@@ -1,34 +1,16 @@
 package cz.martlin.jmop.core.sources;
 
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.stream.StreamSeed;
 import cz.martlin.jmop.core.tracks.Track;
+import cz.martlin.jmop.core.tracks.TrackIdentifier;
 
-public abstract class AbstractRemoteSource<RQT, RST> implements BaseSourceImpl {
+public interface AbstractRemoteSource extends BaseSourceImpl {
 
-	public AbstractRemoteSource() {
-	}
-	
-	public Track getInitialTrack(StreamSeed seed) throws JMOPSourceException {
-		RQT request = createGetInitialTrackRequest(seed);
-		RST response = invokeRequest(request);
+	@Override
+	public Track getTrack(TrackIdentifier id) throws JMOPSourceException;
 
-		return inferTrack(response);
-	}
+	public Track search(String query) throws JMOPSourceException;
 
-	public Track getNextTrack(Track track) throws JMOPSourceException {
-		RQT request = createGetNextTrackRequest(track);
-		RST response = invokeRequest(request);
-
-		return inferTrack(response);
-	}
-
-	public abstract RQT createGetInitialTrackRequest(StreamSeed seed);
-
-	public abstract RQT createGetNextTrackRequest(Track track);
-
-	public abstract RST invokeRequest(RQT request);
-
-	public abstract Track inferTrack(RST response);
+	public Track getNextTrackOf(Track track) throws JMOPSourceException;
 
 }
