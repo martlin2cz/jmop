@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -19,6 +20,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeScopes;
+import com.google.api.services.youtube.model.SearchListResponse;
+import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 
@@ -99,16 +102,36 @@ public class YoutubeUtilities {
 	public static void main(String[] args) throws IOException {
 		YouTube youtube = getYouTubeService();
 		try {
+			final String id = "MgApT3VHtZY";
 			
-			final String id = "k0MPgKG8oh4";
+			HashMap<String, String> parameters = new HashMap<>();
+	        parameters.put("part", "snippet");
+	        parameters.put("relatedToVideoId", id);
+	        parameters.put("type", "video");
+
+	        YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list(parameters.get("part").toString());
+	        if (parameters.containsKey("relatedToVideoId") && parameters.get("relatedToVideoId") != "") {
+	            searchListRelatedVideosRequest.setRelatedToVideoId(parameters.get("relatedToVideoId").toString());
+	        }
+
+	        if (parameters.containsKey("type") && parameters.get("type") != "") {
+	            searchListRelatedVideosRequest.setType(parameters.get("type").toString());
+	        }
+
+	        SearchListResponse response = searchListRelatedVideosRequest.execute();
+	        for (SearchResult res: response.getItems()) {
+	        	System.out.println("Related?" + res.getSnippet().getTitle());
+	        }
 			
-			YouTube.Videos.List req = youtube.videos().list("snippet");
-			req.setId(id);
-			VideoListResponse resp = req.execute();
-			Video video = resp.getItems().get(0);
-			System.out.println("Video " + video.getSnippet().getTitle() + ":\n " + video.getSnippet().getDescription());
 			
-			//TODO how to infer its related videos now?
+			
+			
+//			YouTube.Videos.List req = youtube.videos().list("snippet");
+//			req.setId(id);
+//			VideoListResponse resp = req.execute();
+//			Video video = resp.getItems().get(0);
+//			System.out.println("Video " + video.getSnippet().getTitle() + ":\n " + video.getSnippet().getDescription());
+//			
 			
 			/*
 			 * YouTube.Channels.List channelsListByUsernameRequest =
