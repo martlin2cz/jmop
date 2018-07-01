@@ -1,6 +1,7 @@
 package cz.martlin.jmop.core.sources;
 
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.core.tracks.Track;
 
 public class YoutubeSourceTest {

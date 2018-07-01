@@ -1,6 +1,7 @@
-package cz.martlin.jmop.core.sources;
+package cz.martlin.jmop.core.sources.remotes;
 
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.tracks.Track;
 import cz.martlin.jmop.core.tracks.TrackIdentifier;
 

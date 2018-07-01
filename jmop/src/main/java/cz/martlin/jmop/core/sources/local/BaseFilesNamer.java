@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources;
+package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
 

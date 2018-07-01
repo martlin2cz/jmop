@@ -1,8 +1,9 @@
-package cz.martlin.jmop.core.sources;
+package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
 
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.BaseSourceImpl;
 import cz.martlin.jmop.core.stream.StreamSeed;
 import cz.martlin.jmop.core.tracks.Bundle;
 import cz.martlin.jmop.core.tracks.Track;

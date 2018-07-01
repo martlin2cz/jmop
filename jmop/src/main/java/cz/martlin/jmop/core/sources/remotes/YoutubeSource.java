@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources;
+package cz.martlin.jmop.core.sources.remotes;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,6 +9,7 @@ import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 
+import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.tracks.Track;
 import cz.martlin.jmop.core.tracks.TrackIdentifier;
 
