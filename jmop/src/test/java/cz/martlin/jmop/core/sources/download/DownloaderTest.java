@@ -1,12 +1,15 @@
 package cz.martlin.jmop.core.sources.download;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
 
+import javax.sound.sampled.AudioFileFormat;
+
 import org.junit.Test;
 
+import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.Sources;
@@ -61,14 +64,15 @@ public class DownloaderTest {
 
 		BaseLocalSource local = new DefaultLocalSource(fileSystem, bundle);
 		Sources sources = new Sources(local, remote);
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(sources);
+		ProgressListener listener = new SimpleLoggingListener(System.out);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(sources, listener );
 
 		TrackIdentifier identifier = new TrackIdentifier(source, id);
 		Track track = new Track(identifier, title, description);
 
 		try {
-			boolean succes = downloader.download(track);
-			System.err.println("Success? " + succes);
+			File downloaded = downloader.download(track);
+			System.err.println("Downloaded to: " + downloaded.getAbsolutePath());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
