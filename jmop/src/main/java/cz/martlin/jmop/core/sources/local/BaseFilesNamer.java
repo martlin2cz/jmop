@@ -6,7 +6,7 @@ import cz.martlin.jmop.core.tracks.Bundle;
 import cz.martlin.jmop.core.tracks.Track;
 
 public interface BaseFilesNamer {
-	public File fileOfTrack(Bundle bundle, Track track);
+	public File fileOfTrack(Bundle bundle, Track track, TrackFileFormat format);
 	
 	//TODO 
 }

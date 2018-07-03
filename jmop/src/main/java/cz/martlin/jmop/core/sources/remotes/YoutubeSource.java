@@ -24,6 +24,11 @@ public class YoutubeSource extends
 	}
 
 	@Override
+	protected String urlOfTrack(String id) {
+		return "https://www.youtube.com/watch?v=" + id;
+	}
+
+	@Override
 	protected YouTube.Videos.List createLoadRequest(String id) throws Exception {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 

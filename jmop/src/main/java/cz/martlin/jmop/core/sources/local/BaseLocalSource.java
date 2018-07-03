@@ -14,7 +14,7 @@ public interface BaseLocalSource extends BaseSourceImpl {
 	@Override
 	public abstract Track getTrack(TrackIdentifier id) throws JMOPSourceException;
 
-	public abstract File fileOfTrack(Track track) throws JMOPSourceException;
+	public abstract File fileOfTrack(Track track, TrackFileFormat downloadFileFormat) throws JMOPSourceException;
 
 	public abstract boolean contains(Track next) throws JMOPSourceException;
 

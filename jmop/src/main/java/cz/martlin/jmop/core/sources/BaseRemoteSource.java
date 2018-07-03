@@ -11,4 +11,6 @@ public interface BaseRemoteSource extends BaseSourceImpl {
 
 	public Track getNextOf(Track current) throws JMOPSourceException;
 
+
+
 }
