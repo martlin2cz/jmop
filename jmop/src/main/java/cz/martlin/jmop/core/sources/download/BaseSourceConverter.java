@@ -1,9 +1,9 @@
 package cz.martlin.jmop.core.sources.download;
 
-import java.io.File;
+import cz.martlin.jmop.core.tracks.Track;
 
 public interface BaseSourceConverter {
 	
-	public boolean convert(File file) throws Exception;
+	public boolean convert(Track track) throws Exception;
 	
 }

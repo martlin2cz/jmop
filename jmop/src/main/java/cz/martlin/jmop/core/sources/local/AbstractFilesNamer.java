@@ -7,6 +7,7 @@ import cz.martlin.jmop.core.tracks.Track;
 
 public abstract class AbstractFilesNamer implements BaseFilesNamer {
 
+	private static final String DOT = ".";
 
 	private final File rootDir;
 
@@ -15,20 +16,23 @@ public abstract class AbstractFilesNamer implements BaseFilesNamer {
 	}
 
 	@Override
-	public File fileOfTrack(Bundle bundle, Track track) {
+	public File fileOfTrack(Bundle bundle, Track track, TrackFileFormat format) {
 		File bundleDir = directoryOfBundle(bundle);
-		String trackFile = filenameOfTrack(track);
 
+		String trackFileName = filenameOfTrack(track);
+
+		String extension = format.getExtension();
+
+		String trackFile = trackFileName + DOT + extension;
 		return new File(bundleDir, trackFile);
 	}
-	
+
 	private File directoryOfBundle(Bundle bundle) {
 		String bundleName = dirnameOfBundle(bundle);
 		return new File(rootDir, bundleName);
 	}
 
 	protected abstract String dirnameOfBundle(Bundle bundle);
-
 
 	protected abstract String filenameOfTrack(Track track);
 

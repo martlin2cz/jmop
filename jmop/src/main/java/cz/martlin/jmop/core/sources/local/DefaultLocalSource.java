@@ -24,8 +24,8 @@ public class DefaultLocalSource implements BaseLocalSource {
 	}
 
 	@Override
-	public File fileOfTrack(Track track) throws JMOPSourceException {
-		return fileSystem.getFileOfTrack(bundle, track);
+	public File fileOfTrack(Track track, TrackFileFormat format) throws JMOPSourceException {
+		return fileSystem.getFileOfTrack(bundle, track, format);
 	}
 
 	@Override

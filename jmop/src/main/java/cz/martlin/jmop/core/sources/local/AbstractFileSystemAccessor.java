@@ -9,7 +9,7 @@ public interface AbstractFileSystemAccessor {
 
 
 
-	public File getFileOfTrack(Bundle bundle, Track track);
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format);
 	
 	//TODO: all the others, like list, add ...
 	//TODO: and playlists, thumbnails, etc.

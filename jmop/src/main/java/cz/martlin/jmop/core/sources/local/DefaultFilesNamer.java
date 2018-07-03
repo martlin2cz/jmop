@@ -8,7 +8,6 @@ import cz.martlin.jmop.core.tracks.Track;
 public class DefaultFilesNamer extends AbstractFilesNamer {
 
 	protected static final String SEPARATOR = "_";
-	protected static final String SUFFIX = ".mp3";
 
 	public DefaultFilesNamer(File rootDir) {
 		super(rootDir);
@@ -27,12 +26,12 @@ public class DefaultFilesNamer extends AbstractFilesNamer {
 		String id = track.getIdentifier().getIdentifier();
 
 		String cleanName = clean(trackName);
-		String fileName = cleanName + SEPARATOR + id + SUFFIX;
-		return fileName;
+
+		return cleanName + SEPARATOR + id;
 	}
 
 	private String clean(String text) {
-		//TODO remove all non-ascii chars
+		// TODO remove all non-ascii chars
 		return text;
 	}
 

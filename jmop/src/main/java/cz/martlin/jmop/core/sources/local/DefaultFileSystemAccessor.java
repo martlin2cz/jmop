@@ -15,8 +15,8 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 	}
 
 	@Override
-	public File getFileOfTrack(Bundle bundle, Track track) {
-		return namer.fileOfTrack(bundle, track);
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format) {
+		return namer.fileOfTrack(bundle, track, format);
 		//TODO test existence
 	}
 	

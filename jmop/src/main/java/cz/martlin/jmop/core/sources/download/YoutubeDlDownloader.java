@@ -13,19 +13,19 @@ import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.tracks.Track;
 
-public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, File> implements BaseSourceDownloader {
+public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Boolean> implements BaseSourceDownloader {
 
-	private static final String TMP_SUFFIX = ".tmp";
+	private static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
 	private static final String PROGRESS_LINE_START = "[download]";
 	private static final String COLUMNS_SEPARATOR_REGEX = " +";
-	private static final String PERCENT_REGEX = "\\d{1,2}\\.\\d{1}\\%";
+	private static final String PERCENT_REGEX = "\\d{1,3}\\.\\d{1}\\%";
 	private static final int RESULT_CODE_OK = 0;
 
 	private final BaseLocalSource local;
 	private final AbstractRemoteSource remote;
-	private File outputFile;
 
 	public YoutubeDlDownloader(Sources sources, ProgressListener listener) {
 		super(listener);
@@ -33,8 +33,11 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Fi
 		this.remote = sources.getRemote();
 	}
 
+/////////////////////////////////////////////////////////////////////////////////////
+
+	
 	@Override
-	public File download(Track track) throws ExternalProgramException {
+	public boolean download(Track track) throws ExternalProgramException {
 		return run(track);
 	}
 
@@ -62,12 +65,8 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Fi
 	}
 
 	@Override
-	protected File handleResult(int result) throws Exception {
-		if (result == RESULT_CODE_OK) {
-			return outputFile;
-		} else {
-			return null;
-		}
+	protected Boolean handleResult(int result) throws Exception {
+		return (result == RESULT_CODE_OK);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -77,27 +76,19 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Fi
 	}
 
 	private String createTargetFilePath(Track track) throws JMOPSourceException, IOException {
-		File tmpFile = privateCreateTargetTempFile(track);
-
-		outputFile = tmpFile;
+		File tmpFile = privateCreateTargetFile(track);
 
 		return tmpFile.getAbsolutePath();
 	}
 
-	private File privateCreateTargetTempFile(Track track) throws JMOPSourceException, IOException {
-		File file = local.fileOfTrack(track);
-		String name = file.getName();
-
-		File tmpFile = File.createTempFile(name, TMP_SUFFIX);
-		return tmpFile;
+	private File privateCreateTargetFile(Track track) throws JMOPSourceException, IOException {
+		return local.fileOfTrack(track, DOWNLOAD_FILE_FORMAT);
 	}
 
 	private List<String> createCommandLine(String url, String path) {
 		return Arrays.asList( //
 				"youtube-dl", "--newline", "--extract-audio", "--output", path, url);
 	}
-	
-
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

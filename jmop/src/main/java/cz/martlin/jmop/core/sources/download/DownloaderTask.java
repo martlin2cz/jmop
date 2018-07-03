@@ -1,7 +1,5 @@
 package cz.martlin.jmop.core.sources.download;
 
-import java.io.File;
-
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.tracks.Track;
@@ -12,29 +10,36 @@ public class DownloaderTask extends Task<Boolean> implements ProgressListener {
 	private static final double THE_100_PERCENT = 100.0;
 
 	private final BaseSourceDownloader downloader;
+	private final BaseSourceConverter converter;
 	private final Track track;
 
-	public DownloaderTask(BaseSourceDownloader downloader, Track track) {
+	public DownloaderTask(BaseSourceDownloader downloader, BaseSourceConverter converter, Track track) {
 		super();
 		this.downloader = downloader;
+		this.converter = converter;
 		this.track = track;
 	}
 
 	@Override
 	protected Boolean call() throws Exception {
-		return runDownload();
-	}
-
-	private Boolean runDownload() throws JMOPSourceException {
 		try {
-			File file = downloader.download(track);
+			updateMessage("Downloading ...");
+			boolean downloaded = downloader.download(track);
+			if (!downloaded) {
+				return false;
+			}
 
-			return file != null;
+			updateMessage("Converting ...");
+			boolean converted = converter.convert(track);
+			if (!converted) {
+				return false;
+			}
+
+			return true;
 		} catch (Exception e) {
 			// TODO exception
 			throw new JMOPSourceException(e);
 		}
-
 	}
 
 	@Override
