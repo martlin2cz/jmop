@@ -7,8 +7,8 @@ import cz.martlin.jmop.core.tracks.Track;
 
 public class DefaultFilesNamer extends AbstractFilesNamer {
 
-	protected static final String SEPARATOR = null;
-	protected static final String SUFFIX = null;
+	protected static final String SEPARATOR = "_";
+	protected static final String SUFFIX = ".mp3";
 
 	public DefaultFilesNamer(File rootDir) {
 		super(rootDir);

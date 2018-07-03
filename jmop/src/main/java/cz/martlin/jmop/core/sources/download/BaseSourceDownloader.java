@@ -1,13 +1,13 @@
 package cz.martlin.jmop.core.sources.download;
 
-import java.io.File;
-
-import cz.martlin.jmop.core.tracks.TrackIdentifier;
+import cz.martlin.jmop.core.tracks.Track;
+import javafx.beans.property.DoubleProperty;
 
 public interface BaseSourceDownloader {
 
-	public boolean download(TrackIdentifier identifier) throws Exception;
+	public boolean download(Track track) throws Exception;
 
-	// TODO stopDownloading
-	// TODO getProgressProperty, isRunningProperty ?
+	public void stop() throws Exception;
+	
+	public DoubleProperty getProgressPercentProperty();
 }

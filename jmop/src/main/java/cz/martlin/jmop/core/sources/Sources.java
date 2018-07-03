@@ -5,17 +5,25 @@ import cz.martlin.jmop.core.tracks.Track;
 
 public class Sources {
 	private final BaseLocalSource local;
-	private final BaseRemoteSource remote;
+	private final AbstractRemoteSource remote;
 
-	public Sources(BaseLocalSource local, BaseRemoteSource remote) {
+	public Sources(BaseLocalSource local, AbstractRemoteSource remote) {
 		super();
 		this.local = local;
 		this.remote = remote;
 	}
 
+	public BaseLocalSource getLocal() {
+		return local;
+	}
+
+	public AbstractRemoteSource getRemote() {
+		return remote;
+	}
+
 	public void prepareNextOf(Track current) {
 		try {
-			Track next = remote.getNextOf(current);
+			Track next = remote.getNextTrackOf(current);
 
 			boolean contains = local.contains(next);
 			if (!contains) {

@@ -5,73 +5,136 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import cz.martlin.jmop.core.tracks.TrackIdentifier;
+import com.google.common.io.Files;
+
+import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.Sources;
+import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.tracks.Track;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 public class YoutubeDlDownloader implements BaseSourceDownloader {
 
+	private static final String TMP_SUFFIX = ".%(ext)s";
 	private static final String PROGRESS_LINE_START = "[download]";
 	private static final String COLUMNS_SEPARATOR_REGEX = " +";
 	private static final String PERCENT_REGEX = "\\d{1,2}\\.\\d{1}\\%";
 	private static final int RESULT_CODE_OK = 0;
 
-	private Process process;
-	private DoubleProperty progress;
+	private final BaseLocalSource local;
+	private final AbstractRemoteSource remote;
+	private final DoubleProperty progress;
 
-	public YoutubeDlDownloader() {
+	private Process process;
+
+	public YoutubeDlDownloader(Sources sources) {
+		this.local = sources.getLocal();
+		this.remote = sources.getRemote();
+
 		this.process = null;
 		this.progress = new SimpleDoubleProperty();
 	}
 
 	@Override
-	public boolean download(TrackIdentifier identifier) throws IOException, InterruptedException {
-		startProcess(identifier);
+	public DoubleProperty getProgressPercentProperty() {
+		return progress;
+	}
+
+	@Override
+	public boolean download(Track track) throws IOException, InterruptedException, JMOPSourceException {
+		startProcess(track);
+
 		handleProcessOutput();
 
 		return finishProcess();
 	}
 
-	private void startProcess(TrackIdentifier identifier) throws IOException {
-		List<String> commandline = createCommandLine(identifier);
+	@Override
+	public void stop() {
+		killTheProcess();
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	private void startProcess(Track track) throws IOException, JMOPSourceException {
+		List<String> commandline = createCommandLine(track);
+		System.err.println("Running: " + commandline);
 
 		ProcessBuilder builder = new ProcessBuilder(commandline);
-		File directory = new File("."); // TODO working directory
+
+		File directory = getTemporaryDirectory();
 		builder.directory(directory);
+
 		process = builder.start();
+	}
+
+	private File getTemporaryDirectory() {
+		File directory = Files.createTempDir();
+		return directory;
 	}
 
 	private boolean finishProcess() throws InterruptedException {
 		int result = process.waitFor();
-		
+
 		process = null;
 
 		return result == RESULT_CODE_OK;
 	}
 
+	private void killTheProcess() {
+		process.destroy();
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private List<String> createCommandLine(TrackIdentifier identifier) {
-		// TODO generate url by kind
-		String url = "https://www.youtube.com/watch?v=" + identifier.getIdentifier();
-		return Arrays.asList("youtube-dl", "-x", "--newline", url); // TODO
+	private List<String> createCommandLine(Track track) throws JMOPSourceException {
+		String url = createUrlOfTrack(track);
+		String path = createTargetFilePath(track);
+
+		return createCommandLine(url, path);
+	}
+
+	private String createUrlOfTrack(Track track) throws JMOPSourceException {
+		URL url = remote.urlOf(track);
+		return url.toExternalForm();
+	}
+
+	private String createTargetFilePath(Track track) throws JMOPSourceException {
+		File file = local.fileOfTrack(track);
+		String path = file.getAbsolutePath();
+
+		String withoutSuffix = removeSuffix(path);
+		String withSuffix = withoutSuffix + TMP_SUFFIX;
+		return withSuffix;
+	}
+
+	private List<String> createCommandLine(String url, String path) {
+		return Arrays.asList( //
+				"youtube-dl", "--newline", "--extract-audio", "--audio-format", "mp3", "--output", path,
+				"--exec",  "'ffmpeg -stats -i {} /tmp/tracks/out.mp3'",
+				/*"--postprocessor-args", "'--stats'",*/ url);
+		
+		
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void handleProcessOutput() {
-		InputStream ins = process.getInputStream();
+		InputStream ins = process.getErrorStream();
 		Reader r = new InputStreamReader(ins);
 		Scanner s = new Scanner(r);
 
 		while (s.hasNext()) {
-			String line = s.nextLine();
+			String line = s.next();
 			processLineOfOutput(line);
-			// TODO debug log: System.out.println(">" + line);
+			System.err.println("> " + line);
 		}
 
 		s.close();
@@ -80,8 +143,7 @@ public class YoutubeDlDownloader implements BaseSourceDownloader {
 	private void processLineOfOutput(String line) {
 		Double percent = tryToParsePercentFromLine(line);
 		if (percent != null) {
-			double progressVal = percent / 100.0;
-			progress.set(progressVal);
+			progress.set(percent);
 		}
 	}
 
@@ -105,4 +167,9 @@ public class YoutubeDlDownloader implements BaseSourceDownloader {
 		return percent;
 	}
 
+	protected static String removeSuffix(String path) {
+		int indexOfDot = path.lastIndexOf((int) '.');
+
+		return path.substring(0, indexOfDot);
+	}
 }

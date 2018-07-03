@@ -1,5 +1,8 @@
 package cz.martlin.jmop.core.sources.remotes;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.tracks.Track;
@@ -10,6 +13,23 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 	public SimpleRemoteSource() {
 		super();
 	}
+
+	@Override
+	public URL urlOf(Track track) throws JMOPSourceException {
+		TrackIdentifier identifier = track.getIdentifier();
+		String id = identifier.getIdentifier();
+		String url = urlOfTrack(id);
+		try {
+			return new URL(url);
+		} catch (MalformedURLException e) {
+			// TODO exception
+			throw new JMOPSourceException(e);
+		}
+	}
+
+	protected abstract String urlOfTrack(String id);
+
+	///////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public Track getTrack(TrackIdentifier identifier) throws JMOPSourceException {

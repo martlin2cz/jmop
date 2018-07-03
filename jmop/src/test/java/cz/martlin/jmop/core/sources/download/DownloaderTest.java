@@ -2,9 +2,23 @@ package cz.martlin.jmop.core.sources.download;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.Test;
 
+import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
+import cz.martlin.jmop.core.sources.Sources;
+import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
+import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
+import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
+import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
+import cz.martlin.jmop.core.tracks.Bundle;
+import cz.martlin.jmop.core.tracks.Track;
 import cz.martlin.jmop.core.tracks.TrackIdentifier;
 
 public class DownloaderTest {
@@ -25,15 +39,35 @@ public class DownloaderTest {
 		assertEquals(42.9, YoutubeDlDownloader.tryToParsePercentFromLine(line3).doubleValue(), EPSILON);
 	}
 
-	public static void main(String[] args) {
-		BaseSourceDownloader downloader = new YoutubeDlDownloader();
+	@Test
+	public void testRemoveSuffix() {
+		assertEquals("foo", YoutubeDlDownloader.removeSuffix("foo.xxx"));
+		assertEquals("foo.bar", YoutubeDlDownloader.removeSuffix("foo.bar.42"));
+	}
+	
+	public static void main(String[] args) throws IOException {
+		final String id = "3V7EugoweM4";
+		final String title = "Something";
+		final String description = "Something interresting";
+		final String bundleName = "tracks";
+		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
+		final SourceKind source = SourceKind.YOUTUBE;
 
-		SourceKind source = SourceKind.YOUTUBE;
-		String id = "1eQCzql3dzI";
+		AbstractRemoteSource remote = new YoutubeSource();
+
+		BaseFilesNamer namer = new DefaultFilesNamer(rootDir);
+		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(namer);
+		Bundle bundle = new Bundle(source, bundleName);
+
+		BaseLocalSource local = new DefaultLocalSource(fileSystem, bundle);
+		Sources sources = new Sources(local, remote);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(sources);
+
 		TrackIdentifier identifier = new TrackIdentifier(source, id);
+		Track track = new Track(identifier, title, description);
 
 		try {
-			boolean succes = downloader.download(identifier);
+			boolean succes = downloader.download(track);
 			System.err.println("Success? " + succes);
 		} catch (Exception e) {
 			e.printStackTrace();
