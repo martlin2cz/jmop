@@ -84,8 +84,9 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolea
 	}
 
 	@Override
-	protected Boolean handleResult(int result) throws Exception {
-		// TODO remove original file?
+	protected Boolean handleResult(int result, Track track) throws Exception {
+		removeOriginalInputFile(track);
+		
 		return result == 0;
 	}
 
@@ -111,6 +112,13 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolea
 	private double durationToProgress(int duration) {
 		return (((double) duration) / inputDuration) * 100.0;
 	}
+
+	private void removeOriginalInputFile(Track track) throws JMOPSourceException {
+		File inputFile = local.fileOfTrack(track, inputFormat);
+		inputFile.delete();
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	protected static Integer tryToProcessAsInputDuration(String line) {
 		boolean matches = line.matches(DURATION_LINE_REGEX);

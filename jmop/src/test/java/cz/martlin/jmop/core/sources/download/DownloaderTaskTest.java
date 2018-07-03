@@ -18,15 +18,16 @@ import cz.martlin.jmop.core.tracks.Bundle;
 import cz.martlin.jmop.core.tracks.Track;
 import cz.martlin.jmop.core.tracks.TrackIdentifier;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class DownloaderTaskTest extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		final String id = "3V7EugoweM4";
-		final String title = "Something";
-		final String description = "Something interresting";
+		final String id = "qUXEFj0t7Ek";
+		final String title = "Lorem-ispum";
+		final String description = "lorem ipsum dolor sit amet";
 		final String bundleName = "another-testing-tracks";
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
@@ -57,6 +58,7 @@ public class DownloaderTaskTest extends Application {
 		});
 		task.setOnSucceeded((e) -> {
 			System.out.print("Done!");
+			Platform.exit();
 		});
 
 		task.run();

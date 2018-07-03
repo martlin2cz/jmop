@@ -65,7 +65,7 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 	}
 
 	@Override
-	protected Boolean handleResult(int result) throws Exception {
+	protected Boolean handleResult(int result, Track track) throws Exception {
 		return (result == RESULT_CODE_OK);
 	}
 

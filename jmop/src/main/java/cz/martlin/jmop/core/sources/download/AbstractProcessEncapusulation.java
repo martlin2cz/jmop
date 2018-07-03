@@ -17,6 +17,8 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 	private final ProgressListener listener;
 	protected Process process;
 
+	//TODO logging
+	
 	public AbstractProcessEncapusulation(ProgressListener listener) {
 		super();
 		this.listener = listener;
@@ -28,7 +30,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 
 			handleProcessOutput();
 
-			return finishProcess();
+			return finishProcess(input);
 		} catch (Exception e) {
 			throw new ExternalProgramException("Process failed", e);
 		}
@@ -70,12 +72,12 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 		s.close();
 	}
 
-	private OUT finishProcess() throws Exception {
+	private OUT finishProcess(INT input) throws Exception {
 		int result = process.waitFor();
 
 		process = null;
 
-		return handleResult(result);
+		return handleResult(result, input);
 	}
 
 	private void killTheProcess() {
@@ -92,7 +94,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 
 	protected abstract Double processLineOfOutput(String line) throws Exception;
 
-	protected abstract OUT handleResult(int result) throws Exception;
+	protected abstract OUT handleResult(int result, INT input) throws Exception;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
