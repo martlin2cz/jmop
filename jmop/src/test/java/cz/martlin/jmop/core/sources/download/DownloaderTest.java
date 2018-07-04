@@ -21,9 +21,9 @@ import cz.martlin.jmop.core.tracks.TrackIdentifier;
 public class DownloaderTest {
 
 	public static void main(String[] args) throws IOException {
-		final String id = "3V7EugoweM4";
-		final String title = "Something";
-		final String description = "Something interresting";
+		final String id = "TAOQWSmkofA";
+		final String title = "sample";
+		final String description = "Sample sound track";
 		final String bundleName = "testing-tracks";
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
@@ -37,7 +37,9 @@ public class DownloaderTest {
 		BaseLocalSource local = new DefaultLocalSource(fileSystem, bundle);
 		Sources sources = new Sources(local, remote);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
+		
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(sources, listener);
+		//BaseSourceDownloader downloader = new TestingDownloader(sources);
 
 		TrackIdentifier identifier = new TrackIdentifier(source, id);
 		Track track = new Track(identifier, title, description);

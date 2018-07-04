@@ -42,7 +42,9 @@ public class ConverterTest {
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		BaseSourceConverter converter = new FFMPEGConverter(sources, inputFormat, outputFormat, listener);
+		//BaseSourceConverter converter = new NoopConverter();
 
+		
 		TrackIdentifier identifier = new TrackIdentifier(source, id);
 		Track track = new Track(identifier, title, description);
 
