@@ -12,6 +12,7 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
+import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.core.tracks.Bundle;
@@ -35,10 +36,11 @@ public class DownloaderTaskTest extends Application {
 		AbstractRemoteSource remote = new YoutubeSource();
 
 		BaseFilesNamer namer = new DefaultFilesNamer(rootDir);
-		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(namer);
+		PlaylistLoader loader = null;
+		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(namer, loader);
 		Bundle bundle = new Bundle(source, bundleName);
 
-		BaseLocalSource local = new DefaultLocalSource(fileSystem, bundle);
+		BaseLocalSource local = new DefaultLocalSource(fileSystem);
 		Sources sources = new Sources(local, remote);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		

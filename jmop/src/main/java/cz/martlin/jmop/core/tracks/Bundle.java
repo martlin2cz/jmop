@@ -3,11 +3,13 @@ package cz.martlin.jmop.core.tracks;
 import java.util.HashMap;
 import java.util.Map;
 
+import cz.martlin.jmop.core.player.Playlist;
 import cz.martlin.jmop.core.sources.SourceKind;
 
 public class Bundle {
 	private final SourceKind kind;
 	private final String name;
+	//TODO tracks map / full playlist
 	private final Map<TrackIdentifier, Track> tracks;
 
 	public Bundle(SourceKind kind, String name) {
@@ -17,11 +19,11 @@ public class Bundle {
 		this.tracks = new HashMap<>();
 	}
 
-	public Bundle(SourceKind kind, String name, Map<TrackIdentifier, Track> tracks) {
+	public Bundle(SourceKind kind, String name, Playlist full) {
 		super();
 		this.kind = kind;
 		this.name = name;
-		this.tracks = tracks;
+		this.tracks = null;
 	}
 
 	public SourceKind getKind() {

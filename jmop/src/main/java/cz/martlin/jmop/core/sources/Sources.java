@@ -25,7 +25,7 @@ public class Sources {
 		try {
 			Track next = remote.getNextTrackOf(current);
 
-			boolean contains = local.contains(next);
+			boolean contains = local.exists(next);
 			if (!contains) {
 				startDownloading(next);
 			}
