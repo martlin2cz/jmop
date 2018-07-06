@@ -47,7 +47,7 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		Bundle tmpBundle = new Bundle(null, name, null);
 		PlaylistFileData data = loadPlaylistFile(tmpBundle, playlistName);
 		
-		SourceKind kind = data.getSource();
+		SourceKind kind = data.getKind();
 		Tracklist tracklist = data.getTracklist();
 		return new Bundle(kind, name, tracklist);
 	}
@@ -97,7 +97,7 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	private PlaylistFileData loadPlaylistFile(Bundle bundle, String name) throws IOException {
 		File file = fileOfPlaylist(bundle, name);
-		PlaylistFileData data = loader.load(file);
+		PlaylistFileData data = loader.load(bundle, file);
 		return data;
 	}
 
