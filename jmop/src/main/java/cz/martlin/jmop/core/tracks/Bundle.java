@@ -48,4 +48,8 @@ public class Bundle {
 		return tracks.containsKey(id);
 	}
 
+	public Playlist getFullPlaylist() {
+		return new Playlist("TODO: full playlist", kind);
+	}
+
 }

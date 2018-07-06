@@ -6,6 +6,7 @@ import java.util.List;
 
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.Playlist;
+import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.tracks.Bundle;
 import cz.martlin.jmop.core.tracks.Track;
 import cz.martlin.jmop.core.tracks.TrackIdentifier;
@@ -40,11 +41,11 @@ public class DefaultLocalSource implements BaseLocalSource {
 	}
 
 	@Override
-	public void addBundle(Bundle bundle) throws JMOPSourceException {
+	public void createBundle(Bundle bundle) throws JMOPSourceException {
 		try {
 			fileSystem.createBundle(bundle);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot add bundle", e);
+			throw new JMOPSourceException("Cannot create bundle", e);
 		}
 	}
 
@@ -56,15 +57,6 @@ public class DefaultLocalSource implements BaseLocalSource {
 			return fileSystem.listPlaylists(bundle);
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannot list playlists", e);
-		}
-	}
-
-	@Override
-	public Playlist getFullPlaylist(Bundle bundle) throws JMOPSourceException {
-		try {
-			return fileSystem.getFullPlaylist(bundle);
-		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot load full playlists", e);
 		}
 	}
 

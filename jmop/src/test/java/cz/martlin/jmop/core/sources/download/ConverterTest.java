@@ -31,9 +31,9 @@ public class ConverterTest {
 
 		AbstractRemoteSource remote = new YoutubeSource();
 
-		BaseFilesNamer namer = new DefaultFilesNamer(rootDir);
+		BaseFilesNamer namer = new DefaultFilesNamer();
 		PlaylistLoader loader = null;
-		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(namer, loader);
+		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);
 		Bundle bundle = new Bundle(source, bundleName);
 
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);

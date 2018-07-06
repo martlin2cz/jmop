@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import cz.martlin.jmop.core.player.Playlist;
+import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.tracks.Bundle;
 import cz.martlin.jmop.core.tracks.Track;
 
@@ -20,8 +21,6 @@ public interface AbstractFileSystemAccessor {
 
 	public List<String> listPlaylists(Bundle bundle) throws IOException;
 
-	public Playlist getFullPlaylist(Bundle bundle) throws IOException;
-
 	public Playlist getPlaylist(Bundle bundle, String name) throws IOException;
 
 	public void savePlaylist(Bundle bundle, Playlist playlist) throws IOException;
@@ -29,5 +28,7 @@ public interface AbstractFileSystemAccessor {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format) throws IOException;
+
+	
 
 }
