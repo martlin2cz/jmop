@@ -14,7 +14,7 @@ public class TestingDownloader implements BaseSourceDownloader {
 
 	private static final TrackFileFormat DOWNLOAD_FORMAT = TrackFileFormat.OPUS;
 
-	private static final String TESTING_SAMPLE_FILE = "samples/sample.opus";
+	public static final String TESTING_SAMPLE_FILE = "samples/sample.opus";
 
 	private final BaseLocalSource local;
 

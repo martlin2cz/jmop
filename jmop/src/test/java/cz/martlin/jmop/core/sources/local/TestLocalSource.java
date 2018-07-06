@@ -20,6 +20,7 @@ public class TestLocalSource {
 		PlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);
 		BaseLocalSource local = new DefaultLocalSource(fileSystem );
+		//TestingLocalSource local = new TestingLocalSource();
 		
 		//create some content ...
 		
@@ -51,7 +52,7 @@ public class TestLocalSource {
 		System.out.println("First playlist of foo: " + local.getPlaylist(fooBundle, "second"));
 		System.out.println("Third playlist of bar: " + local.getPlaylist(barBundle, "third"));
 		
-		
+		//local.print(System.err);
 	}
 
 }
