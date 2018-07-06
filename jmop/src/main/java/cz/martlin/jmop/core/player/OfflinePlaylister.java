@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.player;
 
-import cz.martlin.jmop.core.tracks.Track;
+import cz.martlin.jmop.core.data.Track;
 
 public class OfflinePlaylister implements BasePlaylister {
 

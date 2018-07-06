@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
@@ -14,7 +15,6 @@ import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.tracks.Track;
 
 public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Boolean> implements BaseSourceDownloader {
 

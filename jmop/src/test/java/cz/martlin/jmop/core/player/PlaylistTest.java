@@ -1,25 +1,26 @@
 package cz.martlin.jmop.core.player;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Track;
-import cz.martlin.jmop.core.tracks.TrackIdentifier;
 
 public class PlaylistTest {
 
 	@Test
 	public void test() {
-		final Track trackFoo = new Track(new TrackIdentifier(SourceKind.YOUTUBE, "foo"), "Foo", "foo bar");
-		final Track trackBar = new Track(new TrackIdentifier(SourceKind.YOUTUBE, "bar"), "Bar", "bar baz");
-		final Track trackBaz = new Track(new TrackIdentifier(SourceKind.YOUTUBE, "baz"), "Baz", "baz aux");
-		final Track trackAux = new Track(new TrackIdentifier(SourceKind.YOUTUBE, "aux"), "Aux", "aux qux");
-		final Track trackQux = new Track(new TrackIdentifier(SourceKind.YOUTUBE, "Qux"), "Qux", "qux qux");
+		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "testing bundle");
+		final Track trackFoo = new Track(bundle, "foo", "Foo", "foo bar");
+		final Track trackBar = new Track(bundle, "bar", "Bar", "bar baz");
+		final Track trackBaz = new Track(bundle, "baz", "Baz", "baz aux");
+		final Track trackAux = new Track(bundle, "aux", "Aux", "aux qux");
+		final Track trackQux = new Track(bundle, "Qux", "Qux", "qux qux");
 		
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz);
 		BasicPlaylist p = new BasicPlaylist(tracks);

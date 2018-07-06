@@ -1,35 +1,101 @@
 package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.tracks.Bundle;
-import cz.martlin.jmop.core.tracks.Track;
-import cz.martlin.jmop.core.tracks.TrackIdentifier;
 
 public class DefaultLocalSource implements BaseLocalSource {
 
 	private final AbstractFileSystemAccessor fileSystem;
-	private final Bundle bundle;
 
-	public DefaultLocalSource(AbstractFileSystemAccessor fileSystem, Bundle bundle) {
+	public DefaultLocalSource(AbstractFileSystemAccessor fileSystem) {
 		super();
 		this.fileSystem = fileSystem;
-		this.bundle = bundle;
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public List<String> listBundlesNames() throws JMOPSourceException {
+		try {
+			return fileSystem.listBundles();
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot list bundles", e);
+		}
 	}
 
 	@Override
-	public Track getTrack(TrackIdentifier id) throws JMOPSourceException {
+	public Bundle getBundle(String name) throws JMOPSourceException {
+		try {
+			return fileSystem.loadBundle(name);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot load bundle", e);
+		}
+	}
+
+	@Override
+	public void createBundle(Bundle bundle) throws JMOPSourceException {
+		try {
+			fileSystem.createBundle(bundle);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot create bundle", e);
+		}
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public List<String> listPlaylistNames(Bundle bundle) throws JMOPSourceException {
+		try {
+			return fileSystem.listPlaylists(bundle);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot list playlists", e);
+		}
+	}
+
+	@Override
+	public Playlist getPlaylist(Bundle bundle, String name) throws JMOPSourceException {
+		try {
+			return fileSystem.getPlaylist(bundle, name);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot load playlist", e);
+		}
+	}
+
+	@Override
+	public void savePlaylist(Bundle bundle, Playlist playlist) throws JMOPSourceException {
+		try {
+			fileSystem.savePlaylist(bundle, playlist);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot save playlist", e);
+		}
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public Track getTrack(Bundle bundle, String id) throws JMOPSourceException {
 		return bundle.getTrack(id);
 	}
 
 	@Override
 	public File fileOfTrack(Track track, TrackFileFormat format) throws JMOPSourceException {
-		return fileSystem.getFileOfTrack(bundle, track, format);
+		try {
+			Bundle bundle = track.getBundle();
+			return fileSystem.getFileOfTrack(bundle, track, format);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot infer file of track", e);
+		}
 	}
 
 	@Override
-	public boolean contains(Track track) throws JMOPSourceException {
+	public boolean exists(Track track) throws JMOPSourceException {
+		Bundle bundle = track.getBundle();
 		return bundle.contains(track);
 	}
 

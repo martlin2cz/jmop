@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import cz.martlin.jmop.core.tracks.Track;
+import cz.martlin.jmop.core.data.Track;
 
 public class BasicPlaylist {
 

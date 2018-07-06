@@ -1,8 +1,8 @@
 package cz.martlin.jmop.core.player;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.sources.Sources;
-import cz.martlin.jmop.core.tracks.Track;
 
 public class Playlister {
 	private final InternetConnectionStatus connection;

@@ -9,9 +9,8 @@ import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 
-import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Track;
-import cz.martlin.jmop.core.tracks.TrackIdentifier;
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Track;
 
 public class YoutubeSource extends
 		SimpleRemoteSource<//
@@ -81,55 +80,51 @@ public class YoutubeSource extends
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	protected Track convertLoadResponse(VideoListResponse response) throws Exception {
-		return convertVideoListResponse(response);
+	protected Track convertLoadResponse(Bundle bundle, VideoListResponse response) throws Exception {
+		return convertVideoListResponse(bundle, response);
 	}
 
 	@Override
-	protected Track convertSearchResponse(SearchListResponse response) throws Exception {
-		return convertSearchListResponse(response);
+	protected Track convertSearchResponse(Bundle bundle, SearchListResponse response) throws Exception {
+		return convertSearchListResponse(bundle, response);
 	}
 
 	@Override
-	protected Track convertLoadNextResponse(SearchListResponse response) throws Exception {
-		return convertSearchListResponse(response);
+	protected Track convertLoadNextResponse(Bundle bundle, SearchListResponse response) throws Exception {
+		return convertSearchListResponse(bundle, response);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private Track convertVideoListResponse(VideoListResponse response) {
+	private Track convertVideoListResponse(Bundle bundle, VideoListResponse response) {
 		List<Video> results = response.getItems();
 		Video result = results.get(0);
-		Track track = videoToTrack(result);
+		Track track = videoToTrack(bundle, result);
 		return track;
 	}
 
-	private Track videoToTrack(Video result) {
-		SourceKind source = SourceKind.YOUTUBE;
-		String id = result.getId();
+	private Track videoToTrack(Bundle bundle, Video result) {
+		String identifier = result.getId();
 		String title = result.getSnippet().getTitle();
 		String description = result.getSnippet().getDescription();
 		// TODO get thumbnail
 
-		TrackIdentifier identifier = new TrackIdentifier(source, id);
-		return new Track(identifier, title, description);
+		return new Track(bundle, identifier, title, description);
 	}
 
-	private Track convertSearchListResponse(SearchListResponse response) {
+	private Track convertSearchListResponse(Bundle bundle, SearchListResponse response) {
 		List<SearchResult> results = response.getItems();
 		SearchResult result = results.get(0);
-		Track track = snippetToTrack(result);
+		Track track = snippetToTrack(bundle, result);
 		return track;
 	}
 
-	private Track snippetToTrack(SearchResult result) {
-		SourceKind source = SourceKind.YOUTUBE;
-		String id = result.getId().getVideoId();
+	private Track snippetToTrack(Bundle bundle, SearchResult result) {
+		String identifier = result.getId().getVideoId();
 		String title = result.getSnippet().getTitle();
 		String description = result.getSnippet().getDescription();
 		// TODO get thumbnail
 
-		TrackIdentifier identifier = new TrackIdentifier(source, id);
-		return new Track(identifier, title, description);
+		return new Track(bundle, identifier, title, description);
 	}
 }

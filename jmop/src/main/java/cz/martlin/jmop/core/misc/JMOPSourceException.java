@@ -2,11 +2,20 @@ package cz.martlin.jmop.core.misc;
 
 public class JMOPSourceException extends Exception {
 
-	
-	public JMOPSourceException(Exception e) {
-		// TODO Auto-generated constructor stub
+
+	private static final long serialVersionUID = 6881006825304322873L;
+
+	public JMOPSourceException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
-	private static final long serialVersionUID = -2876020745476603545L;
+	public JMOPSourceException(String message) {
+		super(message);
+	}
+
+	public JMOPSourceException(Throwable cause) {
+		super(cause);
+	}
+
 
 }

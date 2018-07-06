@@ -1,7 +1,7 @@
-package cz.martlin.jmop.core.tracks;
+package cz.martlin.jmop.core.data;
 
 import cz.martlin.jmop.core.sources.SourceKind;
-
+@Deprecated
 public class TrackIdentifier {
 	private final SourceKind source;
 	private final String identifier;
