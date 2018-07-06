@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.sources.local;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Track;
 
 public class DefaultFilesNamer extends SimpleFilesNamer {
 
@@ -17,7 +17,7 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 	@Override
 	protected String filenameOfTrack(Track track) {
 		String trackName = track.getTitle();
-		String id = track.getIdentifier().getIdentifier();
+		String id = track.getIdentifier();
 
 		String cleanName = clean(trackName);
 
@@ -49,7 +49,7 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 	}
 
 	@Override
-	protected String nameOfFullPlaylist() {
+	public String nameOfFullPlaylist() {
 		return FULL_PLAYLIST_NAME;
 	}
 

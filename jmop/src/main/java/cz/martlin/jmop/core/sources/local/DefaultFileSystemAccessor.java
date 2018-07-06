@@ -8,10 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import cz.martlin.jmop.core.player.Playlist;
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.PlaylistFileData;
+import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Bundle;
-import cz.martlin.jmop.core.tracks.Track;
 
 public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
@@ -41,17 +43,24 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	@Override
 	public Bundle loadBundle(String name) throws IOException {
-		Playlist full = getFullPlaylist(name); // TODO
-		SourceKind kind = full.getSource();
-		return new Bundle(kind, name, full);
+		String playlistName = namer.nameOfFullPlaylist();
+		Bundle tmpBundle = new Bundle(null, name, null);
+		PlaylistFileData data = loadPlaylistFile(tmpBundle, playlistName);
+		
+		SourceKind kind = data.getSource();
+		Tracklist tracklist = data.getTracklist();
+		return new Bundle(kind, name, tracklist);
 	}
 
 	@Override
 	public void createBundle(Bundle bundle) throws IOException {
 		createBundleDirectory(bundle);
-		Playlist full = bundle.getFullPlaylist();
-		savePlaylist(bundle, full);
 
+		Tracklist tracklist = bundle.tracks();
+		SourceKind kind = bundle.getKind();
+
+		String playlistName = namer.nameOfFullPlaylist();
+		savePlaylistData(bundle, playlistName, kind, tracklist);
 	}
 
 	private void createBundleDirectory(Bundle bundle) throws IOException {
@@ -78,17 +87,18 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		return fileOrDir.isFile() && namer.isPlaylistFile(fileOrDir);
 	}
 
-	private Playlist getFullPlaylist(String bundleName) throws IOException {
-		File file = namer.fileOfFullPlaylist(root, null, bundleName);
-		// FIXME implementeme: return loader.load(file);
-		return new Playlist(file.getName(), SourceKind.YOUTUBE);
-	}
 
 	@Override
 	public Playlist getPlaylist(Bundle bundle, String name) throws IOException {
+		PlaylistFileData data = loadPlaylistFile(bundle, name);
+		Tracklist tracks = data.getTracklist();
+		return new Playlist(bundle, name, tracks);
+	}
+
+	private PlaylistFileData loadPlaylistFile(Bundle bundle, String name) throws IOException {
 		File file = fileOfPlaylist(bundle, name);
-		// FIXME implementeme: return loader.load(file);
-		return new Playlist(name, SourceKind.YOUTUBE);
+		PlaylistFileData data = loader.load(file);
+		return data;
 	}
 
 	private File fileOfPlaylist(Bundle bundle, String name) {
@@ -100,9 +110,18 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 	@Override
 	public void savePlaylist(Bundle bundle, Playlist playlist) throws IOException {
 		String name = playlist.getName();
+
+		SourceKind kind = bundle.getKind();
+		Tracklist tracklist = playlist.getTracks();
+
+		savePlaylistData(bundle, name, kind, tracklist);
+	}
+
+	private void savePlaylistData(Bundle bundle, String name, SourceKind kind, Tracklist tracklist) throws IOException {
+		PlaylistFileData data = new PlaylistFileData(name, kind, tracklist);
 		File file = fileOfPlaylist(bundle, name);
-		// FIXME implementme: loader.save(playlist, file);
-		file.createNewFile();
+
+		loader.save(data, file);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

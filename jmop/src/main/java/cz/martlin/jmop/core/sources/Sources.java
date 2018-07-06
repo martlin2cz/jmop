@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.sources;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
-import cz.martlin.jmop.core.tracks.Track;
 
 public class Sources {
 	private final BaseLocalSource local;

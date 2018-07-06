@@ -2,9 +2,9 @@ package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
 
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Bundle;
-import cz.martlin.jmop.core.tracks.Track;
 
 public abstract class SimpleFilesNamer implements BaseFilesNamer {
 
@@ -75,17 +75,6 @@ public abstract class SimpleFilesNamer implements BaseFilesNamer {
 	}
 
 	protected abstract String filenameOfPlaylist(String name);
-
-	@Override
-	public File fileOfFullPlaylist(File root, SourceKind source, String bundleName) {
-		File bundleDir = directoryOfBundle(root, null, bundleName);
-		String playlistFileName = nameOfFullPlaylist();
-
-		return new File(bundleDir, playlistFileName);
-
-	}
-
-	protected abstract String nameOfFullPlaylist();
 
 	@Override
 	public boolean isPlaylistFile(File file) {

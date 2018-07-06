@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.player;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.Sources;
-import cz.martlin.jmop.core.tracks.Track;
 
 public class OnlinePlaylister implements BasePlaylister {
 	private final Sources sources;

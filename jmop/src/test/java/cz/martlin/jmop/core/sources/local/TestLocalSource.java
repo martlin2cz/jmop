@@ -3,10 +3,12 @@ package cz.martlin.jmop.core.sources.local;
 import java.io.File;
 import java.io.IOException;
 
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.PlaylistFileData;
+import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.Playlist;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Bundle;
 
 public class TestLocalSource {
 
@@ -15,7 +17,7 @@ public class TestLocalSource {
 		final File rootDir = File.createTempFile("xxx", "yyy").getParentFile(); //hehe
 		
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		PlaylistLoader loader = null; //TODO
+		PlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);
 		BaseLocalSource local = new DefaultLocalSource(fileSystem );
 		
@@ -24,16 +26,16 @@ public class TestLocalSource {
 		Bundle fooBundle = new Bundle(SourceKind.YOUTUBE, "foo");
 		local.createBundle(fooBundle );
 		
-		Playlist firstPlaylist = new Playlist("first", SourceKind.YOUTUBE);
+		Playlist firstPlaylist = new Playlist(fooBundle, "first", new Tracklist());
 		local.savePlaylist(fooBundle, firstPlaylist );
 		
-		Playlist secondPlaylist = new Playlist("second", SourceKind.YOUTUBE);
+		Playlist secondPlaylist = new Playlist(fooBundle, "second", new Tracklist());
 		local.savePlaylist(fooBundle, secondPlaylist );
 		
 		Bundle barBundle = new Bundle(SourceKind.YOUTUBE, "bar");
 		local.createBundle(barBundle);
 		
-		Playlist thirdPlaylist = new Playlist("third", SourceKind.YOUTUBE);
+		Playlist thirdPlaylist = new Playlist(barBundle, "third", new Tracklist());
 		local.savePlaylist(barBundle, thirdPlaylist );
 		
 		// try to list it ...

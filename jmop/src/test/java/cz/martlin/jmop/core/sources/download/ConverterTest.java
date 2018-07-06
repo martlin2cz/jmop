@@ -3,6 +3,8 @@ package cz.martlin.jmop.core.sources.download;
 import java.io.File;
 import java.io.IOException;
 
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -16,9 +18,6 @@ import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
-import cz.martlin.jmop.core.tracks.Bundle;
-import cz.martlin.jmop.core.tracks.Track;
-import cz.martlin.jmop.core.tracks.TrackIdentifier;
 
 public class ConverterTest {
 	public static void main(String[] args) throws IOException {
@@ -47,8 +46,7 @@ public class ConverterTest {
 		//BaseSourceConverter converter = new NoopConverter();
 
 		
-		TrackIdentifier identifier = new TrackIdentifier(source, id);
-		Track track = new Track(identifier, title, description);
+		Track track = new Track(bundle, id, title, description);
 
 		try {
 			boolean success = converter.convert(track);

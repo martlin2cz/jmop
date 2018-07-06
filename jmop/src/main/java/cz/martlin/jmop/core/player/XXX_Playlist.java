@@ -2,12 +2,13 @@ package cz.martlin.jmop.core.player;
 
 import cz.martlin.jmop.core.sources.SourceKind;
 
-public class Playlist {
+@Deprecated
+public class XXX_Playlist {
 	private final String name;
 	private final SourceKind source;
 	// TODO tracklist instance?
 
-	public Playlist(String name, SourceKind source) {
+	public XXX_Playlist(String name, SourceKind source) {
 		super();
 		this.name = name;
 		this.source = source;

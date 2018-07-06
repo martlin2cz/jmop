@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.tracks.Track;
 
 public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolean> implements BaseSourceConverter {
 

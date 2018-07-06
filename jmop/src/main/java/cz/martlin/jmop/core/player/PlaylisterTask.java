@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.player;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.stream.StreamSeed;
-import cz.martlin.jmop.core.tracks.Track;
 import javafx.concurrent.Task;
 
 public class PlaylisterTask extends Task<Void> {

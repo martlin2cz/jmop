@@ -4,12 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.Playlist;
-import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Bundle;
-import cz.martlin.jmop.core.tracks.Track;
-import cz.martlin.jmop.core.tracks.TrackIdentifier;
 
 public class DefaultLocalSource implements BaseLocalSource {
 
@@ -81,15 +79,14 @@ public class DefaultLocalSource implements BaseLocalSource {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public Track getTrack(TrackIdentifier id) throws JMOPSourceException {
-		Bundle bundle = null;	//TODO
+	public Track getTrack(Bundle bundle, String id) throws JMOPSourceException {
 		return bundle.getTrack(id);
 	}
 
 	@Override
 	public File fileOfTrack(Track track, TrackFileFormat format) throws JMOPSourceException {
 		try {
-			Bundle bundle = null;	//TODO
+			Bundle bundle = track.getBundle();
 			return fileSystem.getFileOfTrack(bundle, track, format);
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannot infer file of track", e);
@@ -98,7 +95,7 @@ public class DefaultLocalSource implements BaseLocalSource {
 
 	@Override
 	public boolean exists(Track track) throws JMOPSourceException {
-		Bundle bundle = null;	//TODO
+		Bundle bundle = track.getBundle();
 		return bundle.contains(track);
 	}
 

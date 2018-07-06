@@ -1,18 +1,25 @@
-package cz.martlin.jmop.core.tracks;
+package cz.martlin.jmop.core.data;
 
 public class Track {
-	private final TrackIdentifier identifier;
+	private final Bundle bundle;
+	private final String identifier;
 	private final String title;
 	private final String description;
+	// TODO thumbnail
 
-	public Track(TrackIdentifier identifier, String title, String description) {
+	public Track(Bundle bundle, String identifier, String title, String description) {
 		super();
+		this.bundle = bundle;
 		this.identifier = identifier;
 		this.title = title;
 		this.description = description;
 	}
 
-	public TrackIdentifier getIdentifier() {
+	public Bundle getBundle() {
+		return bundle;
+	}
+
+	public String getIdentifier() {
 		return identifier;
 	}
 
@@ -30,6 +37,7 @@ public class Track {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((bundle == null) ? 0 : bundle.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((identifier == null) ? 0 : identifier.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
@@ -45,6 +53,11 @@ public class Track {
 		if (getClass() != obj.getClass())
 			return false;
 		Track other = (Track) obj;
+		if (bundle == null) {
+			if (other.bundle != null)
+				return false;
+		} else if (!bundle.equals(other.bundle))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -65,6 +78,8 @@ public class Track {
 
 	@Override
 	public String toString() {
-		return "Track [identifier=" + identifier + ", title=" + title + ", description=" + description + "]";
+		return "Track [bundle=" + bundle + ", identifier=" + identifier + ", title=" + title + ", description=" + "..."
+				+ "]";
 	}
+
 }

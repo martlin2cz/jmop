@@ -3,13 +3,11 @@ package cz.martlin.jmop.core.sources.local;
 import java.io.File;
 import java.util.List;
 
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.Playlist;
 import cz.martlin.jmop.core.sources.BaseSourceImpl;
-import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Bundle;
-import cz.martlin.jmop.core.tracks.Track;
-import cz.martlin.jmop.core.tracks.TrackIdentifier;
 
 public interface BaseLocalSource extends BaseSourceImpl {
 
@@ -30,7 +28,7 @@ public interface BaseLocalSource extends BaseSourceImpl {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public abstract Track getTrack(TrackIdentifier id) throws JMOPSourceException;
+	public abstract Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException;
 
 	public abstract File fileOfTrack(Track track, TrackFileFormat downloadFileFormat) throws JMOPSourceException;
 

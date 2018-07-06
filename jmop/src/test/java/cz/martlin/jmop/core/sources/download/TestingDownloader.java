@@ -5,10 +5,10 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.tracks.Track;
 
 public class TestingDownloader implements BaseSourceDownloader {
 

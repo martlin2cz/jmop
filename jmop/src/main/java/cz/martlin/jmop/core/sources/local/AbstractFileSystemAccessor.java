@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import cz.martlin.jmop.core.player.Playlist;
-import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.tracks.Bundle;
-import cz.martlin.jmop.core.tracks.Track;
+import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.Track;
 
 public interface AbstractFileSystemAccessor {
 
