@@ -8,7 +8,6 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
@@ -36,10 +35,9 @@ public class DownloaderTest {
 		Bundle bundle = new Bundle(source, bundleName);
 
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
-		Sources sources = new Sources(local, remote);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(sources, listener);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
 		//BaseSourceDownloader downloader = new TestingDownloader(sources);
 
 		Track track = new Track(bundle, id, title, description);

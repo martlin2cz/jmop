@@ -23,7 +23,7 @@ public class PlaylistTest {
 		final Track trackQux = new Track(bundle, "Qux", "Qux", "qux qux");
 		
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz);
-		BasicPlaylist p = new BasicPlaylist(tracks);
+		BasicPlaylistRuntime p = new BasicPlaylistRuntime(tracks);
 		
 		assertEquals(3, p.getRemaining().size());
 		

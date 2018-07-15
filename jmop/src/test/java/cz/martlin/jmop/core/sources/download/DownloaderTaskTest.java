@@ -40,18 +40,17 @@ public class DownloaderTaskTest extends Application {
 		Bundle bundle = new Bundle(source, bundleName);
 
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
-		Sources sources = new Sources(local, remote);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		
 		//BaseSourceDownloader downloader = new YoutubeDlDownloader(sources, listener);
-		BaseSourceDownloader downloader = new TestingDownloader(sources);
+		BaseSourceDownloader downloader = new TestingDownloader(local);
 		
 		Track track = new Track(bundle, id, title, description);
 
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 
-		BaseSourceConverter converter = new FFMPEGConverter(sources, inputFormat, outputFormat, listener);
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
 		//BaseSourceConverter converter = new NoopConverter();
 		
 		DownloaderTask task = new DownloaderTask(downloader, converter, track);

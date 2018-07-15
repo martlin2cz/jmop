@@ -12,13 +12,12 @@ import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Boolean> implements BaseSourceDownloader {
 
-	private static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
+	public static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
 	private static final String PROGRESS_LINE_START = "[download]";
 	private static final String COLUMNS_SEPARATOR_REGEX = " +";
 	private static final String PERCENT_REGEX = "\\d{1,3}\\.\\d{1}\\%";
@@ -27,15 +26,14 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 	private final BaseLocalSource local;
 	private final AbstractRemoteSource remote;
 
-	public YoutubeDlDownloader(Sources sources, ProgressListener listener) {
+	public YoutubeDlDownloader(BaseLocalSource local, AbstractRemoteSource remote, ProgressListener listener) {
 		super(listener);
-		this.local = sources.getLocal();
-		this.remote = sources.getRemote();
+		this.local = local;
+		this.remote = remote;
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////
 
-	
 	@Override
 	public boolean download(Track track) throws ExternalProgramException {
 		return run(track);

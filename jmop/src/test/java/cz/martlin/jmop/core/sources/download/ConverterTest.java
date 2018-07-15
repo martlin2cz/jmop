@@ -28,21 +28,18 @@ public class ConverterTest {
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
 
-		AbstractRemoteSource remote = new YoutubeSource();
-
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		PlaylistLoader loader = null;
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);
 		Bundle bundle = new Bundle(source, bundleName);
 
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
-		Sources sources = new Sources(local, remote);
 		
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
-		BaseSourceConverter converter = new FFMPEGConverter(sources, inputFormat, outputFormat, listener);
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
 		//BaseSourceConverter converter = new NoopConverter();
 
 		

@@ -4,9 +4,9 @@ import cz.martlin.jmop.core.data.Track;
 
 public class OfflinePlaylister implements BasePlaylister {
 
-	private final BetterPlaylist playlist;
+	private final BetterPlaylistRuntime playlist;
 
-	public OfflinePlaylister(BetterPlaylist playlist) {
+	public OfflinePlaylister(BetterPlaylistRuntime playlist) {
 		super();
 		this.playlist = playlist;
 	}

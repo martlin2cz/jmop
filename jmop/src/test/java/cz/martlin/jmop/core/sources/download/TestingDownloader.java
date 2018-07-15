@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
@@ -18,9 +17,9 @@ public class TestingDownloader implements BaseSourceDownloader {
 
 	private final BaseLocalSource local;
 
-	public TestingDownloader(Sources sources) {
+	public TestingDownloader(BaseLocalSource local) {
 		super();
-		this.local = sources.getLocal();
+		this.local = local;
 	}
 
 	@Override

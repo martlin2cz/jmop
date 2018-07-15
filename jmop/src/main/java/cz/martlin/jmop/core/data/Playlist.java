@@ -1,37 +1,55 @@
 package cz.martlin.jmop.core.data;
 
-import java.util.List;
-import java.util.Stack;
+import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 
 public class Playlist {
 	private final Bundle bundle;
-	private final String name;
-	private final Tracklist tracks;
-	
+	private String name;
+	private final BetterPlaylistRuntime runtime;
+
 	public Playlist(Bundle bundle, String name, Tracklist tracks) {
 		super();
 		this.bundle = bundle;
 		this.name = name;
-		this.tracks = tracks;
+		this.runtime = new BetterPlaylistRuntime(tracks.getTracks());
 	}
+
+	public Playlist(Bundle bundle, String name, BetterPlaylistRuntime runtime) {
+		this.bundle = bundle;
+		this.name = name;
+		this.runtime = runtime;
+	}
+
 	public Bundle getBundle() {
 		return bundle;
 	}
+
 	public String getName() {
 		return name;
 	}
-	public Tracklist getTracks() {
-		return tracks;
+
+	public void changeName(String name) {
+		this.name = name;
 	}
+	
+	public BetterPlaylistRuntime getRuntime() {
+		return runtime;
+	}
+
+	public Tracklist getTracks() {
+		return new Tracklist(runtime.list());
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bundle == null) ? 0 : bundle.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((tracks == null) ? 0 : tracks.hashCode());
+		result = prime * result + ((runtime == null) ? 0 : runtime.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -51,17 +69,17 @@ public class Playlist {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (tracks == null) {
-			if (other.tracks != null)
+		if (runtime == null) {
+			if (other.runtime != null)
 				return false;
-		} else if (!tracks.equals(other.tracks))
+		} else if (!runtime.equals(other.runtime))
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + tracks + "]";
+		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + runtime + "]";
 	}
-	
-	
+
 }

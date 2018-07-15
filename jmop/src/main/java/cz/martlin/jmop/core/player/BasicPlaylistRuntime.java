@@ -6,24 +6,24 @@ import java.util.Stack;
 
 import cz.martlin.jmop.core.data.Track;
 
-public class BasicPlaylist {
+public class BasicPlaylistRuntime {
 
 	private final Stack<Track> played;
 	private Track current;
 	private final Stack<Track> remaining;
 
-	public BasicPlaylist() {
+	public BasicPlaylistRuntime() {
 		this.played = new Stack<>();
 		this.current = null;
 		this.remaining = new Stack<>();
 	}
 
-	public BasicPlaylist(Track track) {
+	public BasicPlaylistRuntime(Track track) {
 		this();
 		this.remaining.add(track);
 	}
 
-	public BasicPlaylist(List<Track> tracks) {
+	public BasicPlaylistRuntime(List<Track> tracks) {
 		this();
 		this.remaining.addAll(tracks);
 	}

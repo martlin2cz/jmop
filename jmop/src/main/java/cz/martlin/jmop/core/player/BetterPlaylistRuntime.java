@@ -4,16 +4,17 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Track;
 
-public class BetterPlaylist extends BasicPlaylist {
+public class BetterPlaylistRuntime extends BasicPlaylistRuntime {
 
-	public BetterPlaylist() {
+	public BetterPlaylistRuntime() {
+		super();
 	}
 
-	public BetterPlaylist(Track track) {
+	public BetterPlaylistRuntime(Track track) {
 		super(track);
 	}
 
-	public BetterPlaylist(List<Track> tracks) {
+	public BetterPlaylistRuntime(List<Track> tracks) {
 		super(tracks);
 	}
 

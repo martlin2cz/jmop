@@ -5,9 +5,9 @@ import cz.martlin.jmop.core.sources.Sources;
 
 public class OnlinePlaylister implements BasePlaylister {
 	private final Sources sources;
-	private final BetterPlaylist playlist;
+	private final BetterPlaylistRuntime playlist;
 
-	public OnlinePlaylister(Sources sources, BetterPlaylist playlist) {
+	public OnlinePlaylister(Sources sources, BetterPlaylistRuntime playlist) {
 		super();
 		this.sources = sources;
 		this.playlist = playlist;
@@ -21,7 +21,7 @@ public class OnlinePlaylister implements BasePlaylister {
 	@Override
 	public Track next() {
 		Track current = playlist.getCurrentlyPlayed();
-		sources.prepareNextOf(current);
+		sources.prepareNextOf(current, playlist);
 
 		return playlist.toNextOrAnother();
 	}
