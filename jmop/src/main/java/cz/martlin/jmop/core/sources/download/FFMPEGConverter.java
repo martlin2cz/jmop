@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -15,7 +18,7 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolean> implements BaseSourceConverter {
-
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private static final String DURATION_SEPARATOR = ":";
 	private static final String DURATION_REGEX = "\\d{2}\\:\\d{2}\\:\\d{2}";
 
@@ -43,6 +46,8 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolea
 
 	@Override
 	public boolean convert(Track track) throws ExternalProgramException {
+		LOG.info("Converting track " + track + " from " + inputFormat + " to " + outputFormat);
+		
 		return run(track);
 	}
 

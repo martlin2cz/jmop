@@ -2,6 +2,9 @@ package cz.martlin.jmop.core.player;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
@@ -28,6 +31,7 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 
 public class JMOPPlayerEnvironment {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private final JMOPPlaylister playlister;
 	private final BaseLocalSource local;
 	private final AbstractRemoteSource remote;
@@ -49,6 +53,8 @@ public class JMOPPlayerEnvironment {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void startNewBundle(SourceKind kind, String bundleName, String querySeed) throws JMOPSourceException {
+		LOG.info("Starting bundle " + kind + " " + bundleName + " with query " + querySeed);
+		
 		Bundle bundle = new Bundle(kind, bundleName);
 		local.createBundle(bundle);
 
@@ -65,6 +71,8 @@ public class JMOPPlayerEnvironment {
 	}
 
 	public void startPlaylist(Bundle bundle, String playlistName) throws JMOPSourceException {
+		LOG.info("Starting playlist" + playlistName + " of bundle " + bundle.getName());
+		
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
 
 		BetterPlaylistRuntime btrPlaylist = convert(playlist);
@@ -74,6 +82,8 @@ public class JMOPPlayerEnvironment {
 	}
 
 	public void renameCurrentPlaylist(String newName) throws JMOPSourceException {
+		LOG.info("Renaming current playlist to " + newName);
+		
 		currentPlaylist.changeName(newName);
 		local.savePlaylist(currentBundle, currentPlaylist);
 	}
@@ -89,7 +99,7 @@ public class JMOPPlayerEnvironment {
 		AbstractRemoteSource remote = new YoutubeSource();
 		BaseLocalSource local = createLocal(rootDirectory);
 
-		// TODO FIXME shall be task itself
+		// TODO FIXME listener shall be task itself
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;

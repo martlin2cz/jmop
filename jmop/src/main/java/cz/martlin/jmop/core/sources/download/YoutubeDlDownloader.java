@@ -7,6 +7,9 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -16,7 +19,8 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Boolean> implements BaseSourceDownloader {
-
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	
 	public static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
 	private static final String PROGRESS_LINE_START = "[download]";
 	private static final String COLUMNS_SEPARATOR_REGEX = " +";
@@ -36,6 +40,8 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 
 	@Override
 	public boolean download(Track track) throws ExternalProgramException {
+		LOG.info("Downloading track " + track);
+		
 		return run(track);
 	}
 

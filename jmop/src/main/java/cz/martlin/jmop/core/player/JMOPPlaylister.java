@@ -1,10 +1,15 @@
 package cz.martlin.jmop.core.player;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.sources.Sources;
 
 public class JMOPPlaylister {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	
 	private final AbstractPlayer player;
 	private final InternetConnectionStatus connection;
 	private final OnlinePlaylister online;
@@ -33,15 +38,21 @@ public class JMOPPlaylister {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void play() {
+		LOG.info("Plaing");
+		
 		Track track = playlist.startToPlay();
 		player.play(track);
 	}
 
 	public void stop() {
+		LOG.info("Stopping");
+		
 		player.stop();
 	}
 
 	public void toNext() {
+		LOG.info("To next");
+		
 		BasePlaylister playlister = getPlaylisterStrategy();
 		Track track = playlister.next();
 
@@ -49,6 +60,8 @@ public class JMOPPlaylister {
 	}
 
 	public void toPrevious() {
+		LOG.info("To previous");
+		
 		BasePlaylister playlister = getPlaylisterStrategy();
 		Track track = playlister.previous();
 

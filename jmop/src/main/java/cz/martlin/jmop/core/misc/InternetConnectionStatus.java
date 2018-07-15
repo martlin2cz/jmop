@@ -2,11 +2,15 @@ package cz.martlin.jmop.core.misc;
 
 import java.util.Calendar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
 public class InternetConnectionStatus {
-
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	
 	private final BooleanProperty offline;
 	private Calendar offlineSince;
 
@@ -24,6 +28,8 @@ public class InternetConnectionStatus {
 	}
 
 	public void markOffline() {
+		LOG.info("The internet connection is offline");
+		
 		offline.set(true);
 		offlineSince = Calendar.getInstance();
 	}
@@ -32,6 +38,8 @@ public class InternetConnectionStatus {
 		boolean is = isTimeOut();
 		if (is) {
 			offline.set(false);
+			LOG.info("The internet connection is back online");
+			
 		}
 	}
 
