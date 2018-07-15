@@ -39,6 +39,8 @@ public class Bundle {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	//TODO #createTrack(...) instead of new Track(bundle, ...)
+	
 	public Track getTrack(String id) {
 		return tracks.get(id);
 	}

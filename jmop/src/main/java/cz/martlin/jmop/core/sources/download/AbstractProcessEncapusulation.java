@@ -7,18 +7,20 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.io.Files;
 
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 
 public abstract class AbstractProcessEncapusulation<INT, OUT> {
-
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	
 	private final ProgressListener listener;
 	protected Process process;
 
-	//TODO logging
-	
 	public AbstractProcessEncapusulation(ProgressListener listener) {
 		super();
 		this.listener = listener;
@@ -43,7 +45,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 	/////////////////////////////////////////////////////////////////////////////////////
 	private void startProcess(INT input) throws Exception {
 		List<String> commandline = createCommandLine(input);
-		System.err.println("Running: " + commandline);
+		LOG.info("Starting process " + commandline);
 
 		ProcessBuilder builder = new ProcessBuilder(commandline);
 
@@ -60,7 +62,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 
 		while (s.hasNext()) {
 			String line = s.nextLine();
-			System.err.println("> " + line);
+			LOG.debug(line);
 
 			Double progressOrNot = processLineOfOutput(line);
 			if (progressOrNot != null) {
@@ -77,6 +79,8 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 
 		process = null;
 
+		LOG.info("Process finished with code " + result);
+		
 		return handleResult(result, input);
 	}
 

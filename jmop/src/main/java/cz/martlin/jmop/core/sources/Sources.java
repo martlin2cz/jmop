@@ -47,15 +47,20 @@ public class Sources {
 		}
 	}
 
-	private void startDownloading(Track track, BetterPlaylistRuntime playlist) {
+	//TODO just debug, make privat back !
+	public void startDownloading(Track track, BetterPlaylistRuntime playlist) {
 		DownloaderTask task = new DownloaderTask(downloader, converter, track);
-	
+
 		task.addEventHandler(EventType.ROOT, (e) -> {
 			playlist.append(track);
 		});
 
-		// TODO running, message and progress properties - handle somehow
 		task.run();
+		
+		// TODO running, message and progress properties - handle somehow
+		// TODO run in background, unccomment:
+		// Thread thread = new Thread(task, "DownloaderTask");
+		// thread.start();
 	}
 
 	// TODO ...

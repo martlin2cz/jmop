@@ -14,8 +14,13 @@ public class JMOPPlaylister {
 	private final InternetConnectionStatus connection;
 	private final OnlinePlaylister online;
 	private final OfflinePlaylister offline;
+	
+	@Deprecated
+	private final Sources sources;
+	
 	//TODO shuffle?
 	private BetterPlaylistRuntime playlist;
+	
 
 	public JMOPPlaylister(AbstractPlayer player,  Sources sources,
 			InternetConnectionStatus connection) {
@@ -25,6 +30,8 @@ public class JMOPPlaylister {
 		this.online = new OnlinePlaylister(sources, playlist);
 		this.offline = new OfflinePlaylister(playlist);
 		this.playlist = null;
+		
+		this.sources = sources;
 	}
 	
 	public BetterPlaylistRuntime getPlaylist() {
@@ -33,6 +40,11 @@ public class JMOPPlaylister {
 
 	public void setPlaylist(BetterPlaylistRuntime playlist) {
 		this.playlist = playlist;
+	}
+	
+	@Deprecated
+	public Sources getSources() {
+		return sources;
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -79,4 +91,6 @@ public class JMOPPlaylister {
 			return online;
 		}
 	}
+
+	
 }

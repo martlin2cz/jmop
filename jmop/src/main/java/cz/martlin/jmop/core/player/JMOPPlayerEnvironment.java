@@ -17,7 +17,6 @@ import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
-import cz.martlin.jmop.core.sources.download.SimpleLoggingListener;
 import cz.martlin.jmop.core.sources.download.YoutubeDlDownloader;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
@@ -61,8 +60,11 @@ public class JMOPPlayerEnvironment {
 		this.currentBundle = bundle;
 
 		Track initial = remote.search(bundle, querySeed);
+		//TODO download the track here
+		
 		BetterPlaylistRuntime runtime = new BetterPlaylistRuntime(initial);
-
+		playlister.getSources().startDownloading(initial, runtime);
+		
 		Playlist playlist = new Playlist(bundle, querySeed, runtime);
 		local.savePlaylist(bundle, playlist);
 
@@ -100,7 +102,7 @@ public class JMOPPlayerEnvironment {
 		BaseLocalSource local = createLocal(rootDirectory);
 
 		// TODO FIXME listener shall be task itself
-		ProgressListener listener = new SimpleLoggingListener(System.out);
+		ProgressListener listener = ((p) -> {}); 
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
@@ -113,7 +115,7 @@ public class JMOPPlayerEnvironment {
 		return new JMOPPlayerEnvironment(playlister, local, remote);
 	}
 
-	private static BaseLocalSource createLocal(File rootDirectory) {
+	public static BaseLocalSource createLocal(File rootDirectory) {
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		PlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDirectory, namer, loader);

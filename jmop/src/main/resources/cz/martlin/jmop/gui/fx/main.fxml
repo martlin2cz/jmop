@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="cz.martlin.jmop.gui.control.MainFrameController">
-<children>
-    <Button id="button" fx:id="butt" layoutX="135.0" layoutY="87.0" onAction="#buttOnClick" text="Play!" />
-</children>
+<AnchorPane id="AnchorPane" prefHeight="320.0" prefWidth="480.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="cz.martlin.jmop.gui.control.MainFrameController">
+   <children>
+      <BorderPane prefHeight="320.0" prefWidth="480.0">
+         <top>
+            <ButtonBar prefHeight="40.0" prefWidth="27.0" BorderPane.alignment="CENTER">
+              <buttons>
+                <Button fx:id="startPlaylistButt" mnemonicParsing="false" onAction="#startPlaylistButtAction" text="Start playlist" />
+                  <Button fx:id="newBundleButt" mnemonicParsing="false" onAction="#newBundleButtAction" text="New bundle" />
+                  <Button fx:id="savePlaylistButt" mnemonicParsing="false" onAction="#savePlaylistButtAction" text="Save playlist" />
+              </buttons>
+            </ButtonBar>
+         </top>
+         <center>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="playButt" mnemonicParsing="false" onAction="#playButtAction" text="Play" />
+                  <Button fx:id="stopButt" mnemonicParsing="false" onAction="#stopButtAction" text="Stop" />
+                  <Button fx:id="nextButt" mnemonicParsing="false" onAction="#nextButtAction" text="Next" />
+                  <Button fx:id="prevButt" mnemonicParsing="false" onAction="#prevButtAction" text="Prev" />
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
+   </children>
 </AnchorPane>

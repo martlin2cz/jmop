@@ -91,7 +91,7 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 
 	private List<String> createCommandLine(String url, String path) {
 		return Arrays.asList( //
-				"youtube-dl", "--newline", "--extract-audio", "--output", path, url);
+				"youtube-dl", "--newline", "--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(), "--output", path, url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

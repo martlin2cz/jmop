@@ -72,7 +72,9 @@ public class BasicPlaylistRuntime {
 		List<Track> list = new ArrayList<>(played.size() + 1 + remaining.size());
 
 		list.addAll(played);
-		list.add(current);
+		if (current != null) {
+			list.add(current);
+		}
 		list.addAll(remaining);
 
 		return list;

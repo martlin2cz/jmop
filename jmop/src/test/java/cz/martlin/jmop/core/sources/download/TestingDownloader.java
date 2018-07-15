@@ -11,9 +11,9 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class TestingDownloader implements BaseSourceDownloader {
 
-	private static final TrackFileFormat DOWNLOAD_FORMAT = TrackFileFormat.OPUS;
-
+	public static final TrackFileFormat DOWNLOAD_FORMAT = TrackFileFormat.OPUS;
 	public static final String TESTING_SAMPLE_FILE = "samples/sample.opus";
+
 
 	private final BaseLocalSource local;
 
