@@ -74,7 +74,7 @@ public class MainFrameController implements Initializable {
 		/* TODO here */ }
 
 	public void playButtAction() {
-		// FIXME: resume player.play(track);
+		// TODO FIXME: resume player.play(track);
 	}
 
 	public void stopButtAction() {
