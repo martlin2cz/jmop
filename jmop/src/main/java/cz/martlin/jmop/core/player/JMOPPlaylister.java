@@ -12,8 +12,8 @@ public class JMOPPlaylister {
 
 	private final AbstractPlayer player;
 	private final InternetConnectionStatus connection;
-	private OnlinePlaylister online; // TODO final + setPlaylist
-	private OfflinePlaylister offline; // TODO final + setPlaylist
+	private final OnlinePlaylister online;
+	private final OfflinePlaylister offline;
 
 	@Deprecated
 	private final Sources sources;
@@ -25,6 +25,8 @@ public class JMOPPlaylister {
 		super();
 		this.player = player;
 		this.connection = connection;
+		this.online = new OnlinePlaylister(sources);
+		this.offline = new OfflinePlaylister();
 
 		this.playlist = null;
 
@@ -37,8 +39,10 @@ public class JMOPPlaylister {
 
 	public void setPlaylist(BetterPlaylistRuntime playlist) {
 		this.playlist = playlist;
-		this.online = new OnlinePlaylister(sources, playlist);
-		this.offline = new OfflinePlaylister(playlist);
+
+		this.online.setPlaylist(playlist);
+		this.offline.setPlaylist(playlist);
+
 	}
 
 	@Deprecated

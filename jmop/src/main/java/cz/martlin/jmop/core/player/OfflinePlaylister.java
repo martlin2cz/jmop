@@ -4,13 +4,18 @@ import cz.martlin.jmop.core.data.Track;
 
 public class OfflinePlaylister implements BasePlaylister {
 
-	private final BetterPlaylistRuntime playlist;
+	private BetterPlaylistRuntime playlist;
 
-	public OfflinePlaylister(BetterPlaylistRuntime playlist) {
+	public OfflinePlaylister() {
 		super();
+	}
+
+	@Override
+	public void setPlaylist(BetterPlaylistRuntime playlist) {
 		this.playlist = playlist;
 	}
 
+	
 	@Override
 	public Track previous() {
 		return playlist.toPreviousOrAnother();

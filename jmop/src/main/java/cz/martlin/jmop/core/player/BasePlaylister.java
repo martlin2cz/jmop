@@ -6,4 +6,6 @@ public interface BasePlaylister {
 	public Track previous();
 	public Track next();
 	
+	public void setPlaylist(BetterPlaylistRuntime runtime);
+	
 }

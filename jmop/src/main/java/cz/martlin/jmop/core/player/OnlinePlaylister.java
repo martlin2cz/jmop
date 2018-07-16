@@ -5,11 +5,15 @@ import cz.martlin.jmop.core.sources.Sources;
 
 public class OnlinePlaylister implements BasePlaylister {
 	private final Sources sources;
-	private final BetterPlaylistRuntime playlist;
+	private BetterPlaylistRuntime playlist;
 
-	public OnlinePlaylister(Sources sources, BetterPlaylistRuntime playlist) {
+	public OnlinePlaylister(Sources sources) {
 		super();
 		this.sources = sources;
+	}
+	
+	@Override
+	public void setPlaylist(BetterPlaylistRuntime playlist) {
 		this.playlist = playlist;
 	}
 
