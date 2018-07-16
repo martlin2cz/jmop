@@ -4,19 +4,19 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.AbstractPlayer;
-import cz.martlin.jmop.core.player.JMOPPlayerEnvironment;
+import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.wrappers.GuiDescriptor;
+import cz.martlin.jmop.core.wrappers.JMOPPlayer;
+import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
 import cz.martlin.jmop.gui.util.JMOPDialogs;
-import cz.martlin.jmop.gui.util.JavaFXMediaPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 
-public class MainFrameController implements Initializable {
+public class MainFrameController implements Initializable, GuiDescriptor { 
 	@FXML
 	private Button startPlaylistButt;
 	@FXML
@@ -35,21 +35,17 @@ public class MainFrameController implements Initializable {
 	private Button nextButt;
 	@FXML
 	private Button prevButt;
+	@FXML
+	private ProgressBar progressBar;
 
-	private final JMOPPlayerEnvironment jmop;
-	private AbstractPlayer player;
-
+	private final JMOPPlayer jmop;
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public MainFrameController() {
 		File rootDirectory = new File("/tmp/jmop-gui");
 
-		// TODO FIXME killme:
-		BaseLocalSource local = JMOPPlayerEnvironment.createLocal(rootDirectory);
-		player = new JavaFXMediaPlayer(local);
-		// player = new AplayPlayer(local);
+		this.jmop = JMOPPlayerBuilder.create(this, rootDirectory, null); 
 
-		jmop = JMOPPlayerEnvironment.create(rootDirectory, player);
 	}
 
 	@Override
@@ -61,42 +57,50 @@ public class MainFrameController implements Initializable {
 	// TODO + run actions as Platform.later
 
 	public void newBundleButtAction() throws JMOPSourceException {
-		String bundleName = JMOPDialogs.promptBundleName();
+		String bundleName = JMOPDialogs.promptNewBundleName();
 		String querySeed = JMOPDialogs.promptQuery();
 		SourceKind kind = JMOPDialogs.promptKind();
 		jmop.startNewBundle(kind, bundleName, querySeed);
 	}
 
-	public void startPlaylistButtAction() {
-
-		/* TODO here */ }
-
-	public void savePlaylistButtAction() {
-
-		/* TODO here */ }
-
-	public void playButtAction() {
-		Track track = null;// TODO toNext in player
-		player.startPlayling(track);
+	public void startPlaylistButtAction() throws JMOPSourceException {
+		String bundleName = JMOPDialogs.promptExistingBundle(jmop);
+		String playlistName = JMOPDialogs.promptPlaylist(bundleName, jmop);
+		jmop.startPlaylist(bundleName, playlistName);
 	}
 
-	public void stopButtAction() {
-		player.stop();
+	public void savePlaylistButtAction() throws JMOPSourceException {
+		String playlistName = JMOPDialogs.promptPlaylistName(jmop);
+		jmop.savePlaylistAs(playlistName);
 	}
 
-	public void pauseButtAction() {
-		player.pause();
+	public void playButtAction() throws JMOPSourceException {
+		jmop.startPlaying();
 	}
 
-	public void resumeButtAction() {
-		player.resume();
+	public void stopButtAction() throws JMOPSourceException {
+		jmop.stopPlaying();
 	}
 
-	public void nextButtAction() {
-		// FIXME crashes jmop.getPlaylister().toNext();
+	public void pauseButtAction() throws JMOPSourceException {
+		jmop.pausePlaying();
 	}
 
-	public void prevButtAction() {
-		/* TODO here */ }
+	public void resumeButtAction() throws JMOPSourceException {
+		jmop.resumePlaying();
+	}
+
+	public void nextButtAction() throws JMOPSourceException {
+		jmop.toNext();
+	}
+
+	public void prevButtAction() throws JMOPSourceException {
+		jmop.toPrevious();
+	}
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public ProgressListener getProgressListener() {
+		return (p) -> progressBar.setProgress(p / 100);
+	}
 }

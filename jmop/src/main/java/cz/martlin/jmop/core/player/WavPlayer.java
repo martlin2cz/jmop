@@ -15,7 +15,7 @@ public abstract class WavPlayer implements AbstractPlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private static final TrackFileFormat PLAYER_FORMAT = TrackFileFormat.WAV;
-	private static final TrackFileFormat LOCAL_FORMAT = TrackFileFormat.MP3;
+	public static final TrackFileFormat LOCAL_FORMAT = TrackFileFormat.MP3;
 	protected final BaseLocalSource local;
 
 	public WavPlayer(BaseLocalSource local) {

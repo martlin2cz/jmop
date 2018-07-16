@@ -29,6 +29,7 @@ import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 
+@Deprecated
 public class JMOPPlayerEnvironment {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private final JMOPPlaylister playlister;

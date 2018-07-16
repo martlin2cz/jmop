@@ -7,6 +7,7 @@ public class Track {
 	private final String description;
 	// TODO thumbnail
 
+	//TODO replace by bundle.createTrack
 	public Track(Bundle bundle, String identifier, String title, String description) {
 		super();
 		this.bundle = bundle;
