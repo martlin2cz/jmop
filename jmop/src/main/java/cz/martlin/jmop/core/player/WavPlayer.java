@@ -23,7 +23,7 @@ public abstract class WavPlayer implements AbstractPlayer {
 	}
 
 	@Override
-	public void play(Track track) {
+	public void startPlayling(Track track) {
 		LOG.info("Starting to play track " + track.getTitle());
 
 		try {

@@ -54,7 +54,7 @@ public class JMOPPlaylister {
 		LOG.info("Plaing");
 		
 		Track track = playlist.startToPlay();
-		player.play(track);
+		player.startPlayling(track);
 	}
 
 	public void stop() {
@@ -69,7 +69,7 @@ public class JMOPPlaylister {
 		BasePlaylister playlister = getPlaylisterStrategy();
 		Track track = playlister.next();
 
-		player.play(track);
+		player.startPlayling(track);
 	}
 
 	public void toPrevious() {
@@ -78,7 +78,7 @@ public class JMOPPlaylister {
 		BasePlaylister playlister = getPlaylisterStrategy();
 		Track track = playlister.previous();
 
-		player.play(track);
+		player.startPlayling(track);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

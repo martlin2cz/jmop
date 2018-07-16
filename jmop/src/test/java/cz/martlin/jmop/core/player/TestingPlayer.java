@@ -16,7 +16,7 @@ public class TestingPlayer implements AbstractPlayer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void play(Track track) {
+	public void startPlayling(Track track) {
 		System.out.println("Playing " + track);
 		this.playing = track;
 	}
@@ -25,6 +25,16 @@ public class TestingPlayer implements AbstractPlayer {
 	public void stop() {
 		this.playing = null;
 		System.out.println("Player stopped");
+	}
+
+	@Override
+	public void pause() {
+		System.out.println("Player paused");
+	}
+
+	@Override
+	public void resume() {
+		System.out.println("Player resumed, plaing again " + playing);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

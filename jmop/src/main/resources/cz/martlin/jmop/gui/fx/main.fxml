@@ -23,6 +23,8 @@
                <children>
                   <Button fx:id="playButt" mnemonicParsing="false" onAction="#playButtAction" text="Play" />
                   <Button fx:id="stopButt" mnemonicParsing="false" onAction="#stopButtAction" text="Stop" />
+                  <Button fx:id="resumeButt" mnemonicParsing="false" onAction="#resumeButtAction" text="Resume" />
+                  <Button fx:id="pauseButt" mnemonicParsing="false" onAction="#pauseButtAction" text="Pause" />
                   <Button fx:id="nextButt" mnemonicParsing="false" onAction="#nextButtAction" text="Next" />
                   <Button fx:id="prevButt" mnemonicParsing="false" onAction="#prevButtAction" text="Prev" />
                </children>

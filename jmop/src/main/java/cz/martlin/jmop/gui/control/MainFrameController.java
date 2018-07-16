@@ -4,9 +4,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.AbstractPlayer;
-import cz.martlin.jmop.core.player.AplayPlayer;
 import cz.martlin.jmop.core.player.JMOPPlayerEnvironment;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
@@ -15,8 +15,6 @@ import cz.martlin.jmop.gui.util.JavaFXMediaPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 public class MainFrameController implements Initializable {
 	@FXML
@@ -29,6 +27,10 @@ public class MainFrameController implements Initializable {
 	private Button playButt;
 	@FXML
 	private Button stopButt;
+	@FXML
+	private Button pauseButt;
+	@FXML
+	private Button resumeButt;
 	@FXML
 	private Button nextButt;
 	@FXML
@@ -45,7 +47,7 @@ public class MainFrameController implements Initializable {
 		// TODO FIXME killme:
 		BaseLocalSource local = JMOPPlayerEnvironment.createLocal(rootDirectory);
 		player = new JavaFXMediaPlayer(local);
-		//player = new AplayPlayer(local); 
+		// player = new AplayPlayer(local);
 
 		jmop = JMOPPlayerEnvironment.create(rootDirectory, player);
 	}
@@ -74,15 +76,24 @@ public class MainFrameController implements Initializable {
 		/* TODO here */ }
 
 	public void playButtAction() {
-		// TODO FIXME: resume player.play(track);
+		Track track = null;// TODO toNext in player
+		player.startPlayling(track);
 	}
 
 	public void stopButtAction() {
 		player.stop();
 	}
 
+	public void pauseButtAction() {
+		player.pause();
+	}
+
+	public void resumeButtAction() {
+		player.resume();
+	}
+
 	public void nextButtAction() {
-		//FIXME crashes jmop.getPlaylister().toNext();
+		// FIXME crashes jmop.getPlaylister().toNext();
 	}
 
 	public void prevButtAction() {

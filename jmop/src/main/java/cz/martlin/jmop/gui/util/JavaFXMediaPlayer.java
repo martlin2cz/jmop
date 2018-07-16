@@ -24,7 +24,6 @@ public class JavaFXMediaPlayer extends WavPlayer  {
 		mediaPlayer = new MediaPlayer(media);
 		
 		mediaPlayer.play();
-		
 	}
 
 	@Override
@@ -32,4 +31,13 @@ public class JavaFXMediaPlayer extends WavPlayer  {
 		mediaPlayer.stop();
 	}
 	
+	@Override
+	public void pause() {
+		mediaPlayer.pause();
+	}
+	
+	@Override
+	public void resume() {
+		mediaPlayer.play();
+	}
 }

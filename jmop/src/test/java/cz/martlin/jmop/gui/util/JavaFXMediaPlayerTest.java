@@ -50,7 +50,7 @@ public class JavaFXMediaPlayerTest {
 
 				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local);
 //				AbstractPlayer player = new AplayPlayer(local);
-				player.play(track);
+				player.startPlayling(track);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
