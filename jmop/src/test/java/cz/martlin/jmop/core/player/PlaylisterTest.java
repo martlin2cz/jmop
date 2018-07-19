@@ -31,6 +31,8 @@ import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
+import cz.martlin.jmop.core.wrappers.GuiDescriptor;
+import cz.martlin.jmop.core.wrappers.ToPlaylistAppendingHandler;
 import cz.martlin.jmop.misc.TestingTools;
 
 public class PlaylisterTest {
@@ -63,16 +65,18 @@ public class PlaylisterTest {
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
-		Sources sources = new Sources(local, remote, downloader, converter);
 
-		Bundle bundle = createTestingBundle(sources);
+		Bundle bundle = createTestingBundle(local);
 
 		Track track = createInitialTrack(local, bundle);
 		BetterPlaylistRuntime playlist = new BetterPlaylistRuntime(track);
 		AbstractPlayer player = new TestingPlayer();
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
-		JMOPPlaylister playlister = new JMOPPlaylister(player, sources, connection);
+		GuiDescriptor gui = null;
+		NextTrackPreparer preparer = new NextTrackPreparer(remote, local, converter, downloader, gui );
+		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(preparer);
+		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer , connection, handler);
 		playlister.setPlaylist(playlist);
 
 		System.out.println("Playlister ready!");
@@ -80,13 +84,13 @@ public class PlaylisterTest {
 		return playlister;
 	}
 
-	private Bundle createTestingBundle(Sources sources) {
+	private Bundle createTestingBundle(BaseLocalSource local) {
 		final SourceKind kind = SourceKind.YOUTUBE;
 		final String bundleName = "house-music";
 		Bundle bundle = new Bundle(kind, bundleName);
 
 		try {
-			sources.getLocal().createBundle(bundle);
+			local.createBundle(bundle);
 		} catch (JMOPSourceException e) {
 			assumeNoException("Cannot create bundle", e);
 		}

@@ -1,18 +1,17 @@
 package cz.martlin.jmop.core.wrappers;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
+import cz.martlin.jmop.core.player.NextTrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.download.DownloaderTask;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 
 public class JMOPSources {
@@ -21,15 +20,16 @@ public class JMOPSources {
 	private final BaseSourceDownloader downloader;
 	private final BaseSourceConverter converter;
 	private final GuiDescriptor gui;
-
+	private final NextTrackPreparer preparer;
 
 	public JMOPSources(BaseLocalSource local, AbstractRemoteSource remote, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, GuiDescriptor gui) {
+			BaseSourceConverter converter, NextTrackPreparer preparer, GuiDescriptor gui) {
 		super();
 		this.local = local;
 		this.remote = remote;
 		this.downloader = downloader;
 		this.converter = converter;
+		this.preparer = preparer;
 		this.gui = gui;
 	}
 
@@ -39,7 +39,9 @@ public class JMOPSources {
 			throws JMOPSourceException {
 		Bundle bundle = createBundle(kind, bundleName);
 		Track track = prepareInitialTrack(bundle, querySeed);
+
 		Playlist playlist = createInitialPlaylist(bundle, track, querySeed);
+		preparer.prepreAndAppend(track, playlist.getRuntime());
 		return playlist;
 	}
 
@@ -75,7 +77,7 @@ public class JMOPSources {
 
 	private Track prepareInitialTrack(Bundle bundle, String querySeed) throws JMOPSourceException {
 		Track track = remote.search(bundle, querySeed);
-		checkAndDownload(track, null);
+		preparer.checkAndDownload(track, null);
 		return track;
 	}
 
@@ -87,16 +89,7 @@ public class JMOPSources {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	public void checkAndDownload(Track track, Consumer<Track> onComplete) {
-		DownloaderTask task = new DownloaderTask(downloader, converter, track);
-		// TODO set binding to GUI
 
-		if (onComplete != null) {
-			task.setOnSucceeded((e) -> onComplete.accept(track));
-			Thread thread = new Thread(task, "DownloaderTaskThread");
-			thread.start();
-		} else {
-			task.run();
-		}
-	}
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
 }

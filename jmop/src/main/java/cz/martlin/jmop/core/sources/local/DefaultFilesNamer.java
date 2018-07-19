@@ -63,8 +63,8 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 		return fileName.endsWith(DOT + PLAYLIST_FILE_SUFFIX);
 	}
 
-	private String clean(String text) {
-		return text.replaceAll("/[^A-Za-z0-9]/", "_");
+	protected static String clean(String text) {
+		return text.replaceAll("[^A-Za-z0-9\\-\\.\\_]", "_");
 	}
 
 }

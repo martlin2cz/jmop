@@ -10,8 +10,7 @@ import org.junit.Test;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
-import cz.martlin.jmop.core.player.AbstractPlayer;
-import cz.martlin.jmop.core.player.AplayPlayer;
+import cz.martlin.jmop.core.player.TrackPlayedHandler;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.download.TestingDownloader;
@@ -25,13 +24,39 @@ import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.misc.TestingTools;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.media.MediaPlayer.Status;
+import javafx.util.Duration;
 
 public class JavaFXMediaPlayerTest {
+
+	public class TestingReporter implements MediaPlayerGuiReporter {
+
+		@Override
+		public StringProperty trackNameProperty() {
+			return new SimpleStringProperty();
+		}
+
+		@Override
+		public Property<Duration> durationProperty() {
+			return new SimpleObjectProperty<>();
+		}
+
+		@Override
+		public Property<Status> statusProperty() {
+			return new SimpleObjectProperty<>();
+		}
+
+	}
 
 	@Test
 	public void test() throws Exception {
 		final Thread main = Thread.currentThread();
-		
+
 		TestingTools.runAsJavaFX(() -> {
 			try {
 				BaseLocalSource local = prepareLocal();
@@ -48,10 +73,12 @@ public class JavaFXMediaPlayerTest {
 				FFMPEGConverter converter = new FFMPEGConverter(local, downloadFormat, outputFormat, listener);
 				converter.convert(track);
 
-				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local);
-//				AbstractPlayer player = new AplayPlayer(local);
+				TrackPlayedHandler handler = null;
+				MediaPlayerGuiReporter reporter = new TestingReporter();
+				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local, handler, reporter);
+				// AbstractPlayer player = new AplayPlayer(local);
 				player.startPlayling(track);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				fail(e.toString());
@@ -59,7 +86,7 @@ public class JavaFXMediaPlayerTest {
 				main.interrupt();
 			}
 		});
-		
+
 		try {
 			TimeUnit.MINUTES.sleep(10);
 		} catch (InterruptedException eIgnore) {

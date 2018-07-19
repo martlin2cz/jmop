@@ -26,12 +26,12 @@ public class JMOPDialogs {
 	}
 
 	public static String promptExistingBundle(JMOPPlayer jmop) throws JMOPSourceException {
-		List<String> values = jmop.listBundles();
+		List<String> values = jmop.listBundles(); //TODO order?
 		return promptForChoice("bundle", values);
 	}
 
 	public static String promptPlaylist(String bundleName, JMOPPlayer jmop) throws JMOPSourceException {
-		List<String> values = jmop.listPlaylists(bundleName);
+		List<String> values = jmop.listPlaylists(bundleName); //TODO order?
 		return promptForChoice("playlist", values);
 	}
 

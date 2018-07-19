@@ -64,7 +64,7 @@ public class JMOPPlayerEnvironment {
 		//TODO download the track here
 		
 		BetterPlaylistRuntime runtime = new BetterPlaylistRuntime(initial);
-		playlister.getSources().startDownloading(initial, runtime);
+		//playlister.getSources().startDownloading(initial, runtime);
 		
 		Playlist playlist = new Playlist(bundle, querySeed, runtime);
 		local.savePlaylist(bundle, playlist);
@@ -111,7 +111,7 @@ public class JMOPPlayerEnvironment {
 		Sources sources = new Sources(local, remote, downloader, converter);
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
-		JMOPPlaylister playlister = new JMOPPlaylister(player, sources, connection);
+		JMOPPlaylister playlister = new JMOPPlaylister(player, null, connection, null);
 
 		return new JMOPPlayerEnvironment(playlister, local, remote);
 	}

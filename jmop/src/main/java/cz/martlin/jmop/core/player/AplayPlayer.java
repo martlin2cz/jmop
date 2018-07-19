@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.sources.download.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
@@ -23,7 +24,7 @@ public class AplayPlayer extends WavPlayer {
 	}
 
 	@Override
-	public void playWAVfile(File file) {
+	public void playWAVfile(File file, Track track) {
 		this.file = file;
 		process = new AplayProcess();
 		try {
@@ -47,7 +48,7 @@ public class AplayPlayer extends WavPlayer {
 	@Override
 	public void resume() {
 		LOG.warn("Resume not supported, will play from begin");
-		playWAVfile(file);
+		playWAVfile(file, null);
 	}
 
 	public class AplayProcess extends AbstractProcessEncapusulation<File, Void> {

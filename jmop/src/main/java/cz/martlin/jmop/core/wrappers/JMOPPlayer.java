@@ -2,10 +2,10 @@ package cz.martlin.jmop.core.wrappers;
 
 import java.util.List;
 
-import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
+import cz.martlin.jmop.core.player.NextTrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
@@ -17,8 +17,11 @@ public class JMOPPlayer {
 	private final JMOPPlaying playing;
 	private final GuiDescriptor gui;
 
-	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader, BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylister playlister) {
-		this.sources = new JMOPSources(local, remote, downloader, converter, gui);
+	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
+			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylister playlister,
+			NextTrackPreparer preparer) {
+		
+		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, gui);
 		this.playing = new JMOPPlaying(playlister, playlistToPlayOrNot);
 		this.gui = gui;
 	}
@@ -43,7 +46,7 @@ public class JMOPPlayer {
 
 	public void startPlaying() {
 		playing.startPlaying();
-		//TODO sources -> check and load next
+		// TODO sources -> check and load next
 	}
 
 	public void stopPlaying() {
@@ -60,7 +63,7 @@ public class JMOPPlayer {
 
 	public void toNext() {
 		playing.toNext();
-		//TODO sources -> check and load next
+		// TODO sources -> check and load next
 	}
 
 	public void toPrevious() {

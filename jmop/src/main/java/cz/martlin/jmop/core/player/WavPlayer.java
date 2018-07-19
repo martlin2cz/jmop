@@ -15,7 +15,7 @@ public abstract class WavPlayer implements AbstractPlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private static final TrackFileFormat PLAYER_FORMAT = TrackFileFormat.WAV;
-	public static final TrackFileFormat LOCAL_FORMAT = TrackFileFormat.MP3;
+	public static final TrackFileFormat LOCAL_FORMAT = TrackFileFormat.MP3; //XXX ???
 	protected final BaseLocalSource local;
 
 	public WavPlayer(BaseLocalSource local) {
@@ -33,13 +33,13 @@ public abstract class WavPlayer implements AbstractPlayer {
 			File file = local.fileOfTrack(track, PLAYER_FORMAT);
 
 			LOG.info("Playing wav file " + file);
-			playWAVfile(file);
+			playWAVfile(file, track);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public abstract void playWAVfile(File file);
+	public abstract void playWAVfile(File file, Track track);
 
 	@Override
 	public void stop() {

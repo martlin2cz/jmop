@@ -7,6 +7,7 @@ import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.player.AbstractPlayer;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
+import cz.martlin.jmop.core.player.NextTrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
@@ -24,6 +25,7 @@ import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.gui.util.JavaFXMediaPlayer;
+import cz.martlin.jmop.gui.util.MediaPlayerGuiReporter;
 
 public class JMOPPlayerBuilder {
 	public static JMOPPlayer create(GuiDescriptor gui, File root, Playlist playlistToPlayOrNot) {
@@ -41,10 +43,15 @@ public class JMOPPlayerBuilder {
 		TrackFileFormat outputFormat = JavaFXMediaPlayer.LOCAL_FORMAT;
 		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
 		InternetConnectionStatus connection = new InternetConnectionStatus();
-		AbstractPlayer player = new JavaFXMediaPlayer(local);
-		Sources sources = new Sources(local, remote, downloader, converter);
-		JMOPPlaylister playlister = new JMOPPlaylister(player, sources, connection);
-
-		return new JMOPPlayer(remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister);
+		
+		NextTrackPreparer preparer = new NextTrackPreparer(remote, local, converter, downloader, gui);
+		ToPlaylistAppendingHandler trackPlayedHandler = new ToPlaylistAppendingHandler(preparer);
+		MediaPlayerGuiReporter mediaPlayerGuiReporter = gui.getMediaPlayerGuiReporter();
+		AbstractPlayer player = new JavaFXMediaPlayer(local, trackPlayedHandler, mediaPlayerGuiReporter);
+		
+		
+		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer, connection, trackPlayedHandler);
+		
+		return new JMOPPlayer(remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister, preparer);
 	}
 }

@@ -1,17 +1,18 @@
 package cz.martlin.jmop.core.player;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.Sources;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class OnlinePlaylister implements BasePlaylister {
-	private final Sources sources;
+	private final NextTrackPreparer preparer;
+	
 	private BetterPlaylistRuntime playlist;
 
-	public OnlinePlaylister(Sources sources) {
+	public OnlinePlaylister(NextTrackPreparer preparer) {
 		super();
-		this.sources = sources;
+		this.preparer = preparer;
 	}
-	
+
 	@Override
 	public void setPlaylist(BetterPlaylistRuntime playlist) {
 		this.playlist = playlist;
@@ -25,7 +26,13 @@ public class OnlinePlaylister implements BasePlaylister {
 	@Override
 	public Track next() {
 		Track current = playlist.getCurrentlyPlayed();
-		sources.prepareNextOf(current, playlist);
+
+		try {
+			preparer.prepreAndAppend(current, playlist);
+		} catch (JMOPSourceException e) {
+			// TODO handle error
+			e.printStackTrace();
+		}
 
 		return playlist.toNextOrAnother();
 	}
