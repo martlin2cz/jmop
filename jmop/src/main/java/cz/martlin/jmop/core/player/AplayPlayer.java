@@ -16,21 +16,33 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 public class AplayPlayer extends WavPlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
+	private TrackPlayedHandler handler;
 	private AplayProcess process;
 	private File file;
 
+
+
 	public AplayPlayer(BaseLocalSource local) {
 		super(local);
+	}
+	
+	public void setHandler(TrackPlayedHandler handler) {
+		this.handler = handler;
 	}
 
 	@Override
 	public void playWAVfile(File file, Track track) {
 		this.file = file;
-		process = new AplayProcess();
+		this.process = new AplayProcess();
+		
 		try {
 			process.run(file);
 		} catch (ExternalProgramException e) {
 			e.printStackTrace();
+		}
+		
+		if (handler != null) {
+			handler.trackPlayed(track);
 		}
 	}
 

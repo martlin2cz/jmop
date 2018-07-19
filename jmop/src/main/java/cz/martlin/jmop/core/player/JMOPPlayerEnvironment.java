@@ -111,7 +111,7 @@ public class JMOPPlayerEnvironment {
 		Sources sources = new Sources(local, remote, downloader, converter);
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
-		JMOPPlaylister playlister = new JMOPPlaylister(player, null, connection, null);
+		JMOPPlaylister playlister = new JMOPPlaylister(player, null, connection);
 
 		return new JMOPPlayerEnvironment(playlister, local, remote);
 	}

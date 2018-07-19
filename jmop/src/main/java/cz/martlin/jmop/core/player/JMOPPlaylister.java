@@ -13,20 +13,20 @@ public class JMOPPlaylister {
 	private final InternetConnectionStatus connection;
 	private final OnlinePlaylister online;
 	private final OfflinePlaylister offline;
-	private final TrackPlayedHandler playerHandler;
+//	private final TrackPlayedHandler playerHandler;
 
 	// TODO shuffle?
 	private BetterPlaylistRuntime playlist;
 
 	
 
-	public JMOPPlaylister(AbstractPlayer player, NextTrackPreparer preparer, InternetConnectionStatus connection, TrackPlayedHandler playerHandler) {
+	public JMOPPlaylister(AbstractPlayer player, NextTrackPreparer preparer, InternetConnectionStatus connection/*, TrackPlayedHandler playerHandler*/) {
 		super();
 		this.player = player;
 		this.connection = connection;
 		this.online = new OnlinePlaylister(preparer);
 		this.offline = new OfflinePlaylister();
-		this.playerHandler = playerHandler;
+//		this.playerHandler = playerHandler;
 
 		this.playlist = null;
 	}
@@ -40,7 +40,7 @@ public class JMOPPlaylister {
 
 		this.online.setPlaylist(playlist);
 		this.offline.setPlaylist(playlist);
-		this.playerHandler.setPlaylist(playlist);
+//		this.playerHandler.setPlaylist(playlist);
 
 	}
 

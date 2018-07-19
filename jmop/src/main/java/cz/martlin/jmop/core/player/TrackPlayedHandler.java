@@ -6,5 +6,5 @@ import cz.martlin.jmop.core.data.Track;
 public interface TrackPlayedHandler {
 	public void trackPlayed(Track track);
 
-	public void setPlaylist(BetterPlaylistRuntime playlist);
+//	public void setPlaylist(BetterPlaylistRuntime playlist);
 }

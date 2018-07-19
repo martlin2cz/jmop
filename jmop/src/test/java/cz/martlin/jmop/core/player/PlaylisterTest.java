@@ -75,8 +75,9 @@ public class PlaylisterTest {
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		GuiDescriptor gui = null;
 		NextTrackPreparer preparer = new NextTrackPreparer(remote, local, converter, downloader, gui );
-		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(preparer);
-		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer , connection, handler);
+		
+		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer , connection);
+		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(playlister);
 		playlister.setPlaylist(playlist);
 
 		System.out.println("Playlister ready!");

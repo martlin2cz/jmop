@@ -45,12 +45,16 @@ public class JMOPPlayerBuilder {
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		
 		NextTrackPreparer preparer = new NextTrackPreparer(remote, local, converter, downloader, gui);
-		ToPlaylistAppendingHandler trackPlayedHandler = new ToPlaylistAppendingHandler(preparer);
+		
 		MediaPlayerGuiReporter mediaPlayerGuiReporter = gui.getMediaPlayerGuiReporter();
-		AbstractPlayer player = new JavaFXMediaPlayer(local, trackPlayedHandler, mediaPlayerGuiReporter);
+		
+		AbstractPlayer player = new JavaFXMediaPlayer(local, mediaPlayerGuiReporter);
+		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer, connection);
+		
+		ToPlaylistAppendingHandler trackPlayedHandler = new ToPlaylistAppendingHandler(playlister);
+		player.setHandler(trackPlayedHandler);
 		
 		
-		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer, connection, trackPlayedHandler);
 		
 		return new JMOPPlayer(remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister, preparer);
 	}

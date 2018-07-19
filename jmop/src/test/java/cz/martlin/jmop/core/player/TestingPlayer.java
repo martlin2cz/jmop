@@ -13,6 +13,11 @@ public class TestingPlayer implements AbstractPlayer {
 		return playing;
 	}
 
+	@Override
+	public void setHandler(TrackPlayedHandler handler) {
+		//ignore
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

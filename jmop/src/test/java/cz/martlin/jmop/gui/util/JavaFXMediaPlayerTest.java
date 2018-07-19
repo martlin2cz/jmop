@@ -73,10 +73,13 @@ public class JavaFXMediaPlayerTest {
 				FFMPEGConverter converter = new FFMPEGConverter(local, downloadFormat, outputFormat, listener);
 				converter.convert(track);
 
-				TrackPlayedHandler handler = null;
 				MediaPlayerGuiReporter reporter = new TestingReporter();
-				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local, handler, reporter);
+				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local, reporter);
 				// AbstractPlayer player = new AplayPlayer(local);
+				
+//				TrackPlayedHandler handler = null;
+//				player.setHandler(handler);
+				
 				player.startPlayling(track);
 
 			} catch (Exception e) {
