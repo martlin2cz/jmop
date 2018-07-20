@@ -37,13 +37,15 @@ public class ConverterTest {
 		
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
+		boolean deleteOriginal = false;
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
+		
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, deleteOriginal );
 		//BaseSourceConverter converter = new NoopConverter();
 
 		
-		Track track = new Track(bundle, id, title, description);
+		Track track = bundle.createTrack(id, title, description);
 
 		try {
 			boolean success = converter.convert(track);

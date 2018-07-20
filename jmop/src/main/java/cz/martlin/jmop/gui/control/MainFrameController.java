@@ -32,6 +32,8 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	@FXML
 	private Button newBundleButt;
 	@FXML
+	private Button newPlaylistButt;
+	@FXML
 	private Button savePlaylistButt;
 	@FXML
 	private Button playButt;
@@ -83,6 +85,13 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		String bundleName = JMOPDialogs.promptExistingBundle(jmop);
 		String playlistName = JMOPDialogs.promptPlaylist(bundleName, jmop);
 		jmop.startPlaylist(bundleName, playlistName);
+	}
+	
+	//TODO create new playlist in brand new bundle?
+	
+	public void newPlaylistButtAction() throws JMOPSourceException {
+		String querySeed = JMOPDialogs.promptQuery();
+		jmop.startNewPlaylist(querySeed);
 	}
 
 	public void savePlaylistButtAction() throws JMOPSourceException {

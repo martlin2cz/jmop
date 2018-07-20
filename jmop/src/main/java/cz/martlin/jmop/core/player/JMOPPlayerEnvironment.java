@@ -107,7 +107,7 @@ public class JMOPPlayerEnvironment {
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, false);
 		Sources sources = new Sources(local, remote, downloader, converter);
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();

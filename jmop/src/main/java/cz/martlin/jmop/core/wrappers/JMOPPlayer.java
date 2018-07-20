@@ -2,10 +2,11 @@ package cz.martlin.jmop.core.wrappers;
 
 import java.util.List;
 
+import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
-import cz.martlin.jmop.core.player.NextTrackPreparer;
+import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
@@ -19,7 +20,7 @@ public class JMOPPlayer {
 
 	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
 			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylister playlister,
-			NextTrackPreparer preparer) {
+			TrackPreparer preparer) {
 		
 		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, gui);
 		this.playing = new JMOPPlaying(playlister, playlistToPlayOrNot);
@@ -38,6 +39,15 @@ public class JMOPPlayer {
 		playing.startPlayingPlaylist(playlist);
 	}
 
+	public void startNewPlaylist(String querySeed) throws JMOPSourceException {
+		Bundle bundle = playing.getCurrentPlaylist().getBundle();
+		SourceKind kind = bundle.getKind();
+		String bundleName = bundle.getName();
+		
+		Playlist playlist = sources.createNewBundleAndPrepare(kind, bundleName, querySeed);
+		playing.startPlayingPlaylist(playlist);
+	}
+	
 	public void savePlaylistAs(String newPlaylistName) throws JMOPSourceException {
 		Playlist playlist = playing.getCurrentPlaylist();
 		sources.savePlaylist(playlist, newPlaylistName);
@@ -78,6 +88,8 @@ public class JMOPPlayer {
 	public List<String> listPlaylists(String bundleName) throws JMOPSourceException {
 		return sources.listPlaylists(bundleName);
 	}
+
+
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

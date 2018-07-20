@@ -15,9 +15,10 @@
          <top>
             <ButtonBar prefHeight="40.0" prefWidth="27.0" BorderPane.alignment="CENTER">
               <buttons>
+              	<Button fx:id="newBundleButt" mnemonicParsing="false" onAction="#newBundleButtAction" text="New bundle" />
                 <Button fx:id="startPlaylistButt" mnemonicParsing="false" onAction="#startPlaylistButtAction" text="Start playlist" />
-                  <Button fx:id="newBundleButt" mnemonicParsing="false" onAction="#newBundleButtAction" text="New bundle" />
-                  <Button fx:id="savePlaylistButt" mnemonicParsing="false" onAction="#savePlaylistButtAction" text="Save playlist" />
+                <Button fx:id="newPlaylistButt" mnemonicParsing="false" onAction="#newPlaylistButtAction" text="New playlist" />
+                <Button fx:id="savePlaylistButt" mnemonicParsing="false" onAction="#savePlaylistButtAction" text="Save playlist" />
               </buttons>
             </ButtonBar>
          </top>

@@ -40,7 +40,7 @@ public class DownloaderTest {
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
 		//BaseSourceDownloader downloader = new TestingDownloader(sources);
 
-		Track track = new Track(bundle, id, title, description);
+		Track track = bundle.createTrack(id, title, description);
 
 		try {
 			boolean success = downloader.download(track);

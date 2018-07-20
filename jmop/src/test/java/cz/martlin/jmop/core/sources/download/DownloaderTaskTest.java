@@ -7,7 +7,6 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
@@ -45,15 +44,15 @@ public class DownloaderTaskTest extends Application {
 		//BaseSourceDownloader downloader = new YoutubeDlDownloader(sources, listener);
 		BaseSourceDownloader downloader = new TestingDownloader(local);
 		
-		Track track = new Track(bundle, id, title, description);
+		Track track = bundle.createTrack(id, title, description);
 
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, false);
 		//BaseSourceConverter converter = new NoopConverter();
 		
-		DownloaderTask task = new DownloaderTask(downloader, converter, track);
+		DownloaderTask task = new DownloaderTask(downloader, converter,  track);
 		
 		task.messageProperty().addListener((observable, oldVal, newVal) -> {
 			System.out.println("# " + newVal);

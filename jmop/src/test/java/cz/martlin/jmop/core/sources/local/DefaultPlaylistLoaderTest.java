@@ -28,9 +28,9 @@ public class DefaultPlaylistLoaderTest {
 		SourceKind kind = SourceKind.YOUTUBE;
 
 		List<Track> tracks = Arrays.asList( //
-				new Track(bundle, "123456", "foo", "Lorem ispum dolor sit amet."), //
-				new Track(bundle, "aBcDeFg", "Nothing by Noone", "Just simply nothing."), //
-				new Track(bundle, "xy42+99z", "Silence!", "24 hours of awesome silence.") //
+				bundle.createTrack("123456", "foo", "Lorem ispum dolor sit amet."), //
+				bundle.createTrack("aBcDeFg", "Nothing by Noone", "Just simply nothing."), //
+				bundle.createTrack("xy42+99z", "Silence!", "24 hours of awesome silence.") //
 		);
 		
 		Tracklist tracklist = new Tracklist(tracks);

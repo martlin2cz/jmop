@@ -28,7 +28,7 @@ public abstract class WavPlayer implements AbstractPlayer {
 
 		try {
 			FFMPEGConverter converter = new FFMPEGConverter(local, LOCAL_FORMAT, PLAYER_FORMAT, (p) -> {
-			});
+			}, false);
 			converter.convert(track);
 			File file = local.fileOfTrack(track, PLAYER_FORMAT);
 

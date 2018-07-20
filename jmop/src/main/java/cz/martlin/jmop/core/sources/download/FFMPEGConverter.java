@@ -30,16 +30,19 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolea
 	private final TrackFileFormat inputFormat;
 	private final TrackFileFormat outputFormat;
 	private final BaseLocalSource local;
+	private final boolean deleteOriginal;
 
 	private Integer inputDuration;
+	
 
 	public FFMPEGConverter( BaseLocalSource local, //
-			TrackFileFormat inputFormat, TrackFileFormat outputFormat, ProgressListener listener) {
+			TrackFileFormat inputFormat, TrackFileFormat outputFormat, ProgressListener listener, boolean deleteOriginal) {
 		super(listener);
 
 		this.local = local;
 		this.inputFormat = inputFormat;
 		this.outputFormat = outputFormat;
+		this.deleteOriginal = deleteOriginal;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +91,7 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolea
 
 	@Override
 	protected Boolean handleResult(int result, Track track) throws Exception {
-		removeOriginalInputFile(track);
+		checkAndRemoveOriginalInputFile(track);
 		
 		return result == 0;
 	}
@@ -116,9 +119,11 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolea
 		return (((double) duration) / inputDuration) * 100.0;
 	}
 
-	private void removeOriginalInputFile(Track track) throws JMOPSourceException {
-		File inputFile = local.fileOfTrack(track, inputFormat);
-		inputFile.delete();
+	private void checkAndRemoveOriginalInputFile(Track track) throws JMOPSourceException {
+		if (deleteOriginal) {
+			File inputFile = local.fileOfTrack(track, inputFormat);
+			inputFile.delete();
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

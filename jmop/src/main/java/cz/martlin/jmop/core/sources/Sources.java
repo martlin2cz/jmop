@@ -35,7 +35,7 @@ public class Sources {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/***
-	 * Use {@link JMOPSources#checkAndDownload(Track, java.util.function.Consumer)} instead.
+	 * Use {@link JMOPSources#download(Track, java.util.function.Consumer)} instead.
 	 * @param track
 	 * @param playlist
 	 */
@@ -55,14 +55,14 @@ public class Sources {
 	}
 
 	/***
-	 * Use {@link JMOPSources#checkAndDownload(Track, java.util.function.Consumer)} instead.
+	 * Use {@link JMOPSources#download(Track, java.util.function.Consumer)} instead.
 	 * @param track
 	 * @param playlist
 	 */
 	@Deprecated
 	//TODO just debug, make privat back !
 	public void startDownloading(Track track, BetterPlaylistRuntime playlist) {
-		DownloaderTask task = new DownloaderTask(downloader, converter, track);
+		DownloaderTask task = new DownloaderTask(downloader, converter,  track);
 
 		task.addEventHandler(EventType.ROOT, (e) -> {
 			playlist.append(track);

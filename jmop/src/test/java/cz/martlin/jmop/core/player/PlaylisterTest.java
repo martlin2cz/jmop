@@ -64,7 +64,9 @@ public class PlaylisterTest {
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
+		
+		boolean deleteOriginal = false;
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, deleteOriginal );
 
 		Bundle bundle = createTestingBundle(local);
 
@@ -74,7 +76,7 @@ public class PlaylisterTest {
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		GuiDescriptor gui = null;
-		NextTrackPreparer preparer = new NextTrackPreparer(remote, local, converter, downloader, gui );
+		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, gui );
 		
 		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer , connection);
 		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(playlister);
@@ -107,7 +109,7 @@ public class PlaylisterTest {
 		final String trackId = "WYp9Eo9T3BA";
 		final String trackDesc = "This is just some somple house music originaly by Shingo Nakamura";
 
-		Track track = new Track(bundle, trackId, trackName, trackDesc);
+		Track track = bundle.createTrack(trackId, trackName, trackDesc);
 
 		TestingDownloader downloader = new TestingDownloader(local);
 		try {

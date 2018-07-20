@@ -17,6 +17,7 @@ public interface BaseLocalSource extends BaseSourceImpl {
 
 	public abstract void createBundle(Bundle bundle) throws JMOPSourceException;
 
+	public abstract void saveBundle(Bundle bundle) throws JMOPSourceException;
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public abstract List<String> listPlaylistNames(Bundle bundle) throws JMOPSourceException;
@@ -33,4 +34,6 @@ public interface BaseLocalSource extends BaseSourceImpl {
 	public abstract File fileOfTrack(Track track, TrackFileFormat downloadFileFormat) throws JMOPSourceException;
 
 	public abstract boolean exists(Track next) throws JMOPSourceException;
+
+
 }

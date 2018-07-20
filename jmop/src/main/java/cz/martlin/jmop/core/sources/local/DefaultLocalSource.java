@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class DefaultLocalSource implements BaseLocalSource {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
+
 	private final AbstractFileSystemAccessor fileSystem;
 
 	public DefaultLocalSource(AbstractFileSystemAccessor fileSystem) {
@@ -53,6 +53,17 @@ public class DefaultLocalSource implements BaseLocalSource {
 		}
 	}
 
+	@Override
+	public void saveBundle(Bundle bundle) throws JMOPSourceException {
+		try {
+			LOG.warn("Saving of bundle hacked here");
+			final String ALL_TRACKS = "all_tracks"; // FIXME !!!!
+			Playlist playlist = new Playlist(bundle, ALL_TRACKS, bundle.tracks());
+			fileSystem.savePlaylist(bundle, playlist);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot create bundle", e);
+		}
+	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -107,9 +118,14 @@ public class DefaultLocalSource implements BaseLocalSource {
 	@Override
 	public boolean exists(Track track) throws JMOPSourceException {
 		LOG.info("Checking existence of track " + track.getTitle());
-		
-		Bundle bundle = track.getBundle();
-		return bundle.contains(track);
+
+		// TODO hacky af, killme
+		try {
+			File file = fileSystem.getFileOfTrack(track.getBundle(), track, TrackFileFormat.MP3);
+			return file.exists();
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannnot check file existence", e);
+		}
 	}
 
 }

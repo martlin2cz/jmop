@@ -4,11 +4,11 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class OnlinePlaylister implements BasePlaylister {
-	private final NextTrackPreparer preparer;
+	private final TrackPreparer preparer;
 	
 	private BetterPlaylistRuntime playlist;
 
-	public OnlinePlaylister(NextTrackPreparer preparer) {
+	public OnlinePlaylister(TrackPreparer preparer) {
 		super();
 		this.preparer = preparer;
 	}
@@ -28,7 +28,7 @@ public class OnlinePlaylister implements BasePlaylister {
 		Track current = playlist.getCurrentlyPlayed();
 
 		try {
-			preparer.prepreAndAppend(current, playlist);
+			preparer.prepreNextAndAppend(current, playlist);
 		} catch (JMOPSourceException e) {
 			// TODO handle error
 			e.printStackTrace();

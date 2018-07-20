@@ -6,9 +6,17 @@ public class Track {
 	private final String title;
 	private final String description;
 	// TODO thumbnail
+	// TODO duration
 
-	//TODO replace by bundle.createTrack
-	public Track(Bundle bundle, String identifier, String title, String description) {
+
+	/**
+	 * Use {@link Bundle#createTrack(String, String, String)} instead.
+	 * @param bundle
+	 * @param identifier
+	 * @param title
+	 * @param description
+	 */
+	protected Track(Bundle bundle, String identifier, String title, String description) {
 		super();
 		this.bundle = bundle;
 		this.identifier = identifier;

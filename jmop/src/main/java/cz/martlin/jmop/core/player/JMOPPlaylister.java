@@ -20,7 +20,7 @@ public class JMOPPlaylister {
 
 	
 
-	public JMOPPlaylister(AbstractPlayer player, NextTrackPreparer preparer, InternetConnectionStatus connection/*, TrackPlayedHandler playerHandler*/) {
+	public JMOPPlaylister(AbstractPlayer player, TrackPreparer preparer, InternetConnectionStatus connection/*, TrackPlayedHandler playerHandler*/) {
 		super();
 		this.player = player;
 		this.connection = connection;

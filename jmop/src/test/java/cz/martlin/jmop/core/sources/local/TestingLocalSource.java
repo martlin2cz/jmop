@@ -49,6 +49,11 @@ public class TestingLocalSource implements BaseLocalSource {
 	}
 
 	@Override
+	public void saveBundle(Bundle bundle) throws JMOPSourceException {
+		// okay
+	}
+	
+	@Override
 	public List<String> listPlaylistNames(Bundle bundle) throws JMOPSourceException {
 		return new ArrayList<>(playlists.get(bundle).keySet());
 	}
@@ -111,5 +116,7 @@ public class TestingLocalSource implements BaseLocalSource {
 		}
 
 	}
+
+	
 
 }

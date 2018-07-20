@@ -99,7 +99,7 @@ public class XSPFParserComposer {
 		Element annotationElem = getChild(trackElem, "annotation");
 		String description = annotationElem.getTextContent();
 
-		return new Track(bundle, identifier, title, description);
+		return bundle.createTrack(identifier, title, description);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

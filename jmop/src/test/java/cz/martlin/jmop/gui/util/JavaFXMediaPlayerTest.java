@@ -70,7 +70,7 @@ public class JavaFXMediaPlayerTest {
 				final ProgressListener listener = (p) -> {
 				};
 
-				FFMPEGConverter converter = new FFMPEGConverter(local, downloadFormat, outputFormat, listener);
+				FFMPEGConverter converter = new FFMPEGConverter(local, downloadFormat, outputFormat, listener,false);
 				converter.convert(track);
 
 				MediaPlayerGuiReporter reporter = new TestingReporter();
@@ -111,7 +111,7 @@ public class JavaFXMediaPlayerTest {
 		String identifier = "xxx42yyy";
 		String description = "Lorem Ipsum ...";
 		String title = "test-track";
-		Track track = new Track(bundle, identifier, title, description);
+		Track track = bundle.createTrack(identifier, title, description);
 		return track;
 	}
 

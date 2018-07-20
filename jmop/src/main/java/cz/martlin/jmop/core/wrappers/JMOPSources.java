@@ -7,7 +7,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
-import cz.martlin.jmop.core.player.NextTrackPreparer;
+import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
@@ -20,10 +20,10 @@ public class JMOPSources {
 	private final BaseSourceDownloader downloader;
 	private final BaseSourceConverter converter;
 	private final GuiDescriptor gui;
-	private final NextTrackPreparer preparer;
+	private final TrackPreparer preparer;
 
 	public JMOPSources(BaseLocalSource local, AbstractRemoteSource remote, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, NextTrackPreparer preparer, GuiDescriptor gui) {
+			BaseSourceConverter converter, TrackPreparer preparer, GuiDescriptor gui) {
 		super();
 		this.local = local;
 		this.remote = remote;
@@ -41,7 +41,7 @@ public class JMOPSources {
 		Track track = prepareInitialTrack(bundle, querySeed);
 
 		Playlist playlist = createInitialPlaylist(bundle, track, querySeed);
-		preparer.prepreAndAppend(track, playlist.getRuntime());
+		preparer.prepreNextAndAppend(track, playlist.getRuntime());
 		return playlist;
 	}
 
@@ -77,7 +77,7 @@ public class JMOPSources {
 
 	private Track prepareInitialTrack(Bundle bundle, String querySeed) throws JMOPSourceException {
 		Track track = remote.search(bundle, querySeed);
-		preparer.checkAndDownload(track, null);
+		preparer.load(track);
 		return track;
 	}
 

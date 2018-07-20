@@ -35,7 +35,7 @@ public class DownloaderTask extends Task<Boolean> implements ProgressListener {
 			if (!converted) {
 				return false;
 			}
-
+			
 			updateMessage("Done.");
 			return true;
 		} catch (Exception e) {

@@ -111,7 +111,7 @@ public class YoutubeSource extends
 		String description = result.getSnippet().getDescription();
 		// TODO get thumbnail
 
-		return new Track(bundle, identifier, title, description);
+		return bundle.createTrack(identifier, title, description);
 	}
 
 	private Track convertSearchListResponse(Bundle bundle, SearchListResponse response) {
@@ -127,6 +127,6 @@ public class YoutubeSource extends
 		String description = result.getSnippet().getDescription();
 		// TODO get thumbnail
 
-		return new Track(bundle, identifier, title, description);
+		return bundle.createTrack(identifier, title, description);
 	}
 }

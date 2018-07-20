@@ -7,7 +7,7 @@ import cz.martlin.jmop.core.player.BasePlaylister;
 import cz.martlin.jmop.core.player.BasicPlaylistRuntime;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
-import cz.martlin.jmop.core.player.NextTrackPreparer;
+import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.player.TrackPlayedHandler;
 
 public class ToPlaylistAppendingHandler implements TrackPlayedHandler {
