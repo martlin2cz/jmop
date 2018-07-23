@@ -15,6 +15,8 @@
          <top>
             <ButtonBar prefHeight="40.0" prefWidth="27.0" BorderPane.alignment="CENTER">
               <buttons>
+              	<Button fx:id="showPlaylistButt" mnemonicParsing="false" onAction="#showPlaylistButtAction" text="Show playlist" />
+             
               	<Button fx:id="newBundleButt" mnemonicParsing="false" onAction="#newBundleButtAction" text="New bundle" />
                 <Button fx:id="startPlaylistButt" mnemonicParsing="false" onAction="#startPlaylistButtAction" text="Start playlist" />
                 <Button fx:id="newPlaylistButt" mnemonicParsing="false" onAction="#newPlaylistButtAction" text="New playlist" />

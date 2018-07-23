@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import cz.martlin.jmop.core.player.XXX_Playlist;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -26,7 +27,7 @@ public class Bundle {
 		super();
 		this.kind = kind;
 		this.name = name;
-		this.tracks = null; // TODO tracklist -> map
+		this.tracks = toMap(tracks);
 	}
 
 	public SourceKind getKind() {
@@ -44,11 +45,9 @@ public class Bundle {
 		this.tracks.put(identifier, track);
 		return track;
 	}
-	
 
 	///////////////////////////////////////////////////////////////////////////
 
-	
 	public Track getTrack(String id) {
 		return tracks.get(id);
 	}
@@ -70,6 +69,13 @@ public class Bundle {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
+
+	private static Map<String, Track> toMap(Tracklist tracks) {
+		return tracks.getTracks().stream() //
+				.collect(Collectors.toMap( //
+						(t) -> t.getIdentifier(), //
+						(t) -> t));
+	}
 
 	@Override
 	public String toString() {

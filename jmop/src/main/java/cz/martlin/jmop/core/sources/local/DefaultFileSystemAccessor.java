@@ -44,7 +44,7 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 	@Override
 	public Bundle loadBundle(String name) throws IOException {
 		String playlistName = namer.nameOfFullPlaylist();
-		Bundle tmpBundle = new Bundle(null, name, null);
+		Bundle tmpBundle = new Bundle(null, name, new Tracklist());
 		PlaylistFileData data = loadPlaylistFile(tmpBundle, playlistName);
 		
 		SourceKind kind = data.getKind();

@@ -82,4 +82,8 @@ public class Playlist {
 		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + runtime + "]";
 	}
 
+	public String toHumanString() {
+		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" +  runtime.toHumanString();
+	}
+
 }

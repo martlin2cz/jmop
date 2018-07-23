@@ -89,8 +89,15 @@ public class JMOPPlayer {
 		return sources.listPlaylists(bundleName);
 	}
 
+	
+
 
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	public String currentPlaylistAsString() {
+		Playlist playlist = playing.getCurrentPlaylist();
+		return playlist.toHumanString();
+	}
+	
 }

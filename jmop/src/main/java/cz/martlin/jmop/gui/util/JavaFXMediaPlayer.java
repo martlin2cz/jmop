@@ -31,6 +31,8 @@ public class JavaFXMediaPlayer extends WavPlayer {
 			stop(); //TODO it may be more of situations like this
 		}
 		
+		reporter.trackNameProperty().set(track.getTitle());
+		
 		URI uri = file.toURI();
 		String path = uri.toString();
 
@@ -57,6 +59,8 @@ public class JavaFXMediaPlayer extends WavPlayer {
 	public void stopPlaying() {
 		mediaPlayer.stop();
 		mediaPlayer = null;
+		
+		reporter.trackNameProperty().set("Stopped.");
 	}
 
 	@Override

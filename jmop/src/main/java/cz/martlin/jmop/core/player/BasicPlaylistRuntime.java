@@ -119,6 +119,22 @@ public class BasicPlaylistRuntime {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	public String toHumanString() {
+		StringBuilder stb = new StringBuilder();
+
+		played.forEach((t) -> stb.append("  " + t.getTitle() + "\n"));
+
+		if (current != null) {
+			stb.append("> " + current.getTitle() + "\n");
+		} else {
+			stb.append("> " + "---" + "\n");
+		}
+
+		remaining.forEach((t) -> stb.append("  " + t.getTitle() + "\n"));
+
+		return stb.toString();
+	}
+
 	@Override
 	public String toString() {
 		return "Playlist [" //

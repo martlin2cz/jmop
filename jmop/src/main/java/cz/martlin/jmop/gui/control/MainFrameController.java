@@ -6,13 +6,13 @@ import java.util.ResourceBundle;
 
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
-import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
 import cz.martlin.jmop.gui.DownloadGuiReporter;
-import cz.martlin.jmop.gui.util.JMOPDialogs;
+import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import cz.martlin.jmop.gui.util.MediaPlayerGuiReporter;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
@@ -26,7 +26,9 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
-public class MainFrameController implements Initializable, GuiDescriptor { 
+public class MainFrameController implements Initializable, GuiDescriptor {
+	@FXML
+	private Button showPlaylistButt;
 	@FXML
 	private Button startPlaylistButt;
 	@FXML
@@ -62,7 +64,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	public MainFrameController() {
 		File rootDirectory = new File("/tmp/jmop-gui");
 
-		this.jmop = JMOPPlayerBuilder.create(this, rootDirectory, null); 
+		this.jmop = JMOPPlayerBuilder.create(this, rootDirectory, null);
 
 	}
 
@@ -71,32 +73,26 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	// TODO handle exceptions
-	// TODO + run actions as Platform.later
-
-	public void newBundleButtAction() throws JMOPSourceException {
-		String bundleName = JMOPDialogs.promptNewBundleName();
-		String querySeed = JMOPDialogs.promptQuery();
-		SourceKind kind = JMOPDialogs.promptKind();
-		jmop.startNewBundle(kind, bundleName, querySeed);
+	public void showPlaylistButtAction()  {
+		GuiComplexActionsPerformer.showPlaylist(jmop);
 	}
 
-	public void startPlaylistButtAction() throws JMOPSourceException {
-		String bundleName = JMOPDialogs.promptExistingBundle(jmop);
-		String playlistName = JMOPDialogs.promptPlaylist(bundleName, jmop);
-		jmop.startPlaylist(bundleName, playlistName);
-	}
-	
-	//TODO create new playlist in brand new bundle?
-	
-	public void newPlaylistButtAction() throws JMOPSourceException {
-		String querySeed = JMOPDialogs.promptQuery();
-		jmop.startNewPlaylist(querySeed);
+	public void newBundleButtAction() {
+		GuiComplexActionsPerformer.startNewBundle(jmop);
 	}
 
-	public void savePlaylistButtAction() throws JMOPSourceException {
-		String playlistName = JMOPDialogs.promptPlaylistName(jmop);
-		jmop.savePlaylistAs(playlistName);
+	public void startPlaylistButtAction() {
+		GuiComplexActionsPerformer.startPlaylist(jmop);
+	}
+
+	// TODO create new playlist in brand new bundle?
+
+	public void newPlaylistButtAction()  {
+		GuiComplexActionsPerformer.newPlaylist(jmop);
+	}
+
+	public void savePlaylistButtAction()  {
+		GuiComplexActionsPerformer.savePlaylist(jmop);
 	}
 
 	public void playButtAction() throws JMOPSourceException {
@@ -126,26 +122,28 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 	@Override
 	public ProgressListener getProgressListener() {
-		return (p) -> /*progressBar.setProgress(p / 100) */ {};
+		return (p) -> /* progressBar.setProgress(p / 100) */ {
+		};
 	}
 
 	@Override
 	public MediaPlayerGuiReporter getMediaPlayerGuiReporter() {
 		return new MediaPlayerGuiReporter() {
-			
+
 			@Override
 			public StringProperty trackNameProperty() {
 				return lblTrackName.textProperty();
 			}
-			
+
 			@Override
 			public Property<Status> statusProperty() {
-				return new SimpleObjectProperty<>(); //TODO
+				
+				return new SimpleObjectProperty<>(); // TODO
 			}
-			
+
 			@Override
 			public Property<Duration> durationProperty() {
-				return new SimpleObjectProperty<>(); //TODO
+				return new SimpleObjectProperty<>(); // TODO
 			}
 		};
 	}
@@ -153,17 +151,17 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	@Override
 	public DownloadGuiReporter getDownloadGuiReporter() {
 		return new DownloadGuiReporter() {
-			
+
 			@Override
 			public StringProperty statusProperty() {
 				return lblProgressText.textProperty();
 			}
-			
+
 			@Override
 			public BooleanProperty runningProperty() {
 				return progressBar.visibleProperty();
 			}
-			
+
 			@Override
 			public DoubleProperty progressProperty() {
 				return progressBar.progressProperty();
