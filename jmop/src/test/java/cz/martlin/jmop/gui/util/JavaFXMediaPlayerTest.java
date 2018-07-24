@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.player.TrackPlayedHandler;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -111,7 +112,8 @@ public class JavaFXMediaPlayerTest {
 		String identifier = "xxx42yyy";
 		String description = "Lorem Ipsum ...";
 		String title = "test-track";
-		Track track = bundle.createTrack(identifier, title, description);
+		Duration duration = DurationUtilities.createDuration(0, 1, 1);
+		Track track = bundle.createTrack(identifier, title, description, duration);
 		return track;
 	}
 

@@ -1,12 +1,14 @@
 package cz.martlin.jmop.core.data;
 
+import javafx.util.Duration;
+
 public class Track {
 	private final Bundle bundle;
 	private final String identifier;
 	private final String title;
 	private final String description;
+	private final Duration duration;
 	// TODO thumbnail
-	// TODO duration
 
 
 	/**
@@ -15,13 +17,15 @@ public class Track {
 	 * @param identifier
 	 * @param title
 	 * @param description
+	 * @param duration 
 	 */
-	protected Track(Bundle bundle, String identifier, String title, String description) {
+	protected Track(Bundle bundle, String identifier, String title, String description, Duration duration) {
 		super();
 		this.bundle = bundle;
 		this.identifier = identifier;
 		this.title = title;
 		this.description = description;
+		this.duration = duration;
 	}
 
 	public Bundle getBundle() {
@@ -40,6 +44,10 @@ public class Track {
 		return description;
 	}
 
+	public Duration getDuration() {
+		return duration;
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

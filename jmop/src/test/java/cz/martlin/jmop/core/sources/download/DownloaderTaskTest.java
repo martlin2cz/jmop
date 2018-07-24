@@ -4,6 +4,7 @@ import java.io.File;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -19,6 +20,7 @@ import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class DownloaderTaskTest extends Application {
 
@@ -27,6 +29,7 @@ public class DownloaderTaskTest extends Application {
 		final String id = "qUXEFj0t7Ek";
 		final String title = "Lorem-ispum";
 		final String description = "lorem ipsum dolor sit amet";
+		final Duration duration = DurationUtilities.createDuration(4, 5, 6);
 		final String bundleName = "another-testing-tracks";
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
@@ -44,7 +47,7 @@ public class DownloaderTaskTest extends Application {
 		//BaseSourceDownloader downloader = new YoutubeDlDownloader(sources, listener);
 		BaseSourceDownloader downloader = new TestingDownloader(local);
 		
-		Track track = bundle.createTrack(id, title, description);
+		Track track = bundle.createTrack(id, title, description, duration);
 
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;

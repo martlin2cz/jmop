@@ -13,7 +13,9 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.PlaylistFileData;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.data.Tracklist;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.SourceKind;
+import javafx.util.Duration;
 
 public class DefaultPlaylistLoaderTest {
 
@@ -26,11 +28,15 @@ public class DefaultPlaylistLoaderTest {
 
 		String playlistName = "testing playlist";
 		SourceKind kind = SourceKind.YOUTUBE;
-
+		
+		Duration duration1 = DurationUtilities.createDuration(0, 0, 11);
+		Duration duration2 = DurationUtilities.createDuration(0, 3, 15);
+		Duration duration3 = DurationUtilities.createDuration(1, 50, 42);
+		
 		List<Track> tracks = Arrays.asList( //
-				bundle.createTrack("123456", "foo", "Lorem ispum dolor sit amet."), //
-				bundle.createTrack("aBcDeFg", "Nothing by Noone", "Just simply nothing."), //
-				bundle.createTrack("xy42+99z", "Silence!", "24 hours of awesome silence.") //
+				bundle.createTrack("123456", "foo", "Lorem ispum dolor sit amet.", duration1), //
+				bundle.createTrack("aBcDeFg", "Nothing by Noone", "Just simply nothing.", duration2), //
+				bundle.createTrack("xy42+99z", "Silence!", "24 hours of awesome silence.", duration3) //
 		);
 		
 		Tracklist tracklist = new Tracklist(tracks);

@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.sources.local;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -11,7 +12,9 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.PlaylistFileData;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.data.Tracklist;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.SourceKind;
+import javafx.util.Duration;
 
 public class XSPFParserComposer {
 
@@ -99,7 +102,11 @@ public class XSPFParserComposer {
 		Element annotationElem = getChild(trackElem, "annotation");
 		String description = annotationElem.getTextContent();
 
-		return bundle.createTrack(identifier, title, description);
+		Element durationElem = getChild(trackElem, "duration");
+		String durationStr = durationElem.getTextContent();
+		Duration duration = DurationUtilities.parseMilisDuration(durationStr);
+
+		return bundle.createTrack(identifier, title, description, duration);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -174,6 +181,13 @@ public class XSPFParserComposer {
 		Element annotation = document.createElementNS(NAMESPACE, "annotation");
 		annotation.setTextContent(track.getDescription());
 		trackElem.appendChild(annotation);
+
+		Element duration = document.createElementNS(NAMESPACE, "duration");
+		duration.setTextContent(DurationUtilities.toMilis(track.getDuration()));
+		trackElem.appendChild(duration);
+
+		Comment durationComment = document.createComment(DurationUtilities.toHumanString(track.getDuration()));
+		trackElem.appendChild(durationComment);
 
 		return trackElem;
 	}

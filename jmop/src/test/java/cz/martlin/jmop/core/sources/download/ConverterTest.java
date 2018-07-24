@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -18,12 +19,14 @@ import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
+import javafx.util.Duration;
 
 public class ConverterTest {
 	public static void main(String[] args) throws IOException {
 		final String id = "3V7EugoweM4";
 		final String title = "Something";
 		final String description = "Something interresting";
+		final Duration duration = DurationUtilities.createDuration(1, 2, 3);
 		final String bundleName = "testing-tracks";
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
@@ -45,7 +48,7 @@ public class ConverterTest {
 		//BaseSourceConverter converter = new NoopConverter();
 
 		
-		Track track = bundle.createTrack(id, title, description);
+		Track track = bundle.createTrack(id, title, description, duration);
 
 		try {
 			boolean success = converter.convert(track);

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import cz.martlin.jmop.core.player.XXX_Playlist;
 import cz.martlin.jmop.core.sources.SourceKind;
+import javafx.util.Duration;
 
 public class Bundle {
 	private final SourceKind kind;
@@ -40,8 +41,9 @@ public class Bundle {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public Track createTrack(String identifier, String title, String description) {
-		Track track = new Track(this, identifier, title, description);
+	public Track createTrack(String identifier, String title, String description, Duration duration) {
+		Track track = new Track(this, identifier, title, description, duration);
+		
 		this.tracks.put(identifier, track);
 		return track;
 	}

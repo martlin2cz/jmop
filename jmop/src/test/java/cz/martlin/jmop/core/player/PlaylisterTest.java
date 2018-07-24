@@ -9,12 +9,12 @@ import org.junit.Test;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
@@ -34,6 +34,7 @@ import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import cz.martlin.jmop.core.wrappers.ToPlaylistAppendingHandler;
 import cz.martlin.jmop.misc.TestingTools;
+import javafx.util.Duration;
 
 public class PlaylisterTest {
 
@@ -108,8 +109,9 @@ public class PlaylisterTest {
 		final String trackName = "Sample house music";
 		final String trackId = "WYp9Eo9T3BA";
 		final String trackDesc = "This is just some somple house music originaly by Shingo Nakamura";
-
-		Track track = bundle.createTrack(trackId, trackName, trackDesc);
+		final Duration duration = DurationUtilities.createDuration(1, 12, 13);
+		
+		Track track = bundle.createTrack(trackId, trackName, trackDesc, duration);
 
 		TestingDownloader downloader = new TestingDownloader(local);
 		try {
