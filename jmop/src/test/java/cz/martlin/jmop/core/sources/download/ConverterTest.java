@@ -7,9 +7,7 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.ProgressListener;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
@@ -18,7 +16,6 @@ import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import javafx.util.Duration;
 
 public class ConverterTest {
@@ -44,8 +41,9 @@ public class ConverterTest {
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, deleteOriginal );
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, deleteOriginal );
 		//BaseSourceConverter converter = new NoopConverter();
+		converter.specifyListener(listener);
 
 		
 		Track track = bundle.createTrack(id, title, description, duration);

@@ -40,8 +40,9 @@ public class DownloaderTest {
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		//BaseSourceDownloader downloader = new TestingDownloader(sources);
+		downloader.specifyListener(listener);
 
 		Track track = bundle.createTrack(id, title, description, duration);
 

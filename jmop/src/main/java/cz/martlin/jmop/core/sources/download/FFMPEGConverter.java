@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
@@ -36,8 +35,8 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<Track, Boolea
 	
 
 	public FFMPEGConverter( BaseLocalSource local, //
-			TrackFileFormat inputFormat, TrackFileFormat outputFormat, ProgressListener listener, boolean deleteOriginal) {
-		super(listener);
+			TrackFileFormat inputFormat, TrackFileFormat outputFormat,  boolean deleteOriginal) {
+		super();
 
 		this.local = local;
 		this.inputFormat = inputFormat;

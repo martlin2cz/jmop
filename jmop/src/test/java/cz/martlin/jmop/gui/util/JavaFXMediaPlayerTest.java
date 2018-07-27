@@ -10,8 +10,6 @@ import org.junit.Test;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.ProgressListener;
-import cz.martlin.jmop.core.player.TrackPlayedHandler;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.download.TestingDownloader;
@@ -26,7 +24,6 @@ import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.misc.TestingTools;
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -68,10 +65,8 @@ public class JavaFXMediaPlayerTest {
 
 				final TrackFileFormat downloadFormat = TestingDownloader.DOWNLOAD_FORMAT;
 				final TrackFileFormat outputFormat = TrackFileFormat.MP3;
-				final ProgressListener listener = (p) -> {
-				};
 
-				FFMPEGConverter converter = new FFMPEGConverter(local, downloadFormat, outputFormat, listener,false);
+				FFMPEGConverter converter = new FFMPEGConverter(local, downloadFormat, outputFormat, false);
 				converter.convert(track);
 
 				MediaPlayerGuiReporter reporter = new TestingReporter();

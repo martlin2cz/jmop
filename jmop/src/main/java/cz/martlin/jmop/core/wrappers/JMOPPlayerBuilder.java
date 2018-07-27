@@ -4,12 +4,10 @@ import java.io.File;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.player.AbstractPlayer;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
 import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
@@ -37,12 +35,11 @@ public class JMOPPlayerBuilder {
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
 		AbstractRemoteSource remote = new YoutubeSource();
 
-		ProgressListener listener = gui.getProgressListener();
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = JavaFXMediaPlayer.LOCAL_FORMAT;
 		boolean deleteOriginal = false;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, deleteOriginal);
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  deleteOriginal);
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		
 		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, gui);

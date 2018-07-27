@@ -13,18 +13,26 @@ import org.slf4j.LoggerFactory;
 import com.google.common.io.Files;
 
 import cz.martlin.jmop.core.misc.ExternalProgramException;
+import cz.martlin.jmop.core.misc.ProgressGenerator;
 import cz.martlin.jmop.core.misc.ProgressListener;
 
-public abstract class AbstractProcessEncapusulation<INT, OUT> {
+public abstract class AbstractProcessEncapusulation<INT, OUT> implements ProgressGenerator {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
-	private final ProgressListener listener;
+
+	private ProgressListener listener;
 	protected Process process;
 
-	public AbstractProcessEncapusulation(ProgressListener listener) {
+	public AbstractProcessEncapusulation() {
 		super();
+		this.listener = null;
+	}
+
+	@Override
+	public void specifyListener(ProgressListener listener) {
 		this.listener = listener;
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	public OUT run(INT input) throws ExternalProgramException {
 		try {
@@ -66,12 +74,18 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 
 			Double progressOrNot = processLineOfOutput(line);
 			if (progressOrNot != null) {
-				listener.progressChanged(progressOrNot);
+				reportProgress(progressOrNot);
 			}
 
 		}
 
 		s.close();
+	}
+
+	private void reportProgress(double progress) {
+		if (listener != null) {
+			listener.progressChanged(progress);
+		}
 	}
 
 	private OUT finishProcess(INT input) throws Exception {
@@ -80,7 +94,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 		process = null;
 
 		LOG.info("Process finished with code " + result);
-		
+
 		return handleResult(result, input);
 	}
 

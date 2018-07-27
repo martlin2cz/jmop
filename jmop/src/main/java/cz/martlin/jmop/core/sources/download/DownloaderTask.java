@@ -19,8 +19,18 @@ public class DownloaderTask extends Task<Boolean> implements ProgressListener {
 		this.downloader = downloader;
 		this.converter = converter;
 		this.track = track;
+		
+		downloader.specifyListener(this);
+		converter.specifyListener(this);
 	}
 
+
+	public Track getTrack() {
+		return track;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
 	@Override
 	protected Boolean call() throws Exception {
 		try {
@@ -44,6 +54,7 @@ public class DownloaderTask extends Task<Boolean> implements ProgressListener {
 		}
 	}
 
+	@Deprecated
 	public void bind(DownloadGuiReporter reporter) {
 		reporter.runningProperty().bind(this.runningProperty());
 		reporter.statusProperty().bind(this.messageProperty());
@@ -54,6 +65,7 @@ public class DownloaderTask extends Task<Boolean> implements ProgressListener {
 	public void progressChanged(double percentage) {
 		updateProgress(percentage, THE_100_PERCENT);
 	}
+
 
 	
 }

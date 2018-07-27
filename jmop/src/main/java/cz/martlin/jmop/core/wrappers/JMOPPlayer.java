@@ -17,14 +17,27 @@ public class JMOPPlayer {
 	private final JMOPSources sources;
 	private final JMOPPlaying playing;
 	private final GuiDescriptor gui;
+	private final CoreGuiDescriptor descriptor;
 
 	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
 			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylister playlister,
 			TrackPreparer preparer) {
-		
+
 		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, gui);
 		this.playing = new JMOPPlaying(playlister, playlistToPlayOrNot);
 		this.gui = gui;
+		this.descriptor = new CoreGuiDescriptor(this);
+	}
+
+	protected JMOPSources getSources() {
+		return sources;
+	}
+
+	protected JMOPPlaying getPlaying() {
+		return playing;
+	}
+	public CoreGuiDescriptor getDescriptor() {
+		return descriptor;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,13 +54,10 @@ public class JMOPPlayer {
 
 	public void startNewPlaylist(String querySeed) throws JMOPSourceException {
 		Bundle bundle = playing.getCurrentPlaylist().getBundle();
-		SourceKind kind = bundle.getKind();
-		String bundleName = bundle.getName();
-		
-		Playlist playlist = sources.createNewBundleAndPrepare(kind, bundleName, querySeed);
+		Playlist playlist = sources.createNewPlaylist(bundle, querySeed);
 		playing.startPlayingPlaylist(playlist);
 	}
-	
+
 	public void savePlaylistAs(String newPlaylistName) throws JMOPSourceException {
 		Playlist playlist = playing.getCurrentPlaylist();
 		sources.savePlaylist(playlist, newPlaylistName);
@@ -89,15 +99,11 @@ public class JMOPPlayer {
 		return sources.listPlaylists(bundleName);
 	}
 
-	
-
-
-
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public String currentPlaylistAsString() {
 		Playlist playlist = playing.getCurrentPlaylist();
 		return playlist.toHumanString();
 	}
-	
+
 }

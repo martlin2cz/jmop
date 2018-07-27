@@ -10,19 +10,21 @@ import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
 import cz.martlin.jmop.gui.DownloadGuiReporter;
+import cz.martlin.jmop.gui.comp.DownloadPane;
+import cz.martlin.jmop.gui.comp.TrackPane;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import cz.martlin.jmop.gui.util.MediaPlayerGuiReporter;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
@@ -49,15 +51,23 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private Button nextButt;
 	@FXML
 	private Button prevButt;
+//	@FXML
+//	@Deprecated
+//	private Label lblTrackName;
+//	@FXML
+//	@Deprecated
+//	private Label lblDuration;
+//	@Deprecated
+//	@FXML
+//	private Label lblProgressText;
+//	@Deprecated
+//	@FXML
+//	private ProgressBar progressBar;
 	@FXML
-	private Label lblTrackName;
+	private TrackPane trpnCurrentTrack;
 	@FXML
-	private Label lblDuration;
-	@FXML
-	private Label lblProgressText;
-	@FXML
-	private ProgressBar progressBar;
-
+	private DownloadPane dwnldPane;
+	
 	private final JMOPPlayer jmop;
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,6 +80,12 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initBindings();
+	}
+
+	private void initBindings() {
+		trpnCurrentTrack.trackProperty().bind(jmop.getDescriptor().currentTrackProperty());
+		dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -132,7 +148,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 			@Override
 			public StringProperty trackNameProperty() {
-				return lblTrackName.textProperty();
+				return new SimpleStringProperty();
 			}
 
 			@Override
@@ -154,17 +170,17 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 			@Override
 			public StringProperty statusProperty() {
-				return lblProgressText.textProperty();
+				return new SimpleStringProperty();
 			}
 
 			@Override
 			public BooleanProperty runningProperty() {
-				return progressBar.visibleProperty();
+				return new SimpleBooleanProperty();
 			}
 
 			@Override
 			public DoubleProperty progressProperty() {
-				return progressBar.progressProperty();
+				return new SimpleDoubleProperty();
 			}
 		};
 	}

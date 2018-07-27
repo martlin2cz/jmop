@@ -32,6 +32,10 @@ public class JMOPSources {
 		this.preparer = preparer;
 		this.gui = gui;
 	}
+	
+	public TrackPreparer getPreparer() {
+		return preparer;
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -45,6 +49,15 @@ public class JMOPSources {
 		return playlist;
 	}
 
+	public Playlist createNewPlaylist(Bundle bundle, String querySeed) throws JMOPSourceException {
+		//TODO queryAndCreatePlaylist method: ?
+		Track track = prepareInitialTrack(bundle, querySeed);
+
+		Playlist playlist = createInitialPlaylist(bundle, track, querySeed);
+		preparer.prepreNextAndAppend(track, playlist.getRuntime());
+		return playlist;
+	}
+	
 	public Playlist loadPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
@@ -87,6 +100,8 @@ public class JMOPSources {
 		// TODO save here?
 		return playlist;
 	}
+
+
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

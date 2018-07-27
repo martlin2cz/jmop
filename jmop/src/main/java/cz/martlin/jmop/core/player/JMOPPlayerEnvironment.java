@@ -104,10 +104,10 @@ public class JMOPPlayerEnvironment {
 
 		// TODO FIXME listener shall be task itself
 		ProgressListener listener = ((p) -> {}); 
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, false);
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  false);
 		Sources sources = new Sources(local, remote, downloader, converter);
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();

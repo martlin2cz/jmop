@@ -62,12 +62,15 @@ public class PlaylisterTest {
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+		downloader.specifyListener(listener);
+		
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 		
 		boolean deleteOriginal = false;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, deleteOriginal );
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  deleteOriginal );
+		converter.specifyListener(listener);
 
 		Bundle bundle = createTestingBundle(local);
 

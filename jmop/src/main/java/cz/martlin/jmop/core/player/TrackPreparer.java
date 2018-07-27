@@ -11,7 +11,8 @@ import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.DownloaderTask;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
-import cz.martlin.jmop.gui.DownloadGuiReporter;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class TrackPreparer {
 	private final AbstractRemoteSource remote;
@@ -19,6 +20,7 @@ public class TrackPreparer {
 	private final BaseSourceConverter converter;
 	private final BaseSourceDownloader downloader;
 	private final GuiDescriptor gui;
+	private final ObjectProperty<DownloaderTask> currentTaskProperty;
 
 	public TrackPreparer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceConverter converter,
 			BaseSourceDownloader downloader, GuiDescriptor gui) {
@@ -28,8 +30,13 @@ public class TrackPreparer {
 		this.converter = converter;
 		this.downloader = downloader;
 		this.gui = gui;
+		this.currentTaskProperty = new SimpleObjectProperty<>();
 	}
 
+	public ObjectProperty<DownloaderTask> currentTaskProperty() {
+		return currentTaskProperty;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void load(Track track) throws JMOPSourceException {
@@ -55,8 +62,9 @@ public class TrackPreparer {
 
 	private void download(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
 		DownloaderTask task = new DownloaderTask(downloader, converter, track);
-		DownloadGuiReporter reporter = gui.getDownloadGuiReporter();
-		task.bind(reporter);
+		
+		currentTaskProperty.set(task);
+		
 
 		if (onCompleteOrNull != null) {
 			task.setOnSucceeded((e) -> onTrackDownloadedHandler(track, onCompleteOrNull));
@@ -79,10 +87,14 @@ public class TrackPreparer {
 	}
 
 	private void trackDownloaded(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
+		
+		
 		Bundle bundle = track.getBundle();
 		local.saveBundle(bundle);
 
 		trackReady(track, onCompleteOrNull);
+		
+		currentTaskProperty.set(null);
 	}
 
 	private void trackReady(Track track, Consumer<Track> onCompleteOrNull) {

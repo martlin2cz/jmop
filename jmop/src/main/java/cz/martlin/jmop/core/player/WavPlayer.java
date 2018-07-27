@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.player.AbstractPlayer;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -27,8 +26,7 @@ public abstract class WavPlayer implements AbstractPlayer {
 		LOG.info("Starting to play track " + track.getTitle());
 
 		try {
-			FFMPEGConverter converter = new FFMPEGConverter(local, LOCAL_FORMAT, PLAYER_FORMAT, (p) -> {
-			}, false);
+			FFMPEGConverter converter = new FFMPEGConverter(local, LOCAL_FORMAT, PLAYER_FORMAT, false);
 			converter.convert(track);
 			File file = local.fileOfTrack(track, PLAYER_FORMAT);
 

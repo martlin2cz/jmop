@@ -1,13 +1,7 @@
 package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.AbstractPlayer;
-import cz.martlin.jmop.core.player.BasePlaylister;
-import cz.martlin.jmop.core.player.BasicPlaylistRuntime;
-import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
-import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.player.TrackPlayedHandler;
 
 public class ToPlaylistAppendingHandler implements TrackPlayedHandler {

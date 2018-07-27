@@ -52,8 +52,10 @@ public class DownloaderTaskTest extends Application {
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener, false);
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  false);
 		//BaseSourceConverter converter = new NoopConverter();
+		converter.specifyListener(listener);
+
 		
 		DownloaderTask task = new DownloaderTask(downloader, converter,  track);
 		

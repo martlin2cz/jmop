@@ -11,14 +11,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 public class JavaFXMediaPlayer extends WavPlayer {
-	private final MediaPlayerGuiReporter reporter;
 	private TrackPlayedHandler handler;
 	private MediaPlayer mediaPlayer;
 
 	public JavaFXMediaPlayer(BaseLocalSource local,  MediaPlayerGuiReporter reporter) {
 		super(local);
-
-		this.reporter = reporter;
 	}
 
 	public void setHandler(TrackPlayedHandler handler) {
@@ -31,22 +28,14 @@ public class JavaFXMediaPlayer extends WavPlayer {
 			stop(); //TODO it may be more of situations like this
 		}
 		
-		reporter.trackNameProperty().set(track.getTitle());
-		
 		URI uri = file.toURI();
 		String path = uri.toString();
 
 		Media media = new Media(path);
 		mediaPlayer = new MediaPlayer(media);
-		setupBindings(track);
+		mediaPlayer.setOnEndOfMedia(() -> onTrackPlayed(track));
 
 		mediaPlayer.play();
-	}
-
-	private void setupBindings(Track track) {
-		mediaPlayer.setOnEndOfMedia(() -> onTrackPlayed(track));
-		reporter.durationProperty().bind(mediaPlayer.currentTimeProperty());
-		reporter.statusProperty().bind(mediaPlayer.statusProperty());
 	}
 
 	private void onTrackPlayed(Track track) {
@@ -59,8 +48,6 @@ public class JavaFXMediaPlayer extends WavPlayer {
 	public void stopPlaying() {
 		mediaPlayer.stop();
 		mediaPlayer = null;
-		
-		reporter.trackNameProperty().set("Stopped.");
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class JMOPPlaylister {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -13,6 +15,7 @@ public class JMOPPlaylister {
 	private final InternetConnectionStatus connection;
 	private final OnlinePlaylister online;
 	private final OfflinePlaylister offline;
+	private final ObjectProperty<Track> currentTrackProperty;
 //	private final TrackPlayedHandler playerHandler;
 
 	// TODO shuffle?
@@ -26,6 +29,7 @@ public class JMOPPlaylister {
 		this.connection = connection;
 		this.online = new OnlinePlaylister(preparer);
 		this.offline = new OfflinePlaylister();
+		this.currentTrackProperty = new SimpleObjectProperty<>();
 //		this.playerHandler = playerHandler;
 
 		this.playlist = null;
@@ -43,6 +47,10 @@ public class JMOPPlaylister {
 //		this.playerHandler.setPlaylist(playlist);
 
 	}
+	
+	public ObjectProperty<Track> currentTrackProperty() {
+		return currentTrackProperty;
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,12 +58,15 @@ public class JMOPPlaylister {
 		LOG.info("Plaing");
 
 		Track track = playlist.startToPlay();
+		
+		currentTrackProperty.set(track);
 		player.startPlayling(track);
 	}
 
 	public void stop() {
 		LOG.info("Stopping");
-
+		
+		currentTrackProperty.set(null);
 		player.stop();
 	}
 
@@ -64,7 +75,8 @@ public class JMOPPlaylister {
 
 		BasePlaylister playlister = getPlaylisterStrategy();
 		Track track = playlister.next();
-
+		
+		currentTrackProperty.set(track);
 		player.startPlayling(track);
 	}
 
@@ -74,6 +86,7 @@ public class JMOPPlaylister {
 		BasePlaylister playlister = getPlaylisterStrategy();
 		Track track = playlister.previous();
 
+		currentTrackProperty.set(track);
 		player.startPlayling(track);
 	}
 

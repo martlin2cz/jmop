@@ -20,6 +20,10 @@ public class JMOPPlaying {
 			playlister.setPlaylist(runtime);
 		}
 	}
+	
+	protected JMOPPlaylister getPlaylister() {
+		return playlister;
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

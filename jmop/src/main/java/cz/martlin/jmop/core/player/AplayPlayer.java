@@ -66,7 +66,7 @@ public class AplayPlayer extends WavPlayer {
 	public class AplayProcess extends AbstractProcessEncapusulation<File, Void> {
 
 		public AplayProcess() {
-			super(null);
+			super();
 		}
 
 		@Override
