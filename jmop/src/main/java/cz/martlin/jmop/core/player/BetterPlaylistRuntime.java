@@ -3,8 +3,11 @@ package cz.martlin.jmop.core.player;
 import java.util.List;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.data.Tracklist;
 
 public class BetterPlaylistRuntime extends BasicPlaylistRuntime {
+
+	private Tracklist allTracks;
 
 	public BetterPlaylistRuntime() {
 		super();
@@ -20,34 +23,62 @@ public class BetterPlaylistRuntime extends BasicPlaylistRuntime {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public Track toNextOrAnother() {
+	public Track getNextToPlayOrNull() {
 		final boolean hasNext = hasNextToPlay();
 
 		if (hasNext) {
-			return toNext();
+			return getNextToPlay();
 		} else {
-			return toSome();
+			return null;
 		}
+
+	}
+
+	public Track getLastPlayedOrNull() {
+		final boolean hasPrev = hasLastPlayed();
+
+		if (hasPrev) {
+			return getLastPlayed();
+		} else {
+			return null;
+		}
+	}
+
+	public Track toNextOrAnother() {
+		final boolean hasNext = hasNextToPlay();
+
+		if (!hasNext) {
+			Track some = some();
+			getRemaining().add(some);
+		}
+
+		return toNext();
 	}
 
 	public Track toPreviousOrAnother() {
 		final boolean hasPrev = hasLastPlayed();
 
 		if (hasPrev) {
-			return toPrevious();
-		} else {
-			return toSome();
+			Track some = some();
+			getPlayed().add(some);
 		}
-	}
 
-	private Track toSome() {
-		List<Track> all = super.list();
-
-		// TODO choose some strategy? first? random?
-
-		return all.get(0);
+		return toPrevious();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	private Track some() {
+		List<Track> all = allTracks.getTracks();
+
+		// TODO or just simply first?
+		return getRandom(all);
+	}
+
+	private Track getRandom(List<Track> list) {
+		int size = list.size();
+		int index = (int) (size * Math.random());
+		return list.get(index);
+	}
 
 }

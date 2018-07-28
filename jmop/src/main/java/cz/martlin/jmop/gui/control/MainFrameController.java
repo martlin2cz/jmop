@@ -51,23 +51,27 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private Button nextButt;
 	@FXML
 	private Button prevButt;
-//	@FXML
-//	@Deprecated
-//	private Label lblTrackName;
-//	@FXML
-//	@Deprecated
-//	private Label lblDuration;
-//	@Deprecated
-//	@FXML
-//	private Label lblProgressText;
-//	@Deprecated
-//	@FXML
-//	private ProgressBar progressBar;
+	// @FXML
+	// @Deprecated
+	// private Label lblTrackName;
+	// @FXML
+	// @Deprecated
+	// private Label lblDuration;
+	// @Deprecated
+	// @FXML
+	// private Label lblProgressText;
+	// @Deprecated
+	// @FXML
+	// private ProgressBar progressBar;
 	@FXML
 	private TrackPane trpnCurrentTrack;
 	@FXML
+	private TrackPane trpnPreviousTrack;
+	@FXML
+	private TrackPane trpnNextTrack;
+	@FXML
 	private DownloadPane dwnldPane;
-	
+
 	private final JMOPPlayer jmop;
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -85,11 +89,14 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 	private void initBindings() {
 		trpnCurrentTrack.trackProperty().bind(jmop.getDescriptor().currentTrackProperty());
+		trpnPreviousTrack.trackProperty().bind(jmop.getDescriptor().previousTrackProperty());
+		trpnNextTrack.trackProperty().bind(jmop.getDescriptor().nextTrackProperty());
+
 		dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	public void showPlaylistButtAction()  {
+	public void showPlaylistButtAction() {
 		GuiComplexActionsPerformer.showPlaylist(jmop);
 	}
 
@@ -103,11 +110,11 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 	// TODO create new playlist in brand new bundle?
 
-	public void newPlaylistButtAction()  {
+	public void newPlaylistButtAction() {
 		GuiComplexActionsPerformer.newPlaylist(jmop);
 	}
 
-	public void savePlaylistButtAction()  {
+	public void savePlaylistButtAction() {
 		GuiComplexActionsPerformer.savePlaylist(jmop);
 	}
 
@@ -153,7 +160,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 			@Override
 			public Property<Status> statusProperty() {
-				
+
 				return new SimpleObjectProperty<>(); // TODO
 			}
 

@@ -95,7 +95,7 @@ public class Track {
 
 	@Override
 	public String toString() {
-		return "Track [bundle=" + bundle + ", identifier=" + identifier + ", title=" + title + ", description=" + "..."
+		return "Track [bundle=" + bundle.getName() + ", identifier=" + identifier + ", title=" + title + ", description=" + "..."
 				+ "]";
 	}
 

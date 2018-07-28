@@ -1,7 +1,11 @@
 package cz.martlin.jmop.core.player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 import cz.martlin.jmop.core.data.Track;
@@ -10,12 +14,12 @@ public class BasicPlaylistRuntime {
 
 	private final Stack<Track> played;
 	private Track current;
-	private final Stack<Track> remaining;
+	private final Deque<Track> remaining;
 
 	public BasicPlaylistRuntime() {
 		this.played = new Stack<>();
 		this.current = null;
-		this.remaining = new Stack<>();
+		this.remaining = new LinkedList<>();
 	}
 
 	public BasicPlaylistRuntime(Track track) {
@@ -28,6 +32,11 @@ public class BasicPlaylistRuntime {
 		this.remaining.addAll(tracks);
 	}
 
+	protected BasicPlaylistRuntime(Track... tracks) {
+		this();
+		this.remaining.addAll(Arrays.asList(tracks));
+	}
+
 	protected Stack<Track> getPlayed() {
 		return played;
 	}
@@ -36,7 +45,7 @@ public class BasicPlaylistRuntime {
 		return current;
 	}
 
-	protected Stack<Track> getRemaining() {
+	protected Queue<Track> getRemaining() {
 		return remaining;
 	}
 
@@ -68,7 +77,7 @@ public class BasicPlaylistRuntime {
 		return remaining.peek();
 	}
 
-	public List<Track> list() {
+	public synchronized List<Track> list() {
 		List<Track> list = new ArrayList<>(played.size() + 1 + remaining.size());
 
 		list.addAll(played);
@@ -82,44 +91,50 @@ public class BasicPlaylistRuntime {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public Track startToPlay() {
-		Track track = remaining.pop();
+	public synchronized Track startToPlay() {
+		Track track = remaining.removeFirst();
 		current = track;
 
 		return current;
 	}
 
-	public Track stopPlaying() {
-		remaining.push(current);
+	public synchronized Track stopPlaying() {
+		remaining.addFirst(current);
 		current = null;
 
 		return current;
 	}
 
-	public Track toNext() {
-		Track next = remaining.pop();
-		played.push(current);
+	public synchronized Track toNext() {
+		Track next = remaining.removeFirst();
+
+		if (current != null) {
+			played.push(current);
+		}
 
 		current = next;
 
 		return next;
 	}
 
-	public Track toPrevious() {
+	public synchronized Track toPrevious() {
 		Track previous = played.pop();
-		remaining.push(previous);
+
+		if (current != null) {
+			remaining.addFirst(current);
+		}
 
 		current = previous;
 
 		return previous;
 	}
 
-	public void append(Track track) {
-		remaining.push(track);
+	public synchronized void append(Track track) {
+		remaining.addLast(track);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public String toHumanString() {
+	public  synchronized String toHumanString() {
 		StringBuilder stb = new StringBuilder();
 
 		played.forEach((t) -> stb.append("  " + t.getTitle() + "\n"));
