@@ -8,6 +8,7 @@ import cz.martlin.jmop.core.player.AbstractPlayer;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
 import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
@@ -39,21 +40,19 @@ public class JMOPPlayerBuilder {
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = JavaFXMediaPlayer.LOCAL_FORMAT;
 		boolean deleteOriginal = false;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  deleteOriginal);
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, deleteOriginal);
 		InternetConnectionStatus connection = new InternetConnectionStatus();
-		
-		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, gui);
-		
+		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
+		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, saver, gui);
+
 		MediaPlayerGuiReporter mediaPlayerGuiReporter = gui.getMediaPlayerGuiReporter();
-		
+
 		AbstractPlayer player = new JavaFXMediaPlayer(local, mediaPlayerGuiReporter);
-		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer, connection);
-		
+		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer, connection, saver);
+
 		ToPlaylistAppendingHandler trackPlayedHandler = new ToPlaylistAppendingHandler(playlister);
 		player.setHandler(trackPlayedHandler);
-		
-		
-		
-		return new JMOPPlayer(remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister, preparer);
+
+		return new JMOPPlayer(remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister, preparer, saver);
 	}
 }

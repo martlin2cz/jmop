@@ -6,6 +6,7 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.DownloaderTask;
@@ -19,16 +20,19 @@ public class TrackPreparer {
 	private final BaseLocalSource local;
 	private final BaseSourceConverter converter;
 	private final BaseSourceDownloader downloader;
+	private final AutomaticSavesPerformer saver;
 	private final GuiDescriptor gui;
 	private final ObjectProperty<DownloaderTask> currentTaskProperty;
 
+
 	public TrackPreparer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceConverter converter,
-			BaseSourceDownloader downloader, GuiDescriptor gui) {
+			BaseSourceDownloader downloader, AutomaticSavesPerformer saver, GuiDescriptor gui) {
 		super();
 		this.remote = remote;
 		this.local = local;
 		this.converter = converter;
 		this.downloader = downloader;
+		this.saver = saver;
 		this.gui = gui;
 		this.currentTaskProperty = new SimpleObjectProperty<>();
 	}
@@ -87,10 +91,7 @@ public class TrackPreparer {
 	}
 
 	private void trackDownloaded(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
-		
-		
-		Bundle bundle = track.getBundle();
-		local.saveBundle(bundle);
+		saver.saveCurrentBundle();
 
 		trackReady(track, onCompleteOrNull);
 		

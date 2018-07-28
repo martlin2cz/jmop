@@ -5,16 +5,19 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
+import cz.martlin.jmop.core.misc.WorksWithPlaylist;
+import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-public class JMOPPlaylister {
+public class JMOPPlaylister implements WorksWithPlaylist {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final AbstractPlayer player;
 	private final InternetConnectionStatus connection;
 	private final OnlinePlaylister online;
 	private final OfflinePlaylister offline;
+	private final AutomaticSavesPerformer saver;
 	
 	private final ObjectProperty<Track> currentTrackProperty;
 	private final ObjectProperty<Track> previousTrackProperty;
@@ -25,12 +28,13 @@ public class JMOPPlaylister {
 	private BetterPlaylistRuntime playlist;
 
 	public JMOPPlaylister(AbstractPlayer player, TrackPreparer preparer,
-			InternetConnectionStatus connection) {
+			InternetConnectionStatus connection, AutomaticSavesPerformer saver) {
 		super();
 		this.player = player;
 		this.connection = connection;
 		this.online = new OnlinePlaylister(preparer, this, connection);
 		this.offline = new OfflinePlaylister();
+		this.saver = saver;
 		this.currentTrackProperty = new SimpleObjectProperty<>();
 		this.previousTrackProperty = new SimpleObjectProperty<>();
 		this.nextTrackProperty = new SimpleObjectProperty<>();
@@ -140,7 +144,7 @@ public class JMOPPlaylister {
 
 	public void appendTrack(Track track) {
 		playlist.append(track);
-		//TODO save playlist here ...
+		saver.saveCurrentPlaylist();
 		
 		updateProperties();
 	

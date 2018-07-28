@@ -3,15 +3,18 @@ package cz.martlin.jmop.core.wrappers;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
+import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 
 public class JMOPPlaying {
 
 	private final JMOPPlaylister playlister;
+	private final AutomaticSavesPerformer saver;
 	private Playlist currentPlaylist;
 
-	public JMOPPlaying(JMOPPlaylister playlister, Playlist playlistToPlayOrNot) {
+	public JMOPPlaying(JMOPPlaylister playlister, AutomaticSavesPerformer saver, Playlist playlistToPlayOrNot) {
 		super();
 		this.playlister = playlister;
+		this.saver = saver;
 		this.currentPlaylist = playlistToPlayOrNot;
 
 		if (playlistToPlayOrNot != null) {
@@ -35,8 +38,11 @@ public class JMOPPlaying {
 		// TODO stop currently played?
 		this.currentPlaylist = playlist;
 		
+		saver.setPlaylist(playlist);
+		
 		BetterPlaylistRuntime runtime = playlist.getRuntime();
 		playlister.setPlaylist(runtime);
+		
 		startPlaying();
 	}
 

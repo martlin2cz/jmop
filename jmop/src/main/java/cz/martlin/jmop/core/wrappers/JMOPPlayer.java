@@ -8,6 +8,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.JMOPPlaylister;
 import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
@@ -21,10 +22,10 @@ public class JMOPPlayer {
 
 	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
 			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylister playlister,
-			TrackPreparer preparer) {
+			TrackPreparer preparer, AutomaticSavesPerformer saver) {
 
 		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, playlister, gui);
-		this.playing = new JMOPPlaying(playlister, playlistToPlayOrNot);
+		this.playing = new JMOPPlaying(playlister, saver, playlistToPlayOrNot);
 		this.gui = gui;
 		this.descriptor = new CoreGuiDescriptor(this);
 	}

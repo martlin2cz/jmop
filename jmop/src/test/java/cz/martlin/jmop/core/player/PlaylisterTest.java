@@ -14,6 +14,7 @@ import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
@@ -80,9 +81,10 @@ public class PlaylisterTest {
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		GuiDescriptor gui = null;
-		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, gui );
+		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
+		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, saver , gui );
 		
-		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer , connection);
+		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer , connection,saver);
 		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(playlister);
 		playlister.setPlaylist(playlist);
 
