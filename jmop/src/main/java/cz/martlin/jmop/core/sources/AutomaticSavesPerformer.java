@@ -27,7 +27,7 @@ public class AutomaticSavesPerformer {
 		saveBundle(bundle);
 	}
 
-	private void saveBundle(Bundle bundle) {
+	public void saveBundle(Bundle bundle) {
 		try {
 			// XXX hack! LOG.warn("Saving of bundle hacked here");
 			final String ALL_TRACKS = "all_tracks"; // FIXME !!!!

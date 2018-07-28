@@ -4,16 +4,20 @@
 		<Console name="Console" target="SYSTEM_ERR">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</Console>
+		<File name="File" fileName="logs.log">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</File>
 	</Appenders>
 	<Loggers>
 		<Root level="info">
+			<AppenderRef ref="File" />
 			<AppenderRef ref="Console" />
 		</Root>
 
-		<Logger
-			name="cz.martlin.jmop.core.sources.download.AbstractProcessEncapusulation"
-			level="info">
-			<AppenderRef ref="Console" />
-		</Logger>
+<!-- 		<Logger -->
+<!-- 			name="cz.martlin.jmop.core.sources.download.AbstractProcessEncapusulation" -->
+<!-- 			level="info"> -->
+<!-- 			<AppenderRef ref="Console" /> -->
+<!-- 		</Logger> -->
 	</Loggers>
 </Configuration>

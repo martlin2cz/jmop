@@ -30,10 +30,10 @@ public class OnlinePlaylister implements BasePlaylister {
 
 	@Override
 	public Track next() {
-		Track current = playlist.getCurrentlyPlayed();
+		Track next = playlist.toNextOrAnother();
 
 		try {
-			preparer.prepreNextAndAppend(current, playlister);
+			preparer.prepreNextAndAppend(next, playlister);
 		} catch (JMOPSourceException e) {
 			
 			connection.markOffline();
@@ -42,7 +42,7 @@ public class OnlinePlaylister implements BasePlaylister {
 			e.printStackTrace();
 		}
 
-		return playlist.toNextOrAnother();
+		return next;
 	}
 
 }
