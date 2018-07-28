@@ -23,7 +23,7 @@ public class JMOPPlayer {
 			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylister playlister,
 			TrackPreparer preparer) {
 
-		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, gui);
+		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, playlister, gui);
 		this.playing = new JMOPPlaying(playlister, playlistToPlayOrNot);
 		this.gui = gui;
 		this.descriptor = new CoreGuiDescriptor(this);

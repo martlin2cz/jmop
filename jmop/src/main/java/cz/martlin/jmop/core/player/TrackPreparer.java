@@ -43,9 +43,9 @@ public class TrackPreparer {
 		checkAndDownload(track, null);
 	}
 
-	public void prepreNextAndAppend(Track track, BetterPlaylistRuntime playlist) throws JMOPSourceException {
+	public void prepreNextAndAppend(Track track, JMOPPlaylister playlister) throws JMOPSourceException {
 		Track next = remote.getNextTrackOf(track);
-		checkAndDownload(next, (t) -> playlist.append(t));
+		checkAndDownload(next, (t) -> playlister.appendTrack(t));
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////

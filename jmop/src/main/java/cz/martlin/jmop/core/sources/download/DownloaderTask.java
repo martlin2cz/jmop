@@ -34,18 +34,21 @@ public class DownloaderTask extends Task<Boolean> implements ProgressListener {
 	@Override
 	protected Boolean call() throws Exception {
 		try {
+			updateProgress(0.0, THE_100_PERCENT);
 			updateMessage("Downloading ...");
 			boolean downloaded = downloader.download(track);
 			if (!downloaded) {
 				return false;
 			}
 
+			updateProgress(0.0, THE_100_PERCENT);
 			updateMessage("Converting ...");
 			boolean converted = converter.convert(track);
 			if (!converted) {
 				return false;
 			}
 			
+			updateProgress(THE_100_PERCENT, THE_100_PERCENT);
 			updateMessage("Done.");
 			return true;
 		} catch (Exception e) {

@@ -3,6 +3,7 @@ package cz.martlin.jmop.gui.util;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -15,12 +16,11 @@ public class GuiComplexActionsPerformer {
 
 	private GuiComplexActionsPerformer() {
 	}
-	
 
 	public static void showPlaylist(JMOPPlayer jmop) {
 		String playlistText = jmop.currentPlaylistAsString();
-		showInfo("Current playlist", "This is currently played playlist", playlistText );
-		
+		showInfo("Current playlist", "This is currently played playlist", playlistText);
+
 	}
 
 	public static void startNewBundle(JMOPPlayer jmop) {
@@ -56,20 +56,22 @@ public class GuiComplexActionsPerformer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	private static void runInBackground(RunnableWithException run) {
-		// Task<Void> task = new Task<Void>() {
-		// @Override
-		// protected Void call() throws Exception {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				Platform.runLater(() -> {
+					runAndHandleError(run);
+				});
+				return null;
+			}
+
+		};
+
+		Thread thread = new Thread(task, "BackgroundGUIOperationThread");
+		thread.start();
+		// Platform.runLater(() -> {
 		// runAndHandleError(run);
-		// return null;
-		// }
-		//
-		// };
-		//
-		// Thread thread = new Thread(task, "BackgroundGUIOperationThread");
-		// thread.start();
-		Platform.runLater(() -> {
-			runAndHandleError(run);
-		});
+		// });
 	}
 
 	private static void runAndHandleError(RunnableWithException run) {
@@ -84,7 +86,7 @@ public class GuiComplexActionsPerformer {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
-		
+
 		Label label = new Label(content);
 		label.setWrapText(true);
 		alert.getDialogPane().setContent(label);
@@ -104,6 +106,5 @@ public class GuiComplexActionsPerformer {
 
 		alert.show();
 	}
-
 
 }

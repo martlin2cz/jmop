@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.player;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.stream.StreamSeed;
 import javafx.concurrent.Task;
-
+@Deprecated
 public class PlaylisterTask extends Task<Void> {
 
 	public PlaylisterTask(StreamSeed seed) {

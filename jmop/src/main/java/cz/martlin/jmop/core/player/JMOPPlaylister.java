@@ -15,6 +15,7 @@ public class JMOPPlaylister {
 	private final InternetConnectionStatus connection;
 	private final OnlinePlaylister online;
 	private final OfflinePlaylister offline;
+	
 	private final ObjectProperty<Track> currentTrackProperty;
 	private final ObjectProperty<Track> previousTrackProperty;
 	private final ObjectProperty<Track> nextTrackProperty;
@@ -24,14 +25,11 @@ public class JMOPPlaylister {
 	private BetterPlaylistRuntime playlist;
 
 	public JMOPPlaylister(AbstractPlayer player, TrackPreparer preparer,
-			InternetConnectionStatus connection/*
-												 * , TrackPlayedHandler
-												 * playerHandler
-												 */) {
+			InternetConnectionStatus connection) {
 		super();
 		this.player = player;
 		this.connection = connection;
-		this.online = new OnlinePlaylister(preparer);
+		this.online = new OnlinePlaylister(preparer, this, connection);
 		this.offline = new OfflinePlaylister();
 		this.currentTrackProperty = new SimpleObjectProperty<>();
 		this.previousTrackProperty = new SimpleObjectProperty<>();
@@ -130,9 +128,7 @@ public class JMOPPlaylister {
 		Track current = playlist.getCurrentlyPlayed();
 		currentTrackProperty.set(current);
 
-		//TODO ne, určitě tam nechat null (už jenom kvůli právě probíhajícímu stahování)
-		
-		//TODO zkusit tam zakomponovat menubar :)
+		//TODO try to use menubar :)
 		
 		
 		Track next = playlist.getNextToPlayOrNull();
@@ -140,6 +136,14 @@ public class JMOPPlaylister {
 
 		Track previous = playlist.getLastPlayedOrNull();
 		previousTrackProperty.set(previous);
+	}
+
+	public void appendTrack(Track track) {
+		playlist.append(track);
+		//TODO save playlist here ...
+		
+		updateProperties();
+	
 	}
 
 }
