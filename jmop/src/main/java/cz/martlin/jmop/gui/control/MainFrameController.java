@@ -12,6 +12,7 @@ import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
 import cz.martlin.jmop.gui.DownloadGuiReporter;
 import cz.martlin.jmop.gui.comp.DownloadPane;
 import cz.martlin.jmop.gui.comp.TrackPane;
+import cz.martlin.jmop.gui.comp.TwoStateButton;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import cz.martlin.jmop.gui.util.MediaPlayerGuiReporter;
 import javafx.beans.property.BooleanProperty;
@@ -22,6 +23,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -39,6 +41,10 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private Button newPlaylistButt;
 	@FXML
 	private Button savePlaylistButt;
+	@FXML
+	private TwoStateButton playStopButt;
+	@FXML
+	private TwoStateButton pauseResumeButt;
 	@FXML
 	private Button playButt;
 	@FXML
@@ -72,9 +78,8 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	@FXML
 	private DownloadPane dwnldPane;
 
+	// TODO try to use menubar :)
 
-	//TODO try to use menubar :)
-	
 	private final JMOPPlayer jmop;
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -96,13 +101,19 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		trpnNextTrack.trackProperty().bind(jmop.getDescriptor().nextTrackProperty());
 
 		dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
-		
+
+		playStopButt.firstStateProperty().bind(jmop.getDescriptor().stoppedProperty());
+		pauseResumeButt.firstStateProperty().bind(jmop.getDescriptor().pausedProperty());
+		pauseResumeButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
+
 		stopButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
 		playButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty().not());
-		
-		pauseButt.disableProperty().bind(jmop.getDescriptor().pausedProperty().or(jmop.getDescriptor().stoppedProperty()));
-		resumeButt.disableProperty().bind(jmop.getDescriptor().pausedProperty().not().or(jmop.getDescriptor().stoppedProperty()));
-		
+
+		pauseButt.disableProperty()
+				.bind(jmop.getDescriptor().pausedProperty().or(jmop.getDescriptor().stoppedProperty()));
+		resumeButt.disableProperty()
+				.bind(jmop.getDescriptor().pausedProperty().not().or(jmop.getDescriptor().stoppedProperty()));
+
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -128,27 +139,27 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		GuiComplexActionsPerformer.savePlaylist(jmop);
 	}
 
-	public void playButtAction() throws JMOPSourceException {
+	public void playButtAction() {
 		jmop.startPlaying();
 	}
 
-	public void stopButtAction() throws JMOPSourceException {
+	public void stopButtAction() {
 		jmop.stopPlaying();
 	}
 
-	public void pauseButtAction() throws JMOPSourceException {
+	public void pauseButtAction() {
 		jmop.pausePlaying();
 	}
 
-	public void resumeButtAction() throws JMOPSourceException {
+	public void resumeButtAction() {
 		jmop.resumePlaying();
 	}
 
-	public void nextButtAction() throws JMOPSourceException {
+	public void nextButtAction() {
 		jmop.toNext();
 	}
 
-	public void prevButtAction() throws JMOPSourceException {
+	public void prevButtAction() {
 		jmop.toPrevious();
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
