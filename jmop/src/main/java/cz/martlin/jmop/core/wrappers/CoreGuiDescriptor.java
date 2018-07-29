@@ -2,8 +2,10 @@ package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.download.DownloaderTask;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.util.Duration;
 
 public class CoreGuiDescriptor {
 	private final JMOPPlayer jmop;
@@ -31,6 +33,10 @@ public class CoreGuiDescriptor {
 
 	public ReadOnlyBooleanProperty pausedProperty() {
 		return jmop.getPlaying().getPlaylister().pausedProperty();
+	}
+
+	public ReadOnlyObjectProperty<Duration> currentTimeProperty() {
+		return jmop.getPlaying().getPlaylister().getPlayer().currentTimeProperty();
 	}
 
 	public ReadOnlyObjectProperty<DownloaderTask> currentDownloadTaskProperty() {

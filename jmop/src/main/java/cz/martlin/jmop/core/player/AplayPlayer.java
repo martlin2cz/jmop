@@ -14,6 +14,9 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.download.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.util.Duration;
 
 public class AplayPlayer extends AbstractPlayer {
 	private static final TrackFileFormat APLAY_PLAY_FORMAT = TrackFileFormat.WAV;
@@ -27,6 +30,11 @@ public class AplayPlayer extends AbstractPlayer {
 		super(local, APLAY_PLAY_FORMAT);
 	}
 
+	@Override
+	public ReadOnlyObjectProperty<Duration> currentTimeProperty() {
+		return new SimpleObjectProperty<Duration>(new Duration(0));
+	}
+	
 	@Override
 	protected void doStartPlaying(Track track, File file) {
 		AplayProcess process = new AplayProcess();
@@ -56,6 +64,11 @@ public class AplayPlayer extends AbstractPlayer {
 			// TODO error report
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	protected void doSeek(Duration to) {
+		LOG.warn("Seek not supported, will ignore");
 	}
 
 	private void runProcessInBackround(AplayProcess process, Track track, File file, TrackPlayedHandler handler) {

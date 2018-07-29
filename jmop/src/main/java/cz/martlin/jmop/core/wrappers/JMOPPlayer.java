@@ -13,6 +13,7 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import javafx.util.Duration;
 
 public class JMOPPlayer {
 	private final JMOPSources sources;
@@ -84,11 +85,15 @@ public class JMOPPlayer {
 
 	public void toNext() {
 		playing.toNext();
-		// TODO sources -> check and load next
 	}
 
 	public void toPrevious() {
 		playing.toPrevious();
+	}
+	
+
+	public void seek(Duration to) {
+		playing.seek(to);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,5 +111,6 @@ public class JMOPPlayer {
 		Playlist playlist = playing.getCurrentPlaylist();
 		return playlist.toHumanString();
 	}
+
 
 }

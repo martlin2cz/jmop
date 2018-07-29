@@ -7,7 +7,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
-import javafx.beans.value.WritableBooleanValue;
+import javafx.util.Duration;
 
 public class JMOPPlaylister {
 
@@ -41,6 +41,10 @@ public class JMOPPlaylister {
 		this.offline.setPlaylist(playlist);
 		// this.playerHandler.setPlaylist(playlist);
 
+	}
+	
+	public BasePlayer getPlayer() {
+		return player;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -88,6 +92,13 @@ public class JMOPPlaylister {
 
 		player.resume();
 	}
+	
+
+	public void seek(Duration to) {
+		LOG.info("Seeking");
+
+		player.seek(to);
+	}
 
 	public void appendTrack(Track track) {
 		playlist.append(track);
@@ -114,5 +125,6 @@ public class JMOPPlaylister {
 			return online;
 		}
 	}
+
 
 }

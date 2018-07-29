@@ -8,6 +8,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.util.Duration;
 
 public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPlaylist {
 	final ObjectProperty<Track> currentTrackProperty;
@@ -78,6 +79,11 @@ public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPl
 		super.resume();
 		updateProperties(false, false);
 	}
+	
+
+	public void seek(Duration to) {
+		super.seek(to);
+	}
 
 	public void appendTrack(Track track) {
 		super.appendTrack(track);
@@ -102,5 +108,6 @@ public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPl
 		stoppedProperty.set(stopped);
 		pausedProperty.set(paused);
 	}
+
 
 }

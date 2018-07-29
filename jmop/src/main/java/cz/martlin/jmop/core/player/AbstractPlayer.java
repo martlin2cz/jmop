@@ -6,15 +6,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.util.Duration;
 
 public abstract class AbstractPlayer implements BasePlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseLocalSource local;
 	private final TrackFileFormat supportedFormat;
+
 	private TrackPlayedHandler handler;
 
 	private boolean playing;
@@ -31,7 +35,6 @@ public abstract class AbstractPlayer implements BasePlayer {
 	public TrackPlayedHandler getHandler() {
 		return handler;
 	}
-	
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,7 +47,7 @@ public abstract class AbstractPlayer implements BasePlayer {
 	public boolean supports(TrackFileFormat format) {
 		return supportedFormat.equals(format);
 	}
-	
+
 	protected void onPlayed(Track track) {
 		if (handler != null) {
 			handler.trackPlayed(track);
@@ -100,7 +103,7 @@ public abstract class AbstractPlayer implements BasePlayer {
 
 	@Override
 	public synchronized void resume() {
-		LOG.info("Stopping playing");
+		LOG.info("Resuming playing");
 		if (!paused) {
 			return;
 		}
@@ -111,6 +114,15 @@ public abstract class AbstractPlayer implements BasePlayer {
 	}
 
 	protected abstract void doResumePlaying();
+
+	@Override
+	public void seek(Duration to) {
+		LOG.info("Seeking to " + DurationUtilities.toHumanString(to));
+
+		doSeek(to);
+	}
+
+	protected abstract void doSeek(Duration to);
 
 	/////////////////////////////////////////////////////////////////////////////////////
 }

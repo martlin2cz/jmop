@@ -1,7 +1,11 @@
 package cz.martlin.jmop.core.player;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.util.Duration;
 
 public class TestingPlayer implements BasePlayer {
 
@@ -23,6 +27,11 @@ public class TestingPlayer implements BasePlayer {
 	@Override
 	public boolean supports(TrackFileFormat format) {
 		return true;
+	}
+	
+	@Override
+	public ReadOnlyObjectProperty<Duration> currentTimeProperty() {
+		return new SimpleObjectProperty<>(new Duration(0));
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -47,6 +56,11 @@ public class TestingPlayer implements BasePlayer {
 	@Override
 	public void resume() {
 		System.out.println("Player resumed, plaing again " + playing);
+	}
+	
+	@Override
+	public void seek(Duration to) {
+		System.out.println("Seeking to " + DurationUtilities.toHumanString(to));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

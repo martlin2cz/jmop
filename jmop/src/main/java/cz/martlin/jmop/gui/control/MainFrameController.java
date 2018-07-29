@@ -4,15 +4,17 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
 import cz.martlin.jmop.gui.DownloadGuiReporter;
 import cz.martlin.jmop.gui.comp.DownloadPane;
+import cz.martlin.jmop.gui.comp.GuiChangableSlider;
 import cz.martlin.jmop.gui.comp.TrackPane;
 import cz.martlin.jmop.gui.comp.TwoStateButton;
+import cz.martlin.jmop.gui.util.BindingsUtils;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import cz.martlin.jmop.gui.util.MediaPlayerGuiReporter;
 import javafx.beans.property.BooleanProperty;
@@ -23,7 +25,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -31,6 +33,7 @@ import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
 public class MainFrameController implements Initializable, GuiDescriptor {
+
 	@FXML
 	private Button showPlaylistButt;
 	@FXML
@@ -45,6 +48,8 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private TwoStateButton playStopButt;
 	@FXML
 	private TwoStateButton pauseResumeButt;
+	@FXML
+	private GuiChangableSlider sliTrackProgress;
 	@FXML
 	private Button playButt;
 	@FXML
@@ -81,6 +86,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	// TODO try to use menubar :)
 
 	private final JMOPPlayer jmop;
+	private ChangeListener<Duration> currentTimeChangeListener;
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public MainFrameController() {
@@ -114,6 +120,55 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		resumeButt.disableProperty()
 				.bind(jmop.getDescriptor().pausedProperty().not().or(jmop.getDescriptor().stoppedProperty()));
 
+		jmop.getDescriptor().currentTrackProperty()
+				.addListener((observable, oldVal, newVal) -> trackToSliderMax(newVal));
+		sliTrackProgress.guiChangingProperty()
+				.addListener((observable, oldVal, newVal) -> sliderGuiChangingChanged(newVal));
+		sliTrackProgress.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
+
+		currentTimeChangeListener = (obs, oldv, newv) -> //
+		sliTrackProgress.valueProperty().set(BindingsUtils.durationToMilis(newv));
+
+		bindPlayerCurrentTimeToSlider();
+
+		// jmop.getDescriptor().currentTimeProperty().addListener((o, ol, nw) ->
+		// System.out.println(nw));
+	}
+
+	private void sliderGuiChangingChanged(boolean isGuiChanging) {
+		DoubleProperty property = sliTrackProgress.valueProperty();
+
+		if (isGuiChanging) {
+			unbindPlayerCurrentTimeFromSlider(property);
+		} else {
+			Duration duration = BindingsUtils.milisToDuration(property.get());
+			jmop.seek(duration);
+
+			bindPlayerCurrentTimeToSlider();
+		}
+	}
+
+	private void unbindPlayerCurrentTimeFromSlider(DoubleProperty property) {
+		// FIXME binding not working :-O
+		// property.unbind();
+		
+		jmop.getDescriptor().currentTimeProperty().removeListener(currentTimeChangeListener);
+	}
+
+	private void bindPlayerCurrentTimeToSlider() {
+		// FIXME binding not working :-O
+		// DoubleBinding binding = new
+		// DurationToDoubleMilisBinding(jmop.getDescriptor().currentTimeProperty());
+		// sliTrackProgress.valueProperty().bind(binding);
+
+		jmop.getDescriptor().currentTimeProperty().addListener(currentTimeChangeListener);
+
+	}
+
+	private void trackToSliderMax(Track track) {
+		Duration duration = track.getDuration();
+		double milis = BindingsUtils.durationToMilis(duration);
+		sliTrackProgress.setMax(milis);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -162,6 +217,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	public void prevButtAction() {
 		jmop.toPrevious();
 	}
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

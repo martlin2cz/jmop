@@ -4,6 +4,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
+import javafx.util.Duration;
 
 public class JMOPPlaying {
 
@@ -23,6 +24,8 @@ public class JMOPPlaying {
 			playlister.setPlaylist(runtime);
 		}
 	}
+
+	
 	
 	protected JMOPPlaylisterWithGui getPlaylister() {
 		return playlister;
@@ -69,6 +72,10 @@ public class JMOPPlaying {
 
 	public void toPrevious() {
 		playlister.toPrevious();
+	}
+
+	public void seek(Duration to) {
+		playlister.seek(to);
 	}
 
 }
