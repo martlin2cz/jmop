@@ -72,6 +72,9 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	@FXML
 	private DownloadPane dwnldPane;
 
+
+	//TODO try to use menubar :)
+	
 	private final JMOPPlayer jmop;
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,6 +96,13 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		trpnNextTrack.trackProperty().bind(jmop.getDescriptor().nextTrackProperty());
 
 		dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
+		
+		stopButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
+		playButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty().not());
+		
+		pauseButt.disableProperty().bind(jmop.getDescriptor().pausedProperty().or(jmop.getDescriptor().stoppedProperty()));
+		resumeButt.disableProperty().bind(jmop.getDescriptor().pausedProperty().not().or(jmop.getDescriptor().stoppedProperty()));
+		
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

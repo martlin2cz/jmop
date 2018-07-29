@@ -14,6 +14,8 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class DefaultLocalSource implements BaseLocalSource {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	
+	public static final TrackFileFormat MAIN_STORE_FORMAT = TrackFileFormat.MP3;
 
 	private final AbstractFileSystemAccessor fileSystem;
 

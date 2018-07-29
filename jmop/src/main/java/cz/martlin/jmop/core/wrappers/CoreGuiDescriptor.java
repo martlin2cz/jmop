@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.download.DownloaderTask;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 
 public class CoreGuiDescriptor {
@@ -15,13 +16,21 @@ public class CoreGuiDescriptor {
 	public ReadOnlyObjectProperty<Track> currentTrackProperty() {
 		return jmop.getPlaying().getPlaylister().currentTrackProperty();
 	}
-	
+
 	public ReadOnlyObjectProperty<Track> previousTrackProperty() {
 		return jmop.getPlaying().getPlaylister().previousTrackProperty();
 	}
-	
+
 	public ReadOnlyObjectProperty<Track> nextTrackProperty() {
 		return jmop.getPlaying().getPlaylister().nextTrackProperty();
+	}
+
+	public ReadOnlyBooleanProperty stoppedProperty() {
+		return jmop.getPlaying().getPlaylister().stoppedProperty();
+	}
+
+	public ReadOnlyBooleanProperty pausedProperty() {
+		return jmop.getPlaying().getPlaylister().pausedProperty();
 	}
 
 	public ReadOnlyObjectProperty<DownloaderTask> currentDownloadTaskProperty() {

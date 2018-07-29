@@ -43,7 +43,7 @@ public class PlaylisterTest {
 	public void test() {
 		//TestingTools.runAsJavaFX(() -> { TODO } );
 		
-		JMOPPlaylister playlister = createPlaylister();
+		JMOPPlaylisterWithGui playlister = createPlaylister();
 
 		playlister.play();
 
@@ -52,7 +52,7 @@ public class PlaylisterTest {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private JMOPPlaylister createPlaylister() {
+	private JMOPPlaylisterWithGui createPlaylister() {
 		File root = createRoot();
 
 		AbstractRemoteSource remote = new YoutubeSource();
@@ -77,14 +77,14 @@ public class PlaylisterTest {
 
 		Track track = createInitialTrack(local, bundle);
 		BetterPlaylistRuntime playlist = new BetterPlaylistRuntime(track);
-		AbstractPlayer player = new TestingPlayer();
+		BasePlayer player = new TestingPlayer();
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		GuiDescriptor gui = null;
 		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
 		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, saver , gui );
 		
-		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer , connection,saver);
+		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, preparer , connection,saver);
 		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(playlister);
 		playlister.setPlaylist(playlist);
 

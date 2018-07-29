@@ -2,16 +2,16 @@ package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
-import cz.martlin.jmop.core.player.JMOPPlaylister;
+import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 
 public class JMOPPlaying {
 
-	private final JMOPPlaylister playlister;
+	private final JMOPPlaylisterWithGui playlister;
 	private final AutomaticSavesPerformer saver;
 	private Playlist currentPlaylist;
 
-	public JMOPPlaying(JMOPPlaylister playlister, AutomaticSavesPerformer saver, Playlist playlistToPlayOrNot) {
+	public JMOPPlaying(JMOPPlaylisterWithGui playlister, AutomaticSavesPerformer saver, Playlist playlistToPlayOrNot) {
 		super();
 		this.playlister = playlister;
 		this.saver = saver;
@@ -24,7 +24,7 @@ public class JMOPPlaying {
 		}
 	}
 	
-	protected JMOPPlaylister getPlaylister() {
+	protected JMOPPlaylisterWithGui getPlaylister() {
 		return playlister;
 	}
 

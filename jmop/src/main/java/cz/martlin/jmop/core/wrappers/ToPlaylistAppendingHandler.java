@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.player.JMOPPlaylister;
+import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.player.TrackPlayedHandler;
 
 public class ToPlaylistAppendingHandler implements TrackPlayedHandler {
@@ -10,13 +10,13 @@ public class ToPlaylistAppendingHandler implements TrackPlayedHandler {
 
 	// private BetterPlaylistRuntime playlist;
 
-	private final JMOPPlaylister playlister;
+	private final JMOPPlaylisterWithGui playlister;
 
 	// public void setPlaylist(BetterPlaylistRuntime playlist) {
 	// this.playlist = playlist;
 	// }
 
-	public ToPlaylistAppendingHandler(JMOPPlaylister playlister) {
+	public ToPlaylistAppendingHandler(JMOPPlaylisterWithGui playlister) {
 		this.playlister = playlister;
 	}
 

@@ -10,58 +10,71 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.download.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
-public class AplayPlayer extends WavPlayer {
+public class AplayPlayer extends AbstractPlayer {
+	private static final TrackFileFormat APLAY_PLAY_FORMAT = TrackFileFormat.WAV;
+
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private TrackPlayedHandler handler;
 	private AplayProcess process;
-	private File file;
-
-
+	private Track currentTrack;
 
 	public AplayPlayer(BaseLocalSource local) {
-		super(local);
-	}
-	
-	public void setHandler(TrackPlayedHandler handler) {
-		this.handler = handler;
+		super(local, APLAY_PLAY_FORMAT);
 	}
 
 	@Override
-	public void playWAVfile(File file, Track track) {
-		this.file = file;
-		this.process = new AplayProcess();
+	protected void doStartPlaying(Track track, File file) {
+		AplayProcess process = new AplayProcess();
+
+		runProcessInBackround(process, track, file, getHandler());
 		
+		this.process = process;
+	}
+
+	@Override
+	protected void doStopPlaying() {
+		this.process.stop();
+	}
+
+	@Override
+	protected void doPausePlaying() {
+		LOG.warn("Pause not supported, will stop plaing");
+		stop();
+	}
+
+	@Override
+	protected void doResumePlaying() {
+		LOG.warn("Resume not supported, will play from begin");
 		try {
-			process.run(file);
-		} catch (ExternalProgramException e) {
+			startPlayling(currentTrack);
+		} catch (JMOPSourceException e) {
+			// TODO error report
 			e.printStackTrace();
 		}
-		
-		if (handler != null) {
-			handler.trackPlayed(track);
-		}
 	}
 
-	@Override
-	public void stopPlaying() {
-		process.stop();
+	private void runProcessInBackround(AplayProcess process, Track track, File file, TrackPlayedHandler handler) {
+		Runnable run = () -> {
+			try {
+				process.run(file);
+			} catch (ExternalProgramException e) {
+				e.printStackTrace();
+			}
+
+			if (handler != null) {
+				handler.trackPlayed(track);
+			}
+		};
+
+		Thread thread = new Thread(run, "AplayPlayerThread");
+		thread.start();
 	}
 
-	@Override
-	public void pause() {
-		LOG.warn("Pause not supported, will stop plaing");
-		process.stop();
-	}
-
-	@Override
-	public void resume() {
-		LOG.warn("Resume not supported, will play from begin");
-		playWAVfile(file, null);
-	}
 
 	public class AplayProcess extends AbstractProcessEncapusulation<File, Void> {
 
@@ -95,4 +108,5 @@ public class AplayPlayer extends WavPlayer {
 		}
 
 	}
+
 }

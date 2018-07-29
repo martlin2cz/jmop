@@ -4,8 +4,9 @@ import java.io.File;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.player.AbstractPlayer;
-import cz.martlin.jmop.core.player.JMOPPlaylister;
+import cz.martlin.jmop.core.player.BasePlayer;
+import cz.martlin.jmop.core.player.ConvertingPlayer;
+import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
@@ -24,7 +25,6 @@ import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.gui.util.JavaFXMediaPlayer;
-import cz.martlin.jmop.gui.util.MediaPlayerGuiReporter;
 
 public class JMOPPlayerBuilder {
 	public static JMOPPlayer create(GuiDescriptor gui, File root, Playlist playlistToPlayOrNot) {
@@ -38,17 +38,17 @@ public class JMOPPlayerBuilder {
 
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
-		TrackFileFormat outputFormat = JavaFXMediaPlayer.LOCAL_FORMAT;
+		TrackFileFormat outputFormat = DefaultLocalSource.MAIN_STORE_FORMAT;
 		boolean deleteOriginal = false;
 		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, deleteOriginal);
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
 		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, saver, gui);
 
-		MediaPlayerGuiReporter mediaPlayerGuiReporter = gui.getMediaPlayerGuiReporter();
-
-		AbstractPlayer player = new JavaFXMediaPlayer(local, mediaPlayerGuiReporter);
-		JMOPPlaylister playlister = new JMOPPlaylister(player, preparer, connection, saver);
+		BasePlayer player = new JavaFXMediaPlayer(local);
+		TrackFileFormat formatOfWrapped = JavaFXMediaPlayer.PLAYER_FORMAT;
+		BasePlayer convertingPlayer = new ConvertingPlayer(local, player, formatOfWrapped );
+		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(convertingPlayer, preparer, connection, saver);
 
 		ToPlaylistAppendingHandler trackPlayedHandler = new ToPlaylistAppendingHandler(playlister);
 		player.setHandler(trackPlayedHandler);

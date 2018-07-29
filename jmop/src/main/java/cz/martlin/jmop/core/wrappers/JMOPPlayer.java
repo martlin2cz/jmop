@@ -5,7 +5,7 @@ import java.util.List;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.JMOPPlaylister;
+import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
@@ -21,7 +21,7 @@ public class JMOPPlayer {
 	private final CoreGuiDescriptor descriptor;
 
 	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylister playlister,
+			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylisterWithGui playlister,
 			TrackPreparer preparer, AutomaticSavesPerformer saver) {
 
 		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, playlister, gui);

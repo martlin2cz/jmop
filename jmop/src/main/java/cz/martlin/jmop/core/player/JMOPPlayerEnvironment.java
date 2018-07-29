@@ -32,21 +32,21 @@ import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 @Deprecated
 public class JMOPPlayerEnvironment {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	private final JMOPPlaylister playlister;
+	private final JMOPPlaylisterWithGui playlister;
 	private final BaseLocalSource local;
 	private final AbstractRemoteSource remote;
 
 	private Bundle currentBundle;
 	private Playlist currentPlaylist;
 
-	public JMOPPlayerEnvironment(JMOPPlaylister playlister, BaseLocalSource local, AbstractRemoteSource remote) {
+	public JMOPPlayerEnvironment(JMOPPlaylisterWithGui playlister, BaseLocalSource local, AbstractRemoteSource remote) {
 		super();
 		this.playlister = playlister;
 		this.local = local;
 		this.remote = remote;
 	}
 
-	public JMOPPlaylister getPlaylister() {
+	public JMOPPlaylisterWithGui getPlaylister() {
 		return playlister;
 	}
 	
@@ -98,7 +98,7 @@ public class JMOPPlayerEnvironment {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public static JMOPPlayerEnvironment create(File rootDirectory, AbstractPlayer player) {
+	public static JMOPPlayerEnvironment create(File rootDirectory, BasePlayer player) {
 		AbstractRemoteSource remote = new YoutubeSource();
 		BaseLocalSource local = createLocal(rootDirectory);
 
@@ -111,7 +111,7 @@ public class JMOPPlayerEnvironment {
 		Sources sources = new Sources(local, remote, downloader, converter);
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
-		JMOPPlaylister playlister = new JMOPPlaylister(player, null, connection, null);
+		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, null, connection, null);
 
 		return new JMOPPlayerEnvironment(playlister, local, remote);
 	}

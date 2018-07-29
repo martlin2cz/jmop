@@ -5,42 +5,29 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.WorksWithPlaylist;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.WritableBooleanValue;
 
-public class JMOPPlaylister implements WorksWithPlaylist {
+public class JMOPPlaylister {
+
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-
-	private final AbstractPlayer player;
+	private final BasePlayer player;
 	private final InternetConnectionStatus connection;
 	private final OnlinePlaylister online;
 	private final OfflinePlaylister offline;
 	private final AutomaticSavesPerformer saver;
-	
-	private final ObjectProperty<Track> currentTrackProperty;
-	private final ObjectProperty<Track> previousTrackProperty;
-	private final ObjectProperty<Track> nextTrackProperty;
-	// private final TrackPlayedHandler playerHandler;
-
-	// TODO shuffle?
 	private BetterPlaylistRuntime playlist;
 
-	public JMOPPlaylister(AbstractPlayer player, TrackPreparer preparer,
-			InternetConnectionStatus connection, AutomaticSavesPerformer saver) {
+	public JMOPPlaylister(BasePlayer player, TrackPreparer preparer, InternetConnectionStatus connection,
+			AutomaticSavesPerformer saver) {
 		super();
+
 		this.player = player;
 		this.connection = connection;
 		this.online = new OnlinePlaylister(preparer, this, connection);
 		this.offline = new OfflinePlaylister();
 		this.saver = saver;
-		this.currentTrackProperty = new SimpleObjectProperty<>();
-		this.previousTrackProperty = new SimpleObjectProperty<>();
-		this.nextTrackProperty = new SimpleObjectProperty<>();
-		// this.playerHandler = playerHandler;
-
-		this.playlist = null;
 	}
 
 	public BetterPlaylistRuntime getPlaylist() {
@@ -56,18 +43,6 @@ public class JMOPPlaylister implements WorksWithPlaylist {
 
 	}
 
-	public ObjectProperty<Track> currentTrackProperty() {
-		return currentTrackProperty;
-	}
-
-	public ObjectProperty<Track> previousTrackProperty() {
-		return previousTrackProperty;
-	}
-
-	public ObjectProperty<Track> nextTrackProperty() {
-		return nextTrackProperty;
-	}
-
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void play() {
@@ -75,14 +50,12 @@ public class JMOPPlaylister implements WorksWithPlaylist {
 
 		Track track = playlist.startToPlay();
 
-		updateProperties();
-		player.startPlayling(track);
+		startPlayingWithExceptionCheck(track);
 	}
 
 	public void stop() {
 		LOG.info("Stopping");
 
-		updateProperties();
 		player.stop();
 	}
 
@@ -92,8 +65,7 @@ public class JMOPPlaylister implements WorksWithPlaylist {
 		BasePlaylister playlister = getPlaylisterStrategy();
 		Track track = playlister.next();
 
-		updateProperties();
-		player.startPlayling(track);
+		startPlayingWithExceptionCheck(track);
 	}
 
 	public void toPrevious() {
@@ -102,21 +74,36 @@ public class JMOPPlaylister implements WorksWithPlaylist {
 		BasePlaylister playlister = getPlaylisterStrategy();
 		Track track = playlister.previous();
 
-		updateProperties();
-		player.startPlayling(track);
+		startPlayingWithExceptionCheck(track);
 	}
 
 	public void pause() {
 		LOG.info("Paused");
+
 		player.pause();
 	}
 
 	public void resume() {
 		LOG.info("Resumed");
+
 		player.resume();
 	}
 
+	public void appendTrack(Track track) {
+		playlist.append(track);
+		saver.saveCurrentPlaylist();
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	private void startPlayingWithExceptionCheck(Track track) {
+		try {
+			player.startPlayling(track);
+		} catch (JMOPSourceException e) {
+			// TODO exception
+			e.printStackTrace();
+		}
+	}
 
 	private BasePlaylister getPlaylisterStrategy() {
 		boolean isOffline = connection.isOffline();
@@ -126,28 +113,6 @@ public class JMOPPlaylister implements WorksWithPlaylist {
 		} else {
 			return online;
 		}
-	}
-
-	private void updateProperties() {
-		Track current = playlist.getCurrentlyPlayed();
-		currentTrackProperty.set(current);
-
-		//TODO try to use menubar :)
-		
-		
-		Track next = playlist.getNextToPlayOrNull();
-		nextTrackProperty.set(next);
-
-		Track previous = playlist.getLastPlayedOrNull();
-		previousTrackProperty.set(previous);
-	}
-
-	public void appendTrack(Track track) {
-		playlist.append(track);
-		saver.saveCurrentPlaylist();
-		
-		updateProperties();
-	
 	}
 
 }

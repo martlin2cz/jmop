@@ -70,7 +70,7 @@ public class JavaFXMediaPlayerTest {
 				converter.convert(track);
 
 				MediaPlayerGuiReporter reporter = new TestingReporter();
-				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local, reporter);
+				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local);
 				// AbstractPlayer player = new AplayPlayer(local);
 				
 //				TrackPlayedHandler handler = null;

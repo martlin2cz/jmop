@@ -43,7 +43,6 @@ public class Bundle {
 
 	public Track createTrack(String identifier, String title, String description, Duration duration) {
 		Track track = new Track(this, identifier, title, description, duration);
-		
 		this.tracks.put(identifier, track);
 		return track;
 	}
@@ -76,7 +75,8 @@ public class Bundle {
 		return tracks.getTracks().stream() //
 				.collect(Collectors.toMap( //
 						(t) -> t.getIdentifier(), //
-						(t) -> t));
+						(t) -> t, //
+						(t1, t2) -> t1));
 	}
 
 	@Override

@@ -92,7 +92,7 @@ public class TrackPreparer {
 
 	private void trackDownloaded(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
 		Bundle bundle = track.getBundle();
-		saver.saveBundle(bundle);
+		saver.saveBundle(bundle); //TODO FIXME quite hack
 
 		trackReady(track, onCompleteOrNull);
 		
