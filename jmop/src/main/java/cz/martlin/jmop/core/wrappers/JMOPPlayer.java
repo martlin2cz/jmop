@@ -4,6 +4,7 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.player.TrackPreparer;
@@ -22,8 +23,8 @@ public class JMOPPlayer {
 	private final CoreGuiDescriptor descriptor;
 
 	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot, JMOPPlaylisterWithGui playlister,
-			TrackPreparer preparer, AutomaticSavesPerformer saver) {
+			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot,
+			JMOPPlaylisterWithGui playlister, TrackPreparer preparer, AutomaticSavesPerformer saver) {
 
 		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, playlister, gui);
 		this.playing = new JMOPPlaying(playlister, saver, playlistToPlayOrNot);
@@ -38,8 +39,23 @@ public class JMOPPlayer {
 	protected JMOPPlaying getPlaying() {
 		return playing;
 	}
+
 	public CoreGuiDescriptor getDescriptor() {
 		return descriptor;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public Bundle getCurrentBundle() {
+		if (playing.getCurrentPlaylist() != null) {
+			return playing.getCurrentPlaylist().getBundle();
+		} else {
+			return null;
+		}
+	}
+
+	public Playlist getCurrentPlaylist() {
+		return playing.getCurrentPlaylist();
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,14 +71,21 @@ public class JMOPPlayer {
 	}
 
 	public void startNewPlaylist(String querySeed) throws JMOPSourceException {
-		Bundle bundle = playing.getCurrentPlaylist().getBundle();
+		Bundle bundle = getCurrentBundle();
 		Playlist playlist = sources.createNewPlaylist(bundle, querySeed);
 		playing.startPlayingPlaylist(playlist);
 	}
 
 	public void savePlaylistAs(String newPlaylistName) throws JMOPSourceException {
-		Playlist playlist = playing.getCurrentPlaylist();
+		Playlist playlist = getCurrentPlaylist();
 		sources.savePlaylist(playlist, newPlaylistName);
+	}
+	
+
+	public void loadAndAddTrack(String querySeed) throws JMOPSourceException {
+		Bundle bundle = getCurrentBundle();
+		Track track = sources.queryAndLoad(bundle, querySeed);
+		playing.addToPlaylist(track);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -90,7 +113,6 @@ public class JMOPPlayer {
 	public void toPrevious() {
 		playing.toPrevious();
 	}
-	
 
 	public void seek(Duration to) {
 		playing.seek(to);

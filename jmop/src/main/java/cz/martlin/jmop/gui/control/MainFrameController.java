@@ -1,6 +1,7 @@
 package cz.martlin.jmop.gui.control;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -12,6 +13,7 @@ import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
 import cz.martlin.jmop.gui.DownloadGuiReporter;
 import cz.martlin.jmop.gui.comp.DownloadPane;
 import cz.martlin.jmop.gui.comp.GuiChangableSlider;
+import cz.martlin.jmop.gui.comp.JMOPMainMenu;
 import cz.martlin.jmop.gui.comp.TrackPane;
 import cz.martlin.jmop.gui.comp.TwoStateButton;
 import cz.martlin.jmop.gui.util.BindingsUtils;
@@ -27,7 +29,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
@@ -50,6 +54,9 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private TwoStateButton pauseResumeButt;
 	@FXML
 	private GuiChangableSlider sliTrackProgress;
+	@FXML
+	private JMOPMainMenu mainMenu;
+
 	@FXML
 	private Button playButt;
 	@FXML
@@ -83,9 +90,8 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	@FXML
 	private DownloadPane dwnldPane;
 
-	// TODO try to use menubar :)
-
 	private final JMOPPlayer jmop;
+	private final GuiComplexActionsPerformer actions;
 	private ChangeListener<Duration> currentTimeChangeListener;
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,11 +99,15 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		File rootDirectory = new File("/tmp/jmop-gui");
 
 		this.jmop = JMOPPlayerBuilder.create(this, rootDirectory, null);
+		this.actions = new GuiComplexActionsPerformer(jmop);
 
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
+		mainMenu.jmopProperty().set(jmop);
+
 		initBindings();
 	}
 
@@ -151,7 +161,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private void unbindPlayerCurrentTimeFromSlider(DoubleProperty property) {
 		// FIXME binding not working :-O
 		// property.unbind();
-		
+
 		jmop.getDescriptor().currentTimeProperty().removeListener(currentTimeChangeListener);
 	}
 
@@ -173,25 +183,25 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	public void showPlaylistButtAction() {
-		GuiComplexActionsPerformer.showPlaylist(jmop);
+		actions.showPlaylist();
 	}
 
 	public void newBundleButtAction() {
-		GuiComplexActionsPerformer.startNewBundle(jmop);
+		actions.startNewBundle();
 	}
 
 	public void startPlaylistButtAction() {
-		GuiComplexActionsPerformer.startPlaylist(jmop);
+		actions.startPlaylist();
 	}
 
 	// TODO create new playlist in brand new bundle?
 
 	public void newPlaylistButtAction() {
-		GuiComplexActionsPerformer.newPlaylist(jmop);
+		actions.newPlaylist();
 	}
 
 	public void savePlaylistButtAction() {
-		GuiComplexActionsPerformer.savePlaylist(jmop);
+		actions.savePlaylist();
 	}
 
 	public void playButtAction() {

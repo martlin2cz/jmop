@@ -1,6 +1,7 @@
 package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
@@ -48,6 +49,12 @@ public class JMOPPlaying {
 		
 		startPlaying();
 	}
+	
+	
+	public void addToPlaylist(Track track) {
+		playlister.appendTrack(track);
+	}
+
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	public void startPlaying() {
@@ -78,4 +85,7 @@ public class JMOPPlaying {
 		playlister.seek(to);
 	}
 
+
+
+	
 }

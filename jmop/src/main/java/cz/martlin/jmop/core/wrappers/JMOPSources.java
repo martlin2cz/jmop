@@ -73,6 +73,10 @@ public class JMOPSources {
 		Bundle bundle = playlist.getBundle();
 		local.savePlaylist(bundle, playlist);
 	}
+	
+	public Track queryAndLoad(Bundle bundle, String querySeed) throws JMOPSourceException {
+		return prepareInitialTrack(bundle, querySeed);
+	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public List<String> listAllBundles() throws JMOPSourceException {
@@ -103,6 +107,8 @@ public class JMOPSources {
 		// TODO save here?
 		return playlist;
 	}
+
+	
 
 
 
