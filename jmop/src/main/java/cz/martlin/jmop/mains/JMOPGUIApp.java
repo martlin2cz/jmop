@@ -20,7 +20,7 @@ public class JMOPGUIApp extends Application {
         primaryStage.setTitle("JMOP");
        
        
-        primaryStage.setScene(new Scene(root, 480, 320));
+        primaryStage.setScene(new Scene(root, 640, 280));
         primaryStage.show();
     }
 }

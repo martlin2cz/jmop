@@ -57,14 +57,14 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	@FXML
 	private JMOPMainMenu mainMenu;
 
-	@FXML
-	private Button playButt;
-	@FXML
-	private Button stopButt;
-	@FXML
-	private Button pauseButt;
-	@FXML
-	private Button resumeButt;
+//	@FXML
+//	private Button playButt;
+//	@FXML
+//	private Button stopButt;
+//	@FXML
+//	private Button pauseButt;
+//	@FXML
+//	private Button resumeButt;
 	@FXML
 	private Button nextButt;
 	@FXML
@@ -122,13 +122,6 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		pauseResumeButt.firstStateProperty().bind(jmop.getDescriptor().pausedProperty());
 		pauseResumeButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
 
-		stopButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
-		playButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty().not());
-
-		pauseButt.disableProperty()
-				.bind(jmop.getDescriptor().pausedProperty().or(jmop.getDescriptor().stoppedProperty()));
-		resumeButt.disableProperty()
-				.bind(jmop.getDescriptor().pausedProperty().not().or(jmop.getDescriptor().stoppedProperty()));
 
 		jmop.getDescriptor().currentTrackProperty()
 				.addListener((observable, oldVal, newVal) -> trackToSliderMax(newVal));
