@@ -25,7 +25,8 @@ public class JMOPGUIApp extends Application {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/logo.png")));
        
        
-        primaryStage.setScene(new Scene(root, 640, 280));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 	
