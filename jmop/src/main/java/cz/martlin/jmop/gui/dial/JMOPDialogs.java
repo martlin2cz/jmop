@@ -1,4 +1,4 @@
-package cz.martlin.jmop.gui.util;
+package cz.martlin.jmop.gui.dial;
 
 import java.util.Arrays;
 import java.util.List;

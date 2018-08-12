@@ -16,6 +16,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <fx:root type="JMOPMainMenu" id="mainMenu" fx:id="menu"
 	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
@@ -24,16 +26,61 @@
 		<Menu mnemonicParsing="false" text="File">
 			<items>
 				<MenuItem mnemonicParsing="false" text="Play" fx:id="miPlay"
-					onAction="#onPlayAction" />
+					onAction="#onPlayAction">
+					<graphic>
+						<ImageView fitHeight="16.0" fitWidth="16.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/play.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<MenuItem mnemonicParsing="false" text="Stop" fx:id="miStop"
-					onAction="#onStopAction" />
+					onAction="#onStopAction" >
+					<graphic>
+						<ImageView fitHeight="16.0" fitWidth="16.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/stop.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<MenuItem mnemonicParsing="false" text="Pause" fx:id="miPause"
-					onAction="#onPauseAction" />
+					onAction="#onPauseAction" >
+					<graphic>
+						<ImageView fitHeight="16.0" fitWidth="16.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/pause.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<MenuItem mnemonicParsing="false" text="Resume" fx:id="miResume"
-					onAction="#onResumeAction" />
+					onAction="#onResumeAction" >
+					<graphic>
+						<ImageView fitHeight="16.0" fitWidth="16.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/resume.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<SeparatorMenuItem mnemonicParsing="false" />
 				<!-- here will go "settings" item -->
-				<MenuItem mnemonicParsing="false" text="Exit" onAction="#onExitAction" />
+				<MenuItem mnemonicParsing="false" text="Exit" onAction="#onExitAction" >
+					<graphic>
+						<ImageView fitHeight="16.0" fitWidth="16.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/exit.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 			</items>
 		</Menu>
 

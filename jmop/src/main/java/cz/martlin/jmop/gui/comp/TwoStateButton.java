@@ -9,12 +9,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 
 public class TwoStateButton extends Button {
 
 	private final StringProperty firstStateText;
 	private final StringProperty secondStateText;
+	private final ObjectProperty<Node> firstStateGraphics;
+	private final ObjectProperty<Node> secondStateGraphics;
+	private final ObjectProperty<Tooltip> firstStateTooltip;
+	private final ObjectProperty<Tooltip> secondStateTooltip;
+
 	private final BooleanProperty firstStateProperty;
 	private final ObjectProperty<EventHandler<ActionEvent>> onFirstStateAction;
 	private final ObjectProperty<EventHandler<ActionEvent>> onSecondStateAction;
@@ -23,6 +30,10 @@ public class TwoStateButton extends Button {
 		super();
 		this.firstStateText = new SimpleStringProperty();
 		this.secondStateText = new SimpleStringProperty();
+		this.firstStateGraphics = new SimpleObjectProperty<>();
+		this.secondStateGraphics = new SimpleObjectProperty<>();
+		this.firstStateTooltip = new SimpleObjectProperty<>();
+		this.secondStateTooltip = new SimpleObjectProperty<>();
 		this.firstStateProperty = new SimpleBooleanProperty();
 		this.onFirstStateAction = new SimpleObjectProperty<>();
 		this.onSecondStateAction = new SimpleObjectProperty<>();
@@ -37,6 +48,22 @@ public class TwoStateButton extends Button {
 
 	public StringProperty secondStateText() {
 		return secondStateText;
+	}
+
+	public ObjectProperty<Node> firstStateGraphics() {
+		return firstStateGraphics;
+	}
+
+	public ObjectProperty<Node> secondStateGraphics() {
+		return secondStateGraphics;
+	}
+
+	public ObjectProperty<Tooltip> firstStateTooltip() {
+		return firstStateTooltip;
+	}
+
+	public ObjectProperty<Tooltip> secondStateTooltip() {
+		return secondStateTooltip;
 	}
 
 	public BooleanProperty firstStateProperty() {
@@ -67,6 +94,38 @@ public class TwoStateButton extends Button {
 
 	public void setSecondStateText(String text) {
 		secondStateText.set(text);
+	}
+
+	public Node getFirstStateGraphics() {
+		return firstStateGraphics.get();
+	}
+
+	public void setFirstStateGraphics(Node graphics) {
+		firstStateGraphics.set(graphics);
+	}
+
+	public Node getSecondStateGraphics() {
+		return firstStateGraphics.get();
+	}
+
+	public void setSecondStateGraphics(Node graphics) {
+		secondStateGraphics.set(graphics);
+	}
+
+	public Tooltip getFirstStateTooltip() {
+		return firstStateTooltip.get();
+	}
+
+	public void setFirstStateTooltip(Tooltip tooltip) {
+		firstStateTooltip.set(tooltip);
+	}
+
+	public Tooltip getSecondStateTooltip() {
+		return secondStateTooltip.get();
+	}
+
+	public void setSecondStateTooltip(Tooltip tooltip) {
+		secondStateTooltip.set(tooltip);
 	}
 
 	public boolean getFirstState() {
@@ -102,8 +161,12 @@ public class TwoStateButton extends Button {
 	private void initializeBindings() {
 		firstStateText.addListener((observable, oldVal, newVal) -> updateText());
 		secondStateText.addListener((observable, oldVal, newVal) -> updateText());
+		firstStateGraphics.addListener((observable, oldVal, newVal) -> updateGraphics());
+		secondStateGraphics.addListener((observable, oldVal, newVal) -> updateGraphics());
+		firstStateTooltip.addListener((observable, oldVal, newVal) -> updateTooltip());
+		secondStateTooltip.addListener((observable, oldVal, newVal) -> updateTooltip());
 
-		firstStateProperty.addListener((observable, oldVal, newVal) -> updateText());
+		firstStateProperty.addListener((observable, oldVal, newVal) -> update());
 	}
 
 	private void initializeHandlers() {
@@ -112,11 +175,28 @@ public class TwoStateButton extends Button {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private void updateText() {
+	private void update() {
+		updateText();
+		updateGraphics();
+		updateTooltip();
+	}
 
+	private void updateText() {
 		StringProperty property = getCurrentStateProperty(firstStateText, secondStateText);
 		String newText = property.get();
 		setText(newText);
+	}
+
+	private void updateGraphics() {
+		ObjectProperty<Node> property = getCurrentStateProperty(firstStateGraphics, secondStateGraphics);
+		Node newGraphics = property.get();
+		setGraphic(newGraphics);
+	}
+
+	private void updateTooltip() {
+		ObjectProperty<Tooltip> property = getCurrentStateProperty(firstStateTooltip, secondStateTooltip);
+		Tooltip newTooltip = property.get();
+		setTooltip(newTooltip);
 	}
 
 	private void handleAction(ActionEvent event) {
@@ -128,6 +208,8 @@ public class TwoStateButton extends Button {
 			handler.handle(event);
 		}
 	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private <T extends Property<?>> T getCurrentStateProperty(T firstProperty, T secondProperty) {
 		if (firstStateProperty.get()) {

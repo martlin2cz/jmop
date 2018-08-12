@@ -1,7 +1,6 @@
 package cz.martlin.jmop.gui.control;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,10 +28,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
@@ -100,7 +99,6 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 
 		this.jmop = JMOPPlayerBuilder.create(this, rootDirectory, null);
 		this.actions = new GuiComplexActionsPerformer(jmop);
-
 	}
 
 	@Override
@@ -109,6 +107,9 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		mainMenu.jmopProperty().set(jmop);
 
 		initBindings();
+		
+		//XXX debug:
+//		nextButt.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/next.svg"))));
 	}
 
 	private void initBindings() {

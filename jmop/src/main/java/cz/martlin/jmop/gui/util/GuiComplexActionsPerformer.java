@@ -8,6 +8,8 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
+import cz.martlin.jmop.gui.dial.JMOPAboutDialog;
+import cz.martlin.jmop.gui.dial.JMOPDialogs;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
@@ -145,7 +147,11 @@ public class GuiComplexActionsPerformer {
 	}
 
 	public void showAboutBox() {
-		showInfo("About", "About JMOP", "JMOP 0.1 is open source project, see github for more info.");
+		runInBackground(() -> {
+			JMOPAboutDialog dialog = new JMOPAboutDialog();
+			dialog.show();
+			return null;
+		});
 
 	}
 
@@ -221,14 +227,14 @@ public class GuiComplexActionsPerformer {
 
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("An error occured");
-		
+
 		if (e.getCause() != null) {
 			alert.setHeaderText("The error " + e.getClass().getName() + " caused by "
 					+ e.getCause().getClass().getName() + " occured");
 		} else {
 			alert.setHeaderText("The error " + e.getClass().getName() + " occured");
 		}
-		
+
 		alert.setContentText(e.toString());
 
 		alert.show();

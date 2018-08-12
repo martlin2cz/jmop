@@ -13,49 +13,132 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Tooltip?>
 
-<AnchorPane id="AnchorPane" prefHeight="280.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.martlin.jmop.gui.control.MainFrameController">
+<AnchorPane id="AnchorPane" prefHeight="280.0" prefWidth="640.0"
+	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="cz.martlin.jmop.gui.control.MainFrameController">
 	<children>
 		<BorderPane prefHeight="320.0" prefWidth="640.0">
 			<center>
-				<GridPane alignment="CENTER" prefHeight="267.0" prefWidth="640.0" BorderPane.alignment="CENTER">
+				<GridPane alignment="CENTER" prefHeight="267.0" prefWidth="640.0"
+					BorderPane.alignment="CENTER">
 					<columnConstraints>
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="260.0" />
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="2.0" prefWidth="100.0" />
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="100.0" />
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="213.0" />
+						<ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0"
+							minWidth="10.0" prefWidth="260.0" />
+						<ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0"
+							minWidth="2.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0"
+							minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0"
+							minWidth="10.0" prefWidth="213.0" />
 					</columnConstraints>
 					<rowConstraints>
-						<RowConstraints maxHeight="142.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="121.0" minHeight="0.0" prefHeight="69.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="143.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="142.0" minHeight="10.0"
+							prefHeight="110.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="121.0" minHeight="0.0"
+							prefHeight="69.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="143.0" minHeight="10.0"
+							prefHeight="95.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<DownloadPane fx:id="dwnldPane" prefHeight="40.0" prefWidth="290.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-						<TrackPane fx:id="trpnCurrentTrack" prefHeight="0.0" prefWidth="249.0" />
-						<TrackPane fx:id="trpnPreviousTrack" prefHeight="82.0" prefWidth="261.0" GridPane.rowIndex="1" />
-						<TrackPane fx:id="trpnNextTrack" prefHeight="30.0" prefWidth="290.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-						<TwoStateButton fx:id="playStopButt" alignment="CENTER" contentDisplay="CENTER" firstStateText="|&gt;" mnemonicParsing="false" onFirstStateAction="#playButtAction" onSecondStateAction="#stopButtAction" secondStateText="[ ]" GridPane.columnIndex="1">
-							<font>
-								<Font size="36.0" />
-							</font>
+						<DownloadPane fx:id="dwnldPane" prefHeight="40.0"
+							prefWidth="290.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+						<TrackPane fx:id="trpnCurrentTrack" prefHeight="0.0"
+							prefWidth="249.0" />
+						<TrackPane fx:id="trpnPreviousTrack" prefHeight="82.0"
+							prefWidth="261.0" GridPane.rowIndex="1" />
+						<TrackPane fx:id="trpnNextTrack" prefHeight="30.0"
+							prefWidth="290.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+						<TwoStateButton fx:id="playStopButt" alignment="CENTER"
+							contentDisplay="CENTER" mnemonicParsing="false"
+							onFirstStateAction="#playButtAction" onSecondStateAction="#stopButtAction"
+							GridPane.columnIndex="1">
+							<firstStateGraphics>
+								<ImageView fitHeight="64.0" fitWidth="64.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@/cz/martlin/jmop/gui/img/play.svg" />
+									</image>
+								</ImageView>
+							</firstStateGraphics>
+							<secondStateGraphics>
+								<ImageView fitHeight="64.0" fitWidth="64.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@/cz/martlin/jmop/gui/img/stop.svg" />
+									</image>
+								</ImageView>
+							</secondStateGraphics>
+							<firstStateTooltip>
+								<Tooltip text="Start playing" />
+							</firstStateTooltip>
+							<secondStateTooltip>
+								<Tooltip text="Stop playing" />
+							</secondStateTooltip>
 						</TwoStateButton>
-						<TwoStateButton fx:id="pauseResumeButt" alignment="CENTER" contentDisplay="CENTER" firstStateText="&gt;" mnemonicParsing="false" onFirstStateAction="#resumeButtAction" onSecondStateAction="#pauseButtAction" secondStateText="||" GridPane.columnIndex="2">
-							<font>
-								<Font size="36.0" />
-							</font>
+						<TwoStateButton fx:id="pauseResumeButt" alignment="CENTER"
+							contentDisplay="CENTER" mnemonicParsing="false"
+							onFirstStateAction="#resumeButtAction" onSecondStateAction="#pauseButtAction"
+							GridPane.columnIndex="2">
+							<firstStateGraphics>
+								<ImageView fitHeight="64.0" fitWidth="64.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@/cz/martlin/jmop/gui/img/resume.svg" />
+									</image>
+								</ImageView>
+							</firstStateGraphics>
+							<secondStateGraphics>
+								<ImageView fitHeight="64.0" fitWidth="64.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@/cz/martlin/jmop/gui/img/pause.svg" />
+									</image>
+								</ImageView>
+							</secondStateGraphics>
+							<firstStateTooltip>
+								<Tooltip text="Resume playing" />
+							</firstStateTooltip>
+							<secondStateTooltip>
+								<Tooltip text="Pause playing" />
+							</secondStateTooltip>
 						</TwoStateButton>
-						<Button fx:id="nextButt" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#nextButtAction" text="&gt;&gt;" GridPane.columnIndex="2" GridPane.rowIndex="1">
-							<font>
-								<Font size="24.0" />
-							</font>
+						<Button fx:id="nextButt" alignment="CENTER" contentDisplay="CENTER"
+							mnemonicParsing="false" onAction="#nextButtAction"
+							GridPane.columnIndex="2" GridPane.rowIndex="1">
+							<graphic>
+								<ImageView fitHeight="64.0" fitWidth="64.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@/cz/martlin/jmop/gui/img/next.svg" />
+									</image>
+								</ImageView>
+							</graphic>
+							<tooltip>
+								<Tooltip text="Next track" />
+							</tooltip>
 						</Button>
-						<Button fx:id="prevButt" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#prevButtAction" text="&lt;&lt;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-							<font>
-								<Font size="24.0" />
-							</font>
+						<Button fx:id="prevButt" alignment="CENTER" contentDisplay="CENTER"
+							mnemonicParsing="false" onAction="#prevButtAction"
+							GridPane.columnIndex="1" GridPane.rowIndex="1">
+							<graphic>
+								<ImageView fitHeight="64.0" fitWidth="64.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@/cz/martlin/jmop/gui/img/previous.svg" />
+									</image>
+								</ImageView>
+							</graphic>
+							<tooltip>
+								<Tooltip text="Previous track" />
+							</tooltip>
 						</Button>
-						<GuiChangableSlider fx:id="sliTrackProgress" blockIncrement="10000" GridPane.columnIndex="3" />
+						<GuiChangableSlider fx:id="sliTrackProgress"
+							blockIncrement="10000" GridPane.columnIndex="3" />
 					</children>
 					<padding>
 						<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -63,7 +146,8 @@
 				</GridPane>
 			</center>
 			<top>
-				<JMOPMainMenu fx:id="mainMenu" prefHeight="30.0" prefWidth="640.0" BorderPane.alignment="CENTER" />
+				<JMOPMainMenu fx:id="mainMenu" prefHeight="30.0"
+					prefWidth="640.0" BorderPane.alignment="CENTER" />
 			</top>
 		</BorderPane>
 	</children>
