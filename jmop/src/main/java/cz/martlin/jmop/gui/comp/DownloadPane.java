@@ -6,13 +6,14 @@ import cz.martlin.jmop.core.sources.download.DownloaderTask;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
-public class DownloadPane extends HBox {
+public class DownloadPane extends GridPane {
 
-	private ProgressBar progressIndicator; //TODO progress indicator here, but needs better layout
+	private static final double PRG_MIN_SIZE = 20;
+	private ProgressIndicator progressIndicator; 
 	private Label lblStatus;
 	private Label lblTrack;
 	private ObjectProperty<DownloaderTask> taskProperty;
@@ -33,14 +34,16 @@ public class DownloadPane extends HBox {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void initializeComponents() {
-		progressIndicator = new ProgressBar();
-		this.getChildren().add(progressIndicator);
+		progressIndicator = new ProgressIndicator();
+		progressIndicator.setMinHeight(PRG_MIN_SIZE);
+		progressIndicator.setMinHeight(PRG_MIN_SIZE);
+		this.add(progressIndicator, 0, 0, 1, 2);
 
 		lblStatus = new Label("-");
-		this.getChildren().add(lblStatus);
+		this.add(lblStatus, 1, 0);
 
 		lblTrack = new Label("-");
-		this.getChildren().add(lblTrack);
+		this.add(lblTrack, 1, 1);
 	}
 
 	private void initializeProperties() {
@@ -67,11 +70,11 @@ public class DownloadPane extends HBox {
 		String lblTrackText = obtainTrackLabelText(task);
 		lblTrack.textProperty().set(lblTrackText);
 
-		// TODO this.visible := true
+		this.setVisible(true);
 	}
 
 	private void changeToNoTask() {
-		// TODO this.visible := false
+		this.setVisible(false);
 
 		progressIndicator.progressProperty().unbind();
 		lblStatus.textProperty().unbind();

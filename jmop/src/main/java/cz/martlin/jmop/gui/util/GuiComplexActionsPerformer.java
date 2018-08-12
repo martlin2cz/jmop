@@ -221,8 +221,14 @@ public class GuiComplexActionsPerformer {
 
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("An error occured");
-		alert.setHeaderText(
-				"The error " + e.getClass().getName() + " caused by " + e.getCause().getClass().getName() + " occured");
+		
+		if (e.getCause() != null) {
+			alert.setHeaderText("The error " + e.getClass().getName() + " caused by "
+					+ e.getCause().getClass().getName() + " occured");
+		} else {
+			alert.setHeaderText("The error " + e.getClass().getName() + " occured");
+		}
+		
 		alert.setContentText(e.toString());
 
 		alert.show();

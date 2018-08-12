@@ -29,8 +29,11 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 	}
 
 	@Override
-	public List<String> listBundles() {
+	public List<String> listBundles() throws IOException {
 		File[] bundlesDirs = root.listFiles((f) -> isBundleDir(f));
+		if (bundlesDirs == null) {
+			throw new IOException("Cannot list bundles directories");
+		}
 
 		return Arrays.stream(bundlesDirs) //
 				.map((d) -> namer.dirToBundleName(d)) //
