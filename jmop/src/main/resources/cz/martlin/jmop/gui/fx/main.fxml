@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane id="borderPane" prefHeight="140.0" prefWidth="640.0"
+<BorderPane id="borderPane" prefHeight="140.0" prefWidth="640.0" 
 	minWidth="280.0" minHeight="140.0" xmlns="http://javafx.com/javafx/8.0.60"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.martlin.jmop.gui.control.MainFrameController">
 
@@ -91,10 +91,10 @@
 						</ImageView>
 					</secondStateGraphics>
 					<firstStateTooltip>
-						<Tooltip text="Start playing" />
+						<Tooltip text="Start playing (Shift + S or Enter)" />
 					</firstStateTooltip>
 					<secondStateTooltip>
-						<Tooltip text="Stop playing" />
+						<Tooltip text="Stop playing (S)" />
 					</secondStateTooltip>
 				</TwoStateButton>
 
@@ -119,10 +119,10 @@
 						</ImageView>
 					</secondStateGraphics>
 					<firstStateTooltip>
-						<Tooltip text="Resume playing" />
+						<Tooltip text="Resume playing (Shift + P or Enter)" />
 					</firstStateTooltip>
 					<secondStateTooltip>
-						<Tooltip text="Pause playing" />
+						<Tooltip text="Pause playing (P or Enter)" />
 					</secondStateTooltip>
 				</TwoStateButton>
 
@@ -138,12 +138,13 @@
 						</ImageView>
 					</graphic>
 					<tooltip>
-						<Tooltip text="Next track" />
+						<Tooltip text="Next track (N)" />
 					</tooltip>
 				</Button>
 				<Button fx:id="prevButt" alignment="CENTER" contentDisplay="CENTER"
 					GridPane.columnIndex="1" GridPane.rowIndex="1" mnemonicParsing="false"
 					onAction="#prevButtAction">
+					
 					<graphic>
 						<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
@@ -153,7 +154,7 @@
 						</ImageView>
 					</graphic>
 					<tooltip>
-						<Tooltip text="Previous track" />
+						<Tooltip text="Previous track (Shift + N)" />
 					</tooltip>
 				</Button>
 

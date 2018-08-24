@@ -26,7 +26,7 @@
 		<Menu mnemonicParsing="false" text="File">
 			<items>
 				<MenuItem mnemonicParsing="false" text="Play" fx:id="miPlay"
-					onAction="#onPlayAction">
+					onAction="#onPlayAction" accelerator="Shift + S">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0"
 							pickOnBounds="true" preserveRatio="true">
@@ -37,7 +37,7 @@
 					</graphic>
 				</MenuItem>
 				<MenuItem mnemonicParsing="false" text="Stop" fx:id="miStop"
-					onAction="#onStopAction" >
+					onAction="#onStopAction" accelerator="S">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0"
 							pickOnBounds="true" preserveRatio="true">
@@ -48,7 +48,7 @@
 					</graphic>
 				</MenuItem>
 				<MenuItem mnemonicParsing="false" text="Pause" fx:id="miPause"
-					onAction="#onPauseAction" >
+					onAction="#onPauseAction" accelerator="P">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0"
 							pickOnBounds="true" preserveRatio="true">
@@ -59,12 +59,34 @@
 					</graphic>
 				</MenuItem>
 				<MenuItem mnemonicParsing="false" text="Resume" fx:id="miResume"
-					onAction="#onResumeAction" >
+					onAction="#onResumeAction" accelerator="Shift + P">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@/cz/martlin/jmop/gui/img/resume.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
+				<MenuItem mnemonicParsing="false" text="Previous" fx:id="miPrevious"
+					onAction="#onPreviousAction" accelerator="Shift + N">
+					<graphic>
+						<ImageView fitHeight="16.0" fitWidth="16.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/previous.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
+				<MenuItem mnemonicParsing="false" text="Next" fx:id="miNext"
+					onAction="#onNextAction" accelerator="N">
+					<graphic>
+						<ImageView fitHeight="16.0" fitWidth="16.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/next.svg" />
 							</image>
 						</ImageView>
 					</graphic>

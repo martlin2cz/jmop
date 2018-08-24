@@ -28,6 +28,10 @@ public class MainMenuController implements Initializable {
 	private MenuItem miPause;
 	@FXML
 	private MenuItem miResume;
+	@FXML
+	private MenuItem miPrevious;
+	@FXML
+	private MenuItem miNext;
 
 	@FXML
 	private HalfDynamicMenu menuBundle;
@@ -76,6 +80,7 @@ public class MainMenuController implements Initializable {
 				.bind(jmop.getDescriptor().pausedProperty().or(jmop.getDescriptor().stoppedProperty()));
 		miResume.disableProperty()
 				.bind(jmop.getDescriptor().pausedProperty().not().or(jmop.getDescriptor().stoppedProperty()));
+		
 
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -132,6 +137,15 @@ public class MainMenuController implements Initializable {
 	public void onResumeAction() {
 		actions.resumeButtAction();
 	}
+	
+	public void onPreviousAction() {
+		actions.prevButtAction();
+	}
+	
+	public void onNextAction() {
+		actions.nextButtAction();
+	}
+
 
 	public void onExitAction() {
 		actions.exit();

@@ -30,8 +30,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
@@ -56,14 +54,14 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	@FXML
 	private JMOPMainMenu mainMenu;
 
-//	@FXML
-//	private Button playButt;
-//	@FXML
-//	private Button stopButt;
-//	@FXML
-//	private Button pauseButt;
-//	@FXML
-//	private Button resumeButt;
+	// @FXML
+	// private Button playButt;
+	// @FXML
+	// private Button stopButt;
+	// @FXML
+	// private Button pauseButt;
+	// @FXML
+	// private Button resumeButt;
 	@FXML
 	private Button nextButt;
 	@FXML
@@ -107,9 +105,10 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		mainMenu.jmopProperty().set(jmop);
 
 		initBindings();
-		
-		//XXX debug:
-//		nextButt.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/next.svg"))));
+
+		// XXX debug:
+		// nextButt.setGraphic(new ImageView(new
+		// Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/next.svg"))));
 	}
 
 	private void initBindings() {
@@ -123,6 +122,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		pauseResumeButt.firstStateProperty().bind(jmop.getDescriptor().pausedProperty());
 		pauseResumeButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
 
+		jmop.getDescriptor().stoppedProperty().addListener((observable, oldVal, newVal) -> changeDefaultButton());
 
 		jmop.getDescriptor().currentTrackProperty()
 				.addListener((observable, oldVal, newVal) -> trackToSliderMax(newVal));
@@ -173,6 +173,16 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		Duration duration = track.getDuration();
 		double milis = BindingsUtils.durationToMilis(duration);
 		sliTrackProgress.setMax(milis);
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	private void changeDefaultButton() {
+		boolean isStopped = jmop.getDescriptor().stoppedProperty().get();
+		boolean isPlaying = !isStopped;
+
+		playStopButt.setDefaultButton(isStopped);
+		pauseResumeButt.setDefaultButton(isPlaying);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
