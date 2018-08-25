@@ -204,7 +204,9 @@ public class GuiComplexActionsPerformer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void exit() {
-		jmop.stopPlaying();
+		if (jmop.getDescriptor().currentTrackProperty().isNotNull().get()) {
+			jmop.stopPlaying();
+		}
 		System.exit(0);
 	}
 

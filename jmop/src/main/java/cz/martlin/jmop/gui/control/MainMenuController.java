@@ -11,6 +11,7 @@ import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.comp.HalfDynamicMenu;
 import cz.martlin.jmop.gui.comp.JMOPMainMenu;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,7 +51,6 @@ public class MainMenuController implements Initializable {
 	@FXML
 	private MenuItem miAppendCustomTrack;
 
-	private JMOPPlayer jmop;
 	private GuiComplexActionsPerformer actions;
 
 	public MainMenuController() {
@@ -70,26 +70,38 @@ public class MainMenuController implements Initializable {
 	}
 
 	private void jmopChanged(JMOPPlayer jmop) {
-		this.jmop = jmop;
 		this.actions = new GuiComplexActionsPerformer(jmop);
 
-		miStop.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
-		miPlay.disableProperty().bind(jmop.getDescriptor().stoppedProperty().not());
-
-		miPause.disableProperty()
-				.bind(jmop.getDescriptor().pausedProperty().or(jmop.getDescriptor().stoppedProperty()));
-		miResume.disableProperty()
-				.bind(jmop.getDescriptor().pausedProperty().not().or(jmop.getDescriptor().stoppedProperty()));
-		
-
+		initializeBindings(jmop);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
+
+	private void initializeBindings(JMOPPlayer jmop) {
+		final BooleanBinding hasNoPlaylist = jmop.getDescriptor().hasActiveBundleAndPlaylistProperty().not();
+
+		miStop.disableProperty().bind(jmop.getDescriptor().stoppedProperty().or(hasNoPlaylist));
+		miPlay.disableProperty().bind(jmop.getDescriptor().stoppedProperty().not().or(hasNoPlaylist));
+
+		miPause.disableProperty().bind( //
+				jmop.getDescriptor().pausedProperty() //
+						.or(jmop.getDescriptor().stoppedProperty()) //
+						.or(hasNoPlaylist));
+		miResume.disableProperty().bind( //
+				jmop.getDescriptor().pausedProperty().not() //
+						.or(jmop.getDescriptor().stoppedProperty()) //
+						.or(hasNoPlaylist));
+
+		miPrevious.disableProperty().bind(hasNoPlaylist);
+		miNext.disableProperty().bind(hasNoPlaylist);
+
+		menuPlaylist.disableProperty().bind(hasNoPlaylist);
+		menuTrack.disableProperty().bind(hasNoPlaylist);
+	}
 
 	public void onBundleMenuShowing() {
 		List<String> bundleNames = actions.listBundles();
 		addDynamicItems(menuBundle, bundleNames, (bn) -> new MenuItem(bn));
 	}
-
 
 	public void onPlaylistMenuShowing() {
 		List<String> playlistNames = actions.listPlaylists();
@@ -99,7 +111,7 @@ public class MainMenuController implements Initializable {
 	public void onTrackMenuShowing() {
 		List<Track> tracks = actions.listTracks();
 		addDynamicItems(menuTrack, tracks, (t) -> new MenuItem(t.getTitle()));
-		
+
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -117,8 +129,8 @@ public class MainMenuController implements Initializable {
 	}
 
 	public void onTrackTitleAction() {
-		//System.out.println("play track");
-		//TODO play selected track
+		// System.out.println("play track");
+		// TODO play selected track
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -137,15 +149,14 @@ public class MainMenuController implements Initializable {
 	public void onResumeAction() {
 		actions.resumeButtAction();
 	}
-	
+
 	public void onPreviousAction() {
 		actions.prevButtAction();
 	}
-	
+
 	public void onNextAction() {
 		actions.nextButtAction();
 	}
-
 
 	public void onExitAction() {
 		actions.exit();
@@ -169,7 +180,6 @@ public class MainMenuController implements Initializable {
 		actions.addTrack();
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
-
 
 	private static <E> void addDynamicItems(HalfDynamicMenu menu, List<E> items, Function<E, MenuItem> mapper) {
 

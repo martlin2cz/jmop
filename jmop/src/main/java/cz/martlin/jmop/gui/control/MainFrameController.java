@@ -30,11 +30,18 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
 public class MainFrameController implements Initializable, GuiDescriptor {
 
+	@FXML
+	private Pane playerPane;
+	@FXML
+	private BorderPane wellcomePane;
+	
 	@FXML
 	private Button showPlaylistButt;
 	@FXML
@@ -112,6 +119,10 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	}
 
 	private void initBindings() {
+		playerPane.visibleProperty().bind(jmop.getDescriptor().hasActiveBundleAndPlaylistProperty());
+		wellcomePane.visibleProperty().bind(jmop.getDescriptor().hasActiveBundleAndPlaylistProperty().not());
+		
+		
 		trpnCurrentTrack.trackProperty().bind(jmop.getDescriptor().currentTrackProperty());
 		trpnPreviousTrack.trackProperty().bind(jmop.getDescriptor().previousTrackProperty());
 		trpnNextTrack.trackProperty().bind(jmop.getDescriptor().nextTrackProperty());
