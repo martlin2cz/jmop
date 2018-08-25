@@ -10,6 +10,7 @@ import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 
+@Deprecated
 public class JMOPDialogs {
 
 	public static String promptNewBundleName() {

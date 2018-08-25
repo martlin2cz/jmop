@@ -209,27 +209,27 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	}
 
 	public void playButtAction() {
-		jmop.startPlaying();
+		actions.playButtAction();
 	}
 
 	public void stopButtAction() {
-		jmop.stopPlaying();
+		actions.stopButtAction();
 	}
 
 	public void pauseButtAction() {
-		jmop.pausePlaying();
+		actions.pauseButtAction();
 	}
 
 	public void resumeButtAction() {
-		jmop.resumePlaying();
+		actions.resumeButtAction();
 	}
 
 	public void nextButtAction() {
-		jmop.toNext();
+		actions.nextButtAction();
 	}
 
 	public void prevButtAction() {
-		jmop.toPrevious();
+		actions.prevButtAction();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

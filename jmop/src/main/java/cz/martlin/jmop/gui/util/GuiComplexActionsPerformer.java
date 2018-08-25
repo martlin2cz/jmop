@@ -2,14 +2,26 @@ package cz.martlin.jmop.gui.util;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
+import cz.martlin.jmop.gui.dial.AddTrackDialog;
+import cz.martlin.jmop.gui.dial.AddTrackDialog.AddTrackData;
 import cz.martlin.jmop.gui.dial.JMOPAboutDialog;
-import cz.martlin.jmop.gui.dial.JMOPDialogs;
+import cz.martlin.jmop.gui.dial.NewBundleDialog;
+import cz.martlin.jmop.gui.dial.NewBundleDialog.NewBundleData;
+import cz.martlin.jmop.gui.dial.NewPlaylistDialog;
+import cz.martlin.jmop.gui.dial.NewPlaylistDialog.NewPlaylistData;
+import cz.martlin.jmop.gui.dial.SavePlaylistDialog;
+import cz.martlin.jmop.gui.dial.SavePlaylistDialog.SavePlaylistData;
+import cz.martlin.jmop.gui.dial.StartBundleDialog;
+import cz.martlin.jmop.gui.dial.StartBundleDialog.StartBundleData;
+import cz.martlin.jmop.gui.dial.CreatePlaylistDialog;
+import cz.martlin.jmop.gui.dial.CreatePlaylistDialog.CreatePlaylistData;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
@@ -32,9 +44,18 @@ public class GuiComplexActionsPerformer {
 
 	public void startNewBundle() {
 		runInBackground(() -> {
-			String bundleName = JMOPDialogs.promptNewBundleName();
-			String querySeed = JMOPDialogs.promptQuery();
-			SourceKind kind = JMOPDialogs.promptKind();
+			NewBundleDialog dial = new NewBundleDialog();
+
+			Optional<NewBundleData> optional = dial.showAndWait();
+			if (!optional.isPresent()) {
+				return null;
+			}
+
+			NewBundleData data = optional.get();
+			SourceKind kind = data.getKind();
+			String bundleName = data.getName();
+			String querySeed = data.getQuery();
+
 			jmop.startNewBundle(kind, bundleName, querySeed);
 			return null;
 		});
@@ -42,7 +63,18 @@ public class GuiComplexActionsPerformer {
 
 	public void startBundle(String bundleName) {
 		runInBackground(() -> {
-			String playlistName = JMOPDialogs.promptPlaylist(bundleName, jmop);
+			List<String> playlistNames = jmop.listPlaylists(bundleName);
+			String defaultPlaylistName = "all_tracks"; //FIXME HACK
+			System.out.println(bundleName + " & " + playlistNames);
+			StartBundleDialog dial = new StartBundleDialog(playlistNames, defaultPlaylistName);
+
+			Optional<StartBundleData> optional = dial.showAndWait();
+			if (!optional.isPresent()) {
+				return null;
+			}
+			
+			StartBundleData data = optional.get();
+			String playlistName = data.getPlaylistName();
 			jmop.startPlaylist(bundleName, playlistName);
 			return null;
 		});
@@ -50,8 +82,18 @@ public class GuiComplexActionsPerformer {
 
 	public void startPlaylist() {
 		runAndHandleError(() -> {
-			String bundleName = JMOPDialogs.promptExistingBundle(jmop);
-			String playlistName = JMOPDialogs.promptPlaylist(bundleName, jmop);
+			List<String> bundles = jmop.listBundles();
+			CreatePlaylistDialog dial = new CreatePlaylistDialog(bundles);
+
+			Optional<CreatePlaylistData> optional = dial.showAndWait();
+			if (!optional.isPresent()) {
+				return null;
+			}
+			
+			CreatePlaylistData data = optional.get();
+			String bundleName = data.getBundleName();
+			String playlistName = data.getPlaylistName();
+			
 			jmop.startPlaylist(bundleName, playlistName);
 			return null;
 		});
@@ -67,7 +109,15 @@ public class GuiComplexActionsPerformer {
 
 	public void newPlaylist() {
 		runAndHandleError(() -> {
-			String querySeed = JMOPDialogs.promptQuery();
+			NewPlaylistDialog dial = new NewPlaylistDialog();
+
+			Optional<NewPlaylistData> optional = dial.showAndWait();
+			if (!optional.isPresent()) {
+				return null;
+			}
+			
+			NewPlaylistData data = optional.get();
+			String querySeed = data.getQuery();
 			jmop.startNewPlaylist(querySeed);
 			return null;
 		});
@@ -75,16 +125,33 @@ public class GuiComplexActionsPerformer {
 
 	public void savePlaylist() {
 		runAndHandleError(() -> {
-			String playlistName = JMOPDialogs.promptPlaylistName(jmop);
+			String currentPlaylistName = jmop.getCurrentPlaylist().getName();
+			SavePlaylistDialog dial = new SavePlaylistDialog(currentPlaylistName);
+
+			Optional<SavePlaylistData> optional = dial.showAndWait();
+			if (!optional.isPresent()) {
+				return null;
+			}
+			
+			SavePlaylistData data = optional.get();
+			String playlistName = data.getName();
 			jmop.savePlaylistAs(playlistName);
-			return null;
+			return null;			
 		});
 	}
 
 	public void addTrack() {
 		runInBackground(() -> {
-			String querySeed = JMOPDialogs.promptQuery();
-			jmop.loadAndAddTrack(querySeed);
+			AddTrackDialog dial = new AddTrackDialog();
+
+			Optional<AddTrackData> optional = dial.showAndWait();
+			if (!optional.isPresent()) {
+				return null;
+			}
+			
+			AddTrackData data = optional.get();
+			String query = data.getQuery();
+			jmop.loadAndAddTrack(query);
 			return null;
 		});
 	}
@@ -209,7 +276,7 @@ public class GuiComplexActionsPerformer {
 		}
 	}
 
-	private static void showInfo(String title, String header, String content) {
+	public static void showInfo(String title, String header, String content) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
@@ -217,6 +284,16 @@ public class GuiComplexActionsPerformer {
 		Label label = new Label(content);
 		label.setWrapText(true);
 		alert.getDialogPane().setContent(label);
+
+		alert.show();
+	}
+
+	public static void showErrorDialog(String header, String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("An error occured");
+
+		alert.setHeaderText(header);
+		alert.setContentText(message);
 
 		alert.show();
 	}

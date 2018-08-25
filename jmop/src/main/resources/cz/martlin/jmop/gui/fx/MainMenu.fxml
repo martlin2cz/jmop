@@ -18,17 +18,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import java.lang.Double?>
 
 <fx:root type="JMOPMainMenu" id="mainMenu" fx:id="menu"
 	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="cz.martlin.jmop.gui.control.MainMenuController">
+
+	<fx:define>
+		<Double fx:id="MENUITEM_ICON_SIZE" fx:value="16.0" />
+	</fx:define>
+
 	<menus>
 		<Menu mnemonicParsing="false" text="File">
 			<items>
 				<MenuItem mnemonicParsing="false" text="Play" fx:id="miPlay"
 					onAction="#onPlayAction" accelerator="Shift + S">
 					<graphic>
-						<ImageView fitHeight="16.0" fitWidth="16.0"
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@/cz/martlin/jmop/gui/img/play.svg" />
@@ -39,7 +45,7 @@
 				<MenuItem mnemonicParsing="false" text="Stop" fx:id="miStop"
 					onAction="#onStopAction" accelerator="S">
 					<graphic>
-						<ImageView fitHeight="16.0" fitWidth="16.0"
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@/cz/martlin/jmop/gui/img/stop.svg" />
@@ -50,7 +56,7 @@
 				<MenuItem mnemonicParsing="false" text="Pause" fx:id="miPause"
 					onAction="#onPauseAction" accelerator="P">
 					<graphic>
-						<ImageView fitHeight="16.0" fitWidth="16.0"
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@/cz/martlin/jmop/gui/img/pause.svg" />
@@ -61,7 +67,7 @@
 				<MenuItem mnemonicParsing="false" text="Resume" fx:id="miResume"
 					onAction="#onResumeAction" accelerator="Shift + P">
 					<graphic>
-						<ImageView fitHeight="16.0" fitWidth="16.0"
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@/cz/martlin/jmop/gui/img/resume.svg" />
@@ -72,7 +78,7 @@
 				<MenuItem mnemonicParsing="false" text="Previous" fx:id="miPrevious"
 					onAction="#onPreviousAction" accelerator="Shift + N">
 					<graphic>
-						<ImageView fitHeight="16.0" fitWidth="16.0"
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@/cz/martlin/jmop/gui/img/previous.svg" />
@@ -83,7 +89,7 @@
 				<MenuItem mnemonicParsing="false" text="Next" fx:id="miNext"
 					onAction="#onNextAction" accelerator="N">
 					<graphic>
-						<ImageView fitHeight="16.0" fitWidth="16.0"
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@/cz/martlin/jmop/gui/img/next.svg" />
@@ -93,9 +99,9 @@
 				</MenuItem>
 				<SeparatorMenuItem mnemonicParsing="false" />
 				<!-- here will go "settings" item -->
-				<MenuItem mnemonicParsing="false" text="Exit" onAction="#onExitAction" >
+				<MenuItem mnemonicParsing="false" text="Exit" onAction="#onExitAction">
 					<graphic>
-						<ImageView fitHeight="16.0" fitWidth="16.0"
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
 								<Image url="@/cz/martlin/jmop/gui/img/exit.svg" />

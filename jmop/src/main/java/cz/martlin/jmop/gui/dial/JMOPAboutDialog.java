@@ -1,5 +1,6 @@
 package cz.martlin.jmop.gui.dial;
 
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -25,6 +26,8 @@ public class JMOPAboutDialog extends Dialog<Void> {
 		);
 
 		getDialogPane().setContent(content);
+		
+		getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
 	}
 
