@@ -58,7 +58,7 @@ public class DurationUtilities {
 		int seconds = (int) TimeUnit.MILLISECONDS.toSeconds(remaining);
 		
 		// TODO optionally add leading zeros
-		return hours + ":" + minutes + ":" + seconds;
+		return String.format("%d:%02d:%02d", hours, minutes, seconds);
 	}
 
 }
