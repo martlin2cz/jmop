@@ -13,6 +13,7 @@ import cz.martlin.jmop.gui.DownloadGuiReporter;
 import cz.martlin.jmop.gui.comp.DownloadPane;
 import cz.martlin.jmop.gui.comp.GuiChangableSlider;
 import cz.martlin.jmop.gui.comp.JMOPMainMenu;
+import cz.martlin.jmop.gui.comp.PlaylistAndBundlePane;
 import cz.martlin.jmop.gui.comp.TrackPane;
 import cz.martlin.jmop.gui.comp.TwoStateButton;
 import cz.martlin.jmop.gui.util.BindingsUtils;
@@ -92,7 +93,10 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	@FXML
 	private TrackPane trpnNextTrack;
 	@FXML
+	private PlaylistAndBundlePane playlistAndBundlePane;
+	@FXML
 	private DownloadPane dwnldPane;
+	
 
 	private final JMOPPlayer jmop;
 	private final GuiComplexActionsPerformer actions;
@@ -127,6 +131,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		trpnPreviousTrack.trackProperty().bind(jmop.getDescriptor().previousTrackProperty());
 		trpnNextTrack.trackProperty().bind(jmop.getDescriptor().nextTrackProperty());
 
+		playlistAndBundlePane.playlistProperty().bind(jmop.getDescriptor().currentPlaylistProperty());
 		dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
 
 		playStopButt.firstStateProperty().bind(jmop.getDescriptor().stoppedProperty());

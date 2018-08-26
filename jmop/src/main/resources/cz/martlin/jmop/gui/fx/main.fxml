@@ -5,6 +5,7 @@
 <?import cz.martlin.jmop.gui.comp.JMOPMainMenu?>
 <?import cz.martlin.jmop.gui.comp.TrackPane?>
 <?import cz.martlin.jmop.gui.comp.TwoStateButton?>
+<?import cz.martlin.jmop.gui.comp.PlaylistAndBundlePane?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.text.Font?>
@@ -26,7 +27,7 @@
 
 <BorderPane id="borderPane" xmlns="http://javafx.com/javafx/8.0.60"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.martlin.jmop.gui.control.MainFrameController"
-	prefHeight="140.0" prefWidth="640.0" minWidth="280.0" minHeight="140.0">
+	prefHeight="160.0" prefWidth="640.0" minWidth="280.0" minHeight="160.0">
 	<fx:define>
 		<Double fx:id="BUTTONS_ICON_SIZE" fx:value="32.0" />
 		<Double fx:id="BUTTONS_WIDTH" fx:value="52.0" />
@@ -73,6 +74,8 @@
 							GridPane.columnIndex="0" GridPane.rowIndex="1" />
 						<TrackPane fx:id="trpnNextTrack" minWidth="40.0"
 							GridPane.columnIndex="3" GridPane.rowIndex="1" />
+						<PlaylistAndBundlePane fx:id="playlistAndBundlePane"
+							prefHeight="40.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
 						<DownloadPane fx:id="dwnldPane" prefHeight="40.0"
 							GridPane.columnIndex="3" GridPane.rowIndex="2" />
 
