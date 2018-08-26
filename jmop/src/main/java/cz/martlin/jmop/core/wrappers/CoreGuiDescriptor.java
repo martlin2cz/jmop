@@ -6,6 +6,7 @@ import cz.martlin.jmop.core.sources.download.DownloaderTask;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.util.Duration;
 
 public class CoreGuiDescriptor {
@@ -40,8 +41,13 @@ public class CoreGuiDescriptor {
 		return jmop.getPlaying().getPlaylister().getPlayer().currentTimeProperty();
 	}
 
+	@Deprecated
 	public ReadOnlyObjectProperty<DownloaderTask> currentDownloadTaskProperty() {
 		return jmop.getSources().getPreparer().currentTaskProperty();
+	}
+	
+	public ObservableList<DownloaderTask> currentDownloadTasksProperty() {
+		return jmop.getSources().getPreparer().currentTasks();
 	}
 
 	public ReadOnlyObjectProperty<Playlist> currentPlaylistProperty() {

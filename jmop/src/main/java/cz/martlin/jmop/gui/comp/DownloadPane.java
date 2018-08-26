@@ -1,56 +1,136 @@
 package cz.martlin.jmop.gui.comp;
 
+import java.io.IOException;
+import java.util.List;
+
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.download.DownloaderTask;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
-public class DownloadPane extends GridPane {
+public class DownloadPane extends HBox {
 
-	private static final double PRG_MIN_SIZE = 20;
-	private ProgressIndicator progressIndicator; 
+	@FXML
+	private ProgressIndicator progressIndicator;
+	@FXML
 	private Label lblStatus;
+	@FXML
 	private Label lblTrack;
+	@FXML
+	private Label lblAnothers;
+
+	@Deprecated
 	private ObjectProperty<DownloaderTask> taskProperty;
 
-	public DownloadPane() {	
+	private ObservableList<DownloaderTask> tasksProperty;
+
+	private DownloaderTask shownTask;
+
+	public DownloadPane() throws IOException {
 		super();
 
-		initializeComponents();
-		initializeProperties();
+		initialize();
 
 		changeToNoTask();
 	}
 
+	@Deprecated
 	public ObjectProperty<DownloaderTask> taskProperty() {
 		return taskProperty;
 	}
 
+	public ObservableList<DownloaderTask> tasksProperty() {
+		return tasksProperty;
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	private void initialize() throws IOException {
+		loadFXML();
+		initializeProperties();
+	}
 
-	private void initializeComponents() {
-		progressIndicator = new ProgressIndicator();
-		progressIndicator.setMinHeight(PRG_MIN_SIZE);
-		progressIndicator.setMinHeight(PRG_MIN_SIZE);
-		this.add(progressIndicator, 0, 0, 1, 2);
+	private void loadFXML() throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/DownloadPane.fxml"));
+		loader.setController(this);
 
-		lblStatus = new Label("-");
-		this.add(lblStatus, 1, 0);
-
-		lblTrack = new Label("-");
-		this.add(lblTrack, 1, 1);
+		Parent root = loader.load();
+		getChildren().addAll(root);
 	}
 
 	private void initializeProperties() {
-		taskProperty = new SimpleObjectProperty<>();
-		taskProperty.addListener((observable, oldVal, newVal) -> taskChanged(newVal));
+		// taskProperty = new SimpleObjectProperty<>();
+		// taskProperty.addListener((observable, oldVal, newVal) ->
+		// taskChanged(newVal));
+
+		this.tasksProperty = FXCollections.observableArrayList();
+		this.tasksProperty.addListener((ListChangeListener<DownloaderTask>) (ch) -> tasksChanged(ch));
+
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void tasksChanged(Change<? extends DownloaderTask> change) {
+		Platform.runLater(() -> {
+			change.next();
+
+			if (change.wasAdded()) {
+				handleTasksAdded(change);
+			}
+			if (change.wasRemoved()) {
+				handleTasksRemoved(change);
+			}
+		});
 	}
 
+	private void handleTasksAdded(Change<? extends DownloaderTask> change) {
+		List<? extends DownloaderTask> tasks = change.getList();
+
+		if (shownTask == null) {
+			showFirstTask(change);
+		} else {
+			changeAnothers(tasks.size());
+		}
+	}
+
+	private void handleTasksRemoved(Change<? extends DownloaderTask> change) {
+		List<? extends DownloaderTask> tasks = change.getList();
+
+		List<? extends DownloaderTask> removedTasks = change.getRemoved();
+		if (removedTasks.contains(shownTask)) {
+			changeToNoTask();
+			shownTask = null;
+
+			if (!tasks.isEmpty()) {
+				changeToFirstOf(tasks);
+			}
+		} else {
+			changeAnothers(tasks.size());
+		}
+	}
+
+	private void showFirstTask(Change<? extends DownloaderTask> change) {
+		List<? extends DownloaderTask> addedTasks = change.getAddedSubList();
+		changeToFirstOf(addedTasks);
+	}
+
+	private void changeToFirstOf(List<? extends DownloaderTask> addedTasks) {
+		DownloaderTask addedTask = addedTasks.get(0);
+		changeToTask(addedTask);
+		shownTask = addedTask;
+	}
+
+	@Deprecated
 	private void taskChanged(DownloaderTask newTaskOrNull) {
 		if (newTaskOrNull != null) {
 			changeToTask(newTaskOrNull);
@@ -64,6 +144,7 @@ public class DownloadPane extends GridPane {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void changeToTask(DownloaderTask task) {
+		System.out.println("Showing task " + task.getTrack().getTitle());
 		progressIndicator.progressProperty().bind(task.progressProperty());
 		lblStatus.textProperty().bind(task.messageProperty());
 
@@ -74,7 +155,9 @@ public class DownloadPane extends GridPane {
 	}
 
 	private void changeToNoTask() {
+		System.out.println("Showing NO task");
 		this.setVisible(false);
+		lblAnothers.setVisible(false);
 
 		progressIndicator.progressProperty().unbind();
 		lblStatus.textProperty().unbind();
@@ -82,6 +165,19 @@ public class DownloadPane extends GridPane {
 
 		lblStatus.textProperty().set("-");
 		lblTrack.textProperty().set("-");
+	}
+
+	private void changeAnothers(int tasksCount) {
+		System.out.println("Updating count, total:" + tasksCount);
+		if (tasksCount > 1) {
+			int anothers = tasksCount - 1;
+			lblAnothers.setText(" + " + anothers + " more");
+			lblAnothers.setVisible(true);
+		} else {
+			lblAnothers.setVisible(false);
+			lblAnothers.setText(" + no more");
+		}
+		// TODO: tooltip of their list
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////

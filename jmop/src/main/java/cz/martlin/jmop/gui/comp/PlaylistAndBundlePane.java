@@ -3,6 +3,7 @@ package cz.martlin.jmop.gui.comp;
 import java.io.IOException;
 
 import cz.martlin.jmop.core.data.Playlist;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class PlaylistAndBundlePane extends VBox {
 
 		initialize();
 	}
-	
+
 	public ObjectProperty<Playlist> playlistProperty() {
 		return playlistProperty;
 	}
@@ -50,10 +51,12 @@ public class PlaylistAndBundlePane extends VBox {
 	}
 
 	private void playlistChanged(Playlist newPlaylist) {
-		String bundleName = newPlaylist.getBundle().getName();
-		lblBundleName.setText(bundleName);
+		Platform.runLater(() -> {
+			String bundleName = newPlaylist.getBundle().getName();
+			lblBundleName.setText(bundleName);
 
-		String playlistName = newPlaylist.getName();
-		lblPlaylistName.setText(playlistName);
+			String playlistName = newPlaylist.getName();
+			lblPlaylistName.setText(playlistName);
+		});
 	}
 }

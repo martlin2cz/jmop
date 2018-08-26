@@ -1,5 +1,6 @@
 package cz.martlin.jmop.gui.comp;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
@@ -176,27 +177,35 @@ public class TwoStateButton extends Button {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void update() {
-		updateText();
-		updateGraphics();
-		updateTooltip();
+		Platform.runLater(() -> {
+			updateText();
+			updateGraphics();
+			updateTooltip();
+		});
 	}
 
 	private void updateText() {
-		StringProperty property = getCurrentStateProperty(firstStateText, secondStateText);
-		String newText = property.get();
-		setText(newText);
+		Platform.runLater(() -> {
+			StringProperty property = getCurrentStateProperty(firstStateText, secondStateText);
+			String newText = property.get();
+			setText(newText);
+		});
 	}
 
 	private void updateGraphics() {
-		ObjectProperty<Node> property = getCurrentStateProperty(firstStateGraphics, secondStateGraphics);
-		Node newGraphics = property.get();
-		setGraphic(newGraphics);
+		Platform.runLater(() -> {
+			ObjectProperty<Node> property = getCurrentStateProperty(firstStateGraphics, secondStateGraphics);
+			Node newGraphics = property.get();
+			setGraphic(newGraphics);
+		});
 	}
 
 	private void updateTooltip() {
-		ObjectProperty<Tooltip> property = getCurrentStateProperty(firstStateTooltip, secondStateTooltip);
-		Tooltip newTooltip = property.get();
-		setTooltip(newTooltip);
+		Platform.runLater(() -> {
+			ObjectProperty<Tooltip> property = getCurrentStateProperty(firstStateTooltip, secondStateTooltip);
+			Tooltip newTooltip = property.get();
+			setTooltip(newTooltip);
+		});
 	}
 
 	private void handleAction(ActionEvent event) {

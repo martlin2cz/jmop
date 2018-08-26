@@ -19,6 +19,7 @@ import cz.martlin.jmop.gui.comp.TwoStateButton;
 import cz.martlin.jmop.gui.util.BindingsUtils;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import cz.martlin.jmop.gui.util.MediaPlayerGuiReporter;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
@@ -30,6 +31,7 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -109,6 +111,10 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		this.jmop = JMOPPlayerBuilder.create(this, rootDirectory, null);
 		this.actions = new GuiComplexActionsPerformer(jmop);
 	}
+	
+	public GuiComplexActionsPerformer getActions() {
+		return actions;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -132,7 +138,8 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		trpnNextTrack.trackProperty().bind(jmop.getDescriptor().nextTrackProperty());
 
 		playlistAndBundlePane.playlistProperty().bind(jmop.getDescriptor().currentPlaylistProperty());
-		dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
+		//dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
+		Bindings.bindContent(dwnldPane.tasksProperty(), jmop.getDescriptor().currentDownloadTasksProperty());
 
 		playStopButt.firstStateProperty().bind(jmop.getDescriptor().stoppedProperty());
 		pauseResumeButt.firstStateProperty().bind(jmop.getDescriptor().pausedProperty());

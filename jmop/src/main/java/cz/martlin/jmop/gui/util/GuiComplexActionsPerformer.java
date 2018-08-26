@@ -10,32 +10,36 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.dial.AddTrackDialog;
-import cz.martlin.jmop.gui.dial.AddTrackDialog.AddTrackData;
+import cz.martlin.jmop.gui.dial.CreatePlaylistDialog;
 import cz.martlin.jmop.gui.dial.JMOPAboutDialog;
 import cz.martlin.jmop.gui.dial.NewBundleDialog;
-import cz.martlin.jmop.gui.dial.NewBundleDialog.NewBundleData;
 import cz.martlin.jmop.gui.dial.NewPlaylistDialog;
-import cz.martlin.jmop.gui.dial.NewPlaylistDialog.NewPlaylistData;
 import cz.martlin.jmop.gui.dial.SavePlaylistDialog;
-import cz.martlin.jmop.gui.dial.SavePlaylistDialog.SavePlaylistData;
 import cz.martlin.jmop.gui.dial.StartBundleDialog;
-import cz.martlin.jmop.gui.dial.StartBundleDialog.StartBundleData;
-import cz.martlin.jmop.gui.dial.CreatePlaylistDialog;
-import cz.martlin.jmop.gui.dial.CreatePlaylistDialog.CreatePlaylistData;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 
 public class GuiComplexActionsPerformer {
 
+	private Scene scene;
 	private final JMOPPlayer jmop;
 
 	public GuiComplexActionsPerformer(JMOPPlayer jmop) {
 		this.jmop = jmop;
 	}
+	
+	public void specifyScene(Scene scene) {
+		this.scene = scene;
+	}
 
+	///////////////////////////////////////////////////////////////////////////
+	
 	public void showPlaylist() {
 		String playlistText = jmop.currentPlaylistAsString();
 		showInfo("Current playlist", "This is currently played playlist", playlistText);
@@ -43,60 +47,44 @@ public class GuiComplexActionsPerformer {
 	}
 
 	public void startNewBundle() {
-		runInBackground(() -> {
+		runInBackgroundWithDialog(() -> {
 			NewBundleDialog dial = new NewBundleDialog();
-
-			Optional<NewBundleData> optional = dial.showAndWait();
-			if (!optional.isPresent()) {
-				return null;
-			}
-
-			NewBundleData data = optional.get();
+			return dial;
+		}, (data) -> {
 			SourceKind kind = data.getKind();
 			String bundleName = data.getName();
 			String querySeed = data.getQuery();
 
 			jmop.startNewBundle(kind, bundleName, querySeed);
-			return null;
 		});
 	}
 
 	public void startBundle(String bundleName) {
-		runInBackground(() -> {
+		runInBackgroundWithDialog(() -> {
 			List<String> playlistNames = jmop.listPlaylists(bundleName);
-			String defaultPlaylistName = "all_tracks"; //FIXME HACK
+			String defaultPlaylistName = "all_tracks"; // FIXME HACK
 			System.out.println(bundleName + " & " + playlistNames);
 			StartBundleDialog dial = new StartBundleDialog(playlistNames, defaultPlaylistName);
-
-			Optional<StartBundleData> optional = dial.showAndWait();
-			if (!optional.isPresent()) {
-				return null;
-			}
-			
-			StartBundleData data = optional.get();
+			return dial;
+		}, (data) -> {
 			String playlistName = data.getPlaylistName();
 			jmop.startPlaylist(bundleName, playlistName);
-			return null;
 		});
+
 	}
 
 	public void startPlaylist() {
-		runAndHandleError(() -> {
+		runInBackgroundWithDialog(() -> {
 			List<String> bundles = jmop.listBundles();
 			CreatePlaylistDialog dial = new CreatePlaylistDialog(bundles);
-
-			Optional<CreatePlaylistData> optional = dial.showAndWait();
-			if (!optional.isPresent()) {
-				return null;
-			}
-			
-			CreatePlaylistData data = optional.get();
+			return dial;
+		}, (data) -> {
 			String bundleName = data.getBundleName();
 			String playlistName = data.getPlaylistName();
-			
+
 			jmop.startPlaylist(bundleName, playlistName);
-			return null;
 		});
+
 	}
 
 	public void startPlaylist(String playlistName) {
@@ -108,52 +96,35 @@ public class GuiComplexActionsPerformer {
 	}
 
 	public void newPlaylist() {
-		runAndHandleError(() -> {
+		runInBackgroundWithDialog(() -> {
 			NewPlaylistDialog dial = new NewPlaylistDialog();
-
-			Optional<NewPlaylistData> optional = dial.showAndWait();
-			if (!optional.isPresent()) {
-				return null;
-			}
-			
-			NewPlaylistData data = optional.get();
+			return dial;
+		}, (data) -> {
 			String querySeed = data.getQuery();
 			jmop.startNewPlaylist(querySeed);
-			return null;
 		});
 	}
 
 	public void savePlaylist() {
-		runAndHandleError(() -> {
+		runInBackgroundWithDialog(() -> {
 			String currentPlaylistName = jmop.getCurrentPlaylist().getName();
 			SavePlaylistDialog dial = new SavePlaylistDialog(currentPlaylistName);
-
-			Optional<SavePlaylistData> optional = dial.showAndWait();
-			if (!optional.isPresent()) {
-				return null;
-			}
-			
-			SavePlaylistData data = optional.get();
+			return dial;
+		}, (data) -> {
 			String playlistName = data.getName();
 			jmop.savePlaylistAs(playlistName);
-			return null;			
 		});
 	}
 
 	public void addTrack() {
-		runInBackground(() -> {
+		runInBackgroundWithDialog(() -> {
 			AddTrackDialog dial = new AddTrackDialog();
-
-			Optional<AddTrackData> optional = dial.showAndWait();
-			if (!optional.isPresent()) {
-				return null;
-			}
-			
-			AddTrackData data = optional.get();
+			return dial;
+		}, (data) -> {
 			String query = data.getQuery();
 			jmop.loadAndAddTrack(query);
-			return null;
 		});
+
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -167,7 +138,6 @@ public class GuiComplexActionsPerformer {
 
 	public void stopButtAction() {
 		runInBackground(() -> {
-
 			jmop.stopPlaying();
 			return null;
 		});
@@ -251,16 +221,23 @@ public class GuiComplexActionsPerformer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	private static <T> void runInBackground(RunnableWithException<T> run) {
+	private <T> void runInBackground(RunnableWithException<T> run) {
 		Task<T> task = new Task<T>() {
 			@Override
 			protected T call() throws Exception {
-				Platform.runLater(() -> {
-					runAndHandleError(run);
-				});
+				// Platform.runLater(() -> {
+				runAndHandleError(run);
+				// });
 				return null;
 			}
+
 		};
+
+		//FIXME AF, WTFFFFF ????
+//		scene.setCursor(Cursor.WAIT);
+//		task.setOnSucceeded((e) -> {
+//			scene.setCursor(Cursor.DEFAULT);
+//		});
 
 		Thread thread = new Thread(task, "BackgroundGUIOperationThread");
 		thread.start();
@@ -269,7 +246,32 @@ public class GuiComplexActionsPerformer {
 		// });
 	}
 
-	private static <T> T runAndHandleError(RunnableWithException<T> run) {
+	private <T> void runInBackgroundWithDialog(RunnableWithException<Dialog<T>> dialogConstructor,
+			ConsumerWithException<T> dialogResultProcessor) {
+		runAndHandleError(() -> {
+			Platform.runLater(() -> { //
+				runAndHandleError(() -> {
+
+					Dialog<T> dialog = dialogConstructor.run();
+
+					Optional<T> optional = dialog.showAndWait();
+					if (optional.isPresent()) {
+						T result = optional.get();
+						runInBackground(() -> {
+							dialogResultProcessor.consume(result);
+							return null;
+						});
+					}
+
+					return null;
+				});
+			});
+			return null;
+		});
+
+	}
+
+	private <T> T runAndHandleError(RunnableWithException<T> run) {
 		try {
 			return run.run();
 		} catch (Exception e) {
@@ -324,6 +326,11 @@ public class GuiComplexActionsPerformer {
 	@FunctionalInterface
 	public static interface RunnableWithException<T> {
 		public T run() throws Exception;
+	}
+
+	@FunctionalInterface
+	public static interface ConsumerWithException<T> {
+		public void consume(T object) throws Exception;
 	}
 
 }

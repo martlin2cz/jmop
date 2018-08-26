@@ -2,6 +2,7 @@ package cz.martlin.jmop.gui.comp;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
@@ -12,7 +13,7 @@ import javafx.scene.text.Font;
 public class TrackPane extends VBox {
 
 	private static final Tooltip NO_TRACK_TOOLTIP = new Tooltip("No track");
-	
+
 	private Label lblTitle;
 	private Label lblDuration;
 	private ObjectProperty<Track> trackProperty;
@@ -22,19 +23,19 @@ public class TrackPane extends VBox {
 
 		initializeComponents();
 		initializeProperties();
-		
+
 		changeToNoTrack();
 	}
 
 	public ObjectProperty<Track> trackProperty() {
 		return trackProperty;
 	}
-	
+
 	public void setFont(Font font) {
 		lblTitle.setFont(font);
 		lblDuration.setFont(font);
 	}
-	
+
 	public Font getFont() {
 		return lblTitle.getFont();
 	}
@@ -57,20 +58,22 @@ public class TrackPane extends VBox {
 	///////////////////////////////////////////////////////////////////////////
 
 	private void trackChanged(Track newTrack) {
-		if (newTrack != null) {
-			changeToTrack(newTrack);
-		} else {
-			changeToNoTrack();
-		}
+		Platform.runLater(() -> {
+			if (newTrack != null) {
+				changeToTrack(newTrack);
+			} else {
+				changeToNoTrack();
+			}
+		});
 	}
 
 	private void changeToNoTrack() {
 		lblTitle.setText("No track");
 		lblDuration.setText("");
-		
+
 		lblTitle.setDisable(true);
 		lblDuration.setDisable(true);
-		
+
 		lblTitle.setTooltip(NO_TRACK_TOOLTIP);
 	}
 
@@ -80,10 +83,10 @@ public class TrackPane extends VBox {
 
 		String duration = DurationUtilities.toHumanString(newTrack.getDuration());
 		lblDuration.setText(duration);
-		
+
 		lblTitle.setDisable(false);
 		lblDuration.setDisable(false);
-		
+
 		String description = newTrack.getDescription();
 		Tooltip tooltip = new Tooltip(description);
 		lblTitle.setTooltip(tooltip);

@@ -14,6 +14,8 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class TrackPreparer {
 	private final AbstractRemoteSource remote;
@@ -22,7 +24,9 @@ public class TrackPreparer {
 	private final BaseSourceDownloader downloader;
 	private final AutomaticSavesPerformer saver;
 	private final GuiDescriptor gui;
+	@Deprecated
 	private final ObjectProperty<DownloaderTask> currentTaskProperty;
+	private final ObservableList<DownloaderTask> currentTasks;
 
 
 	public TrackPreparer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceConverter converter,
@@ -35,10 +39,16 @@ public class TrackPreparer {
 		this.saver = saver;
 		this.gui = gui;
 		this.currentTaskProperty = new SimpleObjectProperty<>();
+		this.currentTasks = FXCollections.observableArrayList();
 	}
 
+	@Deprecated
 	public ObjectProperty<DownloaderTask> currentTaskProperty() {
 		return currentTaskProperty;
+	}
+	
+	public ObservableList<DownloaderTask> currentTasks() {
+		return currentTasks;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,35 +78,35 @@ public class TrackPreparer {
 		DownloaderTask task = new DownloaderTask(downloader, converter, track);
 		
 		currentTaskProperty.set(task);
-		
+		currentTasks.add(task);
 
 		if (onCompleteOrNull != null) {
-			task.setOnSucceeded((e) -> onTrackDownloadedHandler(track, onCompleteOrNull));
+			task.setOnSucceeded((e) -> onTrackDownloadedHandler(task, track, onCompleteOrNull));
 			Thread thread = new Thread(task, "DownloaderTaskThread");
 			thread.start();
 		} else {
 			task.run();
-			trackDownloaded(track, null);
+			trackDownloaded(task, track, null);
 		}
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void onTrackDownloadedHandler(Track track, Consumer<Track> onCompleteOrNull)  {
+	private void onTrackDownloadedHandler(DownloaderTask task , Track track, Consumer<Track> onCompleteOrNull)  {
 		try {
-			trackDownloaded(track, onCompleteOrNull);
+			trackDownloaded(task, track, onCompleteOrNull);
 		} catch (JMOPSourceException e) {
 			//TODO exception
 			e.printStackTrace();
 		}
 	}
 
-	private void trackDownloaded(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
+	private void trackDownloaded(DownloaderTask task, Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
 		Bundle bundle = track.getBundle();
 		saver.saveBundle(bundle); //TODO FIXME quite hack
 
 		trackReady(track, onCompleteOrNull);
 		
-		currentTaskProperty.set(null);
+		currentTasks.remove(task);
 	}
 
 	private void trackReady(Track track, Consumer<Track> onCompleteOrNull) {
