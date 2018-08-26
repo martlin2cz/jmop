@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Dialog prompting for the new bundle.
@@ -39,6 +41,8 @@ public class NewBundleDialog extends BaseCommonFXMLDialog<NewBundleData> {
 		setTitle("Create new bundle");
 		setHeaderText("Create new bundle of music, for instance\n" //
 				+ "music of one author, album, genre ...");
+		
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-bundle.png"))));
 	}
 
 	@Override

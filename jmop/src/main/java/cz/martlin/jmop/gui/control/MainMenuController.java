@@ -188,6 +188,10 @@ public class MainMenuController implements Initializable {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
+	public void onHelpAction() {
+		//TODO help
+	}
+	
 	public void onCheckConfigurationAction() {
 		actions.checkConfiguration();
 	}

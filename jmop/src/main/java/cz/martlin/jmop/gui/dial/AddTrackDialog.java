@@ -6,6 +6,8 @@ import cz.martlin.jmop.gui.dial.AddTrackDialog.AddTrackData;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Dialog prompting for the new track.
@@ -27,6 +29,8 @@ public class AddTrackDialog extends BaseCommonFXMLDialog<AddTrackData> {
 	protected void specifyCustomDialogSettings() {
 		setTitle("Add track");
 		setHeaderText("Specify the new track to be added.");
+		
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/add-track.png"))));
 	}
 
 	@Override

@@ -6,6 +6,8 @@ import cz.martlin.jmop.gui.dial.NewPlaylistDialog.NewPlaylistData;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Dialog prompting for the new playlist (starting with by-user-specified
@@ -31,6 +33,8 @@ public class NewPlaylistDialog extends BaseCommonFXMLDialog<NewPlaylistData> {
 		setTitle("Create new playlist");
 		setHeaderText("Create new playlist, for instance for album \n" //
 				+ "or just you favourite set.");
+		
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-playlist.png"))));
 	}
 
 	@Override

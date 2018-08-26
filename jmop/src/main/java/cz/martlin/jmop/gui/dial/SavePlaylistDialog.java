@@ -6,6 +6,8 @@ import cz.martlin.jmop.gui.dial.SavePlaylistDialog.SavePlaylistData;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Dialog prompting for the new playlist name.
@@ -31,6 +33,8 @@ public class SavePlaylistDialog extends BaseCommonFXMLDialog<SavePlaylistData> {
 	protected void specifyCustomDialogSettings() {
 		setTitle("Save playlist");
 		setHeaderText("Specify the new name for this playlist.");
+		
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/save-playlist.png"))));
 	}
 
 	@Override

@@ -10,6 +10,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Dialog prompting for (new) playlist name (and also allowing to change the
@@ -38,6 +40,8 @@ public class CreatePlaylistDialog extends BaseCommonFXMLDialog<CreatePlaylistDat
 	protected void specifyCustomDialogSettings() {
 		setTitle("Create new playlist");
 		setHeaderText("Specify name of the new playlist and also \n" + "change the bundle if needed.");
+		
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-playlist.png"))));
 	}
 
 	@Override

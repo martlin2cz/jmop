@@ -18,7 +18,6 @@ import cz.martlin.jmop.gui.dial.SavePlaylistDialog;
 import cz.martlin.jmop.gui.dial.StartBundleDialog;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -33,13 +32,13 @@ public class GuiComplexActionsPerformer {
 	public GuiComplexActionsPerformer(JMOPPlayer jmop) {
 		this.jmop = jmop;
 	}
-	
+
 	public void specifyScene(Scene scene) {
 		this.scene = scene;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	public void showPlaylist() {
 		String playlistText = jmop.currentPlaylistAsString();
 		showInfo("Current playlist", "This is currently played playlist", playlistText);
@@ -174,19 +173,25 @@ public class GuiComplexActionsPerformer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void exit() {
-		if (jmop.getDescriptor().currentTrackProperty().isNotNull().get()) {
+		if (jmop.getDescriptor().hasActiveBundleAndPlaylistProperty().get() //
+				&& jmop.getDescriptor().currentTrackProperty().isNotNull().get()) {
 			jmop.stopPlaying();
 		}
 		System.exit(0);
 	}
 
 	public void checkConfiguration() {
-		showInfo("Configuration check", "Check whether JMOP you can use",
-				"Please whether you have youtube-dl and ffmpeg properly installed.");
+		runAndHandleError(() -> {
+			// TODO check coinfig
+			showInfo("Configuration check", "Check whether JMOP you can use",
+					"Please whether you have youtube-dl and ffmpeg properly installed.");
+			return null;
+		});
+
 	}
 
 	public void showAboutBox() {
-		runInBackground(() -> {
+		runAndHandleError(() -> {
 			JMOPAboutDialog dialog = new JMOPAboutDialog();
 			dialog.show();
 			return null;
@@ -233,11 +238,11 @@ public class GuiComplexActionsPerformer {
 
 		};
 
-		//FIXME AF, WTFFFFF ????
-//		scene.setCursor(Cursor.WAIT);
-//		task.setOnSucceeded((e) -> {
-//			scene.setCursor(Cursor.DEFAULT);
-//		});
+		// FIXME AF, WTFFFFF ????
+		// scene.setCursor(Cursor.WAIT);
+		// task.setOnSucceeded((e) -> {
+		// scene.setCursor(Cursor.DEFAULT);
+		// });
 
 		Thread thread = new Thread(task, "BackgroundGUIOperationThread");
 		thread.start();

@@ -117,7 +117,16 @@
 			onDynamicItemAction="#onBundleNameAction">
 			<staticItems>
 				<MenuItem mnemonicParsing="false" text="Start new bundle"
-					fx:id="miStartNewBundle" onAction="#onStartNewBundleAction" />
+					fx:id="miStartNewBundle" onAction="#onStartNewBundleAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/new-bundle.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<SeparatorMenuItem mnemonicParsing="false" />
 			</staticItems>
 		</HalfDynamicMenu>
@@ -126,10 +135,29 @@
 			fx:id="menuPlaylist" onShowing="#onPlaylistMenuShowing"
 			onDynamicItemAction="#onPlaylistNameAction">
 			<staticItems>
+
 				<MenuItem mnemonicParsing="false" text="Start new playlist"
-					fx:id="miStartNewPlaylist" onAction="#onStartNewPlaylistAction" />
+					fx:id="miStartNewPlaylist" onAction="#onStartNewPlaylistAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/new-playlist.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<MenuItem mnemonicParsing="false" text="Save this playlist as ..."
-					fx:id="miSaveThisPlaylistAs" onAction="#onSavePlaylistAsAction" />
+					fx:id="miSaveThisPlaylistAs" onAction="#onSavePlaylistAsAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/save-playlist.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<SeparatorMenuItem mnemonicParsing="false" />
 			</staticItems>
 		</HalfDynamicMenu>
@@ -139,16 +167,53 @@
 			onDynamicItemAction="#onTrackTitleAction">
 			<staticItems>
 				<MenuItem mnemonicParsing="false" text="Append custom track"
-					fx:id="miAppendCustomTrack" onAction="#onAppendCustomTrackAction" />
+					fx:id="miAppendCustomTrack" onAction="#onAppendCustomTrackAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/add-track.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<SeparatorMenuItem mnemonicParsing="false" />
 			</staticItems>
 		</HalfDynamicMenu>
 
 		<Menu mnemonicParsing="false" text="Help">
 			<items>
+				<MenuItem mnemonicParsing="false" text="Help" onAction="#onHelpAction" disable="true">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/help.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<MenuItem mnemonicParsing="false" text="Check configuration"
-					onAction="#onCheckConfigurationAction" />
-				<MenuItem mnemonicParsing="false" text="About" onAction="#onAboutAction" />
+					onAction="#onCheckConfigurationAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/check-config.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
+				<MenuItem mnemonicParsing="false" text="About" onAction="#onAboutAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/about.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 			</items>
 		</Menu>
 	</menus>

@@ -9,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Dialog prompting the playlist  to start bundle.
@@ -37,6 +39,8 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 	protected void specifyCustomDialogSettings() {
 		setTitle("Start playing bundle");
 		setHeaderText("Specify playlist which should be started.");
+		
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/play-bundle.png"))));
 	}
 
 	@Override
