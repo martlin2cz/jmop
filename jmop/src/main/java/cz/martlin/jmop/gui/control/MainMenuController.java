@@ -91,8 +91,8 @@ public class MainMenuController implements Initializable {
 						.or(jmop.getDescriptor().stoppedProperty()) //
 						.or(hasNoPlaylist));
 
-		miPrevious.disableProperty().bind(hasNoPlaylist);
-		miNext.disableProperty().bind(hasNoPlaylist);
+		miPrevious.disableProperty().bind(hasNoPlaylist.or(jmop.getDescriptor().hasPreviousProperty().not()));
+		miNext.disableProperty().bind(hasNoPlaylist.or(jmop.getDescriptor().hasNextProperty().not()));
 
 		menuPlaylist.disableProperty().bind(hasNoPlaylist);
 		menuTrack.disableProperty().bind(hasNoPlaylist);

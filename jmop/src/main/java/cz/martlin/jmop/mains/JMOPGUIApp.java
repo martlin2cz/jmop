@@ -28,6 +28,10 @@ public class JMOPGUIApp extends Application {
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
 		primaryStage.sizeToScene();
+		primaryStage.setResizable(true);
+		primaryStage.setMinHeight(scene.getHeight());
+		primaryStage.setMinWidth(scene.getWidth());
+		
 
 		MainFrameController controller = loader.getController();
 		controller.getActions().specifyScene(scene);

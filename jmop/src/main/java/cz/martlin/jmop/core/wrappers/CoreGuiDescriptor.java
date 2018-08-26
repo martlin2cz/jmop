@@ -37,6 +37,15 @@ public class CoreGuiDescriptor {
 		return jmop.getPlaying().getPlaylister().pausedProperty();
 	}
 
+	public ReadOnlyBooleanProperty hasPreviousProperty() {
+		return jmop.getPlaying().getPlaylister().hasPreviousProperty();
+	}
+	
+	public ReadOnlyBooleanProperty hasNextProperty() {
+		return jmop.getPlaying().getPlaylister().hasNextProperty();
+	}
+	
+	
 	public ReadOnlyObjectProperty<Duration> currentTimeProperty() {
 		return jmop.getPlaying().getPlaylister().getPlayer().currentTimeProperty();
 	}

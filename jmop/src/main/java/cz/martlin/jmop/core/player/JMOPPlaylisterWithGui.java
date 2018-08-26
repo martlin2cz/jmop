@@ -16,6 +16,8 @@ public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPl
 	final ObjectProperty<Track> nextTrackProperty;
 	final BooleanProperty stoppedProperty;
 	final BooleanProperty pausedProperty;
+	final BooleanProperty hasPreviousProperty;
+	final BooleanProperty hasNextProperty;
 
 	public JMOPPlaylisterWithGui(BasePlayer player, TrackPreparer preparer, InternetConnectionStatus connection,
 			AutomaticSavesPerformer saver) {
@@ -26,6 +28,8 @@ public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPl
 		this.nextTrackProperty = new SimpleObjectProperty<>();
 		this.stoppedProperty = new SimpleBooleanProperty(true);
 		this.pausedProperty = new SimpleBooleanProperty(true);
+		this.hasPreviousProperty = new SimpleBooleanProperty(true);
+		this.hasNextProperty = new SimpleBooleanProperty(true);
 	}
 
 	public ObjectProperty<Track> currentTrackProperty() {
@@ -46,6 +50,14 @@ public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPl
 
 	public BooleanProperty pausedProperty() {
 		return pausedProperty;
+	}
+
+	public BooleanProperty hasPreviousProperty() {
+		return hasPreviousProperty;
+	}
+
+	public BooleanProperty hasNextProperty() {
+		return hasNextProperty;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +91,6 @@ public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPl
 		super.resume();
 		updateProperties(false, false);
 	}
-	
 
 	public void seek(Duration to) {
 		super.seek(to);
@@ -107,7 +118,12 @@ public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPl
 
 		stoppedProperty.set(stopped);
 		pausedProperty.set(paused);
-	}
 
+		boolean hasPrevious = playlist.hasLastPlayed();
+		hasPreviousProperty.set(hasPrevious);
+
+		boolean hasNext = playlist.hasNextToPlay();
+		hasNextProperty.set(hasNext);
+	}
 
 }

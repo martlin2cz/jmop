@@ -44,7 +44,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private Pane playerPane;
 	@FXML
 	private BorderPane wellcomePane;
-	
+
 	@FXML
 	private Button showPlaylistButt;
 	@FXML
@@ -98,7 +98,6 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private PlaylistAndBundlePane playlistAndBundlePane;
 	@FXML
 	private DownloadPane dwnldPane;
-	
 
 	private final JMOPPlayer jmop;
 	private final GuiComplexActionsPerformer actions;
@@ -111,7 +110,7 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 		this.jmop = JMOPPlayerBuilder.create(this, rootDirectory, null);
 		this.actions = new GuiComplexActionsPerformer(jmop);
 	}
-	
+
 	public GuiComplexActionsPerformer getActions() {
 		return actions;
 	}
@@ -131,19 +130,20 @@ public class MainFrameController implements Initializable, GuiDescriptor {
 	private void initBindings() {
 		playerPane.visibleProperty().bind(jmop.getDescriptor().hasActiveBundleAndPlaylistProperty());
 		wellcomePane.visibleProperty().bind(jmop.getDescriptor().hasActiveBundleAndPlaylistProperty().not());
-		
-		
+
 		trpnCurrentTrack.trackProperty().bind(jmop.getDescriptor().currentTrackProperty());
 		trpnPreviousTrack.trackProperty().bind(jmop.getDescriptor().previousTrackProperty());
 		trpnNextTrack.trackProperty().bind(jmop.getDescriptor().nextTrackProperty());
 
 		playlistAndBundlePane.playlistProperty().bind(jmop.getDescriptor().currentPlaylistProperty());
-		//dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
+		// dwnldPane.taskProperty().bind(jmop.getDescriptor().currentDownloadTaskProperty());
 		Bindings.bindContent(dwnldPane.tasksProperty(), jmop.getDescriptor().currentDownloadTasksProperty());
 
 		playStopButt.firstStateProperty().bind(jmop.getDescriptor().stoppedProperty());
 		pauseResumeButt.firstStateProperty().bind(jmop.getDescriptor().pausedProperty());
 		pauseResumeButt.disableProperty().bind(jmop.getDescriptor().stoppedProperty());
+		prevButt.disableProperty().bind(jmop.getDescriptor().hasPreviousProperty().not());
+		nextButt.disableProperty().bind(jmop.getDescriptor().hasNextProperty().not());
 
 		jmop.getDescriptor().stoppedProperty().addListener((observable, oldVal, newVal) -> changeDefaultButton());
 
