@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import cz.martlin.jmop.gui.comp.DownloadPane?>
-<?import cz.martlin.jmop.gui.comp.GuiChangableSlider?>
-<?import cz.martlin.jmop.gui.comp.JMOPMainMenu?>
-<?import cz.martlin.jmop.gui.comp.TrackPane?>
-<?import cz.martlin.jmop.gui.comp.TwoStateButton?>
-<?import cz.martlin.jmop.gui.comp.PlaylistAndBundlePane?>
+
+
 <?import java.lang.*?>
 <?import java.util.*?>
-<?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+
+<?import cz.martlin.jmop.gui.comp.WelcomePane?>
+<?import cz.martlin.jmop.gui.comp.PlayerPane?>
+<?import cz.martlin.jmop.gui.comp.JMOPMainMenu?>
+
 
 <BorderPane id="borderPane" xmlns="http://javafx.com/javafx/8.0.60"
 	xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.martlin.jmop.gui.control.MainFrameController"
-	prefHeight="160.0" prefWidth="640.0" minWidth="280.0" minHeight="160.0">
-	<fx:define>
-		<Double fx:id="BUTTONS_ICON_SIZE" fx:value="32.0" />
-		<Double fx:id="BUTTONS_WIDTH" fx:value="52.0" />
-		<Double fx:id="BUTTONS_HEIGHT" fx:value="46.0" />
-	</fx:define>
+	prefHeight="240.0" prefWidth="640.0" minWidth="280.0" minHeight="240.0">
+<!-- 	<fx:define> -->
+<!-- 		<Double fx:id="BUTTONS_ICON_SIZE" fx:value="32.0" /> -->
+<!-- 		<Double fx:id="BUTTONS_WIDTH" fx:value="52.0" /> -->
+<!-- 		<Double fx:id="BUTTONS_HEIGHT" fx:value="46.0" /> -->
+<!-- 	</fx:define> -->
 
 	<top>
 		<JMOPMainMenu fx:id="mainMenu" prefHeight="30.0"
@@ -40,153 +27,142 @@
 	</top>
 	<center>
 		<StackPane>
-			<Pane fx:id="playerPane">
-				<GridPane alignment="CENTER" BorderPane.alignment="CENTER">
-					<columnConstraints>
-						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-						<ColumnConstraints hgrow="NEVER" maxWidth="$BUTTONS_WIDTH"
-							minWidth="$BUTTONS_WIDTH" prefWidth="$BUTTONS_WIDTH" />
-						<ColumnConstraints hgrow="NEVER" maxWidth="$BUTTONS_WIDTH"
-							minWidth="$BUTTONS_WIDTH" prefWidth="$BUTTONS_WIDTH" />
-						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-					</columnConstraints>
-					<rowConstraints>
-						<RowConstraints maxHeight="$BUTTONS_HEIGHT"
-							minHeight="$BUTTONS_HEIGHT" prefHeight="$BUTTONS_HEIGHT" vgrow="NEVER" />
-						<RowConstraints maxHeight="$BUTTONS_HEIGHT"
-							minHeight="$BUTTONS_HEIGHT" prefHeight="$BUTTONS_HEIGHT" vgrow="NEVER" />
-						<RowConstraints minHeight="10.0" prefHeight="40.0"
-							vgrow="SOMETIMES" />
-					</rowConstraints>
+<!-- 			<Pane fx:id="playerPane"> -->
+<!-- 				<GridPane alignment="CENTER" BorderPane.alignment="CENTER"> -->
+<!-- 					<columnConstraints> -->
+<!-- 						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" /> -->
+<!-- 						<ColumnConstraints hgrow="NEVER" maxWidth="$BUTTONS_WIDTH" -->
+<!-- 							minWidth="$BUTTONS_WIDTH" prefWidth="$BUTTONS_WIDTH" /> -->
+<!-- 						<ColumnConstraints hgrow="NEVER" maxWidth="$BUTTONS_WIDTH" -->
+<!-- 							minWidth="$BUTTONS_WIDTH" prefWidth="$BUTTONS_WIDTH" /> -->
+<!-- 						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" /> -->
+<!-- 					</columnConstraints> -->
+<!-- 					<rowConstraints> -->
+<!-- 						<RowConstraints maxHeight="$BUTTONS_HEIGHT" -->
+<!-- 							minHeight="$BUTTONS_HEIGHT" prefHeight="$BUTTONS_HEIGHT" vgrow="NEVER" /> -->
+<!-- 						<RowConstraints maxHeight="$BUTTONS_HEIGHT" -->
+<!-- 							minHeight="$BUTTONS_HEIGHT" prefHeight="$BUTTONS_HEIGHT" vgrow="NEVER" /> -->
+<!-- 						<RowConstraints minHeight="10.0" prefHeight="40.0" -->
+<!-- 							vgrow="SOMETIMES" /> -->
+<!-- 					</rowConstraints> -->
 
-					<children>
+<!-- 					<children> -->
 
-						<TrackPane fx:id="trpnCurrentTrack" minWidth="40.0"
-							GridPane.columnIndex="0" GridPane.rowIndex="0">
-							<font>
-								<Font size="18.0" />
-							</font>
-						</TrackPane>
-						<GuiChangableSlider fx:id="sliTrackProgress"
-							minWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="0"
-							blockIncrement="10000" />
-						<TrackPane fx:id="trpnPreviousTrack" minWidth="40.0"
-							GridPane.columnIndex="0" GridPane.rowIndex="1" />
-						<TrackPane fx:id="trpnNextTrack" minWidth="40.0"
-							GridPane.columnIndex="3" GridPane.rowIndex="1" />
-						<PlaylistAndBundlePane fx:id="playlistAndBundlePane"
-							prefHeight="40.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-						<DownloadPane fx:id="dwnldPane" prefHeight="40.0"
-							GridPane.columnIndex="3" GridPane.rowIndex="2" />
+<!-- 						<TrackPane fx:id="trpnCurrentTrack" minWidth="40.0" -->
+<!-- 							GridPane.columnIndex="0" GridPane.rowIndex="0"> -->
+<!-- 							<font> -->
+<!-- 								<Font size="18.0" /> -->
+<!-- 							</font> -->
+<!-- 						</TrackPane> -->
+<!-- 						<GuiChangableSlider fx:id="sliTrackProgress" -->
+<!-- 							minWidth="40.0" GridPane.columnIndex="3" GridPane.rowIndex="0" -->
+<!-- 							blockIncrement="10000" /> -->
+<!-- 						<TrackPane fx:id="trpnPreviousTrack" minWidth="40.0" -->
+<!-- 							GridPane.columnIndex="0" GridPane.rowIndex="1" /> -->
+<!-- 						<TrackPane fx:id="trpnNextTrack" minWidth="40.0" -->
+<!-- 							GridPane.columnIndex="3" GridPane.rowIndex="1" /> -->
+<!-- 						<PlaylistAndBundlePane fx:id="playlistAndBundlePane" -->
+<!-- 							prefHeight="40.0" GridPane.columnIndex="0" GridPane.rowIndex="2" /> -->
+<!-- 						<DownloadPane fx:id="dwnldPane" prefHeight="40.0" -->
+<!-- 							GridPane.columnIndex="3" GridPane.rowIndex="2" /> -->
 
-						<TwoStateButton fx:id="playStopButt" alignment="CENTER"
-							GridPane.columnIndex="1" GridPane.rowIndex="0" contentDisplay="CENTER"
-							mnemonicParsing="false" onFirstStateAction="#playButtAction"
-							onSecondStateAction="#stopButtAction">
-							<firstStateGraphics>
-								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
-									pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@/cz/martlin/jmop/gui/img/play.svg" />
-									</image>
-								</ImageView>
-							</firstStateGraphics>
-							<secondStateGraphics>
-								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
-									pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@/cz/martlin/jmop/gui/img/stop.svg" />
-									</image>
-								</ImageView>
-							</secondStateGraphics>
-							<firstStateTooltip>
-								<Tooltip text="Start playing (Shift + S or Enter)" />
-							</firstStateTooltip>
-							<secondStateTooltip>
-								<Tooltip text="Stop playing (S)" />
-							</secondStateTooltip>
-						</TwoStateButton>
+<!-- 						<TwoStateButton fx:id="playStopButt" alignment="CENTER" -->
+<!-- 							GridPane.columnIndex="1" GridPane.rowIndex="0" contentDisplay="CENTER" -->
+<!-- 							mnemonicParsing="false" onFirstStateAction="#playButtAction" -->
+<!-- 							onSecondStateAction="#stopButtAction"> -->
+<!-- 							<firstStateGraphics> -->
+<!-- 								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE" -->
+<!-- 									pickOnBounds="true" preserveRatio="true"> -->
+<!-- 									<image> -->
+<!-- 										<Image url="@/cz/martlin/jmop/gui/img/play.svg" /> -->
+<!-- 									</image> -->
+<!-- 								</ImageView> -->
+<!-- 							</firstStateGraphics> -->
+<!-- 							<secondStateGraphics> -->
+<!-- 								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE" -->
+<!-- 									pickOnBounds="true" preserveRatio="true"> -->
+<!-- 									<image> -->
+<!-- 										<Image url="@/cz/martlin/jmop/gui/img/stop.svg" /> -->
+<!-- 									</image> -->
+<!-- 								</ImageView> -->
+<!-- 							</secondStateGraphics> -->
+<!-- 							<firstStateTooltip> -->
+<!-- 								<Tooltip text="Start playing (Shift + S or Enter)" /> -->
+<!-- 							</firstStateTooltip> -->
+<!-- 							<secondStateTooltip> -->
+<!-- 								<Tooltip text="Stop playing (S)" /> -->
+<!-- 							</secondStateTooltip> -->
+<!-- 						</TwoStateButton> -->
 
-						<TwoStateButton fx:id="pauseResumeButt" alignment="CENTER"
-							GridPane.columnIndex="2" GridPane.rowIndex="0" contentDisplay="CENTER"
-							mnemonicParsing="false" onFirstStateAction="#resumeButtAction"
-							onSecondStateAction="#pauseButtAction">
-							<firstStateGraphics>
-								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
-									pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@/cz/martlin/jmop/gui/img/resume.svg" />
-									</image>
-								</ImageView>
-							</firstStateGraphics>
-							<secondStateGraphics>
-								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
-									pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@/cz/martlin/jmop/gui/img/pause.svg" />
-									</image>
-								</ImageView>
-							</secondStateGraphics>
-							<firstStateTooltip>
-								<Tooltip text="Resume playing (Shift + P or Enter)" />
-							</firstStateTooltip>
-							<secondStateTooltip>
-								<Tooltip text="Pause playing (P or Enter)" />
-							</secondStateTooltip>
-						</TwoStateButton>
+<!-- 						<TwoStateButton fx:id="pauseResumeButt" alignment="CENTER" -->
+<!-- 							GridPane.columnIndex="2" GridPane.rowIndex="0" contentDisplay="CENTER" -->
+<!-- 							mnemonicParsing="false" onFirstStateAction="#resumeButtAction" -->
+<!-- 							onSecondStateAction="#pauseButtAction"> -->
+<!-- 							<firstStateGraphics> -->
+<!-- 								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE" -->
+<!-- 									pickOnBounds="true" preserveRatio="true"> -->
+<!-- 									<image> -->
+<!-- 										<Image url="@/cz/martlin/jmop/gui/img/resume.svg" /> -->
+<!-- 									</image> -->
+<!-- 								</ImageView> -->
+<!-- 							</firstStateGraphics> -->
+<!-- 							<secondStateGraphics> -->
+<!-- 								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE" -->
+<!-- 									pickOnBounds="true" preserveRatio="true"> -->
+<!-- 									<image> -->
+<!-- 										<Image url="@/cz/martlin/jmop/gui/img/pause.svg" /> -->
+<!-- 									</image> -->
+<!-- 								</ImageView> -->
+<!-- 							</secondStateGraphics> -->
+<!-- 							<firstStateTooltip> -->
+<!-- 								<Tooltip text="Resume playing (Shift + P or Enter)" /> -->
+<!-- 							</firstStateTooltip> -->
+<!-- 							<secondStateTooltip> -->
+<!-- 								<Tooltip text="Pause playing (P or Enter)" /> -->
+<!-- 							</secondStateTooltip> -->
+<!-- 						</TwoStateButton> -->
 
-						<Button fx:id="nextButt" alignment="CENTER" contentDisplay="CENTER"
-							GridPane.columnIndex="2" GridPane.rowIndex="1" mnemonicParsing="false"
-							onAction="#nextButtAction">
-							<graphic>
-								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
-									pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@/cz/martlin/jmop/gui/img/next.svg" />
-									</image>
-								</ImageView>
-							</graphic>
-							<tooltip>
-								<Tooltip text="Next track (N)" />
-							</tooltip>
-						</Button>
-						<Button fx:id="prevButt" alignment="CENTER" contentDisplay="CENTER"
-							GridPane.columnIndex="1" GridPane.rowIndex="1" mnemonicParsing="false"
-							onAction="#prevButtAction">
+<!-- 						<Button fx:id="nextButt" alignment="CENTER" contentDisplay="CENTER" -->
+<!-- 							GridPane.columnIndex="2" GridPane.rowIndex="1" mnemonicParsing="false" -->
+<!-- 							onAction="#nextButtAction"> -->
+<!-- 							<graphic> -->
+<!-- 								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE" -->
+<!-- 									pickOnBounds="true" preserveRatio="true"> -->
+<!-- 									<image> -->
+<!-- 										<Image url="@/cz/martlin/jmop/gui/img/next.svg" /> -->
+<!-- 									</image> -->
+<!-- 								</ImageView> -->
+<!-- 							</graphic> -->
+<!-- 							<tooltip> -->
+<!-- 								<Tooltip text="Next track (N)" /> -->
+<!-- 							</tooltip> -->
+<!-- 						</Button> -->
+<!-- 						<Button fx:id="prevButt" alignment="CENTER" contentDisplay="CENTER" -->
+<!-- 							GridPane.columnIndex="1" GridPane.rowIndex="1" mnemonicParsing="false" -->
+<!-- 							onAction="#prevButtAction"> -->
 
-							<graphic>
-								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
-									pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@/cz/martlin/jmop/gui/img/previous.svg" />
-									</image>
-								</ImageView>
-							</graphic>
-							<tooltip>
-								<Tooltip text="Previous track (Shift + N)" />
-							</tooltip>
-						</Button>
+<!-- 							<graphic> -->
+<!-- 								<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE" -->
+<!-- 									pickOnBounds="true" preserveRatio="true"> -->
+<!-- 									<image> -->
+<!-- 										<Image url="@/cz/martlin/jmop/gui/img/previous.svg" /> -->
+<!-- 									</image> -->
+<!-- 								</ImageView> -->
+<!-- 							</graphic> -->
+<!-- 							<tooltip> -->
+<!-- 								<Tooltip text="Previous track (Shift + N)" /> -->
+<!-- 							</tooltip> -->
+<!-- 						</Button> -->
 
-					</children>
-					<padding>
-						<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-					</padding>
-				</GridPane>
-			</Pane>
-
-			<BorderPane fx:id="wellcomePane">
-				<center>
-					<Label wrapText="true" alignment="CENTER">
-						<text>Welcome to JMOP! To start playing choose existing bundle by
-							clicking 'Bundle - bundle name' or create new by clicking 'Bundle
-							- Start new bundle' in the main menu.
-						</text>
-					</Label>
-				</center>
-				<padding>
-					<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-				</padding>
-			</BorderPane>
+<!-- 					</children> -->
+<!-- 					<padding> -->
+<!-- 						<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /> -->
+<!-- 					</padding> -->
+<!-- 				</GridPane> -->
+<!-- 			</Pane> -->
+					<PlayerPane fx:id="playerPane" />
+					<WelcomePane fx:id="welcomePane" />
+<!-- 			</BorderPane> -->
 		</StackPane>
 	</center>
 </BorderPane>

@@ -16,7 +16,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
-
+/**
+ * use {@link JMOPMainMenu}.
+ * @author martin
+ *
+ */
+@Deprecated
 public class MainMenuController implements Initializable {
 	@FXML
 	JMOPMainMenu menu;
@@ -65,7 +70,7 @@ public class MainMenuController implements Initializable {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	private void initializeBindings() {
-		menu.jmopProperty().addListener((observable, oldVal, newVal) -> jmopChanged(newVal));
+		//menu.jmopProperty().addListener((observable, oldVal, newVal) -> jmopChanged(newVal));
 
 	}
 

@@ -21,8 +21,7 @@
 <?import java.lang.Double?>
 
 <fx:root type="JMOPMainMenu" id="mainMenu" fx:id="menu"
-	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="cz.martlin.jmop.gui.control.MainMenuController">
+	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
 
 	<fx:define>
 		<Double fx:id="MENUITEM_ICON_SIZE" fx:value="16.0" />
@@ -183,7 +182,8 @@
 
 		<Menu mnemonicParsing="false" text="Help">
 			<items>
-				<MenuItem mnemonicParsing="false" text="Help" onAction="#onHelpAction" disable="true">
+				<MenuItem mnemonicParsing="false" text="Help" onAction="#onHelpAction"
+					disable="true">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">

@@ -23,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 public class GuiComplexActionsPerformer {
 
@@ -169,6 +170,10 @@ public class GuiComplexActionsPerformer {
 			jmop.toPrevious();
 			return null;
 		});
+	}
+
+	public void seek(Duration duration) {
+		jmop.seek(duration);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 

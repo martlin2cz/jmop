@@ -1,45 +1,40 @@
 package cz.martlin.jmop.mains;
 
-import java.io.IOException;
+import java.io.File;
 
-import cz.martlin.jmop.gui.control.MainFrameController;
-import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory;
+import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.wrappers.JMOPPlayer;
+import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
-public class JMOPGUIApp extends Application {
+public class JMOPGUIApp {
+	private static JMOPPlayer jmop;
+
 	public static void main(String[] args) {
-		beforeFX();
-		Application.launch(args);
+
+		Playlist playlistOrNull = null;
+
+		File root;
+		if (args.length > 0) {
+			String path = args[0];
+			root = new File(path);
+		} else {
+			String path = System.getProperty("user.dir");
+			root = new File(path);
+		}
+
+		jmop = JMOPPlayerBuilder.create(null, root, playlistOrNull);
+
+		try {
+			Application.launch(JMOPMainGUIApplication.class);
+		} catch (Exception e) {
+			System.err.println("Cannot start GUI'");
+			e.printStackTrace();
+		}
+	}
+	
+	public static JMOPPlayer getJmop() {
+		return jmop;
 	}
 
-	@Override
-	public void start(Stage primaryStage) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/main.fxml"));
-		Parent root = loader.load();
-
-		primaryStage.setTitle("JMOP");
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/logo.png")));
-
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.sizeToScene();
-		primaryStage.setResizable(true);
-		primaryStage.setMinHeight(scene.getHeight());
-		primaryStage.setMinWidth(scene.getWidth());
-		
-
-		MainFrameController controller = loader.getController();
-		controller.getActions().specifyScene(scene);
-
-		primaryStage.show();
-	}
-
-	private static void beforeFX() {
-		SvgImageLoaderFactory.install();
-	}
 }

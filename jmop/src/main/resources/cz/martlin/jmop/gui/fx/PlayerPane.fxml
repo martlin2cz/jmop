@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import cz.martlin.jmop.gui.comp.DownloadPane?>
+<?import cz.martlin.jmop.gui.comp.GuiChangableSlider?>
+<?import cz.martlin.jmop.gui.comp.TrackPane?>
+<?import cz.martlin.jmop.gui.comp.TwoStateButton?>
+<?import cz.martlin.jmop.gui.comp.PlaylistAndBundlePane?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Background?>
+
+<GridPane prefHeight="280.0" prefWidth="640.0" minWidth="240.0"
+	minHeight="240.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" hgap="5" vgap="5">
+
+	<fx:define>
+		<Double fx:id="BUTTONS_ICON_SIZE" fx:value="42.0" />
+		<Double fx:id="BUTTONS_WIDTH" fx:value="60.0" />
+		<Double fx:id="BUTTONS_HEIGHT" fx:value="54.0" />
+	</fx:define>
+	<columnConstraints>
+		<ColumnConstraints hgrow="NEVER" maxWidth="$BUTTONS_WIDTH"
+			minWidth="$BUTTONS_WIDTH" prefWidth="$BUTTONS_WIDTH" />
+		<ColumnConstraints hgrow="NEVER" maxWidth="$BUTTONS_WIDTH"
+			minWidth="$BUTTONS_WIDTH" prefWidth="$BUTTONS_WIDTH" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints minHeight="40.0" prefHeight="40.0"
+			maxHeight="40.0" vgrow="NEVER" />
+		<RowConstraints maxHeight="$BUTTONS_HEIGHT" minHeight="$BUTTONS_HEIGHT"
+			prefHeight="$BUTTONS_HEIGHT" vgrow="NEVER" />
+		<RowConstraints maxHeight="$BUTTONS_HEIGHT" minHeight="$BUTTONS_HEIGHT"
+			prefHeight="$BUTTONS_HEIGHT" vgrow="NEVER" />
+		<RowConstraints minHeight="60.0" prefHeight="60.0"
+			vgrow="SOMETIMES" />
+	</rowConstraints>
+
+	<children>
+		<!-- Current track pane -->
+		<TrackPane fx:id="trpnCurrentTrack" minWidth="40.0"
+			GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3">
+			<font>
+				<Font size="18.0" />
+			</font>
+		</TrackPane>
+
+		<!-- Duration progress slider -->
+		<GuiChangableSlider fx:id="sliTrackProgress"
+			minWidth="40.0" blockIncrement="10000" GridPane.columnIndex="2"
+			GridPane.rowIndex="1" />
+
+		<!-- Play/Stop button -->
+		<TwoStateButton fx:id="playStopButt" alignment="CENTER"
+			GridPane.columnIndex="0" GridPane.rowIndex="1" contentDisplay="CENTER"
+			mnemonicParsing="false" onFirstStateAction="#playButtAction"
+			onSecondStateAction="#stopButtAction">
+			<firstStateGraphics>
+				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@/cz/martlin/jmop/gui/img/play.svg" />
+					</image>
+				</ImageView>
+			</firstStateGraphics>
+			<secondStateGraphics>
+				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@/cz/martlin/jmop/gui/img/stop.svg" />
+					</image>
+				</ImageView>
+			</secondStateGraphics>
+			<firstStateTooltip>
+				<Tooltip text="Start playing (Shift + S or Enter)" />
+			</firstStateTooltip>
+			<secondStateTooltip>
+				<Tooltip text="Stop playing (S)" />
+			</secondStateTooltip>
+		</TwoStateButton>
+
+		<!-- Pause/Resume button -->
+		<TwoStateButton fx:id="pauseResumeButt" alignment="CENTER"
+			GridPane.columnIndex="1" GridPane.rowIndex="1" contentDisplay="CENTER"
+			mnemonicParsing="false" onFirstStateAction="#resumeButtAction"
+			onSecondStateAction="#pauseButtAction">
+			<firstStateGraphics>
+				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@/cz/martlin/jmop/gui/img/resume.svg" />
+					</image>
+				</ImageView>
+			</firstStateGraphics>
+			<secondStateGraphics>
+				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@/cz/martlin/jmop/gui/img/pause.svg" />
+					</image>
+				</ImageView>
+			</secondStateGraphics>
+			<firstStateTooltip>
+				<Tooltip text="Resume playing (Shift + P or Enter)" />
+			</firstStateTooltip>
+			<secondStateTooltip>
+				<Tooltip text="Pause playing (P or Enter)" />
+			</secondStateTooltip>
+		</TwoStateButton>
+
+		<!-- Previous button -->
+		<Button fx:id="prevButt" alignment="CENTER" contentDisplay="CENTER"
+			GridPane.columnIndex="0" GridPane.rowIndex="2" mnemonicParsing="false"
+			onAction="#prevButtAction">
+
+			<graphic>
+				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@/cz/martlin/jmop/gui/img/previous.svg" />
+					</image>
+				</ImageView>
+			</graphic>
+			<tooltip>
+				<Tooltip text="Previous track (Shift + N)" />
+			</tooltip>
+		</Button>
+		<!-- Next button -->
+		<Button fx:id="nextButt" alignment="CENTER" contentDisplay="CENTER"
+			GridPane.columnIndex="1" GridPane.rowIndex="2" mnemonicParsing="false"
+			onAction="#nextButtAction">
+			<graphic>
+				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@/cz/martlin/jmop/gui/img/next.svg" />
+					</image>
+				</ImageView>
+			</graphic>
+			<tooltip>
+				<Tooltip text="Next track (N)" />
+			</tooltip>
+		</Button>
+
+		<!-- Next track pane -->
+		<TrackPane fx:id="trpnNextTrack" minWidth="40.0"
+			GridPane.columnIndex="2" GridPane.rowIndex="2" />
+
+		<!-- Playlist and bundle pane -->
+		<PlaylistAndBundlePane fx:id="playlistAndBundlePane"
+			prefHeight="40.0" GridPane.columnSpan="2" GridPane.columnIndex="0"
+			GridPane.rowIndex="3" />
+
+		<!-- Download pane -->
+		<DownloadPane fx:id="dwnldPane" prefHeight="40.0"
+			GridPane.columnIndex="2" GridPane.rowIndex="3" />
+
+	</children>
+
+	<padding>
+		<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+	</padding>
+</GridPane>
