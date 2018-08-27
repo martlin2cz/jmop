@@ -1,6 +1,7 @@
 package cz.martlin.jmop.mains;
 
 import java.io.File;
+import java.io.IOException;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
@@ -23,12 +24,17 @@ public class JMOPGUIApp {
 			root = new File(path);
 		}
 
-		jmop = JMOPPlayerBuilder.create(null, root, playlistOrNull);
+		try {
+			jmop = JMOPPlayerBuilder.create(null, root, playlistOrNull);
+		} catch (IOException e) {
+			System.err.println("Cannot prepare JMOP core");
+			e.printStackTrace();
+		}
 
 		try {
 			Application.launch(JMOPMainGUIApplication.class);
 		} catch (Exception e) {
-			System.err.println("Cannot start GUI'");
+			System.err.println("Cannot start GUI");
 			e.printStackTrace();
 		}
 	}

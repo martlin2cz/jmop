@@ -1,6 +1,7 @@
 package cz.martlin.jmop.core.player;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,7 +99,7 @@ public class JMOPPlayerEnvironment {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public static JMOPPlayerEnvironment create(File rootDirectory, BasePlayer player) {
+	public static JMOPPlayerEnvironment create(File rootDirectory, BasePlayer player) throws IOException {
 		AbstractRemoteSource remote = new YoutubeSource();
 		BaseLocalSource local = createLocal(rootDirectory);
 
@@ -107,7 +108,7 @@ public class JMOPPlayerEnvironment {
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  false);
+		BaseSourceConverter converter = new FFMPEGConverter(local);
 		Sources sources = new Sources(local, remote, downloader, converter);
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
@@ -116,7 +117,7 @@ public class JMOPPlayerEnvironment {
 		return new JMOPPlayerEnvironment(playlister, local, remote);
 	}
 
-	public static BaseLocalSource createLocal(File rootDirectory) {
+	public static BaseLocalSource createLocal(File rootDirectory) throws IOException {
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		PlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDirectory, namer, loader);

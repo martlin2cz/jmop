@@ -16,12 +16,13 @@ import javafx.util.Duration;
 
 public class JavaFXMediaPlayer extends AbstractPlayer {
 	public static final TrackFileFormat PLAYER_FORMAT = TrackFileFormat.WAV;
+	private static final boolean PLAYING_TMP = true;
 	private final ObjectProperty<Duration> currentTimeProperty;
 
 	private MediaPlayer mediaPlayer;
 
 	public JavaFXMediaPlayer(BaseLocalSource local) {
-		super(local, PLAYER_FORMAT);
+		super(local, PLAYER_FORMAT, PLAYING_TMP);
 
 		this.currentTimeProperty = new SimpleObjectProperty<>(new Duration(0.0));
 	}

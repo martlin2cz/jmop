@@ -34,26 +34,26 @@ public class ConverterTest {
 		Bundle bundle = new Bundle(source, bundleName);
 
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
-		
+
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		boolean deleteOriginal = false;
-		
+		boolean inputTmp = false;
+		boolean outputTmp = false;
+
 		ProgressListener listener = new SimpleLoggingListener(System.out);
-		
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, deleteOriginal );
-		//BaseSourceConverter converter = new NoopConverter();
+
+		BaseSourceConverter converter = new FFMPEGConverter(local);
+		// BaseSourceConverter converter = new NoopConverter();
 		converter.specifyListener(listener);
 
-		
 		Track track = bundle.createTrack(id, title, description, duration);
 
 		try {
-			boolean success = converter.convert(track);
+
+			boolean success = converter.convert(track, inputFormat, inputTmp, outputFormat, outputTmp);
 			System.err.println("Success? " + success);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 }
-

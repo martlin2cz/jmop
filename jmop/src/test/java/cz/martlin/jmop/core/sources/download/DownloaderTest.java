@@ -47,7 +47,7 @@ public class DownloaderTest {
 		Track track = bundle.createTrack(id, title, description, duration);
 
 		try {
-			boolean success = downloader.download(track);
+			boolean success = downloader.download(track, false);
 			System.err.println("Success? " + success);
 		} catch (Exception e) {
 			e.printStackTrace();

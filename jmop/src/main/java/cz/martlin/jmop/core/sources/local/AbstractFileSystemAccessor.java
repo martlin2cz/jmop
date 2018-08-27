@@ -26,7 +26,7 @@ public interface AbstractFileSystemAccessor {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format) throws IOException;
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format, boolean isTmp) throws IOException;
 
 	
 

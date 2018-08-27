@@ -14,12 +14,15 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.download.YoutubeDlDownloader.DownloadData;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
-public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Boolean> implements BaseSourceDownloader {
+public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadData, Boolean>
+		implements BaseSourceDownloader {
+
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
+
 	public static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
 	private static final String PROGRESS_LINE_START = "[download]";
 	private static final String COLUMNS_SEPARATOR_REGEX = " +";
@@ -35,25 +38,30 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 		this.remote = remote;
 	}
 
+	@Override
+	public TrackFileFormat formatOfDownload() {
+		return DOWNLOAD_FILE_FORMAT;
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public boolean download(Track track) throws ExternalProgramException {
+	public boolean download(Track track, boolean isTmp) throws ExternalProgramException {
 		LOG.info("Downloading track " + track);
-		
-		return run(track);
+		DownloadData data = new DownloadData(track, isTmp);
+		return run(data);
 	}
 
 	@Override
-	protected List<String> createCommandLine(Track track) throws Exception {
-		String url = createUrlOfTrack(track);
-		String path = createTargetFilePath(track);
+	protected List<String> createCommandLine(DownloadData data) throws Exception {
+		String url = createUrlOfTrack(data);
+		String path = createTargetFilePath(data);
 
 		return createCommandLine(url, path);
 	}
 
 	@Override
-	protected File getWorkingDirectory(Track track) throws Exception {
+	protected File getWorkingDirectory(DownloadData data) throws Exception {
 		return getTemporaryDirectory();
 	}
 
@@ -68,29 +76,33 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 	}
 
 	@Override
-	protected Boolean handleResult(int result, Track track) throws Exception {
+	protected Boolean handleResult(int result, DownloadData data) throws Exception {
 		return (result == RESULT_CODE_OK);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	private String createUrlOfTrack(Track track) throws JMOPSourceException {
+	private String createUrlOfTrack(DownloadData data) throws JMOPSourceException {
+		Track track = data.getTrack();
 		URL url = remote.urlOf(track);
 		return url.toExternalForm();
 	}
 
-	private String createTargetFilePath(Track track) throws JMOPSourceException, IOException {
-		File tmpFile = privateCreateTargetFile(track);
+	private String createTargetFilePath(DownloadData data) throws JMOPSourceException, IOException {
+		Track track = data.getTrack();
+		boolean isTmp = data.isTmp();
+		File tmpFile = createTargetFileFile(track, isTmp);
 
 		return tmpFile.getAbsolutePath();
 	}
 
-	private File privateCreateTargetFile(Track track) throws JMOPSourceException, IOException {
-		return local.fileOfTrack(track, DOWNLOAD_FILE_FORMAT);
+	private File createTargetFileFile(Track track, boolean isTmp) throws JMOPSourceException, IOException {
+		return local.fileOfTrack(track, DOWNLOAD_FILE_FORMAT, isTmp);
 	}
 
 	private List<String> createCommandLine(String url, String path) {
 		return Arrays.asList( //
-				"youtube-dl", "--newline", "--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(), "--output", path, url);
+				"youtube-dl", "--newline", "--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(),
+				"--output", path, url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -119,6 +131,27 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 		int indexOfDot = path.lastIndexOf((int) '.');
 
 		return path.substring(0, indexOfDot);
+	}
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	protected static class DownloadData {
+		private final Track track;
+		private final boolean isTmp;
+
+		public DownloadData(Track track, boolean isTmp) {
+			super();
+			this.track = track;
+			this.isTmp = isTmp;
+		}
+
+		public Track getTrack() {
+			return track;
+		}
+
+		public boolean isTmp() {
+			return isTmp;
+		}
+
 	}
 
 }

@@ -1,8 +1,10 @@
 package cz.martlin.jmop.gui.util;
 
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNoException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
@@ -23,33 +25,9 @@ import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.misc.TestingTools;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
 public class JavaFXMediaPlayerTest {
-
-	public class TestingReporter implements MediaPlayerGuiReporter {
-
-		@Override
-		public StringProperty trackNameProperty() {
-			return new SimpleStringProperty();
-		}
-
-		@Override
-		public Property<Duration> durationProperty() {
-			return new SimpleObjectProperty<>();
-		}
-
-		@Override
-		public Property<Status> statusProperty() {
-			return new SimpleObjectProperty<>();
-		}
-
-	}
 
 	@Test
 	public void test() throws Exception {
@@ -59,25 +37,26 @@ public class JavaFXMediaPlayerTest {
 			try {
 				BaseLocalSource local = prepareLocal();
 				Track track = prepareTrack();
-
-				TestingDownloader downloader = new TestingDownloader(local);
-				downloader.download(track);
-
-				final TrackFileFormat downloadFormat = TestingDownloader.DOWNLOAD_FORMAT;
+				final TrackFileFormat downloadFormat = TrackFileFormat.OPUS;
 				final TrackFileFormat outputFormat = TrackFileFormat.MP3;
+				final boolean downloadTmp = false;
+				final boolean playTmp = false;
 
-				FFMPEGConverter converter = new FFMPEGConverter(local, downloadFormat, outputFormat, false);
-				converter.convert(track);
+				TestingDownloader downloader = new TestingDownloader(local, downloadFormat);
+				downloader.download(track, downloadTmp);
 
-				MediaPlayerGuiReporter reporter = new TestingReporter();
+				FFMPEGConverter converter = new FFMPEGConverter(local);
+				converter.convert(track, downloadFormat, downloadTmp, outputFormat, playTmp);
+
 				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local);
 				// AbstractPlayer player = new AplayPlayer(local);
-				
-//				TrackPlayedHandler handler = null;
-//				player.setHandler(handler);
-				
-				player.startPlayling(track);
 
+				// TrackPlayedHandler handler = null;
+				// player.setHandler(handler);
+
+				player.startPlayling(track);
+			} catch (IOException e) {
+				assumeNoException(e);
 			} catch (Exception e) {
 				e.printStackTrace();
 				fail(e.toString());
@@ -112,7 +91,7 @@ public class JavaFXMediaPlayerTest {
 		return track;
 	}
 
-	private BaseLocalSource prepareLocal() {
+	private BaseLocalSource prepareLocal() throws IOException {
 		PlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		File root = new File("/tmp/jmop-gui/");

@@ -9,7 +9,9 @@ import javafx.util.Duration;
 public interface BasePlayer {
 	
 	public void setHandler(TrackPlayedHandler handler);
+	@Deprecated
 	public boolean supports(TrackFileFormat format);
+	public TrackFileFormat getPlayableFormat();
 	public ReadOnlyObjectProperty<Duration> currentTimeProperty();
 	
 	public void startPlayling(Track track) throws JMOPSourceException;
@@ -17,5 +19,6 @@ public interface BasePlayer {
 	public void resume();
 	public void stop();
 	public void seek(Duration to);
+	
 	
 }

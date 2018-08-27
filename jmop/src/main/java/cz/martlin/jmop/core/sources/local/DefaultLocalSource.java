@@ -96,23 +96,23 @@ public class DefaultLocalSource implements BaseLocalSource {
 	}
 
 	@Override
-	public File fileOfTrack(Track track, TrackFileFormat format) throws JMOPSourceException {
-		LOG.info("Infering file of track " + track.getTitle() + " with format " + format);
+	public File fileOfTrack(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException {
+		LOG.info("Infering file of track " + track.getTitle() + " with format " + format + " and tmp " + isTmp);
 		try {
 			Bundle bundle = track.getBundle();
-			return fileSystem.getFileOfTrack(bundle, track, format);
+			return fileSystem.getFileOfTrack(bundle, track, format, isTmp);
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannot infer file of track", e);
 		}
 	}
 
 	@Override
-	public boolean exists(Track track) throws JMOPSourceException {
+	public boolean exists(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException {
 		LOG.info("Checking existence of track " + track.getTitle());
 
 		// TODO hacky af, killme
 		try {
-			File file = fileSystem.getFileOfTrack(track.getBundle(), track, TrackFileFormat.MP3);
+			File file = fileSystem.getFileOfTrack(track.getBundle(), track, format, isTmp);
 			return file.exists();
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannnot check file existence", e);

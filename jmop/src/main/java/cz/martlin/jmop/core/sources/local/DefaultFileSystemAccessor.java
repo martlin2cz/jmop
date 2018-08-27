@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.PlaylistFileData;
@@ -16,17 +19,35 @@ import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.sources.SourceKind;
 
 public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final File root;
 	private final BaseFilesNamer namer;
 	private final PlaylistLoader loader;
 
-	public DefaultFileSystemAccessor(File root, BaseFilesNamer namer, PlaylistLoader loader) {
+	public DefaultFileSystemAccessor(File root, BaseFilesNamer namer, PlaylistLoader loader) throws IOException {
 		super();
 		this.root = root;
 		this.namer = namer;
 		this.loader = loader;
+
+		initialize();
 	}
+
+	private void initialize() throws IOException {
+		createTmpDirectory();
+	}
+
+	private File createTmpDirectory() throws IOException {
+		File tmpDir = namer.tmpDirectory();
+		Path path = tmpDir.toPath();
+
+		Files.createDirectories(path);
+		LOG.info("Temporary directory " + tmpDir.getAbsolutePath() + " created");
+		return tmpDir;
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public List<String> listBundles() throws IOException {
@@ -49,7 +70,7 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		String playlistName = namer.nameOfFullPlaylist();
 		Bundle tmpBundle = new Bundle(null, name, new Tracklist());
 		PlaylistFileData data = loadPlaylistFile(tmpBundle, playlistName);
-		
+
 		SourceKind kind = data.getKind();
 		Tracklist tracklist = data.getTracklist();
 		return new Bundle(kind, name, tracklist);
@@ -90,7 +111,6 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		return fileOrDir.isFile() && namer.isPlaylistFile(fileOrDir);
 	}
 
-
 	@Override
 	public Playlist getPlaylist(Bundle bundle, String name) throws IOException {
 		PlaylistFileData data = loadPlaylistFile(bundle, name);
@@ -129,8 +149,8 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
-	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format) {
-		return namer.fileOfTrack(root, bundle, track, format);
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format, boolean isTmp) {
+		return namer.fileOfTrack(root, bundle, track, format, isTmp);
 		// TODO test existence
 	}
 	/////////////////////////////////////////////////////////////////////////////////////

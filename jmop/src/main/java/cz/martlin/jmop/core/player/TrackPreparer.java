@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.player;
 
 import java.util.function.Consumer;
 
+import cz.martlin.jmop.core.config.Configuration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -9,7 +10,7 @@ import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.download.DownloaderTask;
+import cz.martlin.jmop.core.sources.download.PreparerTask;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import javafx.beans.property.ObjectProperty;
@@ -18,24 +19,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class TrackPreparer {
+	private final Configuration config;
 	private final AbstractRemoteSource remote;
 	private final BaseLocalSource local;
 	private final BaseSourceConverter converter;
 	private final BaseSourceDownloader downloader;
+	private final BasePlayer player;
 	private final AutomaticSavesPerformer saver;
 	private final GuiDescriptor gui;
 	@Deprecated
-	private final ObjectProperty<DownloaderTask> currentTaskProperty;
-	private final ObservableList<DownloaderTask> currentTasks;
+	private final ObjectProperty<PreparerTask> currentTaskProperty;
+	private final ObservableList<PreparerTask> currentTasks;
+	
+	
 
 
-	public TrackPreparer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceConverter converter,
-			BaseSourceDownloader downloader, AutomaticSavesPerformer saver, GuiDescriptor gui) {
+	public TrackPreparer(Configuration config, AbstractRemoteSource remote, BaseLocalSource local, BaseSourceConverter converter,
+			BaseSourceDownloader downloader, BasePlayer player, AutomaticSavesPerformer saver, GuiDescriptor gui) {
 		super();
+		this.config = config;
 		this.remote = remote;
 		this.local = local;
 		this.converter = converter;
 		this.downloader = downloader;
+		this.player = player;
 		this.saver = saver;
 		this.gui = gui;
 		this.currentTaskProperty = new SimpleObjectProperty<>();
@@ -43,39 +50,29 @@ public class TrackPreparer {
 	}
 
 	@Deprecated
-	public ObjectProperty<DownloaderTask> currentTaskProperty() {
+	public ObjectProperty<PreparerTask> currentTaskProperty() {
 		return currentTaskProperty;
 	}
 	
-	public ObservableList<DownloaderTask> currentTasks() {
+	public ObservableList<PreparerTask> currentTasks() {
 		return currentTasks;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void load(Track track) throws JMOPSourceException {
-		checkAndDownload(track, null);
+		prepare(track, null);
 	}
 
 	public void prepreNextAndAppend(Track track, JMOPPlaylister playlister) throws JMOPSourceException {
 		Track next = remote.getNextTrackOf(track);
-		checkAndDownload(next, (t) -> playlister.appendTrack(t));
+		prepare(next, (t) -> playlister.appendTrack(t));
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void checkAndDownload(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
-		boolean contains = local.exists(track);
-
-		if (!contains) {
-			download(track, onCompleteOrNull);
-		} else {
-			trackReady(track, onCompleteOrNull);
-		}
-	}
-
-	private void download(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
-		DownloaderTask task = new DownloaderTask(downloader, converter, track);
+	private void prepare(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
+		PreparerTask task = new PreparerTask(config, local, downloader, converter, player, track);
 		
 		currentTaskProperty.set(task);
 		currentTasks.add(task);
@@ -91,7 +88,7 @@ public class TrackPreparer {
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void onTrackDownloadedHandler(DownloaderTask task , Track track, Consumer<Track> onCompleteOrNull)  {
+	private void onTrackDownloadedHandler(PreparerTask task , Track track, Consumer<Track> onCompleteOrNull)  {
 		try {
 			trackDownloaded(task, track, onCompleteOrNull);
 		} catch (JMOPSourceException e) {
@@ -100,7 +97,7 @@ public class TrackPreparer {
 		}
 	}
 
-	private void trackDownloaded(DownloaderTask task, Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
+	private void trackDownloaded(PreparerTask task, Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
 		Bundle bundle = track.getBundle();
 		saver.saveBundle(bundle); //TODO FIXME quite hack
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.sources.download.DownloaderTask;
+import cz.martlin.jmop.core.sources.download.PreparerTask;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
@@ -32,11 +32,11 @@ public class DownloadPane extends HBox {
 	private Label lblAnothers;
 
 	@Deprecated
-	private ObjectProperty<DownloaderTask> taskProperty;
+	private ObjectProperty<PreparerTask> taskProperty;
 
-	private ObservableList<DownloaderTask> tasksProperty;
+	private ObservableList<PreparerTask> tasksProperty;
 
-	private DownloaderTask shownTask;
+	private PreparerTask shownTask;
 
 	public DownloadPane() throws IOException {
 		super();
@@ -47,11 +47,11 @@ public class DownloadPane extends HBox {
 	}
 
 	@Deprecated
-	public ObjectProperty<DownloaderTask> taskProperty() {
+	public ObjectProperty<PreparerTask> taskProperty() {
 		return taskProperty;
 	}
 
-	public ObservableList<DownloaderTask> tasksProperty() {
+	public ObservableList<PreparerTask> tasksProperty() {
 		return tasksProperty;
 	}
 
@@ -75,12 +75,12 @@ public class DownloadPane extends HBox {
 		// taskChanged(newVal));
 
 		this.tasksProperty = FXCollections.observableArrayList();
-		this.tasksProperty.addListener((ListChangeListener<DownloaderTask>) (ch) -> tasksChanged(ch));
+		this.tasksProperty.addListener((ListChangeListener<PreparerTask>) (ch) -> tasksChanged(ch));
 
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void tasksChanged(Change<? extends DownloaderTask> change) {
+	private void tasksChanged(Change<? extends PreparerTask> change) {
 		Platform.runLater(() -> {
 			change.next();
 
@@ -93,8 +93,8 @@ public class DownloadPane extends HBox {
 		});
 	}
 
-	private void handleTasksAdded(Change<? extends DownloaderTask> change) {
-		List<? extends DownloaderTask> tasks = change.getList();
+	private void handleTasksAdded(Change<? extends PreparerTask> change) {
+		List<? extends PreparerTask> tasks = change.getList();
 
 		if (shownTask == null) {
 			showFirstTask(change);
@@ -103,10 +103,10 @@ public class DownloadPane extends HBox {
 		}
 	}
 
-	private void handleTasksRemoved(Change<? extends DownloaderTask> change) {
-		List<? extends DownloaderTask> tasks = change.getList();
+	private void handleTasksRemoved(Change<? extends PreparerTask> change) {
+		List<? extends PreparerTask> tasks = change.getList();
 
-		List<? extends DownloaderTask> removedTasks = change.getRemoved();
+		List<? extends PreparerTask> removedTasks = change.getRemoved();
 		if (removedTasks.contains(shownTask)) {
 			changeToNoTask();
 			shownTask = null;
@@ -119,19 +119,19 @@ public class DownloadPane extends HBox {
 		}
 	}
 
-	private void showFirstTask(Change<? extends DownloaderTask> change) {
-		List<? extends DownloaderTask> addedTasks = change.getAddedSubList();
+	private void showFirstTask(Change<? extends PreparerTask> change) {
+		List<? extends PreparerTask> addedTasks = change.getAddedSubList();
 		changeToFirstOf(addedTasks);
 	}
 
-	private void changeToFirstOf(List<? extends DownloaderTask> addedTasks) {
-		DownloaderTask addedTask = addedTasks.get(0);
+	private void changeToFirstOf(List<? extends PreparerTask> addedTasks) {
+		PreparerTask addedTask = addedTasks.get(0);
 		changeToTask(addedTask);
 		shownTask = addedTask;
 	}
 
 	@Deprecated
-	private void taskChanged(DownloaderTask newTaskOrNull) {
+	private void taskChanged(PreparerTask newTaskOrNull) {
 		if (newTaskOrNull != null) {
 			changeToTask(newTaskOrNull);
 		} else {
@@ -143,7 +143,7 @@ public class DownloadPane extends HBox {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void changeToTask(DownloaderTask task) {
+	private void changeToTask(PreparerTask task) {
 		System.out.println("Showing task " + task.getTrack().getTitle());
 		progressIndicator.progressProperty().bind(task.progressProperty());
 		lblStatus.textProperty().bind(task.messageProperty());
@@ -182,7 +182,7 @@ public class DownloadPane extends HBox {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private String obtainTrackLabelText(DownloaderTask task) {
+	private String obtainTrackLabelText(PreparerTask task) {
 		Track track = task.getTrack();
 
 		String title = track.getTitle();

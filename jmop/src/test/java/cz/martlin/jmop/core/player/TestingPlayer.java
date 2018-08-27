@@ -9,9 +9,11 @@ import javafx.util.Duration;
 
 public class TestingPlayer implements BasePlayer {
 
+	private final TrackFileFormat playableFormat;
 	private Track playing;
 
-	public TestingPlayer() {
+	public TestingPlayer(TrackFileFormat playableFormat) {
+		this.playableFormat = playableFormat;
 	}
 
 	public Track getPlaying() {
@@ -20,22 +22,25 @@ public class TestingPlayer implements BasePlayer {
 
 	@Override
 	public void setHandler(TrackPlayedHandler handler) {
-		//ignore
+		// ignore
 	}
 
+	@Override
+	public TrackFileFormat getPlayableFormat() {
+		return playableFormat;
+	}
 
 	@Override
 	public boolean supports(TrackFileFormat format) {
 		return true;
 	}
-	
+
 	@Override
 	public ReadOnlyObjectProperty<Duration> currentTimeProperty() {
 		return new SimpleObjectProperty<>(new Duration(0));
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	
 	@Override
 	public void startPlayling(Track track) {
 		System.out.println("Playing " + track);
@@ -57,7 +62,7 @@ public class TestingPlayer implements BasePlayer {
 	public void resume() {
 		System.out.println("Player resumed, plaing again " + playing);
 	}
-	
+
 	@Override
 	public void seek(Duration to) {
 		System.out.println("Seeking to " + DurationUtilities.toHumanString(to));

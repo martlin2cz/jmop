@@ -9,27 +9,44 @@ import cz.martlin.jmop.core.sources.SourceKind;
 public abstract class SimpleFilesNamer implements BaseFilesNamer {
 
 	protected static final String DOT = ".";
-
+	private final File tmpDirectory;
 
 	public SimpleFilesNamer() {
+		tmpDirectory = tmpDirectory();
 	}
 
 	@Override
-	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileFormat format) {
-		File bundleDir = directoryOfBundle(root, bundle.getKind(), bundle.getName());
+	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileFormat format, boolean isTmp) {
+		File directory;
+		if (!isTmp) {
+			directory = directoryOfBundle(root, bundle.getKind(), bundle.getName());
+		} else {
+			directory = tmpDirectory;
+		}
 
 		String trackFileName = filenameOfTrack(track);
 
 		String extension = format.getExtension();
 
 		String trackFile = trackFileName + DOT + extension;
-		return new File(bundleDir, trackFile);
+		return new File(directory, trackFile);
 	}
 
+	protected abstract String filenameOfTrack(Track track);
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	protected abstract String filenameOfTrack(Track track);
+	@Override
+	public File tmpDirectory() {
+		String tmpDirPath = System.getProperty("java.io.tmpdir");
+		File tmpDirRoot = new File(tmpDirPath);
 
+		String tmpDirName = tmpDirectoryName();
+		return new File(tmpDirRoot, tmpDirName);
+	}
+
+	protected abstract String tmpDirectoryName();
+
+	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public File directoryOfBundle(File root, SourceKind source, String name) {
 		String directoryName = dirnameOfBundle(source, name);
@@ -46,13 +63,12 @@ public abstract class SimpleFilesNamer implements BaseFilesNamer {
 
 	protected abstract String bundleNameOfDirectory(String directoryName);
 
-
 	@Override
 	public boolean isBundleDirectory(File directory) {
 		String name = directory.getName();
 		return isBundleDir(name);
 	}
-	
+
 	protected abstract boolean isBundleDir(String directoryName);
 
 	/////////////////////////////////////////////////////////////////////////////////////

@@ -12,9 +12,11 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.io.Files;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.ProgressGenerator;
 import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public abstract class AbstractProcessEncapusulation<INT, OUT> implements ProgressGenerator {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -119,4 +121,5 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	public static File getTemporaryDirectory() {
 		return Files.createTempDir();
 	}
+
 }

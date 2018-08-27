@@ -12,22 +12,27 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class TestingDownloader implements BaseSourceDownloader {
 
-	public static final TrackFileFormat DOWNLOAD_FORMAT = TrackFileFormat.OPUS;
 	public static final String TESTING_SAMPLE_FILE = "samples/sample.opus";
 
-
+	private final TrackFileFormat downloadFormat;
 	private final BaseLocalSource local;
 
-	public TestingDownloader(BaseLocalSource local) {
+	public TestingDownloader(BaseLocalSource local, TrackFileFormat downloadFormat) {
 		super();
 		this.local = local;
+		this.downloadFormat = downloadFormat;
 	}
 
 	@Override
-	public boolean download(Track track) throws Exception {
+	public TrackFileFormat formatOfDownload() {
+		return downloadFormat;
+	}
+
+	@Override
+	public boolean download(Track track, boolean isTmp) throws Exception {
 		InputStream ins = getClass().getClassLoader().getResourceAsStream(TESTING_SAMPLE_FILE);
 
-		File targetFile = local.fileOfTrack(track, DOWNLOAD_FORMAT);
+		File targetFile = local.fileOfTrack(track, downloadFormat, isTmp);
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 

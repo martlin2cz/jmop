@@ -27,7 +27,7 @@ public class AplayPlayer extends AbstractPlayer {
 	private Track currentTrack;
 
 	public AplayPlayer(BaseLocalSource local) {
-		super(local, APLAY_PLAY_FORMAT);
+		super(local, APLAY_PLAY_FORMAT, true);
 	}
 
 	@Override

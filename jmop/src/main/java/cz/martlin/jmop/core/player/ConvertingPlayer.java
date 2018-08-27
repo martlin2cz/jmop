@@ -11,6 +11,10 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.util.Duration;
 
+/**
+ * Replaced by updated {@link TrackPreparer}.
+ */
+@Deprecated
 public class ConvertingPlayer implements BasePlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -27,6 +31,10 @@ public class ConvertingPlayer implements BasePlayer {
 		this.formatOfWrapped = formatOfWrapped;
 	}
 
+	@Override
+	public TrackFileFormat getPlayableFormat() {
+		return null;
+	}
 	@Override
 	public boolean supports(TrackFileFormat format) {
 		return true;
@@ -49,8 +57,8 @@ public class ConvertingPlayer implements BasePlayer {
 		LOG.info("Starting to convertert and play track " + track.getTitle());
 
 		try {
-			FFMPEGConverter converter = new FFMPEGConverter(local, LOCAL_FORMAT, formatOfWrapped, false);
-			converter.convert(track);
+			FFMPEGConverter converter = new FFMPEGConverter(local);
+			converter.convert(track, null, false, null, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.download.DownloaderTask;
+import cz.martlin.jmop.core.sources.download.PreparerTask;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -51,11 +51,11 @@ public class CoreGuiDescriptor {
 	}
 
 	@Deprecated
-	public ReadOnlyObjectProperty<DownloaderTask> currentDownloadTaskProperty() {
+	public ReadOnlyObjectProperty<PreparerTask> currentDownloadTaskProperty() {
 		return jmop.getSources().getPreparer().currentTaskProperty();
 	}
 	
-	public ObservableList<DownloaderTask> currentDownloadTasksProperty() {
+	public ObservableList<PreparerTask> currentDownloadTasksProperty() {
 		return jmop.getSources().getPreparer().currentTasks();
 	}
 

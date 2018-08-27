@@ -48,7 +48,6 @@ public class TestingLocalSource implements BaseLocalSource {
 		tracks.put(bundle, new LinkedHashMap<>());
 	}
 
-
 	@Override
 	public List<String> listPlaylistNames(Bundle bundle) throws JMOPSourceException {
 		return new ArrayList<>(playlists.get(bundle).keySet());
@@ -72,13 +71,16 @@ public class TestingLocalSource implements BaseLocalSource {
 	}
 
 	@Override
-	public File fileOfTrack(Track track, TrackFileFormat downloadFileFormat) throws JMOPSourceException {
+	public File fileOfTrack(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException {
+
 		InputStream ins = getClass().getClassLoader().getResourceAsStream(TestingDownloader.TESTING_SAMPLE_FILE);
 
 		String name = track.getTitle();
 		try {
-			File file = File.createTempFile(name + "_", "." + TrackFileFormat.OPUS.getExtension());
-			Files.copy(ins, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			String prefix = (isTmp ? "_tmp_" : "_") + name;
+			String suffix = "." + format.getExtension();
+			File file = File.createTempFile(prefix, suffix);
+			Files.copy(ins, file.toPath(), StandardCopyOption.REPLACE_EXISTING); //TODO wtf?
 			return file;
 		} catch (IOException e) {
 			throw new JMOPSourceException("Failed", e);
@@ -87,11 +89,9 @@ public class TestingLocalSource implements BaseLocalSource {
 	}
 
 	@Override
-	public boolean exists(Track track) throws JMOPSourceException {
-		Bundle bundle = track.getBundle();
-		String id = track.getIdentifier();
-
-		return tracks.get(bundle).containsKey(id);
+	public boolean exists(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException {
+		File file = fileOfTrack(track, format, isTmp);
+		return file.exists();
 	}
 
 	public void print(PrintStream to) {
@@ -112,7 +112,5 @@ public class TestingLocalSource implements BaseLocalSource {
 		}
 
 	}
-
-	
 
 }

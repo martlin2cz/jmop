@@ -4,7 +4,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.download.DownloaderTask;
+import cz.martlin.jmop.core.sources.download.PreparerTask;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.wrappers.JMOPSources;
 import javafx.event.EventType;
@@ -44,7 +44,7 @@ public class Sources {
 		try {
 			Track next = remote.getNextTrackOf(current);
 
-			boolean contains = local.exists(next);
+			boolean contains = local.exists(next, null, false);
 			if (!contains) {
 				startDownloading(next, playlist);
 			}
@@ -62,7 +62,7 @@ public class Sources {
 	@Deprecated
 	//TODO just debug, make privat back !
 	public void startDownloading(Track track, BetterPlaylistRuntime playlist) {
-		DownloaderTask task = new DownloaderTask(downloader, converter,  track);
+		PreparerTask task = new PreparerTask(null, null, downloader, converter,  null, track);
 
 		task.addEventHandler(EventType.ROOT, (e) -> {
 			playlist.append(track);

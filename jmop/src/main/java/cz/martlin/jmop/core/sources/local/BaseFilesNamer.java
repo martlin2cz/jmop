@@ -7,10 +7,12 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
 
 public interface BaseFilesNamer {
-	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileFormat format);
+	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileFormat format, boolean isTmp);
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	
+
+	public File tmpDirectory();
+
 	public boolean isBundleDirectory(File directory);
 
 	public String dirToBundleName(File directory);
@@ -26,4 +28,5 @@ public interface BaseFilesNamer {
 	public File fileOfPlaylist(File root, SourceKind source, String bundleName, String playlistName);
 
 	public String nameOfFullPlaylist();
+
 }

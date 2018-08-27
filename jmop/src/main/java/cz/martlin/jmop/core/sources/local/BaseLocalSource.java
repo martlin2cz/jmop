@@ -30,9 +30,9 @@ public interface BaseLocalSource extends BaseSourceImpl {
 	@Override
 	public abstract Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException;
 
-	public abstract File fileOfTrack(Track track, TrackFileFormat downloadFileFormat) throws JMOPSourceException;
+	public abstract File fileOfTrack(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException;
 
-	public abstract boolean exists(Track next) throws JMOPSourceException;
+	public abstract boolean exists(Track next, TrackFileFormat format, boolean isTmp) throws JMOPSourceException;
 
 
 }

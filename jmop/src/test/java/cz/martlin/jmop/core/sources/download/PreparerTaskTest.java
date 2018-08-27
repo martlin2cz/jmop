@@ -2,10 +2,13 @@ package cz.martlin.jmop.core.sources.download;
 
 import java.io.File;
 
+import cz.martlin.jmop.core.config.Configuration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.player.BasePlayer;
+import cz.martlin.jmop.core.player.TestingPlayer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
@@ -22,7 +25,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class DownloaderTaskTest extends Application {
+public class PreparerTaskTest extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -33,7 +36,9 @@ public class DownloaderTaskTest extends Application {
 		final String bundleName = "another-testing-tracks";
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
-
+		final TrackFileFormat playerFormat = TrackFileFormat.OPUS;
+		
+		Configuration config = new Configuration();
 		AbstractRemoteSource remote = new YoutubeSource();
 
 		BaseFilesNamer namer = new DefaultFilesNamer();
@@ -42,22 +47,23 @@ public class DownloaderTaskTest extends Application {
 		Bundle bundle = new Bundle(source, bundleName);
 
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
+		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		
-		//BaseSourceDownloader downloader = new YoutubeDlDownloader(sources, listener);
-		BaseSourceDownloader downloader = new TestingDownloader(local);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+		//BaseSourceDownloader downloader = new TestingDownloader(local, downloadFormat);
 		
 		Track track = bundle.createTrack(id, title, description, duration);
 
-		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
-		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  false);
+		BaseSourceConverter converter = new FFMPEGConverter(local);
 		//BaseSourceConverter converter = new NoopConverter();
 		converter.specifyListener(listener);
 
 		
-		DownloaderTask task = new DownloaderTask(downloader, converter,  track);
+		BasePlayer player = new TestingPlayer(playerFormat);
+
+		PreparerTask task = new PreparerTask(config, local, downloader, converter, player, track);
 		
 		task.messageProperty().addListener((observable, oldVal, newVal) -> {
 			System.out.println("# " + newVal);

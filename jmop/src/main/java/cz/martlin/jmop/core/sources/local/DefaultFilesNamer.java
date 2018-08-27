@@ -10,6 +10,7 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 	private static final String PLAYLIST_FILE_SUFFIX = "xspf";
 
 	private static final String FULL_PLAYLIST_NAME = "all_tracks";
+	private static final String TEMP_DIR_NAME = "jmop";
 
 	public DefaultFilesNamer() {
 	}
@@ -41,6 +42,11 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 		return !directoryName.startsWith(HIDDEN_FILE_PREFIX);
 	}
 
+	@Override
+	protected String tmpDirectoryName() {
+		return TEMP_DIR_NAME;
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

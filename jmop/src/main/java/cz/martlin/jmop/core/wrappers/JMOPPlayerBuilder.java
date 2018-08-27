@@ -1,11 +1,12 @@
 package cz.martlin.jmop.core.wrappers;
 
 import java.io.File;
+import java.io.IOException;
 
+import cz.martlin.jmop.core.config.Configuration;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.player.BasePlayer;
-import cz.martlin.jmop.core.player.ConvertingPlayer;
 import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.player.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
@@ -22,37 +23,33 @@ import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.gui.util.JavaFXMediaPlayer;
 
 public class JMOPPlayerBuilder {
-	public static JMOPPlayer create(GuiDescriptor gui, File root, Playlist playlistToPlayOrNot) {
+	public static JMOPPlayer create(GuiDescriptor gui, File root, Playlist playlistToPlayOrNot) throws IOException {
+		Configuration config = new Configuration();
 
 		PlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
+		InternetConnectionStatus connection = new InternetConnectionStatus();
+		AbstractRemoteSource remote = new YoutubeSource();
 
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
-		AbstractRemoteSource remote = new YoutubeSource();
+		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
 
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
-		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
-		TrackFileFormat outputFormat = DefaultLocalSource.MAIN_STORE_FORMAT;
-		boolean deleteOriginal = false;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, deleteOriginal);
-		InternetConnectionStatus connection = new InternetConnectionStatus();
-		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
-		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, saver, gui);
-
+		BaseSourceConverter converter = new FFMPEGConverter(local);
 		BasePlayer player = new JavaFXMediaPlayer(local);
-		TrackFileFormat formatOfWrapped = JavaFXMediaPlayer.PLAYER_FORMAT;
-		BasePlayer convertingPlayer = new ConvertingPlayer(local, player, formatOfWrapped );
-		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(convertingPlayer, preparer, connection, saver);
+
+		TrackPreparer preparer = new TrackPreparer(config, remote, local, converter, downloader, player, saver, gui);
+		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, preparer, connection, saver);
 
 		ToPlaylistAppendingHandler trackPlayedHandler = new ToPlaylistAppendingHandler(playlister);
 		player.setHandler(trackPlayedHandler);
 
-		return new JMOPPlayer(remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister, preparer, saver);
+		return new JMOPPlayer(remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister, preparer,
+				saver);
 	}
 }
