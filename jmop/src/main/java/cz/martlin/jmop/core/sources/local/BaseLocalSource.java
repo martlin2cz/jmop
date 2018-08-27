@@ -33,4 +33,6 @@ public interface BaseLocalSource extends BaseSourceImpl {
 	public abstract File fileOfTrack(Track track, TrackFileFormat downloadFileFormat) throws JMOPSourceException;
 
 	public abstract boolean exists(Track next) throws JMOPSourceException;
+
+
 }

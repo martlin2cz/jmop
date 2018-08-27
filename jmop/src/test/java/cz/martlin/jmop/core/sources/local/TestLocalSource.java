@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.PlaylistFileData;
 import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.SourceKind;

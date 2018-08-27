@@ -7,22 +7,32 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.io.Files;
 
 import cz.martlin.jmop.core.misc.ExternalProgramException;
+import cz.martlin.jmop.core.misc.ProgressGenerator;
 import cz.martlin.jmop.core.misc.ProgressListener;
 
-public abstract class AbstractProcessEncapusulation<INT, OUT> {
+public abstract class AbstractProcessEncapusulation<INT, OUT> implements ProgressGenerator {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private final ProgressListener listener;
+	private ProgressListener listener;
 	protected Process process;
 
-	//TODO logging
-	
-	public AbstractProcessEncapusulation(ProgressListener listener) {
+	public AbstractProcessEncapusulation() {
 		super();
+		this.listener = null;
+	}
+
+	@Override
+	public void specifyListener(ProgressListener listener) {
 		this.listener = listener;
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	public OUT run(INT input) throws ExternalProgramException {
 		try {
@@ -43,7 +53,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 	/////////////////////////////////////////////////////////////////////////////////////
 	private void startProcess(INT input) throws Exception {
 		List<String> commandline = createCommandLine(input);
-		System.err.println("Running: " + commandline);
+		LOG.info("Starting process " + commandline);
 
 		ProcessBuilder builder = new ProcessBuilder(commandline);
 
@@ -60,11 +70,11 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 
 		while (s.hasNext()) {
 			String line = s.nextLine();
-			System.err.println("> " + line);
+			LOG.debug(line);
 
 			Double progressOrNot = processLineOfOutput(line);
 			if (progressOrNot != null) {
-				listener.progressChanged(progressOrNot);
+				reportProgress(progressOrNot);
 			}
 
 		}
@@ -72,10 +82,18 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> {
 		s.close();
 	}
 
+	private void reportProgress(double progress) {
+		if (listener != null) {
+			listener.progressChanged(progress);
+		}
+	}
+
 	private OUT finishProcess(INT input) throws Exception {
 		int result = process.waitFor();
 
 		process = null;
+
+		LOG.info("Process finished with code " + result);
 
 		return handleResult(result, input);
 	}

@@ -11,6 +11,9 @@ import com.google.api.services.youtube.model.VideoListResponse;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
+import javafx.util.Duration;
 
 public class YoutubeSource extends
 		SimpleRemoteSource<//
@@ -18,8 +21,6 @@ public class YoutubeSource extends
 				YouTube.Search.List, SearchListResponse, //
 				YouTube.Search.List, SearchListResponse> {
 
-	
-	
 	public YoutubeSource() {
 		super();
 	}
@@ -33,7 +34,7 @@ public class YoutubeSource extends
 	protected YouTube.Videos.List createLoadRequest(String id) throws Exception {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 
-		YouTube.Videos.List listVideosRequest = youtube.videos().list("snippet");
+		YouTube.Videos.List listVideosRequest = youtube.videos().list("contentDetails,snippet");
 		listVideosRequest.setId(id);
 		return listVideosRequest;
 	}
@@ -98,6 +99,7 @@ public class YoutubeSource extends
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+
 	private Track convertVideoListResponse(Bundle bundle, VideoListResponse response) {
 		List<Video> results = response.getItems();
 		Video result = results.get(0);
@@ -109,24 +111,46 @@ public class YoutubeSource extends
 		String identifier = result.getId();
 		String title = result.getSnippet().getTitle();
 		String description = result.getSnippet().getDescription();
+		String durationStr = result.getContentDetails().getDuration();
+		Duration duration = DurationUtilities.parseYoutubeDuration(durationStr);
 		// TODO get thumbnail
 
-		return new Track(bundle, identifier, title, description);
+		return bundle.createTrack(identifier, title, description, duration);
 	}
 
-	private Track convertSearchListResponse(Bundle bundle, SearchListResponse response) {
+	private String searchResultToId(SearchResult result) {
+		String identifier = result.getId().getVideoId();
+		return identifier;
+	}
+	
+	private Track convertSearchListResponse(Bundle bundle, SearchListResponse response) throws JMOPSourceException {
+		List<SearchResult> results = response.getItems();
+		SearchResult result = results.get(0);
+		String identifier = searchResultToId(result);
+		
+		Track track = getTrack(bundle, identifier);
+		return track;
+	}
+	
+	@Deprecated
+	private Track _old_convertSearchListResponse(Bundle bundle, SearchListResponse response) {
 		List<SearchResult> results = response.getItems();
 		SearchResult result = results.get(0);
 		Track track = snippetToTrack(bundle, result);
 		return track;
 	}
 
+	@Deprecated
 	private Track snippetToTrack(Bundle bundle, SearchResult result) {
 		String identifier = result.getId().getVideoId();
 		String title = result.getSnippet().getTitle();
 		String description = result.getSnippet().getDescription();
-		// TODO get thumbnail
+		String durationStr = null;
+		Duration duration = DurationUtilities.parseYoutubeDuration(durationStr);
 
-		return new Track(bundle, identifier, title, description);
+		return bundle.createTrack(identifier, title, description, duration);
 	}
+
+
+
 }

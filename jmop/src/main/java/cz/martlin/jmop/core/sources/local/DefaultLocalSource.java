@@ -15,6 +15,8 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 public class DefaultLocalSource implements BaseLocalSource {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
+	public static final TrackFileFormat MAIN_STORE_FORMAT = TrackFileFormat.MP3;
+
 	private final AbstractFileSystemAccessor fileSystem;
 
 	public DefaultLocalSource(AbstractFileSystemAccessor fileSystem) {
@@ -107,9 +109,14 @@ public class DefaultLocalSource implements BaseLocalSource {
 	@Override
 	public boolean exists(Track track) throws JMOPSourceException {
 		LOG.info("Checking existence of track " + track.getTitle());
-		
-		Bundle bundle = track.getBundle();
-		return bundle.contains(track);
+
+		// TODO hacky af, killme
+		try {
+			File file = fileSystem.getFileOfTrack(track.getBundle(), track, TrackFileFormat.MP3);
+			return file.exists();
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannnot check file existence", e);
+		}
 	}
 
 }

@@ -1,18 +1,31 @@
 package cz.martlin.jmop.core.data;
 
+import javafx.util.Duration;
+
 public class Track {
 	private final Bundle bundle;
 	private final String identifier;
 	private final String title;
 	private final String description;
+	private final Duration duration;
 	// TODO thumbnail
 
-	public Track(Bundle bundle, String identifier, String title, String description) {
+
+	/**
+	 * Use {@link Bundle#createTrack(String, String, String)} instead.
+	 * @param bundle
+	 * @param identifier
+	 * @param title
+	 * @param description
+	 * @param duration 
+	 */
+	protected Track(Bundle bundle, String identifier, String title, String description, Duration duration) {
 		super();
 		this.bundle = bundle;
 		this.identifier = identifier;
 		this.title = title;
 		this.description = description;
+		this.duration = duration;
 	}
 
 	public Bundle getBundle() {
@@ -31,6 +44,10 @@ public class Track {
 		return description;
 	}
 
+	public Duration getDuration() {
+		return duration;
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -78,7 +95,7 @@ public class Track {
 
 	@Override
 	public String toString() {
-		return "Track [bundle=" + bundle + ", identifier=" + identifier + ", title=" + title + ", description=" + "..."
+		return "Track [bundle=" + bundle.getName() + ", identifier=" + identifier + ", title=" + title + ", description=" + "..."
 				+ "]";
 	}
 

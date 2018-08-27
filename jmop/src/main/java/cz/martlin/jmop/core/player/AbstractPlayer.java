@@ -1,9 +1,128 @@
 package cz.martlin.jmop.core.player;
 
-import cz.martlin.jmop.core.data.Track;
+import java.io.File;
 
-public interface AbstractPlayer {
-	public void play(Track track);
-	public void stop();
-	//TODO pause and adjust volume?
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.util.Duration;
+
+public abstract class AbstractPlayer implements BasePlayer {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+
+	private final BaseLocalSource local;
+	private final TrackFileFormat supportedFormat;
+
+	private TrackPlayedHandler handler;
+
+	private boolean playing;
+	private boolean paused;
+
+	public AbstractPlayer(BaseLocalSource local, TrackFileFormat supportedFormat) {
+		super();
+		this.local = local;
+		this.supportedFormat = supportedFormat;
+		this.playing = false;
+		this.paused = false;
+	}
+
+	public TrackPlayedHandler getHandler() {
+		return handler;
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void setHandler(TrackPlayedHandler handler) {
+		this.handler = handler;
+	}
+
+	@Override
+	public boolean supports(TrackFileFormat format) {
+		return supportedFormat.equals(format);
+	}
+
+	protected void onPlayed(Track track) {
+		if (handler != null) {
+			handler.trackPlayed(track);
+		}
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public synchronized void startPlayling(Track track) throws JMOPSourceException {
+		LOG.info("Starting playing");
+		if (playing) {
+			doStopPlaying();
+		}
+
+		playing = true;
+
+		File file = local.fileOfTrack(track, supportedFormat);
+
+		LOG.debug("Will play file " + file);
+		doStartPlaying(track, file);
+	}
+
+	protected abstract void doStartPlaying(Track track, File file);
+
+	@Override
+	public synchronized void stop() {
+		LOG.info("Stopping playing");
+		if (!playing) {
+			return;
+		}
+
+		doStopPlaying();
+
+		playing = false;
+	}
+
+	protected abstract void doStopPlaying();
+
+	@Override
+	public synchronized void pause() {
+		LOG.info("Pausing playing");
+		if (paused) {
+			return;
+		}
+
+		paused = true;
+
+		doPausePlaying();
+	}
+
+	protected abstract void doPausePlaying();
+
+	@Override
+	public synchronized void resume() {
+		LOG.info("Resuming playing");
+		if (!paused) {
+			return;
+		}
+
+		doResumePlaying();
+
+		paused = false;
+	}
+
+	protected abstract void doResumePlaying();
+
+	@Override
+	public void seek(Duration to) {
+		LOG.info("Seeking to " + DurationUtilities.toHumanString(to));
+
+		doSeek(to);
+	}
+
+	protected abstract void doSeek(Duration to);
+
+	/////////////////////////////////////////////////////////////////////////////////////
 }

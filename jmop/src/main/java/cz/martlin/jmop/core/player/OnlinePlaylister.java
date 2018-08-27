@@ -1,15 +1,25 @@
 package cz.martlin.jmop.core.player;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.Sources;
+import cz.martlin.jmop.core.misc.InternetConnectionStatus;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class OnlinePlaylister implements BasePlaylister {
-	private final Sources sources;
-	private final BetterPlaylistRuntime playlist;
+	private final TrackPreparer preparer;
+	private final JMOPPlaylister playlister;
+	private final InternetConnectionStatus connection;
 
-	public OnlinePlaylister(Sources sources, BetterPlaylistRuntime playlist) {
+	private BetterPlaylistRuntime playlist;
+
+	public OnlinePlaylister(TrackPreparer preparer, JMOPPlaylister playlister, InternetConnectionStatus connection) {
 		super();
-		this.sources = sources;
+		this.preparer = preparer;
+		this.playlister = playlister;
+		this.connection = connection;
+	}
+
+	@Override
+	public void setPlaylist(BetterPlaylistRuntime playlist) {
 		this.playlist = playlist;
 	}
 
@@ -20,10 +30,21 @@ public class OnlinePlaylister implements BasePlaylister {
 
 	@Override
 	public Track next() {
-		Track current = playlist.getCurrentlyPlayed();
-		sources.prepareNextOf(current, playlist);
+		// TODO shouldňt here overrride the rest of playlist
+		// instead of appending to its end?
+		Track next = playlist.toNextOrAnother();
 
-		return playlist.toNextOrAnother();
+		try {
+			preparer.prepreNextAndAppend(next, playlister);
+		} catch (JMOPSourceException e) {
+
+			connection.markOffline();
+
+			// TODO handle error
+			e.printStackTrace();
+		}
+
+		return next;
 	}
 
 }

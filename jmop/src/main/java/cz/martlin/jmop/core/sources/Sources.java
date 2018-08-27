@@ -6,8 +6,10 @@ import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.DownloaderTask;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.wrappers.JMOPSources;
 import javafx.event.EventType;
 
+@Deprecated
 public class Sources {
 	private final BaseLocalSource local;
 	private final AbstractRemoteSource remote;
@@ -32,7 +34,12 @@ public class Sources {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
+	/***
+	 * Use {@link JMOPSources#download(Track, java.util.function.Consumer)} instead.
+	 * @param track
+	 * @param playlist
+	 */
+	@Deprecated
 	public void prepareNextOf(Track current, BetterPlaylistRuntime playlist) {
 		try {
 			Track next = remote.getNextTrackOf(current);
@@ -47,15 +54,26 @@ public class Sources {
 		}
 	}
 
-	private void startDownloading(Track track, BetterPlaylistRuntime playlist) {
-		DownloaderTask task = new DownloaderTask(downloader, converter, track);
-	
+	/***
+	 * Use {@link JMOPSources#download(Track, java.util.function.Consumer)} instead.
+	 * @param track
+	 * @param playlist
+	 */
+	@Deprecated
+	//TODO just debug, make privat back !
+	public void startDownloading(Track track, BetterPlaylistRuntime playlist) {
+		DownloaderTask task = new DownloaderTask(downloader, converter,  track);
+
 		task.addEventHandler(EventType.ROOT, (e) -> {
 			playlist.append(track);
 		});
 
-		// TODO running, message and progress properties - handle somehow
 		task.run();
+		
+		// TODO running, message and progress properties - handle somehow
+		// TODO run in background, unccomment:
+		// Thread thread = new Thread(task, "DownloaderTask");
+		// thread.start();
 	}
 
 	// TODO ...

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Tooltip?>
+
+<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="300.0" vgap="5.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="200.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+   		<Label text="Bundle" GridPane.rowIndex="1" />
+      <ComboBox fx:id="cmbBundleName" prefHeight="26.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <tooltip>
+      		<Tooltip text="Optionaly change the bundle of the playlist." />
+      	</tooltip>
+      </ComboBox>
+   
+      <Label text="Playlist name" />
+      <TextField fx:id="txtPlaylistName" promptText="'Best hits' or 'New album'" GridPane.columnIndex="1">
+      	<tooltip>
+      		<Tooltip text="Specify name of the playlist." />
+      	</tooltip>
+      </TextField>
+      
+<!--       <Label text="Start with" GridPane.rowIndex="2" /> -->
+<!--       <TextField fx:id="txtQuery" promptText="The very best one!" GridPane.columnIndex="1" GridPane.rowIndex="2"> -->
+<!--       <tooltip> -->
+<!--       		<Tooltip text="Specify the initial track of the playlist. This value will be sent to the choosen source as search query." /> -->
+<!--       	</tooltip> -->
+<!--       </TextField> -->
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>

@@ -9,12 +9,13 @@ import org.junit.Test;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.Sources;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
@@ -31,7 +32,10 @@ import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
+import cz.martlin.jmop.core.wrappers.GuiDescriptor;
+import cz.martlin.jmop.core.wrappers.ToPlaylistAppendingHandler;
 import cz.martlin.jmop.misc.TestingTools;
+import javafx.util.Duration;
 
 public class PlaylisterTest {
 
@@ -39,7 +43,7 @@ public class PlaylisterTest {
 	public void test() {
 		//TestingTools.runAsJavaFX(() -> { TODO } );
 		
-		JMOPPlaylister playlister = createPlaylister();
+		JMOPPlaylisterWithGui playlister = createPlaylister();
 
 		playlister.play();
 
@@ -48,7 +52,7 @@ public class PlaylisterTest {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private JMOPPlaylister createPlaylister() {
+	private JMOPPlaylisterWithGui createPlaylister() {
 		File root = createRoot();
 
 		AbstractRemoteSource remote = new YoutubeSource();
@@ -59,20 +63,29 @@ public class PlaylisterTest {
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+		downloader.specifyListener(listener);
+		
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat, listener);
-		Sources sources = new Sources(local, remote, downloader, converter);
+		
+		boolean deleteOriginal = false;
+		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  deleteOriginal );
+		converter.specifyListener(listener);
 
-		Bundle bundle = createTestingBundle(sources);
+		Bundle bundle = createTestingBundle(local);
 
 		Track track = createInitialTrack(local, bundle);
 		BetterPlaylistRuntime playlist = new BetterPlaylistRuntime(track);
-		AbstractPlayer player = new TestingPlayer();
+		BasePlayer player = new TestingPlayer();
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
-		JMOPPlaylister playlister = new JMOPPlaylister(player, sources, connection);
+		GuiDescriptor gui = null;
+		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
+		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, saver , gui );
+		
+		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, preparer , connection,saver);
+		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(playlister);
 		playlister.setPlaylist(playlist);
 
 		System.out.println("Playlister ready!");
@@ -80,13 +93,13 @@ public class PlaylisterTest {
 		return playlister;
 	}
 
-	private Bundle createTestingBundle(Sources sources) {
+	private Bundle createTestingBundle(BaseLocalSource local) {
 		final SourceKind kind = SourceKind.YOUTUBE;
 		final String bundleName = "house-music";
 		Bundle bundle = new Bundle(kind, bundleName);
 
 		try {
-			sources.getLocal().createBundle(bundle);
+			local.createBundle(bundle);
 		} catch (JMOPSourceException e) {
 			assumeNoException("Cannot create bundle", e);
 		}
@@ -101,8 +114,9 @@ public class PlaylisterTest {
 		final String trackName = "Sample house music";
 		final String trackId = "WYp9Eo9T3BA";
 		final String trackDesc = "This is just some somple house music originaly by Shingo Nakamura";
-
-		Track track = new Track(bundle, trackId, trackName, trackDesc);
+		final Duration duration = DurationUtilities.createDuration(1, 12, 13);
+		
+		Track track = bundle.createTrack(trackId, trackName, trackDesc, duration);
 
 		TestingDownloader downloader = new TestingDownloader(local);
 		try {

@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -16,6 +17,7 @@ import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
+import javafx.util.Duration;
 
 public class DownloaderTest {
 
@@ -24,6 +26,7 @@ public class DownloaderTest {
 		final String title = "sample";
 		final String description = "Sample sound track";
 		final String bundleName = "testing-tracks";
+		final Duration duration = DurationUtilities.createDuration(0, 0, 9);
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
 
@@ -37,10 +40,11 @@ public class DownloaderTest {
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote, listener);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		//BaseSourceDownloader downloader = new TestingDownloader(sources);
+		downloader.specifyListener(listener);
 
-		Track track = new Track(bundle, id, title, description);
+		Track track = bundle.createTrack(id, title, description, duration);
 
 		try {
 			boolean success = downloader.download(track);

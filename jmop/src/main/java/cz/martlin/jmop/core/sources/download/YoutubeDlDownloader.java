@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -30,8 +29,8 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 	private final BaseLocalSource local;
 	private final AbstractRemoteSource remote;
 
-	public YoutubeDlDownloader(BaseLocalSource local, AbstractRemoteSource remote, ProgressListener listener) {
-		super(listener);
+	public YoutubeDlDownloader(BaseLocalSource local, AbstractRemoteSource remote) {
+		super();
 		this.local = local;
 		this.remote = remote;
 	}
@@ -91,7 +90,7 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<Track, Bo
 
 	private List<String> createCommandLine(String url, String path) {
 		return Arrays.asList( //
-				"youtube-dl", "--newline", "--extract-audio", "--output", path, url);
+				"youtube-dl", "--newline", "--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(), "--output", path, url);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
