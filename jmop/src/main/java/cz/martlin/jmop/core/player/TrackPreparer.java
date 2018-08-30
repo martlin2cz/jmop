@@ -12,6 +12,7 @@ import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.PreparerTask;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,6 +23,7 @@ public class TrackPreparer {
 	private final Configuration config;
 	private final AbstractRemoteSource remote;
 	private final BaseLocalSource local;
+	private final AbstractTrackFileLocator locator;
 	private final BaseSourceConverter converter;
 	private final BaseSourceDownloader downloader;
 	private final BasePlayer player;
@@ -32,14 +34,16 @@ public class TrackPreparer {
 	private final ObservableList<PreparerTask> currentTasks;
 	
 	
+	
 
 
-	public TrackPreparer(Configuration config, AbstractRemoteSource remote, BaseLocalSource local, BaseSourceConverter converter,
+	public TrackPreparer(Configuration config, AbstractRemoteSource remote, BaseLocalSource local, AbstractTrackFileLocator locator, BaseSourceConverter converter,
 			BaseSourceDownloader downloader, BasePlayer player, AutomaticSavesPerformer saver, GuiDescriptor gui) {
 		super();
 		this.config = config;
 		this.remote = remote;
 		this.local = local;
+		this.locator = locator;
 		this.converter = converter;
 		this.downloader = downloader;
 		this.player = player;
@@ -72,7 +76,7 @@ public class TrackPreparer {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void prepare(Track track, Consumer<Track> onCompleteOrNull) throws JMOPSourceException {
-		PreparerTask task = new PreparerTask(config, local, downloader, converter, player, track);
+		PreparerTask task = new PreparerTask(config, locator, local, downloader, converter, player, track);
 		
 		currentTaskProperty.set(task);
 		currentTasks.add(task);

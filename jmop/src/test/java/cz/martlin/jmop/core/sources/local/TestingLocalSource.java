@@ -16,6 +16,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.download.TestingDownloader;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class TestingLocalSource implements BaseLocalSource {
 
@@ -71,15 +72,16 @@ public class TestingLocalSource implements BaseLocalSource {
 	}
 
 	@Override
-	public File fileOfTrack(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException {
+	public File fileOfTrack(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
 
 		InputStream ins = getClass().getClassLoader().getResourceAsStream(TestingDownloader.TESTING_SAMPLE_FILE);
 
-		String name = track.getTitle();
+		String title = track.getTitle();
 		try {
-			String prefix = (isTmp ? "_tmp_" : "_") + name;
+			String prefix = "_" + location.name() + "_";
 			String suffix = "." + format.getExtension();
-			File file = File.createTempFile(prefix, suffix);
+			String name = prefix + title;
+			File file = File.createTempFile(name, suffix);
 			Files.copy(ins, file.toPath(), StandardCopyOption.REPLACE_EXISTING); //TODO wtf?
 			return file;
 		} catch (IOException e) {
@@ -89,8 +91,8 @@ public class TestingLocalSource implements BaseLocalSource {
 	}
 
 	@Override
-	public boolean exists(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException {
-		File file = fileOfTrack(track, format, isTmp);
+	public boolean exists(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
+		File file = fileOfTrack(track, location, format);
 		return file.exists();
 	}
 

@@ -5,9 +5,10 @@ import java.io.File;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public interface BaseFilesNamer {
-	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileFormat format, boolean isTmp);
+	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format);
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

@@ -7,6 +7,7 @@ import java.util.List;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public interface AbstractFileSystemAccessor {
 
@@ -26,7 +27,7 @@ public interface AbstractFileSystemAccessor {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format, boolean isTmp) throws IOException;
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) throws IOException;
 
 	
 

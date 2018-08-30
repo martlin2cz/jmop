@@ -19,6 +19,8 @@ import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -63,7 +65,8 @@ public class PreparerTaskTest extends Application {
 		
 		BasePlayer player = new TestingPlayer(playerFormat);
 
-		PreparerTask task = new PreparerTask(config, local, downloader, converter, player, track);
+		AbstractTrackFileLocator locator = new PrimitiveLocator();
+		PreparerTask task = new PreparerTask(config, locator, local, downloader, converter, player, track);
 		
 		task.messageProperty().addListener((observable, oldVal, newVal) -> {
 			System.out.println("# " + newVal);

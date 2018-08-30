@@ -5,24 +5,19 @@ import java.io.File;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.SourceKind;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public abstract class SimpleFilesNamer implements BaseFilesNamer {
 
 	protected static final String DOT = ".";
-	private final File tmpDirectory;
 
 	public SimpleFilesNamer() {
-		tmpDirectory = tmpDirectory();
+		super();
 	}
 
 	@Override
-	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileFormat format, boolean isTmp) {
-		File directory;
-		if (!isTmp) {
-			directory = directoryOfBundle(root, bundle.getKind(), bundle.getName());
-		} else {
-			directory = tmpDirectory;
-		}
+	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) {
+		File directory = locatedDirectoryOfBundle(root, location, bundle.getKind(), bundle.getName());
 
 		String trackFileName = filenameOfTrack(track);
 
@@ -33,8 +28,40 @@ public abstract class SimpleFilesNamer implements BaseFilesNamer {
 	}
 
 	protected abstract String filenameOfTrack(Track track);
-	/////////////////////////////////////////////////////////////////////////////////////
 
+	/////////////////////////////////////////////////////////////////////////////////////
+	private File locatedDirectoryOfBundle(File root, TrackFileLocation location, SourceKind kind, String name) {
+		switch (location) {
+		case CACHE:
+			return cacheDirectoryOfBundle(root, kind, name);
+		case SAVE:
+			return saveDirectoryOfBundle(root, kind, name);
+		case TEMP:
+			return tempDirectoryOfBundle(root, kind, name);
+		default:
+			throw new IllegalArgumentException("Unknown location: " + location);
+		}
+	}
+
+	
+
+	private File saveDirectoryOfBundle(File root, SourceKind kind, String name) {
+		return directoryOfBundle(root, kind, name);
+	}
+
+	private File cacheDirectoryOfBundle(File root, SourceKind kind, String name) {
+		String cacheDirName = cacheDirectoryName();
+		File cacheDir = new File(root, cacheDirName);
+		File cacheBundleDir = new File(cacheDir, name);
+		return cacheBundleDir;
+	}
+
+	protected abstract String cacheDirectoryName();
+
+	private File tempDirectoryOfBundle(File root, SourceKind kind, String name) {
+		return tmpDirectory();
+	}
+	
 	@Override
 	public File tmpDirectory() {
 		String tmpDirPath = System.getProperty("java.io.tmpdir");

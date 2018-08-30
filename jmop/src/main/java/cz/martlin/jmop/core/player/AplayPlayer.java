@@ -14,6 +14,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.download.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Duration;
@@ -26,8 +27,8 @@ public class AplayPlayer extends AbstractPlayer {
 	private AplayProcess process;
 	private Track currentTrack;
 
-	public AplayPlayer(BaseLocalSource local) {
-		super(local, APLAY_PLAY_FORMAT, true);
+	public AplayPlayer(BaseLocalSource local, AbstractTrackFileLocator locator) {
+		super(local, locator,  APLAY_PLAY_FORMAT);
 	}
 
 	@Override

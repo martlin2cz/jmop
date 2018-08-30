@@ -8,6 +8,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.BaseSourceImpl;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public interface BaseLocalSource extends BaseSourceImpl {
 
@@ -30,9 +31,9 @@ public interface BaseLocalSource extends BaseSourceImpl {
 	@Override
 	public abstract Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException;
 
-	public abstract File fileOfTrack(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException;
+	public abstract File fileOfTrack(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException;
 
-	public abstract boolean exists(Track next, TrackFileFormat format, boolean isTmp) throws JMOPSourceException;
+	public abstract boolean exists(Track next, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException;
 
 
 }

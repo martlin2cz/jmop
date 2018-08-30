@@ -33,6 +33,9 @@ import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import cz.martlin.jmop.core.wrappers.ToPlaylistAppendingHandler;
@@ -86,8 +89,10 @@ public class PlaylisterTest {
 		GuiDescriptor gui = null;
 		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
 		
-		TrackPreparer preparer = new TrackPreparer(config , remote, local, converter, downloader, player, saver , gui );
-		
+		AbstractTrackFileLocator locator = new PrimitiveLocator();
+		TrackPreparer preparer = new TrackPreparer(config, remote, local, locator, converter, downloader, player, saver,
+				gui);
+
 		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, preparer , connection,saver);
 		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(playlister);
 		playlister.setPlaylist(playlist);
@@ -124,8 +129,9 @@ public class PlaylisterTest {
 		Track track = bundle.createTrack(trackId, trackName, trackDesc, duration);
 
 		TestingDownloader downloader = new TestingDownloader(local, downloadFormat);
+		TrackFileLocation location = TrackFileLocation.TEMP;
 		try {
-			assumeTrue("Cannot prepare initial track", downloader.download(track, false));
+			assumeTrue("Cannot prepare initial track", downloader.download(track, location));
 		} catch (Exception e) {
 			assumeNoException("Cannot prepare initial track", e);
 		}

@@ -24,6 +24,9 @@ import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.misc.TestingTools;
 import javafx.util.Duration;
 
@@ -37,18 +40,19 @@ public class JavaFXMediaPlayerTest {
 			try {
 				BaseLocalSource local = prepareLocal();
 				Track track = prepareTrack();
-				final TrackFileFormat downloadFormat = TrackFileFormat.OPUS;
-				final TrackFileFormat outputFormat = TrackFileFormat.MP3;
-				final boolean downloadTmp = false;
-				final boolean playTmp = false;
+				TrackFileLocation downloadLocation = TrackFileLocation.TEMP;
+				TrackFileLocation playLocation = TrackFileLocation.SAVE;
+				TrackFileFormat downloadFormat = TrackFileFormat.OPUS;
+				TrackFileFormat playFormat = TrackFileFormat.MP3;
 
 				TestingDownloader downloader = new TestingDownloader(local, downloadFormat);
-				downloader.download(track, downloadTmp);
+				downloader.download(track, downloadLocation);
 
 				FFMPEGConverter converter = new FFMPEGConverter(local);
-				converter.convert(track, downloadFormat, downloadTmp, outputFormat, playTmp);
+				converter.convert(track, downloadLocation, downloadFormat, playLocation, playFormat);
 
-				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local);
+				AbstractTrackFileLocator locator = new PrimitiveLocator();
+				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local, locator);
 				// AbstractPlayer player = new AplayPlayer(local);
 
 				// TrackPlayedHandler handler = null;

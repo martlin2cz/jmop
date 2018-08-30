@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class NoopConverter implements BaseSourceConverter {
 
@@ -16,8 +17,8 @@ public class NoopConverter implements BaseSourceConverter {
 	}
 
 	@Override
-	public boolean convert(Track track, TrackFileFormat from, boolean fromTmp, TrackFileFormat to, boolean toTmp)
-			throws Exception {
+	public boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
+			TrackFileLocation toLocation, TrackFileFormat toFormat) throws Exception {
 		
 		LOG.info("NOT Converting track " + track);
 
@@ -28,5 +29,7 @@ public class NoopConverter implements BaseSourceConverter {
 	public void specifyListener(ProgressListener listener) {
 		// nothing
 	}
+
+	
 
 }

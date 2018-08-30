@@ -17,6 +17,7 @@ import cz.martlin.jmop.core.data.PlaylistFileData;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.sources.SourceKind;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -149,8 +150,8 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
-	public File getFileOfTrack(Bundle bundle, Track track, TrackFileFormat format, boolean isTmp) {
-		return namer.fileOfTrack(root, bundle, track, format, isTmp);
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) {
+		return namer.fileOfTrack(root, bundle, track, location, format);
 		// TODO test existence
 	}
 	/////////////////////////////////////////////////////////////////////////////////////

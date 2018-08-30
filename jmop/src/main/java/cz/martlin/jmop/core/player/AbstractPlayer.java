@@ -10,25 +10,28 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import javafx.util.Duration;
 
 public abstract class AbstractPlayer implements BasePlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseLocalSource local;
+	private final TrackFileLocation tracksLocation;
 	private final TrackFileFormat supportedFormat;
-	private final boolean isTmp;
 
 	private TrackPlayedHandler handler;
 
 	private boolean playing;
 	private boolean paused;
 
-	public AbstractPlayer(BaseLocalSource local, TrackFileFormat supportedFormat, boolean isTmp) {
+	public AbstractPlayer(BaseLocalSource local, AbstractTrackFileLocator locator, TrackFileFormat supportedFormat) {
 		super();
 		this.local = local;
 		this.supportedFormat = supportedFormat;
-		this.isTmp = isTmp;
+		
+		this.tracksLocation = locator.locationOfPlay();
 		this.playing = false;
 		this.paused = false;
 	}
@@ -71,7 +74,7 @@ public abstract class AbstractPlayer implements BasePlayer {
 
 		playing = true;
 
-		File file = local.fileOfTrack(track, supportedFormat, isTmp);
+		File file = local.fileOfTrack(track, tracksLocation, supportedFormat);
 
 		LOG.debug("Will play file " + file);
 		doStartPlaying(track, file);

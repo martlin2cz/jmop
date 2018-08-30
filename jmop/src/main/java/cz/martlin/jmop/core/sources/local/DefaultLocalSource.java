@@ -11,10 +11,11 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class DefaultLocalSource implements BaseLocalSource {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
+
 	public static final TrackFileFormat MAIN_STORE_FORMAT = TrackFileFormat.MP3;
 
 	private final AbstractFileSystemAccessor fileSystem;
@@ -96,23 +97,24 @@ public class DefaultLocalSource implements BaseLocalSource {
 	}
 
 	@Override
-	public File fileOfTrack(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException {
-		LOG.info("Infering file of track " + track.getTitle() + " with format " + format + " and tmp " + isTmp);
+	public File fileOfTrack(Track track, TrackFileLocation location, TrackFileFormat format)
+			throws JMOPSourceException {
+		LOG.info("Infering file of track " + track.getTitle() + " in " + location + " as " + format);
 		try {
 			Bundle bundle = track.getBundle();
-			return fileSystem.getFileOfTrack(bundle, track, format, isTmp);
+			return fileSystem.getFileOfTrack(bundle, track, location, format);
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannot infer file of track", e);
 		}
 	}
 
 	@Override
-	public boolean exists(Track track, TrackFileFormat format, boolean isTmp) throws JMOPSourceException {
-		LOG.info("Checking existence of track " + track.getTitle());
+	public boolean exists(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
+		LOG.info("Checking existence of track " + track.getTitle() + " in " + location + " as " + format);
 
 		// TODO hacky af, killme
 		try {
-			File file = fileSystem.getFileOfTrack(track.getBundle(), track, format, isTmp);
+			File file = fileSystem.getFileOfTrack(track.getBundle(), track, location, format);
 			return file.exists();
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannnot check file existence", e);

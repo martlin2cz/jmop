@@ -16,6 +16,7 @@ import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import javafx.util.Duration;
 
@@ -45,9 +46,10 @@ public class DownloaderTest {
 		downloader.specifyListener(listener);
 
 		Track track = bundle.createTrack(id, title, description, duration);
-
+		TrackFileLocation location = TrackFileLocation.TEMP;
 		try {
-			boolean success = downloader.download(track, false);
+			
+			boolean success = downloader.download(track, location );
 			System.err.println("Success? " + success);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -16,6 +16,7 @@ import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import javafx.util.Duration;
 
 public class ConverterTest {
@@ -35,10 +36,11 @@ public class ConverterTest {
 
 		BaseLocalSource local = new DefaultLocalSource(fileSystem);
 
+		TrackFileLocation inputLocation = TrackFileLocation.TEMP;
+		TrackFileLocation outputLocation = TrackFileLocation.SAVE;
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		boolean inputTmp = false;
-		boolean outputTmp = false;
+		
 
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 
@@ -50,7 +52,7 @@ public class ConverterTest {
 
 		try {
 
-			boolean success = converter.convert(track, inputFormat, inputTmp, outputFormat, outputTmp);
+			boolean success = converter.convert(track, inputLocation, inputFormat, outputLocation, outputFormat);
 			System.err.println("Success? " + success);
 		} catch (Exception e) {
 			e.printStackTrace();

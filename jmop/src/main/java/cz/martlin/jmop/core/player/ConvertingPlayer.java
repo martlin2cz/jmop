@@ -58,7 +58,7 @@ public class ConvertingPlayer implements BasePlayer {
 
 		try {
 			FFMPEGConverter converter = new FFMPEGConverter(local);
-			converter.convert(track, null, false, null, false);
+			converter.convert(track, null, null, null, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -9,6 +9,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class TestingDownloader implements BaseSourceDownloader {
 
@@ -29,10 +30,10 @@ public class TestingDownloader implements BaseSourceDownloader {
 	}
 
 	@Override
-	public boolean download(Track track, boolean isTmp) throws Exception {
+	public boolean download(Track track, TrackFileLocation location) throws Exception {
 		InputStream ins = getClass().getClassLoader().getResourceAsStream(TESTING_SAMPLE_FILE);
 
-		File targetFile = local.fileOfTrack(track, downloadFormat, isTmp);
+		File targetFile = local.fileOfTrack(track, location, downloadFormat);
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 

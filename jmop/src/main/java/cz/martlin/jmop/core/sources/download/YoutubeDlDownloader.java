@@ -17,6 +17,7 @@ import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.download.YoutubeDlDownloader.DownloadData;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadData, Boolean>
 		implements BaseSourceDownloader {
@@ -46,9 +47,9 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public boolean download(Track track, boolean isTmp) throws ExternalProgramException {
+	public boolean download(Track track, TrackFileLocation location) throws ExternalProgramException {
 		LOG.info("Downloading track " + track);
-		DownloadData data = new DownloadData(track, isTmp);
+		DownloadData data = new DownloadData(track, location);
 		return run(data);
 	}
 
@@ -89,14 +90,14 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 
 	private String createTargetFilePath(DownloadData data) throws JMOPSourceException, IOException {
 		Track track = data.getTrack();
-		boolean isTmp = data.isTmp();
-		File tmpFile = createTargetFileFile(track, isTmp);
+		TrackFileLocation location = data.getLocation();
+		File tmpFile = createTargetFileFile(track, location);
 
 		return tmpFile.getAbsolutePath();
 	}
 
-	private File createTargetFileFile(Track track, boolean isTmp) throws JMOPSourceException, IOException {
-		return local.fileOfTrack(track, DOWNLOAD_FILE_FORMAT, isTmp);
+	private File createTargetFileFile(Track track, TrackFileLocation location) throws JMOPSourceException, IOException {
+		return local.fileOfTrack(track, location, DOWNLOAD_FILE_FORMAT);
 	}
 
 	private List<String> createCommandLine(String url, String path) {
@@ -136,22 +137,22 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 
 	protected static class DownloadData {
 		private final Track track;
-		private final boolean isTmp;
+		private final TrackFileLocation location;
 
-		public DownloadData(Track track, boolean isTmp) {
+		public DownloadData(Track track, TrackFileLocation location) {
 			super();
 			this.track = track;
-			this.isTmp = isTmp;
+			this.location = location;
 		}
 
 		public Track getTrack() {
 			return track;
 		}
 
-		public boolean isTmp() {
-			return isTmp;
+		public TrackFileLocation getLocation() {
+			return location;
 		}
-
+		
 	}
 
 }

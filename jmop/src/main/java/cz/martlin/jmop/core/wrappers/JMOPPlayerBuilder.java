@@ -23,6 +23,8 @@ import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.DefaultLocator;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.gui.util.JavaFXMediaPlayer;
 
@@ -41,9 +43,11 @@ public class JMOPPlayerBuilder {
 
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		BaseSourceConverter converter = new FFMPEGConverter(local);
-		BasePlayer player = new JavaFXMediaPlayer(local);
+		AbstractTrackFileLocator locatorDepended = null; //XXX FIXME dependencies cycle
+		BasePlayer player = new JavaFXMediaPlayer(local, locatorDepended);
 
-		TrackPreparer preparer = new TrackPreparer(config, remote, local, converter, downloader, player, saver, gui);
+		AbstractTrackFileLocator locator = new DefaultLocator(config, downloader, player);
+		TrackPreparer preparer = new TrackPreparer(config, remote, local, locator, converter, downloader, player, saver, gui);
 		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, preparer, connection, saver);
 
 		ToPlaylistAppendingHandler trackPlayedHandler = new ToPlaylistAppendingHandler(playlister);

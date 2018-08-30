@@ -7,6 +7,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.player.AbstractPlayer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,13 +17,12 @@ import javafx.util.Duration;
 
 public class JavaFXMediaPlayer extends AbstractPlayer {
 	public static final TrackFileFormat PLAYER_FORMAT = TrackFileFormat.WAV;
-	private static final boolean PLAYING_TMP = true;
 	private final ObjectProperty<Duration> currentTimeProperty;
 
 	private MediaPlayer mediaPlayer;
 
-	public JavaFXMediaPlayer(BaseLocalSource local) {
-		super(local, PLAYER_FORMAT, PLAYING_TMP);
+	public JavaFXMediaPlayer(BaseLocalSource local, AbstractTrackFileLocator locator) {
+		super(local, locator, PLAYER_FORMAT);
 
 		this.currentTimeProperty = new SimpleObjectProperty<>(new Duration(0.0));
 	}

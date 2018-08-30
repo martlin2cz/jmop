@@ -44,7 +44,7 @@ public class Sources {
 		try {
 			Track next = remote.getNextTrackOf(current);
 
-			boolean contains = local.exists(next, null, false);
+			boolean contains = local.exists(next, null, null);
 			if (!contains) {
 				startDownloading(next, playlist);
 			}
@@ -62,7 +62,7 @@ public class Sources {
 	@Deprecated
 	//TODO just debug, make privat back !
 	public void startDownloading(Track track, BetterPlaylistRuntime playlist) {
-		PreparerTask task = new PreparerTask(null, null, downloader, converter,  null, track);
+		PreparerTask task = new PreparerTask(null, null, local, downloader, converter, null, track);
 
 		task.addEventHandler(EventType.ROOT, (e) -> {
 			playlist.append(track);

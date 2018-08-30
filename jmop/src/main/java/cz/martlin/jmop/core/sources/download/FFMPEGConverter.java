@@ -11,12 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter.TrackConvertData;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 //import  cz.martlin.jmop.core.sources.download.FFMPEGConverterTest.Trac;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertData, Boolean>
 		implements BaseSourceConverter {
@@ -39,12 +39,12 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
 	@Override
-	public boolean convert(Track track, TrackFileFormat from, boolean fromTmp, TrackFileFormat to, boolean toTmp)
-			throws ExternalProgramException {
-		LOG.info("Converting track " + track + " from " + from + " to " + to);
-		TrackConvertData data = new TrackConvertData(track, from, fromTmp, to, toTmp);
+	public boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
+			TrackFileLocation toLocation, TrackFileFormat toFormat) throws Exception {
+
+		LOG.info("Converting track " + track + " from " + fromFormat + " to " + toFormat);
+		TrackConvertData data = new TrackConvertData(track, fromLocation, fromFormat, toLocation, toFormat);
 		return run(data);
 	}
 
@@ -92,19 +92,19 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 
 	private String createInputFile(TrackConvertData data) throws JMOPSourceException {
 		Track track = data.getTrack();
-		TrackFileFormat inputFormat = data.getFrom();
-		boolean inputTmp = data.isFromTmp();
+		TrackFileLocation inputLocation = data.getFromLocation();
+		TrackFileFormat inputFormat = data.getFromFormat();
 
-		File inputFile = local.fileOfTrack(track, inputFormat, inputTmp);
+		File inputFile = local.fileOfTrack(track, inputLocation, inputFormat);
 		return inputFile.getAbsolutePath();
 	}
 
 	private String createOutputFile(TrackConvertData data) throws JMOPSourceException {
 		Track track = data.getTrack();
-		TrackFileFormat outputFormat = data.getTo();
-		boolean outputTmp = data.isToTmp();
+		TrackFileLocation outputLocation = data.getToLocation();
+		TrackFileFormat outputFormat = data.getToFormat();
 
-		File outputFile = local.fileOfTrack(track, outputFormat, outputTmp);
+		File outputFile = local.fileOfTrack(track, outputLocation, outputFormat);
 		return outputFile.getAbsolutePath();
 	}
 
@@ -164,38 +164,39 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 
 	protected static class TrackConvertData {
 		private final Track track;
-		private final TrackFileFormat from;
-		private final boolean fromTmp;
-		private final TrackFileFormat to;
-		private final boolean toTmp;
+		private final TrackFileLocation fromLocation;
+		private final TrackFileFormat fromFormat;
+		private final TrackFileLocation toLocation;
+		private final TrackFileFormat toFormat;
 
-		public TrackConvertData(Track track, TrackFileFormat from, boolean fromTmp, TrackFileFormat to, boolean toTmp) {
+		public TrackConvertData(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
+				TrackFileLocation toLocation, TrackFileFormat toFormat) {
 			super();
 			this.track = track;
-			this.from = from;
-			this.fromTmp = fromTmp;
-			this.to = to;
-			this.toTmp = toTmp;
+			this.fromLocation = fromLocation;
+			this.fromFormat = fromFormat;
+			this.toLocation = toLocation;
+			this.toFormat = toFormat;
 		}
 
 		public Track getTrack() {
 			return track;
 		}
 
-		public TrackFileFormat getFrom() {
-			return from;
+		public TrackFileLocation getFromLocation() {
+			return fromLocation;
 		}
 
-		public boolean isFromTmp() {
-			return fromTmp;
+		public TrackFileFormat getFromFormat() {
+			return fromFormat;
 		}
 
-		public TrackFileFormat getTo() {
-			return to;
+		public TrackFileLocation getToLocation() {
+			return toLocation;
 		}
 
-		public boolean isToTmp() {
-			return toTmp;
+		public TrackFileFormat getToFormat() {
+			return toFormat;
 		}
 
 	}

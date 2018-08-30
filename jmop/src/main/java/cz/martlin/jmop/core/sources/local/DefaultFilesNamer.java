@@ -11,6 +11,7 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 
 	private static final String FULL_PLAYLIST_NAME = "all_tracks";
 	private static final String TEMP_DIR_NAME = "jmop";
+	private static final String CACHE_DIR_NAME = "cache";
 
 	public DefaultFilesNamer() {
 	}
@@ -47,6 +48,10 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 		return TEMP_DIR_NAME;
 	}
 	
+	@Override
+	protected String cacheDirectoryName() {
+		return CACHE_DIR_NAME;
+	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
