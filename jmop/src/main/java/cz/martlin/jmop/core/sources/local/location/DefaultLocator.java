@@ -5,21 +5,19 @@ import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
-public class DefaultLocator implements AbstractTrackFileLocator{
+public class DefaultLocator implements AbstractTrackFileLocator {
 
-	private final TrackFileFormat downloadFormat;
 	private final TrackFileFormat saveFormat;
-	private final TrackFileFormat playerFormat;
-	
-	public DefaultLocator(Configuration config, BaseSourceDownloader downloader, BasePlayer player) {
+
+	public DefaultLocator(Configuration config) {
 		super();
-		this.downloadFormat = downloader.formatOfDownload();
 		this.saveFormat = config.getSaveFormat();
-		this.playerFormat = player.getPlayableFormat();
 	}
-	
+
 	@Override
-	public TrackFileLocation locationOfDownload() {
+	public TrackFileLocation locationOfDownload(BaseSourceDownloader downloader) {
+		TrackFileFormat downloadFormat = downloader.formatOfDownload();
+
 		if (downloadFormat.equals(saveFormat)) {
 			return TrackFileLocation.SAVE;
 		} else {
@@ -33,7 +31,9 @@ public class DefaultLocator implements AbstractTrackFileLocator{
 	}
 
 	@Override
-	public TrackFileLocation locationOfPlay() {
+	public TrackFileLocation locationOfPlay(BasePlayer player) {
+		TrackFileFormat playerFormat = player.getPlayableFormat();
+
 		if (playerFormat.equals(saveFormat)) {
 			return TrackFileLocation.SAVE;
 		} else {

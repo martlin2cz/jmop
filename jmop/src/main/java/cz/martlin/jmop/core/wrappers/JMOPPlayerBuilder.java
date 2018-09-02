@@ -43,10 +43,11 @@ public class JMOPPlayerBuilder {
 
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		BaseSourceConverter converter = new FFMPEGConverter(local);
-		AbstractTrackFileLocator locatorDepended = null; //XXX FIXME dependencies cycle
-		BasePlayer player = new JavaFXMediaPlayer(local, locatorDepended);
+		
+		AbstractTrackFileLocator locator = new DefaultLocator(config);
+		BasePlayer player = new JavaFXMediaPlayer(local, locator);
 
-		AbstractTrackFileLocator locator = new DefaultLocator(config, downloader, player);
+		
 		TrackPreparer preparer = new TrackPreparer(config, remote, local, locator, converter, downloader, player, saver, gui);
 		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, preparer, connection, saver);
 

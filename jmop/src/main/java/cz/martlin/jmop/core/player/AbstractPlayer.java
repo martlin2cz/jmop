@@ -31,7 +31,7 @@ public abstract class AbstractPlayer implements BasePlayer {
 		this.local = local;
 		this.supportedFormat = supportedFormat;
 		
-		this.tracksLocation = locator.locationOfPlay();
+		this.tracksLocation = locator.locationOfPlay(this);
 		this.playing = false;
 		this.paused = false;
 	}

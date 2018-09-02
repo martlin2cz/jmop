@@ -32,20 +32,6 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		this.namer = namer;
 		this.loader = loader;
 
-		initialize();
-	}
-
-	private void initialize() throws IOException {
-		createTmpDirectory();
-	}
-
-	private File createTmpDirectory() throws IOException {
-		File tmpDir = namer.tmpDirectory();
-		Path path = tmpDir.toPath();
-
-		Files.createDirectories(path);
-		LOG.info("Temporary directory " + tmpDir.getAbsolutePath() + " created");
-		return tmpDir;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -125,10 +111,12 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		return data;
 	}
 
-	private File fileOfPlaylist(Bundle bundle, String name) {
+	private File fileOfPlaylist(Bundle bundle, String name) throws IOException {
 		SourceKind source = bundle.getKind();
 		String bundleName = bundle.getName();
-		return namer.fileOfPlaylist(root, source, bundleName, name);
+		File file = namer.fileOfPlaylist(root, source, bundleName, name);
+		checkAndCreateParentDirectory(file);
+		return file;
 	}
 
 	@Override
@@ -150,8 +138,10 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
-	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) {
-		return namer.fileOfTrack(root, bundle, track, location, format);
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) throws IOException {
+		File file = namer.fileOfTrack(root, bundle, track, location, format);
+		checkAndCreateParentDirectory(file);
+		return file;
 		// TODO test existence
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -163,4 +153,11 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		return directory;
 	}
 
+	private void checkAndCreateParentDirectory(File file) throws IOException {
+		File parent = file.getParentFile();
+		Path path = parent.toPath();
+		
+		Files.createDirectories(path);
+	}
+	
 }

@@ -42,9 +42,9 @@ public class PreparerTask extends Task<Boolean> implements ProgressListener {
 		this.track = track;
 
 		this.preparer = new TrackFileFormatLocationPreparer(local, converter);
-		this.downloadLocation = locator.locationOfDownload();
+		this.downloadLocation = locator.locationOfDownload(downloader);
 		this.saveLocation = locator.locationOfSave();
-		this.playerLocation = locator.locationOfPlay();
+		this.playerLocation = locator.locationOfPlay(player);
 
 		this.downloadFormat = downloader.formatOfDownload();
 		this.saveFormat = config.getSaveFormat();
