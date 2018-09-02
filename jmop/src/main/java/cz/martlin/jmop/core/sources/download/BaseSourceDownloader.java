@@ -11,4 +11,6 @@ public interface BaseSourceDownloader extends ProgressGenerator {
 
 	public TrackFileFormat formatOfDownload();
 
+	public boolean check();
+
 }

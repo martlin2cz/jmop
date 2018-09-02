@@ -30,6 +30,9 @@ public class NoopConverter implements BaseSourceConverter {
 		// nothing
 	}
 
-	
+	@Override
+	public boolean check() {
+		return true;
+	}
 
 }

@@ -80,6 +80,12 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	protected Boolean handleResult(int result, DownloadData data) throws Exception {
 		return (result == RESULT_CODE_OK);
 	}
+	
+	
+	@Override
+	public boolean check() {
+		return runAndCheckForResult("youtube-dl --version") == RESULT_CODE_OK;
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	private String createUrlOfTrack(DownloadData data) throws JMOPSourceException {

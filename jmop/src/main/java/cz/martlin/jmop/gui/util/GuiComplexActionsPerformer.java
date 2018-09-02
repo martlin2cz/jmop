@@ -186,7 +186,7 @@ public class GuiComplexActionsPerformer {
 		}
 		System.exit(0);
 	}
-	
+
 	public void openHelp() {
 		runAndHandleError(() -> {
 			HelpDialog dialog = new HelpDialog();
@@ -198,9 +198,14 @@ public class GuiComplexActionsPerformer {
 
 	public void checkConfiguration() {
 		runAndHandleError(() -> {
-			// TODO check coinfig
-			showInfo("Configuration check", "Check whether JMOP you can use",
-					"Please whether you have youtube-dl and ffmpeg properly installed.");
+			String error = jmop.runCheck();
+			if (error == null) {
+				showInfo("Configuration check", "The configuration is OK",
+						"The JMOP have checked some basic system settings and it seems it is all OK. "
+								+ "If problems continues, see try to look into app logs.");
+			} else {
+				showErrorDialog("Configuration not OK", error);
+			}
 			return null;
 		});
 
@@ -242,11 +247,12 @@ public class GuiComplexActionsPerformer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	
+
 	@Deprecated
 	protected void changeCursor(Cursor cursor) {
 		scene.getRoot().setCursor(cursor);
 	}
+
 	/////////////////////////////////////////////////////////////////////////////////////
 	private <T> void runInBackground(RunnableWithException<T> run) {
 		Task<T> task = new Task<T>() {
@@ -260,11 +266,10 @@ public class GuiComplexActionsPerformer {
 
 		};
 
-		// FIXME AF, WTFFFFF ????
-		 scene.setCursor(Cursor.WAIT);
-		 task.setOnSucceeded((e) -> {
-		 scene.setCursor(Cursor.DEFAULT);
-		 });
+		scene.setCursor(Cursor.WAIT);
+		task.setOnSucceeded((e) -> {
+			scene.setCursor(Cursor.DEFAULT);
+		});
 
 		Thread thread = new Thread(task, "BackgroundGUIOperationThread");
 		thread.start();
@@ -359,6 +364,5 @@ public class GuiComplexActionsPerformer {
 	public static interface ConsumerWithException<T> {
 		public void consume(T object) throws Exception;
 	}
-
 
 }

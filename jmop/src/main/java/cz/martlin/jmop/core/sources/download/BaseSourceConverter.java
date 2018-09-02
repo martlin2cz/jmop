@@ -8,6 +8,8 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 public interface BaseSourceConverter extends ProgressGenerator {
 	
 	public boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat) throws Exception;
+
+	public boolean check();
 	
 
 	

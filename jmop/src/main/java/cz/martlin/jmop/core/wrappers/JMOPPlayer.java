@@ -22,7 +22,9 @@ public class JMOPPlayer {
 	private final JMOPSources sources;
 	private final JMOPPlaying playing;
 	private final CoreGuiDescriptor descriptor;
+	private final JMOPChecker checker;
 	private final ObjectProperty<Playlist> currentPlaylistProperty;
+	
 
 	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
 			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot,
@@ -31,6 +33,7 @@ public class JMOPPlayer {
 		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, playlister, gui);
 		this.playing = new JMOPPlaying(playlister, saver, playlistToPlayOrNot);
 		this.descriptor = new CoreGuiDescriptor(this);
+		this.checker = new JMOPChecker(downloader, converter);
 		this.currentPlaylistProperty = new SimpleObjectProperty<>();
 	}
 
@@ -131,6 +134,11 @@ public class JMOPPlayer {
 	public List<String> listPlaylists(String bundleName) throws JMOPSourceException {
 		return sources.listPlaylists(bundleName);
 	}
+	
+
+	public String runCheck() {
+		return checker.doCheck();
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -142,6 +150,7 @@ public class JMOPPlayer {
 	public ObjectProperty<Playlist> currentPlaylistProperty() {
 		return currentPlaylistProperty;
 	}
+
 
 
 }

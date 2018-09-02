@@ -28,6 +28,7 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 	private static final String PROGRESS_LINE_REGEX = "^size\\=[ \\dkMG]+B time\\=" + DURATION_REGEX + ".*$";
 	private static final Pattern DURATION_PATTERN = Pattern.compile(DURATION_REGEX);
 	private static final int TIME_UNIT_MULTIPLICATOR = 60;
+	private static final int RESULT_CODE_OK = 0;
 
 	private final BaseLocalSource local;
 	private Integer inputDuration;
@@ -85,10 +86,17 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 
 	@Override
 	protected Boolean handleResult(int result, TrackConvertData data) throws Exception {
-		return result == 0;
+		return result == RESULT_CODE_OK;
+	}
+	
+	@Override
+	public boolean check() {
+		return runAndCheckForResult("ffmpeg -version") == RESULT_CODE_OK;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	
 
 	private String createInputFile(TrackConvertData data) throws JMOPSourceException {
 		Track track = data.getTrack();
