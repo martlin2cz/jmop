@@ -11,6 +11,7 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.dial.AddTrackDialog;
 import cz.martlin.jmop.gui.dial.CreatePlaylistDialog;
+import cz.martlin.jmop.gui.dial.HelpDialog;
 import cz.martlin.jmop.gui.dial.JMOPAboutDialog;
 import cz.martlin.jmop.gui.dial.NewBundleDialog;
 import cz.martlin.jmop.gui.dial.NewPlaylistDialog;
@@ -18,6 +19,7 @@ import cz.martlin.jmop.gui.dial.SavePlaylistDialog;
 import cz.martlin.jmop.gui.dial.StartBundleDialog;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -184,6 +186,15 @@ public class GuiComplexActionsPerformer {
 		}
 		System.exit(0);
 	}
+	
+	public void openHelp() {
+		runAndHandleError(() -> {
+			HelpDialog dialog = new HelpDialog();
+			dialog.show();
+			return null;
+		});
+
+	}
 
 	public void checkConfiguration() {
 		runAndHandleError(() -> {
@@ -231,6 +242,12 @@ public class GuiComplexActionsPerformer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	
+	@Deprecated
+	protected void changeCursor(Cursor cursor) {
+		scene.getRoot().setCursor(cursor);
+	}
+	/////////////////////////////////////////////////////////////////////////////////////
 	private <T> void runInBackground(RunnableWithException<T> run) {
 		Task<T> task = new Task<T>() {
 			@Override
@@ -244,10 +261,10 @@ public class GuiComplexActionsPerformer {
 		};
 
 		// FIXME AF, WTFFFFF ????
-		// scene.setCursor(Cursor.WAIT);
-		// task.setOnSucceeded((e) -> {
-		// scene.setCursor(Cursor.DEFAULT);
-		// });
+		 scene.setCursor(Cursor.WAIT);
+		 task.setOnSucceeded((e) -> {
+		 scene.setCursor(Cursor.DEFAULT);
+		 });
 
 		Thread thread = new Thread(task, "BackgroundGUIOperationThread");
 		thread.start();
@@ -342,5 +359,6 @@ public class GuiComplexActionsPerformer {
 	public static interface ConsumerWithException<T> {
 		public void consume(T object) throws Exception;
 	}
+
 
 }

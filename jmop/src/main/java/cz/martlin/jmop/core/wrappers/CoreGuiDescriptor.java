@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.wrappers;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.download.PreparerTask;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -65,6 +66,10 @@ public class CoreGuiDescriptor {
 
 	public BooleanBinding hasActiveBundleAndPlaylistProperty() {
 		return currentPlaylistProperty().isNotNull();
+	}
+
+	public BooleanBinding isPreparpingProperty() {
+		return Bindings.isNotEmpty(currentDownloadTasksProperty());
 	}
 
 }

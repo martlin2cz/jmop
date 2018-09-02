@@ -209,7 +209,7 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	public void onHelpAction() {
-		// TODO help
+		actions.openHelp();
 	}
 
 	public void onCheckConfigurationAction() {

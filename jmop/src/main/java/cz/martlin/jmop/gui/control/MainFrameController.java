@@ -22,6 +22,7 @@ public class MainFrameController implements Initializable, RequiresJMOP {
 	private WelcomePane welcomePane;
 
 	private CoreGuiDescriptor descriptor;
+	private GuiComplexActionsPerformer actions;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -36,6 +37,7 @@ public class MainFrameController implements Initializable, RequiresJMOP {
 	@Override
 	public void setupJMOP(JMOPPlayer jmop, CoreGuiDescriptor descriptor, GuiComplexActionsPerformer actions) {
 		this.descriptor = descriptor;
+		this.actions = actions;
 
 		initBindings();
 		
@@ -48,6 +50,16 @@ public class MainFrameController implements Initializable, RequiresJMOP {
 	private void initBindings() {
 		playerPane.visibleProperty().bind(descriptor.hasActiveBundleAndPlaylistProperty());
 		welcomePane.visibleProperty().bind(descriptor.hasActiveBundleAndPlaylistProperty().not());
+		
+//		descriptor.isPreparpingProperty().addListener((observable, oldVal, newVal) -> preparingChanged(newVal));
 	}
+//
+//	private void preparingChanged(boolean isSomePreparing) {
+//		if (isSomePreparing) {
+//			actions.changeCursor(Cursor.WAIT);
+//		} else {
+//			actions.changeCursor(Cursor.DEFAULT);
+//		}
+//	}
 
 }
