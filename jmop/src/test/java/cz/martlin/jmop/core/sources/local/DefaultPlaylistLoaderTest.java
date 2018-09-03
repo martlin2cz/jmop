@@ -40,13 +40,13 @@ public class DefaultPlaylistLoaderTest {
 		);
 		
 		Tracklist tracklist = new Tracklist(tracks);
-		final PlaylistFileData inputData = new PlaylistFileData(playlistName, kind, tracklist);
+		final PlaylistFileData inputData = new PlaylistFileData(bundle.getName(), playlistName, kind, tracklist);
 
 		DefaultPlaylistLoader loader = new DefaultPlaylistLoader();
 
 		loader.save(inputData, file);
 
-		PlaylistFileData outputData = loader.load(bundle, file);
+		PlaylistFileData outputData = loader.load(bundle, file, false);
 
 		System.out.println(outputData);
 		
@@ -59,7 +59,7 @@ public class DefaultPlaylistLoaderTest {
 		System.out.println("And with " + file.getAbsolutePath());
 		
 		loader.save(outputData, secondFile);
-		PlaylistFileData anotherData = loader.load(bundle, secondFile);
+		PlaylistFileData anotherData = loader.load(bundle, secondFile, false);
 		
 		assertEquals(inputData, anotherData);
 		

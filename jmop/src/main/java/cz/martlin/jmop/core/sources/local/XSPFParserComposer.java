@@ -17,15 +17,19 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
 
 public class XSPFParserComposer {
+	public static final String FILE_EXTENSION = "xspf";
 
 	private static final String NAMESPACE = "http://xspf.org/ns/0/";
 	private static final String APPLICATION = "https://github.com/martlin2cz/jmop";
 
-	public void parse(Bundle bundle, Document document, PlaylistFileData playlist) {
+	public void parse(Bundle bundle, Document document, PlaylistFileData playlist, boolean onlyMetadata) {
 		Element root = document.getDocumentElement();
 		checkRoot(root);
 		processHeaders(root, playlist);
-		processTracks(bundle, root, playlist);
+
+		if (!onlyMetadata) {
+			processTracks(bundle, root, playlist);
+		}
 	}
 
 	private void checkRoot(Element root) {
@@ -55,6 +59,9 @@ public class XSPFParserComposer {
 		String source = jmop.getAttribute("source");
 		SourceKind kind = SourceKind.valueOf(source);
 		playlist.setKind(kind);
+
+		String bundleName = jmop.getAttribute("bundleName");
+		playlist.setBundleName(bundleName);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -151,6 +158,7 @@ public class XSPFParserComposer {
 		Element extension = document.createElementNS(NAMESPACE, "extension");
 		Element jmop = document.createElement("jmop");
 		jmop.setAttribute("source", playlist.getKind().name());
+		jmop.setAttribute("bundleName", playlist.getBundleName());
 		jmop.setAttribute("application", APPLICATION);
 		extension.appendChild(jmop);
 		root.appendChild(extension);

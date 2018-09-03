@@ -26,7 +26,7 @@ import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 
@@ -119,9 +119,9 @@ public class JMOPPlayerEnvironment {
 
 	public static BaseLocalSource createLocal(File rootDirectory) throws IOException {
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		PlaylistLoader loader = new DefaultPlaylistLoader();
+		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDirectory, namer, loader);
-		BaseLocalSource local = new DefaultLocalSource(fileSystem);
+		BaseLocalSource local = new DefaultLocalSource(null, fileSystem);
 		return local;
 	}
 }

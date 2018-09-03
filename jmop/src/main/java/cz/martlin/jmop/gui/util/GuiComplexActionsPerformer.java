@@ -64,8 +64,7 @@ public class GuiComplexActionsPerformer {
 	public void startBundle(String bundleName) {
 		runInBackgroundWithDialog(() -> {
 			List<String> playlistNames = jmop.listPlaylists(bundleName);
-			String defaultPlaylistName = "all_tracks"; // FIXME HACK
-			System.out.println(bundleName + " & " + playlistNames);
+			String defaultPlaylistName = jmop.getConfig().getAllTracksPlaylistName();
 			StartBundleDialog dial = new StartBundleDialog(playlistNames, defaultPlaylistName);
 			return dial;
 		}, (data) -> {
@@ -268,6 +267,9 @@ public class GuiComplexActionsPerformer {
 
 		scene.setCursor(Cursor.WAIT);
 		task.setOnSucceeded((e) -> {
+			scene.setCursor(Cursor.DEFAULT);
+		});
+		task.setOnFailed((e) -> {
 			scene.setCursor(Cursor.DEFAULT);
 		});
 

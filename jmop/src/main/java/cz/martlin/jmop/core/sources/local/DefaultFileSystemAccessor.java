@@ -3,13 +3,9 @@ package cz.martlin.jmop.core.sources.local;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
@@ -20,13 +16,13 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final File root;
 	private final BaseFilesNamer namer;
-	private final PlaylistLoader loader;
+	private final AbstractPlaylistLoader loader;
 
-	public DefaultFileSystemAccessor(File root, BaseFilesNamer namer, PlaylistLoader loader) throws IOException {
+	public DefaultFileSystemAccessor(File root, BaseFilesNamer namer, AbstractPlaylistLoader loader)
+			throws IOException {
 		super();
 		this.root = root;
 		this.namer = namer;
@@ -34,130 +30,131 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public List<String> listBundlesDirectoriesNames() throws IOException {
+		return Arrays.stream(root.listFiles()) //
+				.filter((f) -> f.isDirectory()) //
+				.map((f) -> f.getName()) //
+				.collect(Collectors.toList());
+	}
 
 	@Override
-	public List<String> listBundles() throws IOException {
-		File[] bundlesDirs = root.listFiles((f) -> isBundleDir(f));
-		if (bundlesDirs == null) {
-			throw new IOException("Cannot list bundles directories");
+	public String bundleDirectoryName(String bundleName) throws IOException {
+		return namer.directoryNameOfBundle(bundleName);
+	}
+
+	@Override
+	public void createBundleDirectory(String bundleName) throws IOException {
+		File bundleDir = namer.bundleDirOfBundleName(root, bundleName);
+		Files.createDirectories(bundleDir.toPath());
+
+	}
+
+	@Override
+	public List<String> listPlaylistsFiles(String bundleDirName) throws IOException {
+		File bundleDir = namer.bundleDirOfBundleDirName(root, bundleDirName);
+		return Arrays.stream(bundleDir.listFiles()) //
+				.filter((f) -> isPlaylistFile(f)) //
+				.map((f) -> f.getName()) //
+				.collect(Collectors.toList());
+	}
+
+	private boolean isPlaylistFile(File file) {
+		if (!file.isFile()) {
+			return false;
 		}
 
-		return Arrays.stream(bundlesDirs) //
-				.map((d) -> namer.dirToBundleName(d)) //
-				.collect(Collectors.toList()); //
-	}
+		String name = file.getName();
+		String extension = loader.getFileExtension();
+		String suffix = DefaultFilesNamer.DOT + extension;
 
-	private boolean isBundleDir(File fileOrDir) {
-		return fileOrDir.isDirectory() && namer.isBundleDirectory(fileOrDir);
-	}
-
-	@Override
-	public Bundle loadBundle(String name) throws IOException {
-		String playlistName = namer.nameOfFullPlaylist();
-		Bundle tmpBundle = new Bundle(null, name, new Tracklist());
-		PlaylistFileData data = loadPlaylistFile(tmpBundle, playlistName);
-
-		SourceKind kind = data.getKind();
-		Tracklist tracklist = data.getTracklist();
-		return new Bundle(kind, name, tracklist);
+		return name.endsWith(suffix);
 	}
 
 	@Override
-	public void createBundle(Bundle bundle) throws IOException {
-		createBundleDirectory(bundle);
-
-		Tracklist tracklist = bundle.tracks();
-		SourceKind kind = bundle.getKind();
-
-		String playlistName = namer.nameOfFullPlaylist();
-		savePlaylistData(bundle, playlistName, kind, tracklist);
+	public boolean existsPlaylist(String bundleDirName, String playlistName) throws IOException {
+		String extension = loader.getFileExtension();
+		File playlistFile = namer.playlistFileOfPlaylist(root, bundleDirName, playlistName, extension);
+		return playlistFile.exists();
 	}
 
-	private void createBundleDirectory(Bundle bundle) throws IOException {
-		File directory = directoryOfBundle(bundle);
+	@Override
+	public PlaylistFileData getPlaylistMetadataOfName(String bundleDirName, String playlistName) throws IOException {
+		String extension = loader.getFileExtension();
+		File playlistFile = namer.playlistFileOfPlaylist(root, bundleDirName, playlistName, extension);
+		return loader.load(null, playlistFile, true);
+	}
 
-		Path path = directory.toPath();
-		Files.createDirectory(path);
+	@Override
+	public PlaylistFileData getPlaylistMetadataOfFile(String bundleDirName, String playlistFileName)
+			throws IOException {
+		File playlistFile = namer.playlistFileOfFile(root, bundleDirName, playlistFileName);
+		return loader.load(null, playlistFile, true);
+	}
+
+	@Override
+	public PlaylistFileData getPlaylistOfName(Bundle bundle, String bundleDirName, String playlistName)
+			throws IOException {
+		String extension = loader.getFileExtension();
+		File playlistFile = namer.playlistFileOfPlaylist(root, bundleDirName, playlistName, extension);
+		return loader.load(bundle, playlistFile, false);
+	}
+
+	@Override
+	public void savePlaylist(String bundleDirName, Playlist playlist) throws IOException {
+		String playlistName = playlist.getName();
+		String extension = loader.getFileExtension();
+		File playlistFile = namer.playlistFileOfPlaylist(root, bundleDirName, playlistName, extension);
+		PlaylistFileData data = playlistToData(playlist);
+		loader.save(data, playlistFile);
+	}
+
+	@Override
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format)
+			throws IOException {
+		return fileOfTrack(bundle, track, location, format);
+	}
+
+	@Override
+	public boolean existsTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format)
+			throws IOException {
+		File trackFile = fileOfTrack(bundle, track, location, format);
+		return trackFile.exists();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public List<String> listPlaylists(Bundle bundle) {
-		File bundleDirectory = directoryOfBundle(bundle);
-		File[] playlistsFiles = bundleDirectory //
-				.listFiles((f) -> isPlaylistFile(f));
-
-		return Arrays.stream(playlistsFiles) //
-				.map((f) -> namer.fileToPlaylistName(f)) //
-				.collect(Collectors.toList()); //
-	}
-
-	private boolean isPlaylistFile(File fileOrDir) {
-		return fileOrDir.isFile() && namer.isPlaylistFile(fileOrDir);
-	}
-
-	@Override
-	public Playlist getPlaylist(Bundle bundle, String name) throws IOException {
-		PlaylistFileData data = loadPlaylistFile(bundle, name);
-		Tracklist tracks = data.getTracklist();
-		return new Playlist(bundle, name, tracks);
-	}
-
-	private PlaylistFileData loadPlaylistFile(Bundle bundle, String name) throws IOException {
-		File file = fileOfPlaylist(bundle, name);
-		PlaylistFileData data = loader.load(bundle, file);
-		return data;
-	}
-
-	private File fileOfPlaylist(Bundle bundle, String name) throws IOException {
-		SourceKind source = bundle.getKind();
+	private PlaylistFileData playlistToData(Playlist playlist) {
+		Bundle bundle = playlist.getBundle();
 		String bundleName = bundle.getName();
-		File file = namer.fileOfPlaylist(root, source, bundleName, name);
-		checkAndCreateParentDirectory(file);
-		return file;
-	}
-
-	@Override
-	public void savePlaylist(Bundle bundle, Playlist playlist) throws IOException {
-		String name = playlist.getName();
-
 		SourceKind kind = bundle.getKind();
+		String playlistName = playlist.getName();
 		Tracklist tracklist = playlist.getTracks();
-
-		savePlaylistData(bundle, name, kind, tracklist);
+		return new PlaylistFileData(bundleName, playlistName, kind, tracklist);
 	}
 
-	private void savePlaylistData(Bundle bundle, String name, SourceKind kind, Tracklist tracklist) throws IOException {
-		PlaylistFileData data = new PlaylistFileData(name, kind, tracklist);
-		File file = fileOfPlaylist(bundle, name);
-
-		loader.save(data, file);
+	private File fileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) throws IOException {
+		File bundleDir = locatedBundleDir(bundle, location);
+		if (!bundleDir.exists()) {
+			Files.createDirectories(bundleDir.toPath());
+		}
+		String trackFileName = namer.fileNameOfTrack(track, format);
+		return new File(bundleDir, trackFileName);
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////
-	@Override
-	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) throws IOException {
-		File file = namer.fileOfTrack(root, bundle, track, location, format);
-		checkAndCreateParentDirectory(file);
-		return file;
-		// TODO test existence
-	}
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	private File directoryOfBundle(Bundle bundle) {
-		SourceKind kind = bundle.getKind();
-		String name = bundle.getName();
-		File directory = namer.directoryOfBundle(root, kind, name);
-		return directory;
+	private File locatedBundleDir(Bundle bundle, TrackFileLocation location) {
+		String bundleName = bundle.getName();
+		switch (location) {
+		case CACHE:
+			return namer.cacheBundleDir(root, bundleName);
+		case SAVE:
+			return namer.bundleDirOfBundleName(root, bundleName);
+		case TEMP:
+			return namer.tempBundleDir(bundleName);
+		default:
+			throw new IllegalArgumentException("Unknown location " + location);
+		}
 	}
 
-	private void checkAndCreateParentDirectory(File file) throws IOException {
-		File parent = file.getParentFile();
-		Path path = parent.toPath();
-		
-		Files.createDirectories(path);
-	}
-	
 }

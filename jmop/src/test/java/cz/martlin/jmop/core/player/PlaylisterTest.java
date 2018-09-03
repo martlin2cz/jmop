@@ -31,7 +31,7 @@ import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
@@ -68,9 +68,9 @@ public class PlaylisterTest {
 		AbstractRemoteSource remote = new YoutubeSource();
 
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		PlaylistLoader loader = new DefaultPlaylistLoader();
+		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
-		BaseLocalSource local = new DefaultLocalSource(fileSystem);
+		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
@@ -87,7 +87,7 @@ public class PlaylisterTest {
 
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		GuiDescriptor gui = null;
-		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
+		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(config, local);
 		
 		AbstractTrackFileLocator locator = new PrimitiveLocator();
 		TrackPreparer preparer = new TrackPreparer(config, remote, local, locator, converter, downloader, player, saver,

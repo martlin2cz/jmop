@@ -8,4 +8,8 @@ public class Configuration {
 		return TrackFileFormat.MP3;
 	}
 
+	public String getAllTracksPlaylistName() {
+		return "all tracks";
+	}
+
 }

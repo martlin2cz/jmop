@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.sources.download;
 import java.io.File;
 import java.io.IOException;
 
+import cz.martlin.jmop.core.config.Configuration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -14,7 +15,7 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import javafx.util.Duration;
@@ -28,13 +29,14 @@ public class ConverterTest {
 		final String bundleName = "testing-tracks";
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
-
+		
+		Configuration config = new Configuration();
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		PlaylistLoader loader = null;
+		AbstractPlaylistLoader loader = null;
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);
 		Bundle bundle = new Bundle(source, bundleName);
 
-		BaseLocalSource local = new DefaultLocalSource(fileSystem);
+		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 
 		TrackFileLocation inputLocation = TrackFileLocation.TEMP;
 		TrackFileLocation outputLocation = TrackFileLocation.SAVE;

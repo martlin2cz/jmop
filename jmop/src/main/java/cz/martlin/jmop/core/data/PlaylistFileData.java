@@ -4,6 +4,7 @@ import cz.martlin.jmop.core.sources.SourceKind;
 
 public class PlaylistFileData {
 
+	private String bundleName;
 	private String playlistName;
 	private SourceKind kind;
 	private Tracklist tracklist;
@@ -11,10 +12,19 @@ public class PlaylistFileData {
 	public PlaylistFileData() {
 	}
 
-	public PlaylistFileData(String playlistName, SourceKind kind, Tracklist tracklist) {
+	public PlaylistFileData(String bundleName, String playlistName, SourceKind kind, Tracklist tracklist) {
+		this.bundleName = bundleName;
 		this.playlistName = playlistName;
 		this.kind = kind;
 		this.tracklist = tracklist;
+	}
+
+	public String getBundleName() {
+		return bundleName;
+	}
+
+	public void setBundleName(String bundleName) {
+		this.bundleName = bundleName;
 	}
 
 	public String getPlaylistName() {
@@ -42,42 +52,9 @@ public class PlaylistFileData {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((kind == null) ? 0 : kind.hashCode());
-		result = prime * result + ((playlistName == null) ? 0 : playlistName.hashCode());
-		result = prime * result + ((tracklist == null) ? 0 : tracklist.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PlaylistFileData other = (PlaylistFileData) obj;
-		if (kind != other.kind)
-			return false;
-		if (playlistName == null) {
-			if (other.playlistName != null)
-				return false;
-		} else if (!playlistName.equals(other.playlistName))
-			return false;
-		if (tracklist == null) {
-			if (other.tracklist != null)
-				return false;
-		} else if (!tracklist.equals(other.tracklist))
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
-		return "PlaylistFileData [playlistName=" + playlistName + ", kind=" + kind + ", tracklist=" + tracklist + "]";
+		return "PlaylistFileData [bundleName=" + bundleName + ", playlistName=" + playlistName + ", kind=" + kind
+				+ ", tracklist=" + tracklist + "]";
 	}
 
 }

@@ -17,7 +17,7 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
@@ -44,11 +44,11 @@ public class PreparerTaskTest extends Application {
 		AbstractRemoteSource remote = new YoutubeSource();
 
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		PlaylistLoader loader = null;
+		AbstractPlaylistLoader loader = null;
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);
 		Bundle bundle = new Bundle(source, bundleName);
 
-		BaseLocalSource local = new DefaultLocalSource(fileSystem);
+		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		

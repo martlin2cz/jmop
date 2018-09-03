@@ -1,5 +1,6 @@
 package cz.martlin.jmop.core.sources;
 
+import cz.martlin.jmop.core.config.Configuration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -7,11 +8,13 @@ import cz.martlin.jmop.core.misc.WorksWithPlaylist;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 
 public class AutomaticSavesPerformer {
+	private final Configuration config; 
 	private final BaseLocalSource local;
 	private Playlist playlist;
 
-	public AutomaticSavesPerformer(BaseLocalSource local) {
+	public AutomaticSavesPerformer(Configuration config, BaseLocalSource local) {
 		super();
+		this.config = config;
 		this.local = local;
 		this.playlist = null;
 	}
@@ -30,8 +33,8 @@ public class AutomaticSavesPerformer {
 	public void saveBundle(Bundle bundle) {
 		try {
 			// XXX hack! LOG.warn("Saving of bundle hacked here");
-			final String ALL_TRACKS = "all_tracks"; // FIXME !!!!
-			Playlist playlist = new Playlist(bundle, ALL_TRACKS, bundle.tracks());
+			final String allTracksPlaylistName =  config.getAllTracksPlaylistName();
+			Playlist playlist = new Playlist(bundle, allTracksPlaylistName, bundle.tracks());
 			local.savePlaylist(bundle, playlist);
 		} catch (JMOPSourceException e) {
 			e.printStackTrace(); // TODO error report

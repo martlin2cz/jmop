@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.wrappers;
 
 import java.util.List;
 
+import cz.martlin.jmop.core.config.Configuration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
@@ -19,17 +20,19 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Duration;
 
 public class JMOPPlayer {
+	private final Configuration config;
 	private final JMOPSources sources;
 	private final JMOPPlaying playing;
 	private final CoreGuiDescriptor descriptor;
 	private final JMOPChecker checker;
 	private final ObjectProperty<Playlist> currentPlaylistProperty;
-	
 
-	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot,
-			JMOPPlaylisterWithGui playlister, TrackPreparer preparer, AutomaticSavesPerformer saver) {
+	public JMOPPlayer(Configuration config, AbstractRemoteSource remote, BaseLocalSource local,
+			BaseSourceDownloader downloader, BaseSourceConverter converter, GuiDescriptor gui,
+			Playlist playlistToPlayOrNot, JMOPPlaylisterWithGui playlister, TrackPreparer preparer,
+			AutomaticSavesPerformer saver) {
 
+		this.config = config;
 		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, playlister, gui);
 		this.playing = new JMOPPlaying(playlister, saver, playlistToPlayOrNot);
 		this.descriptor = new CoreGuiDescriptor(this);
@@ -47,6 +50,10 @@ public class JMOPPlayer {
 
 	public CoreGuiDescriptor getDescriptor() {
 		return descriptor;
+	}
+
+	public Configuration getConfig() {
+		return config;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +95,6 @@ public class JMOPPlayer {
 		Playlist playlist = getCurrentPlaylist();
 		sources.savePlaylist(playlist, newPlaylistName);
 	}
-	
 
 	public void loadAndAddTrack(String querySeed) throws JMOPSourceException {
 		Bundle bundle = getCurrentBundle();
@@ -134,7 +140,6 @@ public class JMOPPlayer {
 	public List<String> listPlaylists(String bundleName) throws JMOPSourceException {
 		return sources.listPlaylists(bundleName);
 	}
-	
 
 	public String runCheck() {
 		return checker.doCheck();
@@ -150,7 +155,5 @@ public class JMOPPlayer {
 	public ObjectProperty<Playlist> currentPlaylistProperty() {
 		return currentPlaylistProperty;
 	}
-
-
 
 }

@@ -22,7 +22,7 @@ import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.DefaultLocator;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
@@ -32,14 +32,14 @@ public class JMOPPlayerBuilder {
 	public static JMOPPlayer create(GuiDescriptor gui, File root, Playlist playlistToPlayOrNot) throws IOException {
 		Configuration config = new Configuration();
 
-		PlaylistLoader loader = new DefaultPlaylistLoader();
+		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		InternetConnectionStatus connection = new InternetConnectionStatus();
 		AbstractRemoteSource remote = new YoutubeSource();
 
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
-		BaseLocalSource local = new DefaultLocalSource(fileSystem);
-		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
+		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
+		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(config, local);
 
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
 		BaseSourceConverter converter = new FFMPEGConverter(local);
@@ -54,7 +54,7 @@ public class JMOPPlayerBuilder {
 		ToPlaylistAppendingHandler trackPlayedHandler = new ToPlaylistAppendingHandler(playlister);
 		player.setHandler(trackPlayedHandler);
 
-		return new JMOPPlayer(remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister, preparer,
+		return new JMOPPlayer(config, remote, local, downloader, converter, gui, playlistToPlayOrNot, playlister, preparer,
 				saver);
 	}
 }
