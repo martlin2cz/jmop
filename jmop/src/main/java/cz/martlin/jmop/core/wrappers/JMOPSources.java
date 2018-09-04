@@ -64,6 +64,9 @@ public class JMOPSources {
 	public Playlist loadPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
+		
+		preparer.load(playlist.getRuntime().getNextToPlay()); //quite HACK
+		
 		return playlist;
 
 	}

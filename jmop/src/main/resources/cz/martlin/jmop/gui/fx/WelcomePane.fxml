@@ -8,10 +8,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
+<?import cz.martlin.jmop.gui.comp.DownloadPane?>
+
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
 	xmlns:fx="http://javafx.com/fxml/1" prefHeight="240.0" prefWidth="640.0"
-	minWidth="280.0" minHeight="160.0">
+	minWidth="280.0" minHeight="200.0">
 
 	<children>
 		<BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -36,8 +38,12 @@
 					- Start new bundle' to create and play new one.</Label>
 			</center>
 
+			<bottom>
+				<DownloadPane fx:id="dwnldPane" prefHeight="40.0" prefWidth="120.0" />
+			</bottom>
+
 			<opaqueInsets>
-				<Insets top="4.0" />
+				<Insets top="20.0" />
 			</opaqueInsets>
 			<padding>
 				<Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

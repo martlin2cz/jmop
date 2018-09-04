@@ -10,7 +10,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -39,7 +38,7 @@ public class HalfDynamicMenu extends Menu {
 	public ObservableList<MenuItem> getDynamicItems() {
 		return dynamicItems;
 	}
-	
+
 	public void setDynamicItems(List<MenuItem> items) {
 		dynamicItems.clear();
 		dynamicItems.addAll(items);
@@ -62,10 +61,8 @@ public class HalfDynamicMenu extends Menu {
 	private void initializeHandlers() {
 		staticItems.addListener((ListChangeListener<? super MenuItem>) (ch) -> staticItemsChanged(ch));
 		dynamicItems.addListener((ListChangeListener<? super MenuItem>) (ch) -> dynamicItemsChanged(ch));
-		
 
 	}
-
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,8 +90,12 @@ public class HalfDynamicMenu extends Menu {
 
 		items.clear();
 		items.addAll(staticItems);
-		items.addAll(dynamicItems);
-		// FIXME if empy add something
+
+		if (!dynamicItems.isEmpty()) {
+			items.addAll(dynamicItems);
+		} else {
+			items.add(createNoItemsItem());
+		}
 
 		// FIXME: such unnefective solution above
 		// while (change.next()) {
@@ -103,4 +104,11 @@ public class HalfDynamicMenu extends Menu {
 		// change.getRemoved().forEach((mi) -> items.remove(mi));
 		// }
 	}
+
+	private static MenuItem createNoItemsItem() {
+		MenuItem mi = new MenuItem("No items");
+		mi.setDisable(true);
+		return mi;
+	}
+
 }

@@ -21,8 +21,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
 public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP {
-//	@FXML
-//	JMOPMainMenu menu;
+	// @FXML
+	// JMOPMainMenu menu;
 
 	@FXML
 	private MenuItem miPlay;
@@ -77,18 +77,16 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 
 	///////////////////////////////////////////////////////////////////////////
 
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// we need to wait for the JMOP
 	}
 
-	
 	@Override
 	public void setupJMOP(JMOPPlayer jmop, CoreGuiDescriptor descriptor, GuiComplexActionsPerformer actions) {
 		this.descriptor = descriptor;
 		this.actions = actions;
-		
+
 		initializeBindings();
 	}
 
@@ -130,7 +128,7 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 
 	public void onTrackMenuShowing() {
 		List<Track> tracks = actions.listTracks();
-		addDynamicItems(menuTrack, tracks, (t) -> new MenuItem(t.getTitle()));
+		addDynamicItems(menuTrack, tracks, (t) -> trackMenuItem(t));
 
 	}
 
@@ -200,6 +198,15 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 		actions.addTrack();
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
+
+	private MenuItem trackMenuItem(Track track) {
+		String title = track.getTitle();
+		MenuItem mi = new MenuItem(title);
+
+		mi.setDisable(true); //TODO make it clickable
+
+		return mi;
+	}
 
 	private static <E> void addDynamicItems(HalfDynamicMenu menu, List<E> items, Function<E, MenuItem> mapper) {
 

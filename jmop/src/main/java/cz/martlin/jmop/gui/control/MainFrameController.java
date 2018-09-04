@@ -42,6 +42,7 @@ public class MainFrameController implements Initializable, RequiresJMOP {
 		initBindings();
 		
 		mainMenu.setupJMOP(jmop, descriptor, actions);
+		welcomePane.setupJMOP(jmop, descriptor, actions);
 		playerPane.setupJMOP(jmop, descriptor, actions);
 	}
 
