@@ -64,8 +64,8 @@ public class PlaylisterTest {
 	private JMOPPlaylisterWithGui createPlaylister() throws IOException {
 		File root = createRoot();
 		Configuration config = new Configuration();
-
-		AbstractRemoteSource remote = new YoutubeSource();
+		InternetConnectionStatus connection = new InternetConnectionStatus(config);
+		AbstractRemoteSource remote = new YoutubeSource(connection);
 
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
@@ -73,7 +73,9 @@ public class PlaylisterTest {
 		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+
+		
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(connection , local, remote);
 		downloader.specifyListener(listener);
 		
 		BaseSourceConverter converter = new FFMPEGConverter(local);
@@ -85,7 +87,6 @@ public class PlaylisterTest {
 		BetterPlaylistRuntime playlist = new BetterPlaylistRuntime(track);
 		BasePlayer player = new TestingPlayer(TrackFileFormat.WAV);
 
-		InternetConnectionStatus connection = new InternetConnectionStatus();
 		GuiDescriptor gui = null;
 		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(config, local);
 		

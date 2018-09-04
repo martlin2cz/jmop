@@ -6,18 +6,19 @@ import cz.martlin.jmop.core.config.Configuration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.player.TestingPlayer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
@@ -41,7 +42,8 @@ public class PreparerTaskTest extends Application {
 		final TrackFileFormat playerFormat = TrackFileFormat.OPUS;
 		
 		Configuration config = new Configuration();
-		AbstractRemoteSource remote = new YoutubeSource();
+		InternetConnectionStatus connection = new InternetConnectionStatus(config);
+		AbstractRemoteSource remote = new YoutubeSource(connection);
 
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		AbstractPlaylistLoader loader = null;
@@ -52,7 +54,7 @@ public class PreparerTaskTest extends Application {
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(connection, local, remote);
 		//BaseSourceDownloader downloader = new TestingDownloader(local, downloadFormat);
 		
 		Track track = bundle.createTrack(id, title, description, duration);

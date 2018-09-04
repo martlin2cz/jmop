@@ -12,6 +12,7 @@ import com.google.api.services.youtube.model.VideoListResponse;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import javafx.util.Duration;
 
@@ -21,8 +22,9 @@ public class YoutubeSource extends
 				YouTube.Search.List, SearchListResponse, //
 				YouTube.Search.List, SearchListResponse> {
 
-	public YoutubeSource() {
-		super();
+
+	public YoutubeSource(InternetConnectionStatus connection) {
+		super(connection);
 	}
 
 	@Override
@@ -99,7 +101,6 @@ public class YoutubeSource extends
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-
 	private Track convertVideoListResponse(Bundle bundle, VideoListResponse response) {
 		List<Video> results = response.getItems();
 		Video result = results.get(0);
@@ -122,16 +123,16 @@ public class YoutubeSource extends
 		String identifier = result.getId().getVideoId();
 		return identifier;
 	}
-	
+
 	private Track convertSearchListResponse(Bundle bundle, SearchListResponse response) throws JMOPSourceException {
 		List<SearchResult> results = response.getItems();
 		SearchResult result = results.get(0);
 		String identifier = searchResultToId(result);
-		
+
 		Track track = getTrack(bundle, identifier);
 		return track;
 	}
-	
+
 	@Deprecated
 	private Track _old_convertSearchListResponse(Bundle bundle, SearchListResponse response) {
 		List<SearchResult> results = response.getItems();
@@ -150,7 +151,5 @@ public class YoutubeSource extends
 
 		return bundle.createTrack(identifier, title, description, duration);
 	}
-
-
 
 }

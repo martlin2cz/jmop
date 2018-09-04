@@ -1,24 +1,29 @@
 package cz.martlin.jmop.core.misc;
 
+import java.time.Instant;
 import java.util.Calendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.martlin.jmop.core.config.Configuration;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
 public class InternetConnectionStatus {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
+
+	private final int timeout;
 	private final BooleanProperty offline;
 	private Calendar offlineSince;
 
-	public InternetConnectionStatus() {
+	public InternetConnectionStatus(Configuration config) {
+		this.timeout = config.getOfflineRetryTimeout();
 		this.offline = new SimpleBooleanProperty();
 	}
 
-	public BooleanProperty getOfflineProperty() {
+	public ReadOnlyBooleanProperty getOfflineProperty() {
 		return offline;
 	}
 
@@ -29,23 +34,33 @@ public class InternetConnectionStatus {
 
 	public void markOffline() {
 		LOG.info("The internet connection is offline");
-		
+
 		offline.set(true);
 		offlineSince = Calendar.getInstance();
 	}
 
 	private void checkOfflineTimeout() {
-		boolean is = isTimeOut();
+		boolean is = isOfflineTimeOut();
 		if (is) {
 			offline.set(false);
-			LOG.info("The internet connection is back online");
-			
+			LOG.info("The internet connection could be back online");
+
 		}
 	}
 
-	private boolean isTimeOut() {
-		// TODO is (current time - OFFLINE_TIMOUT) > offlineSince?
-		return false;
+	private boolean isOfflineTimeOut() {
+		if (offlineSince != null) {
+			return isOfflineMoreThanTimeout();
+		} else {
+			return true;
+		}
+	}
+
+	private boolean isOfflineMoreThanTimeout() {
+		Instant now = Instant.now();
+		Instant offlineAfterTimeout = offlineSince.toInstant().plusSeconds(timeout);
+
+		return offlineAfterTimeout.isBefore(now);
 	}
 
 }

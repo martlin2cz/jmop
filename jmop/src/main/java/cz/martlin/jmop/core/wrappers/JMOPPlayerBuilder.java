@@ -34,14 +34,14 @@ public class JMOPPlayerBuilder {
 
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		InternetConnectionStatus connection = new InternetConnectionStatus();
-		AbstractRemoteSource remote = new YoutubeSource();
+		InternetConnectionStatus connection = new InternetConnectionStatus(config);
+		AbstractRemoteSource remote = new YoutubeSource(connection);
 
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
 		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(config, local);
 
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(connection, local, remote);
 		BaseSourceConverter converter = new FFMPEGConverter(local);
 		
 		AbstractTrackFileLocator locator = new DefaultLocator(config);

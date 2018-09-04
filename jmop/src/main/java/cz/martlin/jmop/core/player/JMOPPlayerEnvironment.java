@@ -100,18 +100,18 @@ public class JMOPPlayerEnvironment {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public static JMOPPlayerEnvironment create(File rootDirectory, BasePlayer player) throws IOException {
-		AbstractRemoteSource remote = new YoutubeSource();
+		AbstractRemoteSource remote = new YoutubeSource(null);
 		BaseLocalSource local = createLocal(rootDirectory);
 
 		// TODO FIXME listener shall be task itself
 		ProgressListener listener = ((p) -> {}); 
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(null, local, remote);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 		BaseSourceConverter converter = new FFMPEGConverter(local);
 		Sources sources = new Sources(local, remote, downloader, converter);
 
-		InternetConnectionStatus connection = new InternetConnectionStatus();
+		InternetConnectionStatus connection = new InternetConnectionStatus(null);
 		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, null, connection, null);
 
 		return new JMOPPlayerEnvironment(playlister, local, remote);

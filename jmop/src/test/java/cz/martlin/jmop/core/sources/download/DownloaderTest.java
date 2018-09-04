@@ -7,6 +7,7 @@ import cz.martlin.jmop.core.config.Configuration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -33,7 +34,8 @@ public class DownloaderTest {
 		final SourceKind source = SourceKind.YOUTUBE;
 
 		Configuration config = new Configuration();
-		AbstractRemoteSource remote = new YoutubeSource();
+		InternetConnectionStatus connection = new InternetConnectionStatus(config);
+		AbstractRemoteSource remote = new YoutubeSource(connection);
 
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		AbstractPlaylistLoader loader = null;
@@ -43,7 +45,7 @@ public class DownloaderTest {
 		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 		
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(connection, local, remote);
 		//BaseSourceDownloader downloader = new TestingDownloader(sources);
 		downloader.specifyListener(listener);
 

@@ -12,4 +12,8 @@ public class Configuration {
 		return "all tracks";
 	}
 
+	public int getOfflineRetryTimeout() {
+		return 60;
+	}
+
 }

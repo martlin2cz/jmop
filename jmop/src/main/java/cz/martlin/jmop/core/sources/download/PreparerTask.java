@@ -16,7 +16,7 @@ import javafx.concurrent.Task;
 
 public class PreparerTask extends Task<Boolean> implements ProgressListener {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
+
 	private static final double THE_100_PERCENT = 100.0;
 
 	private final BaseLocalSource local;
@@ -82,15 +82,19 @@ public class PreparerTask extends Task<Boolean> implements ProgressListener {
 			updateMessage("Done.");
 			return true;
 		} catch (Exception e) {
-			// TODO exception
 			throw new JMOPSourceException(e);
 		}
 	}
 
 	private boolean checkAndDownload() throws Exception {
 		startSubTask("Downloading ...");
-		boolean exists = local.exists(track, downloadLocation, downloadFormat);
-		if (exists) {
+		boolean ready = existsSaved() && existsToPlay();
+		if (ready) {
+			return true;
+		}
+		
+		boolean existsDownloaded = existsDownloaded();
+		if (existsDownloaded) {
 			return true;
 		}
 
@@ -100,7 +104,7 @@ public class PreparerTask extends Task<Boolean> implements ProgressListener {
 
 	private boolean checkAndConvert() throws Exception {
 		startSubTask("Converting ...");
-		boolean exists = local.exists(track, saveLocation, saveFormat);
+		boolean exists = existsSaved();
 		if (exists) {
 			return true;
 		}
@@ -111,7 +115,7 @@ public class PreparerTask extends Task<Boolean> implements ProgressListener {
 
 	private boolean checkAndPrepare() throws Exception {
 		startSubTask("Preparing to play ...");
-		boolean exists = local.exists(track, playerLocation, playerFormat);
+		boolean exists = existsToPlay();
 		if (exists) {
 			return true;
 		}
@@ -119,7 +123,19 @@ public class PreparerTask extends Task<Boolean> implements ProgressListener {
 		boolean prepared = preparer.prepare(track, downloadFormat, downloadLocation, playerFormat, playerLocation);
 		return prepared;
 	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	private boolean existsDownloaded() throws JMOPSourceException {
+		return local.exists(track, downloadLocation, downloadFormat);
+	}
+
+	private boolean existsSaved() throws JMOPSourceException {
+		return local.exists(track, saveLocation, saveFormat);
+	}
+
+	private boolean existsToPlay() throws JMOPSourceException {
+		return local.exists(track, playerLocation, playerFormat);
+	}
 
 	private void startSubTask(String name) {
 		LOG.info(name + " track " + track.getTitle());

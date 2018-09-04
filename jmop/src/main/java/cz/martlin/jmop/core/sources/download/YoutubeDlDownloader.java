@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
+import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.download.YoutubeDlDownloader.DownloadData;
@@ -29,12 +30,14 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	private static final String COLUMNS_SEPARATOR_REGEX = " +";
 	private static final String PERCENT_REGEX = "\\d{1,3}\\.\\d{1}\\%";
 	private static final int RESULT_CODE_OK = 0;
-
+	
+	private final InternetConnectionStatus connection;
 	private final BaseLocalSource local;
 	private final AbstractRemoteSource remote;
 
-	public YoutubeDlDownloader(BaseLocalSource local, AbstractRemoteSource remote) {
+	public YoutubeDlDownloader(InternetConnectionStatus connection, BaseLocalSource local, AbstractRemoteSource remote) {
 		super();
+		this.connection = connection;
 		this.local = local;
 		this.remote = remote;
 	}
@@ -78,7 +81,11 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 
 	@Override
 	protected Boolean handleResult(int result, DownloadData data) throws Exception {
-		return (result == RESULT_CODE_OK);
+		boolean isOk = (result == RESULT_CODE_OK);
+		if (!isOk) {
+			connection.markOffline();
+		}
+		return isOk;
 	}
 	
 	
