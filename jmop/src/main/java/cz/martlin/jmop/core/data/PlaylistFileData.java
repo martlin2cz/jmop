@@ -52,6 +52,46 @@ public class PlaylistFileData {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bundleName == null) ? 0 : bundleName.hashCode());
+		result = prime * result + ((kind == null) ? 0 : kind.hashCode());
+		result = prime * result + ((playlistName == null) ? 0 : playlistName.hashCode());
+		result = prime * result + ((tracklist == null) ? 0 : tracklist.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PlaylistFileData other = (PlaylistFileData) obj;
+		if (bundleName == null) {
+			if (other.bundleName != null)
+				return false;
+		} else if (!bundleName.equals(other.bundleName))
+			return false;
+		if (kind != other.kind)
+			return false;
+		if (playlistName == null) {
+			if (other.playlistName != null)
+				return false;
+		} else if (!playlistName.equals(other.playlistName))
+			return false;
+		if (tracklist == null) {
+			if (other.tracklist != null)
+				return false;
+		} else if (!tracklist.equals(other.tracklist))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "PlaylistFileData [bundleName=" + bundleName + ", playlistName=" + playlistName + ", kind=" + kind
 				+ ", tracklist=" + tracklist + "]";
