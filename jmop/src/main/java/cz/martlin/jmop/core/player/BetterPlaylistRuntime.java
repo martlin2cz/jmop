@@ -4,7 +4,7 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.data.Tracklist;
-
+@Deprecated
 public class BetterPlaylistRuntime extends BasicPlaylistRuntime {
 
 	private Tracklist allTracks;

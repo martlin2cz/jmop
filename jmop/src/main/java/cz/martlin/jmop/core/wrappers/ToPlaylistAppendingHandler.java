@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.wrappers;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
 import cz.martlin.jmop.core.player.TrackPlayedHandler;
-
+@Deprecated
 public class ToPlaylistAppendingHandler implements TrackPlayedHandler {
 
 	// private final NextTrackPreparer preparer;

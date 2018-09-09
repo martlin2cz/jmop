@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.PlaylistFileData;
@@ -23,10 +23,10 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 public class DefaultLocalSource implements BaseLocalSource {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private final Configuration config;
+	private final BaseConfiguration config;
 	private final AbstractFileSystemAccessor fileSystem;
 
-	public DefaultLocalSource(Configuration config, AbstractFileSystemAccessor fileSystem) {
+	public DefaultLocalSource(BaseConfiguration config, AbstractFileSystemAccessor fileSystem) {
 		super();
 		this.config = config;
 		this.fileSystem = fileSystem;

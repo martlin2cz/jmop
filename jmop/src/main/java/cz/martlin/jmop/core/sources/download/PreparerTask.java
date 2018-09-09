@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.sources.download;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
@@ -13,11 +13,9 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import javafx.concurrent.Task;
-
+@Deprecated
 public class PreparerTask extends Task<Boolean> implements ProgressListener {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-
-	private static final double THE_100_PERCENT = 100.0;
 
 	private final BaseLocalSource local;
 	private final BaseSourceDownloader downloader;
@@ -33,7 +31,7 @@ public class PreparerTask extends Task<Boolean> implements ProgressListener {
 
 	private final Track track;
 
-	public PreparerTask(Configuration config, AbstractTrackFileLocator locator, BaseLocalSource local,
+	public PreparerTask(DefaultConfiguration config, AbstractTrackFileLocator locator, BaseLocalSource local,
 			BaseSourceDownloader downloader, BaseSourceConverter converter, BasePlayer player, Track track) {
 		super();
 		this.local = local;

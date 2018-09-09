@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.sources.local.location;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -9,7 +9,7 @@ public class DefaultLocator implements AbstractTrackFileLocator {
 
 	private final TrackFileFormat saveFormat;
 
-	public DefaultLocator(Configuration config) {
+	public DefaultLocator(BaseConfiguration config) {
 		super();
 		this.saveFormat = config.getSaveFormat();
 	}

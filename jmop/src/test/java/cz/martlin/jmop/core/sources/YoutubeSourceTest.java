@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.sources;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 public class YoutubeSourceTest {
 
 	public static void main(String[] args) throws JMOPSourceException {
-		Configuration config = new Configuration();
+		DefaultConfiguration config = new DefaultConfiguration();
 		InternetConnectionStatus connection = new InternetConnectionStatus(config);
 		YoutubeSource source = new YoutubeSource(connection);
 

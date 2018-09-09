@@ -1,18 +1,17 @@
 package cz.martlin.jmop.core.sources;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.WorksWithPlaylist;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 
 public class AutomaticSavesPerformer {
-	private final Configuration config; 
+	private final BaseConfiguration config; 
 	private final BaseLocalSource local;
 	private Playlist playlist;
 
-	public AutomaticSavesPerformer(Configuration config, BaseLocalSource local) {
+	public AutomaticSavesPerformer(BaseConfiguration config, BaseLocalSource local) {
 		super();
 		this.config = config;
 		this.local = local;

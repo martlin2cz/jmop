@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -63,7 +63,7 @@ public class PlaylisterTest {
 
 	private JMOPPlaylisterWithGui createPlaylister() throws IOException {
 		File root = createRoot();
-		Configuration config = new Configuration();
+		DefaultConfiguration config = new DefaultConfiguration();
 		InternetConnectionStatus connection = new InternetConnectionStatus(config);
 		AbstractRemoteSource remote = new YoutubeSource(connection);
 
@@ -91,13 +91,13 @@ public class PlaylisterTest {
 		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(config, local);
 		
 		AbstractTrackFileLocator locator = new PrimitiveLocator();
-		TrackPreparer preparer = new TrackPreparer(config, remote, local, locator, converter, downloader, player, saver,
+		XXX_TrackPreparer preparer = new XXX_TrackPreparer(config, remote, local, locator, converter, downloader, player, saver,
 				gui);
 
 		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, preparer , connection,saver);
 		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(playlister);
 		playlister.setPlaylist(playlist);
-		player.setHandler(handler);
+//		player.setHandler(handler);
 
 		System.out.println("Playlister ready!");
 

@@ -2,41 +2,34 @@ package cz.martlin.jmop.core.wrappers;
 
 import java.util.List;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.BaseConfiguration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
-import cz.martlin.jmop.core.player.TrackPreparer;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
+import cz.martlin.jmop.core.player.PlayerWrapper;
+import cz.martlin.jmop.core.playlister.Playlister;
+import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Duration;
 
 public class JMOPPlayer {
-	private final Configuration config;
+	private final BaseConfiguration config;
 	private final JMOPSources sources;
 	private final JMOPPlaying playing;
-	private final CoreGuiDescriptor descriptor;
-	private final JMOPChecker checker;
+	private final BaseJMOPEnvironmentChecker checker;
 	private final ObjectProperty<Playlist> currentPlaylistProperty;
 
-	public JMOPPlayer(Configuration config, AbstractRemoteSource remote, BaseLocalSource local,
-			BaseSourceDownloader downloader, BaseSourceConverter converter, GuiDescriptor gui,
-			Playlist playlistToPlayOrNot, JMOPPlaylisterWithGui playlister, TrackPreparer preparer,
-			AutomaticSavesPerformer saver) {
+	public JMOPPlayer(BaseConfiguration config, BaseLocalSource local, TrackPreparer preparer,
+			Playlister playlister, PlayerWrapper player, BaseJMOPEnvironmentChecker checker) {
 
 		this.config = config;
-		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, playlister, gui);
-		this.playing = new JMOPPlaying(playlister, saver, playlistToPlayOrNot);
-		this.descriptor = new CoreGuiDescriptor(this);
-		this.checker = new JMOPChecker(downloader, converter);
+		this.sources = new JMOPSources(local, preparer, playlister);
+		this.playing = new JMOPPlaying(playlister);
+		this.checker = checker;
 		this.currentPlaylistProperty = new SimpleObjectProperty<>();
 	}
 
@@ -48,26 +41,25 @@ public class JMOPPlayer {
 		return playing;
 	}
 
-	public CoreGuiDescriptor getDescriptor() {
-		return descriptor;
-	}
 
-	public Configuration getConfig() {
+	public BaseConfiguration getConfig() {
 		return config;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public Bundle getCurrentBundle() {
-		if (playing.getCurrentPlaylist() != null) {
-			return playing.getCurrentPlaylist().getBundle();
-		} else {
-			return null;
-		}
+//		if (playing.getCurrentPlaylist() != null) {
+//			return playing.getCurrentPlaylist().getBundle();
+//		} else {
+//			return null;
+//		}
+		return currentPlaylistProperty.get().getBundle();
 	}
 
 	public Playlist getCurrentPlaylist() {
-		return playing.getCurrentPlaylist();
+//		return playing.getCurrentPlaylist();
+		return currentPlaylistProperty.get();
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,14 +90,12 @@ public class JMOPPlayer {
 
 	public void loadAndAddTrack(String querySeed) throws JMOPSourceException {
 		Bundle bundle = getCurrentBundle();
-		Track track = sources.queryAndLoad(bundle, querySeed);
-		playing.addToPlaylist(track);
+		sources.queryAndLoad(bundle, querySeed);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public void startPlaying() {
+	public void startPlaying() throws JMOPSourceException {
 		playing.startPlaying();
-		// TODO sources -> check and load next
 	}
 
 	public void stopPlaying() {
@@ -120,11 +110,11 @@ public class JMOPPlayer {
 		playing.resumePlaying();
 	}
 
-	public void toNext() {
+	public void toNext() throws JMOPSourceException {
 		playing.toNext();
 	}
 
-	public void toPrevious() {
+	public void toPrevious() throws JMOPSourceException {
 		playing.toPrevious();
 	}
 
@@ -146,14 +136,15 @@ public class JMOPPlayer {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	public String currentPlaylistAsString() {
-		Playlist playlist = playing.getCurrentPlaylist();
-		return playlist.toHumanString();
-	}
+//	@Deprecated
+//	public String currentPlaylistAsString() {
+//		Playlist playlist = playing.getCurrentPlaylist();
+//		return playlist.toHumanString();
+//	}
 
 	public ObjectProperty<Playlist> currentPlaylistProperty() {
 		return currentPlaylistProperty;
 	}
+
 
 }

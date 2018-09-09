@@ -9,10 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.download.TestingDownloader;
@@ -59,7 +60,7 @@ public class JavaFXMediaPlayerTest {
 				// TrackPlayedHandler handler = null;
 				// player.setHandler(handler);
 
-				player.startPlayling(track);
+				player.startPlaying(track);
 			} catch (IOException e) {
 				assumeNoException(e);
 			} catch (Exception e) {
@@ -97,7 +98,7 @@ public class JavaFXMediaPlayerTest {
 	}
 
 	private BaseLocalSource prepareLocal() throws IOException {
-		Configuration config = new Configuration();
+		DefaultConfiguration config = new DefaultConfiguration();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		File root = new File("/tmp/jmop-gui/");

@@ -6,7 +6,7 @@ import java.util.Calendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.BaseConfiguration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -18,7 +18,7 @@ public class InternetConnectionStatus {
 	private final BooleanProperty offline;
 	private Calendar offlineSince;
 
-	public InternetConnectionStatus(Configuration config) {
+	public InternetConnectionStatus(BaseConfiguration config) {
 		this.timeout = config.getOfflineRetryTimeout();
 		this.offline = new SimpleBooleanProperty();
 	}

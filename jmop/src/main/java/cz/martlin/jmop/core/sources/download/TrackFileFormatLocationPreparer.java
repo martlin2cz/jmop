@@ -7,6 +7,7 @@ import com.google.common.io.Files;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
@@ -20,6 +21,12 @@ public class TrackFileFormatLocationPreparer {
 		this.local = local;
 		this.converter = converter;
 	}
+
+	public void specifyListener(ProgressListener progressListener) {
+		this.converter.specifyListener(progressListener);
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	public boolean prepare(Track track, TrackFileFormat fromFormat, TrackFileLocation fromLocation,
 			TrackFileFormat toFormat, TrackFileLocation toLocation) throws Exception {
@@ -42,8 +49,8 @@ public class TrackFileFormatLocationPreparer {
 		if (!equalFormat && !equalLocation) {
 			return convertWithCopy(track, fromLocation, toLocation, fromFormat, toFormat);
 		}
-		
-		return false; 
+
+		return false;
 	}
 
 	private boolean justCopy(Track track, //
@@ -73,4 +80,5 @@ public class TrackFileFormatLocationPreparer {
 		return converter.convert(track, fromLocation, fromFormat, toLocation, toFormat);
 
 	}
+
 }

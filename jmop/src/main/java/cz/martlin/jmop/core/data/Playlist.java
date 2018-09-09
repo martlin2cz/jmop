@@ -1,10 +1,12 @@
 package cz.martlin.jmop.core.data;
 
+import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 
-public class Playlist {
+public class Playlist extends ObservableObject<Playlist> {
 	private final Bundle bundle;
 	private String name;
+	@Deprecated
 	private final BetterPlaylistRuntime runtime;
 
 	public Playlist(Bundle bundle, String name, Tracklist tracks) {
@@ -15,9 +17,17 @@ public class Playlist {
 	}
 
 	public Playlist(Bundle bundle, String name, BetterPlaylistRuntime runtime) {
+		super();
 		this.bundle = bundle;
 		this.name = name;
 		this.runtime = runtime;
+	}
+
+	public Playlist(Bundle bundle, String name) {
+		super();
+		this.bundle = bundle;
+		this.name = name;
+		this.runtime = new BetterPlaylistRuntime();
 	}
 
 	public Bundle getBundle() {
@@ -30,8 +40,10 @@ public class Playlist {
 
 	public void changeName(String name) {
 		this.name = name;
+		fireValueChangedEvent();
 	}
 	
+	@Deprecated
 	public BetterPlaylistRuntime getRuntime() {
 		return runtime;
 	}

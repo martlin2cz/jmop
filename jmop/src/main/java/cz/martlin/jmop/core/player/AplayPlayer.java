@@ -15,8 +15,6 @@ import cz.martlin.jmop.core.sources.download.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Duration;
 
 public class AplayPlayer extends AbstractPlayer {
@@ -32,15 +30,16 @@ public class AplayPlayer extends AbstractPlayer {
 	}
 
 	@Override
-	public ReadOnlyObjectProperty<Duration> currentTimeProperty() {
-		return new SimpleObjectProperty<Duration>(new Duration(0));
+	public Duration currentTime() {
+		return new Duration(0);
 	}
+	
 	
 	@Override
 	protected void doStartPlaying(Track track, File file) {
 		AplayProcess process = new AplayProcess();
 
-		runProcessInBackround(process, track, file, getHandler());
+		runProcessInBackround(process, track, file);
 		
 		this.process = process;
 	}
@@ -60,7 +59,7 @@ public class AplayPlayer extends AbstractPlayer {
 	protected void doResumePlaying() {
 		LOG.warn("Resume not supported, will play from begin");
 		try {
-			startPlayling(currentTrack);
+			startPlaying(currentTrack);
 		} catch (JMOPSourceException e) {
 			// TODO error report
 			e.printStackTrace();
@@ -72,7 +71,7 @@ public class AplayPlayer extends AbstractPlayer {
 		LOG.warn("Seek not supported, will ignore");
 	}
 
-	private void runProcessInBackround(AplayProcess process, Track track, File file, TrackPlayedHandler handler) {
+	private void runProcessInBackround(AplayProcess process, Track track, File file) {
 		Runnable run = () -> {
 			try {
 				process.run(file);
@@ -80,9 +79,7 @@ public class AplayPlayer extends AbstractPlayer {
 				e.printStackTrace();
 			}
 
-			if (handler != null) {
-				handler.trackPlayed(track);
-			}
+			trackFinished();
 		};
 
 		Thread thread = new Thread(run, "AplayPlayerThread");

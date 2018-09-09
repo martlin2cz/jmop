@@ -3,11 +3,11 @@ package cz.martlin.jmop.core.wrappers;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 
-public class JMOPChecker {
+public class DefaultJMOPEnvironmentChecker implements BaseJMOPEnvironmentChecker {
 	private final BaseSourceDownloader downloader;
 	private final BaseSourceConverter converter;
 
-	public JMOPChecker(BaseSourceDownloader downloader, BaseSourceConverter converter) {
+	public DefaultJMOPEnvironmentChecker(BaseSourceDownloader downloader, BaseSourceConverter converter) {
 		super();
 		this.downloader = downloader;
 		this.converter = converter;
@@ -15,6 +15,8 @@ public class JMOPChecker {
 
 	//TODO check current bundle/playlist/track/...
 	
+
+	@Override
 	public String doCheck() {
 		String error = null;
 

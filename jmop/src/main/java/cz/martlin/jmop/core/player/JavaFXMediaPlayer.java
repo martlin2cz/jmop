@@ -1,35 +1,33 @@
-package cz.martlin.jmop.gui.util;
+package cz.martlin.jmop.core.player;
 
 import java.io.File;
 import java.net.URI;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.player.AbstractPlayer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class JavaFXMediaPlayer extends AbstractPlayer {
 	public static final TrackFileFormat PLAYER_FORMAT = TrackFileFormat.WAV;
-	private final ObjectProperty<Duration> currentTimeProperty;
 
 	private MediaPlayer mediaPlayer;
+	private Duration currentTime;
+
+	private Runnable endListener;
+	private ChangeListener<? super Duration> timeListener;
 
 	public JavaFXMediaPlayer(BaseLocalSource local, AbstractTrackFileLocator locator) {
 		super(local, locator, PLAYER_FORMAT);
-
-		this.currentTimeProperty = new SimpleObjectProperty<>(new Duration(0.0));
 	}
 
 	@Override
-	public ReadOnlyObjectProperty<Duration> currentTimeProperty() {
-		return currentTimeProperty;
+	public Duration currentTime() {
+		return currentTime;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -41,18 +39,24 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 
 		Media media = new Media(path);
 		mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.setOnEndOfMedia(() -> onPlayed(track));
-		currentTimeProperty.bind(mediaPlayer.currentTimeProperty());
+
+		endListener = () -> trackFinished();
+		mediaPlayer.setOnEndOfMedia(endListener);
+
+		timeListener = (observable, oldValue, newValue) -> timeChanged(newValue);
+		mediaPlayer.currentTimeProperty().addListener(timeListener);
 
 		mediaPlayer.play();
 	}
 
 	@Override
 	protected void doStopPlaying() {
-		currentTimeProperty.unbind();
+		mediaPlayer.setOnEndOfMedia(null);
+		mediaPlayer.currentTimeProperty().removeListener(timeListener);
 
 		mediaPlayer.stop();
 		mediaPlayer = null;
+		currentTime = null;
 	}
 
 	@Override
@@ -69,6 +73,12 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 	protected void doSeek(Duration to) {
 		mediaPlayer.seek(to);
 
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	private void timeChanged(Duration to) {
+		this.currentTime = to;
 	}
 
 }

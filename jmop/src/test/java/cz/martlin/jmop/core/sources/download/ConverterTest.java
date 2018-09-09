@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.sources.download;
 import java.io.File;
 import java.io.IOException;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -30,7 +30,7 @@ public class ConverterTest {
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
 		
-		Configuration config = new Configuration();
+		DefaultConfiguration config = new DefaultConfiguration();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		AbstractPlaylistLoader loader = null;
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);

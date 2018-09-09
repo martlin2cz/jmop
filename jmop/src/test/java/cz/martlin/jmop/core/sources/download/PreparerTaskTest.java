@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.sources.download;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -41,7 +41,7 @@ public class PreparerTaskTest extends Application {
 		final SourceKind source = SourceKind.YOUTUBE;
 		final TrackFileFormat playerFormat = TrackFileFormat.OPUS;
 		
-		Configuration config = new Configuration();
+		DefaultConfiguration config = new DefaultConfiguration();
 		InternetConnectionStatus connection = new InternetConnectionStatus(config);
 		AbstractRemoteSource remote = new YoutubeSource(connection);
 

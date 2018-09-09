@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.player;
 
 import java.util.function.Consumer;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -19,8 +19,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class TrackPreparer {
-	private final Configuration config;
+@Deprecated
+public class XXX_TrackPreparer {
+	private final DefaultConfiguration config;
 	private final AbstractRemoteSource remote;
 	private final BaseLocalSource local;
 	private final AbstractTrackFileLocator locator;
@@ -37,7 +38,7 @@ public class TrackPreparer {
 	
 
 
-	public TrackPreparer(Configuration config, AbstractRemoteSource remote, BaseLocalSource local, AbstractTrackFileLocator locator, BaseSourceConverter converter,
+	public XXX_TrackPreparer(DefaultConfiguration config, AbstractRemoteSource remote, BaseLocalSource local, AbstractTrackFileLocator locator, BaseSourceConverter converter,
 			BaseSourceDownloader downloader, BasePlayer player, AutomaticSavesPerformer saver, GuiDescriptor gui) {
 		super();
 		this.config = config;

@@ -9,7 +9,7 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.util.Duration;
-
+@Deprecated
 public class CoreGuiDescriptor {
 	private final JMOPPlayer jmop;
 
@@ -48,7 +48,8 @@ public class CoreGuiDescriptor {
 	
 	
 	public ReadOnlyObjectProperty<Duration> currentTimeProperty() {
-		return jmop.getPlaying().getPlaylister().getPlayer().currentTimeProperty();
+		return null;
+//		return jmop.getPlaying().getPlaylister().getPlayer().currentTimeProperty();
 	}
 
 	@Deprecated

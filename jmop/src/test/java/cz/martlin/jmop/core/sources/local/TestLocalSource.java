@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.sources.local;
 import java.io.File;
 import java.io.IOException;
 
-import cz.martlin.jmop.core.config.Configuration;
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Tracklist;
@@ -15,7 +15,7 @@ public class TestLocalSource {
 	public static void main(String[] args) throws IOException, JMOPSourceException {
 		//create local
 		final File rootDir = File.createTempFile("xxx", "yyy").getParentFile(); //hehe
-		Configuration config = new Configuration();
+		DefaultConfiguration config = new DefaultConfiguration();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);

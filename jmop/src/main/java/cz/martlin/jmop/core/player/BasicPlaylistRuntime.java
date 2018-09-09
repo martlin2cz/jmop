@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 import cz.martlin.jmop.core.data.Track;
-
+@Deprecated
 public class BasicPlaylistRuntime {
 
 	private final Stack<Track> played;
