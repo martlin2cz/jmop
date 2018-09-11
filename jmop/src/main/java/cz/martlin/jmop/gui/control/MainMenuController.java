@@ -82,22 +82,22 @@ public class MainMenuController implements Initializable {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	private void initializeBindings(JMOPPlayer jmop) {
-		final BooleanBinding hasNoPlaylist = jmop.getDescriptor().hasActiveBundleAndPlaylistProperty().not();
+		final BooleanBinding hasNoPlaylist = jmop.getData().hasActiveBundleAndPlaylistProperty().not();
 
-		miStop.disableProperty().bind(jmop.getDescriptor().stoppedProperty().or(hasNoPlaylist));
-		miPlay.disableProperty().bind(jmop.getDescriptor().stoppedProperty().not().or(hasNoPlaylist));
+		miStop.disableProperty().bind(jmop.getData().stoppedProperty().or(hasNoPlaylist));
+		miPlay.disableProperty().bind(jmop.getData().stoppedProperty().not().or(hasNoPlaylist));
 
 		miPause.disableProperty().bind( //
-				jmop.getDescriptor().pausedProperty() //
-						.or(jmop.getDescriptor().stoppedProperty()) //
+				jmop.getData().pausedProperty() //
+						.or(jmop.getData().stoppedProperty()) //
 						.or(hasNoPlaylist));
 		miResume.disableProperty().bind( //
-				jmop.getDescriptor().pausedProperty().not() //
-						.or(jmop.getDescriptor().stoppedProperty()) //
+				jmop.getData().pausedProperty().not() //
+						.or(jmop.getData().stoppedProperty()) //
 						.or(hasNoPlaylist));
 
-		miPrevious.disableProperty().bind(hasNoPlaylist.or(jmop.getDescriptor().hasPreviousProperty().not()));
-		miNext.disableProperty().bind(hasNoPlaylist.or(jmop.getDescriptor().hasNextProperty().not()));
+		miPrevious.disableProperty().bind(hasNoPlaylist.or(jmop.getData().hasPreviousProperty().not()));
+		miNext.disableProperty().bind(hasNoPlaylist.or(jmop.getData().hasNextProperty().not()));
 
 		menuPlaylist.disableProperty().bind(hasNoPlaylist);
 		menuTrack.disableProperty().bind(hasNoPlaylist);

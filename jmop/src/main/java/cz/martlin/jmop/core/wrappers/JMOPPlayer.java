@@ -17,6 +17,7 @@ public class JMOPPlayer {
 	private final JMOPSources sources;
 	private final JMOPPlaying playing;
 	private final BaseJMOPEnvironmentChecker checker;
+	private final JMOPData data;
 
 	public JMOPPlayer(BaseConfiguration config, PlayerEngine engine, LocalSourceWrapper local, TrackPreparer preparer,
 			BaseJMOPEnvironmentChecker checker) {
@@ -24,6 +25,7 @@ public class JMOPPlayer {
 		this.sources = new JMOPSources(local, preparer);
 		this.playing = new JMOPPlaying(engine);
 		this.checker = checker;
+		this.data = new JMOPData(this);
 	}
 
 	protected JMOPSources getSources() {
@@ -38,6 +40,10 @@ public class JMOPPlayer {
 		return config;
 	}
 
+	public JMOPData getData() {
+		return data;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void startNewBundle(SourceKind kind, String bundleName, String querySeed) throws JMOPSourceException {

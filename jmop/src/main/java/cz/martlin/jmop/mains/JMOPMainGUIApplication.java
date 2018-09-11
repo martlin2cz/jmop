@@ -2,7 +2,6 @@ package cz.martlin.jmop.mains;
 
 import java.io.IOException;
 
-import cz.martlin.jmop.core.wrappers.CoreGuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.MainFrameController;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
@@ -48,11 +47,10 @@ public class JMOPMainGUIApplication extends Application {
 	}
 
 	private void initializeController(MainFrameController controller, Scene scene) {
-		CoreGuiDescriptor descriptor = jmop.getDescriptor();
 		GuiComplexActionsPerformer actions = new GuiComplexActionsPerformer(jmop);
 		actions.specifyScene(scene);
 
-		controller.setupJMOP(jmop, descriptor, actions);
+		controller.setupJMOP(jmop, actions);
 	}
 
 	private static void beforeFX() {

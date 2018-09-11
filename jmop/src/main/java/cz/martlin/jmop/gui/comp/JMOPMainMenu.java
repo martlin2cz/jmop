@@ -8,7 +8,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.wrappers.CoreGuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.RequiresJMOP;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
@@ -54,7 +53,7 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	@FXML
 	private MenuItem miAppendCustomTrack;
 
-	private CoreGuiDescriptor descriptor;
+	private JMOPPlayer jmop;
 	private GuiComplexActionsPerformer actions;
 
 	public JMOPMainMenu() throws IOException {
@@ -83,8 +82,8 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	}
 
 	@Override
-	public void setupJMOP(JMOPPlayer jmop, CoreGuiDescriptor descriptor, GuiComplexActionsPerformer actions) {
-		this.descriptor = descriptor;
+	public void setupJMOP(JMOPPlayer jmop, GuiComplexActionsPerformer actions) {
+		this.jmop = jmop;
 		this.actions = actions;
 
 		initializeBindings();
@@ -93,22 +92,22 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	private void initializeBindings() {
-		final BooleanBinding hasNoPlaylist = descriptor.hasActiveBundleAndPlaylistProperty().not();
+		final BooleanBinding hasNoPlaylist = jmop.getData().hasActiveBundleAndPlaylistProperty().not();
 
-		miStop.disableProperty().bind(descriptor.stoppedProperty().or(hasNoPlaylist));
-		miPlay.disableProperty().bind(descriptor.stoppedProperty().not().or(hasNoPlaylist));
+		miStop.disableProperty().bind(jmop.getData().stoppedProperty().or(hasNoPlaylist));
+		miPlay.disableProperty().bind(jmop.getData().stoppedProperty().not().or(hasNoPlaylist));
 
 		miPause.disableProperty().bind( //
-				descriptor.pausedProperty() //
-						.or(descriptor.stoppedProperty()) //
+				jmop.getData().pausedProperty() //
+						.or(jmop.getData().stoppedProperty()) //
 						.or(hasNoPlaylist));
 		miResume.disableProperty().bind( //
-				descriptor.pausedProperty().not() //
-						.or(descriptor.stoppedProperty()) //
+				jmop.getData().pausedProperty().not() //
+						.or(jmop.getData().stoppedProperty()) //
 						.or(hasNoPlaylist));
 
-		miPrevious.disableProperty().bind(hasNoPlaylist.or(descriptor.hasPreviousProperty().not()));
-		miNext.disableProperty().bind(hasNoPlaylist.or(descriptor.hasNextProperty().not()));
+		miPrevious.disableProperty().bind(hasNoPlaylist.or(jmop.getData().hasPreviousProperty().not()));
+		miNext.disableProperty().bind(hasNoPlaylist.or(jmop.getData().hasNextProperty().not()));
 
 		menuPlaylist.disableProperty().bind(hasNoPlaylist);
 		menuTrack.disableProperty().bind(hasNoPlaylist);

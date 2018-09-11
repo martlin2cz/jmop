@@ -42,11 +42,7 @@ public class GuiComplexActionsPerformer {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public void showPlaylist() {
-		String playlistText = jmop.currentPlaylistAsString();
-		showInfo("Current playlist", "This is currently played playlist", playlistText);
 
-	}
 
 	public void startNewBundle() {
 		runInBackgroundWithDialog(() -> {
@@ -90,7 +86,7 @@ public class GuiComplexActionsPerformer {
 
 	public void startPlaylist(String playlistName) {
 		runAndHandleError(() -> {
-			String bundleName = jmop.getCurrentBundle().getName();
+			String bundleName = jmop.getData().playlistProperty().get().getBundle().getName();
 			jmop.startPlaylist(bundleName, playlistName);
 			return null;
 		});
@@ -108,7 +104,7 @@ public class GuiComplexActionsPerformer {
 
 	public void savePlaylist() {
 		runInBackgroundWithDialog(() -> {
-			String currentPlaylistName = jmop.getCurrentPlaylist().getName();
+			String currentPlaylistName = jmop.getData().playlistProperty().get().getName();
 			SavePlaylistDialog dial = new SavePlaylistDialog(currentPlaylistName);
 			return dial;
 		}, (data) -> {
@@ -179,8 +175,8 @@ public class GuiComplexActionsPerformer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void exit() {
-		if (jmop.getDescriptor().hasActiveBundleAndPlaylistProperty().get() //
-				&& jmop.getDescriptor().currentTrackProperty().isNotNull().get()) {
+		if (jmop.getData().hasActiveBundleAndPlaylistProperty().get() //
+				&& jmop.getData().currentTrackProperty().isNotNull().get()) {
 			jmop.stopPlaying();
 		}
 		System.exit(0);
@@ -227,7 +223,7 @@ public class GuiComplexActionsPerformer {
 
 	public List<String> listPlaylists() {
 		return runAndHandleError(() -> {
-			Bundle bundle = jmop.getCurrentBundle();
+			Bundle bundle = jmop.getData().playlistProperty().get().getBundle();
 			if (bundle == null) {
 				return Collections.emptyList();
 			}
@@ -237,7 +233,7 @@ public class GuiComplexActionsPerformer {
 
 	public List<Track> listTracks() {
 		return runAndHandleError(() -> {
-			Playlist playlist = jmop.getCurrentPlaylist();
+			Playlist playlist = jmop.getData().playlistProperty().get();
 			if (playlist == null) {
 				return Collections.emptyList();
 			}

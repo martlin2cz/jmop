@@ -7,29 +7,53 @@ import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ObservableValueProperty;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 
 public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	private final Playlister playlister;
-	// private final ObservableValueProperty<PlaylistRuntime> runtimeProperty;
 	private final ObservableValueProperty<Playlist> playlistProperty;
+	private final BooleanProperty hasPreviousProperty;
+	private final BooleanProperty hasNextProperty;
+	private final ObjectProperty<Track> previousTrackProperty;
+	private final ObjectProperty<Track> nextTrackProperty;
+
 	private ChangeListener<? super PlaylistRuntime> runtimeListener;
 
 	public PlaylisterWrapper(Playlister playlister) {
 		this.playlister = playlister;
 
-		// this.runtimeProperty = new ObservableValueProperty<>();
 		this.playlistProperty = new ObservableValueProperty<>();
+		this.hasPreviousProperty = new SimpleBooleanProperty();
+		this.hasNextProperty = new SimpleBooleanProperty();
+		this.previousTrackProperty = new SimpleObjectProperty<>();
+		this.nextTrackProperty = new SimpleObjectProperty<>();
 
 		initBindings();
 	}
 
-	//
-	// public ObservableValueProperty<PlaylistRuntime> runtimeProperty() {
-	// return runtimeProperty;
-	// }
 	public ObservableValueProperty<Playlist> playlistProperty() {
 		return playlistProperty;
+	}
+
+	public ReadOnlyBooleanProperty hasPreviousProperty() {
+		return hasPreviousProperty;
+	}
+
+	public ReadOnlyBooleanProperty hasNextProperty() {
+		return hasNextProperty;
+	}
+
+	public ObjectProperty<Track> previousTrackProperty() {
+		return previousTrackProperty;
+	}
+
+	public ObjectProperty<Track> nextTrackProperty() {
+		return nextTrackProperty;
 	}
 
 	@Override
@@ -47,6 +71,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		runtime.addListener(runtimeListener);
 
 		playlistProperty.set(playlist);
+		updateNextAndPreviousProperties(runtime);
 	}
 
 	public void stopPlayingPlaylist(Playlist playlist) {
@@ -55,6 +80,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 
 		playlister.stopPlayingPlaylist(playlist);
 		playlistProperty.set(null);
+		updateNextAndPreviousProperties(null);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -96,6 +122,29 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 
 		playlist.setTracks(tracks);
 		playlist.setCurrentTrackIndex(currentIndex);
+
+		updateNextAndPreviousProperties(runtime);
+	}
+
+	private void updateNextAndPreviousProperties(PlaylistRuntime runtime) {
+		if (runtime == null) {
+			hasPreviousProperty.set(false);
+			hasNextProperty.set(false);
+			previousTrackProperty.set(null);
+			nextTrackProperty.set(null);
+		} else {
+			boolean hasPrev = runtime.hasPlayed();
+			hasPreviousProperty.set(hasPrev);
+
+			boolean hasNext = runtime.hasNextToPlay();
+			hasNextProperty.set(hasNext);
+			
+			Track previous = runtime.lastPlayed();
+			previousTrackProperty.set(previous);
+			
+			Track next = runtime.nextToBePlayed();
+			nextTrackProperty.set(next);
+		}
 	}
 
 }

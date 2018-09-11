@@ -88,7 +88,7 @@ public class JMOPPlayerEnvironment {
 	public void renameCurrentPlaylist(String newName) throws JMOPSourceException {
 		LOG.info("Renaming current playlist to " + newName);
 		
-		currentPlaylist.changeName(newName);
+		//currentPlaylist.changeName(newName);
 		local.savePlaylist(currentBundle, currentPlaylist);
 	}
 

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import cz.martlin.jmop.core.wrappers.CoreGuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.RequiresJMOP;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
@@ -20,7 +19,7 @@ public class WelcomePane extends VBox implements Initializable, RequiresJMOP {
 	@FXML
 	private DownloadPane dwnldPane;
 
-	private CoreGuiDescriptor descriptor;
+	private JMOPPlayer jmop;
 
 	public WelcomePane() throws IOException {
 		initialize();
@@ -46,14 +45,14 @@ public class WelcomePane extends VBox implements Initializable, RequiresJMOP {
 	///////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void setupJMOP(JMOPPlayer jmop, CoreGuiDescriptor descriptor, GuiComplexActionsPerformer actions) {
-		this.descriptor = descriptor;
+	public void setupJMOP(JMOPPlayer jmop, GuiComplexActionsPerformer actions) {
+		this.jmop = jmop;
 
 		initBindings();
 	}
 
 	private void initBindings() {
-		Bindings.bindContent(dwnldPane.tasksProperty(), descriptor.currentDownloadTasksProperty());
+		Bindings.bindContent(dwnldPane.tasksProperty(), jmop.getData().currentDownloadTasksProperty());
 
 		this.visibleProperty().addListener((observable, oldVal, newVal) -> onVisibilityChanged(newVal));
 
@@ -61,7 +60,7 @@ public class WelcomePane extends VBox implements Initializable, RequiresJMOP {
 
 	private void onVisibilityChanged(boolean newVisible) {
 		if (!newVisible) {
-			Bindings.unbindContent(dwnldPane.tasksProperty(), descriptor.currentDownloadTasksProperty());
+			Bindings.unbindContent(dwnldPane.tasksProperty(), jmop.getData().currentDownloadTasksProperty());
 		}
 	}
 }

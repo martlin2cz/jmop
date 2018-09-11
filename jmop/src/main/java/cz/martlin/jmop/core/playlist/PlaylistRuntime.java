@@ -64,6 +64,10 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	public Track nextToBePlayed() {
 		return remaining.peek();
 	}
+	
+	public Track lastWasPlayed() {
+		return played.peek();
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 

@@ -3,7 +3,6 @@ package cz.martlin.jmop.gui.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import cz.martlin.jmop.core.wrappers.CoreGuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.comp.JMOPMainMenu;
 import cz.martlin.jmop.gui.comp.PlayerPane;
@@ -21,7 +20,7 @@ public class MainFrameController implements Initializable, RequiresJMOP {
 	@FXML
 	private WelcomePane welcomePane;
 
-	private CoreGuiDescriptor descriptor;
+	private JMOPPlayer jmop;
 	private GuiComplexActionsPerformer actions;
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -35,22 +34,22 @@ public class MainFrameController implements Initializable, RequiresJMOP {
 	}
 	
 	@Override
-	public void setupJMOP(JMOPPlayer jmop, CoreGuiDescriptor descriptor, GuiComplexActionsPerformer actions) {
-		this.descriptor = descriptor;
+	public void setupJMOP(JMOPPlayer jmop, GuiComplexActionsPerformer actions) {
+		this.jmop = jmop;
 		this.actions = actions;
 
 		initBindings();
 		
-		mainMenu.setupJMOP(jmop, descriptor, actions);
-		welcomePane.setupJMOP(jmop, descriptor, actions);
-		playerPane.setupJMOP(jmop, descriptor, actions);
+		mainMenu.setupJMOP(jmop, actions);
+		welcomePane.setupJMOP(jmop, actions);
+		playerPane.setupJMOP(jmop, actions);
 	}
 
 
 
 	private void initBindings() {
-		playerPane.visibleProperty().bind(descriptor.hasActiveBundleAndPlaylistProperty());
-		welcomePane.visibleProperty().bind(descriptor.hasActiveBundleAndPlaylistProperty().not());
+		playerPane.visibleProperty().bind(jmop.getData().hasActiveBundleAndPlaylistProperty());
+		welcomePane.visibleProperty().bind(jmop.getData().hasActiveBundleAndPlaylistProperty().not());
 		
 //		descriptor.isPreparpingProperty().addListener((observable, oldVal, newVal) -> preparingChanged(newVal));
 	}
