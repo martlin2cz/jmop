@@ -3,67 +3,69 @@ package cz.martlin.jmop.core.wrappers;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.PlayerWrapper;
-import cz.martlin.jmop.core.playlister.Playlister;
-import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
+import cz.martlin.jmop.core.playlister.PlayerEngine;
 import javafx.util.Duration;
 
 public class JMOPPlaying {
-	private final Playlister playlister;
+	private final PlayerEngine engine;
+
 	private Playlist currentPlaylist;
 
-	public JMOPPlaying(Playlister playlister) {
+	public JMOPPlaying(PlayerEngine engine) {
 		super();
-		this.playlister = playlister;
+		this.engine = engine;
 
 	}
-	
-	protected Playlister getPlaylister() {
-		return playlister;
+
+	protected PlayerEngine getEngine() {
+		return engine;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void startPlayingPlaylist(Playlist playlist) throws JMOPSourceException {
-		playlister.stopPlayingPlaylist(currentPlaylist);
+		engine.stopPlayingPlaylist(currentPlaylist);
 
-		playlister.startPlayingPlaylist(playlist);
+		engine.startPlayingPlaylist(playlist);
 
 		startPlaying();
 	}
 
-	public void addToPlaylist(Track track) {
-		playlister.add(track);
+	public void stopPlayingPlaylist(Playlist currentPlaylist) {
+		engine.stopPlayingPlaylist(currentPlaylist);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	public void startPlaying() throws JMOPSourceException {
-		playlister.playNext();
+		engine.playNext();
 	}
 
 	public void stopPlaying() {
-		playlister.stop();
+		engine.stop();
 	}
 
 	public void pausePlaying() {
-		playlister.pause();
+		engine.pause();
 	}
 
 	public void resumePlaying() {
-		playlister.resume();
+		engine.resume();
 	}
 
 	public void toNext() throws JMOPSourceException {
-		playlister.toNext();
-
+		engine.toNext();
 	}
 
 	public void toPrevious() throws JMOPSourceException {
-		playlister.toPrevious();
+		engine.toPrevious();
 	}
 
 	public void seek(Duration to) {
-		playlister.seek(to);
+		engine.seek(to);
+	}
+
+	public void addToPlaylist(Track track) {
+		engine.add(track);
 	}
 
 }

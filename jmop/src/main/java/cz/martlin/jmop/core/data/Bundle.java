@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import cz.martlin.jmop.core.player.XXX_Playlist;
+import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
 
-public class Bundle {
+public class Bundle extends ObservableObject<Bundle> {
 	private final SourceKind kind;
 	private final String name;
-	// TODO tracks map / full playlist
 	private final Map<String, Track> tracks;
 
 	public Bundle(SourceKind kind, String name) {
@@ -44,6 +43,9 @@ public class Bundle {
 	public Track createTrack(String identifier, String title, String description, Duration duration) {
 		Track track = new Track(this, identifier, title, description, duration);
 		this.tracks.put(identifier, track);
+		
+		fireValueChangedEvent();
+		
 		return track;
 	}
 
@@ -64,10 +66,6 @@ public class Bundle {
 		return new Tracklist(list);
 	}
 
-	@Deprecated
-	public XXX_Playlist getFullPlaylist() {
-		return new XXX_Playlist("TODO: full playlist", kind);
-	}
 
 	///////////////////////////////////////////////////////////////////////////
 

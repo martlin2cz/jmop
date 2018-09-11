@@ -7,6 +7,8 @@ import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Duration;
@@ -19,7 +21,7 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 	private final BooleanProperty pausedProperty;
 	private final ObjectProperty<Track> trackProperty;
 	private final ObjectProperty<Duration> timeProperty;
-	
+
 	private Consumer<Track> onTrackPlayed;
 
 	public PlayerWrapper(BasePlayer player) {
@@ -35,13 +37,31 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 	public void initBindings() {
 		player.addListener((observable, oldValue, newValue) -> playerChanged());
 	}
-	
+
 	public void setOnTrackPlayed(Consumer<Track> onTrackPlayed) {
 		this.onTrackPlayed = onTrackPlayed;
 	}
+
 	///////////////////////////////////////////////////////////////////////////////
 
-	public synchronized void startPlayling(Track track) throws JMOPSourceException {
+	public ReadOnlyBooleanProperty stoppedProperty() {
+		return stoppedProperty;
+	}
+
+	public ReadOnlyBooleanProperty pausedProperty() {
+		return pausedProperty;
+	}
+
+	public ReadOnlyObjectProperty<Track> trackProperty() {
+		return trackProperty;
+	}
+
+	public ReadOnlyObjectProperty<Duration> timeProperty() {
+		return timeProperty;
+	}
+	///////////////////////////////////////////////////////////////////////////////
+
+	public synchronized void startPlaying(Track track) throws JMOPSourceException {
 		player.startPlaying(track);
 	}
 
@@ -89,7 +109,7 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 
 	private void fireTrackPlayed() {
 		Track track = player.getPlayedTrack();
-		
+
 		onTrackPlayed.accept(track);
 	}
 

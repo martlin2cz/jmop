@@ -6,61 +6,59 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.playlister.Playlister;
+import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 
 public class JMOPSources {
-	private final BaseLocalSource local;
+	private final LocalSourceWrapper local;
 	private final TrackPreparer preparer;
-	private final Playlister playlister;
 
-	public JMOPSources(BaseLocalSource local, TrackPreparer preparer, Playlister playlister) {
+	public JMOPSources(LocalSourceWrapper local, TrackPreparer preparer) {
 		super();
 		this.local = local;
 		this.preparer = preparer;
-		this.playlister = playlister;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public Playlist createNewBundleAndPrepare(SourceKind kind, String bundleName, String query)
+	public Playlist createNewBundleAndPrepare(SourceKind kind, String bundleName, String query, PlayerEngine engine)
 			throws JMOPSourceException {
 		Bundle bundle = createBundle(kind, bundleName);
 		Playlist playlist = new Playlist(bundle, query);
 
-		preparer.startSearchAndLoad(bundle, query, playlister);
+		preparer.startSearchAndLoad(bundle, query, engine);
 
 		return playlist;
 	}
 
-	public Playlist createNewPlaylist(Bundle bundle, String query) throws JMOPSourceException {
+	public Playlist createNewPlaylist(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
 		Playlist playlist = new Playlist(bundle, query);
 
-		preparer.startSearchAndLoad(bundle, query, playlister);
+		preparer.startSearchAndLoad(bundle, query, engine);
 		return playlist;
 	}
 
-	public Playlist loadPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
+	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine) throws JMOPSourceException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
 		Track track = playlist.getTracks().getTracks().get(0); // TODO quite
 																// hack
-		preparer.checkAndStartLoadingTrack(track, playlister);
+		preparer.checkAndStartLoadingTrack(track, engine);
 
 		return playlist;
 
 	}
 
 	public void savePlaylist(Playlist playlist, String newPlaylistName) throws JMOPSourceException {
-		playlist.changeName(newPlaylistName);
+		playlist.setName(newPlaylistName);
 		Bundle bundle = playlist.getBundle();
 		local.savePlaylist(bundle, playlist);
 	}
 
-	public void queryAndLoad(Bundle bundle, String query) throws JMOPSourceException {
-		preparer.startSearchAndLoad(bundle, query, playlister);
+	public void queryAndLoad(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
+		preparer.startSearchAndLoad(bundle, query, engine);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

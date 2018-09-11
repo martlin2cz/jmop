@@ -26,6 +26,15 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 		this.remaining = new LinkedList<>(tracks);
 	}
 
+	public Tracklist toTracklist() {
+		List<Track> tracks = listAll();
+		return new Tracklist(tracks);
+	}
+
+	public int currentTrackIndex() {
+		return playedCount() + 1;
+	}
+
 	public List<Track> listAll() {
 		final int size = played.size() + remaining.size();
 		List<Track> all = new ArrayList<>(size);
@@ -55,7 +64,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	public Track nextToBePlayed() {
 		return remaining.peek();
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	public boolean hasNextToPlay() {
@@ -89,14 +98,14 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 
 		remaining.clear();
 		remaining.addAll(newRemaining);
-		
+
 		fireValueChangedEvent();
 	}
 
 	public void popUp(int index) {
 		Track track = getOrRemove(index, true);
 		remaining.addLast(track);
-		
+
 		fireValueChangedEvent();
 	}
 
@@ -107,7 +116,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	public void replaceRest(Track track) {
 		remaining.clear();
 		remaining.push(track);
-		
+
 		fireValueChangedEvent();
 	}
 
@@ -117,15 +126,13 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 		throw new UnsupportedOperationException("popUp");
 	}
 
-
 	/////////////////////////////////////////////////////////////////////////////////////////
 
-	
 	public static PlaylistRuntime of(Tracklist tracklist) {
 		List<Track> tracks = tracklist.getTracks();
 		return new PlaylistRuntime(tracks);
 	}
-	
+
 	public static PlaylistRuntime of(Playlist playlist) {
 		List<Track> tracks = playlist.getTracks().getTracks();
 		return new PlaylistRuntime(tracks);

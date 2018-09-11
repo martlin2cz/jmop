@@ -2,24 +2,24 @@ package cz.martlin.jmop.core.wrappers.builder;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.CommandlineData;
-import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
 import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.playlister.BasePlaylister;
+import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.playlister.Playlister;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
 import cz.martlin.jmop.core.playlister.StaticPlaylistPlaylister;
 import cz.martlin.jmop.core.playlister.TotallyOnlinePlaylister;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.download.YoutubeDlDownloader;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.wrappers.BaseJMOPEnvironmentChecker;
 import cz.martlin.jmop.core.wrappers.DefaultJMOPEnvironmentChecker;
@@ -52,24 +52,26 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		BasePlaylister offlinePlaylister = createOfflinePlaylister();
 		BasePlaylister onlinePlaylister = createOnlinePlaylister(preparer);
 
+		Playlister playlister = new Playlister(connection, offlinePlaylister, onlinePlaylister);
+
 		// level 2 things
+
 		PlayerWrapper playerWrapper = new PlayerWrapper(player);
+		PlaylisterWrapper playlisterWrapper = new PlaylisterWrapper(playlister);
 
-		PlaylisterWrapper offlinePlaylisterWrapper = new PlaylisterWrapper(offlinePlaylister);
-		PlaylisterWrapper onlinePlaylisterWrapper = new PlaylisterWrapper(onlinePlaylister);
+		PlayerEngine engine = new PlayerEngine(playlisterWrapper, playerWrapper);
 
-		Playlister playlister = new Playlister(connection, offlinePlaylisterWrapper, onlinePlaylisterWrapper,
-				playerWrapper);
+		LocalSourceWrapper localWrapper = new LocalSourceWrapper(local, playlisterWrapper);
 
 		BaseJMOPEnvironmentChecker checker = createEnvironmentChecker(data, config, local, remote, downloader,
 				converter);
 
 		// level 3 things
 
-		JMOPPlayer jmop = new JMOPPlayer(config, local, preparer, playlister, playerWrapper, checker);
-		
+		JMOPPlayer jmop = new JMOPPlayer(config,  engine, localWrapper, preparer, checker);
+
 		// level 4 things
-		
+
 		if (data.getBundleToPlayName() != null) {
 			String bundleName = data.getBundleToPlayName();
 			if (data.getPlaylistToPlayName() != null) {

@@ -63,6 +63,16 @@ public class DefaultLocalSource implements BaseLocalSource {
 		}
 	}
 
+	@Override
+	public void saveBundle(Bundle bundle) throws JMOPSourceException {
+		try {
+			saveBundleInternal(bundle);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot create bundle", e);
+		}
+	}
+
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -94,6 +104,7 @@ public class DefaultLocalSource implements BaseLocalSource {
 			throw new JMOPSourceException("Cannot save playlist", e);
 		}
 	}
+
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -178,6 +189,15 @@ public class DefaultLocalSource implements BaseLocalSource {
 		fileSystem.createBundleDirectory(name);
 	}
 
+	
+	private void saveBundleInternal(Bundle bundle) throws IOException {
+		String playlistName = config.getAllTracksPlaylistName();
+		Tracklist tracks = bundle.tracks();
+		Playlist playlist = new Playlist(bundle, playlistName, tracks);
+		
+		savePlaylistInternal(bundle, playlist);
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private List<String> listsPlaylistNamesInternal(Bundle bundle) throws IOException, ExceptionInLoop {

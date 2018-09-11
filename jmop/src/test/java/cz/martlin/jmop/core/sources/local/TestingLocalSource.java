@@ -67,12 +67,18 @@ public class TestingLocalSource implements BaseLocalSource {
 	}
 
 	@Override
+	public void saveBundle(Bundle bundle) throws JMOPSourceException {
+		// okay
+	}
+
+	@Override
 	public Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException {
 		return tracks.get(bundle).get(identifier);
 	}
 
 	@Override
-	public File fileOfTrack(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
+	public File fileOfTrack(Track track, TrackFileLocation location, TrackFileFormat format)
+			throws JMOPSourceException {
 
 		InputStream ins = getClass().getClassLoader().getResourceAsStream(TestingDownloader.TESTING_SAMPLE_FILE);
 
@@ -82,7 +88,8 @@ public class TestingLocalSource implements BaseLocalSource {
 			String suffix = "." + format.getExtension();
 			String name = prefix + title;
 			File file = File.createTempFile(name, suffix);
-			Files.copy(ins, file.toPath(), StandardCopyOption.REPLACE_EXISTING); //TODO wtf?
+			Files.copy(ins, file.toPath(), StandardCopyOption.REPLACE_EXISTING); // TODO
+																					// wtf?
 			return file;
 		} catch (IOException e) {
 			throw new JMOPSourceException("Failed", e);

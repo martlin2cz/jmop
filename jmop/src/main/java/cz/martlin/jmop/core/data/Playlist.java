@@ -1,33 +1,25 @@
 package cz.martlin.jmop.core.data;
 
 import cz.martlin.jmop.core.misc.ObservableObject;
-import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
 
 public class Playlist extends ObservableObject<Playlist> {
 	private final Bundle bundle;
 	private String name;
-	@Deprecated
-	private final BetterPlaylistRuntime runtime;
+	private Tracklist tracks;
+	private int currentTrackIndex;
 
 	public Playlist(Bundle bundle, String name, Tracklist tracks) {
 		super();
 		this.bundle = bundle;
 		this.name = name;
-		this.runtime = new BetterPlaylistRuntime(tracks.getTracks());
-	}
-
-	public Playlist(Bundle bundle, String name, BetterPlaylistRuntime runtime) {
-		super();
-		this.bundle = bundle;
-		this.name = name;
-		this.runtime = runtime;
+		this.tracks = tracks;
 	}
 
 	public Playlist(Bundle bundle, String name) {
 		super();
 		this.bundle = bundle;
 		this.name = name;
-		this.runtime = new BetterPlaylistRuntime();
+		this.tracks = new Tracklist();
 	}
 
 	public Bundle getBundle() {
@@ -38,18 +30,24 @@ public class Playlist extends ObservableObject<Playlist> {
 		return name;
 	}
 
-	public void changeName(String name) {
+	public void setName(String name) {
 		this.name = name;
-		fireValueChangedEvent();
-	}
-	
-	@Deprecated
-	public BetterPlaylistRuntime getRuntime() {
-		return runtime;
 	}
 
 	public Tracklist getTracks() {
-		return new Tracklist(runtime.list());
+		return tracks;
+	}
+
+	public void setTracks(Tracklist tracks) {
+		this.tracks = tracks;
+	}
+
+	public int getCurrentTrackIndex() {
+		return currentTrackIndex;
+	}
+
+	public void setCurrentTrackIndex(int currentTrackIndex) {
+		this.currentTrackIndex = currentTrackIndex;
 	}
 
 	@Override
@@ -58,7 +56,6 @@ public class Playlist extends ObservableObject<Playlist> {
 		int result = 1;
 		result = prime * result + ((bundle == null) ? 0 : bundle.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((runtime == null) ? 0 : runtime.hashCode());
 		return result;
 	}
 
@@ -81,21 +78,16 @@ public class Playlist extends ObservableObject<Playlist> {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (runtime == null) {
-			if (other.runtime != null)
-				return false;
-		} else if (!runtime.equals(other.runtime))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + runtime + "]";
+		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + tracks + "]";
 	}
 
 	public String toHumanString() {
-		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" +  runtime.toHumanString();
+		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" + tracks.toHumanString();
 	}
 
 }

@@ -67,7 +67,7 @@ public class JMOPPlayerEnvironment {
 		BetterPlaylistRuntime runtime = new BetterPlaylistRuntime(initial);
 		//playlister.getSources().startDownloading(initial, runtime);
 		
-		Playlist playlist = new Playlist(bundle, querySeed, runtime);
+		Playlist playlist = new Playlist(bundle, querySeed, null);
 		local.savePlaylist(bundle, playlist);
 
 		playlister.setPlaylist(runtime);

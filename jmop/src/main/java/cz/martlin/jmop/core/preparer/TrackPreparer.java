@@ -6,7 +6,9 @@ import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.player.BasePlayer;
-import cz.martlin.jmop.core.playlister.Playlister;
+import cz.martlin.jmop.core.playlister.BasePlaylister;
+import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
 import cz.martlin.jmop.core.preparer.operations.BaseTrackOperation;
 import cz.martlin.jmop.core.preparer.operations.DownloadAndConvertOperation;
 import cz.martlin.jmop.core.preparer.operations.NextTrackLoadInstance;
@@ -36,9 +38,9 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	public void startSearchAndLoad(Bundle bundle, String query, Playlister addTo) {
+	public void startSearchAndLoad(Bundle bundle, String query, PlayerEngine engine) {
 		SearchData data = new SearchData(bundle, query);
-		runInBackground(this.query, data, (t) -> appendAndStartPlaying(t, addTo));
+		runInBackground(this.query, data, (t) -> appendAndStartPlaying(t, engine));
 	}
 
 	public void startSearchAndLoad(Bundle bundle, String query, Consumer<Track> onLoaded) {
@@ -47,7 +49,18 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	public void startLoadingNextOf(Track track, Playlister addTo) {
+	public void startLoadingNextOf(Track track, PlayerEngine engine) {
+		runInBackground(this.nexts, track, (t) -> append(t, engine));
+	}
+
+	/**
+	 * Quite hack, equal to
+	 * {@link #startLoadingNextOf(Track, PlaylisterWrapper)}.
+	 * 
+	 * @param track
+	 * @param addTo
+	 */
+	public void startLoadingNextOf(Track track, BasePlaylister addTo) {
 		runInBackground(this.nexts, track, (t) -> append(t, addTo));
 	}
 
@@ -56,8 +69,8 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	public void checkAndStartLoadingTrack(Track track, Playlister addTo) {
-		runInBackground(this.files, track, (t) -> append(t, addTo));
+	public void checkAndStartLoadingTrack(Track track, PlayerEngine engine) {
+		runInBackground(this.files, track, (t) -> append(t, engine));
 	}
 
 	public void checkAndStartLoadingTrack(Track track, Consumer<Track> onLoaded) {
@@ -66,25 +79,33 @@ public class TrackPreparer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private void appendAndStartPlaying(Track track, Playlister addTo) {
+	private void appendAndStartPlaying(Track track, PlayerEngine engine) {
 		try {
-			addTo.add(track);
-			addTo.playNext();
+			engine.add(track);
+			engine.playNext();
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO error handler
 		}
 	}
 
-	private void append(Track track, Playlister addTo) {
+	private void append(Track track, PlayerEngine engine) {
 		try {
-			addTo.add(track);
+			engine.add(track);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO error handler
 		}
 	}
 
+	private void append(Track track, BasePlaylister addTo) {
+		try {
+			addTo.trackPrepared(track);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO error handler
+		}
+	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private static <IT, OT> void runInBackground(BaseTrackOperation<IT, OT> operation, IT data,

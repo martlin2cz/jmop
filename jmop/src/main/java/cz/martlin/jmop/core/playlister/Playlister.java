@@ -4,88 +4,75 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.PlayerWrapper;
-import javafx.util.Duration;
+import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 
 public class Playlister {
 	private final InternetConnectionStatus connection;
-	private final PlaylisterWrapper offlinePlaylister;
-	private final PlaylisterWrapper onlinePlaylister;
-	private final PlayerWrapper player;
+	private final BasePlaylister offlinePlaylister;
+	private final BasePlaylister onlinePlaylister;
 
-	public Playlister(InternetConnectionStatus connection, PlaylisterWrapper offlinePlaylister,
-			PlaylisterWrapper onlinePlaylister, PlayerWrapper player) {
+	public Playlister(InternetConnectionStatus connection, BasePlaylister offlinePlaylister,
+			BasePlaylister onlinePlaylister) {
 		super();
 		this.connection = connection;
 		this.offlinePlaylister = offlinePlaylister;
 		this.onlinePlaylister = onlinePlaylister;
-		this.player = player;
 	}
-	
+
+	public BasePlaylister getOnline() {
+		return onlinePlaylister;
+	}
+
+	public BasePlaylister getOffline() {
+		return offlinePlaylister;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
 
 	public void startPlayingPlaylist(Playlist playlist) {
 		// TODO A!!!
 		throw new UnsupportedOperationException();
 	}
 
-
-
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
 		// TODO !!!
 		throw new UnsupportedOperationException();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////////
 
-	public void playNext() throws JMOPSourceException {
-		PlaylisterWrapper playlister = currentPlaylister();
-		Track track = playlister.toNextToPlay();
-		player.startPlayling(track);
+	public Track playNext() throws JMOPSourceException {
+		BasePlaylister playlister = currentPlaylister();
+		Track track = playlister.obtainNext();
+		return track;
 	}
 
-	public void play(int index) throws JMOPSourceException {
-		PlaylisterWrapper playlister = currentPlaylister();
-		Track track = playlister.toTrackAt(index);
-		player.startPlayling(track);
+	public Track play(int index) throws JMOPSourceException {
+		BasePlaylister playlister = currentPlaylister();
+		Track track = playlister.playChoosen(index);
+		return track;
 	}
 
-	public void stop() {
-		player.stop();
+	public Track toNext() throws JMOPSourceException {
+		BasePlaylister playlister = currentPlaylister();
+		Track track = playlister.obtainNext();
+		return track;
 	}
 
-	public void pause() {
-		player.pause();
-	}
-
-	public void resume() {
-		player.resume();
-	}
-
-	public void seek(Duration to) {
-		player.seek(to);
-	}
-
-	public void toNext() throws JMOPSourceException {
-		PlaylisterWrapper playlister = currentPlaylister();
-		Track track = playlister.toNext();
-		player.startPlayling(track);
-	}
-
-	public void toPrevious() throws JMOPSourceException {
-		PlaylisterWrapper playlister = currentPlaylister();
-		Track track = playlister.toPrevious();
-		player.startPlayling(track);
+	public Track toPrevious() throws JMOPSourceException {
+		BasePlaylister playlister = currentPlaylister();
+		Track track = playlister.obtainPrevious();
+		return track;
 	}
 
 	public void add(Track track) {
-		PlaylisterWrapper playlister = currentPlaylister();
-		playlister.addTrack(track);
+		BasePlaylister playlister = currentPlaylister();
+		playlister.trackPrepared(track);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
-	private PlaylisterWrapper currentPlaylister() {
+	private BasePlaylister currentPlaylister() {
 		if (connection.isOffline()) {
 			return offlinePlaylister;
 		} else {
@@ -93,6 +80,9 @@ public class Playlister {
 		}
 	}
 
-
+	public PlaylistRuntime getRuntime() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -6,6 +6,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 
+@Deprecated
 public class AutomaticSavesPerformer {
 	private final BaseConfiguration config; 
 	private final BaseLocalSource local;
