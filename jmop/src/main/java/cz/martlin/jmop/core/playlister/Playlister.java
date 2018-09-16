@@ -27,23 +27,30 @@ public class Playlister {
 		return offlinePlaylister;
 	}
 
+	public PlaylistRuntime getRuntime() {
+		// both have the same instance
+		BasePlaylister playlister = currentPlaylister();
+		return playlister.getRuntime();
+	}
 	////////////////////////////////////////////////////////////////////////////
 
 	public void startPlayingPlaylist(Playlist playlist) {
-		// TODO A!!!
-		throw new UnsupportedOperationException();
+		PlaylistRuntime runtime = PlaylistRuntime.of(playlist);
+
+		offlinePlaylister.startPlayingPlaylist(playlist, runtime);
+		onlinePlaylister.startPlayingPlaylist(playlist, runtime);
 	}
 
-	public void stopPlayingPlaylist(Playlist currentPlaylist) {
-		// TODO !!!
-		throw new UnsupportedOperationException();
+	public void stopPlayingPlaylist(Playlist playlist) {
+		offlinePlaylister.stopPlayingPlaylist();
+		onlinePlaylister.stopPlayingPlaylist();
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
 	public Track playNext() throws JMOPSourceException {
 		BasePlaylister playlister = currentPlaylister();
-		Track track = playlister.obtainNext();
+		Track track = playlister.nextToPlay();
 		return track;
 	}
 
@@ -67,7 +74,7 @@ public class Playlister {
 
 	public void add(Track track) {
 		BasePlaylister playlister = currentPlaylister();
-		playlister.trackPrepared(track);
+		playlister.addTrack(track);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -78,11 +85,6 @@ public class Playlister {
 		} else {
 			return onlinePlaylister;
 		}
-	}
-
-	public PlaylistRuntime getRuntime() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

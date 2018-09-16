@@ -4,7 +4,6 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
@@ -28,7 +27,7 @@ public class JMOPSources {
 		Bundle bundle = createBundle(kind, bundleName);
 		Playlist playlist = new Playlist(bundle, query);
 
-		preparer.startSearchAndLoad(bundle, query, engine);
+		preparer.startSearchAndLoadInBg(bundle, query, engine);
 
 		return playlist;
 	}
@@ -36,16 +35,13 @@ public class JMOPSources {
 	public Playlist createNewPlaylist(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
 		Playlist playlist = new Playlist(bundle, query);
 
-		preparer.startSearchAndLoad(bundle, query, engine);
+		preparer.startSearchAndLoadInBg(bundle, query, engine);
 		return playlist;
 	}
 
 	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine) throws JMOPSourceException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
-		Track track = playlist.getTracks().getTracks().get(0); // TODO quite
-																// hack
-		preparer.checkAndStartLoadingTrack(track, engine);
 
 		return playlist;
 
@@ -58,7 +54,7 @@ public class JMOPSources {
 	}
 
 	public void queryAndLoad(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
-		preparer.startSearchAndLoad(bundle, query, engine);
+		preparer.startSearchAndLoadInBg(bundle, query, engine);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

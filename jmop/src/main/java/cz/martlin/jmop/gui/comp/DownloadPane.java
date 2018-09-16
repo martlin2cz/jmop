@@ -144,7 +144,6 @@ public class DownloadPane extends HBox {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void changeToTask(PreparerTask task) {
-		System.out.println("Showing task " + task.getTrack().getTitle());
 		progressIndicator.progressProperty().bind(task.progressProperty());
 		lblStatus.textProperty().bind(task.messageProperty());
 
@@ -155,7 +154,6 @@ public class DownloadPane extends HBox {
 	}
 
 	private void changeToNoTask() {
-		System.out.println("Showing NO task");
 		this.setVisible(false);
 		lblAnothers.setVisible(false);
 
@@ -168,7 +166,6 @@ public class DownloadPane extends HBox {
 	}
 
 	private void changeAnothers(int tasksCount) {
-		System.out.println("Updating count, total:" + tasksCount);
 		if (tasksCount > 1) {
 			int anothers = tasksCount - 1;
 			lblAnothers.setText(" + " + anothers + " more");

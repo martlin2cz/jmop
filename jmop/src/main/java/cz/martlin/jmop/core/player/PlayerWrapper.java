@@ -31,11 +31,13 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 		this.pausedProperty = new SimpleBooleanProperty();
 		this.trackProperty = new SimpleObjectProperty<>();
 		this.timeProperty = new SimpleObjectProperty<>();
+		
+		initBindings();
 	}
 
 	@Override
 	public void initBindings() {
-		player.addListener((observable, oldValue, newValue) -> playerChanged());
+		player.addListener((value) -> playerChanged());
 	}
 
 	public void setOnTrackPlayed(Consumer<Track> onTrackPlayed) {
@@ -83,7 +85,6 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 
 	///////////////////////////////////////////////////////////////////////////////
 	private void playerChanged() {
-
 		boolean over = player.isPlayOver();
 
 		if (over) {

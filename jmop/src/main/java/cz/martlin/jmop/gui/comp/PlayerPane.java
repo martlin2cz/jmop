@@ -130,6 +130,7 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 	}
 
 	private void trackToSliderMax(Track track) {
+		System.out.println("PlayerPane.trackToSliderMax() to " + track);
 		Duration duration = track.getDuration();
 		double milis = BindingsUtils.durationToMilis(duration);
 		sliTrackProgress.setMax(milis);

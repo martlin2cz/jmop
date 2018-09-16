@@ -12,19 +12,20 @@ public abstract class SimplePlaylister implements BasePlaylister {
 		super();
 	}
 
+
+	@Override
 	public PlaylistRuntime getRuntime() {
 		return runtime;
 	}
-
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist) {
-		this.runtime = PlaylistRuntime.of(playlist);
+	public void startPlayingPlaylist(Playlist playlist, PlaylistRuntime runtime) {
+		this.runtime = runtime;
 	}
 
 	@Override
-	public void stopPlayingPlaylist(Playlist playlist) {
+	public void stopPlayingPlaylist() {
 		this.runtime = null;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////

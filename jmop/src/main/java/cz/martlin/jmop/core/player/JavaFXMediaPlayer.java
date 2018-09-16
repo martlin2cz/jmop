@@ -79,6 +79,7 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 
 	private void timeChanged(Duration to) {
 		this.currentTime = to;
+		fireValueChangedEvent();
 	}
 
 }

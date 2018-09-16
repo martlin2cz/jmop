@@ -59,7 +59,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		PlayerWrapper playerWrapper = new PlayerWrapper(player);
 		PlaylisterWrapper playlisterWrapper = new PlaylisterWrapper(playlister);
 
-		PlayerEngine engine = new PlayerEngine(playlisterWrapper, playerWrapper);
+		PlayerEngine engine = new PlayerEngine(playlisterWrapper, playerWrapper, preparer);
 
 		LocalSourceWrapper localWrapper = new LocalSourceWrapper(local, playlisterWrapper);
 

@@ -17,12 +17,12 @@ public class TotallyOnlinePlaylister extends SimplePlaylister {
 	public Track obtainNext() {
 		Track track = super.obtainNext();
 		
-		preparer.startLoadingNextOf(track, this);
+		preparer.startLoadingNextOfInBg(track, this);
 		return track;
 	}
 
 	@Override
-	public void trackPrepared(Track track) {
+	public void addTrack(Track track) {
 		PlaylistRuntime runtime = getRuntime();
 		runtime.replaceRest(track);
 	}

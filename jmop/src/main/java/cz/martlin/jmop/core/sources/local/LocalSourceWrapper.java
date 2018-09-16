@@ -3,27 +3,33 @@ package cz.martlin.jmop.core.sources.local;
 import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.BundleBinding;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.ObservableListenerBinding;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
-import javafx.beans.value.ChangeListener;
 
 public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
 	private final BaseLocalSource local;
 	private final PlaylisterWrapper playlister;
 
-	private ChangeListener<Bundle> bundleListener;
+	private final ObservableListenerBinding<Playlist> playlistBinding;
+	private final ObservableListenerBinding<Playlist> bundleBinding;
 
 	public LocalSourceWrapper(BaseLocalSource local, PlaylisterWrapper playlister) {
 		super();
 		this.local = local;
 		this.playlister = playlister;
+
+		this.playlistBinding = new ObservableListenerBinding<>();
+		this.bundleBinding = new BundleBinding();
 	}
 
 	@Override
 	public void initBindings() {
-		playlister.playlistProperty().addListener((observable, oldVal, newVal) -> playlistChaned(oldVal, newVal));
+		playlister.playlistProperty().addListener(//
+				(observable, oldVal, newVal) -> playlistPropertyValueChaned(oldVal, newVal));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -53,31 +59,33 @@ public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private void playlistChaned(Playlist oldPlaylistValue, Playlist newPlaylistValue) {
-		final boolean isNonNull = newPlaylistValue != null;
-		final boolean wasNonNull = oldPlaylistValue != null;
+	private void playlistPropertyValueChaned(Playlist oldPlaylistValue, Playlist newPlaylistValue) {
+		playlistBinding.rebind(oldPlaylistValue, newPlaylistValue, //
+				(p) -> playlistChanged((Playlist) p));
 
+		bundleBinding.rebind(oldPlaylistValue, newPlaylistValue, //
+				(p) -> playlistBundleChanged((Playlist) p));
+
+	}
+
+	private void playlistChanged(Playlist playlist) {
 		try {
-			if (isNonNull && wasNonNull) {
-				savePlaylist(newPlaylistValue);
-			}
-
-			if (isNonNull && !wasNonNull) {
-				bindPlaylist(newPlaylistValue);
-			}
-			if (!isNonNull && wasNonNull) {
-				unbindPlaylist(oldPlaylistValue);
-			}
-
+			Bundle bundle = playlist.getBundle();
+			local.savePlaylist(bundle, playlist);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO error hangling
 		}
 	}
 
+	private void playlistBundleChanged(Playlist playlist) {
+		Bundle bundle = playlist.getBundle();
+		bundleChanged(bundle);
+	}
+
 	private void bundleChanged(Bundle bundle) {
 		try {
-			saveBundle(bundle);
+			local.saveBundle(bundle);
 		} catch (JMOPSourceException e) {
 			e.printStackTrace();
 			// TODO error hangling
@@ -85,26 +93,5 @@ public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
-	private void savePlaylist(Playlist playlist) throws JMOPSourceException {
-		Bundle bundle = playlist.getBundle();
-		local.savePlaylist(bundle, playlist);
-	}
-
-	private void unbindPlaylist(Playlist playlist) {
-		Bundle bundle = playlist.getBundle();
-		bundle.removeListener(bundleListener);
-	}
-
-	private void bindPlaylist(Playlist playlist) {
-		Bundle bundle = playlist.getBundle();
-
-		bundleListener = (observable, oldVal, newVal) -> bundleChanged(newVal);
-		bundle.addListener(bundleListener);
-	}
-
-	private void saveBundle(Bundle bundle) throws JMOPSourceException {
-		local.saveBundle(bundle);
-	}
 
 }

@@ -3,6 +3,7 @@ package cz.martlin.jmop.gui.comp;
 import java.io.IOException;
 
 import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.misc.ObservableListenerBinding;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -19,11 +20,13 @@ public class PlaylistAndBundlePane extends VBox {
 	@FXML
 	private Label lblPlaylistName;
 
+	private final ObservableListenerBinding<Playlist> playlistBinding;
 	private final ObjectProperty<Playlist> playlistProperty;
 
 	public PlaylistAndBundlePane() throws IOException {
+		this.playlistBinding = new ObservableListenerBinding<>();
 		this.playlistProperty = new SimpleObjectProperty<>();
-
+		
 		initialize();
 	}
 
@@ -47,15 +50,27 @@ public class PlaylistAndBundlePane extends VBox {
 	}
 
 	private void initBindings() {
-		playlistProperty.addListener((observable, oldVal, newVal) -> playlistChanged(newVal));
+		playlistProperty.addListener((observable, oldVal, newVal) -> playlistPropertyChanged(oldVal, newVal));
 	}
 
-	private void playlistChanged(Playlist newPlaylist) {
-		Platform.runLater(() -> {
-			String bundleName = newPlaylist.getBundle().getName();
-			lblBundleName.setText(bundleName);
+	private void playlistPropertyChanged(Playlist oldPlaylistValue, Playlist newPlaylistValue) {
+		
+		playlistBinding.rebind(oldPlaylistValue, newPlaylistValue, (p) -> playlistChanged((Playlist) p));
+	}
 
-			String playlistName = newPlaylist.getName();
+	private void playlistChanged(Playlist playlist) {
+		Platform.runLater(() -> {
+			String bundleName;
+			String playlistName;
+
+			if (playlist != null) {
+				bundleName = playlist.getBundle().getName();
+				playlistName = playlist.getName();
+			} else {
+				bundleName = "-";
+				playlistName = "-";
+			}
+			lblBundleName.setText(bundleName);
 			lblPlaylistName.setText(playlistName);
 		});
 	}

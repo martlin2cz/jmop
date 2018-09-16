@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ObservableValueProperty;
+import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import javafx.util.Duration;
 
-public abstract class AbstractPlayer extends ObservableValueProperty<BasePlayer> implements BasePlayer {
+public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implements BasePlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseLocalSource local;
@@ -77,11 +77,13 @@ public abstract class AbstractPlayer extends ObservableValueProperty<BasePlayer>
 		
 		over = false;
 		stopped = false;
+		playedTrack = track;
 
 		File file = local.fileOfTrack(track, tracksLocation, supportedFormat);
 
 		LOG.debug("Will play file " + file);
 		doStartPlaying(track, file);
+		
 		fireValueChangedEvent();
 	}
 
@@ -95,7 +97,8 @@ public abstract class AbstractPlayer extends ObservableValueProperty<BasePlayer>
 		}
 
 		doStopPlaying();
-
+		
+		playedTrack = null;
 		stopped = true;
 		fireValueChangedEvent();
 	}

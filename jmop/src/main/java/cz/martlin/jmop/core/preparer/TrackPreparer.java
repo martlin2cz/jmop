@@ -38,12 +38,12 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	public void startSearchAndLoad(Bundle bundle, String query, PlayerEngine engine) {
+	public void startSearchAndLoadInBg(Bundle bundle, String query, PlayerEngine engine) {
 		SearchData data = new SearchData(bundle, query);
 		runInBackground(this.query, data, (t) -> appendAndStartPlaying(t, engine));
 	}
 
-	public void startSearchAndLoad(Bundle bundle, String query, Consumer<Track> onLoaded) {
+	public void startSearchAndLoadInBg(Bundle bundle, String query, Consumer<Track> onLoaded) {
 		SearchData data = new SearchData(bundle, query);
 		runInBackground(this.query, data, (t) -> onLoaded.accept(t));
 	}
@@ -60,19 +60,26 @@ public class TrackPreparer {
 	 * @param track
 	 * @param addTo
 	 */
-	public void startLoadingNextOf(Track track, BasePlaylister addTo) {
+	public void startLoadingNextOfInBg(Track track, BasePlaylister addTo) {
 		runInBackground(this.nexts, track, (t) -> append(t, addTo));
 	}
 
-	public void startLoadingNextOf(Track track, Consumer<Track> onLoaded) {
+	public void startLoadingNextOfInBg(Track track, Consumer<Track> onLoaded) {
 		runInBackground(this.nexts, track, (t) -> onLoaded.accept(t));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	public void checkAndLoadTrack(Track track) {
+		runInForeground(this.files, track);
+	}
+
+
+	@Deprecated
 	public void checkAndStartLoadingTrack(Track track, PlayerEngine engine) {
 		runInBackground(this.files, track, (t) -> append(t, engine));
 	}
-
+	
+	@Deprecated
 	public void checkAndStartLoadingTrack(Track track, Consumer<Track> onLoaded) {
 		runInBackground(this.files, track, (t) -> onLoaded.accept(t));
 	}
@@ -100,7 +107,7 @@ public class TrackPreparer {
 
 	private void append(Track track, BasePlaylister addTo) {
 		try {
-			addTo.trackPrepared(track);
+			addTo.addTrack(track);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO error handler
@@ -114,11 +121,23 @@ public class TrackPreparer {
 		PreparationInstanceTask<IT, OT> task = new PreparationInstanceTask<>(operation, data);
 
 		task.setOnSucceeded((e) -> onCompleted.accept(task.getValue()));
+		// TODO task.setOnError ....
 
 		// TODO running tasks . add ( task )
 
 		Thread thr = new Thread(task, "TrackOperationTaskThread");
 		thr.start();
+	}
+	
+	private static <IT, OT> void runInForeground(BaseTrackOperation<IT, OT> operation, IT data) {
+		PreparationInstanceTask<IT, OT> task = new PreparationInstanceTask<>(operation, data);
+
+		// TODO task.setOnError ....
+		
+		task.run();
+
+		// TODO running tasks . add ( task )
+		
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 }

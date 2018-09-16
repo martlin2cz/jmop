@@ -10,7 +10,7 @@ public class StaticPlaylistPlaylister extends SimplePlaylister {
 	}
 
 	@Override
-	public void trackPrepared(Track track) {
+	public void addTrack(Track track) {
 		PlaylistRuntime runtime = getRuntime();
 		
 		runtime.append(track);

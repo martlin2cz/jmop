@@ -48,6 +48,10 @@ public class BindingsUtils {
 	}
 
 	public static double durationToMilis(Duration duration) {
+		if (duration == null) {
+			return 0.0;
+		} 
+		
 		return duration.toMillis();
 	}
 

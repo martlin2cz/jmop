@@ -5,38 +5,40 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ObservableValueProperty;
+import cz.martlin.jmop.core.misc.ObservableListenerBinding;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 
 public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	private final Playlister playlister;
-	private final ObservableValueProperty<Playlist> playlistProperty;
+
+	private final ObjectProperty<Playlist> playlistProperty;
 	private final BooleanProperty hasPreviousProperty;
 	private final BooleanProperty hasNextProperty;
 	private final ObjectProperty<Track> previousTrackProperty;
 	private final ObjectProperty<Track> nextTrackProperty;
 
-	private ChangeListener<? super PlaylistRuntime> runtimeListener;
+	private final ObservableListenerBinding<PlaylistRuntime> runtimeListener;
 
 	public PlaylisterWrapper(Playlister playlister) {
 		this.playlister = playlister;
 
-		this.playlistProperty = new ObservableValueProperty<>();
+		this.playlistProperty = new SimpleObjectProperty<>();
 		this.hasPreviousProperty = new SimpleBooleanProperty();
 		this.hasNextProperty = new SimpleBooleanProperty();
 		this.previousTrackProperty = new SimpleObjectProperty<>();
 		this.nextTrackProperty = new SimpleObjectProperty<>();
 
+		this.runtimeListener = new ObservableListenerBinding<>();
+
 		initBindings();
 	}
 
-	public ObservableValueProperty<Playlist> playlistProperty() {
+	public ObjectProperty<Playlist> playlistProperty() {
 		return playlistProperty;
 	}
 
@@ -64,19 +66,21 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void startPlayingPlaylist(Playlist playlist) {
+		PlaylistRuntime oldRuntime = playlister.getRuntime();
+
 		playlister.startPlayingPlaylist(playlist);
 
-		runtimeListener = (observable, oldVal, newVal) -> runtimeChanged(newVal);
-		PlaylistRuntime runtime = playlister.getRuntime();
-		runtime.addListener(runtimeListener);
+		PlaylistRuntime newRuntime = playlister.getRuntime();
+		runtimeListener.rebind(oldRuntime, newRuntime, //
+				(r) -> runtimeChanged((PlaylistRuntime) r));
 
 		playlistProperty.set(playlist);
-		updateNextAndPreviousProperties(runtime);
+		updateNextAndPreviousProperties(newRuntime);
 	}
 
 	public void stopPlayingPlaylist(Playlist playlist) {
 		PlaylistRuntime runtime = playlister.getRuntime();
-		runtime.removeListener(runtimeListener);
+		runtimeListener.rebind(runtime, null, null);
 
 		playlister.stopPlayingPlaylist(playlist);
 		playlistProperty.set(null);
@@ -127,24 +131,36 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	}
 
 	private void updateNextAndPreviousProperties(PlaylistRuntime runtime) {
-		if (runtime == null) {
-			hasPreviousProperty.set(false);
-			hasNextProperty.set(false);
-			previousTrackProperty.set(null);
-			nextTrackProperty.set(null);
-		} else {
-			boolean hasPrev = runtime.hasPlayed();
-			hasPreviousProperty.set(hasPrev);
+		boolean hasPrev;
+		boolean hasNext;
+		Track previous;
+		Track next;
 
-			boolean hasNext = runtime.hasNextToPlay();
-			hasNextProperty.set(hasNext);
-			
-			Track previous = runtime.lastPlayed();
-			previousTrackProperty.set(previous);
-			
-			Track next = runtime.nextToBePlayed();
-			nextTrackProperty.set(next);
+		if (runtime == null) {
+			hasPrev = false;
+			hasNext = false;
+			previous = null;
+			next = null;
+		} else {
+			hasPrev = runtime.hasPlayed();
+			hasNext = runtime.hasNextToPlay();
+
+			if (hasPrev) {
+				previous = runtime.lastWasPlayed();
+			} else {
+				previous = null;
+			}
+			if (hasNext) {
+				next = runtime.nextToBePlayed();
+			} else {
+				next = null;
+			}
 		}
+
+		hasPreviousProperty.set(hasPrev);
+		hasNextProperty.set(hasNext);
+		previousTrackProperty.set(previous);
+		nextTrackProperty.set(next);
 	}
 
 }

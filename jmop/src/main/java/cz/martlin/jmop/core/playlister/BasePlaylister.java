@@ -10,9 +10,6 @@ public interface BasePlaylister {
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 
-	public void startPlayingPlaylist(Playlist playlist);
-
-	public void stopPlayingPlaylist(Playlist playlist);
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,6 +27,10 @@ public interface BasePlaylister {
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 
-	public void trackPrepared(Track track);
+	public void addTrack(Track track);
+
+	void startPlayingPlaylist(Playlist playlist, PlaylistRuntime runtime);
+
+	void stopPlayingPlaylist();
 
 }

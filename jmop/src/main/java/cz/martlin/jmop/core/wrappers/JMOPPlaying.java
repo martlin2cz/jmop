@@ -24,11 +24,13 @@ public class JMOPPlaying {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void startPlayingPlaylist(Playlist playlist) throws JMOPSourceException {
-		engine.stopPlayingPlaylist(currentPlaylist);
-
+		if (currentPlaylist != null) {
+			engine.stopPlayingPlaylist(currentPlaylist);
+		}
+		
 		engine.startPlayingPlaylist(playlist);
-
 		startPlaying();
+
 	}
 
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
