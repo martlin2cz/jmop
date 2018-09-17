@@ -124,6 +124,13 @@ public class GuiComplexActionsPerformer {
 
 	}
 
+
+	public void playTrack(int index) {
+		runInBackground(() -> {
+			jmop.playTrack(index);
+			return null;
+		});
+	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void playButtAction() {
@@ -240,6 +247,18 @@ public class GuiComplexActionsPerformer {
 			return playlist.getTracks().getTracks();
 		});
 	}
+	
+	public int inferCurrentTrackIndex() {
+		return runAndHandleError(() -> {
+			Playlist playlist = jmop.getData().playlistProperty().get();
+			if (playlist == null) {
+				return 0;
+			}
+			return playlist.getCurrentTrackIndex();
+		});
+	}
+	
+	
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -362,5 +381,6 @@ public class GuiComplexActionsPerformer {
 	public static interface ConsumerWithException<T> {
 		public void consume(T object) throws Exception;
 	}
+
 
 }

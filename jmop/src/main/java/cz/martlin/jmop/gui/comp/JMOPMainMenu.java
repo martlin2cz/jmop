@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 
 public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP {
 	// @FXML
@@ -127,7 +130,10 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 
 	public void onTrackMenuShowing() {
 		List<Track> tracks = actions.listTracks();
-		addDynamicItems(menuTrack, tracks, (t) -> trackMenuItem(t));
+		int currentIndex = actions.inferCurrentTrackIndex();
+		ToggleGroup group = new ToggleGroup();
+		AtomicInteger index = new AtomicInteger(0);
+		addDynamicItems(menuTrack, tracks, (t) -> trackMenuItem(t, index, group, currentIndex));
 
 	}
 
@@ -145,9 +151,10 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 		actions.startPlaylist(playlistName);
 	}
 
-	public void onTrackTitleAction() {
-		// System.out.println("play track");
-		// TODO play selected track
+	public void onTrackTitleAction(ActionEvent event) {
+		MenuItem playlistMenuItem = (MenuItem) event.getSource();
+		int index = menuTrack.getDynamicItems().indexOf(playlistMenuItem);
+		actions.playTrack(index);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -198,12 +205,16 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 
-	private MenuItem trackMenuItem(Track track) {
+	private MenuItem trackMenuItem(Track track, AtomicInteger index, ToggleGroup group, int currentlyPlayedIndex) {
 		String title = track.getTitle();
-		MenuItem mi = new MenuItem(title);
-
-		mi.setDisable(true); //TODO make it clickable
-
+		RadioMenuItem mi = new RadioMenuItem(title);
+		
+		mi.setToggleGroup(group);
+		
+		boolean isCurrentlyPlayed = (index.get() == currentlyPlayedIndex);
+		mi.setSelected(isCurrentlyPlayed);
+		
+		index.incrementAndGet();
 		return mi;
 	}
 

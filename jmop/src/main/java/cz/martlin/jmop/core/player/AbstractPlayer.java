@@ -60,7 +60,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	public boolean isPaused() {
 		return paused;
 	}
-	
+
 	@Override
 	public boolean isPlayOver() {
 		return over;
@@ -74,16 +74,16 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		if (!stopped) {
 			doStopPlaying();
 		}
-		
-		over = false;
-		stopped = false;
-		playedTrack = track;
 
 		File file = local.fileOfTrack(track, tracksLocation, supportedFormat);
-
 		LOG.debug("Will play file " + file);
 		doStartPlaying(track, file);
-		
+
+		over = false;
+		stopped = false;
+		paused = false;
+		playedTrack = track;
+
 		fireValueChangedEvent();
 	}
 
@@ -97,7 +97,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		}
 
 		doStopPlaying();
-		
+
 		playedTrack = null;
 		stopped = true;
 		fireValueChangedEvent();

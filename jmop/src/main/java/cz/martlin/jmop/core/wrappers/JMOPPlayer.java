@@ -50,14 +50,7 @@ public class JMOPPlayer {
 
 		PlayerEngine engine = playing.getEngine();
 		Playlist playlist = sources.createNewBundleAndPrepare(kind, bundleName, querySeed, engine);
-		playing.startPlayingPlaylist(playlist);
-	}
-
-	public void startPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
-		PlayerEngine engine = playing.getEngine();
-
-		Playlist playlist = sources.loadPlaylist(bundleName, playlistName, engine);
-		playing.startPlayingPlaylist(playlist);
+		playing.startPlayingPlaylist(playlist, false);
 	}
 
 	public void startNewPlaylist(String querySeed) throws JMOPSourceException {
@@ -65,7 +58,14 @@ public class JMOPPlayer {
 		PlayerEngine engine = playing.getEngine();
 
 		Playlist playlist = sources.createNewPlaylist(bundle, querySeed, engine);
-		playing.startPlayingPlaylist(playlist);
+		playing.startPlayingPlaylist(playlist, false);
+	}
+
+	public void startPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
+		PlayerEngine engine = playing.getEngine();
+
+		Playlist playlist = sources.loadPlaylist(bundleName, playlistName, engine);
+		playing.startPlayingPlaylist(playlist, true);
 	}
 
 	public void savePlaylistAs(String newPlaylistName) throws JMOPSourceException {
@@ -78,6 +78,11 @@ public class JMOPPlayer {
 		PlayerEngine engine = playing.getEngine();
 
 		sources.queryAndLoad(bundle, querySeed, engine);
+	}
+	
+
+	public void playTrack(int index) throws JMOPSourceException {
+		playing.playTrack(index);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -137,5 +142,6 @@ public class JMOPPlayer {
 		Playlist playlist = getCurrentPlaylist();
 		return playlist.getBundle();
 	}
+
 
 }

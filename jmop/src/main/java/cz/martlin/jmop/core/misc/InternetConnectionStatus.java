@@ -42,9 +42,12 @@ public class InternetConnectionStatus {
 	private void checkOfflineTimeout() {
 		boolean is = isOfflineTimeOut();
 		if (is) {
+			boolean was = offline.get();
+			if (!was) {
+				LOG.info("The internet connection could be back online");
+			}
+			
 			offline.set(false);
-			LOG.info("The internet connection could be back online");
-
 		}
 	}
 

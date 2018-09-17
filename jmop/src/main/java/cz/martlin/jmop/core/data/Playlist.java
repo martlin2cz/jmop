@@ -32,6 +32,7 @@ public class Playlist extends ObservableObject<Playlist> {
 
 	public void setName(String name) {
 		this.name = name;
+		fireValueChangedEvent();
 	}
 
 	public Tracklist getTracks() {
@@ -40,6 +41,7 @@ public class Playlist extends ObservableObject<Playlist> {
 
 	public void setTracks(Tracklist tracks) {
 		this.tracks = tracks;
+		fireValueChangedEvent();
 	}
 
 	public int getCurrentTrackIndex() {
@@ -48,6 +50,7 @@ public class Playlist extends ObservableObject<Playlist> {
 
 	public void setCurrentTrackIndex(int currentTrackIndex) {
 		this.currentTrackIndex = currentTrackIndex;
+		fireValueChangedEvent();
 	}
 
 	@Override

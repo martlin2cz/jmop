@@ -130,9 +130,15 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 	}
 
 	private void trackToSliderMax(Track track) {
-		System.out.println("PlayerPane.trackToSliderMax() to " + track);
-		Duration duration = track.getDuration();
-		double milis = BindingsUtils.durationToMilis(duration);
+		double milis;
+		
+		if (track != null) {
+			Duration duration = track.getDuration();
+			milis = BindingsUtils.durationToMilis(duration);
+		} else {
+			milis = 0.0;
+		}
+
 		sliTrackProgress.setMax(milis);
 	}
 
@@ -148,10 +154,10 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////
-//
-//	public void showPlaylistButtAction() {
-//		actions.showPlaylist();
-//	}
+	//
+	// public void showPlaylistButtAction() {
+	// actions.showPlaylist();
+	// }
 
 	public void newBundleButtAction() {
 		actions.startNewBundle();

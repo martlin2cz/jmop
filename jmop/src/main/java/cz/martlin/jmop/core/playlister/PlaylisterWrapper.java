@@ -119,6 +119,8 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void runtimeChanged(PlaylistRuntime runtime) {
+		System.out.println("Runtime  changed, has " + runtime.toTracklist().count() + " tracks");
+		
 		Tracklist tracks = runtime.toTracklist();
 		int currentIndex = runtime.currentTrackIndex();
 

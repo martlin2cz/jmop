@@ -1,6 +1,7 @@
 package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -127,7 +128,7 @@ public class DefaultLocalSource implements BaseLocalSource {
 
 	@Override
 	public boolean exists(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
-		LOG.info("Checking existence of track " + track.getTitle() + " in " + location + " as " + format);
+		LOG.info("Checking existence of track " + (track != null ? track.getTitle() : null) + " in " + location + " as " + format);
 		try {
 			return existsInternal(track, location, format);
 		} catch (IOException e) {
@@ -175,7 +176,9 @@ public class DefaultLocalSource implements BaseLocalSource {
 	private Bundle getBundleInternal(String name) throws IOException {
 		String bundleDirName = fileSystem.bundleDirectoryName(name);
 		PlaylistFileData data = loadAllTracksPlaylistMetadata(bundleDirName);
-		
+		if (data == null) {
+			throw new FileNotFoundException("All tracks playlist not found");
+		}
 		SourceKind kind = data.getKind();
 		Bundle bundle = new Bundle(kind, name);
 		

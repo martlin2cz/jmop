@@ -59,7 +59,6 @@ public class TrackPane extends VBox {
 
 	private void trackChanged(Track newTrack) {
 		Platform.runLater(() -> {
-			System.out.println("TrackPane[" + getFont().getSize() + "].trackChanged() to " + newTrack);
 			if (newTrack != null) {
 				changeToTrack(newTrack);
 			} else {

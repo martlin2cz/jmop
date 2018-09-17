@@ -23,14 +23,16 @@ public class JMOPPlaying {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public void startPlayingPlaylist(Playlist playlist) throws JMOPSourceException {
+	public void startPlayingPlaylist(Playlist playlist, boolean startPlaying) throws JMOPSourceException {
 		if (currentPlaylist != null) {
 			engine.stopPlayingPlaylist(currentPlaylist);
 		}
 		
 		engine.startPlayingPlaylist(playlist);
-		startPlaying();
-
+		
+		if (startPlaying) {
+			startPlaying();
+		}
 	}
 
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
@@ -68,6 +70,10 @@ public class JMOPPlaying {
 
 	public void addToPlaylist(Track track) {
 		engine.add(track);
+	}
+
+	public void playTrack(int index) throws JMOPSourceException {
+		engine.play(index);
 	}
 
 }

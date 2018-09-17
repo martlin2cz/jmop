@@ -14,11 +14,17 @@ public class Tracklist {
 	public Tracklist(List<Track> tracks) {
 		super();
 		this.tracks = tracks;
-	}
+	} //////////////////////////////////////////////////////////////////////////////////////
 
 	public List<Track> getTracks() {
 		return tracks;
 	}
+
+	public int count() {
+		return tracks.size();
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public int hashCode() {
@@ -50,6 +56,7 @@ public class Tracklist {
 		return "Tracklist" + tracks + "";
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////
 	public String toHumanString() {
 		StringBuilder stb = new StringBuilder();
 

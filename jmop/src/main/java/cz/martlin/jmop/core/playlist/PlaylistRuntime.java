@@ -64,7 +64,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	public Track nextToBePlayed() {
 		return remaining.peek();
 	}
-	
+
 	public Track lastWasPlayed() {
 		return played.peek();
 	}
@@ -81,21 +81,25 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 
 	public Track nextToPlay() {
 		Track track = remaining.pop();
+		played.push(track);
+
 		fireValueChangedEvent();
 		return track;
 	}
 
 	public Track lastPlayed() {
 		Track track = played.pop();
+		remaining.push(track);
+
 		fireValueChangedEvent();
 		return track;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	public void markPlayedUpTo(int index) {
+	public void markPlayedUpTo(int index) {//TODO TESME !!!
 		List<Track> all = listAll();
 		List<Track> newPlayed = all.subList(0, index);
-		List<Track> newRemaining = all.subList(index + 1, 0);
+		List<Track> newRemaining = all.subList(index + 1, all.size() - 1);
 
 		played.clear();
 		played.addAll(newPlayed);
@@ -127,7 +131,39 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	private Track getOrRemove(int index, boolean remove) {
-		throw new UnsupportedOperationException("popUp");
+		if (index < played.size()) {
+			return getOrRemove(played, index, remove);
+		} else {
+			return getOrRemove(remaining, index, remove);
+		}
+	}
+
+	private static Track getOrRemove(Deque<Track> queue, int index, boolean remove) {
+		Track track = get(queue, index);
+		if (remove) {
+			queue.remove(index);
+		}
+		return track;
+	}
+
+	private static Track getOrRemove(Stack<Track> stack, int index, boolean remove) {
+		if (remove) {
+			return stack.remove(index);
+		} else {
+			return stack.get(index);
+		}
+	}
+
+	private static Track get(Deque<Track> queue, int index) {
+		int i = 0;
+		for (Track track : queue) {
+			if (i == index) {
+				return track;
+			}
+
+			i++;
+		}
+		return null;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
