@@ -1,11 +1,9 @@
 package cz.martlin.jmop.core.playlist;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
+import java.util.stream.Collectors;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
@@ -13,159 +11,136 @@ import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.ObservableObject;
 
 public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
-	private final Stack<Track> played;
-	private final Deque<Track> remaining;
+	private final List<Track> tracks;
+	private int currentTrack;
 
 	public PlaylistRuntime() {
-		this.played = new Stack<>();
-		this.remaining = new LinkedList<>();
+		this.tracks = new LinkedList<>();
+		this.currentTrack = 0;
 	}
 
 	public PlaylistRuntime(List<Track> tracks) {
-		this.played = new Stack<>();
-		this.remaining = new LinkedList<>(tracks);
-	}
-
-	public Tracklist toTracklist() {
-		List<Track> tracks = listAll();
-		return new Tracklist(tracks);
-	}
-
-	public int currentTrackIndex() {
-		return playedCount() + 1;
-	}
-
-	public List<Track> listAll() {
-		final int size = played.size() + remaining.size();
-		List<Track> all = new ArrayList<>(size);
-
-		all.addAll(played);
-		all.addAll(remaining);
-
-		return Collections.unmodifiableList(all);
-	}
-
-	public Track get(int index) {
-		return getOrRemove(index, false);
+		this.tracks = new LinkedList<>(tracks);
+		this.currentTrack = 0;
 	}
 
 	public int count() {
-		return played.size() + remaining.size();
+		return tracks.size();
+	}
+
+	public int currentTrackIndex() {
+		return currentTrack;
 	}
 
 	public int playedCount() {
-		return played.size();
+		return currentTrack;
 	}
 
 	public int remainingCount() {
-		return remaining.size();
+		return tracks.size() - currentTrack - 1;
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////
+
+	public Track get(int index) {
+		return tracks.get(index);
 	}
 
 	public Track nextToBePlayed() {
-		return remaining.peek();
+		return tracks.get(currentTrack + 1);
+	}
+
+	public Track current() {
+		return tracks.get(currentTrack);
 	}
 
 	public Track lastWasPlayed() {
-		return played.peek();
+		return tracks.get(currentTrack - 1);
+	}
+
+	public Tracklist toTracklist() {
+		return new Tracklist(tracks);
+	}
+
+	public List<Track> played() {
+		return tracks.subList(0, currentTrack);
+	}
+
+	public List<Track> toBePlayed() {
+		return tracks.subList(currentTrack + 1, count());
+	}
+
+	public List<Track> listAll() {
+		return Collections.unmodifiableList(tracks);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	public boolean hasNextToPlay() {
-		return !remaining.isEmpty();
+		return remainingCount() > 0;
 	}
 
 	public boolean hasPlayed() {
-		return !played.isEmpty();
+		return playedCount() > 0;
 	}
 
-	public Track nextToPlay() {
-		Track track = remaining.pop();
-		played.push(track);
-
+	public Track toNext() {
+		currentTrack++;
 		fireValueChangedEvent();
-		return track;
+
+		return current();
 	}
 
-	public Track lastPlayed() {
-		Track track = played.pop();
-		remaining.push(track);
-
+	public Track toPrevious() {
+		currentTrack--;
 		fireValueChangedEvent();
-		return track;
+
+		return current();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	public void markPlayedUpTo(int index) {//TODO TESME !!!
-		List<Track> all = listAll();
-		List<Track> newPlayed = all.subList(0, index);
-		List<Track> newRemaining = all.subList(index + 1, all.size() - 1);
-
-		played.clear();
-		played.addAll(newPlayed);
-
-		remaining.clear();
-		remaining.addAll(newRemaining);
+	public void markPlayedUpTo(int index) {
+		currentTrack = index;
 
 		fireValueChangedEvent();
 	}
 
 	public void popUp(int index) {
-		Track track = getOrRemove(index, true);
-		remaining.addLast(track);
+		Track track = tracks.remove(index);
+
+		if (index < currentTrack) {
+			currentTrack--;
+		}
+		tracks.add(currentTrack, track);
 
 		fireValueChangedEvent();
 	}
 
 	public void append(Track track) {
-		remaining.push(track);
+		tracks.add(track);
+
+		fireValueChangedEvent();
 	}
 
 	public void replaceRest(Track track) {
-		remaining.clear();
-		remaining.push(track);
+		int start = currentTrack + 1;
+		int end = count();
+
+		tracks.subList(start, end).clear();
+
+		tracks.add(track);
 
 		fireValueChangedEvent();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-
-	private Track getOrRemove(int index, boolean remove) {
-		if (index < played.size()) {
-			return getOrRemove(played, index, remove);
-		} else {
-			return getOrRemove(remaining, index, remove);
-		}
+	@Override
+	public String toString() {
+		return "PlaylistRuntime [count=" + count() + ", currentTrackIndex=" + currentTrackIndex() //
+				+ ", played=" + played().stream().map((t) -> t.getTitle()).collect(Collectors.joining(",")) //
+				+ ", current=" + current().getTitle() //
+				+ ", toBePlayed=" + toBePlayed().stream().map((t) -> t.getTitle()).collect(Collectors.joining(",")) //
+				+ "]";
 	}
-
-	private static Track getOrRemove(Deque<Track> queue, int index, boolean remove) {
-		Track track = get(queue, index);
-		if (remove) {
-			queue.remove(index);
-		}
-		return track;
-	}
-
-	private static Track getOrRemove(Stack<Track> stack, int index, boolean remove) {
-		if (remove) {
-			return stack.remove(index);
-		} else {
-			return stack.get(index);
-		}
-	}
-
-	private static Track get(Deque<Track> queue, int index) {
-		int i = 0;
-		for (Track track : queue) {
-			if (i == index) {
-				return track;
-			}
-
-			i++;
-		}
-		return null;
-	}
-
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	public static PlaylistRuntime of(Tracklist tracklist) {
@@ -177,4 +152,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 		List<Track> tracks = playlist.getTracks().getTracks();
 		return new PlaylistRuntime(tracks);
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////
+
 }
