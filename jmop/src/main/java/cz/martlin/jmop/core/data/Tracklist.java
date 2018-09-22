@@ -13,7 +13,7 @@ public class Tracklist {
 
 	public Tracklist(List<Track> tracks) {
 		super();
-		this.tracks = tracks;
+		this.tracks = new ArrayList<>(tracks);
 	} //////////////////////////////////////////////////////////////////////////////////////
 
 	public List<Track> getTracks() {

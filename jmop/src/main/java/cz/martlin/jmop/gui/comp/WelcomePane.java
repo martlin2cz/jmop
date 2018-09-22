@@ -52,7 +52,7 @@ public class WelcomePane extends VBox implements Initializable, RequiresJMOP {
 	}
 
 	private void initBindings() {
-		Bindings.bindContent(dwnldPane.tasksProperty(), jmop.getData().currentDownloadTasksProperty());
+		Bindings.bindContent(dwnldPane.tasksProperty(), jmop.getData().currentOperationsProperty());
 
 		this.visibleProperty().addListener((observable, oldVal, newVal) -> onVisibilityChanged(newVal));
 
@@ -60,7 +60,7 @@ public class WelcomePane extends VBox implements Initializable, RequiresJMOP {
 
 	private void onVisibilityChanged(boolean newVisible) {
 		if (!newVisible) {
-			Bindings.unbindContent(dwnldPane.tasksProperty(), jmop.getData().currentDownloadTasksProperty());
+			Bindings.unbindContent(dwnldPane.tasksProperty(), jmop.getData().currentOperationsProperty());
 		}
 	}
 }

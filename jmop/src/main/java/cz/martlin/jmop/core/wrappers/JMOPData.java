@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.preparer.operations.base.OperationWrapper;
 import cz.martlin.jmop.core.sources.download.PreparerTask;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -58,10 +59,13 @@ public class JMOPData {
 		return jmop.getPlaying().getEngine().getPlayer().timeProperty();
 	}
 
-	// public ObservableList<BaseTrackOperation<?, ?>>
-	// currentDownloadTasksProperty() {
+	@Deprecated
 	public ObservableList<PreparerTask> currentDownloadTasksProperty() {
 		return FXCollections.observableArrayList();	//FIXME
+	}
+	
+	public ObservableList<OperationWrapper<?, ?>> currentOperationsProperty() {
+		return jmop.getSources().getPreparer().currentOperations();
 	}
 
 }

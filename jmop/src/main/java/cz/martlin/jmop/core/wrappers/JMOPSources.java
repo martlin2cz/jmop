@@ -19,6 +19,10 @@ public class JMOPSources {
 		this.local = local;
 		this.preparer = preparer;
 	}
+	
+	public TrackPreparer getPreparer() {
+		return preparer;
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

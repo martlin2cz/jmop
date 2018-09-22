@@ -1,5 +1,6 @@
 package cz.martlin.jmop.core.preparer;
 
+import java.util.LinkedList;
 import java.util.function.Consumer;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
@@ -9,48 +10,57 @@ import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.playlister.BasePlaylister;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
-import cz.martlin.jmop.core.preparer.operations.BaseTrackOperation;
-import cz.martlin.jmop.core.preparer.operations.DownloadAndConvertOperation;
-import cz.martlin.jmop.core.preparer.operations.NextTrackLoadInstance;
-import cz.martlin.jmop.core.preparer.operations.TrackQueryInstance;
-import cz.martlin.jmop.core.preparer.operations.TrackQueryInstance.SearchData;
+import cz.martlin.jmop.core.preparer.operations.Operations;
+import cz.martlin.jmop.core.preparer.operations.TrackSearchOperation.SearchData;
+import cz.martlin.jmop.core.preparer.operations.base.BaseOperation;
+import cz.martlin.jmop.core.preparer.operations.base.OperationWrapper;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class TrackPreparer {
 
-	private final DownloadAndConvertOperation files;
-	private final TrackQueryInstance query;
-	private final NextTrackLoadInstance nexts;
+	private final Operations operations;
+
+	private final ObservableList<OperationWrapper<?, ?>> currentTasks;
 
 	public TrackPreparer(BaseConfiguration config, AbstractRemoteSource remote, BaseLocalSource local,
 			AbstractTrackFileLocator locator, BaseSourceDownloader downloader, BaseSourceConverter converter,
 			BasePlayer player) {
 
-		this.files = new DownloadAndConvertOperation(config, locator, local, downloader, converter, player);
+		this.operations = new Operations(config, locator, remote, local, downloader, converter, player);
 
-		this.query = new TrackQueryInstance(config, remote, locator, local, downloader, converter, player);
+		this.currentTasks = FXCollections.observableList(new LinkedList<>());
+	}
 
-		this.nexts = new NextTrackLoadInstance(config, remote, locator, local, downloader, converter, player);
+	public ObservableList<OperationWrapper<?, ?>> currentOperations() {
+		return currentTasks;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	public void startSearchAndLoadInBg(Bundle bundle, String query, PlayerEngine engine) {
 		SearchData data = new SearchData(bundle, query);
-		runInBackground(this.query, data, (t) -> appendAndStartPlaying(t, engine));
+		BaseOperation<SearchData, Track> search = operations.searchAndLoadOperation();
+
+		runInBackground(search, data, (t) -> appendAndStartPlaying(t, engine));
 	}
 
 	public void startSearchAndLoadInBg(Bundle bundle, String query, Consumer<Track> onLoaded) {
 		SearchData data = new SearchData(bundle, query);
-		runInBackground(this.query, data, (t) -> onLoaded.accept(t));
+		BaseOperation<SearchData, Track> search = operations.searchAndLoadOperation();
+
+		runInBackground(search, data, (t) -> onLoaded.accept(t));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	public void startLoadingNextOf(Track track, PlayerEngine engine) {
-		runInBackground(this.nexts, track, (t) -> append(t, engine));
+		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
+
+		runInBackground(nexts, track, (t) -> append(t, engine));
 	}
 
 	/**
@@ -61,28 +71,37 @@ public class TrackPreparer {
 	 * @param addTo
 	 */
 	public void startLoadingNextOfInBg(Track track, BasePlaylister addTo) {
-		runInBackground(this.nexts, track, (t) -> append(t, addTo));
+		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
+
+		runInBackground(nexts, track, (t) -> append(t, addTo));
 	}
 
 	public void startLoadingNextOfInBg(Track track, Consumer<Track> onLoaded) {
-		runInBackground(this.nexts, track, (t) -> onLoaded.accept(t));
+		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
+
+		runInBackground(nexts, track, (t) -> onLoaded.accept(t));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	public void checkAndLoadTrack(Track track) {
-		runInForeground(this.files, track);
+		BaseOperation<Track, Track> load = operations.loadOperation();
+
+		runInForeground(load, track);
 	}
 
-
-	@Deprecated
-	public void checkAndStartLoadingTrack(Track track, PlayerEngine engine) {
-		runInBackground(this.files, track, (t) -> append(t, engine));
-	}
-	
-	@Deprecated
-	public void checkAndStartLoadingTrack(Track track, Consumer<Track> onLoaded) {
-		runInBackground(this.files, track, (t) -> onLoaded.accept(t));
-	}
+//	@Deprecated
+//	public void checkAndStartLoadingTrack(Track track, PlayerEngine engine) {
+//		BaseOperation<Track, Track> load = operations.loadOperation();
+//
+//		runInForeground(load, track, (t) -> append(t, engine));
+//	}
+//
+//	@Deprecated
+//	public void checkAndStartLoadingTrack(Track track, Consumer<Track> onLoaded) {
+//		BaseOperation<Track, Track> load = operations.loadOperation();
+//
+//		runInForeground(load, track, (t) -> onLoaded.accept(t));
+//	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -115,29 +134,46 @@ public class TrackPreparer {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private static <IT, OT> void runInBackground(BaseTrackOperation<IT, OT> operation, IT data,
-			Consumer<OT> onCompleted) {
+	private <IT, OT> void runInBackground(BaseOperation<IT, OT> operation, IT data, Consumer<OT> onCompleted) {
+		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
+		
+		TrackOperationTask<IT, OT> task = new TrackOperationTask<>(wrapper, data);
+		
+		currentTasks.add(wrapper);
 
-		PreparationInstanceTask<IT, OT> task = new PreparationInstanceTask<>(operation, data);
-
-		task.setOnSucceeded((e) -> onCompleted.accept(task.getValue()));
+		task.setOnSucceeded((e) -> taskInBgCompleted(task, onCompleted));
 		// TODO task.setOnError ....
-
-		// TODO running tasks . add ( task )
 
 		Thread thr = new Thread(task, "TrackOperationTaskThread");
 		thr.start();
 	}
-	
-	private static <IT, OT> void runInForeground(BaseTrackOperation<IT, OT> operation, IT data) {
-		PreparationInstanceTask<IT, OT> task = new PreparationInstanceTask<>(operation, data);
+
+	private <IT, OT> void runInForeground(BaseOperation<IT, OT> operation, IT data) {
+OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
+		
+		TrackOperationTask<IT, OT> task = new TrackOperationTask<>(wrapper, data);
+		
+		currentTasks.add(wrapper);
 
 		// TODO task.setOnError ....
-		
+
 		task.run();
 
-		// TODO running tasks . add ( task )
-		
+		taskInFgCompleted(task);
+
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	private <IT, OT> void taskInBgCompleted(TrackOperationTask<IT, OT> task, Consumer<OT> onCompleted) {
+		OT result = task.getValue();
+		onCompleted.accept(result);
+
+		currentTasks.remove(task);
+	}
+
+	private <IT, OT> void taskInFgCompleted(TrackOperationTask<IT, OT> task) {
+		currentTasks.remove(task);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
+
 }

@@ -3,11 +3,9 @@ package cz.martlin.jmop.gui.comp;
 import java.io.IOException;
 import java.util.List;
 
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.sources.download.PreparerTask;
+import cz.martlin.jmop.core.preparer.TrackOperationTask;
+import cz.martlin.jmop.core.preparer.operations.base.OperationWrapper;
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
@@ -18,8 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.HBox;
-import javafx.util.Duration;
 
+//TODO RENAME !!! (all inc. the labels and fields)
 public class DownloadPane extends HBox {
 
 	@FXML
@@ -31,12 +29,9 @@ public class DownloadPane extends HBox {
 	@FXML
 	private Label lblAnothers;
 
-	@Deprecated
-	private ObjectProperty<PreparerTask> taskProperty;
+	private ObservableList<OperationWrapper<?, ?>> tasksProperty;
 
-	private ObservableList<PreparerTask> tasksProperty;
-
-	private PreparerTask shownTask;
+	private OperationWrapper<?, ?> shownTask;
 
 	public DownloadPane() throws IOException {
 		super();
@@ -46,12 +41,7 @@ public class DownloadPane extends HBox {
 		changeToNoTask();
 	}
 
-	@Deprecated
-	public ObjectProperty<PreparerTask> taskProperty() {
-		return taskProperty;
-	}
-
-	public ObservableList<PreparerTask> tasksProperty() {
+	public ObservableList<OperationWrapper<?, ?>> tasksProperty() {
 		return tasksProperty;
 	}
 
@@ -75,12 +65,12 @@ public class DownloadPane extends HBox {
 		// taskChanged(newVal));
 
 		this.tasksProperty = FXCollections.observableArrayList();
-		this.tasksProperty.addListener((ListChangeListener<PreparerTask>) (ch) -> tasksChanged(ch));
+		this.tasksProperty.addListener((ListChangeListener<OperationWrapper<?, ?>>) (ch) -> tasksChanged(ch));
 
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void tasksChanged(Change<? extends PreparerTask> change) {
+	private void tasksChanged(Change<? extends OperationWrapper<?, ?>> change) {
 		Platform.runLater(() -> {
 			change.next();
 
@@ -93,8 +83,8 @@ public class DownloadPane extends HBox {
 		});
 	}
 
-	private void handleTasksAdded(Change<? extends PreparerTask> change) {
-		List<? extends PreparerTask> tasks = change.getList();
+	private void handleTasksAdded(Change<? extends OperationWrapper<?, ?>> change) {
+		List<? extends OperationWrapper<?, ?>> tasks = change.getList();
 
 		if (shownTask == null) {
 			showFirstTask(change);
@@ -103,10 +93,10 @@ public class DownloadPane extends HBox {
 		}
 	}
 
-	private void handleTasksRemoved(Change<? extends PreparerTask> change) {
-		List<? extends PreparerTask> tasks = change.getList();
+	private void handleTasksRemoved(Change<? extends OperationWrapper<?, ?>> change) {
+		List<? extends OperationWrapper<?, ?>> tasks = change.getList();
 
-		List<? extends PreparerTask> removedTasks = change.getRemoved();
+		List<? extends OperationWrapper<?, ?>> removedTasks = change.getRemoved();
 		if (removedTasks.contains(shownTask)) {
 			changeToNoTask();
 			shownTask = null;
@@ -119,36 +109,23 @@ public class DownloadPane extends HBox {
 		}
 	}
 
-	private void showFirstTask(Change<? extends PreparerTask> change) {
-		List<? extends PreparerTask> addedTasks = change.getAddedSubList();
+	private void showFirstTask(Change<? extends OperationWrapper<?, ?>> change) {
+		List<? extends OperationWrapper<?, ?>> addedTasks = change.getAddedSubList();
 		changeToFirstOf(addedTasks);
 	}
 
-	private void changeToFirstOf(List<? extends PreparerTask> addedTasks) {
-		PreparerTask addedTask = addedTasks.get(0);
+	private void changeToFirstOf(List<? extends OperationWrapper<?, ?>> addedTasks) {
+		OperationWrapper<?, ?> addedTask = addedTasks.get(0);
 		changeToTask(addedTask);
 		shownTask = addedTask;
 	}
 
-	@Deprecated
-	private void taskChanged(PreparerTask newTaskOrNull) {
-		if (newTaskOrNull != null) {
-			changeToTask(newTaskOrNull);
-		} else {
-			changeToNoTask();
-
-		}
-
-	}
-
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void changeToTask(PreparerTask task) {
+	private void changeToTask(OperationWrapper<?, ?> task) {
 		progressIndicator.progressProperty().bind(task.progressProperty());
-		lblStatus.textProperty().bind(task.messageProperty());
-
-		String lblTrackText = obtainTrackLabelText(task);
-		lblTrack.textProperty().set(lblTrackText);
+		lblStatus.textProperty().bind(task.statusProperty());
+		lblTrack.textProperty().bind(task.dataProperty());
 
 		this.setVisible(true);
 	}
@@ -179,14 +156,8 @@ public class DownloadPane extends HBox {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private String obtainTrackLabelText(PreparerTask task) {
-		Track track = task.getTrack();
-
-		String title = track.getTitle();
-		Duration duration = track.getDuration();
-		String durationStr = DurationUtilities.toHumanString(duration);
-
-		return title + " (" + durationStr + ")";
+	private String obtainTrackLabelText(TrackOperationTask<?, ?> task) {
+		return null; //XXX
 	}
 
 }

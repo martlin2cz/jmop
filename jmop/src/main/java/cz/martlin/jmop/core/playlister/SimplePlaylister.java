@@ -44,13 +44,13 @@ public abstract class SimplePlaylister implements BasePlaylister {
 
 	@Override
 	public Track obtainPrevious() {
-		Track track = runtime.lastPlayed();
+		Track track = runtime.toPrevious();
 		return track;
 	}
 
 	@Override
 	public Track obtainNext() {
-		Track track = runtime.nextToPlay();
+		Track track = runtime.toNext();
 		return track;
 	}
 
@@ -58,7 +58,7 @@ public abstract class SimplePlaylister implements BasePlaylister {
 
 	@Override
 	public Track nextToPlay() {
-		return runtime.nextToBePlayed();
+		return runtime.current();
 	}
 	
 	@Override

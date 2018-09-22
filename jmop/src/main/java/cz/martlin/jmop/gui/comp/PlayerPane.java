@@ -82,7 +82,7 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 		trpnNextTrack.trackProperty().bind(jmop.getData().nextTrackProperty());
 
 		playlistAndBundlePane.playlistProperty().bind(jmop.getData().playlistProperty());
-		Bindings.bindContent(dwnldPane.tasksProperty(), jmop.getData().currentDownloadTasksProperty());
+		Bindings.bindContent(dwnldPane.tasksProperty(), jmop.getData().currentOperationsProperty());
 
 		playStopButt.firstStateProperty().bind(jmop.getData().stoppedProperty());
 		pauseResumeButt.firstStateProperty().bind(jmop.getData().pausedProperty());
