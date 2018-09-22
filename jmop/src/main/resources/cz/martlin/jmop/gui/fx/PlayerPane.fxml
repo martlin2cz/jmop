@@ -7,11 +7,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<?import cz.martlin.jmop.gui.comp.OperationsPane?>
 <?import cz.martlin.jmop.gui.comp.GuiChangableSlider?>
 <?import cz.martlin.jmop.gui.comp.TrackPane?>
 <?import cz.martlin.jmop.gui.comp.TwoStateButton?>
-<?import cz.martlin.jmop.gui.comp.PlaylistAndBundlePane?>
+
 
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -31,8 +30,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Background?>
 
-<GridPane prefHeight="280.0" prefWidth="640.0" minWidth="240.0"
-	minHeight="240.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" hgap="5" vgap="5">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60"
+	prefHeight="150.0" minHeight="150.0" prefWidth="640.0" minWidth="240.0"
+	hgap="5" vgap="5">
 
 	<fx:define>
 		<Double fx:id="BUTTONS_ICON_SIZE" fx:value="42.0" />
@@ -53,8 +53,6 @@
 			prefHeight="$BUTTONS_HEIGHT" vgrow="NEVER" />
 		<RowConstraints maxHeight="$BUTTONS_HEIGHT" minHeight="$BUTTONS_HEIGHT"
 			prefHeight="$BUTTONS_HEIGHT" vgrow="NEVER" />
-		<RowConstraints minHeight="60.0" prefHeight="60.0"
-			vgrow="SOMETIMES" />
 	</rowConstraints>
 
 	<children>
@@ -166,15 +164,6 @@
 		<!-- Next track pane -->
 		<TrackPane fx:id="trpnNextTrack" minWidth="40.0"
 			GridPane.columnIndex="2" GridPane.rowIndex="2" />
-
-		<!-- Playlist and bundle pane -->
-		<PlaylistAndBundlePane fx:id="playlistAndBundlePane"
-			prefHeight="40.0" GridPane.columnSpan="2" GridPane.columnIndex="0"
-			GridPane.rowIndex="3" />
-
-		<!-- Download pane -->
-		<OperationsPane fx:id="operationsPane" prefHeight="40.0"
-			GridPane.columnIndex="2" GridPane.rowIndex="3" />
 
 	</children>
 

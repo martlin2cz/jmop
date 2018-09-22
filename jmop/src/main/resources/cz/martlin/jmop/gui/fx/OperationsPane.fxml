@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Tooltip?>
 
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
@@ -12,12 +13,22 @@
 	<children>
 		<ProgressIndicator fx:id="progressIndicator"
 			prefHeight="50.0" prefWidth="35.0" progress="0.0" />
-			
+
 		<VBox prefHeight="55.0" prefWidth="260.0" spacing="2.0">
 			<children>
-				<Label fx:id="lblStatus" text="status" />
-				<Label fx:id="lblData" text="data" />
-				<Label fx:id="lblAnothers" text="+ another 0" />
+				<Label fx:id="lblStatus" text="status">
+				</Label>
+
+				<Label fx:id="lblData" text="data">
+					<tooltip>
+						<Tooltip />
+					</tooltip>
+				</Label>
+				<Label fx:id="lblAnothers" text="+ another 0">
+					<tooltip>
+						<Tooltip />
+					</tooltip>
+				</Label>
 			</children>
 		</VBox>
 	</children>

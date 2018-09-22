@@ -82,7 +82,7 @@ public class MainMenuController implements Initializable {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	private void initializeBindings(JMOPPlayer jmop) {
-		final BooleanBinding hasNoPlaylist = jmop.getData().hasActiveBundleAndPlaylistProperty().not();
+		final BooleanBinding hasNoPlaylist = jmop.getData().inPlayModeProperty().not();
 
 		miStop.disableProperty().bind(jmop.getData().stoppedProperty().or(hasNoPlaylist));
 		miPlay.disableProperty().bind(jmop.getData().stoppedProperty().not().or(hasNoPlaylist));

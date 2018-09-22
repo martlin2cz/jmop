@@ -124,8 +124,10 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	public void replaceRest(Track track) {
 		int start = currentTrack + 1;
 		int end = count();
-
-		tracks.subList(start, end).clear();
+		
+		if (start < end) {
+			tracks.subList(start, end).clear();
+		}
 
 		tracks.add(track);
 

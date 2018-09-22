@@ -2,6 +2,8 @@ package cz.martlin.jmop.core.preparer.operations.base;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -20,15 +22,15 @@ public class OperationWrapper<IT, OT> implements OperationChangeListener {
 		this.progress = new SimpleDoubleProperty();
 	}
 
-	public StringProperty statusProperty() {
+	public ReadOnlyStringProperty statusProperty() {
 		return status;
 	}
 
-	public StringProperty dataProperty() {
+	public ReadOnlyStringProperty dataProperty() {
 		return data;
 	}
 
-	public DoubleProperty progressProperty() {
+	public ReadOnlyDoubleProperty progressProperty() {
 		return progress;
 	}
 

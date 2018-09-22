@@ -2,9 +2,11 @@ package cz.martlin.jmop.gui.comp;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cz.martlin.jmop.core.preparer.operations.base.OperationWrapper;
 import javafx.application.Platform;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
@@ -28,7 +30,6 @@ public class OperationsPane extends HBox {
 	private Label lblAnothers;
 
 	private ObservableList<OperationWrapper<?, ?>> operationsProperty;
-
 	private OperationWrapper<?, ?> shownOperation;
 
 	public OperationsPane() throws IOException {
@@ -87,7 +88,7 @@ public class OperationsPane extends HBox {
 		if (shownOperation == null) {
 			showFirstOperation(change);
 		} else {
-			changeAnothers(operations.size());
+			changeAnothers(operations.size(), operations);
 		}
 	}
 
@@ -103,7 +104,7 @@ public class OperationsPane extends HBox {
 				changeToFirstOf(operations);
 			}
 		} else {
-			changeAnothers(operations.size());
+			changeAnothers(operations.size(), operations);
 		}
 	}
 
@@ -124,6 +125,7 @@ public class OperationsPane extends HBox {
 		progressIndicator.progressProperty().bind(operation.progressProperty());
 		lblStatus.textProperty().bind(operation.statusProperty());
 		lblData.textProperty().bind(operation.dataProperty());
+		lblData.getTooltip().textProperty().bind(operation.dataProperty());
 
 		this.setVisible(true);
 	}
@@ -131,16 +133,19 @@ public class OperationsPane extends HBox {
 	private void changeToNoOperation() {
 		this.setVisible(false);
 		lblAnothers.setVisible(false);
+		lblAnothers.getTooltip().textProperty().unbind();
 
 		progressIndicator.progressProperty().unbind();
 		lblStatus.textProperty().unbind();
 		lblData.textProperty().unbind();
+		lblData.getTooltip().textProperty().unbind();
 
 		lblStatus.textProperty().set("-");
 		lblData.textProperty().set("-");
+		lblData.getTooltip().setText("-");
 	}
 
-	private void changeAnothers(int operationsCount) {
+	private void changeAnothers(int operationsCount, List<? extends OperationWrapper<?, ?>> operations) {
 		if (operationsCount > 1) {
 			int anothers = operationsCount - 1;
 			lblAnothers.setText(" + " + anothers + " more");
@@ -149,8 +154,39 @@ public class OperationsPane extends HBox {
 			lblAnothers.setVisible(false);
 			lblAnothers.setText(" + no more");
 		}
-		// TODO: tooltip of their list
+
+		if (lblAnothers.getTooltip().textProperty().isBound()) {
+			lblAnothers.getTooltip().textProperty().unbind();
+		}
+		lblAnothers.getTooltip().textProperty().bind(new OperationsListTooltipTextBinding(operations));
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static class OperationsListTooltipTextBinding extends StringBinding {
+
+		private final List<? extends OperationWrapper<?, ?>> operations;
+
+		public OperationsListTooltipTextBinding(List<? extends OperationWrapper<?, ?>> operations) {
+			super();
+
+			this.operations = operations;
+			bindTheOperations();
+		}
+
+		private void bindTheOperations() {
+			operations.forEach((o) -> {
+				bind(o.statusProperty());
+				bind(o.dataProperty());
+			});
+		}
+
+		@Override
+		protected String computeValue() {
+			return operations.stream() //
+					.map((o) -> o.statusProperty().get() + ": " + o.dataProperty().get()) //
+					.collect(Collectors.joining("\n"));
+		}
+
+	}
 }

@@ -95,7 +95,7 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	private void initializeBindings() {
-		final BooleanBinding hasNoPlaylist = jmop.getData().hasActiveBundleAndPlaylistProperty().not();
+		final BooleanBinding hasNoPlaylist = jmop.getData().inPlayModeProperty().not();
 
 		miStop.disableProperty().bind(jmop.getData().stoppedProperty().or(hasNoPlaylist));
 		miPlay.disableProperty().bind(jmop.getData().stoppedProperty().not().or(hasNoPlaylist));

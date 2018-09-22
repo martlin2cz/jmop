@@ -13,7 +13,7 @@ import javafx.util.Duration;
 
 public class PlayerEngine {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
+
 	private final PlaylisterWrapper playlister;
 	private final TrackPreparer preparer;
 	private final PlayerWrapper player;
@@ -23,10 +23,9 @@ public class PlayerEngine {
 		this.playlister = playlister;
 		this.preparer = preparer;
 		this.player = player;
-		
+
 		player.setOnTrackPlayed((t) -> onTrackPlayed(t));
 	}
-
 
 	public PlaylisterWrapper getPlaylister() {
 		return playlister;
@@ -40,19 +39,20 @@ public class PlayerEngine {
 
 	public void startPlayingPlaylist(Playlist playlist) {
 		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName());
-		
+
 		playlister.startPlayingPlaylist(playlist);
 	}
 
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
-		LOG.info("Stopping to play playlist " + currentPlaylist.getName() + " of bundle " + currentPlaylist.getBundle().getName());
-		
+		LOG.info("Stopping to play playlist " + currentPlaylist.getName() + " of bundle "
+				+ currentPlaylist.getBundle().getName());
+
 		playlister.stopPlayingPlaylist(currentPlaylist);
 	}
 
 	public void playNext() throws JMOPSourceException {
 		LOG.info("Playing next to play");
-		
+
 		Track track = playlister.playNext();
 		preparer.checkAndLoadTrack(track);
 		player.startPlaying(track);
@@ -60,7 +60,7 @@ public class PlayerEngine {
 
 	public void play(int index) throws JMOPSourceException {
 		LOG.info("Playing " + index + " th");
-		
+
 		Track track = playlister.play(index);
 		preparer.checkAndLoadTrack(track);
 		player.startPlaying(track);
@@ -88,7 +88,7 @@ public class PlayerEngine {
 
 	public void toNext() throws JMOPSourceException {
 		LOG.info("Playing next");
-		
+
 		Track track = playlister.toNext();
 		preparer.checkAndLoadTrack(track);
 		player.startPlaying(track);
@@ -96,7 +96,7 @@ public class PlayerEngine {
 
 	public void toPrevious() throws JMOPSourceException {
 		LOG.info("Playing previous");
-		
+
 		Track track = playlister.toNext();
 		preparer.checkAndLoadTrack(track);
 		player.startPlaying(track);
@@ -104,19 +104,27 @@ public class PlayerEngine {
 
 	public void add(Track track) {
 		LOG.info("Adding track " + track.getTitle() + ", id " + track.getIdentifier());
-		
+
 		playlister.add(track);
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void onTrackPlayed(Track track) {
 		try {
-			toNext();
+			if (hasNext()) {
+				toNext();
+			}
+			// TODO based on strategy play other ...
+			// TODO ... or Park here and wait until has next
 		} catch (JMOPSourceException e) {
 			// TODO error handling
 			e.printStackTrace();
 		}
+	}
+
+	private boolean hasNext() {
+		return playlister.hasNextProperty().get();
 	}
 
 }

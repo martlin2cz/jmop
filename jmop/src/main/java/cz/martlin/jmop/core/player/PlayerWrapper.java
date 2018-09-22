@@ -21,6 +21,7 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 	private final BooleanProperty pausedProperty;
 	private final ObjectProperty<Track> trackProperty;
 	private final ObjectProperty<Duration> timeProperty;
+	private final BooleanProperty inPlayModeProperty;
 
 	private Consumer<Track> onTrackPlayed;
 
@@ -31,6 +32,7 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 		this.pausedProperty = new SimpleBooleanProperty();
 		this.trackProperty = new SimpleObjectProperty<>();
 		this.timeProperty = new SimpleObjectProperty<>();
+		this.inPlayModeProperty = new SimpleBooleanProperty();
 		
 		initBindings();
 	}
@@ -60,6 +62,10 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 
 	public ReadOnlyObjectProperty<Duration> timeProperty() {
 		return timeProperty;
+	}
+	
+	public BooleanProperty inPlayModeProperty() {
+		return inPlayModeProperty;
 	}
 	///////////////////////////////////////////////////////////////////////////////
 
@@ -106,6 +112,9 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 
 		Duration time = player.currentTime();
 		timeProperty.set(time);
+		
+		boolean inPlayMode = inPlayModeProperty.get() || !stopped;
+		inPlayModeProperty.set(inPlayMode);
 	}
 
 	private void fireTrackPlayed() {

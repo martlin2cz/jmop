@@ -36,10 +36,6 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 	private Button prevButt;
 	@FXML
 	private TrackPane trpnNextTrack;
-	@FXML
-	private OperationsPane operationsPane;
-	@FXML
-	private PlaylistAndBundlePane playlistAndBundlePane;
 
 	private JMOPPlayer jmop;
 	private GuiComplexActionsPerformer actions;
@@ -80,9 +76,6 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 		trpnCurrentTrack.trackProperty().bind(jmop.getData().currentTrackProperty());
 		trpnNextTrack.trackProperty().bind(jmop.getData().nextTrackProperty());
-
-		playlistAndBundlePane.playlistProperty().bind(jmop.getData().playlistProperty());
-		Bindings.bindContent(operationsPane.operationsProperty(), jmop.getData().currentOperationsProperty());
 
 		playStopButt.firstStateProperty().bind(jmop.getData().stoppedProperty());
 		pauseResumeButt.firstStateProperty().bind(jmop.getData().pausedProperty());
@@ -131,7 +124,7 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 	private void trackToSliderMax(Track track) {
 		double milis;
-		
+
 		if (track != null) {
 			Duration duration = track.getDuration();
 			milis = BindingsUtils.durationToMilis(duration);

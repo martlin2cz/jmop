@@ -14,9 +14,9 @@ public class TotallyOnlinePlaylister extends SimplePlaylister {
 	}
 
 	@Override
-	public Track obtainNext() {
-		Track track = super.obtainNext();
-		
+	public Track nextToPlay() {
+		Track track = super.nextToPlay();
+
 		preparer.startLoadingNextOfInBg(track, this);
 		return track;
 	}

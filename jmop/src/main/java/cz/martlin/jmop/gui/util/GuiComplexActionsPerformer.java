@@ -126,7 +126,7 @@ public class GuiComplexActionsPerformer {
 
 
 	public void playTrack(int index) {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.playTrack(index);
 			return null;
 		});
@@ -134,43 +134,42 @@ public class GuiComplexActionsPerformer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void playButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.startPlaying();
 			return null;
 		});
 	}
 
 	public void stopButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.stopPlaying();
 			return null;
 		});
 	}
 
 	public void pauseButtAction() {
-
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.pausePlaying();
 			return null;
 		});
 	}
 
 	public void resumeButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.resumePlaying();
 			return null;
 		});
 	}
 
 	public void nextButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.toNext();
 			return null;
 		});
 	}
 
 	public void prevButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.toPrevious();
 			return null;
 		});
@@ -182,7 +181,7 @@ public class GuiComplexActionsPerformer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void exit() {
-		if (jmop.getData().hasActiveBundleAndPlaylistProperty().get() //
+		if (jmop.getData().inPlayModeProperty().get() //
 				&& jmop.getData().currentTrackProperty().isNotNull().get()) {
 			jmop.stopPlaying();
 		}
@@ -268,6 +267,32 @@ public class GuiComplexActionsPerformer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	private <T> void runInForegound(RunnableWithException<T> run) {
+		Task<T> task = new Task<T>() {
+			@Override
+			protected T call() throws Exception {
+				// Platform.runLater(() -> {
+				runAndHandleError(run);
+				// });
+				return null;
+			}
+
+		};
+
+		scene.setCursor(Cursor.WAIT);
+		task.setOnSucceeded((e) -> {
+			scene.setCursor(Cursor.DEFAULT);
+		});
+		task.setOnFailed((e) -> {
+			scene.setCursor(Cursor.DEFAULT);
+		});
+
+		task.run();
+		// Platform.runLater(() -> {
+		// runAndHandleError(run);
+		// });
+	}
+	
 	private <T> void runInBackground(RunnableWithException<T> run) {
 		Task<T> task = new Task<T>() {
 			@Override
