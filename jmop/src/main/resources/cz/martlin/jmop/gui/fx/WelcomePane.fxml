@@ -8,7 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
-<?import cz.martlin.jmop.gui.comp.DownloadPane?>
+<?import cz.martlin.jmop.gui.comp.OperationsPane?>
 
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
@@ -39,7 +39,7 @@
 			</center>
 
 			<bottom>
-				<DownloadPane fx:id="dwnldPane" prefHeight="40.0" prefWidth="120.0" />
+				<OperationsPane fx:id="operationsPane" prefHeight="40.0" prefWidth="120.0" />
 			</bottom>
 
 			<opaqueInsets>

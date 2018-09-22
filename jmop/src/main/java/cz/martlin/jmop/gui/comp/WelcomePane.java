@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 public class WelcomePane extends VBox implements Initializable, RequiresJMOP {
 
 	@FXML
-	private DownloadPane dwnldPane;
+	private OperationsPane operationsPane;
 
 	private JMOPPlayer jmop;
 
@@ -52,7 +52,7 @@ public class WelcomePane extends VBox implements Initializable, RequiresJMOP {
 	}
 
 	private void initBindings() {
-		Bindings.bindContent(dwnldPane.tasksProperty(), jmop.getData().currentOperationsProperty());
+		Bindings.bindContent(operationsPane.operationsProperty(), jmop.getData().currentOperationsProperty());
 
 		this.visibleProperty().addListener((observable, oldVal, newVal) -> onVisibilityChanged(newVal));
 
@@ -60,7 +60,7 @@ public class WelcomePane extends VBox implements Initializable, RequiresJMOP {
 
 	private void onVisibilityChanged(boolean newVisible) {
 		if (!newVisible) {
-			Bindings.unbindContent(dwnldPane.tasksProperty(), jmop.getData().currentOperationsProperty());
+			Bindings.unbindContent(operationsPane.operationsProperty(), jmop.getData().currentOperationsProperty());
 		}
 	}
 }

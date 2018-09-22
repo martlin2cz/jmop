@@ -89,19 +89,20 @@ public class TrackPreparer {
 		runInForeground(load, track);
 	}
 
-//	@Deprecated
-//	public void checkAndStartLoadingTrack(Track track, PlayerEngine engine) {
-//		BaseOperation<Track, Track> load = operations.loadOperation();
-//
-//		runInForeground(load, track, (t) -> append(t, engine));
-//	}
-//
-//	@Deprecated
-//	public void checkAndStartLoadingTrack(Track track, Consumer<Track> onLoaded) {
-//		BaseOperation<Track, Track> load = operations.loadOperation();
-//
-//		runInForeground(load, track, (t) -> onLoaded.accept(t));
-//	}
+	// @Deprecated
+	// public void checkAndStartLoadingTrack(Track track, PlayerEngine engine) {
+	// BaseOperation<Track, Track> load = operations.loadOperation();
+	//
+	// runInForeground(load, track, (t) -> append(t, engine));
+	// }
+	//
+	// @Deprecated
+	// public void checkAndStartLoadingTrack(Track track, Consumer<Track>
+	// onLoaded) {
+	// BaseOperation<Track, Track> load = operations.loadOperation();
+	//
+	// runInForeground(load, track, (t) -> onLoaded.accept(t));
+	// }
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -136,44 +137,52 @@ public class TrackPreparer {
 
 	private <IT, OT> void runInBackground(BaseOperation<IT, OT> operation, IT data, Consumer<OT> onCompleted) {
 		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
-		
+
 		TrackOperationTask<IT, OT> task = new TrackOperationTask<>(wrapper, data);
-		
+
 		currentTasks.add(wrapper);
 
-		task.setOnSucceeded((e) -> taskInBgCompleted(task, onCompleted));
-		// TODO task.setOnError ....
+		task.setOnSucceeded((e) -> taskInBgCompleted(task, wrapper, onCompleted));
+		task.setOnFailed((e) -> taskFailed(task, wrapper));
 
 		Thread thr = new Thread(task, "TrackOperationTaskThread");
 		thr.start();
 	}
 
+
 	private <IT, OT> void runInForeground(BaseOperation<IT, OT> operation, IT data) {
-OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
-		
+		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
+
 		TrackOperationTask<IT, OT> task = new TrackOperationTask<>(wrapper, data);
-		
+
 		currentTasks.add(wrapper);
 
-		// TODO task.setOnError ....
+		task.setOnSucceeded((e) -> taskInFgCompleted(task, wrapper));
+		task.setOnFailed((e) -> taskFailed(task, wrapper));
 
 		task.run();
 
-		taskInFgCompleted(task);
+		taskInFgCompleted(task, wrapper);
 
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	private <IT, OT> void taskInBgCompleted(TrackOperationTask<IT, OT> task, Consumer<OT> onCompleted) {
+	private <IT, OT> void taskInBgCompleted(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper,
+			Consumer<OT> onCompleted) {
 		OT result = task.getValue();
 		onCompleted.accept(result);
 
-		currentTasks.remove(task);
+		currentTasks.remove(wrapper);
 	}
 
-	private <IT, OT> void taskInFgCompleted(TrackOperationTask<IT, OT> task) {
-		currentTasks.remove(task);
+	private <IT, OT> void taskInFgCompleted(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper) {
+		currentTasks.remove(wrapper);
 	}
+	private <IT, OT> void taskFailed(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper) {
+		//TODO report some error
+		currentTasks.remove(wrapper);
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 }

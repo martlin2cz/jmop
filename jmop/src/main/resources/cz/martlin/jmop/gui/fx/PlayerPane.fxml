@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<?import cz.martlin.jmop.gui.comp.DownloadPane?>
+<?import cz.martlin.jmop.gui.comp.OperationsPane?>
 <?import cz.martlin.jmop.gui.comp.GuiChangableSlider?>
 <?import cz.martlin.jmop.gui.comp.TrackPane?>
 <?import cz.martlin.jmop.gui.comp.TwoStateButton?>
@@ -173,7 +173,7 @@
 			GridPane.rowIndex="3" />
 
 		<!-- Download pane -->
-		<DownloadPane fx:id="dwnldPane" prefHeight="40.0"
+		<OperationsPane fx:id="operationsPane" prefHeight="40.0"
 			GridPane.columnIndex="2" GridPane.rowIndex="3" />
 
 	</children>

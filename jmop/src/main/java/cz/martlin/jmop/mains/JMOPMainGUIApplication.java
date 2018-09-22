@@ -27,6 +27,7 @@ public class JMOPMainGUIApplication extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
+		try {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/main.fxml"));
 		Parent root = loader.load();
 
@@ -44,6 +45,10 @@ public class JMOPMainGUIApplication extends Application {
 		initializeController(controller, scene);
 
 		primaryStage.show();
+		} catch (Exception e) {
+			System.err.println("Application GUI could not start: " + e.toString());
+			//TODO LOG
+		}
 	}
 
 	private void initializeController(MainFrameController controller, Scene scene) {
