@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.preparer.operations.base.OperationWrapper;
 import javafx.application.Platform;
 import javafx.beans.binding.StringBinding;
@@ -19,6 +22,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.HBox;
 
 public class OperationsPane extends HBox {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@FXML
 	private ProgressIndicator progressIndicator;
@@ -71,13 +75,17 @@ public class OperationsPane extends HBox {
 
 	private void operationsChanged(Change<? extends OperationWrapper<?, ?>> change) {
 		Platform.runLater(() -> {
-			change.next();
+			try {
+				change.next();
 
-			if (change.wasAdded()) {
-				handleOperationsAdded(change);
-			}
-			if (change.wasRemoved()) {
-				handleOperationsRemoved(change);
+				if (change.wasAdded()) {
+					handleOperationsAdded(change);
+				}
+				if (change.wasRemoved()) {
+					handleOperationsRemoved(change);
+				}
+			} catch (Exception e) {
+				LOG.warn("Could not show operations", e);
 			}
 		});
 	}
@@ -86,7 +94,7 @@ public class OperationsPane extends HBox {
 		List<? extends OperationWrapper<?, ?>> operations = change.getList();
 
 		if (shownOperation == null) {
-			showFirstOperation(change);
+			showFirstOperation(change, operations);
 		} else {
 			changeAnothers(operations.size(), operations);
 		}
@@ -108,7 +116,12 @@ public class OperationsPane extends HBox {
 		}
 	}
 
-	private void showFirstOperation(Change<? extends OperationWrapper<?, ?>> change) {
+	private void showFirstOperation(Change<? extends OperationWrapper<?, ?>> change, List<? extends OperationWrapper<?, ?>> operations) {
+		if (operations.isEmpty()) {
+			// for case of concurency failure
+			return;
+		}
+		
 		List<? extends OperationWrapper<?, ?>> addedOperations = change.getAddedSubList();
 		changeToFirstOf(addedOperations);
 	}

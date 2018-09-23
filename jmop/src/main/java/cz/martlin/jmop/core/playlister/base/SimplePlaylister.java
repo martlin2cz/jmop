@@ -1,9 +1,17 @@
-package cz.martlin.jmop.core.playlister;
+package cz.martlin.jmop.core.playlister.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
+import cz.martlin.jmop.core.playlister.PlayerEngine;
 
+/**
+ * The base playlister, which simply everything delegates to the runtime. Feel
+ * free to override some methods and add custom functionality to them.
+ * 
+ * @author martin
+ *
+ */
 public abstract class SimplePlaylister implements BasePlaylister {
 
 	private PlaylistRuntime runtime;
@@ -12,7 +20,6 @@ public abstract class SimplePlaylister implements BasePlaylister {
 		super();
 	}
 
-
 	@Override
 	public PlaylistRuntime getRuntime() {
 		return runtime;
@@ -20,7 +27,7 @@ public abstract class SimplePlaylister implements BasePlaylister {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist, PlaylistRuntime runtime) {
+	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist, PlaylistRuntime runtime) {
 		this.runtime = runtime;
 	}
 
@@ -43,24 +50,34 @@ public abstract class SimplePlaylister implements BasePlaylister {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public Track obtainPrevious() {
-		Track track = runtime.toPrevious();
-		return track;
+	public Track getPrevious() {
+		return runtime.lastWasPlayed();
 	}
 
 	@Override
-	public Track obtainNext() {
-		Track track = runtime.toNext();
-		return track;
+	public Track getCurrent() {
+		return runtime.current();
+	}
+
+	@Override
+	public Track getNext() {
+		return runtime.nextToBePlayed();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public Track nextToPlay() {
-		return runtime.current();
+	public Track toNext() {
+		Track track = runtime.toNext();
+		return track;
 	}
-	
+
+	@Override
+	public Track toPrevious() {
+		Track track = runtime.toNext();
+		return track;
+	}
+
 	@Override
 	public Track playChoosen(int index) {
 		runtime.markPlayedUpTo(index);

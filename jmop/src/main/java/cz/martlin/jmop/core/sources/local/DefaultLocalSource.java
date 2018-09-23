@@ -196,7 +196,7 @@ public class DefaultLocalSource implements BaseLocalSource {
 	private void saveBundleInternal(Bundle bundle) throws IOException {
 		String playlistName = config.getAllTracksPlaylistName();
 		Tracklist tracks = bundle.tracks();
-		Playlist playlist = new Playlist(bundle, playlistName, tracks);
+		Playlist playlist = new Playlist(bundle, playlistName, tracks, 0, true);
 		
 		savePlaylistInternal(bundle, playlist);
 	}

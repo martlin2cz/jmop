@@ -7,9 +7,9 @@ import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.player.BasePlayer;
-import cz.martlin.jmop.core.playlister.BasePlaylister;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
+import cz.martlin.jmop.core.playlister.base.BasePlaylister;
 import cz.martlin.jmop.core.preparer.operations.Operations;
 import cz.martlin.jmop.core.preparer.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.preparer.operations.base.BaseOperation;
@@ -41,6 +41,15 @@ public class TrackPreparer {
 		return currentTasks;
 	}
 
+	public boolean isCurrentlyRunningSome() {
+		return !currentTasks.isEmpty();
+	}
+	
+	public int countOfCurrentlyRunning() {
+		return currentTasks.size();
+	}
+
+
 	/////////////////////////////////////////////////////////////////////////////////////
 	public void startSearchAndLoadInBg(Bundle bundle, String query, PlayerEngine engine) {
 		SearchData data = new SearchData(bundle, query);
@@ -70,6 +79,7 @@ public class TrackPreparer {
 	 * @param track
 	 * @param addTo
 	 */
+	@Deprecated
 	public void startLoadingNextOfInBg(Track track, BasePlaylister addTo) {
 		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
 
@@ -149,7 +159,6 @@ public class TrackPreparer {
 		thr.start();
 	}
 
-
 	private <IT, OT> void runInForeground(BaseOperation<IT, OT> operation, IT data) {
 		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
 
@@ -178,8 +187,9 @@ public class TrackPreparer {
 	private <IT, OT> void taskInFgCompleted(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper) {
 		currentTasks.remove(wrapper);
 	}
+
 	private <IT, OT> void taskFailed(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper) {
-		//TODO report some error
+		// TODO report some error
 		currentTasks.remove(wrapper);
 	}
 

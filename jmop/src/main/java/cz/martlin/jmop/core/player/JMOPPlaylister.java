@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.playlister.BasePlaylister;
+import cz.martlin.jmop.core.playlister.base.BasePlaylister;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
 import javafx.util.Duration;
 

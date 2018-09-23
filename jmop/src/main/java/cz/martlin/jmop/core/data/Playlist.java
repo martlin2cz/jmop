@@ -7,12 +7,24 @@ public class Playlist extends ObservableObject<Playlist> {
 	private String name;
 	private Tracklist tracks;
 	private int currentTrackIndex;
+	private boolean locked;
+
+	public Playlist(Bundle bundle, String name, Tracklist tracks, int currentTrackIndex, boolean locked) {
+		super();
+		this.bundle = bundle;
+		this.name = name;
+		this.tracks = tracks;
+		this.currentTrackIndex = currentTrackIndex;
+		this.locked = locked;
+	}
 
 	public Playlist(Bundle bundle, String name, Tracklist tracks) {
 		super();
 		this.bundle = bundle;
 		this.name = name;
 		this.tracks = tracks;
+		this.currentTrackIndex = 0;
+		this.locked = false;
 	}
 
 	public Playlist(Bundle bundle, String name) {
@@ -20,8 +32,11 @@ public class Playlist extends ObservableObject<Playlist> {
 		this.bundle = bundle;
 		this.name = name;
 		this.tracks = new Tracklist();
+		this.currentTrackIndex = 0;
+		this.locked = false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	public Bundle getBundle() {
 		return bundle;
 	}
@@ -53,6 +68,16 @@ public class Playlist extends ObservableObject<Playlist> {
 		fireValueChangedEvent();
 	}
 
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+		fireValueChangedEvent();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -89,6 +114,7 @@ public class Playlist extends ObservableObject<Playlist> {
 		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + tracks + "]";
 	}
 
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	public String toHumanString() {
 		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" + tracks.toHumanString();
 	}

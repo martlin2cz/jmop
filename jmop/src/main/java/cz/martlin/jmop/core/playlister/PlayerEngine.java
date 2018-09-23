@@ -40,7 +40,7 @@ public class PlayerEngine {
 	public void startPlayingPlaylist(Playlist playlist) {
 		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName());
 
-		playlister.startPlayingPlaylist(playlist);
+		playlister.startPlayingPlaylist(this, playlist);
 	}
 
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
@@ -97,7 +97,7 @@ public class PlayerEngine {
 	public void toPrevious() throws JMOPSourceException {
 		LOG.info("Playing previous");
 
-		Track track = playlister.toNext();
+		Track track = playlister.toPrevious();
 		preparer.checkAndLoadTrack(track);
 		player.startPlaying(track);
 	}
@@ -115,8 +115,7 @@ public class PlayerEngine {
 			if (hasNext()) {
 				toNext();
 			}
-			// TODO based on strategy play other ...
-			// TODO ... or Park here and wait until has next
+			// TODO  Park here and wait until has next
 		} catch (JMOPSourceException e) {
 			// TODO error handling
 			e.printStackTrace();
