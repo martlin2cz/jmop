@@ -36,6 +36,10 @@ public class Playlister {
 		this.onlinePlaylister = onlinePlaylister;
 	}
 
+	public InternetConnectionStatus getConnection() {
+		return connection;
+	}
+	
 	public PlaylistRuntime getRuntime() {
 		return runtime;
 	}

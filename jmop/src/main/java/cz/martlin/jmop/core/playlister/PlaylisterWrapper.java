@@ -4,6 +4,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.BaseWrapper;
+import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import javafx.beans.property.BooleanProperty;
@@ -55,7 +56,8 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 
 	@Override
 	public void initBindings() {
-		// nothing needed here
+		InternetConnectionStatus connection = playlister.getConnection();
+		connection.addListener((observable) -> offlineChanged()); 
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +97,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	}
 
 	public Track toPrevious() throws JMOPSourceException {
-		Track track = playlister.toNext();
+		Track track = playlister.toPrevious();
 		playlisterChanged();
 		return track;
 	}
@@ -106,6 +108,12 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	private void offlineChanged() {
+		System.out.println("PlaylisterWrapper.offlineChanged()");
+		updateNextAndPreviousProperties();
+	}
+	
 	private void playlisterChanged() {
 		updatePlaylist();
 		updateNextAndPreviousProperties();

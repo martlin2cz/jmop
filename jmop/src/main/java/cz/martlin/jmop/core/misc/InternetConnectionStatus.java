@@ -11,7 +11,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
-public class InternetConnectionStatus {
+public class InternetConnectionStatus extends ObservableObject<InternetConnectionStatus> {
+
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final int timeout;
@@ -20,10 +21,11 @@ public class InternetConnectionStatus {
 
 	public InternetConnectionStatus(BaseConfiguration config) {
 		this.timeout = config.getOfflineRetryTimeout();
-		this.offline = new SimpleBooleanProperty();
+		this.offline = new SimpleBooleanProperty(false);
 	}
 
-	public ReadOnlyBooleanProperty getOfflineProperty() {
+	@Deprecated
+	public ReadOnlyBooleanProperty offlineProperty() {
 		return offline;
 	}
 
@@ -35,19 +37,26 @@ public class InternetConnectionStatus {
 	public void markOffline() {
 		LOG.info("The internet connection is offline");
 
-		offline.set(true);
 		offlineSince = Calendar.getInstance();
+
+		boolean was = offline.get();
+		if (!was) {
+			offline.set(true);
+			fireValueChangedEvent();
+		}
 	}
 
 	private void checkOfflineTimeout() {
 		boolean is = isOfflineTimeOut();
 		if (is) {
 			boolean was = offline.get();
-			if (!was) {
+			if (was) {
 				LOG.info("The internet connection could be back online");
+
+				offline.set(false);
+				fireValueChangedEvent();
 			}
-			
-			offline.set(false);
+
 		}
 	}
 

@@ -4,7 +4,6 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
-import javafx.beans.InvalidationListener;
 
 /**
  * Playlister, which *somehow* loads the next track when there are no more track
@@ -15,7 +14,7 @@ import javafx.beans.InvalidationListener;
  */
 public abstract class AbstractNextInferringPlaylister extends SimplePlaylister {
 
-	private InvalidationListener runtimeListener;
+//	private InvalidationListener runtimeListener;
 
 	public AbstractNextInferringPlaylister() {
 		super();
@@ -57,15 +56,24 @@ public abstract class AbstractNextInferringPlaylister extends SimplePlaylister {
 		return track;
 	}
 	
+	@Override
+	public boolean hasNext() {
+		if (hasAtLeastOneTrack()) {
+			Track track = super.getCurrent();
+			checkAndInferNext(track);
+		}
+		return super.hasNext();
+	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 //	private void runtimeChanged() {
-//		// FIXME this is invoked by all playlister, bot offline and online
-//		// FIXME and thats terribly wrong
+//		// this is invoked by all playlister, bot offline and online
+//		// and thats terribly wrong
 //		checkAndInferNext(); 
 //	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+
 
 	/**
 	 * Checks whether there are no more track to be played in the queue and in
@@ -82,7 +90,7 @@ public abstract class AbstractNextInferringPlaylister extends SimplePlaylister {
 //		
 //		Track current = getCurrent();
 
-		if (!hasNext()) {
+		if (!super.hasNext()) {
 			loadNext(current);
 		}
 	}

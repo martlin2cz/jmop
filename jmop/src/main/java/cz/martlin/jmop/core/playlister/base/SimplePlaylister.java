@@ -38,6 +38,11 @@ public abstract class SimplePlaylister implements BasePlaylister {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
+	public boolean hasAtLeastOneTrack() {
+		return runtime.count() > 0;
+	}
+	
+	@Override
 	public boolean hasPrevious() {
 		return runtime.hasPlayed();
 	}
@@ -74,7 +79,7 @@ public abstract class SimplePlaylister implements BasePlaylister {
 
 	@Override
 	public Track toPrevious() {
-		Track track = runtime.toNext();
+		Track track = runtime.toPrevious();
 		return track;
 	}
 

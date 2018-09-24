@@ -46,6 +46,12 @@ public interface BasePlaylister {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
+	 * Returns true if has at least one track to be played.
+	 * @return
+	 */
+	public boolean hasAtLeastOneTrack();
+	
+	/**
 	 * Returns true, if previous track can be played.
 	 * 
 	 * @return
