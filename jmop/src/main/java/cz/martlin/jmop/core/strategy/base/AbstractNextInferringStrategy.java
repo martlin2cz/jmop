@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.playlister.base;
+package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
@@ -12,11 +12,11 @@ import cz.martlin.jmop.core.playlister.PlayerEngine;
  * @author martin
  *
  */
-public abstract class AbstractNextInferringPlaylister extends SimplePlaylister {
+public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStrategy {
 
 //	private InvalidationListener runtimeListener;
 
-	public AbstractNextInferringPlaylister() {
+	public AbstractNextInferringStrategy() {
 		super();
 	}
 

@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.playlister.playlisters;
+package cz.martlin.jmop.core.strategy.impls;
 
 import java.util.List;
 import java.util.Random;
@@ -8,7 +8,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
-import cz.martlin.jmop.core.playlister.base.AbstractNextInferringPlaylister;
+import cz.martlin.jmop.core.strategy.base.AbstractNextInferringStrategy;
 
 /**
  * The playlister inferring next tracks by simply picking random tracks from the
@@ -17,11 +17,11 @@ import cz.martlin.jmop.core.playlister.base.AbstractNextInferringPlaylister;
  * @author martin
  *
  */
-public class InfiniteOfflinePlaylister extends AbstractNextInferringPlaylister {
+public class InfiniteOfflineStrategy extends AbstractNextInferringStrategy {
 	private final Random random;
 	private Bundle bundle;
 
-	public InfiniteOfflinePlaylister() {
+	public InfiniteOfflineStrategy() {
 		this.random = new Random();
 	}
 

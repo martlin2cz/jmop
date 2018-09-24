@@ -1,9 +1,9 @@
-package cz.martlin.jmop.core.playlister.playlisters;
+package cz.martlin.jmop.core.strategy.impls;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
-import cz.martlin.jmop.core.playlister.base.AbstractNextOnlineLoadingPlaylister;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
+import cz.martlin.jmop.core.strategy.base.AbstractNextOnlineLoadingStrategy;
 
 /**
  * The standart online playlister. Plays tracks from playlist, when there is
@@ -13,9 +13,9 @@ import cz.martlin.jmop.core.preparer.TrackPreparer;
  * @author martin
  *
  */
-public class StandartOnlinePlaylister extends AbstractNextOnlineLoadingPlaylister {
+public class StandartOnlineStrategy extends AbstractNextOnlineLoadingStrategy {
 
-	public StandartOnlinePlaylister(TrackPreparer preparer) {
+	public StandartOnlineStrategy(TrackPreparer preparer) {
 		super(preparer);
 	}
 

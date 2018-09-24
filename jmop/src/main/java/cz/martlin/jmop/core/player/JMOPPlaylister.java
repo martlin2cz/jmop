@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.playlister.base.BasePlaylister;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
+import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
 import javafx.util.Duration;
 
 @Deprecated
@@ -68,7 +68,7 @@ public class JMOPPlaylister {
 	public void toNext() {
 		LOG.info("To next");
 
-		BasePlaylister playlister = getPlaylisterStrategy();
+		BasePlaylisterStrategy playlister = getPlaylisterStrategy();
 //		Track track = playlister.next();
 		Track track = null; //FIXME
 
@@ -78,7 +78,7 @@ public class JMOPPlaylister {
 	public void toPrevious() {
 		LOG.info("To previous");
 
-		BasePlaylister playlister = getPlaylisterStrategy();
+		BasePlaylisterStrategy playlister = getPlaylisterStrategy();
 //		Track track = playlister.previous();
 		Track track = null; //FIXME
 
@@ -120,7 +120,7 @@ public class JMOPPlaylister {
 		}
 	}
 
-	private BasePlaylister getPlaylisterStrategy() {
+	private BasePlaylisterStrategy getPlaylisterStrategy() {
 		boolean isOffline = connection.isOffline();
 
 		if (isOffline) {

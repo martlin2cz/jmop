@@ -5,14 +5,14 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
-import cz.martlin.jmop.core.playlister.base.BasePlaylister;
+import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
 
 /**
- * The playlister, simply said, class responsible for specifying which track
+ * The strategy, simply said, class responsible for specifying which track
  * shall be played next. Holds reference to the playlist runtime instance and
- * bulk of particullar playlister (specifically: playlister for locked playlist,
- * playlister for offline playing and playlister of online playing). By current
- * situation chooses particullar playlister and delegates method to them.
+ * bulk of particullar strategy (specifically: strategy for locked playlist,
+ * strategy for offline playing and strategy of online playing). By current
+ * situation chooses particullar strategy and delegates method to them.
  * 
  * @author martin
  *
@@ -21,14 +21,14 @@ public class Playlister {
 	private final InternetConnectionStatus connection;
 	private Playlist currentPlaylist;
 
-	private final BasePlaylister lockedPlaylister;
-	private final BasePlaylister offlinePlaylister;
-	private final BasePlaylister onlinePlaylister;
+	private final BasePlaylisterStrategy lockedPlaylister;
+	private final BasePlaylisterStrategy offlinePlaylister;
+	private final BasePlaylisterStrategy onlinePlaylister;
 	
 	private PlaylistRuntime runtime;
 
-	public Playlister(InternetConnectionStatus connection, BasePlaylister lockedPlaylister,
-			BasePlaylister offlinePlaylister, BasePlaylister onlinePlaylister) {
+	public Playlister(InternetConnectionStatus connection, BasePlaylisterStrategy lockedPlaylister,
+			BasePlaylisterStrategy offlinePlaylister, BasePlaylisterStrategy onlinePlaylister) {
 		super();
 		this.connection = connection;
 		this.lockedPlaylister = lockedPlaylister;
@@ -68,64 +68,64 @@ public class Playlister {
 	////////////////////////////////////////////////////////////////////////////
 
 	public boolean hasNext() {
-		BasePlaylister playlister = currentPlaylister();
-		return playlister.hasNext();
+		BasePlaylisterStrategy strategy = currentStrategy();
+		return strategy.hasNext();
 	}
 
 	public boolean hasPrevious() {
-		BasePlaylister playlister = currentPlaylister();
-		return playlister.hasPrevious();
+		BasePlaylisterStrategy strategy = currentStrategy();
+		return strategy.hasPrevious();
 	}
 
 	public Track getPrevious() {
-		BasePlaylister playlister = currentPlaylister();
-		return playlister.getPrevious();
+		BasePlaylisterStrategy strategy = currentStrategy();
+		return strategy.getPrevious();
 	}
 
 	public Track getCurrent() {
-		BasePlaylister playlister = currentPlaylister();
-		return playlister.getCurrent();
+		BasePlaylisterStrategy strategy = currentStrategy();
+		return strategy.getCurrent();
 	}
 
 	public Track getNext() {
-		BasePlaylister playlister = currentPlaylister();
-		return playlister.getNext();
+		BasePlaylisterStrategy strategy = currentStrategy();
+		return strategy.getNext();
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
 	public Track playNext() throws JMOPSourceException {
-		BasePlaylister playlister = currentPlaylister();
-		Track track = playlister.getCurrent();
+		BasePlaylisterStrategy strategy = currentStrategy();
+		Track track = strategy.getCurrent();
 		return track;
 	}
 
 	public Track play(int index) throws JMOPSourceException {
-		BasePlaylister playlister = currentPlaylister();
-		Track track = playlister.playChoosen(index);
+		BasePlaylisterStrategy strategy = currentStrategy();
+		Track track = strategy.playChoosen(index);
 		return track;
 	}
 
 	public Track toNext() throws JMOPSourceException {
-		BasePlaylister playlister = currentPlaylister();
-		Track track = playlister.toNext();
+		BasePlaylisterStrategy strategy = currentStrategy();
+		Track track = strategy.toNext();
 		return track;
 	}
 
 	public Track toPrevious() throws JMOPSourceException {
-		BasePlaylister playlister = currentPlaylister();
-		Track track = playlister.toPrevious();
+		BasePlaylisterStrategy strategy = currentStrategy();
+		Track track = strategy.toPrevious();
 		return track;
 	}
 
 	public void add(Track track) {
-		BasePlaylister playlister = currentPlaylister();
-		playlister.addTrack(track);
+		BasePlaylisterStrategy strategy = currentStrategy();
+		strategy.addTrack(track);
 	}
 
 	////////////////////////////////////////////////////////////////////////////
 
-	private BasePlaylister currentPlaylister() {
+	private BasePlaylisterStrategy currentStrategy() {
 		if (currentPlaylist != null && currentPlaylist.isLocked()) {
 			return lockedPlaylister;
 		} else {

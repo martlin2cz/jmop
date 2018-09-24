@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.playlister.base;
+package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
@@ -12,11 +12,11 @@ import cz.martlin.jmop.core.playlister.PlayerEngine;
  * @author martin
  *
  */
-public abstract class SimplePlaylister implements BasePlaylister {
+public abstract class SimplePlaylisterStrategy implements BasePlaylisterStrategy {
 
 	private PlaylistRuntime runtime;
 
-	public SimplePlaylister() {
+	public SimplePlaylisterStrategy() {
 		super();
 	}
 

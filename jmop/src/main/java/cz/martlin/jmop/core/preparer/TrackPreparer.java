@@ -9,7 +9,6 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
-import cz.martlin.jmop.core.playlister.base.BasePlaylister;
 import cz.martlin.jmop.core.preparer.operations.Operations;
 import cz.martlin.jmop.core.preparer.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.preparer.operations.base.BaseOperation;
@@ -19,6 +18,7 @@ import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -80,7 +80,7 @@ public class TrackPreparer {
 	 * @param addTo
 	 */
 	@Deprecated
-	public void startLoadingNextOfInBg(Track track, BasePlaylister addTo) {
+	public void startLoadingNextOfInBg(Track track, BasePlaylisterStrategy addTo) {
 		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
 
 		runInBackground(nexts, track, (t) -> append(t, addTo));
@@ -135,7 +135,7 @@ public class TrackPreparer {
 		}
 	}
 
-	private void append(Track track, BasePlaylister addTo) {
+	private void append(Track track, BasePlaylisterStrategy addTo) {
 		try {
 			addTo.addTrack(track);
 		} catch (Exception e) {

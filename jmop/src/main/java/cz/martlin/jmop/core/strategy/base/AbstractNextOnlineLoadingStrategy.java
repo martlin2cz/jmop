@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.playlister.base;
+package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
@@ -13,12 +13,12 @@ import cz.martlin.jmop.core.preparer.TrackPreparer;
  * @author martin
  *
  */
-public abstract class AbstractNextOnlineLoadingPlaylister extends AbstractNextInferringPlaylister {
+public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInferringStrategy {
 
 	protected final TrackPreparer preparer;
 	private PlayerEngine engine;
 
-	public AbstractNextOnlineLoadingPlaylister(TrackPreparer preparer) {
+	public AbstractNextOnlineLoadingStrategy(TrackPreparer preparer) {
 		super();
 		this.preparer = preparer;
 	}

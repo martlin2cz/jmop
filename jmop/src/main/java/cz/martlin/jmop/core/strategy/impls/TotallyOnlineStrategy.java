@@ -1,9 +1,9 @@
-package cz.martlin.jmop.core.playlister.playlisters;
+package cz.martlin.jmop.core.strategy.impls;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
-import cz.martlin.jmop.core.playlister.base.AbstractNextOnlineLoadingPlaylister;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
+import cz.martlin.jmop.core.strategy.base.AbstractNextOnlineLoadingStrategy;
 
 /**
  * The playlister which plays allways online. There is nothing like playlist for
@@ -13,9 +13,9 @@ import cz.martlin.jmop.core.preparer.TrackPreparer;
  * @author martin
  *
  */
-public class TotallyOnlinePlaylister extends AbstractNextOnlineLoadingPlaylister {
+public class TotallyOnlineStrategy extends AbstractNextOnlineLoadingStrategy {
 
-	public TotallyOnlinePlaylister(TrackPreparer preparer) {
+	public TotallyOnlineStrategy(TrackPreparer preparer) {
 		super(preparer);
 	}
 

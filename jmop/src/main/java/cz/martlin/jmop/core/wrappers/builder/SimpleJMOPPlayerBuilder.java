@@ -9,11 +9,6 @@ import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.playlister.Playlister;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
-import cz.martlin.jmop.core.playlister.base.BasePlaylister;
-import cz.martlin.jmop.core.playlister.playlisters.InfiniteOfflinePlaylister;
-import cz.martlin.jmop.core.playlister.playlisters.StandartOnlinePlaylister;
-import cz.martlin.jmop.core.playlister.playlisters.StaticPlaylistPlaylister;
-import cz.martlin.jmop.core.playlister.playlisters.TotallyOnlinePlaylister;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
@@ -23,6 +18,10 @@ import cz.martlin.jmop.core.sources.download.YoutubeDlDownloader;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
+import cz.martlin.jmop.core.strategy.impls.InfiniteOfflineStrategy;
+import cz.martlin.jmop.core.strategy.impls.StandartOnlineStrategy;
+import cz.martlin.jmop.core.strategy.impls.StaticPlaylistStrategy;
 import cz.martlin.jmop.core.wrappers.BaseJMOPEnvironmentChecker;
 import cz.martlin.jmop.core.wrappers.DefaultJMOPEnvironmentChecker;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
@@ -51,11 +50,11 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		// level 2 things
 		TrackPreparer preparer = new TrackPreparer(config, remote, local, locator, downloader, converter, player);
 
-		BasePlaylister lockedPlaylister = createLockedPlaylister(data, config);
-		BasePlaylister offlinePlaylister = createOfflinePlaylister(data, config);
-		BasePlaylister onlinePlaylister = createOnlinePlaylister(data, config, preparer);
+		BasePlaylisterStrategy lockedStrategy = createLockedStrategy(data, config);
+		BasePlaylisterStrategy offlineStrategy = createOfflineStrategy(data, config);
+		BasePlaylisterStrategy onlineStrategy = createOnlineStrategy(data, config, preparer);
 
-		Playlister playlister = new Playlister(connection, lockedPlaylister, offlinePlaylister, onlinePlaylister);
+		Playlister playlister = new Playlister(connection, lockedStrategy, offlineStrategy, onlineStrategy);
 
 		// level 3 things
 		PlayerWrapper playerWrapper = new PlayerWrapper(player);
@@ -92,17 +91,17 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		return new DefaultJMOPEnvironmentChecker(downloader, converter);
 	}
 
-	private BasePlaylister createLockedPlaylister(CommandlineData data, BaseConfiguration config) {
-		return new StaticPlaylistPlaylister();
+	private BasePlaylisterStrategy createLockedStrategy(CommandlineData data, BaseConfiguration config) {
+		return new StaticPlaylistStrategy();
 	}
 
-	private BasePlaylister createOfflinePlaylister(CommandlineData data, BaseConfiguration config) {
-		return new InfiniteOfflinePlaylister(); // TODO data.getRandomSeed()
+	private BasePlaylisterStrategy createOfflineStrategy(CommandlineData data, BaseConfiguration config) {
+		return new InfiniteOfflineStrategy(); // TODO data.getRandomSeed()
 	}
 
-	private BasePlaylister createOnlinePlaylister(CommandlineData data, BaseConfiguration config,
+	private BasePlaylisterStrategy createOnlineStrategy(CommandlineData data, BaseConfiguration config,
 			TrackPreparer preparer) {
-		return new StandartOnlinePlaylister(preparer);
+		return new StandartOnlineStrategy(preparer);
 	}
 
 	public abstract BaseConfiguration createConfiguration(CommandlineData data) throws Exception;

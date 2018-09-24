@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.playlister.base;
+package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
@@ -6,7 +6,7 @@ import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 
 /**
- * Base playlister, class performing going thought playlist (playlist runtime).
+ * Base playlister strategy, class performing going thought playlist (playlist runtime).
  * Subclasses could do more than just simply delegating to the runtime, for
  * instance do some checks, loading, preparing, reporting, or simply ignoring
  * the runtime and playing on its own (for instance randomly).
@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.playlister.PlayerEngine;
  * @author martin
  *
  */
-public interface BasePlaylister {
+public interface BasePlaylisterStrategy {
 
 	/**
 	 * Starts playing given playlist (prepares to play, not the start playing
@@ -32,6 +32,8 @@ public interface BasePlaylister {
 	 * Stops playing playlist (may not be working after this method).
 	 */
 	public void stopPlayingPlaylist();
+	
+	
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
