@@ -8,7 +8,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.ObservableListenerBinding;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.RequiresJMOP;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
@@ -21,6 +23,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP {
 	// @FXML
@@ -50,6 +54,10 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	private MenuItem miStartNewPlaylist;
 	@FXML
 	private MenuItem miSaveThisPlaylistAs;
+	@FXML
+	private MenuItem miLockUnlockThisPlaylist;
+	@FXML
+	private MenuItem miRemoveRemaining;
 
 	@FXML
 	private HalfDynamicMenu menuTrack;
@@ -59,8 +67,12 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	private JMOPPlayer jmop;
 	private GuiComplexActionsPerformer actions;
 
+	private final ObservableListenerBinding<Playlist> playlistBinding;
+
 	public JMOPMainMenu() throws IOException {
 		super();
+
+		this.playlistBinding = new ObservableListenerBinding<>();
 
 		load();
 	}
@@ -97,8 +109,13 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	private void initializeBindings() {
 		final BooleanBinding hasNoPlaylist = jmop.getData().inPlayModeProperty().not();
 
-		miStop.disableProperty().bind(jmop.getData().stoppedProperty().or(hasNoPlaylist));
-		miPlay.disableProperty().bind(jmop.getData().stoppedProperty().not().or(hasNoPlaylist));
+		miStop.disableProperty().bind(//
+				jmop.getData().stoppedProperty() //
+						.or(hasNoPlaylist));
+		miPlay.disableProperty().bind(//
+				jmop.getData().stoppedProperty().not() //
+						.or(jmop.getData().hasSomeTrackProperty().not()) //
+						.or(hasNoPlaylist));
 
 		miPause.disableProperty().bind( //
 				jmop.getData().pausedProperty() //
@@ -109,11 +126,18 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 						.or(jmop.getData().stoppedProperty()) //
 						.or(hasNoPlaylist));
 
-		miPrevious.disableProperty().bind(hasNoPlaylist.or(jmop.getData().hasPreviousProperty().not()));
-		miNext.disableProperty().bind(hasNoPlaylist.or(jmop.getData().hasNextProperty().not()));
+		miPrevious.disableProperty().bind( //
+				jmop.getData().hasPreviousProperty().not()//
+						.or(hasNoPlaylist));
+		miNext.disableProperty().bind(//
+				jmop.getData().hasNextProperty().not() //
+						.or(hasNoPlaylist));
 
 		menuPlaylist.disableProperty().bind(hasNoPlaylist);
 		menuTrack.disableProperty().bind(hasNoPlaylist);
+
+		jmop.getData().playlistProperty()
+				.addListener((observable, oldVal, newVal) -> playlistPropertyChanged(oldVal, newVal));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -200,20 +224,40 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 		actions.savePlaylist();
 	}
 
+	public void onLockUnlockPlaylistAction() {
+		actions.lockUnlockPlaylist();
+	}
+
+	public void onClearRemainingAction() {
+		actions.clearRemaining();
+	}
+
 	public void onAppendCustomTrackAction() {
 		actions.addTrack();
+	} /////////////////////////////////////////////////////////////////////////////////////////
+
+	public void onHelpAction() {
+		actions.openHelp();
+	}
+
+	public void onCheckConfigurationAction() {
+		actions.checkConfiguration();
+	}
+
+	public void onAboutAction() {
+		actions.showAboutBox();
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	private MenuItem trackMenuItem(Track track, AtomicInteger index, ToggleGroup group, int currentlyPlayedIndex) {
 		String title = track.getTitle();
 		RadioMenuItem mi = new RadioMenuItem(title);
-		
+
 		mi.setToggleGroup(group);
-		
+
 		boolean isCurrentlyPlayed = (index.get() == currentlyPlayedIndex);
 		mi.setSelected(isCurrentlyPlayed);
-		
+
 		index.incrementAndGet();
 		return mi;
 	}
@@ -225,16 +269,29 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	public void onHelpAction() {
-		actions.openHelp();
+
+	private void playlistPropertyChanged(Playlist oldPlaylist, Playlist newPlaylist) {
+		playlistBinding.rebind(oldPlaylist, newPlaylist, (p) -> playlistChanged((Playlist) p));
+
+		playlistChanged(newPlaylist);
 	}
 
-	public void onCheckConfigurationAction() {
-		actions.checkConfiguration();
+	private void playlistChanged(Playlist playlist) {
+
+		if (playlist.isLocked()) {
+			miLockUnlockThisPlaylist.setText("Un_lock this playlist");
+			changeImage("/cz/martlin/jmop/gui/img/unlock-playlist.svg");
+		} else {
+			miLockUnlockThisPlaylist.setText("_Lock this playlist");
+			changeImage("/cz/martlin/jmop/gui/img/lock-playlist.svg");
+		}
 	}
 
-	public void onAboutAction() {
-		actions.showAboutBox();
+	private void changeImage(String url) {
+		ImageView graphic = (ImageView) miLockUnlockThisPlaylist.getGraphic();
+		Image image = new Image(url);
+
+		graphic.setImage(image);
 	}
 
 }

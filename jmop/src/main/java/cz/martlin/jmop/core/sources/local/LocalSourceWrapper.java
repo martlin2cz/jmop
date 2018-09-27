@@ -24,7 +24,7 @@ public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
 
 		this.playlistBinding = new ObservableListenerBinding<>();
 		this.bundleBinding = new BundleBinding();
-		
+
 		initBindings();
 	}
 
@@ -74,17 +74,16 @@ public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
 		try {
 			Bundle bundle = playlist.getBundle();
 			local.savePlaylist(bundle, playlist);
-			System.out.println("Playlist " + playlist.getName() + " changed, has " + playlist.getTracks().count() + " tracks");
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO error hangling
 		}
 	}
-//
-//	private void playlistBundleChanged(Playlist playlist) {
-//		Bundle bundle = playlist.getBundle();
-//		bundleChanged(bundle);
-//	}
+	//
+	// private void playlistBundleChanged(Playlist playlist) {
+	// Bundle bundle = playlist.getBundle();
+	// bundleChanged(bundle);
+	// }
 
 	private void bundleChanged(Bundle bundle) {
 		try {

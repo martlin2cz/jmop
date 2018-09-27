@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.playlister.PlayerEngine;
  */
 public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStrategy {
 
-//	private InvalidationListener runtimeListener;
+	// private InvalidationListener runtimeListener;
 
 	public AbstractNextInferringStrategy() {
 		super();
@@ -26,18 +26,25 @@ public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStra
 	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist, PlaylistRuntime runtime) {
 		super.startPlayingPlaylist(engine, playlist, runtime);
 
-//		runtimeListener = (val) -> runtimeChanged();
-//		runtime.addListener(runtimeListener);
+		// runtimeListener = (val) -> runtimeChanged();
+		// runtime.addListener(runtimeListener);
 
-//		checkAndInferNext();
+		// checkAndInferNext();
 	}
 
 	@Override
 	public void stopPlayingPlaylist() {
-//		PlaylistRuntime runtime = getRuntime();
-//		runtime.removeListener(runtimeListener);
+		// PlaylistRuntime runtime = getRuntime();
+		// runtime.removeListener(runtimeListener);
 
 		super.stopPlayingPlaylist();
+	}
+
+	@Override
+	public void playlistChanged(Playlist playlist, PlaylistRuntime runtime) {
+		super.playlistChanged(playlist, runtime);
+		
+		checkAndInferNext();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -45,35 +52,37 @@ public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStra
 	@Override
 	public Track getCurrent() {
 		Track track = super.getCurrent();
-		checkAndInferNext(track); 
+		checkAndInferNext(track);
 		return track;
 	}
-	
+
 	@Override
 	public Track toNext() {
 		Track track = super.toNext();
-		checkAndInferNext(track); 
+		checkAndInferNext(track);
 		return track;
 	}
-	
+
 	@Override
 	public boolean hasNext() {
-		if (hasAtLeastOneTrack()) {
-			Track track = super.getCurrent();
-			checkAndInferNext(track);
-		}
+		checkAndInferNext();
 		return super.hasNext();
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
-//	private void runtimeChanged() {
-//		// this is invoked by all playlister, bot offline and online
-//		// and thats terribly wrong
-//		checkAndInferNext(); 
-//	}
+	// private void runtimeChanged() {
+	// // this is invoked by all playlister, bot offline and online
+	// // and thats terribly wrong
+	// checkAndInferNext();
+	// }
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
+	private void checkAndInferNext() {
+		if (hasAtLeastOneTrack()) {
+			Track track = super.getCurrent();
+			checkAndInferNext(track);
+		}
+	}
 
 	/**
 	 * Checks whether there are no more track to be played in the queue and in
@@ -82,13 +91,13 @@ public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStra
 	 * 
 	 */
 	private void checkAndInferNext(Track current) {
-		System.out.println("Okay, loading next of " + current.getTitle() + " by " + this);
-//		PlaylistRuntime runtime = getRuntime();
-//		if (runtime.count() == 0) {
-//			return;
-//		}
-//		
-//		Track current = getCurrent();
+//		System.out.println("Okay, loading next of " + current.getTitle() + " by " + this);
+		// PlaylistRuntime runtime = getRuntime();
+		// if (runtime.count() == 0) {
+		// return;
+		// }
+		//
+		// Track current = getCurrent();
 
 		if (!super.hasNext()) {
 			loadNext(current);

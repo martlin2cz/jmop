@@ -108,6 +108,14 @@ public class PlayerEngine {
 		playlister.add(track);
 	}
 
+	
+
+	public void clearRemaining() {
+		LOG.info("Clearing remaining");
+
+		playlister.clearRemaining();
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void onTrackPlayed(Track track) {

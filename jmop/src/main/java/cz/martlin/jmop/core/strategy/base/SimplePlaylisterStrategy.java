@@ -35,6 +35,11 @@ public abstract class SimplePlaylisterStrategy implements BasePlaylisterStrategy
 	public void stopPlayingPlaylist() {
 		this.runtime = null;
 	}
+	
+	@Override
+	public void playlistChanged(Playlist playlist, PlaylistRuntime runtime) {
+		// overrride me if needed!
+	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

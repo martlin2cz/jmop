@@ -62,6 +62,18 @@ public class XSPFParserComposer {
 
 		String bundleName = jmop.getAttribute("bundleName");
 		playlist.setBundleName(bundleName);
+
+		String currentTrackOrNot = jmop.getAttribute("currentTrack");
+		if (currentTrackOrNot != null && !currentTrackOrNot.isEmpty()) {
+			int currentTrack = Integer.parseInt(currentTrackOrNot);
+			playlist.setCurrentTrackIndex(currentTrack);
+		}
+
+		String lockedOrNot = jmop.getAttribute("locked");
+		if (lockedOrNot != null && !lockedOrNot.isEmpty()) {
+			boolean locked = Boolean.parseBoolean(lockedOrNot);
+			playlist.setLocked(locked);
+		}
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -157,9 +169,13 @@ public class XSPFParserComposer {
 
 		Element extension = document.createElementNS(NAMESPACE, "extension");
 		Element jmop = document.createElement("jmop");
+		
 		jmop.setAttribute("source", playlist.getKind().name());
 		jmop.setAttribute("bundleName", playlist.getBundleName());
 		jmop.setAttribute("application", APPLICATION);
+		jmop.setAttribute("currentTrack", Integer.toString(playlist.getCurrentTrackIndex()));
+		jmop.setAttribute("locked", Boolean.toString(playlist.isLocked()));
+
 		extension.appendChild(jmop);
 		root.appendChild(extension);
 	}

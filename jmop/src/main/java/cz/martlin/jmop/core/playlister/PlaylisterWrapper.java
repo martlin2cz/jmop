@@ -7,6 +7,7 @@ import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.playlist.PlaylistRuntime;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -17,15 +18,19 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	private final Playlister playlister;
 
 	private final ObjectProperty<Playlist> playlistProperty;
+	private final BooleanProperty hasSomeTrackProperty;
 	private final BooleanProperty hasPreviousProperty;
 	private final BooleanProperty hasNextProperty;
 	private final ObjectProperty<Track> previousTrackProperty;
 	private final ObjectProperty<Track> nextTrackProperty;
 
+	private InvalidationListener playlistListener;
+
 	public PlaylisterWrapper(Playlister playlister) {
 		this.playlister = playlister;
 
 		this.playlistProperty = new SimpleObjectProperty<>();
+		this.hasSomeTrackProperty = new SimpleBooleanProperty();
 		this.hasPreviousProperty = new SimpleBooleanProperty();
 		this.hasNextProperty = new SimpleBooleanProperty();
 		this.previousTrackProperty = new SimpleObjectProperty<>();
@@ -36,6 +41,10 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 
 	public ObjectProperty<Playlist> playlistProperty() {
 		return playlistProperty;
+	}
+	
+	public BooleanProperty hasSomeTrackProperty() {
+		return hasSomeTrackProperty;
 	}
 
 	public ReadOnlyBooleanProperty hasPreviousProperty() {
@@ -57,7 +66,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	@Override
 	public void initBindings() {
 		InternetConnectionStatus connection = playlister.getConnection();
-		connection.addListener((observable) -> offlineChanged()); 
+		connection.addListener((observable) -> offlineChanged());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -66,15 +75,19 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		playlister.startPlayingPlaylist(engine, playlist);
 
 		playlistProperty.set(playlist);
-		
+
+		playlistListener = (o) -> playlistValueChanged((Playlist) o);
+		playlist.addListener(playlistListener);
+
 		updateNextAndPreviousProperties();
 	}
 
 	public void stopPlayingPlaylist(Playlist playlist) {
 		playlister.stopPlayingPlaylist(playlist);
-		
+
+		playlist.removeListener(playlistListener);
 		playlistProperty.set(null);
-		
+
 		updateNextAndPreviousProperties();
 	}
 
@@ -107,13 +120,21 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		playlisterChanged();
 	}
 
+	public void clearRemaining() {
+		playlister.clearRemaining();
+		playlisterChanged();
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void offlineChanged() {
-		System.out.println("PlaylisterWrapper.offlineChanged()");
 		updateNextAndPreviousProperties();
 	}
-	
+
+	private void playlistValueChanged(Playlist playlist) {
+		playlister.playlistChanged(playlist);
+	}
+
 	private void playlisterChanged() {
 		updatePlaylist();
 		updateNextAndPreviousProperties();
@@ -132,6 +153,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	}
 
 	private void updateNextAndPreviousProperties() {
+		boolean hasSome = playlister.hasSomeTrack();
 		boolean hasPrev = playlister.hasPrevious();
 		boolean hasNext = playlister.hasNext();
 		Track previous;
@@ -147,7 +169,8 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		} else {
 			next = null;
 		}
-
+		
+		hasSomeTrackProperty.set(hasSome);
 		hasPreviousProperty.set(hasPrev);
 		hasNextProperty.set(hasNext);
 		previousTrackProperty.set(previous);

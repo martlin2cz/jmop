@@ -29,9 +29,9 @@ public class DefaultPlaylistLoaderTest {
 		String playlistName = "testing playlist";
 		SourceKind kind = SourceKind.YOUTUBE;
 		
-		Duration duration1 = DurationUtilities.createDuration(0, 0, 11);
+		Duration duration1 = DurationUtilities.createDuration(0, 0, 42);
 		Duration duration2 = DurationUtilities.createDuration(0, 3, 15);
-		Duration duration3 = DurationUtilities.createDuration(1, 50, 42);
+		Duration duration3 = DurationUtilities.createDuration(23, 59, 59);
 		
 		List<Track> tracks = Arrays.asList( //
 				bundle.createTrack("123456", "foo", "Lorem ispum dolor sit amet.", duration1), //
@@ -40,7 +40,10 @@ public class DefaultPlaylistLoaderTest {
 		);
 		
 		Tracklist tracklist = new Tracklist(tracks);
-		final PlaylistFileData inputData = new PlaylistFileData(bundle.getName(), playlistName, kind, tracklist);
+		int currentTrackIndex = 1;
+		boolean locked = true;
+		
+		final PlaylistFileData inputData = new PlaylistFileData(bundle.getName(), playlistName, kind, tracklist, currentTrackIndex, locked);
 
 		DefaultPlaylistLoader loader = new DefaultPlaylistLoader();
 

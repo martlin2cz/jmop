@@ -112,6 +112,22 @@ public class GuiComplexActionsPerformer {
 			jmop.savePlaylistAs(playlistName);
 		});
 	}
+	
+	
+	public void lockUnlockPlaylist() {
+		runInForegound(() -> {
+			jmop.togglePlaylistLockedStatus();
+			return null;
+		});
+	}
+	
+	public void clearRemaining() {
+		runInForegound(() -> {
+			jmop.clearRemainingTracks();
+			return null;
+		});
+	}
+
 
 	public void addTrack() {
 		runInBackgroundWithDialog(() -> {

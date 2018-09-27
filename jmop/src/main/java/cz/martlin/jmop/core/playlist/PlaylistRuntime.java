@@ -226,11 +226,12 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	}
 
 	/**
-	 * Replaces all the remaining tracks with given track.
+	 * Replaces all the remaining tracks with given track (if specified, if not,
+	 * only removes remaining tracks).
 	 * 
-	 * @param track
+	 * @param trackOrNull
 	 */
-	public void replaceRest(Track track) {
+	public void replaceRest(Track trackOrNull) {
 		int start = currentTrack + 1;
 		int end = count();
 
@@ -238,7 +239,9 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 			tracks.subList(start, end).clear();
 		}
 
-		tracks.add(track);
+		if (trackOrNull != null) {
+			tracks.add(trackOrNull);
+		}
 
 		fireValueChangedEvent();
 	}
@@ -254,6 +257,26 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Synchronize this runtime to given playlist.
+	 * 
+	 * @param playlist
+	 */
+	public void updateTo(Playlist playlist) {
+		this.currentTrack = playlist.getCurrentTrackIndex();
+
+		List<Track> newTracks = playlist.getTracks().getTracks();
+		
+		// optimalisation (check only for change)
+		if (newTracks.size() != this.tracks.size() || newTracks.equals(this.tracks)) {
+			this.tracks.clear();
+			tracks.addAll(newTracks);
+		}
+
+		fireValueChangedEvent();
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////
+
 	public static PlaylistRuntime of(Tracklist tracklist) {
 		List<Track> tracks = tracklist.getTracks();
 		return new PlaylistRuntime(tracks);
@@ -262,10 +285,10 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	public static PlaylistRuntime of(Playlist playlist) {
 		List<Track> tracks = playlist.getTracks().getTracks();
 		int currentTrack = playlist.getCurrentTrackIndex();
-		
+
 		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
 		runtime.markPlayedUpTo(currentTrack);
-		
+
 		return runtime;
 	}
 

@@ -73,6 +73,16 @@ public class JMOPPlayer {
 		sources.savePlaylist(playlist, newPlaylistName);
 	}
 
+	public void togglePlaylistLockedStatus(){
+		Playlist playlist = getCurrentPlaylist();
+		playing.togglePlaylistLockedStatus(playlist);
+	}
+	
+	public void clearRemainingTracks(){
+		Playlist playlist = getCurrentPlaylist();
+		playing.clearRemainingTracks(playlist);
+	}
+	
 	public void loadAndAddTrack(String querySeed) throws JMOPSourceException {
 		Bundle bundle = getCurrentBundle();
 		PlayerEngine engine = playing.getEngine();

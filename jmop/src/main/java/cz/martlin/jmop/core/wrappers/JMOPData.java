@@ -24,6 +24,10 @@ public class JMOPData {
 		return jmop.getPlaying().getEngine().getPlayer().inPlayModeProperty();
 	}
 
+	public ReadOnlyBooleanProperty hasSomeTrackProperty() {
+		return jmop.getPlaying().getEngine().getPlaylister().hasSomeTrackProperty();
+	}
+
 	public ReadOnlyObjectProperty<Track> currentTrackProperty() {
 		return jmop.getPlaying().getEngine().getPlayer().trackProperty();
 	}
@@ -56,11 +60,11 @@ public class JMOPData {
 		return jmop.getPlaying().getEngine().getPlayer().timeProperty();
 	}
 
-//	@Deprecated
-//	public ObservableList<PreparerTask> currentDownloadTasksProperty() {
-//		return FXCollections.observableArrayList();
-//	}
-	
+	// @Deprecated
+	// public ObservableList<PreparerTask> currentDownloadTasksProperty() {
+	// return FXCollections.observableArrayList();
+	// }
+
 	public ObservableList<OperationWrapper<?, ?>> currentOperationsProperty() {
 		return jmop.getSources().getPreparer().currentOperations();
 	}

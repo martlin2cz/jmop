@@ -76,4 +76,15 @@ public class JMOPPlaying {
 		engine.play(index);
 	}
 
+	public void togglePlaylistLockedStatus(Playlist playlist) {
+		boolean is = playlist.isLocked();
+		boolean isNot = !is;
+		
+		playlist.setLocked(isNot);
+	}
+
+	public void clearRemainingTracks(Playlist playlist) {
+		engine.clearRemaining();
+	}
+
 }

@@ -157,6 +157,28 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
+				<MenuItem mnemonicParsing="true" text="_Lock/Unlock this playlist"
+					fx:id="miLockUnlockThisPlaylist" onAction="#onLockUnlockPlaylistAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/lock-playlist.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
+				<MenuItem mnemonicParsing="true" text="_Clear remaining"
+					fx:id="miClearRemaining" onAction="#onClearRemainingAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/clear-remaining.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
 				<SeparatorMenuItem mnemonicParsing="true" />
 			</staticItems>
 		</HalfDynamicMenu>

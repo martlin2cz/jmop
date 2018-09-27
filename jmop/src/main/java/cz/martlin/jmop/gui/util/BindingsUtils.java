@@ -58,4 +58,5 @@ public class BindingsUtils {
 	public static Duration milisToDuration(double milis) {
 		return new Duration(milis);
 	}
+	
 }

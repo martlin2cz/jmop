@@ -8,15 +8,21 @@ public class PlaylistFileData {
 	private String playlistName;
 	private SourceKind kind;
 	private Tracklist tracklist;
+	private int currentTrackIndex;
+	private boolean locked;
 
 	public PlaylistFileData() {
 	}
 
-	public PlaylistFileData(String bundleName, String playlistName, SourceKind kind, Tracklist tracklist) {
+	public PlaylistFileData(String bundleName, String playlistName, SourceKind kind, Tracklist tracklist,
+			int currentTrackIndex, boolean locked) {
+		super();
 		this.bundleName = bundleName;
 		this.playlistName = playlistName;
 		this.kind = kind;
 		this.tracklist = tracklist;
+		this.currentTrackIndex = currentTrackIndex;
+		this.locked = locked;
 	}
 
 	public String getBundleName() {
@@ -51,12 +57,30 @@ public class PlaylistFileData {
 		this.tracklist = tracklist;
 	}
 
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	public int getCurrentTrackIndex() {
+		return currentTrackIndex;
+	}
+
+	public void setCurrentTrackIndex(int currentTrackIndex) {
+		this.currentTrackIndex = currentTrackIndex;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bundleName == null) ? 0 : bundleName.hashCode());
+		result = prime * result + currentTrackIndex;
 		result = prime * result + ((kind == null) ? 0 : kind.hashCode());
+		result = prime * result + (locked ? 1231 : 1237);
 		result = prime * result + ((playlistName == null) ? 0 : playlistName.hashCode());
 		result = prime * result + ((tracklist == null) ? 0 : tracklist.hashCode());
 		return result;
@@ -76,7 +100,11 @@ public class PlaylistFileData {
 				return false;
 		} else if (!bundleName.equals(other.bundleName))
 			return false;
+		if (currentTrackIndex != other.currentTrackIndex)
+			return false;
 		if (kind != other.kind)
+			return false;
+		if (locked != other.locked)
 			return false;
 		if (playlistName == null) {
 			if (other.playlistName != null)
@@ -94,7 +122,9 @@ public class PlaylistFileData {
 	@Override
 	public String toString() {
 		return "PlaylistFileData [bundleName=" + bundleName + ", playlistName=" + playlistName + ", kind=" + kind
-				+ ", tracklist=" + tracklist + "]";
+				+ ", tracklist=" + tracklist + ", currentTrackIndex=" + currentTrackIndex + ", locked=" + locked + "]";
 	}
+
+
 
 }

@@ -65,8 +65,21 @@ public class Playlister {
 		runtime = null;
 	}
 
+	public void playlistChanged(Playlist playlist) {
+		runtime.updateTo(playlist);
+
+		BasePlaylisterStrategy strategy = currentStrategy();
+		strategy.playlistChanged(playlist, runtime);
+	}
+	
 	////////////////////////////////////////////////////////////////////////////
 
+	public boolean hasSomeTrack() {
+		BasePlaylisterStrategy strategy = currentStrategy();
+		return strategy.hasAtLeastOneTrack();
+	}
+
+	
 	public boolean hasNext() {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		return strategy.hasNext();
@@ -122,6 +135,11 @@ public class Playlister {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		strategy.addTrack(track);
 	}
+	
+
+	public void clearRemaining() {
+		runtime.replaceRest(null);
+	}
 
 	////////////////////////////////////////////////////////////////////////////
 
@@ -136,5 +154,6 @@ public class Playlister {
 			}
 		}
 	}
+
 
 }

@@ -6,10 +6,10 @@ import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 
 /**
- * Base playlister strategy, class performing going thought playlist (playlist runtime).
- * Subclasses could do more than just simply delegating to the runtime, for
- * instance do some checks, loading, preparing, reporting, or simply ignoring
- * the runtime and playing on its own (for instance randomly).
+ * Base playlister strategy, class performing going thought playlist (playlist
+ * runtime). Subclasses could do more than just simply delegating to the
+ * runtime, for instance do some checks, loading, preparing, reporting, or
+ * simply ignoring the runtime and playing on its own (for instance randomly).
  * 
  * @author martin
  *
@@ -22,7 +22,9 @@ public interface BasePlaylisterStrategy {
 	 * good practice to keep reference to it since the same runtime is shared
 	 * between the others playlisters and change in one may reflect into
 	 * others).
-	 * @param engine TODO
+	 * 
+	 * @param engine
+	 *            TODO
 	 * @param playlist
 	 * @param runtime
 	 */
@@ -32,8 +34,15 @@ public interface BasePlaylisterStrategy {
 	 * Stops playing playlist (may not be working after this method).
 	 */
 	public void stopPlayingPlaylist();
-	
-	
+
+	/**
+	 * Handles that playlist have been changed from outside.
+	 * 
+	 * @param playlist
+	 * @param runtime
+	 */
+	public void playlistChanged(Playlist playlist, PlaylistRuntime runtime);
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -49,10 +58,11 @@ public interface BasePlaylisterStrategy {
 
 	/**
 	 * Returns true if has at least one track to be played.
+	 * 
 	 * @return
 	 */
 	public boolean hasAtLeastOneTrack();
-	
+
 	/**
 	 * Returns true, if previous track can be played.
 	 * 

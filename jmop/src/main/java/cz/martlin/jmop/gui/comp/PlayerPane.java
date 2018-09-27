@@ -9,7 +9,6 @@ import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.RequiresJMOP;
 import cz.martlin.jmop.gui.util.BindingsUtils;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -77,7 +76,9 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 		trpnCurrentTrack.trackProperty().bind(jmop.getData().currentTrackProperty());
 		trpnNextTrack.trackProperty().bind(jmop.getData().nextTrackProperty());
 
-		playStopButt.firstStateProperty().bind(jmop.getData().stoppedProperty());
+		playStopButt.firstStateProperty().bind( //
+				jmop.getData().stoppedProperty() //
+						.or(jmop.getData().hasSomeTrackProperty().not()));
 		pauseResumeButt.firstStateProperty().bind(jmop.getData().pausedProperty());
 		pauseResumeButt.disableProperty().bind(jmop.getData().stoppedProperty());
 		prevButt.disableProperty().bind(jmop.getData().hasPreviousProperty().not());
