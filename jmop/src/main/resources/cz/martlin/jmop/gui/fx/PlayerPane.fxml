@@ -10,6 +10,7 @@
 <?import cz.martlin.jmop.gui.comp.GuiChangableSlider?>
 <?import cz.martlin.jmop.gui.comp.TrackPane?>
 <?import cz.martlin.jmop.gui.comp.TwoStateButton?>
+<?import cz.martlin.jmop.gui.comp.DurationsPane?>
 
 
 <?import java.lang.*?>
@@ -25,6 +26,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.Label?>
@@ -64,10 +66,14 @@
 			</font>
 		</TrackPane>
 
-		<!-- Duration progress slider -->
-		<GuiChangableSlider fx:id="sliTrackProgress"
-			minWidth="40.0" blockIncrement="10000" GridPane.columnIndex="2"
-			GridPane.rowIndex="1" />
+		<VBox spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="1">
+			<!-- Duration progress slider -->
+			<GuiChangableSlider fx:id="sliTrackProgress"
+				minWidth="40.0" blockIncrement="10000" />
+
+			<!-- Current duration -->
+			<DurationsPane fx:id="currentDurationPane" />
+		</VBox>
 
 		<!-- Play/Stop button -->
 		<TwoStateButton fx:id="playStopButt" alignment="CENTER"

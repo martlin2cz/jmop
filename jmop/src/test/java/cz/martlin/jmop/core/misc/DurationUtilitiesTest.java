@@ -8,7 +8,7 @@ import javafx.util.Duration;
 
 public class DurationUtilitiesTest {
 
-	private static final double DELTA = 0;
+	private static final double DELTA = 0.001;
 
 	@Test 
 	public void testCreateDurarion() {
@@ -26,7 +26,7 @@ public class DurationUtilitiesTest {
 	}
 	
 	@Test
-	public void testParseDuration() {
+	public void testParseYoutubeDuration() {
 		Duration expectedShort = DurationUtilities.createDuration(0, 0, 5);
 		Duration actualShort = DurationUtilities.parseYoutubeDuration("PT5S");
 		
@@ -46,10 +46,10 @@ public class DurationUtilitiesTest {
 	@Test
 	public void testToHumanString() {
 		Duration inputShort = DurationUtilities.createDuration(0, 0, 5);
-		assertEquals("0:00:05", DurationUtilities.toHumanString(inputShort));
+		assertEquals("0:05", DurationUtilities.toHumanString(inputShort));
 		
 		Duration inputMiddle = DurationUtilities.createDuration(0, 11, 12);
-		assertEquals("0:11:12", DurationUtilities.toHumanString(inputMiddle));
+		assertEquals("11:12", DurationUtilities.toHumanString(inputMiddle));
 		
 		Duration inputLong = DurationUtilities.createDuration(99, 1, 1);
 		assertEquals("99:01:01", DurationUtilities.toHumanString(inputLong));

@@ -8,6 +8,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.RequiresJMOP;
 import cz.martlin.jmop.gui.util.BindingsUtils;
+import cz.martlin.jmop.gui.util.BindingsUtils.DoubleMilisToDurationBinding;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -25,6 +26,9 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 	@FXML
 	private GuiChangableSlider sliTrackProgress;
+
+	@FXML
+	private DurationsPane currentDurationPane;
 	@FXML
 	private TwoStateButton playStopButt;
 	@FXML
@@ -86,13 +90,15 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 		jmop.getData().stoppedProperty().addListener((observable, oldVal, newVal) -> changeDefaultButton());
 
-		jmop.getData().currentTrackProperty().addListener((observable, oldVal, newVal) -> trackToSliderMax(newVal));
+		jmop.getData().currentTrackProperty().addListener((observable, oldVal, newVal) -> currentTrackChanged(newVal));
 		sliTrackProgress.guiChangingProperty()
 				.addListener((observable, oldVal, newVal) -> sliderGuiChangingChanged(newVal));
 		sliTrackProgress.disableProperty().bind(jmop.getData().stoppedProperty());
 
 		currentTimeChangeListener = (obs, oldv, newv) -> //
 		sliTrackProgress.valueProperty().set(BindingsUtils.durationToMilis(newv));
+		currentDurationPane.currentTimeProperty()
+				.bind(new DoubleMilisToDurationBinding(sliTrackProgress.valueProperty()));
 
 		bindPlayerCurrentTimeToSlider();
 	}
@@ -122,6 +128,12 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 		jmop.getData().currentTimeProperty().addListener(currentTimeChangeListener);
 
 	}
+	///////////////////////////////////////////////////////////////////////////
+
+	private void currentTrackChanged(Track track) {
+		trackToSliderMax(track);
+		trackToDurationsPane(track);
+	}
 
 	private void trackToSliderMax(Track track) {
 		double milis;
@@ -134,6 +146,17 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 		}
 
 		sliTrackProgress.setMax(milis);
+	}
+
+	private void trackToDurationsPane(Track track) {
+		Duration duration;
+		if (track != null) {
+			duration = track.getDuration();
+		} else {
+			duration = null;
+		}
+		
+		currentDurationPane.totalTimeProperty().set(duration);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
