@@ -32,12 +32,13 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	private static final String COLUMNS_SEPARATOR_REGEX = " +";
 	private static final String PERCENT_REGEX = "\\d{1,3}\\.\\d{1}\\%";
 	private static final int RESULT_CODE_OK = 0;
-	
+
 	private final InternetConnectionStatus connection;
 	private final BaseLocalSource local;
 	private final AbstractRemoteSource remote;
 
-	public YoutubeDlDownloader(InternetConnectionStatus connection, BaseLocalSource local, AbstractRemoteSource remote) {
+	public YoutubeDlDownloader(InternetConnectionStatus connection, BaseLocalSource local,
+			AbstractRemoteSource remote) {
 		super();
 		this.connection = connection;
 		this.local = local;
@@ -89,8 +90,7 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 		}
 		return isOk;
 	}
-	
-	
+
 	@Override
 	public boolean check() {
 		return runAndCheckForResult("youtube-dl --version") == RESULT_CODE_OK;
@@ -167,7 +167,7 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 		public TrackFileLocation getLocation() {
 			return location;
 		}
-		
+
 	}
 
 }

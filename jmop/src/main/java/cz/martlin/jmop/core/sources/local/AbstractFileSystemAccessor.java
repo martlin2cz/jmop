@@ -29,7 +29,8 @@ public interface AbstractFileSystemAccessor {
 
 	public PlaylistFileData getPlaylistMetadataOfFile(String bundleDirName, String playlistFileName) throws IOException;
 
-	public PlaylistFileData getPlaylistOfName(Bundle bundle, String bundleDirName, String playlistName) throws IOException;
+	public PlaylistFileData getPlaylistOfName(Bundle bundle, String bundleDirName, String playlistName)
+			throws IOException;
 
 	public void savePlaylist(String bundleDirName, Playlist playlist) throws IOException;
 
@@ -40,8 +41,5 @@ public interface AbstractFileSystemAccessor {
 
 	public boolean existsTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format)
 			throws IOException;
-
-	
-
 
 }

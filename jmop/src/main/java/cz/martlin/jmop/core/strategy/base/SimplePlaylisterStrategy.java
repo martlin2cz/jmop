@@ -35,7 +35,7 @@ public abstract class SimplePlaylisterStrategy implements BasePlaylisterStrategy
 	public void stopPlayingPlaylist() {
 		this.runtime = null;
 	}
-	
+
 	@Override
 	public void playlistChanged(Playlist playlist, PlaylistRuntime runtime) {
 		// overrride me if needed!
@@ -46,7 +46,7 @@ public abstract class SimplePlaylisterStrategy implements BasePlaylisterStrategy
 	public boolean hasAtLeastOneTrack() {
 		return runtime.count() > 0;
 	}
-	
+
 	@Override
 	public boolean hasPrevious() {
 		return runtime.hasPlayed();

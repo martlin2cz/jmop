@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader;
-
 public class YoutubeDlDownloaderTest {
 
 	private static final double EPSILON = 0.1;
@@ -29,6 +27,5 @@ public class YoutubeDlDownloaderTest {
 		assertEquals("foo", YoutubeDlDownloader.removeSuffix("foo.xxx"));
 		assertEquals("foo.bar", YoutubeDlDownloader.removeSuffix("foo.bar.42"));
 	}
-	
 
 }

@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
-
 public class DefaultFilesNamerTest {
 
 	@Test

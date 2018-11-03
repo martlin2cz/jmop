@@ -23,9 +23,9 @@ public class SavePlaylistDialog extends BaseCommonFXMLDialog<SavePlaylistData> {
 
 	public SavePlaylistDialog(String currentPlaylistName) throws IOException {
 		super();
-		
+
 		this.currentPlaylistName = currentPlaylistName;
-		
+
 		load("/cz/martlin/jmop/gui/fx/SavePlaylistDialog.fxml");
 	}
 
@@ -33,8 +33,9 @@ public class SavePlaylistDialog extends BaseCommonFXMLDialog<SavePlaylistData> {
 	protected void specifyCustomDialogSettings() {
 		setTitle("Save playlist");
 		setHeaderText("Specify the new name for this playlist.");
-		
-		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/save-playlist.png"))));
+
+		setGraphic(
+				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/save-playlist.png"))));
 	}
 
 	@Override

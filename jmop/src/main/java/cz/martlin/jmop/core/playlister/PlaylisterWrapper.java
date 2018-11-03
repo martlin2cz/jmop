@@ -42,7 +42,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	public ObjectProperty<Playlist> playlistProperty() {
 		return playlistProperty;
 	}
-	
+
 	public BooleanProperty hasSomeTrackProperty() {
 		return hasSomeTrackProperty;
 	}
@@ -169,7 +169,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		} else {
 			next = null;
 		}
-		
+
 		hasSomeTrackProperty.set(hasSome);
 		hasPreviousProperty.set(hasPrev);
 		hasNextProperty.set(hasNext);

@@ -15,7 +15,6 @@ import cz.martlin.jmop.core.operation.operations.Operations;
 import cz.martlin.jmop.core.operation.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
-import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;

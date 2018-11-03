@@ -8,11 +8,11 @@ import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
 
 /**
- * The strategy, simply said, class responsible for specifying which track
- * shall be played next. Holds reference to the playlist runtime instance and
- * bulk of particullar strategy (specifically: strategy for locked playlist,
- * strategy for offline playing and strategy of online playing). By current
- * situation chooses particullar strategy and delegates method to them.
+ * The strategy, simply said, class responsible for specifying which track shall
+ * be played next. Holds reference to the playlist runtime instance and bulk of
+ * particullar strategy (specifically: strategy for locked playlist, strategy
+ * for offline playing and strategy of online playing). By current situation
+ * chooses particullar strategy and delegates method to them.
  * 
  * @author martin
  *
@@ -24,7 +24,7 @@ public class Playlister {
 	private final BasePlaylisterStrategy lockedPlaylister;
 	private final BasePlaylisterStrategy offlinePlaylister;
 	private final BasePlaylisterStrategy onlinePlaylister;
-	
+
 	private PlaylistRuntime runtime;
 
 	public Playlister(InternetConnectionStatus connection, BasePlaylisterStrategy lockedPlaylister,
@@ -39,7 +39,7 @@ public class Playlister {
 	public InternetConnectionStatus getConnection() {
 		return connection;
 	}
-	
+
 	public PlaylistRuntime getRuntime() {
 		return runtime;
 	}
@@ -71,7 +71,7 @@ public class Playlister {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		strategy.playlistChanged(playlist, runtime);
 	}
-	
+
 	////////////////////////////////////////////////////////////////////////////
 
 	public boolean hasSomeTrack() {
@@ -79,7 +79,6 @@ public class Playlister {
 		return strategy.hasAtLeastOneTrack();
 	}
 
-	
 	public boolean hasNext() {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		return strategy.hasNext();
@@ -135,7 +134,6 @@ public class Playlister {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		strategy.addTrack(track);
 	}
-	
 
 	public void clearRemaining() {
 		runtime.replaceRest(null);
@@ -154,6 +152,5 @@ public class Playlister {
 			}
 		}
 	}
-
 
 }

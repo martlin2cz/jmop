@@ -26,7 +26,7 @@ public class JMOPAboutDialog extends Dialog<Void> {
 		);
 
 		getDialogPane().setContent(content);
-		
+
 		getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 
 	}

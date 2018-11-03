@@ -41,7 +41,7 @@ public class NewBundleDialog extends BaseCommonFXMLDialog<NewBundleData> {
 		setTitle("Create new bundle");
 		setHeaderText("Create new bundle of music, for instance\n" //
 				+ "music of one author, album, genre ...");
-		
+
 		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-bundle.png"))));
 	}
 

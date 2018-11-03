@@ -29,7 +29,7 @@ public class InfiniteOfflineStrategy extends AbstractNextInferringStrategy {
 	@Override
 	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist, PlaylistRuntime runtime) {
 		this.bundle = playlist.getBundle();
-		
+
 		super.startPlayingPlaylist(engine, playlist, runtime);
 	}
 

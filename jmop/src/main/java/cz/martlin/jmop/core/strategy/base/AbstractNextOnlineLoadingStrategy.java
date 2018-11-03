@@ -31,10 +31,10 @@ public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInfe
 	@Override
 	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist, PlaylistRuntime runtime) {
 		super.startPlayingPlaylist(engine, playlist, runtime);
-		
+
 		this.engine = engine;
 	}
-	
+
 	/**
 	 * Checks whether there is no running load operation (which indicates that
 	 * there is next track currently beeing loaded already) and if so, starts

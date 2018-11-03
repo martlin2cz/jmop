@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 
 public class WelcomePane extends VBox implements Initializable {
 
-
 	public WelcomePane() throws IOException {
 		initialize();
 	}
@@ -34,7 +33,5 @@ public class WelcomePane extends VBox implements Initializable {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
-
-
 
 }

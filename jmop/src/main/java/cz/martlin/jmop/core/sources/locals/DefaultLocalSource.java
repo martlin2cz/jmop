@@ -75,7 +75,6 @@ public class DefaultLocalSource implements BaseLocalSource {
 		}
 	}
 
-
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -108,7 +107,6 @@ public class DefaultLocalSource implements BaseLocalSource {
 		}
 	}
 
-
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -130,7 +128,8 @@ public class DefaultLocalSource implements BaseLocalSource {
 
 	@Override
 	public boolean exists(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
-		LOG.info("Checking existence of track " + (track != null ? track.getTitle() : null) + " in " + location + " as " + format);
+		LOG.info("Checking existence of track " + (track != null ? track.getTitle() : null) + " in " + location + " as "
+				+ format);
 		try {
 			return existsInternal(track, location, format);
 		} catch (IOException e) {
@@ -163,13 +162,13 @@ public class DefaultLocalSource implements BaseLocalSource {
 		String playlistName = config.getAllTracksPlaylistName();
 		return fileSystem.getPlaylistOfName(bundle, bundleDirName, playlistName);
 	}
-	
+
 	private PlaylistFileData loadAllTracksPlaylistMetadata(String bundleDirName) throws IOException {
 		String playlistName = config.getAllTracksPlaylistName();
-			boolean exists = fileSystem.existsPlaylist(bundleDirName, playlistName);
-			if (!exists) {
-				return null;
-			}
+		boolean exists = fileSystem.existsPlaylist(bundleDirName, playlistName);
+		if (!exists) {
+			return null;
+		}
 
 		PlaylistFileData data = fileSystem.getPlaylistMetadataOfName(bundleDirName, playlistName);
 		return data;
@@ -183,9 +182,9 @@ public class DefaultLocalSource implements BaseLocalSource {
 		}
 		SourceKind kind = data.getKind();
 		Bundle bundle = new Bundle(kind, name);
-		
+
 		loadAllTracksPlaylist(bundle, bundleDirName);
-		
+
 		return bundle;
 	}
 
@@ -194,15 +193,14 @@ public class DefaultLocalSource implements BaseLocalSource {
 		fileSystem.createBundleDirectory(name);
 	}
 
-	
 	private void saveBundleInternal(Bundle bundle) throws IOException {
 		String playlistName = config.getAllTracksPlaylistName();
 		Tracklist tracks = bundle.tracks();
 		Playlist playlist = new Playlist(bundle, playlistName, tracks, 0, true);
-		
+
 		savePlaylistInternal(bundle, playlist);
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private List<String> listsPlaylistNamesInternal(Bundle bundle) throws IOException, ExceptionInLoop {

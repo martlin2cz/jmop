@@ -12,16 +12,14 @@ import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
-import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader;
-import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import javafx.util.Duration;
 
 public class DownloaderTest {
@@ -46,16 +44,16 @@ public class DownloaderTest {
 
 		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
-		
+
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(connection, local, remote);
-		//BaseSourceDownloader downloader = new TestingDownloader(sources);
+		// BaseSourceDownloader downloader = new TestingDownloader(sources);
 		downloader.specifyListener(listener);
 
 		Track track = bundle.createTrack(id, title, description, duration);
 		TrackFileLocation location = TrackFileLocation.TEMP;
 		try {
-			
-			boolean success = downloader.download(track, location );
+
+			boolean success = downloader.download(track, location);
 			System.err.println("Success? " + success);
 		} catch (Exception e) {
 			e.printStackTrace();

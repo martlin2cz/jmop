@@ -266,7 +266,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 		this.currentTrack = playlist.getCurrentTrackIndex();
 
 		List<Track> newTracks = playlist.getTracks().getTracks();
-		
+
 		// optimalisation (check only for change)
 		if (newTracks.size() != this.tracks.size() || newTracks.equals(this.tracks)) {
 			this.tracks.clear();

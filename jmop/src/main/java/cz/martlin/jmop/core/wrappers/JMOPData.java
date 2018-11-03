@@ -60,7 +60,6 @@ public class JMOPData {
 		return jmop.getPlaying().getEngine().getPlayer().timeProperty();
 	}
 
-
 	public ObservableList<OperationWrapper<?, ?>> currentOperationsProperty() {
 		return jmop.getSources().getPreparer().currentOperations();
 	}

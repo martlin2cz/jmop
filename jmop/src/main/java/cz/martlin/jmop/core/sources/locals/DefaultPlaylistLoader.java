@@ -27,10 +27,10 @@ public class DefaultPlaylistLoader implements AbstractPlaylistLoader {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(file);
-			
+
 			PlaylistFileData data = new PlaylistFileData();
 			PARSER_COMPOSER.parse(bundle, document, data, onlyMetadata);
-			
+
 			return data;
 		} catch (Exception e) {
 			throw new IOException("Cannot load playlist file", e);
@@ -48,7 +48,7 @@ public class DefaultPlaylistLoader implements AbstractPlaylistLoader {
 
 			TransformerFactory tFactory = TransformerFactory.newInstance();
 			Transformer transformer = tFactory.newTransformer();
-			
+
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
 			DOMSource source = new DOMSource(document);

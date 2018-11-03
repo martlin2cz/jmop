@@ -27,9 +27,9 @@ public class JMOPPlaying {
 		if (currentPlaylist != null) {
 			engine.stopPlayingPlaylist(currentPlaylist);
 		}
-		
+
 		engine.startPlayingPlaylist(playlist);
-		
+
 		if (startPlaying) {
 			startPlaying();
 		}
@@ -79,7 +79,7 @@ public class JMOPPlaying {
 	public void togglePlaylistLockedStatus(Playlist playlist) {
 		boolean is = playlist.isLocked();
 		boolean isNot = !is;
-		
+
 		playlist.setLocked(isNot);
 	}
 

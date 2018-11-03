@@ -125,6 +125,4 @@ public class PlaylistFileData {
 				+ ", tracklist=" + tracklist + ", currentTrackIndex=" + currentTrackIndex + ", locked=" + locked + "]";
 	}
 
-
-
 }

@@ -50,7 +50,8 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		BasePlayer player = createPlayer(data, config, local, locator);
 
 		// level 2 things
-		TrackPreparer preparer = new TrackPreparer(reporter, config, remote, local, locator, downloader, converter, player);
+		TrackPreparer preparer = new TrackPreparer(reporter, config, remote, local, locator, downloader, converter,
+				player);
 
 		BasePlaylisterStrategy lockedStrategy = createLockedStrategy(data, config);
 		BasePlaylisterStrategy offlineStrategy = createOfflineStrategy(data, config);

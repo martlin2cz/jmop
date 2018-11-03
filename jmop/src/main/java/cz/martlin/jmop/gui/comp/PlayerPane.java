@@ -155,7 +155,7 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 		} else {
 			duration = null;
 		}
-		
+
 		currentDurationPane.totalTimeProperty().set(duration);
 	}
 

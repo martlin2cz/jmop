@@ -136,11 +136,12 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		Tracklist tracklist = playlist.getTracks();
 		boolean locked = playlist.isLocked();
 		int currentTrack = playlist.getCurrentTrackIndex();
-		
+
 		return new PlaylistFileData(bundleName, playlistName, kind, tracklist, currentTrack, locked);
 	}
 
-	private File fileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) throws IOException {
+	private File fileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format)
+			throws IOException {
 		File bundleDir = locatedBundleDir(bundle, location);
 		if (!bundleDir.exists()) {
 			Files.createDirectories(bundleDir.toPath());

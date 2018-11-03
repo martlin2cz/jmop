@@ -13,8 +13,7 @@ public class DefaultJMOPEnvironmentChecker implements BaseJMOPEnvironmentChecker
 		this.converter = converter;
 	}
 
-	//TODO check current bundle/playlist/track/...
-	
+	// TODO check current bundle/playlist/track/...
 
 	@Override
 	public String doCheck() {

@@ -12,7 +12,7 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 
 public class TestingTools {
-	
+
 	public static boolean delete(File directory) {
 		Path path = directory.toPath();
 
@@ -39,20 +39,18 @@ public class TestingTools {
 
 		return true;
 	}
-	
+
 	public static File testingTempDirectory(String name) {
-		
+
 		String tmpDir = System.getProperty("java.io.tmpdir");
 		File dir = new File(tmpDir, name);
 
-		
 		return dir;
 	}
-	
-	
+
 	public static void runAsJavaFX(Runnable runnable) {
 		new JFXPanel(); // Initializes the JavaFx Platform
-		
-        Platform.runLater(runnable);
+
+		Platform.runLater(runnable);
 	}
 }

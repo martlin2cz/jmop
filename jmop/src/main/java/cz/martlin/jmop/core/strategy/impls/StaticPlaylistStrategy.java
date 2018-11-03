@@ -5,7 +5,8 @@ import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.strategy.base.SimplePlaylisterStrategy;
 
 /**
- * Playlister completelly follows the playlist (i.e. runtime). 
+ * Playlister completelly follows the playlist (i.e. runtime).
+ * 
  * @author martin
  *
  */
@@ -18,7 +19,7 @@ public class StaticPlaylistStrategy extends SimplePlaylisterStrategy {
 	@Override
 	public void addTrack(Track track) {
 		PlaylistRuntime runtime = getRuntime();
-		
+
 		runtime.append(track);
 	}
 

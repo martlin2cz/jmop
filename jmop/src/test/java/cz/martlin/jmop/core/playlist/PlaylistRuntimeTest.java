@@ -122,7 +122,7 @@ public class PlaylistRuntimeTest {
 		List<Track> allTracks1 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
 		check(runtime, allTracks1, Arrays.asList(trackFoo, trackBar), trackBaz, Arrays.asList(trackAux, trackQux));
 		runtime.popUp(4);
-		
+
 		List<Track> allTracks2 = Arrays.asList(trackFoo, trackBar, trackQux, trackBaz, trackAux);
 		check(runtime, allTracks2, Arrays.asList(trackFoo, trackBar), trackQux, Arrays.asList(trackBaz, trackAux));
 		runtime.popUp(0);

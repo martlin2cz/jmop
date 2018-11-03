@@ -20,9 +20,8 @@ public class PlayerEngine {
 	private final TrackPreparer preparer;
 	private final PlayerWrapper player;
 
-	
-
-	public PlayerEngine(ErrorReporter reporter, PlaylisterWrapper playlister, PlayerWrapper player, TrackPreparer preparer) {
+	public PlayerEngine(ErrorReporter reporter, PlaylisterWrapper playlister, PlayerWrapper player,
+			TrackPreparer preparer) {
 		super();
 		this.reporter = reporter;
 		this.playlister = playlister;
@@ -113,8 +112,6 @@ public class PlayerEngine {
 		playlister.add(track);
 	}
 
-	
-
 	public void clearRemaining() {
 		LOG.info("Clearing remaining");
 
@@ -128,7 +125,7 @@ public class PlayerEngine {
 			if (hasNext()) {
 				toNext();
 			}
-			// TODO  Park here and wait until has next
+			// TODO Park here and wait until has next
 		} catch (JMOPSourceException e) {
 			reporter.report(e);
 		} catch (Exception e) {

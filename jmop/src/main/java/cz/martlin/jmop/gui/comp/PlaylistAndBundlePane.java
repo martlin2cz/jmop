@@ -26,7 +26,7 @@ public class PlaylistAndBundlePane extends VBox {
 	public PlaylistAndBundlePane() throws IOException {
 		this.playlistBinding = new ObservableListenerBinding<>();
 		this.playlistProperty = new SimpleObjectProperty<>();
-		
+
 		initialize();
 	}
 
@@ -54,7 +54,7 @@ public class PlaylistAndBundlePane extends VBox {
 	}
 
 	private void playlistPropertyChanged(Playlist oldPlaylistValue, Playlist newPlaylistValue) {
-//		System.out.println("PlaylistAndBundlePane.playlistPropertyChanged()");
+		// System.out.println("PlaylistAndBundlePane.playlistPropertyChanged()");
 		playlistBinding.rebind(oldPlaylistValue, newPlaylistValue, (p) -> playlistChanged((Playlist) p));
 		playlistChanged(newPlaylistValue);
 	}

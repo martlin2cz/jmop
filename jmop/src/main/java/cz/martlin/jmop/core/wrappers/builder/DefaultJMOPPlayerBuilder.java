@@ -60,7 +60,7 @@ public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 	@Override
 	public AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
 			InternetConnectionStatus connection) {
-		//TODO replace with Factory for SourceKind
+		// TODO replace with Factory for SourceKind
 		return new YoutubeSource(connection);
 	}
 

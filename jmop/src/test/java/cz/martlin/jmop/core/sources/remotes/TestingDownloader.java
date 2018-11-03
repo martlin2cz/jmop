@@ -45,7 +45,7 @@ public class TestingDownloader implements BaseSourceDownloader {
 	public void specifyListener(ProgressListener listener) {
 		// nothing
 	}
-	
+
 	@Override
 	public boolean check() {
 		return true;

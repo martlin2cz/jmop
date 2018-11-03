@@ -23,7 +23,6 @@ public class YoutubeSource extends
 				YouTube.Search.List, SearchListResponse, //
 				YouTube.Search.List, SearchListResponse> {
 
-
 	public YoutubeSource(InternetConnectionStatus connection) {
 		super(connection);
 	}
@@ -133,7 +132,5 @@ public class YoutubeSource extends
 		Track track = getTrack(bundle, identifier);
 		return track;
 	}
-
-	
 
 }

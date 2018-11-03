@@ -27,12 +27,12 @@ public class CreatePlaylistDialog extends BaseCommonFXMLDialog<CreatePlaylistDat
 	private TextField txtPlaylistName;
 
 	private final List<String> bundles;
-	
+
 	public CreatePlaylistDialog(List<String> bundles) throws IOException {
 		super();
 
 		this.bundles = bundles;
-		
+
 		load("/cz/martlin/jmop/gui/fx/CreatePlaylistDialog.fxml");
 	}
 
@@ -40,8 +40,9 @@ public class CreatePlaylistDialog extends BaseCommonFXMLDialog<CreatePlaylistDat
 	protected void specifyCustomDialogSettings() {
 		setTitle("Create new playlist");
 		setHeaderText("Specify name of the new playlist and also \n" + "change the bundle if needed.");
-		
-		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-playlist.png"))));
+
+		setGraphic(
+				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-playlist.png"))));
 	}
 
 	@Override

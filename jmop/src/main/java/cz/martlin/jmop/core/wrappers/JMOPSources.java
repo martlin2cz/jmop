@@ -19,7 +19,7 @@ public class JMOPSources {
 		this.local = local;
 		this.preparer = preparer;
 	}
-	
+
 	public TrackPreparer getPreparer() {
 		return preparer;
 	}
@@ -43,7 +43,8 @@ public class JMOPSources {
 		return playlist;
 	}
 
-	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine) throws JMOPSourceException {
+	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine)
+			throws JMOPSourceException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
 
@@ -77,7 +78,6 @@ public class JMOPSources {
 		local.createBundle(bundle);
 		return bundle;
 	}
-
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

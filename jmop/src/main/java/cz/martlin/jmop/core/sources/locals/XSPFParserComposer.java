@@ -169,7 +169,7 @@ public class XSPFParserComposer {
 
 		Element extension = document.createElementNS(NAMESPACE, "extension");
 		Element jmop = document.createElement("jmop");
-		
+
 		jmop.setAttribute("source", playlist.getKind().name());
 		jmop.setAttribute("bundleName", playlist.getBundleName());
 		jmop.setAttribute("application", APPLICATION);

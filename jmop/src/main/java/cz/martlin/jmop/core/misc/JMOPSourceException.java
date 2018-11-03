@@ -2,7 +2,6 @@ package cz.martlin.jmop.core.misc;
 
 public class JMOPSourceException extends Exception {
 
-
 	private static final long serialVersionUID = 6881006825304322873L;
 
 	public JMOPSourceException(String message, Throwable cause) {
@@ -16,6 +15,5 @@ public class JMOPSourceException extends Exception {
 	public JMOPSourceException(Throwable cause) {
 		super(cause);
 	}
-
 
 }

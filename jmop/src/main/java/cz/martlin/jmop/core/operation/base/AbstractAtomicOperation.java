@@ -11,13 +11,13 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final ErrorReporter reporter;
-	
+
 	private final String name;
-	
+
 	public AbstractAtomicOperation(ErrorReporter reporter, String name) {
 		super();
-		this.reporter =reporter;
-		
+		this.reporter = reporter;
+
 		this.name = name;
 	}
 

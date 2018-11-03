@@ -90,15 +90,13 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 	protected Boolean handleResult(int result, TrackConvertData data) throws Exception {
 		return result == RESULT_CODE_OK;
 	}
-	
+
 	@Override
 	public boolean check() {
 		return runAndCheckForResult("ffmpeg -version") == RESULT_CODE_OK;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
-	
 
 	private String createInputFile(TrackConvertData data) throws JMOPSourceException {
 		Track track = data.getTrack();

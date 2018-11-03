@@ -43,9 +43,9 @@ public class Bundle extends ObservableObject<Bundle> {
 	public Track createTrack(String identifier, String title, String description, Duration duration) {
 		Track track = new Track(this, identifier, title, description, duration);
 		this.tracks.put(identifier, track);
-		
+
 		fireValueChangedEvent();
-		
+
 		return track;
 	}
 
@@ -65,7 +65,6 @@ public class Bundle extends ObservableObject<Bundle> {
 		List<Track> list = new ArrayList<>(col);
 		return new Tracklist(list);
 	}
-
 
 	///////////////////////////////////////////////////////////////////////////
 

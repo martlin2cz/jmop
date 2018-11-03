@@ -2,8 +2,6 @@ package cz.martlin.jmop.core.config;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.data.Playlist;
-
 public class CommandlineData {
 	private File root;
 	private String bundleToPlayName;
@@ -29,5 +27,5 @@ public class CommandlineData {
 		return playlistToPlayName;
 	}
 
-	//TODO setters
+	// TODO setters
 }

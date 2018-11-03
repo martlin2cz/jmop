@@ -21,7 +21,6 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 		this.offline = false;
 	}
 
-
 	public boolean isOffline() {
 		checkOfflineTimeout();
 		return offline;

@@ -43,7 +43,7 @@ public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStra
 	@Override
 	public void playlistChanged(Playlist playlist, PlaylistRuntime runtime) {
 		super.playlistChanged(playlist, runtime);
-		
+
 		checkAndInferNext();
 	}
 
@@ -91,7 +91,8 @@ public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStra
 	 * 
 	 */
 	private void checkAndInferNext(Track current) {
-//		System.out.println("Okay, loading next of " + current.getTitle() + " by " + this);
+		// System.out.println("Okay, loading next of " + current.getTitle() + "
+		// by " + this);
 		// PlaylistRuntime runtime = getRuntime();
 		// if (runtime.count() == 0) {
 		// return;

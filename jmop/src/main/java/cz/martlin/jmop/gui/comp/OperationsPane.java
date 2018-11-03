@@ -116,12 +116,13 @@ public class OperationsPane extends HBox {
 		}
 	}
 
-	private void showFirstOperation(Change<? extends OperationWrapper<?, ?>> change, List<? extends OperationWrapper<?, ?>> operations) {
+	private void showFirstOperation(Change<? extends OperationWrapper<?, ?>> change,
+			List<? extends OperationWrapper<?, ?>> operations) {
 		if (operations.isEmpty()) {
 			// for case of concurency failure
 			return;
 		}
-		
+
 		List<? extends OperationWrapper<?, ?>> addedOperations = change.getAddedSubList();
 		changeToFirstOf(addedOperations);
 	}

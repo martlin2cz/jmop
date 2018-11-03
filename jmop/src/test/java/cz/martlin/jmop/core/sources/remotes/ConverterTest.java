@@ -10,16 +10,15 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
-import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
 import javafx.util.Duration;
 
 public class ConverterTest {
@@ -31,7 +30,7 @@ public class ConverterTest {
 		final String bundleName = "testing-tracks";
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
-		
+
 		DefaultConfiguration config = new DefaultConfiguration();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		AbstractPlaylistLoader loader = null;
@@ -44,7 +43,6 @@ public class ConverterTest {
 		TrackFileLocation outputLocation = TrackFileLocation.SAVE;
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		
 
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 

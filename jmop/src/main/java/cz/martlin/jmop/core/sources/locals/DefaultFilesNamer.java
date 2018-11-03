@@ -13,9 +13,8 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 		super();
 	}
 
-
 	/////////////////////////////////////////////////////////////////////////////////////
-	
+
 	@Override
 	public String directoryNameOfBundle(String bundleName) {
 		return convertBundleNameToDirName(bundleName);
@@ -59,7 +58,7 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 	public String temporaryDirectoryName() {
 		return TEMP_DIR_NAME;
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	protected static String clean(String text) {

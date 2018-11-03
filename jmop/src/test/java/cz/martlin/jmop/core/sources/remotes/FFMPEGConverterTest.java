@@ -6,8 +6,6 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
-
 public class FFMPEGConverterTest {
 
 	@Test

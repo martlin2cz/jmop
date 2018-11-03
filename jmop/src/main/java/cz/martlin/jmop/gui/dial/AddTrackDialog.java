@@ -21,7 +21,7 @@ public class AddTrackDialog extends BaseCommonFXMLDialog<AddTrackData> {
 
 	public AddTrackDialog() throws IOException {
 		super();
-		
+
 		load("/cz/martlin/jmop/gui/fx/AddTrackDialog.fxml");
 	}
 
@@ -29,7 +29,7 @@ public class AddTrackDialog extends BaseCommonFXMLDialog<AddTrackData> {
 	protected void specifyCustomDialogSettings() {
 		setTitle("Add track");
 		setHeaderText("Specify the new track to be added.");
-		
+
 		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/add-track.png"))));
 	}
 

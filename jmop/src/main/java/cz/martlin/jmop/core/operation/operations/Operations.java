@@ -19,8 +19,9 @@ public class Operations {
 	private final TwosetOperation<Track, Track, Track> nextAndLoad;
 	private final BaseOperation<Track, Track> load;
 
-	public Operations(ErrorReporter reporter, BaseConfiguration config, AbstractTrackFileLocator locator, AbstractRemoteSource remote,
-			BaseLocalSource local, BaseSourceDownloader downloader, BaseSourceConverter converter, BasePlayer player) {
+	public Operations(ErrorReporter reporter, BaseConfiguration config, AbstractTrackFileLocator locator,
+			AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
+			BaseSourceConverter converter, BasePlayer player) {
 		super();
 
 		BaseOperation<SearchData, Track> search = new TrackSearchOperation(reporter, config, remote);

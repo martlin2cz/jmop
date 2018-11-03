@@ -9,7 +9,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 public interface AbstractRemoteSource extends BaseSourceImpl {
 
 	public URL urlOf(Track track) throws JMOPSourceException;
-	
+
 	@Override
 	public Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException;
 

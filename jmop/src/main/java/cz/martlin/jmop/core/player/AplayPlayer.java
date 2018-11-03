@@ -22,14 +22,14 @@ public class AplayPlayer extends AbstractPlayer {
 	private static final TrackFileFormat APLAY_PLAY_FORMAT = TrackFileFormat.WAV;
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
+
 	private final ErrorReporter reporter;
 	private AplayProcess process;
 	private Track currentTrack;
 
 	public AplayPlayer(ErrorReporter reporter, BaseLocalSource local, AbstractTrackFileLocator locator) {
-		super(local, locator,  APLAY_PLAY_FORMAT);
-		
+		super(local, locator, APLAY_PLAY_FORMAT);
+
 		this.reporter = reporter;
 	}
 
@@ -37,14 +37,13 @@ public class AplayPlayer extends AbstractPlayer {
 	public Duration currentTime() {
 		return new Duration(0);
 	}
-	
-	
+
 	@Override
 	protected void doStartPlaying(Track track, File file) {
 		AplayProcess process = new AplayProcess();
 
 		runProcessInBackround(process, track, file);
-		
+
 		this.process = process;
 	}
 
@@ -70,7 +69,7 @@ public class AplayPlayer extends AbstractPlayer {
 			reporter.internal(e);
 		}
 	}
-	
+
 	@Override
 	protected void doSeek(Duration to) {
 		LOG.warn("Seek not supported, will ignore");
@@ -92,7 +91,6 @@ public class AplayPlayer extends AbstractPlayer {
 		Thread thread = new Thread(run, "AplayPlayerThread");
 		thread.start();
 	}
-
 
 	public class AplayProcess extends AbstractProcessEncapusulation<File, Void> {
 

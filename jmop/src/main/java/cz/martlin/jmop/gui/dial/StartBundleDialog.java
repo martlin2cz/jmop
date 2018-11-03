@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * Dialog prompting the playlist  to start bundle.
+ * Dialog prompting the playlist to start bundle.
  * 
  * @author martin
  *
@@ -22,16 +22,16 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 
 	@FXML
 	private ComboBox<String> cmbPlaylistName;
-	
+
 	private final List<String> playlistsNames;
 	private final String defaultPlaylistName;
 
 	public StartBundleDialog(List<String> playlistsNames, String defaultPlaylistName) throws IOException {
 		super();
-		
+
 		this.playlistsNames = playlistsNames;
 		this.defaultPlaylistName = defaultPlaylistName;
-		
+
 		load("/cz/martlin/jmop/gui/fx/StartBundleDialog.fxml");
 	}
 
@@ -39,8 +39,9 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 	protected void specifyCustomDialogSettings() {
 		setTitle("Start playing bundle");
 		setHeaderText("Specify playlist which should be started.");
-		
-		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/play-bundle.png"))));
+
+		setGraphic(
+				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/play-bundle.png"))));
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 		ObservableList<String> names = FXCollections.observableArrayList(playlistsNames);
 		cmbPlaylistName.setItems(names);
 		cmbPlaylistName.setValue(defaultPlaylistName);
-		
+
 	}
 
 	///////////////////////////////////////////////////////////////////////////

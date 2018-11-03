@@ -26,7 +26,7 @@ public abstract class BaseCommonFXMLDialog<R> extends Dialog<R> implements Initi
 	protected void load(String fxmlFilePath) throws IOException {
 		initializeContent(fxmlFilePath);
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////
 
 	protected void initializeDialog() throws IOException {

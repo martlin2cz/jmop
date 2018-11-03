@@ -22,8 +22,8 @@ public class JMOPPlayer {
 	private final BaseJMOPEnvironmentChecker checker;
 	private final JMOPData data;
 
-	public JMOPPlayer(BaseConfiguration config, ErrorReporter reporter, PlayerEngine engine, LocalSourceWrapper local, TrackPreparer preparer,
-			BaseJMOPEnvironmentChecker checker) {
+	public JMOPPlayer(BaseConfiguration config, ErrorReporter reporter, PlayerEngine engine, LocalSourceWrapper local,
+			TrackPreparer preparer, BaseJMOPEnvironmentChecker checker) {
 		this.config = config;
 		this.reporter = reporter;
 		this.sources = new JMOPSources(local, preparer);
@@ -32,15 +32,14 @@ public class JMOPPlayer {
 		this.data = new JMOPData(this);
 	}
 
-
 	public BaseConfiguration getConfig() {
 		return config;
 	}
-	
+
 	public ErrorReporter getErrorReporter() {
 		return reporter;
 	}
-	
+
 	protected JMOPSources getSources() {
 		return sources;
 	}
@@ -49,11 +48,10 @@ public class JMOPPlayer {
 		return playing;
 	}
 
-
 	public JMOPData getData() {
 		return data;
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void startNewBundle(SourceKind kind, String bundleName, String querySeed) throws JMOPSourceException {
@@ -83,23 +81,22 @@ public class JMOPPlayer {
 		sources.savePlaylist(playlist, newPlaylistName);
 	}
 
-	public void togglePlaylistLockedStatus(){
+	public void togglePlaylistLockedStatus() {
 		Playlist playlist = getCurrentPlaylist();
 		playing.togglePlaylistLockedStatus(playlist);
 	}
-	
-	public void clearRemainingTracks(){
+
+	public void clearRemainingTracks() {
 		Playlist playlist = getCurrentPlaylist();
 		playing.clearRemainingTracks(playlist);
 	}
-	
+
 	public void loadAndAddTrack(String querySeed) throws JMOPSourceException {
 		Bundle bundle = getCurrentBundle();
 		PlayerEngine engine = playing.getEngine();
 
 		sources.queryAndLoad(bundle, querySeed, engine);
 	}
-	
 
 	public void playTrack(int index) throws JMOPSourceException {
 		playing.playTrack(index);
@@ -157,6 +154,5 @@ public class JMOPPlayer {
 		Playlist playlist = getCurrentPlaylist();
 		return playlist.getBundle();
 	}
-
 
 }
