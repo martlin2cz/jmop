@@ -9,6 +9,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.PlaylistFileData;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 
 public interface AbstractFileSystemAccessor {
 

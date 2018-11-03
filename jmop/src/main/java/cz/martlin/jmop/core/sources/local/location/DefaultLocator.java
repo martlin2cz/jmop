@@ -2,8 +2,8 @@ package cz.martlin.jmop.core.sources.local.location;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.player.BasePlayer;
-import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
+import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
 
 public class DefaultLocator implements AbstractTrackFileLocator {
 

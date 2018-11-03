@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.config;
 
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 
 public interface BaseConfiguration {
 

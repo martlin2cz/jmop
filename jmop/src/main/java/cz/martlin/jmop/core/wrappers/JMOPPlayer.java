@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.wrappers;
 
 import java.util.List;
 
+import cz.martlin.jmop.core.check.BaseJMOPEnvironmentChecker;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;

@@ -1,0 +1,15 @@
+package cz.martlin.jmop.core.sources.locals;
+
+public enum TrackFileFormat {
+	MP3("mp3"), OPUS("opus"), WAV("wav");
+
+	private final String extension;
+
+	private TrackFileFormat(String extension) {
+		this.extension = extension;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+}

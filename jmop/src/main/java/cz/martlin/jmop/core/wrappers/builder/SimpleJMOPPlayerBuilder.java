@@ -1,5 +1,7 @@
 package cz.martlin.jmop.core.wrappers.builder;
 
+import cz.martlin.jmop.core.check.BaseJMOPEnvironmentChecker;
+import cz.martlin.jmop.core.check.DefaultJMOPEnvironmentChecker;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.CommandlineData;
 import cz.martlin.jmop.core.misc.ErrorReporter;
@@ -12,19 +14,17 @@ import cz.martlin.jmop.core.playlister.Playlister;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
-import cz.martlin.jmop.core.sources.download.YoutubeDlDownloader;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
+import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader;
 import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
 import cz.martlin.jmop.core.strategy.impls.InfiniteOfflineStrategy;
 import cz.martlin.jmop.core.strategy.impls.StandartOnlineStrategy;
 import cz.martlin.jmop.core.strategy.impls.StaticPlaylistStrategy;
-import cz.martlin.jmop.core.wrappers.BaseJMOPEnvironmentChecker;
-import cz.martlin.jmop.core.wrappers.DefaultJMOPEnvironmentChecker;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 
 public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {

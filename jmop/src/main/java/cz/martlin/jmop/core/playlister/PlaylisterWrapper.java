@@ -6,7 +6,7 @@ import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.playlist.PlaylistRuntime;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;

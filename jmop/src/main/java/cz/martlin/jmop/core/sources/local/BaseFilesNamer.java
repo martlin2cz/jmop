@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.sources.local;
 import java.io.File;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 
 public interface BaseFilesNamer {
 

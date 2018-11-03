@@ -14,6 +14,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.remote.SimpleRemoteSource;
 import javafx.util.Duration;
 
 public class YoutubeSource extends

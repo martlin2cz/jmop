@@ -9,6 +9,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.BaseSourceImpl;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 
 public interface BaseLocalSource extends BaseSourceImpl {
 

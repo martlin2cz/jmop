@@ -13,6 +13,7 @@ import org.junit.Test;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
 

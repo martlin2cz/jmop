@@ -2,8 +2,8 @@ package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 
 /**
  * Base playlister strategy, class performing going thought playlist (playlist

@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.player;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Duration;
 
