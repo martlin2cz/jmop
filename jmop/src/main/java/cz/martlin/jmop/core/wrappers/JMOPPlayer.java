@@ -147,11 +147,6 @@ public class JMOPPlayer {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	// @Deprecated
-	// public String currentPlaylistAsString() {
-	// Playlist playlist = playing.getCurrentPlaylist();
-	// return playlist.toHumanString();
-	// }
 
 	private Playlist getCurrentPlaylist() {
 		return playing.getEngine().getPlaylister().playlistProperty().get();

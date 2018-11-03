@@ -7,31 +7,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 
 public class InternetConnectionStatus extends ObservableObject<InternetConnectionStatus> {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final int timeout;
-	private final BooleanProperty offline;
+	private boolean offline;
 	private Calendar offlineSince;
 
 	public InternetConnectionStatus(BaseConfiguration config) {
 		this.timeout = config.getOfflineRetryTimeout();
-		this.offline = new SimpleBooleanProperty(false);
+		this.offline = false;
 	}
 
-	@Deprecated
-	public ReadOnlyBooleanProperty offlineProperty() {
-		return offline;
-	}
 
 	public boolean isOffline() {
 		checkOfflineTimeout();
-		return offline.get();
+		return offline;
 	}
 
 	public void markOffline() {
@@ -39,9 +32,9 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 
 		offlineSince = Calendar.getInstance();
 
-		boolean was = offline.get();
+		boolean was = offline;
 		if (!was) {
-			offline.set(true);
+			offline = true;
 			fireValueChangedEvent();
 		}
 	}
@@ -49,11 +42,11 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 	private void checkOfflineTimeout() {
 		boolean is = isOfflineTimeOut();
 		if (is) {
-			boolean was = offline.get();
+			boolean was = offline;
 			if (was) {
 				LOG.info("The internet connection could be back online");
 
-				offline.set(false);
+				offline = false;
 				fireValueChangedEvent();
 			}
 

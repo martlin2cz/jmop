@@ -45,8 +45,6 @@ public class GuiComplexActionsPerformer {
 
 	///////////////////////////////////////////////////////////////////////////
 
-
-
 	public void startNewBundle() {
 		runInBackgroundWithDialog(() -> {
 			NewBundleDialog dial = new NewBundleDialog();
@@ -115,22 +113,20 @@ public class GuiComplexActionsPerformer {
 			jmop.savePlaylistAs(playlistName);
 		});
 	}
-	
-	
+
 	public void lockUnlockPlaylist() {
 		runInForegound(() -> {
 			jmop.togglePlaylistLockedStatus();
 			return null;
 		});
 	}
-	
+
 	public void clearRemaining() {
 		runInForegound(() -> {
 			jmop.clearRemainingTracks();
 			return null;
 		});
 	}
-
 
 	public void addTrack() {
 		runInBackgroundWithDialog(() -> {
@@ -142,7 +138,6 @@ public class GuiComplexActionsPerformer {
 		});
 
 	}
-
 
 	public void playTrack(int index) {
 		runInForegound(() -> {
@@ -265,7 +260,7 @@ public class GuiComplexActionsPerformer {
 			return playlist.getTracks().getTracks();
 		});
 	}
-	
+
 	public int inferCurrentTrackIndex() {
 		return runAndHandleError(() -> {
 			Playlist playlist = jmop.getData().playlistProperty().get();
@@ -275,15 +270,8 @@ public class GuiComplexActionsPerformer {
 			return playlist.getCurrentTrackIndex();
 		});
 	}
-	
-	
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
-	@Deprecated
-	protected void changeCursor(Cursor cursor) {
-		scene.getRoot().setCursor(cursor);
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	private <T> void runInForegound(RunnableWithException<T> run) {
@@ -311,7 +299,7 @@ public class GuiComplexActionsPerformer {
 		// runAndHandleError(run);
 		// });
 	}
-	
+
 	private <T> void runInBackground(RunnableWithException<T> run) {
 		Task<T> task = new Task<T>() {
 			@Override
@@ -395,7 +383,6 @@ public class GuiComplexActionsPerformer {
 		alert.show();
 	}
 
-
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@FunctionalInterface
@@ -407,6 +394,5 @@ public class GuiComplexActionsPerformer {
 	public static interface ConsumerWithException<T> {
 		public void consume(T object) throws Exception;
 	}
-
 
 }

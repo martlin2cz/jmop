@@ -60,10 +60,6 @@ public class JMOPData {
 		return jmop.getPlaying().getEngine().getPlayer().timeProperty();
 	}
 
-	// @Deprecated
-	// public ObservableList<PreparerTask> currentDownloadTasksProperty() {
-	// return FXCollections.observableArrayList();
-	// }
 
 	public ObservableList<OperationWrapper<?, ?>> currentOperationsProperty() {
 		return jmop.getSources().getPreparer().currentOperations();

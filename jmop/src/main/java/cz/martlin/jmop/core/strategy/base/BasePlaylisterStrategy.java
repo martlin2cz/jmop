@@ -47,11 +47,10 @@ public interface BasePlaylisterStrategy {
 
 	/**
 	 * Returns the runtime played within this playlister. Runtime may be set by
-	 * {@link #startPlayingPlaylist(PlayerEngine, Playlist, PlaylistRuntime)}.
+	 * {@link #startPlayingPlaylist(PlayerEngine, Playlist, PlaylistRuntime)}. Use with care!
 	 * 
 	 * @return
 	 */
-	@Deprecated
 	public PlaylistRuntime getRuntime();
 
 	/////////////////////////////////////////////////////////////////////////////////////////

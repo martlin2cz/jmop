@@ -78,21 +78,6 @@ public class JMOPSources {
 		return bundle;
 	}
 
-	// @Deprecated
-	// private Track prepareInitialTrack(Bundle bundle, String querySeed) throws
-	// JMOPSourceException {
-	// Track track = remote.search(bundle, querySeed);
-	// // preparer.load(track);
-	// return track;
-	// }
-	//
-	// private Playlist createInitialPlaylist(Bundle bundle, String query) {
-	// BetterPlaylistRuntime runtime = new BetterPlaylistRuntime();
-	// Playlist playlist = new Playlist(bundle, query, runtime);
-	// return playlist;
-	// }
-
-	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

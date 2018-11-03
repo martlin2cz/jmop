@@ -133,23 +133,6 @@ public class YoutubeSource extends
 		return track;
 	}
 
-	@Deprecated
-	private Track _old_convertSearchListResponse(Bundle bundle, SearchListResponse response) {
-		List<SearchResult> results = response.getItems();
-		SearchResult result = results.get(0);
-		Track track = snippetToTrack(bundle, result);
-		return track;
-	}
-
-	@Deprecated
-	private Track snippetToTrack(Bundle bundle, SearchResult result) {
-		String identifier = result.getId().getVideoId();
-		String title = result.getSnippet().getTitle();
-		String description = result.getSnippet().getDescription();
-		String durationStr = null;
-		Duration duration = DurationUtilities.parseYoutubeDuration(durationStr);
-
-		return bundle.createTrack(identifier, title, description, duration);
-	}
+	
 
 }

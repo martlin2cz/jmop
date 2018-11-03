@@ -30,12 +30,12 @@ public class TrackPreparer {
 	private final Operations operations;
 	private final ObservableList<OperationWrapper<?, ?>> currentTasks;
 
-	public TrackPreparer(ErrorReporter reporter, BaseConfiguration config, AbstractRemoteSource remote, BaseLocalSource local,
-			AbstractTrackFileLocator locator, BaseSourceDownloader downloader, BaseSourceConverter converter,
-			BasePlayer player) {
+	public TrackPreparer(ErrorReporter reporter, BaseConfiguration config, AbstractRemoteSource remote,
+			BaseLocalSource local, AbstractTrackFileLocator locator, BaseSourceDownloader downloader,
+			BaseSourceConverter converter, BasePlayer player) {
 
 		this.reporter = reporter;
-		
+
 		this.operations = new Operations(reporter, config, locator, remote, local, downloader, converter, player);
 
 		this.currentTasks = FXCollections.observableList(new LinkedList<>());
@@ -48,11 +48,10 @@ public class TrackPreparer {
 	public boolean isCurrentlyRunningSome() {
 		return !currentTasks.isEmpty();
 	}
-	
+
 	public int countOfCurrentlyRunning() {
 		return currentTasks.size();
 	}
-
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	public void startSearchAndLoadInBg(Bundle bundle, String query, PlayerEngine engine) {
@@ -76,20 +75,6 @@ public class TrackPreparer {
 		runInBackground(nexts, track, (t) -> append(t, engine));
 	}
 
-	/**
-	 * Quite hack, equal to
-	 * {@link #startLoadingNextOf(Track, PlaylisterWrapper)}.
-	 * 
-	 * @param track
-	 * @param addTo
-	 */
-	@Deprecated
-	public void startLoadingNextOfInBg(Track track, BasePlaylisterStrategy addTo) {
-		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
-
-		runInBackground(nexts, track, (t) -> append(t, addTo));
-	}
-
 	public void startLoadingNextOfInBg(Track track, Consumer<Track> onLoaded) {
 		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
 
@@ -102,21 +87,6 @@ public class TrackPreparer {
 
 		runInForeground(load, track);
 	}
-
-	// @Deprecated
-	// public void checkAndStartLoadingTrack(Track track, PlayerEngine engine) {
-	// BaseOperation<Track, Track> load = operations.loadOperation();
-	//
-	// runInForeground(load, track, (t) -> append(t, engine));
-	// }
-	//
-	// @Deprecated
-	// public void checkAndStartLoadingTrack(Track track, Consumer<Track>
-	// onLoaded) {
-	// BaseOperation<Track, Track> load = operations.loadOperation();
-	//
-	// runInForeground(load, track, (t) -> onLoaded.accept(t));
-	// }
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
