@@ -10,15 +10,21 @@ public class Tracklist {
 		super();
 		this.tracks = new ArrayList<>();
 	}
-	
+
 	public Tracklist(List<Track> tracks) {
 		super();
-		this.tracks = tracks;
-	}
+		this.tracks = new ArrayList<>(tracks);
+	} //////////////////////////////////////////////////////////////////////////////////////
 
 	public List<Track> getTracks() {
 		return tracks;
 	}
+
+	public int count() {
+		return tracks.size();
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public int hashCode() {
@@ -49,6 +55,14 @@ public class Tracklist {
 	public String toString() {
 		return "Tracklist" + tracks + "";
 	}
-	
-	
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	public String toHumanString() {
+		StringBuilder stb = new StringBuilder();
+
+		tracks.forEach((t) -> stb.append("  " + t.getTitle() + "\n"));
+
+		return stb.toString();
+	}
+
 }

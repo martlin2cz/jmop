@@ -28,9 +28,9 @@
 	</fx:define>
 
 	<menus>
-		<Menu mnemonicParsing="false" text="File">
+		<Menu mnemonicParsing="true" text="_File">
 			<items>
-				<MenuItem mnemonicParsing="false" text="Play" fx:id="miPlay"
+				<MenuItem mnemonicParsing="true" text="P_lay" fx:id="miPlay"
 					onAction="#onPlayAction" accelerator="Shift + S">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -41,7 +41,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="false" text="Stop" fx:id="miStop"
+				<MenuItem mnemonicParsing="true" text="_Stop" fx:id="miStop"
 					onAction="#onStopAction" accelerator="S">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -52,7 +52,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="false" text="Pause" fx:id="miPause"
+				<MenuItem mnemonicParsing="true" text="_Pause" fx:id="miPause"
 					onAction="#onPauseAction" accelerator="P">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -63,7 +63,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="false" text="Resume" fx:id="miResume"
+				<MenuItem mnemonicParsing="true" text="_Resume" fx:id="miResume"
 					onAction="#onResumeAction" accelerator="Shift + P">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -74,7 +74,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="false" text="Previous" fx:id="miPrevious"
+				<MenuItem mnemonicParsing="true" text="Pre_vious" fx:id="miPrevious"
 					onAction="#onPreviousAction" accelerator="Shift + N">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -85,7 +85,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="false" text="Next" fx:id="miNext"
+				<MenuItem mnemonicParsing="true" text="_Next" fx:id="miNext"
 					onAction="#onNextAction" accelerator="N">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -96,9 +96,9 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<SeparatorMenuItem mnemonicParsing="false" />
+				<SeparatorMenuItem mnemonicParsing="true" />
 				<!-- here will go "settings" item -->
-				<MenuItem mnemonicParsing="false" text="Exit" onAction="#onExitAction">
+				<MenuItem mnemonicParsing="true" text="E_xit" onAction="#onExitAction">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
@@ -111,11 +111,11 @@
 			</items>
 		</Menu>
 
-		<HalfDynamicMenu mnemonicParsing="false" text="Bundle"
+		<HalfDynamicMenu mnemonicParsing="true" text="_Bundle"
 			fx:id="menuBundle" onShowing="#onBundleMenuShowing"
 			onDynamicItemAction="#onBundleNameAction">
 			<staticItems>
-				<MenuItem mnemonicParsing="false" text="Start new bundle"
+				<MenuItem mnemonicParsing="true" text="Start _new bundle"
 					fx:id="miStartNewBundle" onAction="#onStartNewBundleAction">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -126,16 +126,16 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<SeparatorMenuItem mnemonicParsing="false" />
+				<SeparatorMenuItem mnemonicParsing="true" />
 			</staticItems>
 		</HalfDynamicMenu>
 
-		<HalfDynamicMenu mnemonicParsing="false" text="Playlist"
+		<HalfDynamicMenu mnemonicParsing="true" text="_Playlist"
 			fx:id="menuPlaylist" onShowing="#onPlaylistMenuShowing"
 			onDynamicItemAction="#onPlaylistNameAction">
 			<staticItems>
 
-				<MenuItem mnemonicParsing="false" text="Start new playlist"
+				<MenuItem mnemonicParsing="true" text="Start _new playlist"
 					fx:id="miStartNewPlaylist" onAction="#onStartNewPlaylistAction">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -146,7 +146,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="false" text="Save this playlist as ..."
+				<MenuItem mnemonicParsing="true" text="_Save this playlist as ..."
 					fx:id="miSaveThisPlaylistAs" onAction="#onSavePlaylistAsAction">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -157,15 +157,37 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<SeparatorMenuItem mnemonicParsing="false" />
+				<MenuItem mnemonicParsing="true" text="_Lock/Unlock this playlist"
+					fx:id="miLockUnlockThisPlaylist" onAction="#onLockUnlockPlaylistAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/lock-playlist.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
+				<MenuItem mnemonicParsing="true" text="_Clear remaining"
+					fx:id="miClearRemaining" onAction="#onClearRemainingAction">
+					<graphic>
+						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@/cz/martlin/jmop/gui/img/clear-remaining.svg" />
+							</image>
+						</ImageView>
+					</graphic>
+				</MenuItem>
+				<SeparatorMenuItem mnemonicParsing="true" />
 			</staticItems>
 		</HalfDynamicMenu>
 
-		<HalfDynamicMenu mnemonicParsing="false" text="Track"
+		<HalfDynamicMenu mnemonicParsing="true" text="_Track"
 			fx:id="menuTrack" onShowing="#onTrackMenuShowing"
 			onDynamicItemAction="#onTrackTitleAction">
 			<staticItems>
-				<MenuItem mnemonicParsing="false" text="Append custom track"
+				<MenuItem mnemonicParsing="true" text="_Append custom track"
 					fx:id="miAppendCustomTrack" onAction="#onAppendCustomTrackAction">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -176,14 +198,13 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<SeparatorMenuItem mnemonicParsing="false" />
+				<SeparatorMenuItem mnemonicParsing="true" />
 			</staticItems>
 		</HalfDynamicMenu>
 
-		<Menu mnemonicParsing="false" text="Help">
+		<Menu mnemonicParsing="true" text="_Help">
 			<items>
-				<MenuItem mnemonicParsing="false" text="Help" onAction="#onHelpAction"
-					disable="true">
+				<MenuItem mnemonicParsing="true" text="_Help" onAction="#onHelpAction">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
@@ -193,7 +214,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="false" text="Check configuration"
+				<MenuItem mnemonicParsing="true" text="_Check configuration"
 					onAction="#onCheckConfigurationAction">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
@@ -204,7 +225,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="false" text="About" onAction="#onAboutAction">
+				<MenuItem mnemonicParsing="true" text="_About" onAction="#onAboutAction">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">

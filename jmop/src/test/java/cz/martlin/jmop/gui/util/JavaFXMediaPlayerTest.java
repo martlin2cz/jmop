@@ -1,15 +1,19 @@
 package cz.martlin.jmop.gui.util;
 
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNoException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.download.TestingDownloader;
@@ -20,36 +24,15 @@ import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.misc.TestingTools;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
 public class JavaFXMediaPlayerTest {
-
-	public class TestingReporter implements MediaPlayerGuiReporter {
-
-		@Override
-		public StringProperty trackNameProperty() {
-			return new SimpleStringProperty();
-		}
-
-		@Override
-		public Property<Duration> durationProperty() {
-			return new SimpleObjectProperty<>();
-		}
-
-		@Override
-		public Property<Status> statusProperty() {
-			return new SimpleObjectProperty<>();
-		}
-
-	}
 
 	@Test
 	public void test() throws Exception {
@@ -59,25 +42,27 @@ public class JavaFXMediaPlayerTest {
 			try {
 				BaseLocalSource local = prepareLocal();
 				Track track = prepareTrack();
+				TrackFileLocation downloadLocation = TrackFileLocation.TEMP;
+				TrackFileLocation playLocation = TrackFileLocation.SAVE;
+				TrackFileFormat downloadFormat = TrackFileFormat.OPUS;
+				TrackFileFormat playFormat = TrackFileFormat.MP3;
 
-				TestingDownloader downloader = new TestingDownloader(local);
-				downloader.download(track);
+				TestingDownloader downloader = new TestingDownloader(local, downloadFormat);
+				downloader.download(track, downloadLocation);
 
-				final TrackFileFormat downloadFormat = TestingDownloader.DOWNLOAD_FORMAT;
-				final TrackFileFormat outputFormat = TrackFileFormat.MP3;
+				FFMPEGConverter converter = new FFMPEGConverter(local);
+				converter.convert(track, downloadLocation, downloadFormat, playLocation, playFormat);
 
-				FFMPEGConverter converter = new FFMPEGConverter(local, downloadFormat, outputFormat, false);
-				converter.convert(track);
-
-				MediaPlayerGuiReporter reporter = new TestingReporter();
-				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local);
+				AbstractTrackFileLocator locator = new PrimitiveLocator();
+				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local, locator);
 				// AbstractPlayer player = new AplayPlayer(local);
-				
-//				TrackPlayedHandler handler = null;
-//				player.setHandler(handler);
-				
-				player.startPlayling(track);
 
+				// TrackPlayedHandler handler = null;
+				// player.setHandler(handler);
+
+				player.startPlaying(track);
+			} catch (IOException e) {
+				assumeNoException(e);
 			} catch (Exception e) {
 				e.printStackTrace();
 				fail(e.toString());
@@ -112,12 +97,13 @@ public class JavaFXMediaPlayerTest {
 		return track;
 	}
 
-	private BaseLocalSource prepareLocal() {
-		PlaylistLoader loader = new DefaultPlaylistLoader();
+	private BaseLocalSource prepareLocal() throws IOException {
+		DefaultConfiguration config = new DefaultConfiguration();
+		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		File root = new File("/tmp/jmop-gui/");
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
-		BaseLocalSource local = new DefaultLocalSource(fileSystem);
+		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		return local;
 	}
 

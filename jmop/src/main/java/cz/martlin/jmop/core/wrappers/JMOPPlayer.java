@@ -2,36 +2,30 @@ package cz.martlin.jmop.core.wrappers;
 
 import java.util.List;
 
+import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
-import cz.martlin.jmop.core.player.TrackPreparer;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
+import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 import javafx.util.Duration;
 
 public class JMOPPlayer {
+	private final BaseConfiguration config;
 	private final JMOPSources sources;
 	private final JMOPPlaying playing;
-	private final CoreGuiDescriptor descriptor;
-	private final ObjectProperty<Playlist> currentPlaylistProperty;
+	private final BaseJMOPEnvironmentChecker checker;
+	private final JMOPData data;
 
-	public JMOPPlayer(AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, GuiDescriptor gui, Playlist playlistToPlayOrNot,
-			JMOPPlaylisterWithGui playlister, TrackPreparer preparer, AutomaticSavesPerformer saver) {
-
-		this.sources = new JMOPSources(local, remote, downloader, converter, preparer, playlister, gui);
-		this.playing = new JMOPPlaying(playlister, saver, playlistToPlayOrNot);
-		this.descriptor = new CoreGuiDescriptor(this);
-		this.currentPlaylistProperty = new SimpleObjectProperty<>();
+	public JMOPPlayer(BaseConfiguration config, PlayerEngine engine, LocalSourceWrapper local, TrackPreparer preparer,
+			BaseJMOPEnvironmentChecker checker) {
+		this.config = config;
+		this.sources = new JMOPSources(local, preparer);
+		this.playing = new JMOPPlaying(engine);
+		this.checker = checker;
+		this.data = new JMOPData(this);
 	}
 
 	protected JMOPSources getSources() {
@@ -42,61 +36,68 @@ public class JMOPPlayer {
 		return playing;
 	}
 
-	public CoreGuiDescriptor getDescriptor() {
-		return descriptor;
+	public BaseConfiguration getConfig() {
+		return config;
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	public Bundle getCurrentBundle() {
-		if (playing.getCurrentPlaylist() != null) {
-			return playing.getCurrentPlaylist().getBundle();
-		} else {
-			return null;
-		}
+	public JMOPData getData() {
+		return data;
 	}
-
-	public Playlist getCurrentPlaylist() {
-		return playing.getCurrentPlaylist();
-	}
-
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public void startNewBundle(SourceKind kind, String bundleName, String querySeed) throws JMOPSourceException {
-		Playlist playlist = sources.createNewBundleAndPrepare(kind, bundleName, querySeed);
-		playing.startPlayingPlaylist(playlist);
-		currentPlaylistProperty.set(playlist);
-	}
 
-	public void startPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
-		Playlist playlist = sources.loadPlaylist(bundleName, playlistName);
-		playing.startPlayingPlaylist(playlist);
-		currentPlaylistProperty.set(playlist);
+		PlayerEngine engine = playing.getEngine();
+		Playlist playlist = sources.createNewBundleAndPrepare(kind, bundleName, querySeed, engine);
+		playing.startPlayingPlaylist(playlist, false);
 	}
 
 	public void startNewPlaylist(String querySeed) throws JMOPSourceException {
 		Bundle bundle = getCurrentBundle();
-		Playlist playlist = sources.createNewPlaylist(bundle, querySeed);
-		playing.startPlayingPlaylist(playlist);
-		currentPlaylistProperty.set(playlist);
+		PlayerEngine engine = playing.getEngine();
+
+		Playlist playlist = sources.createNewPlaylist(bundle, querySeed, engine);
+		playing.startPlayingPlaylist(playlist, false);
+	}
+
+	public void startPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
+		PlayerEngine engine = playing.getEngine();
+
+		Playlist playlist = sources.loadPlaylist(bundleName, playlistName, engine);
+		playing.startPlayingPlaylist(playlist, true);
 	}
 
 	public void savePlaylistAs(String newPlaylistName) throws JMOPSourceException {
 		Playlist playlist = getCurrentPlaylist();
 		sources.savePlaylist(playlist, newPlaylistName);
 	}
-	
 
+	public void togglePlaylistLockedStatus(){
+		Playlist playlist = getCurrentPlaylist();
+		playing.togglePlaylistLockedStatus(playlist);
+	}
+	
+	public void clearRemainingTracks(){
+		Playlist playlist = getCurrentPlaylist();
+		playing.clearRemainingTracks(playlist);
+	}
+	
 	public void loadAndAddTrack(String querySeed) throws JMOPSourceException {
 		Bundle bundle = getCurrentBundle();
-		Track track = sources.queryAndLoad(bundle, querySeed);
-		playing.addToPlaylist(track);
+		PlayerEngine engine = playing.getEngine();
+
+		sources.queryAndLoad(bundle, querySeed, engine);
+	}
+	
+
+	public void playTrack(int index) throws JMOPSourceException {
+		playing.playTrack(index);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public void startPlaying() {
+	public void startPlaying() throws JMOPSourceException {
 		playing.startPlaying();
-		// TODO sources -> check and load next
 	}
 
 	public void stopPlaying() {
@@ -111,11 +112,11 @@ public class JMOPPlayer {
 		playing.resumePlaying();
 	}
 
-	public void toNext() {
+	public void toNext() throws JMOPSourceException {
 		playing.toNext();
 	}
 
-	public void toPrevious() {
+	public void toPrevious() throws JMOPSourceException {
 		playing.toPrevious();
 	}
 
@@ -132,15 +133,24 @@ public class JMOPPlayer {
 		return sources.listPlaylists(bundleName);
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	public String currentPlaylistAsString() {
-		Playlist playlist = playing.getCurrentPlaylist();
-		return playlist.toHumanString();
+	public String runCheck() {
+		return checker.doCheck();
 	}
 
-	public ObjectProperty<Playlist> currentPlaylistProperty() {
-		return currentPlaylistProperty;
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	// @Deprecated
+	// public String currentPlaylistAsString() {
+	// Playlist playlist = playing.getCurrentPlaylist();
+	// return playlist.toHumanString();
+	// }
+
+	private Playlist getCurrentPlaylist() {
+		return playing.getEngine().getPlaylister().playlistProperty().get();
+	}
+
+	private Bundle getCurrentBundle() {
+		Playlist playlist = getCurrentPlaylist();
+		return playlist.getBundle();
 	}
 
 

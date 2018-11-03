@@ -2,9 +2,10 @@ package cz.martlin.jmop.mains;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.config.CommandlineData;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
-import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
+import cz.martlin.jmop.core.wrappers.builder.BaseJMOPBuilder;
+import cz.martlin.jmop.core.wrappers.builder.DefaultJMOPPlayerBuilder;
 import javafx.application.Application;
 
 public class JMOPGUIApp {
@@ -12,27 +13,33 @@ public class JMOPGUIApp {
 
 	public static void main(String[] args) {
 
-		Playlist playlistOrNull = null;
-
-		File root;
+		CommandlineData data = new CommandlineData();
 		if (args.length > 0) {
 			String path = args[0];
-			root = new File(path);
+			File root = new File(path);
+			data.setRoot(root);
 		} else {
 			String path = System.getProperty("user.dir");
-			root = new File(path);
+			File root = new File(path);
+			data.setRoot(root);
 		}
 
-		jmop = JMOPPlayerBuilder.create(null, root, playlistOrNull);
+		try {
+			BaseJMOPBuilder builder = new DefaultJMOPPlayerBuilder();
+			jmop = builder.create(data);
+		} catch (Exception e) {
+			System.err.println("Cannot prepare JMOP core");
+			e.printStackTrace();
+		}
 
 		try {
 			Application.launch(JMOPMainGUIApplication.class);
 		} catch (Exception e) {
-			System.err.println("Cannot start GUI'");
+			System.err.println("Cannot start GUI");
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static JMOPPlayer getJmop() {
 		return jmop;
 	}

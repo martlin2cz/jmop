@@ -7,26 +7,28 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
+import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
 import javafx.util.Duration;
 
+@Deprecated
 public class JMOPPlaylister {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private final BasePlayer player;
 	private final InternetConnectionStatus connection;
-	private final OnlinePlaylister online;
-	private final OfflinePlaylister offline;
+	private final Void online;
+	private final Void offline;
 	private final AutomaticSavesPerformer saver;
 	private BetterPlaylistRuntime playlist;
 
-	public JMOPPlaylister(BasePlayer player, TrackPreparer preparer, InternetConnectionStatus connection,
+	public JMOPPlaylister(BasePlayer player, XXX_TrackPreparer preparer, InternetConnectionStatus connection,
 			AutomaticSavesPerformer saver) {
 		super();
 
 		this.player = player;
 		this.connection = connection;
-		this.online = new OnlinePlaylister(preparer, this, connection);
-		this.offline = new OfflinePlaylister();
+		this.online = null;//new XXX_OnlinePlaylister(preparer, this, connection);
+		this.offline = null; //new XXX_OfflinePlaylister();
 		this.saver = saver;
 	}
 
@@ -37,8 +39,8 @@ public class JMOPPlaylister {
 	public void setPlaylist(BetterPlaylistRuntime playlist) {
 		this.playlist = playlist;
 
-		this.online.setPlaylist(playlist);
-		this.offline.setPlaylist(playlist);
+		//this.online.setPlaylist(playlist);
+		//this.offline.setPlaylist(playlist);
 		// this.playerHandler.setPlaylist(playlist);
 
 	}
@@ -66,8 +68,9 @@ public class JMOPPlaylister {
 	public void toNext() {
 		LOG.info("To next");
 
-		BasePlaylister playlister = getPlaylisterStrategy();
-		Track track = playlister.next();
+		BasePlaylisterStrategy playlister = getPlaylisterStrategy();
+//		Track track = playlister.next();
+		Track track = null; //FIXME
 
 		startPlayingWithExceptionCheck(track);
 	}
@@ -75,8 +78,9 @@ public class JMOPPlaylister {
 	public void toPrevious() {
 		LOG.info("To previous");
 
-		BasePlaylister playlister = getPlaylisterStrategy();
-		Track track = playlister.previous();
+		BasePlaylisterStrategy playlister = getPlaylisterStrategy();
+//		Track track = playlister.previous();
+		Track track = null; //FIXME
 
 		startPlayingWithExceptionCheck(track);
 	}
@@ -109,21 +113,22 @@ public class JMOPPlaylister {
 
 	private void startPlayingWithExceptionCheck(Track track) {
 		try {
-			player.startPlayling(track);
+			player.startPlaying(track);
 		} catch (JMOPSourceException e) {
 			// TODO exception
 			e.printStackTrace();
 		}
 	}
 
-	private BasePlaylister getPlaylisterStrategy() {
+	private BasePlaylisterStrategy getPlaylisterStrategy() {
 		boolean isOffline = connection.isOffline();
 
 		if (isOffline) {
-			return offline;
+			//return offline;
 		} else {
-			return online;
+			//return online;
 		}
+		return null;
 	}
 
 

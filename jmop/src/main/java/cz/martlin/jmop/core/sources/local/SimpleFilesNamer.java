@@ -2,86 +2,61 @@ package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.SourceKind;
-
 public abstract class SimpleFilesNamer implements BaseFilesNamer {
 
 	protected static final String DOT = ".";
 
-
 	public SimpleFilesNamer() {
+		super();
 	}
 
 	@Override
-	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileFormat format) {
-		File bundleDir = directoryOfBundle(root, bundle.getKind(), bundle.getName());
-
-		String trackFileName = filenameOfTrack(track);
-
-		String extension = format.getExtension();
-
-		String trackFile = trackFileName + DOT + extension;
-		return new File(bundleDir, trackFile);
+	public File bundleDirOfBundleDirName(File root, String bundleDirName) {
+		return new File(root, bundleDirName);
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	protected abstract String filenameOfTrack(Track track);
-
 	@Override
-	public File directoryOfBundle(File root, SourceKind source, String name) {
-		String directoryName = dirnameOfBundle(source, name);
-		return new File(root, directoryName);
+	public File bundleDirOfBundleName(File root, String bundleName) {
+		String bundleDirName = directoryNameOfBundle(bundleName);
+		return bundleDirOfBundleDirName(root, bundleDirName);
 	}
 
-	protected abstract String dirnameOfBundle(SourceKind source, String name);
-
 	@Override
-	public String dirToBundleName(File directory) {
-		String directoryName = directory.getName();
-		return bundleNameOfDirectory(directoryName);
+	public File cacheBundleDir(File root, String bundleName) {
+		String cacheDirName = directoryNameOfCache();
+		String bundleDirName = directoryNameOfBundle(bundleName);
+
+		File cache = new File(root, cacheDirName);
+		return new File(cache, bundleDirName);
 	}
 
-	protected abstract String bundleNameOfDirectory(String directoryName);
-
-
-	@Override
-	public boolean isBundleDirectory(File directory) {
-		String name = directory.getName();
-		return isBundleDir(name);
-	}
-	
-	protected abstract boolean isBundleDir(String directoryName);
-
-	/////////////////////////////////////////////////////////////////////////////////////
+	public abstract String directoryNameOfCache();
 
 	@Override
-	public String fileToPlaylistName(File file) {
-		String filename = file.getName();
-
-		return nameOfPlaylist(filename);
+	public File tempBundleDir(String bundleName) {
+		File tempDirRoot = getSystemTempDirectory();
+		String tempDirName = temporaryDirectoryName();
+		return new File(tempDirRoot, tempDirName);
 	}
 
-	protected abstract String nameOfPlaylist(String filename);
+	private File getSystemTempDirectory() {
+		String path = System.getProperty("java.io.tmpdir");
+		return new File(path);
+	}
+
+	public abstract String temporaryDirectoryName();
 
 	@Override
-	public File fileOfPlaylist(File root, SourceKind source, String bundleName, String playlistName) {
-		File bundleDir = directoryOfBundle(root, source, bundleName);
-		String playlistFileName = filenameOfPlaylist(playlistName);
+	public File playlistFileOfPlaylist(File root, String bundleDirName, String playlistName,
+			String playlistFileExtension) {
+		String playlistFileName = fileNameOfPlaylist(playlistName, playlistFileExtension);
+		return playlistFileOfFile(root, bundleDirName, playlistFileName);
+	}
 
+	@Override
+	public File playlistFileOfFile(File root, String bundleDirName, String playlistFileName) {
+		File bundleDir = new File(root, bundleDirName);
 		return new File(bundleDir, playlistFileName);
 	}
-
-	protected abstract String filenameOfPlaylist(String name);
-
-	@Override
-	public boolean isPlaylistFile(File file) {
-		String name = file.getName();
-		return isPlaylistFile(name);
-	}
-
-	protected abstract boolean isPlaylistFile(String fileName);
 
 }

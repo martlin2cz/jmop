@@ -8,40 +8,32 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 
+<?import cz.martlin.jmop.gui.comp.OperationsPane?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
-	xmlns:fx="http://javafx.com/fxml/1" prefHeight="240.0" prefWidth="640.0"
-	minWidth="280.0" minHeight="160.0">
+
+<VBox alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1"
+	spacing="10" maxHeight="Infinity" maxWidth="Infinity" prefHeight="150.0"
+	minHeight="120.0" prefWidth="640.0" minWidth="280.0">
 
 	<children>
-		<BorderPane prefHeight="200.0" prefWidth="200.0">
-			<top>
-				<Label text="Welcome to JMOP!" BorderPane.alignment="CENTER">
-					<font>
-						<Font size="18.0" />
-					</font>
-					<graphic>
-						<ImageView fitHeight="64" fitWidth="64">
-							<Image url="@/cz/martlin/jmop/gui/img/logo.png" />
-						</ImageView>
-					</graphic>
-				</Label>
-			</top>
+		<Label text="Welcome to JMOP!" VBox.vgrow="ALWAYS">
+			<font>
+				<Font size="18.0" />
+			</font>
+			<graphic>
+				<ImageView fitHeight="64" fitWidth="64">
+					<Image url="@/cz/martlin/jmop/gui/img/logo.png" />
+				</ImageView>
+			</graphic>
+		</Label>
 
-			<center>
-				<Label alignment="CENTER" wrapText="true"
-					BorderPane.alignment="CENTER">
-					To start playing use menu 'Bundle'. Choose
-					'Bundle - bundle name' to start playing existing bundle or 'Bundle
-					- Start new bundle' to create and play new one.</Label>
-			</center>
+		<Label alignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
+			To start
+			playing use menu 'Bundle'.
+			Choose 'Bundle - bundle name' to start
+			playing existing bundle
+			or 'Bundle - Start new bundle' to create and
+			play new one.</Label>
 
-			<opaqueInsets>
-				<Insets top="4.0" />
-			</opaqueInsets>
-			<padding>
-				<Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-			</padding>
-		</BorderPane>
 	</children>
 </VBox>

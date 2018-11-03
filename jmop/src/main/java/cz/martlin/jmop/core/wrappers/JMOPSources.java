@@ -4,36 +4,20 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
-import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
-import cz.martlin.jmop.core.player.TrackPreparer;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.download.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 
 public class JMOPSources {
-	private final BaseLocalSource local;
-	private final AbstractRemoteSource remote;
-	private final BaseSourceDownloader downloader;
-	private final BaseSourceConverter converter;
-	private final GuiDescriptor gui;
+	private final LocalSourceWrapper local;
 	private final TrackPreparer preparer;
-	private final JMOPPlaylisterWithGui playlister;
 
-	public JMOPSources(BaseLocalSource local, AbstractRemoteSource remote, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, TrackPreparer preparer, JMOPPlaylisterWithGui playlister, GuiDescriptor gui) {
+	public JMOPSources(LocalSourceWrapper local, TrackPreparer preparer) {
 		super();
 		this.local = local;
-		this.remote = remote;
-		this.downloader = downloader;
-		this.converter = converter;
 		this.preparer = preparer;
-		this.playlister = playlister;
-		this.gui = gui;
 	}
 	
 	public TrackPreparer getPreparer() {
@@ -42,40 +26,39 @@ public class JMOPSources {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public Playlist createNewBundleAndPrepare(SourceKind kind, String bundleName, String querySeed)
+	public Playlist createNewBundleAndPrepare(SourceKind kind, String bundleName, String query, PlayerEngine engine)
 			throws JMOPSourceException {
 		Bundle bundle = createBundle(kind, bundleName);
-		Track track = prepareInitialTrack(bundle, querySeed);
+		Playlist playlist = new Playlist(bundle, query);
 
-		Playlist playlist = createInitialPlaylist(bundle, track, querySeed);
-		preparer.prepreNextAndAppend(track, playlister);
+		preparer.startSearchAndLoadInBg(bundle, query, engine);
+
 		return playlist;
 	}
 
-	public Playlist createNewPlaylist(Bundle bundle, String querySeed) throws JMOPSourceException {
-		//TODO queryAndCreatePlaylist method: ?
-		Track track = prepareInitialTrack(bundle, querySeed);
+	public Playlist createNewPlaylist(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
+		Playlist playlist = new Playlist(bundle, query);
 
-		Playlist playlist = createInitialPlaylist(bundle, track, querySeed);
-		preparer.prepreNextAndAppend(track, playlister);
+		preparer.startSearchAndLoadInBg(bundle, query, engine);
 		return playlist;
 	}
-	
-	public Playlist loadPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
+
+	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine) throws JMOPSourceException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
+
 		return playlist;
 
 	}
 
 	public void savePlaylist(Playlist playlist, String newPlaylistName) throws JMOPSourceException {
-		playlist.changeName(newPlaylistName);
+		playlist.setName(newPlaylistName);
 		Bundle bundle = playlist.getBundle();
 		local.savePlaylist(bundle, playlist);
 	}
-	
-	public Track queryAndLoad(Bundle bundle, String querySeed) throws JMOPSourceException {
-		return prepareInitialTrack(bundle, querySeed);
+
+	public void queryAndLoad(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
+		preparer.startSearchAndLoadInBg(bundle, query, engine);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -95,22 +78,19 @@ public class JMOPSources {
 		return bundle;
 	}
 
-	private Track prepareInitialTrack(Bundle bundle, String querySeed) throws JMOPSourceException {
-		Track track = remote.search(bundle, querySeed);
-		preparer.load(track);
-		return track;
-	}
-
-	private Playlist createInitialPlaylist(Bundle bundle, Track track, String querySeed) {
-		BetterPlaylistRuntime runtime = new BetterPlaylistRuntime(track);
-		Playlist playlist = new Playlist(bundle, querySeed, runtime);
-		// TODO save here?
-		return playlist;
-	}
-
-	
-
-
+	// @Deprecated
+	// private Track prepareInitialTrack(Bundle bundle, String querySeed) throws
+	// JMOPSourceException {
+	// Track track = remote.search(bundle, querySeed);
+	// // preparer.load(track);
+	// return track;
+	// }
+	//
+	// private Playlist createInitialPlaylist(Bundle bundle, String query) {
+	// BetterPlaylistRuntime runtime = new BetterPlaylistRuntime();
+	// Playlist playlist = new Playlist(bundle, query, runtime);
+	// return playlist;
+	// }
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -10,13 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 
 public class WelcomePane extends VBox implements Initializable {
+
+
 	public WelcomePane() throws IOException {
 		initialize();
-	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// nothing needed here
 	}
 
 	private void initialize() throws IOException {
@@ -30,5 +27,14 @@ public class WelcomePane extends VBox implements Initializable {
 		Parent root = loader.load();
 		getChildren().addAll(root);
 	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// nothing needed here
+	}
+
+	///////////////////////////////////////////////////////////////////////////////
+
+
 
 }

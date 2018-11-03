@@ -16,19 +16,19 @@ import org.w3c.dom.Document;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.PlaylistFileData;
 
-public class DefaultPlaylistLoader implements PlaylistLoader {
+public class DefaultPlaylistLoader implements AbstractPlaylistLoader {
 
 	private final static XSPFParserComposer PARSER_COMPOSER = new XSPFParserComposer();
 
 	@Override
-	public PlaylistFileData load(Bundle bundle, File file) throws IOException {
+	public PlaylistFileData load(Bundle bundle, File file, boolean onlyMetadata) throws IOException {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(file);
 			
 			PlaylistFileData data = new PlaylistFileData();
-			PARSER_COMPOSER.parse(bundle, document, data);
+			PARSER_COMPOSER.parse(bundle, document, data, onlyMetadata);
 			
 			return data;
 		} catch (Exception e) {
@@ -56,6 +56,11 @@ public class DefaultPlaylistLoader implements PlaylistLoader {
 		} catch (Exception e) {
 			throw new IOException("Cannot save playlist file", e);
 		}
+	}
+
+	@Override
+	public String getFileExtension() {
+		return XSPFParserComposer.FILE_EXTENSION;
 	}
 
 }

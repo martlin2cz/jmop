@@ -1,62 +1,39 @@
 package cz.martlin.jmop.gui.control;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.ProgressListener;
-import cz.martlin.jmop.core.wrappers.CoreGuiDescriptor;
-import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
-import cz.martlin.jmop.core.wrappers.JMOPPlayerBuilder;
-import cz.martlin.jmop.gui.DownloadGuiReporter;
-import cz.martlin.jmop.gui.comp.DownloadPane;
-import cz.martlin.jmop.gui.comp.GuiChangableSlider;
 import cz.martlin.jmop.gui.comp.JMOPMainMenu;
+import cz.martlin.jmop.gui.comp.OperationsPane;
 import cz.martlin.jmop.gui.comp.PlayerPane;
 import cz.martlin.jmop.gui.comp.PlaylistAndBundlePane;
-import cz.martlin.jmop.gui.comp.TrackPane;
-import cz.martlin.jmop.gui.comp.TwoStateButton;
 import cz.martlin.jmop.gui.comp.WelcomePane;
-import cz.martlin.jmop.gui.util.BindingsUtils;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
-import cz.martlin.jmop.gui.util.MediaPlayerGuiReporter;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.media.MediaPlayer.Status;
-import javafx.util.Duration;
 
 public class MainFrameController implements Initializable, RequiresJMOP {
 
 	@FXML
 	private JMOPMainMenu mainMenu;
+	
 	@FXML
 	private PlayerPane playerPane;
 	@FXML
 	private WelcomePane welcomePane;
+	
+	@FXML
+	private OperationsPane operationsPane;
+	@FXML
+	private PlaylistAndBundlePane playlistAndBundlePane;
 
-	private CoreGuiDescriptor descriptor;
+	private JMOPPlayer jmop;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public MainFrameController() {
-		File rootDirectory = new File("/tmp/jmop-gui");
-
-		JMOPPlayer jmop = null;
-		JMOPPlayerBuilder.create(null, rootDirectory, null);
-		new GuiComplexActionsPerformer(jmop);
 	}
 
 	@Override
@@ -65,20 +42,34 @@ public class MainFrameController implements Initializable, RequiresJMOP {
 	}
 	
 	@Override
-	public void setupJMOP(JMOPPlayer jmop, CoreGuiDescriptor descriptor, GuiComplexActionsPerformer actions) {
-		this.descriptor = descriptor;
+	public void setupJMOP(JMOPPlayer jmop, GuiComplexActionsPerformer actions) {
+		this.jmop = jmop;
 
 		initBindings();
 		
-		mainMenu.setupJMOP(jmop, descriptor, actions);
-		playerPane.setupJMOP(jmop, descriptor, actions);
+		mainMenu.setupJMOP(jmop, actions);
+		playerPane.setupJMOP(jmop, actions);
 	}
 
 
 
 	private void initBindings() {
-		playerPane.visibleProperty().bind(descriptor.hasActiveBundleAndPlaylistProperty());
-		welcomePane.visibleProperty().bind(descriptor.hasActiveBundleAndPlaylistProperty().not());
+		playerPane.visibleProperty().bind(jmop.getData().inPlayModeProperty());
+		
+		welcomePane.visibleProperty().bind(jmop.getData().inPlayModeProperty().not());
+		
+		playlistAndBundlePane.visibleProperty().bind(jmop.getData().inPlayModeProperty());
+		playlistAndBundlePane.playlistProperty().bind(jmop.getData().playlistProperty());
+		
+		Bindings.bindContent(operationsPane.operationsProperty(), jmop.getData().currentOperationsProperty());
 	}
+//
+//	private void preparingChanged(boolean isSomePreparing) {
+//		if (isSomePreparing) {
+//			actions.changeCursor(Cursor.WAIT);
+//		} else {
+//			actions.changeCursor(Cursor.DEFAULT);
+//		}
+//	}
 
 }

@@ -9,25 +9,31 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 public class TestingDownloader implements BaseSourceDownloader {
 
-	public static final TrackFileFormat DOWNLOAD_FORMAT = TrackFileFormat.OPUS;
 	public static final String TESTING_SAMPLE_FILE = "samples/sample.opus";
 
-
+	private final TrackFileFormat downloadFormat;
 	private final BaseLocalSource local;
 
-	public TestingDownloader(BaseLocalSource local) {
+	public TestingDownloader(BaseLocalSource local, TrackFileFormat downloadFormat) {
 		super();
 		this.local = local;
+		this.downloadFormat = downloadFormat;
 	}
 
 	@Override
-	public boolean download(Track track) throws Exception {
+	public TrackFileFormat formatOfDownload() {
+		return downloadFormat;
+	}
+
+	@Override
+	public boolean download(Track track, TrackFileLocation location) throws Exception {
 		InputStream ins = getClass().getClassLoader().getResourceAsStream(TESTING_SAMPLE_FILE);
 
-		File targetFile = local.fileOfTrack(track, DOWNLOAD_FORMAT);
+		File targetFile = local.fileOfTrack(track, location, downloadFormat);
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
@@ -37,6 +43,11 @@ public class TestingDownloader implements BaseSourceDownloader {
 	@Override
 	public void specifyListener(ProgressListener listener) {
 		// nothing
+	}
+	
+	@Override
+	public boolean check() {
+		return true;
 	}
 
 }

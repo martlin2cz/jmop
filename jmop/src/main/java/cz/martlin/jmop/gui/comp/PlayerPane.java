@@ -5,12 +5,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.wrappers.CoreGuiDescriptor;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.RequiresJMOP;
 import cz.martlin.jmop.gui.util.BindingsUtils;
+import cz.martlin.jmop.gui.util.BindingsUtils.DoubleMilisToDurationBinding;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -27,6 +26,9 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 	@FXML
 	private GuiChangableSlider sliTrackProgress;
+
+	@FXML
+	private DurationsPane currentDurationPane;
 	@FXML
 	private TwoStateButton playStopButt;
 	@FXML
@@ -37,12 +39,8 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 	private Button prevButt;
 	@FXML
 	private TrackPane trpnNextTrack;
-	@FXML
-	private DownloadPane dwnldPane;
-	@FXML
-	private PlaylistAndBundlePane playlistAndBundlePane;
 
-	private CoreGuiDescriptor descriptor;
+	private JMOPPlayer jmop;
 	private GuiComplexActionsPerformer actions;
 	private ChangeListener<Duration> currentTimeChangeListener;
 
@@ -60,8 +58,8 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 	}
 
 	@Override
-	public void setupJMOP(JMOPPlayer jmop, CoreGuiDescriptor descriptor, GuiComplexActionsPerformer actions) {
-		this.descriptor = descriptor;
+	public void setupJMOP(JMOPPlayer jmop, GuiComplexActionsPerformer actions) {
+		this.jmop = jmop;
 		this.actions = actions;
 
 		initBindings();
@@ -79,27 +77,28 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 	private void initBindings() {
 
-		trpnCurrentTrack.trackProperty().bind(descriptor.currentTrackProperty());
-		trpnNextTrack.trackProperty().bind(descriptor.nextTrackProperty());
+		trpnCurrentTrack.trackProperty().bind(jmop.getData().currentTrackProperty());
+		trpnNextTrack.trackProperty().bind(jmop.getData().nextTrackProperty());
 
-		playlistAndBundlePane.playlistProperty().bind(descriptor.currentPlaylistProperty());
-		Bindings.bindContent(dwnldPane.tasksProperty(), descriptor.currentDownloadTasksProperty());
+		playStopButt.firstStateProperty().bind( //
+				jmop.getData().stoppedProperty() //
+						.or(jmop.getData().hasSomeTrackProperty().not()));
+		pauseResumeButt.firstStateProperty().bind(jmop.getData().pausedProperty());
+		pauseResumeButt.disableProperty().bind(jmop.getData().stoppedProperty());
+		prevButt.disableProperty().bind(jmop.getData().hasPreviousProperty().not());
+		nextButt.disableProperty().bind(jmop.getData().hasNextProperty().not());
 
-		playStopButt.firstStateProperty().bind(descriptor.stoppedProperty());
-		pauseResumeButt.firstStateProperty().bind(descriptor.pausedProperty());
-		pauseResumeButt.disableProperty().bind(descriptor.stoppedProperty());
-		prevButt.disableProperty().bind(descriptor.hasPreviousProperty().not());
-		nextButt.disableProperty().bind(descriptor.hasNextProperty().not());
+		jmop.getData().stoppedProperty().addListener((observable, oldVal, newVal) -> changeDefaultButton());
 
-		descriptor.stoppedProperty().addListener((observable, oldVal, newVal) -> changeDefaultButton());
-
-		descriptor.currentTrackProperty().addListener((observable, oldVal, newVal) -> trackToSliderMax(newVal));
+		jmop.getData().currentTrackProperty().addListener((observable, oldVal, newVal) -> currentTrackChanged(newVal));
 		sliTrackProgress.guiChangingProperty()
 				.addListener((observable, oldVal, newVal) -> sliderGuiChangingChanged(newVal));
-		sliTrackProgress.disableProperty().bind(descriptor.stoppedProperty());
+		sliTrackProgress.disableProperty().bind(jmop.getData().stoppedProperty());
 
 		currentTimeChangeListener = (obs, oldv, newv) -> //
 		sliTrackProgress.valueProperty().set(BindingsUtils.durationToMilis(newv));
+		currentDurationPane.currentTimeProperty()
+				.bind(new DoubleMilisToDurationBinding(sliTrackProgress.valueProperty()));
 
 		bindPlayerCurrentTimeToSlider();
 	}
@@ -121,25 +120,49 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 	private void unbindPlayerCurrentTimeFromSlider(DoubleProperty property) {
 		// FIXME binding not working :-O
-		descriptor.currentTimeProperty().removeListener(currentTimeChangeListener);
+		jmop.getData().currentTimeProperty().removeListener(currentTimeChangeListener);
 	}
 
 	private void bindPlayerCurrentTimeToSlider() {
 		// FIXME binding not working :-O
-		descriptor.currentTimeProperty().addListener(currentTimeChangeListener);
+		jmop.getData().currentTimeProperty().addListener(currentTimeChangeListener);
 
+	}
+	///////////////////////////////////////////////////////////////////////////
+
+	private void currentTrackChanged(Track track) {
+		trackToSliderMax(track);
+		trackToDurationsPane(track);
 	}
 
 	private void trackToSliderMax(Track track) {
-		Duration duration = track.getDuration();
-		double milis = BindingsUtils.durationToMilis(duration);
+		double milis;
+
+		if (track != null) {
+			Duration duration = track.getDuration();
+			milis = BindingsUtils.durationToMilis(duration);
+		} else {
+			milis = 0.0;
+		}
+
 		sliTrackProgress.setMax(milis);
+	}
+
+	private void trackToDurationsPane(Track track) {
+		Duration duration;
+		if (track != null) {
+			duration = track.getDuration();
+		} else {
+			duration = null;
+		}
+		
+		currentDurationPane.totalTimeProperty().set(duration);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void changeDefaultButton() {
-		boolean isStopped = descriptor.stoppedProperty().get();
+		boolean isStopped = jmop.getData().stoppedProperty().get();
 		boolean isPlaying = !isStopped;
 
 		playStopButt.setDefaultButton(isStopped);
@@ -148,10 +171,10 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////
-
-	public void showPlaylistButtAction() {
-		actions.showPlaylist();
-	}
+	//
+	// public void showPlaylistButtAction() {
+	// actions.showPlaylist();
+	// }
 
 	public void newBundleButtAction() {
 		actions.startNewBundle();

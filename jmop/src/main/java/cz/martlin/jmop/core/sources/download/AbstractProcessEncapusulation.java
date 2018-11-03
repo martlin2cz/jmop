@@ -119,4 +119,15 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	public static File getTemporaryDirectory() {
 		return Files.createTempDir();
 	}
+
+	public static int runAndCheckForResult(String command) {
+		try {
+			Process process = Runtime.getRuntime().exec(command);
+			int result = process.waitFor();
+			return result;
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
 }

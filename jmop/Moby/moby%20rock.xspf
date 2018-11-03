@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+<title>moby rock</title>
+<creator>jmop application</creator>
+<date>Sun Sep 02 21:36:55 CEST 2018</date>
+<extension>
+<jmop application="https://github.com/martlin2cz/jmop" source="YOUTUBE"/>
+</extension>
+<trackList>
+<track>
+<identifier>gCF4n9UTJ7U</identifier>
+<title>Moby - Bodyrock</title>
+<annotation>Play (1999) All work belongs to Moby. Here's the link to amazon to buy the album: http://www.amazon.co.uk/Play-Moby/dp/B00000JCXD</annotation>
+<duration>216000.0</duration>
+<!--0:03:36-->
+</track>
+<track>
+<identifier>8d9SgRtEkBo</identifier>
+<title>moby honey</title>
+<annotation>if my honey comes back sometime&#13;
+i'm gonna rap that jack sometimes&#13;
+get a hump in my back sometimes&#13;
+i'm going over here sometimes&#13;
+&#13;
+way down yonder sometimes&#13;
+gonna get my pal sometimes</annotation>
+<duration>209000.0</duration>
+<!--0:03:29-->
+</track>
+</trackList>
+</playlist>

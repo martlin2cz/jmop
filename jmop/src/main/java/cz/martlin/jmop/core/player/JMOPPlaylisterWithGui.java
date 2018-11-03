@@ -9,7 +9,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Duration;
-
+@Deprecated
 public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPlaylist {
 	final ObjectProperty<Track> currentTrackProperty;
 	final ObjectProperty<Track> previousTrackProperty;
@@ -19,7 +19,7 @@ public class JMOPPlaylisterWithGui extends JMOPPlaylister implements WorksWithPl
 	final BooleanProperty hasPreviousProperty;
 	final BooleanProperty hasNextProperty;
 
-	public JMOPPlaylisterWithGui(BasePlayer player, TrackPreparer preparer, InternetConnectionStatus connection,
+	public JMOPPlaylisterWithGui(BasePlayer player, XXX_TrackPreparer preparer, InternetConnectionStatus connection,
 			AutomaticSavesPerformer saver) {
 		super(player, preparer, connection, saver);
 

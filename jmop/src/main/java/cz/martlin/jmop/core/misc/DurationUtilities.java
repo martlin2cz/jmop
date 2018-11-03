@@ -50,15 +50,18 @@ public class DurationUtilities {
 	public static String toHumanString(Duration duration) {
 		long remaining = (long) duration.toMillis();
 		int hours = (int) TimeUnit.MILLISECONDS.toHours(remaining);
-		
+
 		remaining -= TimeUnit.HOURS.toMillis(hours);
 		int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(remaining);
-		
+
 		remaining -= TimeUnit.MINUTES.toMillis(minutes);
 		int seconds = (int) TimeUnit.MILLISECONDS.toSeconds(remaining);
-		
-		// TODO optionally add leading zeros
-		return String.format("%d:%02d:%02d", hours, minutes, seconds);
+
+		if (hours == 0) {
+			return String.format("%d:%02d", minutes, seconds);
+		} else {
+			return String.format("%d:%02d:%02d", hours, minutes, seconds);
+		}
 	}
 
 }

@@ -4,9 +4,11 @@ import static org.junit.Assume.assumeNoException;
 import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Test;
 
+import cz.martlin.jmop.core.config.DefaultConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -29,8 +31,11 @@ import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
+import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 import cz.martlin.jmop.core.wrappers.GuiDescriptor;
 import cz.martlin.jmop.core.wrappers.ToPlaylistAppendingHandler;
@@ -40,7 +45,8 @@ import javafx.util.Duration;
 public class PlaylisterTest {
 
 	@Test
-	public void test() {
+	public void test()  {
+		try {
 		//TestingTools.runAsJavaFX(() -> { TODO } );
 		
 		JMOPPlaylisterWithGui playlister = createPlaylister();
@@ -48,45 +54,50 @@ public class PlaylisterTest {
 		playlister.play();
 
 		playlister.toNext();
+		} catch (IOException e) {
+			assumeNoException(e);
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private JMOPPlaylisterWithGui createPlaylister() {
+	private JMOPPlaylisterWithGui createPlaylister() throws IOException {
 		File root = createRoot();
-
-		AbstractRemoteSource remote = new YoutubeSource();
+		DefaultConfiguration config = new DefaultConfiguration();
+		InternetConnectionStatus connection = new InternetConnectionStatus(config);
+		AbstractRemoteSource remote = new YoutubeSource(connection);
 
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		PlaylistLoader loader = new DefaultPlaylistLoader();
+		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
-		BaseLocalSource local = new DefaultLocalSource(fileSystem);
+		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		
 		ProgressListener listener = new SimpleLoggingListener(System.out);
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+
+		
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(connection , local, remote);
 		downloader.specifyListener(listener);
 		
-		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
-		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		
-		boolean deleteOriginal = false;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  deleteOriginal );
+		BaseSourceConverter converter = new FFMPEGConverter(local);
 		converter.specifyListener(listener);
 
 		Bundle bundle = createTestingBundle(local);
 
-		Track track = createInitialTrack(local, bundle);
+		Track track = createInitialTrack(local, bundle, downloader.formatOfDownload());
 		BetterPlaylistRuntime playlist = new BetterPlaylistRuntime(track);
-		BasePlayer player = new TestingPlayer();
+		BasePlayer player = new TestingPlayer(TrackFileFormat.WAV);
 
-		InternetConnectionStatus connection = new InternetConnectionStatus();
 		GuiDescriptor gui = null;
-		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(local);
-		TrackPreparer preparer = new TrackPreparer(remote, local, converter, downloader, saver , gui );
+		AutomaticSavesPerformer saver = new AutomaticSavesPerformer(config, local);
 		
+		AbstractTrackFileLocator locator = new PrimitiveLocator();
+		XXX_TrackPreparer preparer = new XXX_TrackPreparer(config, remote, local, locator, converter, downloader, player, saver,
+				gui);
+
 		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, preparer , connection,saver);
 		TrackPlayedHandler handler = new ToPlaylistAppendingHandler(playlister);
 		playlister.setPlaylist(playlist);
+//		player.setHandler(handler);
 
 		System.out.println("Playlister ready!");
 
@@ -110,7 +121,7 @@ public class PlaylisterTest {
 
 	}
 
-	private Track createInitialTrack(BaseLocalSource local, Bundle bundle) {
+	private Track createInitialTrack(BaseLocalSource local, Bundle bundle, TrackFileFormat downloadFormat) {
 		final String trackName = "Sample house music";
 		final String trackId = "WYp9Eo9T3BA";
 		final String trackDesc = "This is just some somple house music originaly by Shingo Nakamura";
@@ -118,9 +129,10 @@ public class PlaylisterTest {
 		
 		Track track = bundle.createTrack(trackId, trackName, trackDesc, duration);
 
-		TestingDownloader downloader = new TestingDownloader(local);
+		TestingDownloader downloader = new TestingDownloader(local, downloadFormat);
+		TrackFileLocation location = TrackFileLocation.TEMP;
 		try {
-			assumeTrue("Cannot prepare initial track", downloader.download(track));
+			assumeTrue("Cannot prepare initial track", downloader.download(track, location));
 		} catch (Exception e) {
 			assumeNoException("Cannot prepare initial track", e);
 		}

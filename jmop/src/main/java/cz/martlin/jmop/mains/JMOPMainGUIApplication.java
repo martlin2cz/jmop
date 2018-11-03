@@ -2,7 +2,9 @@ package cz.martlin.jmop.mains;
 
 import java.io.IOException;
 
-import cz.martlin.jmop.core.wrappers.CoreGuiDescriptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.MainFrameController;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
@@ -16,6 +18,8 @@ import javafx.stage.Stage;
 
 public class JMOPMainGUIApplication extends Application {
 
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+
 	static {
 		beforeFX();
 	}
@@ -28,31 +32,35 @@ public class JMOPMainGUIApplication extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/main.fxml"));
-		Parent root = loader.load();
+		try {
+			LOG.info("Starting GUI application ...");
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/main.fxml"));
+			Parent root = loader.load();
 
-		primaryStage.setTitle("JMOP");
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/logo.png")));
+			primaryStage.setTitle("JMOP");
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/logo.png")));
 
-		Scene scene = new Scene(root);
-		primaryStage.setScene(scene);
-		primaryStage.sizeToScene();
-		primaryStage.setResizable(true);
-		primaryStage.setMinHeight(scene.getHeight());
-		primaryStage.setMinWidth(scene.getWidth());
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.sizeToScene();
+			primaryStage.setResizable(true);
+			primaryStage.setMinHeight(scene.getHeight());
+			primaryStage.setMinWidth(scene.getWidth());
 
-		MainFrameController controller = loader.getController();
-		initializeController(controller, scene);
+			MainFrameController controller = loader.getController();
+			initializeController(controller, scene);
 
-		primaryStage.show();
+			primaryStage.show();
+		} catch (Exception e) {
+			LOG.error("Application GUI could not start!", e);
+		}
 	}
 
 	private void initializeController(MainFrameController controller, Scene scene) {
-		CoreGuiDescriptor descriptor = jmop.getDescriptor();
 		GuiComplexActionsPerformer actions = new GuiComplexActionsPerformer(jmop);
 		actions.specifyScene(scene);
 
-		controller.setupJMOP(jmop, descriptor, actions);
+		controller.setupJMOP(jmop, actions);
 	}
 
 	private static void beforeFX() {

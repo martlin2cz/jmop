@@ -1,25 +1,42 @@
 package cz.martlin.jmop.core.data;
 
-import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
+import cz.martlin.jmop.core.misc.ObservableObject;
 
-public class Playlist {
+public class Playlist extends ObservableObject<Playlist> {
 	private final Bundle bundle;
 	private String name;
-	private final BetterPlaylistRuntime runtime;
+	private Tracklist tracks;
+	private int currentTrackIndex;
+	private boolean locked;
+
+	public Playlist(Bundle bundle, String name, Tracklist tracks, int currentTrackIndex, boolean locked) {
+		super();
+		this.bundle = bundle;
+		this.name = name;
+		this.tracks = tracks;
+		this.currentTrackIndex = currentTrackIndex;
+		this.locked = locked;
+	}
 
 	public Playlist(Bundle bundle, String name, Tracklist tracks) {
 		super();
 		this.bundle = bundle;
 		this.name = name;
-		this.runtime = new BetterPlaylistRuntime(tracks.getTracks());
+		this.tracks = tracks;
+		this.currentTrackIndex = 0;
+		this.locked = false;
 	}
 
-	public Playlist(Bundle bundle, String name, BetterPlaylistRuntime runtime) {
+	public Playlist(Bundle bundle, String name) {
+		super();
 		this.bundle = bundle;
 		this.name = name;
-		this.runtime = runtime;
+		this.tracks = new Tracklist();
+		this.currentTrackIndex = 0;
+		this.locked = false;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	public Bundle getBundle() {
 		return bundle;
 	}
@@ -28,25 +45,45 @@ public class Playlist {
 		return name;
 	}
 
-	public void changeName(String name) {
+	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public BetterPlaylistRuntime getRuntime() {
-		return runtime;
+		fireValueChangedEvent();
 	}
 
 	public Tracklist getTracks() {
-		return new Tracklist(runtime.list());
+		return tracks;
 	}
 
+	public void setTracks(Tracklist tracks) {
+		this.tracks = tracks;
+		fireValueChangedEvent();
+	}
+
+	public int getCurrentTrackIndex() {
+		return currentTrackIndex;
+	}
+
+	public void setCurrentTrackIndex(int currentTrackIndex) {
+		this.currentTrackIndex = currentTrackIndex;
+		fireValueChangedEvent();
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+		fireValueChangedEvent();
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bundle == null) ? 0 : bundle.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((runtime == null) ? 0 : runtime.hashCode());
 		return result;
 	}
 
@@ -69,21 +106,17 @@ public class Playlist {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (runtime == null) {
-			if (other.runtime != null)
-				return false;
-		} else if (!runtime.equals(other.runtime))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + runtime + "]";
+		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + tracks + "]";
 	}
 
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	public String toHumanString() {
-		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" +  runtime.toHumanString();
+		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" + tracks.toHumanString();
 	}
 
 }

@@ -11,6 +11,7 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.dial.AddTrackDialog;
 import cz.martlin.jmop.gui.dial.CreatePlaylistDialog;
+import cz.martlin.jmop.gui.dial.HelpDialog;
 import cz.martlin.jmop.gui.dial.JMOPAboutDialog;
 import cz.martlin.jmop.gui.dial.NewBundleDialog;
 import cz.martlin.jmop.gui.dial.NewPlaylistDialog;
@@ -18,6 +19,7 @@ import cz.martlin.jmop.gui.dial.SavePlaylistDialog;
 import cz.martlin.jmop.gui.dial.StartBundleDialog;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -40,11 +42,7 @@ public class GuiComplexActionsPerformer {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public void showPlaylist() {
-		String playlistText = jmop.currentPlaylistAsString();
-		showInfo("Current playlist", "This is currently played playlist", playlistText);
 
-	}
 
 	public void startNewBundle() {
 		runInBackgroundWithDialog(() -> {
@@ -62,8 +60,7 @@ public class GuiComplexActionsPerformer {
 	public void startBundle(String bundleName) {
 		runInBackgroundWithDialog(() -> {
 			List<String> playlistNames = jmop.listPlaylists(bundleName);
-			String defaultPlaylistName = "all_tracks"; // FIXME HACK
-			System.out.println(bundleName + " & " + playlistNames);
+			String defaultPlaylistName = jmop.getConfig().getAllTracksPlaylistName();
 			StartBundleDialog dial = new StartBundleDialog(playlistNames, defaultPlaylistName);
 			return dial;
 		}, (data) -> {
@@ -89,7 +86,7 @@ public class GuiComplexActionsPerformer {
 
 	public void startPlaylist(String playlistName) {
 		runAndHandleError(() -> {
-			String bundleName = jmop.getCurrentBundle().getName();
+			String bundleName = jmop.getData().playlistProperty().get().getBundle().getName();
 			jmop.startPlaylist(bundleName, playlistName);
 			return null;
 		});
@@ -107,7 +104,7 @@ public class GuiComplexActionsPerformer {
 
 	public void savePlaylist() {
 		runInBackgroundWithDialog(() -> {
-			String currentPlaylistName = jmop.getCurrentPlaylist().getName();
+			String currentPlaylistName = jmop.getData().playlistProperty().get().getName();
 			SavePlaylistDialog dial = new SavePlaylistDialog(currentPlaylistName);
 			return dial;
 		}, (data) -> {
@@ -115,6 +112,22 @@ public class GuiComplexActionsPerformer {
 			jmop.savePlaylistAs(playlistName);
 		});
 	}
+	
+	
+	public void lockUnlockPlaylist() {
+		runInForegound(() -> {
+			jmop.togglePlaylistLockedStatus();
+			return null;
+		});
+	}
+	
+	public void clearRemaining() {
+		runInForegound(() -> {
+			jmop.clearRemainingTracks();
+			return null;
+		});
+	}
+
 
 	public void addTrack() {
 		runInBackgroundWithDialog(() -> {
@@ -127,46 +140,52 @@ public class GuiComplexActionsPerformer {
 
 	}
 
+
+	public void playTrack(int index) {
+		runInForegound(() -> {
+			jmop.playTrack(index);
+			return null;
+		});
+	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void playButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.startPlaying();
 			return null;
 		});
 	}
 
 	public void stopButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.stopPlaying();
 			return null;
 		});
 	}
 
 	public void pauseButtAction() {
-
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.pausePlaying();
 			return null;
 		});
 	}
 
 	public void resumeButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.resumePlaying();
 			return null;
 		});
 	}
 
 	public void nextButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.toNext();
 			return null;
 		});
 	}
 
 	public void prevButtAction() {
-		runInBackground(() -> {
+		runInForegound(() -> {
 			jmop.toPrevious();
 			return null;
 		});
@@ -178,18 +197,32 @@ public class GuiComplexActionsPerformer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void exit() {
-		if (jmop.getDescriptor().hasActiveBundleAndPlaylistProperty().get() //
-				&& jmop.getDescriptor().currentTrackProperty().isNotNull().get()) {
+		if (jmop.getData().inPlayModeProperty().get() //
+				&& jmop.getData().currentTrackProperty().isNotNull().get()) {
 			jmop.stopPlaying();
 		}
 		System.exit(0);
 	}
 
+	public void openHelp() {
+		runAndHandleError(() -> {
+			HelpDialog dialog = new HelpDialog();
+			dialog.show();
+			return null;
+		});
+
+	}
+
 	public void checkConfiguration() {
 		runAndHandleError(() -> {
-			// TODO check coinfig
-			showInfo("Configuration check", "Check whether JMOP you can use",
-					"Please whether you have youtube-dl and ffmpeg properly installed.");
+			String error = jmop.runCheck();
+			if (error == null) {
+				showInfo("Configuration check", "The configuration is OK",
+						"The JMOP have checked some basic system settings and it seems it is all OK. "
+								+ "If problems continues, see try to look into app logs.");
+			} else {
+				showErrorDialog("Configuration not OK", error);
+			}
 			return null;
 		});
 
@@ -212,7 +245,7 @@ public class GuiComplexActionsPerformer {
 
 	public List<String> listPlaylists() {
 		return runAndHandleError(() -> {
-			Bundle bundle = jmop.getCurrentBundle();
+			Bundle bundle = jmop.getData().playlistProperty().get().getBundle();
 			if (bundle == null) {
 				return Collections.emptyList();
 			}
@@ -222,15 +255,60 @@ public class GuiComplexActionsPerformer {
 
 	public List<Track> listTracks() {
 		return runAndHandleError(() -> {
-			Playlist playlist = jmop.getCurrentPlaylist();
+			Playlist playlist = jmop.getData().playlistProperty().get();
 			if (playlist == null) {
 				return Collections.emptyList();
 			}
 			return playlist.getTracks().getTracks();
 		});
 	}
+	
+	public int inferCurrentTrackIndex() {
+		return runAndHandleError(() -> {
+			Playlist playlist = jmop.getData().playlistProperty().get();
+			if (playlist == null) {
+				return 0;
+			}
+			return playlist.getCurrentTrackIndex();
+		});
+	}
+	
+	
 
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	@Deprecated
+	protected void changeCursor(Cursor cursor) {
+		scene.getRoot().setCursor(cursor);
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	private <T> void runInForegound(RunnableWithException<T> run) {
+		Task<T> task = new Task<T>() {
+			@Override
+			protected T call() throws Exception {
+				// Platform.runLater(() -> {
+				runAndHandleError(run);
+				// });
+				return null;
+			}
+
+		};
+
+		scene.setCursor(Cursor.WAIT);
+		task.setOnSucceeded((e) -> {
+			scene.setCursor(Cursor.DEFAULT);
+		});
+		task.setOnFailed((e) -> {
+			scene.setCursor(Cursor.DEFAULT);
+		});
+
+		task.run();
+		// Platform.runLater(() -> {
+		// runAndHandleError(run);
+		// });
+	}
+	
 	private <T> void runInBackground(RunnableWithException<T> run) {
 		Task<T> task = new Task<T>() {
 			@Override
@@ -243,11 +321,13 @@ public class GuiComplexActionsPerformer {
 
 		};
 
-		// FIXME AF, WTFFFFF ????
-		// scene.setCursor(Cursor.WAIT);
-		// task.setOnSucceeded((e) -> {
-		// scene.setCursor(Cursor.DEFAULT);
-		// });
+		scene.setCursor(Cursor.WAIT);
+		task.setOnSucceeded((e) -> {
+			scene.setCursor(Cursor.DEFAULT);
+		});
+		task.setOnFailed((e) -> {
+			scene.setCursor(Cursor.DEFAULT);
+		});
 
 		Thread thread = new Thread(task, "BackgroundGUIOperationThread");
 		thread.start();
@@ -342,5 +422,6 @@ public class GuiComplexActionsPerformer {
 	public static interface ConsumerWithException<T> {
 		public void consume(T object) throws Exception;
 	}
+
 
 }

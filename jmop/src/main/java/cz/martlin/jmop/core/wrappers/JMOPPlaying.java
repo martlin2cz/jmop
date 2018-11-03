@@ -2,90 +2,89 @@ package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.player.BetterPlaylistRuntime;
-import cz.martlin.jmop.core.player.JMOPPlaylisterWithGui;
-import cz.martlin.jmop.core.sources.AutomaticSavesPerformer;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.playlister.PlayerEngine;
 import javafx.util.Duration;
 
 public class JMOPPlaying {
+	private final PlayerEngine engine;
 
-	private final JMOPPlaylisterWithGui playlister;
-	private final AutomaticSavesPerformer saver;
 	private Playlist currentPlaylist;
 
-	public JMOPPlaying(JMOPPlaylisterWithGui playlister, AutomaticSavesPerformer saver, Playlist playlistToPlayOrNot) {
+	public JMOPPlaying(PlayerEngine engine) {
 		super();
-		this.playlister = playlister;
-		this.saver = saver;
-		this.currentPlaylist = playlistToPlayOrNot;
+		this.engine = engine;
 
-		if (playlistToPlayOrNot != null) {
-			// TODO make this nicer
-			BetterPlaylistRuntime runtime = playlistToPlayOrNot.getRuntime();
-			playlister.setPlaylist(runtime);
+	}
+
+	protected PlayerEngine getEngine() {
+		return engine;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public void startPlayingPlaylist(Playlist playlist, boolean startPlaying) throws JMOPSourceException {
+		if (currentPlaylist != null) {
+			engine.stopPlayingPlaylist(currentPlaylist);
+		}
+		
+		engine.startPlayingPlaylist(playlist);
+		
+		if (startPlaying) {
+			startPlaying();
 		}
 	}
 
-	
-	
-	protected JMOPPlaylisterWithGui getPlaylister() {
-		return playlister;
+	public void stopPlayingPlaylist(Playlist currentPlaylist) {
+		engine.stopPlayingPlaylist(currentPlaylist);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	public Playlist getCurrentPlaylist() {
-		return currentPlaylist;
-	}
-
-	public void startPlayingPlaylist(Playlist playlist) {
-		// TODO stop currently played?
-		this.currentPlaylist = playlist;
-		
-		saver.setPlaylist(playlist);
-		
-		BetterPlaylistRuntime runtime = playlist.getRuntime();
-		playlister.setPlaylist(runtime);
-		
-		startPlaying();
-	}
-	
-	
-	public void addToPlaylist(Track track) {
-		playlister.appendTrack(track);
-	}
-
-
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	public void startPlaying() {
-		playlister.play();
+	public void startPlaying() throws JMOPSourceException {
+		engine.playNext();
 	}
 
 	public void stopPlaying() {
-		playlister.stop();
+		engine.stop();
 	}
 
 	public void pausePlaying() {
-		playlister.pause();
+		engine.pause();
 	}
 
 	public void resumePlaying() {
-		playlister.resume();
+		engine.resume();
 	}
 
-	public void toNext() {
-		playlister.toNext();
+	public void toNext() throws JMOPSourceException {
+		engine.toNext();
 	}
 
-	public void toPrevious() {
-		playlister.toPrevious();
+	public void toPrevious() throws JMOPSourceException {
+		engine.toPrevious();
 	}
 
 	public void seek(Duration to) {
-		playlister.seek(to);
+		engine.seek(to);
 	}
 
+	public void addToPlaylist(Track track) {
+		engine.add(track);
+	}
 
+	public void playTrack(int index) throws JMOPSourceException {
+		engine.play(index);
+	}
 
-	
+	public void togglePlaylistLockedStatus(Playlist playlist) {
+		boolean is = playlist.isLocked();
+		boolean isNot = !is;
+		
+		playlist.setLocked(isNot);
+	}
+
+	public void clearRemainingTracks(Playlist playlist) {
+		engine.clearRemaining();
+	}
+
 }

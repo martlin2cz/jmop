@@ -1,6 +1,7 @@
 package cz.martlin.jmop.core.player;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.PlaylistLoader;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 
@@ -66,7 +67,7 @@ public class JMOPPlayerEnvironment {
 		BetterPlaylistRuntime runtime = new BetterPlaylistRuntime(initial);
 		//playlister.getSources().startDownloading(initial, runtime);
 		
-		Playlist playlist = new Playlist(bundle, querySeed, runtime);
+		Playlist playlist = new Playlist(bundle, querySeed, null);
 		local.savePlaylist(bundle, playlist);
 
 		playlister.setPlaylist(runtime);
@@ -87,7 +88,7 @@ public class JMOPPlayerEnvironment {
 	public void renameCurrentPlaylist(String newName) throws JMOPSourceException {
 		LOG.info("Renaming current playlist to " + newName);
 		
-		currentPlaylist.changeName(newName);
+		//currentPlaylist.changeName(newName);
 		local.savePlaylist(currentBundle, currentPlaylist);
 	}
 
@@ -98,29 +99,29 @@ public class JMOPPlayerEnvironment {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public static JMOPPlayerEnvironment create(File rootDirectory, BasePlayer player) {
-		AbstractRemoteSource remote = new YoutubeSource();
+	public static JMOPPlayerEnvironment create(File rootDirectory, BasePlayer player) throws IOException {
+		AbstractRemoteSource remote = new YoutubeSource(null);
 		BaseLocalSource local = createLocal(rootDirectory);
 
 		// TODO FIXME listener shall be task itself
 		ProgressListener listener = ((p) -> {}); 
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(local, remote);
+		BaseSourceDownloader downloader = new YoutubeDlDownloader(null, local, remote);
 		TrackFileFormat inputFormat = YoutubeDlDownloader.DOWNLOAD_FILE_FORMAT;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
-		BaseSourceConverter converter = new FFMPEGConverter(local, inputFormat, outputFormat,  false);
+		BaseSourceConverter converter = new FFMPEGConverter(local);
 		Sources sources = new Sources(local, remote, downloader, converter);
 
-		InternetConnectionStatus connection = new InternetConnectionStatus();
+		InternetConnectionStatus connection = new InternetConnectionStatus(null);
 		JMOPPlaylisterWithGui playlister = new JMOPPlaylisterWithGui(player, null, connection, null);
 
 		return new JMOPPlayerEnvironment(playlister, local, remote);
 	}
 
-	public static BaseLocalSource createLocal(File rootDirectory) {
+	public static BaseLocalSource createLocal(File rootDirectory) throws IOException {
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		PlaylistLoader loader = new DefaultPlaylistLoader();
+		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDirectory, namer, loader);
-		BaseLocalSource local = new DefaultLocalSource(fileSystem);
+		BaseLocalSource local = new DefaultLocalSource(null, fileSystem);
 		return local;
 	}
 }

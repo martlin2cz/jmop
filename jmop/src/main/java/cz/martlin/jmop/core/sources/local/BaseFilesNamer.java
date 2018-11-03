@@ -2,28 +2,33 @@ package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.SourceKind;
 
 public interface BaseFilesNamer {
-	public File fileOfTrack(File root, Bundle bundle, Track track, TrackFileFormat format);
-
-	/////////////////////////////////////////////////////////////////////////////////////
-	
-	public boolean isBundleDirectory(File directory);
-
-	public String dirToBundleName(File directory);
-
-	public File directoryOfBundle(File root, SourceKind source, String name);
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public boolean isPlaylistFile(File file);
+	public String directoryNameOfBundle(String bundleName);
 
-	public String fileToPlaylistName(File file);
+	public String fileNameOfPlaylist(String playlistName, String playlistFileExtension);
 
-	public File fileOfPlaylist(File root, SourceKind source, String bundleName, String playlistName);
+	public String fileNameOfTrack(Track track, TrackFileFormat format);
+	/////////////////////////////////////////////////////////////////////////////////////
 
-	public String nameOfFullPlaylist();
+	public File bundleDirOfBundleDirName(File root, String bundleDirName);
+
+	public File bundleDirOfBundleName(File root, String bundleName);
+
+	public File cacheBundleDir(File root, String bundleName);
+
+	public File tempBundleDir(String bundleName);
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	public File playlistFileOfPlaylist(File root, String bundleDirName, String playlistName,
+			String playlistFileExtension);
+
+	public File playlistFileOfFile(File root, String bundleDirName, String playlistFileName);
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
 }
