@@ -6,19 +6,22 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.BundleBinding;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.BaseWrapper;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ObservableListenerBinding;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
 
 public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
+	private final ErrorReporter reporter;
 	private final BaseLocalSource local;
 	private final PlaylisterWrapper playlister;
 
 	private final ObservableListenerBinding<Playlist> playlistBinding;
 	private final ObservableListenerBinding<Playlist> bundleBinding;
 
-	public LocalSourceWrapper(BaseLocalSource local, PlaylisterWrapper playlister) {
+	public LocalSourceWrapper(ErrorReporter reporter, BaseLocalSource local, PlaylisterWrapper playlister) {
 		super();
+		this.reporter = reporter;
 		this.local = local;
 		this.playlister = playlister;
 
@@ -74,9 +77,10 @@ public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
 		try {
 			Bundle bundle = playlist.getBundle();
 			local.savePlaylist(bundle, playlist);
+		} catch (JMOPSourceException e) {
+			reporter.report(e);
 		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO error hangling
+			reporter.internal(e);
 		}
 	}
 	//
@@ -89,8 +93,9 @@ public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
 		try {
 			local.saveBundle(bundle);
 		} catch (JMOPSourceException e) {
-			e.printStackTrace();
-			// TODO error hangling
+			reporter.report(e);
+		} catch (Exception e) {
+			reporter.internal(e);
 		}
 	}
 

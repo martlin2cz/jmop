@@ -3,15 +3,21 @@ package cz.martlin.jmop.core.preparer.operations.base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.martlin.jmop.core.misc.ErrorReporter;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
+
 public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<IT, OT> {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
+	private final ErrorReporter reporter;
+	
 	private final String name;
-
-	public AbstractAtomicOperation(String name) {
+	
+	public AbstractAtomicOperation(ErrorReporter reporter, String name) {
 		super();
-
+		this.reporter =reporter;
+		
 		this.name = name;
 	}
 
@@ -26,8 +32,11 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 		OT result;
 		try {
 			result = runInternal(input, handler);
+		} catch (JMOPSourceException e) {
+			reporter.report(e);
+			result = null;
 		} catch (Exception e) {
-			e.printStackTrace(); // TODO handle error
+			reporter.internal(e);
 			result = null;
 		}
 

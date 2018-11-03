@@ -31,8 +31,7 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {
-			// TODO exception
-			throw new JMOPSourceException(e);
+			throw new JMOPSourceException("URL of track corrupted", e);
 		}
 	}
 

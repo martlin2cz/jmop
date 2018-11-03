@@ -5,6 +5,7 @@ import java.util.List;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
@@ -14,20 +15,31 @@ import javafx.util.Duration;
 
 public class JMOPPlayer {
 	private final BaseConfiguration config;
+	private final ErrorReporter reporter;
 	private final JMOPSources sources;
 	private final JMOPPlaying playing;
 	private final BaseJMOPEnvironmentChecker checker;
 	private final JMOPData data;
 
-	public JMOPPlayer(BaseConfiguration config, PlayerEngine engine, LocalSourceWrapper local, TrackPreparer preparer,
+	public JMOPPlayer(BaseConfiguration config, ErrorReporter reporter, PlayerEngine engine, LocalSourceWrapper local, TrackPreparer preparer,
 			BaseJMOPEnvironmentChecker checker) {
 		this.config = config;
+		this.reporter = reporter;
 		this.sources = new JMOPSources(local, preparer);
 		this.playing = new JMOPPlaying(engine);
 		this.checker = checker;
 		this.data = new JMOPData(this);
 	}
 
+
+	public BaseConfiguration getConfig() {
+		return config;
+	}
+	
+	public ErrorReporter getErrorReporter() {
+		return reporter;
+	}
+	
 	protected JMOPSources getSources() {
 		return sources;
 	}
@@ -36,9 +48,6 @@ public class JMOPPlayer {
 		return playing;
 	}
 
-	public BaseConfiguration getConfig() {
-		return config;
-	}
 
 	public JMOPData getData() {
 		return data;

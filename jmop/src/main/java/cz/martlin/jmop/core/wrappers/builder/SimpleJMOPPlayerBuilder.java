@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.wrappers.builder;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.CommandlineData;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
@@ -35,6 +36,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 	@Override
 	public JMOPPlayer create(CommandlineData data) throws Exception {
 		BaseConfiguration config = createConfiguration(data);
+		ErrorReporter reporter = new ErrorReporter();
 		InternetConnectionStatus connection = createInternetConnectionStatus(data, config);
 
 		// level 1 things
@@ -48,7 +50,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		BasePlayer player = createPlayer(data, config, local, locator);
 
 		// level 2 things
-		TrackPreparer preparer = new TrackPreparer(config, remote, local, locator, downloader, converter, player);
+		TrackPreparer preparer = new TrackPreparer(reporter, config, remote, local, locator, downloader, converter, player);
 
 		BasePlaylisterStrategy lockedStrategy = createLockedStrategy(data, config);
 		BasePlaylisterStrategy offlineStrategy = createOfflineStrategy(data, config);
@@ -60,16 +62,16 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		PlayerWrapper playerWrapper = new PlayerWrapper(player);
 		PlaylisterWrapper playlisterWrapper = new PlaylisterWrapper(playlister);
 
-		PlayerEngine engine = new PlayerEngine(playlisterWrapper, playerWrapper, preparer);
+		PlayerEngine engine = new PlayerEngine(reporter, playlisterWrapper, playerWrapper, preparer);
 
-		LocalSourceWrapper localWrapper = new LocalSourceWrapper(local, playlisterWrapper);
+		LocalSourceWrapper localWrapper = new LocalSourceWrapper(reporter, local, playlisterWrapper);
 
 		BaseJMOPEnvironmentChecker checker = createEnvironmentChecker(data, config, local, remote, downloader,
 				converter);
 
 		// level 4 things
 
-		JMOPPlayer jmop = new JMOPPlayer(config, engine, localWrapper, preparer, checker);
+		JMOPPlayer jmop = new JMOPPlayer(config, reporter, engine, localWrapper, preparer, checker);
 
 		// level 5 things
 

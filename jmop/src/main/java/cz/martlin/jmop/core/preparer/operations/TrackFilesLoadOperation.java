@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.preparer.operations;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.preparer.operations.base.AbstractAtomicOperation;
@@ -30,9 +31,9 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	private final TrackFileFormat saveFormat;
 	private final TrackFileFormat playerFormat;
 
-	public TrackFilesLoadOperation(BaseConfiguration config, AbstractTrackFileLocator locator,
+	public TrackFilesLoadOperation(ErrorReporter reporter, BaseConfiguration config, AbstractTrackFileLocator locator,
 			BaseLocalSource local, BaseSourceDownloader downloader, BaseSourceConverter converter, BasePlayer player) {
-		super("Download and convert");
+		super(reporter, "Download and convert");
 
 		this.local = local;
 		this.downloader = downloader;

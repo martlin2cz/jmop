@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.preparer.operations;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.preparer.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.preparer.operations.base.AbstractAtomicOperation;
@@ -13,8 +14,8 @@ public class TrackSearchOperation extends AbstractAtomicOperation<SearchData, Tr
 
 	private final AbstractRemoteSource remote;
 
-	public TrackSearchOperation(BaseConfiguration config, AbstractRemoteSource remote) {
-		super("Track query");
+	public TrackSearchOperation(ErrorReporter reporter, BaseConfiguration config, AbstractRemoteSource remote) {
+		super(reporter, "Track query");
 		this.remote = remote;
 	}
 

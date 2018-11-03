@@ -135,7 +135,6 @@ public class MainMenuController implements Initializable {
 
 	public void onTrackTitleAction() {
 		// System.out.println("play track");
-		// TODO play selected track
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.download.AbstractProcessEncapusulation;
@@ -21,12 +22,15 @@ public class AplayPlayer extends AbstractPlayer {
 	private static final TrackFileFormat APLAY_PLAY_FORMAT = TrackFileFormat.WAV;
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-
+	
+	private final ErrorReporter reporter;
 	private AplayProcess process;
 	private Track currentTrack;
 
-	public AplayPlayer(BaseLocalSource local, AbstractTrackFileLocator locator) {
+	public AplayPlayer(ErrorReporter reporter, BaseLocalSource local, AbstractTrackFileLocator locator) {
 		super(local, locator,  APLAY_PLAY_FORMAT);
+		
+		this.reporter = reporter;
 	}
 
 	@Override
@@ -61,8 +65,9 @@ public class AplayPlayer extends AbstractPlayer {
 		try {
 			startPlaying(currentTrack);
 		} catch (JMOPSourceException e) {
-			// TODO error report
-			e.printStackTrace();
+			reporter.report(e);
+		} catch (Exception e) {
+			reporter.internal(e);
 		}
 	}
 	
@@ -76,7 +81,9 @@ public class AplayPlayer extends AbstractPlayer {
 			try {
 				process.run(file);
 			} catch (ExternalProgramException e) {
-				e.printStackTrace();
+				reporter.report(e);
+			} catch (Exception e) {
+				reporter.internal(e);
 			}
 
 			trackFinished();

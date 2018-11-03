@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.preparer.operations;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.preparer.operations.base.AbstractAtomicOperation;
 import cz.martlin.jmop.core.preparer.operations.base.OperationChangeListener;
@@ -10,8 +11,8 @@ import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 public class NextTrackOperation extends AbstractAtomicOperation<Track, Track> {
 	private final AbstractRemoteSource remote;
 
-	public NextTrackOperation(BaseConfiguration config, AbstractRemoteSource remote) {
-		super("Next track");
+	public NextTrackOperation(ErrorReporter reporter, BaseConfiguration config, AbstractRemoteSource remote) {
+		super(reporter, "Next track");
 		this.remote = remote;
 	}
 

@@ -58,7 +58,7 @@ public class YoutubeUtilities {
 			DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
 		} catch (Throwable t) {
 			t.printStackTrace();
-			System.exit(1);
+			//System.exit(1);
 		}
 	}
 

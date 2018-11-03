@@ -7,6 +7,7 @@ import java.util.Optional;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.dial.AddTrackDialog;
@@ -30,10 +31,12 @@ import javafx.util.Duration;
 public class GuiComplexActionsPerformer {
 
 	private Scene scene;
+	private final ErrorReporter reporter;
 	private final JMOPPlayer jmop;
 
 	public GuiComplexActionsPerformer(JMOPPlayer jmop) {
 		this.jmop = jmop;
+		this.reporter = jmop.getErrorReporter();
 	}
 
 	public void specifyScene(Scene scene) {
@@ -365,7 +368,7 @@ public class GuiComplexActionsPerformer {
 		try {
 			return run.run();
 		} catch (Exception e) {
-			showExceptionDialog(e);
+			reporter.internal(e);
 			return null;
 		}
 	}
@@ -392,24 +395,6 @@ public class GuiComplexActionsPerformer {
 		alert.show();
 	}
 
-	private static void showExceptionDialog(Exception e) {
-		e.printStackTrace();
-		// TODO log by logger
-
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("An error occured");
-
-		if (e.getCause() != null) {
-			alert.setHeaderText("The error " + e.getClass().getName() + " caused by "
-					+ e.getCause().getClass().getName() + " occured");
-		} else {
-			alert.setHeaderText("The error " + e.getClass().getName() + " occured");
-		}
-
-		alert.setContentText(e.toString());
-
-		alert.show();
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

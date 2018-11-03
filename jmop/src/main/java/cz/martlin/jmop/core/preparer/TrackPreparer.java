@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.ErrorReporter;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
@@ -24,15 +26,17 @@ import javafx.collections.ObservableList;
 
 public class TrackPreparer {
 
+	private final ErrorReporter reporter;
 	private final Operations operations;
-
 	private final ObservableList<OperationWrapper<?, ?>> currentTasks;
 
-	public TrackPreparer(BaseConfiguration config, AbstractRemoteSource remote, BaseLocalSource local,
+	public TrackPreparer(ErrorReporter reporter, BaseConfiguration config, AbstractRemoteSource remote, BaseLocalSource local,
 			AbstractTrackFileLocator locator, BaseSourceDownloader downloader, BaseSourceConverter converter,
 			BasePlayer player) {
 
-		this.operations = new Operations(config, locator, remote, local, downloader, converter, player);
+		this.reporter = reporter;
+		
+		this.operations = new Operations(reporter, config, locator, remote, local, downloader, converter, player);
 
 		this.currentTasks = FXCollections.observableList(new LinkedList<>());
 	}
@@ -120,9 +124,10 @@ public class TrackPreparer {
 		try {
 			engine.add(track);
 			engine.playNext();
+		} catch (JMOPSourceException e) {
+			reporter.report(e);
 		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO error handler
+			reporter.internal(e);
 		}
 	}
 
@@ -130,8 +135,7 @@ public class TrackPreparer {
 		try {
 			engine.add(track);
 		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO error handler
+			reporter.internal(e);
 		}
 	}
 
@@ -139,8 +143,7 @@ public class TrackPreparer {
 		try {
 			addTo.addTrack(track);
 		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO error handler
+			reporter.internal(e);
 		}
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -189,7 +192,6 @@ public class TrackPreparer {
 	}
 
 	private <IT, OT> void taskFailed(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper) {
-		// TODO report some error
 		currentTasks.remove(wrapper);
 	}
 
