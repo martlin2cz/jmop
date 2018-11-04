@@ -8,6 +8,7 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 import javafx.beans.value.ChangeListener;
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -20,6 +21,10 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 
 	private Runnable endListener;
 	private ChangeListener<? super Duration> timeListener;
+
+	static {
+		initializeFX();
+	}
 
 	public JavaFXMediaPlayer(BaseLocalSource local, AbstractTrackFileLocator locator) {
 		super(local, locator, PLAYER_FORMAT);
@@ -76,6 +81,9 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	private static void initializeFX() {
+		new JFXPanel();
+	}
 
 	private void timeChanged(Duration to) {
 		this.currentTime = to;

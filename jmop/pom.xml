@@ -4,11 +4,12 @@
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
 	<packaging>jar</packaging>
-	<version>0.3</version>
+	<version>0.4</version>
 	<name>jmop</name>
 	<url>https://github.com/martlin2cz/jmop</url>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>

@@ -6,6 +6,7 @@ import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.CommandlineData;
 import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
 import cz.martlin.jmop.core.player.PlayerWrapper;
@@ -75,16 +76,26 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		JMOPPlayer jmop = new JMOPPlayer(config, reporter, engine, localWrapper, preparer, checker);
 
 		// level 5 things
-
-		if (data.getBundleToPlayName() != null) {
-			String bundleName = data.getBundleToPlayName();
-			if (data.getPlaylistToPlayName() != null) {
-				String playlistName = data.getPlaylistToPlayName();
-				jmop.startPlaylist(bundleName, playlistName);
-			}
-		}
+		
+		checkAndStartPlayling(data, config, jmop);
 
 		return jmop;
+	}
+
+	private void checkAndStartPlayling(CommandlineData data, BaseConfiguration config, JMOPPlayer jmop)
+			throws JMOPSourceException {
+		if (data.getBundleToPlayName() != null) {
+			String bundleName = data.getBundleToPlayName();
+			String playlistName;
+			
+			if (data.getPlaylistToPlayName() != null) {
+				playlistName = data.getPlaylistToPlayName();
+			} else {
+				playlistName = config.getAllTracksPlaylistName();
+			}
+			
+			jmop.startPlaylist(bundleName, playlistName);
+		}
 	}
 
 	private BaseJMOPEnvironmentChecker createEnvironmentChecker(CommandlineData data, BaseConfiguration config,

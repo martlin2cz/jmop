@@ -101,6 +101,8 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 				.bind(new DoubleMilisToDurationBinding(sliTrackProgress.valueProperty()));
 
 		bindPlayerCurrentTimeToSlider();
+
+		checkAndUpdateToCurrentTrack();
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -128,7 +130,14 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 		jmop.getData().currentTimeProperty().addListener(currentTimeChangeListener);
 
 	}
+
 	///////////////////////////////////////////////////////////////////////////
+	private void checkAndUpdateToCurrentTrack() {
+		final Track track = jmop.getData().currentTrackProperty().get();
+		if (track != null) {
+			currentTrackChanged(track);
+		}
+	}
 
 	private void currentTrackChanged(Track track) {
 		trackToSliderMax(track);
