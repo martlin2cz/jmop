@@ -1,7 +1,20 @@
 package cz.martlin.jmop.core.sources.locals;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
+/**
+ * The default files namer with following:
+ * <ul>
+ * <li>uses {@link #clean(String)} to replace all non-ascii charaters in the
+ * dir/file names
+ * <li>track file is named: "clean(TITLE)_ID.extension"
+ * <li>temp directory is named "jmop"
+ * <li>cache directory is named ".cache"
+ * 
+ * @author martin
+ *
+ */
 public class DefaultFilesNamer extends SimpleFilesNamer {
 
 	private static final String SEPARATOR = "_";

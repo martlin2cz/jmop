@@ -8,8 +8,8 @@ import java.nio.file.StandardCopyOption;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
 
 public class TestingDownloader implements BaseSourceDownloader {

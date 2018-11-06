@@ -55,6 +55,11 @@ public class InfiniteOfflineStrategy extends AbstractNextInferringStrategy {
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Returns random track from all the bundle tracks.
+	 * 
+	 * @return
+	 */
 	private Track pickRandom() {
 		List<Track> allTracks = bundle.tracks().getTracks();
 		int count = allTracks.size();

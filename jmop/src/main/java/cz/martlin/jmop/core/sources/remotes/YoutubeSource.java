@@ -17,6 +17,12 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.remote.SimpleRemoteSource;
 import javafx.util.Duration;
 
+/**
+ * The youtube.com remote source implemented by youtube API.
+ * 
+ * @author martin
+ *
+ */
 public class YoutubeSource extends
 		SimpleRemoteSource<//
 				YouTube.Videos.List, VideoListResponse, //
@@ -101,6 +107,13 @@ public class YoutubeSource extends
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Converts videolist into track.
+	 * 
+	 * @param bundle
+	 * @param response
+	 * @return
+	 */
 	private Track convertVideoListResponse(Bundle bundle, VideoListResponse response) {
 		List<Video> results = response.getItems();
 		Video result = results.get(0);
@@ -108,6 +121,13 @@ public class YoutubeSource extends
 		return track;
 	}
 
+	/**
+	 * Converts video to track.
+	 * 
+	 * @param bundle
+	 * @param result
+	 * @return
+	 */
 	private Track videoToTrack(Bundle bundle, Video result) {
 		String identifier = result.getId();
 		String title = result.getSnippet().getTitle();
@@ -119,11 +139,25 @@ public class YoutubeSource extends
 		return bundle.createTrack(identifier, title, description, duration);
 	}
 
+	/**
+	 * Converts search result to track id.
+	 * 
+	 * @param result
+	 * @return
+	 */
 	private String searchResultToId(SearchResult result) {
 		String identifier = result.getId().getVideoId();
 		return identifier;
 	}
 
+	/**
+	 * Converts seachlist to track.
+	 * 
+	 * @param bundle
+	 * @param response
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private Track convertSearchListResponse(Bundle bundle, SearchListResponse response) throws JMOPSourceException {
 		List<SearchResult> results = response.getItems();
 		SearchResult result = results.get(0);

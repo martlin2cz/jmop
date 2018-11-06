@@ -5,14 +5,20 @@ import java.net.URI;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+/**
+ * Player encapsulating JavaFX {@link MediaPlayer} instance.
+ * 
+ * @author martin
+ *
+ */
 public class JavaFXMediaPlayer extends AbstractPlayer {
 	public static final TrackFileFormat PLAYER_FORMAT = TrackFileFormat.WAV;
 
@@ -81,10 +87,18 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Force-loads the FX framework.
+	 */
 	private static void initializeFX() {
 		new JFXPanel();
 	}
 
+	/**
+	 * Handles current time change.
+	 * 
+	 * @param to
+	 */
 	private void timeChanged(Duration to) {
 		this.currentTime = to;
 		fireValueChangedEvent();

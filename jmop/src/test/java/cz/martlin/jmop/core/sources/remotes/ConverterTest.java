@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.sources.remotes;
 import java.io.File;
 import java.io.IOException;
 
-import cz.martlin.jmop.core.config.DefaultConfiguration;
+import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -13,11 +13,11 @@ import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
 import javafx.util.Duration;
 
@@ -31,7 +31,7 @@ public class ConverterTest {
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
 
-		DefaultConfiguration config = new DefaultConfiguration();
+		ConstantConfiguration config = new ConstantConfiguration();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		AbstractPlaylistLoader loader = null;
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);

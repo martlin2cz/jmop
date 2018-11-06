@@ -20,7 +20,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeScopes;
 
 /**
- * Based on
+ * All the technical stuff for working with youtube API. Based on
  * https://github.com/youtube/api-samples/blob/master/java/src/main/java/com/google/api/services/samples/youtube/cmdline/data/Quickstart.java
  * 
  * @author martin

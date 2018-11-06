@@ -9,14 +9,21 @@ import cz.martlin.jmop.core.operation.base.AbstractAtomicOperation;
 import cz.martlin.jmop.core.operation.base.OperationChangeListener;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
+import cz.martlin.jmop.core.sources.locals.TrackFileFormatLocationPreparer;
 import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.remote.TrackFileFormatLocationPreparer;
 import javafx.util.Duration;
 
+/**
+ * Operation performing "loading" of track files. That means, download, convert
+ * to save and prepare to play.
+ * 
+ * @author martin
+ *
+ */
 public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Track> {
 
 	private final BaseLocalSource local;
@@ -77,6 +84,15 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 		return input;
 	}
 
+	/**
+	 * Checks if needs to download (saved or prepared to play track file(s) does
+	 * not exist), and if is not yet downloaded, and if so, runs download phase.
+	 * 
+	 * @param track
+	 * @param handler
+	 * @return false if failed, true if succeed or skipped
+	 * @throws Exception
+	 */
 	private boolean checkAndDownload(Track track, OperationChangeListener handler) throws Exception {
 
 		startSubOperation("Downloading ...", handler);
@@ -95,6 +111,15 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 		return downloaded;
 	}
 
+	/**
+	 * Checks if is not yet converted to save, and if so, converts the
+	 * downloaded file to save.
+	 * 
+	 * @param track
+	 * @param handler
+	 * @return false if failed, true if succeed or skipped
+	 * @throws Exception
+	 */
 	private boolean checkAndConvert(Track track, OperationChangeListener handler) throws Exception {
 
 		startSubOperation("Converting ...", handler);
@@ -108,6 +133,15 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 		return converted;
 	}
 
+	/**
+	 * Checks if is not yet prepared to play, and if so, converts the downloaded
+	 * file to prepared.
+	 * 
+	 * @param track
+	 * @param handler
+	 * @return false if failed, true if succeed or skipped
+	 * @throws Exception
+	 */
 	private boolean checkAndPrepare(Track track, OperationChangeListener handler) throws Exception {
 
 		startSubOperation("Preparing to play ...", handler);
@@ -123,14 +157,36 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Exists downloaded file (file in download format in download location)?
+	 * 
+	 * @param track
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private boolean existsDownloaded(Track track) throws JMOPSourceException {
 		return local.exists(track, downloadLocation, downloadFormat);
 	}
 
+	/**
+	 * Exists saved file (file in save format in save location)?
+	 * 
+	 * @param track
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private boolean existsSaved(Track track) throws JMOPSourceException {
 		return local.exists(track, saveLocation, saveFormat);
 	}
 
+	/**
+	 * Exists prepared file (file in prepared-to-play format in prepared-to-play
+	 * location?
+	 * 
+	 * @param track
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private boolean existsToPlay(Track track) throws JMOPSourceException {
 		return local.exists(track, playerLocation, playerFormat);
 	}
@@ -142,6 +198,12 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 		return trackToString(input);
 	}
 
+	/**
+	 * Converts given track to some human string in format "TITLE (DURATION)".
+	 * 
+	 * @param track
+	 * @return
+	 */
 	public static String trackToString(Track track) {
 		String title = track.getTitle();
 		Duration duration = track.getDuration();

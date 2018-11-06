@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class InternetConnectionStatusTest {
 	public InternetConnectionStatusTest() {

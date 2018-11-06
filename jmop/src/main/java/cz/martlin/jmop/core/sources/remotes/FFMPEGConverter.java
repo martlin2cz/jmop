@@ -11,15 +11,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 //import  cz.martlin.jmop.core.sources.download.FFMPEGConverterTest.Trac;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
-import cz.martlin.jmop.core.sources.remote.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter.TrackConvertData;
 
+/**
+ * The converted working by ffmpeg program.
+ * 
+ * @author martin
+ *
+ */
 public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertData, Boolean>
 		implements BaseSourceConverter {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -97,7 +103,13 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
+	/**
+	 * Creates input file parameter.
+	 * 
+	 * @param data
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private String createInputFile(TrackConvertData data) throws JMOPSourceException {
 		Track track = data.getTrack();
 		TrackFileLocation inputLocation = data.getFromLocation();
@@ -107,6 +119,13 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 		return inputFile.getAbsolutePath();
 	}
 
+	/**
+	 * Creates output file parameter.
+	 * 
+	 * @param data
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private String createOutputFile(TrackConvertData data) throws JMOPSourceException {
 		Track track = data.getTrack();
 		TrackFileLocation outputLocation = data.getToLocation();
@@ -116,6 +135,13 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 		return outputFile.getAbsolutePath();
 	}
 
+	/**
+	 * Creates the command itself.
+	 * 
+	 * @param inputFile
+	 * @param outputFile
+	 * @return
+	 */
 	private List<String> creteCommandLine(String inputFile, String outputFile) {
 		return Arrays.asList( //
 				"ffmpeg", "-stats", "-y", "-i", inputFile, outputFile);
@@ -123,12 +149,24 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Converts given (current) duration into progress.
+	 * 
+	 * @param duration
+	 * @return
+	 */
 	private double durationToProgress(int duration) {
 		return (((double) duration) / inputDuration) * 100.0;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
+	/**
+	 * Processes given line as line with input file duration. In fact checks for
+	 * such line pattern, and if matches, infers and parses duration.
+	 * 
+	 * @param line
+	 * @return
+	 */
 	protected static Integer tryToProcessAsInputDuration(String line) {
 		boolean matches = line.matches(DURATION_LINE_REGEX);
 		if (!matches) {
@@ -141,6 +179,13 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 		return duration;
 	}
 
+	/**
+	 * Processes given line as line with current progress duration. In fact
+	 * checks for such line pattern, and if matches, infers and parses duration.
+	 * 
+	 * @param line
+	 * @return
+	 */
 	protected static Integer tryToProcessAsProgress(String line) {
 		boolean matches = line.matches(PROGRESS_LINE_REGEX);
 		if (!matches) {
@@ -151,12 +196,25 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 		return parseDuration(durationStr);
 	}
 
+	/**
+	 * Infers the duration from the line. In fact returns first match of the
+	 * duration pattern occurence.
+	 * 
+	 * @param line
+	 * @return
+	 */
 	protected static String inferDuration(String line) {
 		Matcher matcher = DURATION_PATTERN.matcher(line);
 		matcher.find();
 		return matcher.group();
 	}
 
+	/**
+	 * Parses string duration into integer (number of seconds).
+	 * 
+	 * @param durationStr
+	 * @return
+	 */
 	protected static int parseDuration(String durationStr) {
 		String[] parts = durationStr.split(DURATION_SEPARATOR);
 
@@ -170,6 +228,11 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 		return sum;
 	}
 
+	/**
+	 * The input to the process (track, input and output location and format).
+	 * @author martin
+	 *
+	 */
 	protected static class TrackConvertData {
 		private final Track track;
 		private final TrackFileLocation fromLocation;

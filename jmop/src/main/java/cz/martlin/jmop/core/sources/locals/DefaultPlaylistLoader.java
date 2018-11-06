@@ -17,6 +17,12 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.PlaylistFileData;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 
+/**
+ * The default playlist loader. Works with playlists in xspf format.
+ * 
+ * @author martin
+ *
+ */
 public class DefaultPlaylistLoader implements AbstractPlaylistLoader {
 
 	private final static XSPFParserComposer PARSER_COMPOSER = new XSPFParserComposer();

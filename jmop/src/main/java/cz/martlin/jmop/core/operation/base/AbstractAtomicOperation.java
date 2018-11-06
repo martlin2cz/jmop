@@ -6,6 +6,17 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
+/**
+ * Operation, which is just simply atomic. This class shall be used as a base
+ * class for all implementations.
+ * 
+ * @author martin
+ *
+ * @param <IT>
+ *            input type
+ * @param <OT>
+ *            output type
+ */
 public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<IT, OT> {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -14,6 +25,14 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 
 	private final String name;
 
+	/**
+	 * Creates instance.
+	 * 
+	 * @param reporter
+	 *            error repoter for handling errors
+	 * @param name
+	 *            human name of this operation
+	 */
 	public AbstractAtomicOperation(ErrorReporter reporter, String name) {
 		super();
 		this.reporter = reporter;
@@ -21,6 +40,12 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 		this.name = name;
 	}
 
+	/**
+	 * Convert given input to string.
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public abstract String inputDataAsString(IT input);
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -45,6 +70,13 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 		return result;
 	}
 
+	/**
+	 * Does the start of the operation. Updates the status, data, and progress
+	 * and logs.
+	 * 
+	 * @param input
+	 * @param handler
+	 */
 	protected void handleStart(IT input, OperationChangeListener handler) {
 		handler.updateStatus(name);
 		String data = inputDataAsString(input);
@@ -54,8 +86,22 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 		LOG.info("Starting atomic operation " + name + " with " + data);
 	}
 
+	/**
+	 * Runs the operation itself.
+	 * 
+	 * @param input
+	 * @param handler
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract OT runInternal(IT input, OperationChangeListener handler) throws Exception;
 
+	/**
+	 * Starts suboperation of given name.
+	 * 
+	 * @param sub
+	 * @param handler
+	 */
 	protected void startSubOperation(String sub, OperationChangeListener handler) {
 		handler.updateStatus(sub);
 		handler.updateProgress(0.0);
@@ -63,6 +109,12 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 		LOG.debug("Atomic operation " + name + " starting sub-operation " + sub);
 	}
 
+	/**
+	 * Does the finish of the operation. Updates status to "completing",
+	 * progress to 100% and logs.
+	 * 
+	 * @param handler
+	 */
 	protected void handleFinish(OperationChangeListener handler) {
 		handler.updateStatus(name + " (completing)");
 		handler.updateProgress(OperationChangeListener.THE_100_PERCENT);

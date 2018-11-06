@@ -4,6 +4,16 @@ import java.io.File;
 
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 
+/**
+ * The simple, but abstract implementation of files namer. Specifies abstract
+ * "atomic" methods for simply converting bundle/playlist/track to dir name/file
+ * name. Assumes track and playlist files are located in their bundle directory,
+ * temporary location lays as a subdir of system temp dir, and cache directory
+ * is located in the root and is flat (no subdirectories for bundles).
+ * 
+ * @author martin
+ *
+ */
 public abstract class SimpleFilesNamer implements BaseFilesNamer {
 
 	protected static final String DOT = ".";
@@ -32,6 +42,10 @@ public abstract class SimpleFilesNamer implements BaseFilesNamer {
 		return new File(cache, bundleDirName);
 	}
 
+	/**
+	 * Returns name of cache directory.
+	 * @return
+	 */
 	public abstract String directoryNameOfCache();
 
 	@Override
@@ -46,6 +60,10 @@ public abstract class SimpleFilesNamer implements BaseFilesNamer {
 		return new File(path);
 	}
 
+	/**
+	 * Returns name of temporary directory (directory located in the operating system temp dir).
+	 * @return
+	 */
 	public abstract String temporaryDirectoryName();
 
 	@Override

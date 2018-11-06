@@ -1,17 +1,42 @@
-package cz.martlin.jmop.core.config;
+package cz.martlin.jmop.core.data;
 
 import java.io.File;
 
+/**
+ * The data structure for command line parameters. It's just simple POJO with
+ * getters and setters.
+ * 
+ * @author martin
+ *
+ */
 public class CommandlineData {
+	/**
+	 * Was given -h or --help flag?
+	 */
 	private boolean isHelp;
+	/**
+	 * Was given -v or --version flag?
+	 */
 	private boolean isVersion;
+	/**
+	 * Value of -dir parameter.
+	 */
 	private File root;
+	/**
+	 * Value of -lang parameter.
+	 */
 	private String language;
+	/**
+	 * Value of first -play parameter.
+	 */
 	private String bundleToPlayName;
+	/**
+	 * Value of second -play parameter.
+	 */
 	private String playlistToPlayName;
 
-	// TODO command line args ....
 	public CommandlineData() {
+		super();
 	}
 
 	public boolean isHelp() {
@@ -62,5 +87,11 @@ public class CommandlineData {
 		this.playlistToPlayName = playlistToPlayName;
 	}
 
-	// TODO setters
+	@Override
+	public String toString() {
+		return "CommandlineData [isHelp=" + isHelp + ", isVersion=" + isVersion + ", root=" + root + ", language="
+				+ language + ", bundleToPlayName=" + bundleToPlayName + ", playlistToPlayName=" + playlistToPlayName
+				+ "]";
+	}
+
 }

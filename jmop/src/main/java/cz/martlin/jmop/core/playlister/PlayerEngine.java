@@ -12,6 +12,13 @@ import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
 import javafx.util.Duration;
 
+/**
+ * Player engine is just simply the JMOP core of core. It is responsible for
+ * both track playing (player) and also for the choosing of track (playlister).
+ * 
+ * @author martin
+ *
+ */
 public class PlayerEngine {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -40,13 +47,20 @@ public class PlayerEngine {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
+	/**
+	 * Mark as playing given playist.
+	 * @param playlist
+	 */
 	public void startPlayingPlaylist(Playlist playlist) {
 		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName());
 
 		playlister.startPlayingPlaylist(this, playlist);
 	}
 
+	/**
+	 * Mark as not playing given playlist.
+	 * @param currentPlaylist
+	 */
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
 		LOG.info("Stopping to play playlist " + currentPlaylist.getName() + " of bundle "
 				+ currentPlaylist.getBundle().getName());
@@ -54,6 +68,10 @@ public class PlayerEngine {
 		playlister.stopPlayingPlaylist(currentPlaylist);
 	}
 
+	/**
+	 * Play next track in the queque.
+	 * @throws JMOPSourceException
+	 */
 	public void playNext() throws JMOPSourceException {
 		LOG.info("Playing next to play");
 
@@ -62,6 +80,11 @@ public class PlayerEngine {
 		player.startPlaying(track);
 	}
 
+	/**
+	 * Play the index-th track in the (current) playlist.
+	 * @param index
+	 * @throws JMOPSourceException
+	 */
 	public void play(int index) throws JMOPSourceException {
 		LOG.info("Playing " + index + " th");
 
@@ -70,26 +93,43 @@ public class PlayerEngine {
 		player.startPlaying(track);
 	}
 
+	/**
+	 * Stop playing.
+	 */
 	public void stop() {
 		LOG.info("Stopping playing");
 		player.stop();
 	}
 
+	/**
+	 * Pause playing.
+	 */
 	public void pause() {
 		LOG.info("Pausing");
 		player.pause();
 	}
 
+	/**
+	 * Resume playing.
+	 */
 	public void resume() {
 		LOG.info("Resuming");
 		player.resume();
 	}
 
+	/**
+	 * Seek to given time.
+	 * @param to
+	 */
 	public void seek(Duration to) {
 		LOG.info("Seeking to " + DurationUtilities.toHumanString(to));
 		player.seek(to);
 	}
 
+	/**
+	 * Go to (start playing) next track.
+	 * @throws JMOPSourceException
+	 */
 	public void toNext() throws JMOPSourceException {
 		LOG.info("Playing next");
 
@@ -98,6 +138,10 @@ public class PlayerEngine {
 		player.startPlaying(track);
 	}
 
+	/**
+	 * Go to (start playing) previous track.
+	 * @throws JMOPSourceException
+	 */
 	public void toPrevious() throws JMOPSourceException {
 		LOG.info("Playing previous");
 
@@ -106,12 +150,19 @@ public class PlayerEngine {
 		player.startPlaying(track);
 	}
 
+	/**
+	 * Add given track to the play (probably to the playlist).
+	 * @param track
+	 */
 	public void add(Track track) {
 		LOG.info("Adding track " + track.getTitle() + ", id " + track.getIdentifier());
 
 		playlister.add(track);
 	}
 
+	/**
+	 * Remove all the track after the current one.
+	 */
 	public void clearRemaining() {
 		LOG.info("Clearing remaining");
 
@@ -120,6 +171,10 @@ public class PlayerEngine {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Handle track have been played. In fact, if has next, play next.
+	 * @param track
+	 */
 	private void onTrackPlayed(Track track) {
 		try {
 			if (hasNext()) {
@@ -133,6 +188,10 @@ public class PlayerEngine {
 		}
 	}
 
+	/**
+	 * Has next? Just and shorthand method.
+	 * @return
+	 */
 	private boolean hasNext() {
 		return playlister.hasNextProperty().get();
 	}

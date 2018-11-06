@@ -3,6 +3,12 @@ package cz.martlin.jmop.core.data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Tracklist is simply immutable list of tracks.
+ * 
+ * @author martin
+ *
+ */
 public class Tracklist {
 	private final List<Track> tracks;
 
@@ -14,7 +20,9 @@ public class Tracklist {
 	public Tracklist(List<Track> tracks) {
 		super();
 		this.tracks = new ArrayList<>(tracks);
-	} //////////////////////////////////////////////////////////////////////////////////////
+	} 
+	
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	public List<Track> getTracks() {
 		return tracks;

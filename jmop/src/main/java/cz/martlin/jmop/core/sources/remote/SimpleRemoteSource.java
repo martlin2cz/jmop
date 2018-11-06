@@ -10,8 +10,29 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 
+/**
+ * The general base remote source. Assumes working with some internal
+ * representation.
+ * 
+ * <strong>If some of requests implemented here fails, it marks
+ * {@link InternetConnectionStatus} as offline.</strong>
+ * 
+ * @author martin
+ *
+ * @param <GtRqt>
+ *            request type of get track
+ * @param <GtRst>
+ *            response type of get track
+ * @param <SeaRqt>
+ *            request type of track search
+ * @param <SeaRst>
+ *            response type of track search
+ * @param <GntRqt>
+ *            request type of next track load
+ * @param <GntRst>
+ *            response type of next track load
+ */
 public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, GntRst> implements AbstractRemoteSource {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -35,6 +56,12 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 		}
 	}
 
+	/**
+	 * Returns url of track as String.
+	 * 
+	 * @param id
+	 * @return
+	 */
 	protected abstract String urlOfTrack(String id);
 
 	///////////////////////////////////////////////////////////////////////////
@@ -67,6 +94,15 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 
 	///////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Loads track. In fact creates load request, executes it and converts
+	 * response to Track.
+	 * 
+	 * @param bundle
+	 * @param id
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private Track loadTrack(Bundle bundle, String id) throws JMOPSourceException {
 		try {
 			GtRqt request = createLoadRequest(id);
@@ -79,6 +115,15 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 		}
 	}
 
+	/**
+	 * Searches. In fact creates search request, executes it and converts
+	 * response to Track.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private Track loadSearchResult(Bundle bundle, String query) throws JMOPSourceException {
 		try {
 			SeaRqt request = createSearchRequest(query);
@@ -91,6 +136,15 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 		}
 	}
 
+	/**
+	 * Loads next track. In fact creates "load next" request, executes it and
+	 * converts response to Track.
+	 * 
+	 * @param bundle
+	 * @param id
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private Track loadNextOf(Bundle bundle, String id) throws JMOPSourceException {
 		try {
 			GntRqt request = createLoadNextRequest(id);
@@ -103,22 +157,88 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 	}
 	///////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Converts response of load track request into track.
+	 * 
+	 * @param bundle
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract Track convertLoadResponse(Bundle bundle, GtRst response) throws Exception;
 
+	/**
+	 * Executes the load track request.
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract GtRst executeLoadRequest(GtRqt request) throws Exception;
 
+	/**
+	 * Creates the load track request.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract GtRqt createLoadRequest(String id) throws Exception;
 
+	/**
+	 * Converts response of search request into track.
+	 * 
+	 * @param bundle
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract Track convertSearchResponse(Bundle bundle, SeaRst response) throws Exception;
 
+	/**
+	 * Executes the search request.
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract SeaRst executeSearchRequest(SeaRqt request) throws Exception;
 
+	/**
+	 * Creates the search request.
+	 * 
+	 * @param query
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract SeaRqt createSearchRequest(String query) throws Exception;
 
+	/**
+	 * Converts response of load next request into track.
+	 * 
+	 * @param bundle
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract Track convertLoadNextResponse(Bundle bundle, GntRst response) throws Exception;
 
+	/**
+	 * Executes the load next request.
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract GntRst executeLoadNextRequest(GntRqt request) throws Exception;
 
+	/**
+	 * Creates the load next request.
+	 * 
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract GntRqt createLoadNextRequest(String id) throws Exception;
 
 }

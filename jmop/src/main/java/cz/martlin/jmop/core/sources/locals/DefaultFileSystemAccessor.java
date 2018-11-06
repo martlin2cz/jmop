@@ -16,8 +16,19 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
+/**
+ * The default implementation of {@link AbstractFileSystemAccessor}. Simply
+ * works with bundle dirs and playlist and track files as expected. The paths
+ * and names of such files and dirs are specified by {@link BaseFilesNamer}, the
+ * way how to load contents of playlist files are then implemented by
+ * {@link AbstractPlaylistLoader} instance.
+ * 
+ * @author martin
+ *
+ */
 public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	private final File root;
@@ -62,6 +73,13 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * Returns true if given "file" (in fact could be even a directory) is a
+	 * playlist file (ends with the playlist file extension).
+	 * 
+	 * @param file
+	 * @return
+	 */
 	private boolean isPlaylistFile(File file) {
 		if (!file.isFile()) {
 			return false;
@@ -128,6 +146,11 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 	/////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Converts given playlist to playlist file data.
+	 * @param playlist
+	 * @return
+	 */
 	private PlaylistFileData playlistToData(Playlist playlist) {
 		Bundle bundle = playlist.getBundle();
 		String bundleName = bundle.getName();
@@ -140,6 +163,15 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		return new PlaylistFileData(bundleName, playlistName, kind, tracklist, currentTrack, locked);
 	}
 
+	/**
+	 * Returns file for track at given location and of given format. Creates directories, if do not exist.
+	 * @param bundle
+	 * @param track
+	 * @param location
+	 * @param format
+	 * @return
+	 * @throws IOException
+	 */
 	private File fileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format)
 			throws IOException {
 		File bundleDir = locatedBundleDir(bundle, location);
@@ -150,6 +182,12 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		return new File(bundleDir, trackFileName);
 	}
 
+	/**
+	 * Returns path of the bundle directory based on the location.
+	 * @param bundle
+	 * @param location
+	 * @return
+	 */
 	private File locatedBundleDir(Bundle bundle, TrackFileLocation location) {
 		String bundleName = bundle.getName();
 		switch (location) {

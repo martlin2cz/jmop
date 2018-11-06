@@ -3,7 +3,7 @@ package cz.martlin.jmop.mains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.config.CommandlineData;
+import cz.martlin.jmop.core.data.CommandlineData;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.core.wrappers.builder.BaseJMOPBuilder;
 import cz.martlin.jmop.core.wrappers.builder.DefaultJMOPPlayerBuilder;

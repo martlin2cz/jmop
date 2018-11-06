@@ -21,8 +21,20 @@ import cz.martlin.jmop.core.misc.MapperWithException.ExceptionInLoop;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
+/**
+ * The default local source implementation. Uses file system for storing all of
+ * the data. The file system operations are wrapped by
+ * {@link AbstractFileSystemAccessor} instance.
+ * 
+ * Each method of this class logs at entry, and catches and repacks exceptions,
+ * hence it calls separate internal methods.
+ * 
+ * @author martin
+ *
+ */
 public class DefaultLocalSource implements BaseLocalSource {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 

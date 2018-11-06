@@ -8,6 +8,16 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 
+/**
+ * The class responsible for very simply network status monitoring. When some
+ * trouble with the internet connection happens, call {@link #markOffline()}. To
+ * avoid unnecessary network operations, before each of them check the
+ * connection by calling {@link #isOffline()}. After specified timeout call to
+ * {@link #isOffline()} marks connection back offline.
+ * 
+ * @author martin
+ *
+ */
 public class InternetConnectionStatus extends ObservableObject<InternetConnectionStatus> {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -21,11 +31,19 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 		this.offline = false;
 	}
 
+	/**
+	 * Is connection (probably) offline?
+	 * 
+	 * @return
+	 */
 	public boolean isOffline() {
 		checkOfflineTimeout();
 		return offline;
 	}
 
+	/**
+	 * Marks the connection as offline.
+	 */
 	public void markOffline() {
 		LOG.info("The internet connection is offline");
 
@@ -38,6 +56,9 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 		}
 	}
 
+	/**
+	 * Checks whether the connection is (probably) offline.
+	 */
 	private void checkOfflineTimeout() {
 		boolean is = isOfflineTimeOut();
 		if (is) {
@@ -52,6 +73,11 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 		}
 	}
 
+	/**
+	 * Timed out the offline status?
+	 * 
+	 * @return
+	 */
 	private boolean isOfflineTimeOut() {
 		if (offlineSince != null) {
 			return isOfflineMoreThanTimeout();
@@ -60,6 +86,12 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 		}
 	}
 
+	/**
+	 * Is the time since marked as offline more than the timeout given by
+	 * configuration?
+	 * 
+	 * @return
+	 */
 	private boolean isOfflineMoreThanTimeout() {
 		Instant now = Instant.now();
 		Instant offlineAfterTimeout = offlineSince.toInstant().plusSeconds(timeout);

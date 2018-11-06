@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.config.CommandlineData;
+import cz.martlin.jmop.core.data.CommandlineData;
 
 public class CommandLineDataParserTest {
 

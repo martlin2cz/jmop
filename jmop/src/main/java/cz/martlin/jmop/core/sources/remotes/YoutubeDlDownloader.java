@@ -11,17 +11,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
-import cz.martlin.jmop.core.sources.remote.AbstractProcessEncapusulation;
+import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader.DownloadData;
 
+/**
+ * The downloader working by youtube-dl.
+ * 
+ * @author martin
+ *
+ */
 public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadData, Boolean>
 		implements BaseSourceDownloader {
 
@@ -97,12 +103,29 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Generates url parameter. In fact calls
+	 * {@link AbstractRemoteSource#urlOf(Track)}.
+	 * 
+	 * @param data
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private String createUrlOfTrack(DownloadData data) throws JMOPSourceException {
 		Track track = data.getTrack();
 		URL url = remote.urlOf(track);
 		return url.toExternalForm();
 	}
 
+	/**
+	 * Creates the output file parameter. In fact calls
+	 * {@link #createTargetFileFile(Track, TrackFileLocation)}.
+	 * 
+	 * @param data
+	 * @return
+	 * @throws JMOPSourceException
+	 * @throws IOException
+	 */
 	private String createTargetFilePath(DownloadData data) throws JMOPSourceException, IOException {
 		Track track = data.getTrack();
 		TrackFileLocation location = data.getLocation();
@@ -111,10 +134,26 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 		return tmpFile.getAbsolutePath();
 	}
 
+	/**
+	 * Creates the output file (as a file).
+	 * 
+	 * @param track
+	 * @param location
+	 * @return
+	 * @throws JMOPSourceException
+	 * @throws IOException
+	 */
 	private File createTargetFileFile(Track track, TrackFileLocation location) throws JMOPSourceException, IOException {
 		return local.fileOfTrack(track, location, DOWNLOAD_FILE_FORMAT);
 	}
 
+	/**
+	 * Creates the command.
+	 * 
+	 * @param url
+	 * @param path
+	 * @return
+	 */
 	private List<String> createCommandLine(String url, String path) {
 		return Arrays.asList( //
 				"youtube-dl", "--newline", "--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(),
@@ -123,6 +162,13 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Infers the progress from the command. In fact checks the line start and
+	 * if so, extracts the progress value.
+	 * 
+	 * @param line
+	 * @return
+	 */
 	protected static Double tryToParsePercentFromLine(String line) {
 		if (!line.startsWith(PROGRESS_LINE_START)) {
 			return null;
@@ -143,6 +189,12 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 		return percent;
 	}
 
+	/**
+	 * Removes everything after the dot character.
+	 * 
+	 * @param path
+	 * @return
+	 */
 	protected static String removeSuffix(String path) {
 		int indexOfDot = path.lastIndexOf((int) '.');
 
@@ -150,6 +202,12 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * The data for download process (track and location).
+	 * 
+	 * @author martin
+	 *
+	 */
 	protected static class DownloadData {
 		private final Track track;
 		private final TrackFileLocation location;

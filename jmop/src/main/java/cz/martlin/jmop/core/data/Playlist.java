@@ -2,8 +2,18 @@ package cz.martlin.jmop.core.data;
 
 import cz.martlin.jmop.core.misc.ObservableObject;
 
+/**
+ * The data structure for playlist. Each playlist is associated with some
+ * bundle, and has name, list of tracks and current track index, and also
+ * indicator, whether is locked or not. Changes of instance of this class fires
+ * invalidated events.
+ * 
+ * @author martin
+ *
+ */
 public class Playlist extends ObservableObject<Playlist> {
 	private final Bundle bundle;
+
 	private String name;
 	private Tracklist tracks;
 	private int currentTrackIndex;

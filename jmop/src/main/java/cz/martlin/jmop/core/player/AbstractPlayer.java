@@ -10,11 +10,18 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 import javafx.util.Duration;
 
+/**
+ * The general {@link BasePlayer} with some common functions. Holds all required
+ * values in fields and when the internal status changes, fires event.
+ * 
+ * @author martin
+ *
+ */
 public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implements BasePlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -87,6 +94,13 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Start playing given track with given file. No need to additional checks
+	 * or stop.
+	 * 
+	 * @param track
+	 * @param file
+	 */
 	protected abstract void doStartPlaying(Track track, File file);
 
 	@Override
@@ -103,6 +117,9 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Stop playing current track. No need to aditional checks.
+	 */
 	protected abstract void doStopPlaying();
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -119,6 +136,9 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Pauses playing current track. No need to aditional checks.
+	 */
 	protected abstract void doPausePlaying();
 
 	@Override
@@ -134,6 +154,9 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Resumes playing current track. No need to aditional checks.
+	 */
 	protected abstract void doResumePlaying();
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -145,10 +168,18 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Seeks to given time. No need to aditional checks.
+	 * 
+	 * @param to
+	 */
 	protected abstract void doSeek(Duration to);
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Marks as finished playing track. No need to aditional checks.
+	 */
 	protected void trackFinished() {
 		LOG.info("Track play finished");
 

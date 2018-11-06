@@ -7,12 +7,18 @@ import cz.martlin.jmop.core.operation.base.BaseOperation;
 import cz.martlin.jmop.core.operation.base.TwosetOperation;
 import cz.martlin.jmop.core.operation.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.player.BasePlayer;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
 
+/**
+ * An utility class holding all the operations needed in the JMOP.
+ * 
+ * @author martin
+ *
+ */
 public class Operations {
 
 	private final TwosetOperation<SearchData, Track, Track> searchAndLoad;
@@ -34,14 +40,29 @@ public class Operations {
 		this.load = load;
 	}
 
+	/**
+	 * Returns the "search and load such track" operation.
+	 * 
+	 * @return
+	 */
 	public TwosetOperation<SearchData, Track, Track> searchAndLoadOperation() {
 		return searchAndLoad;
 	}
 
+	/**
+	 * Returns the "get next and load such track" operation.
+	 * 
+	 * @return
+	 */
 	public TwosetOperation<Track, Track, Track> nextAndLoadOperation() {
 		return nextAndLoad;
 	}
 
+	/**
+	 * Returns "load given track" operation.
+	 * 
+	 * @return
+	 */
 	public BaseOperation<Track, Track> loadOperation() {
 		return load;
 	}

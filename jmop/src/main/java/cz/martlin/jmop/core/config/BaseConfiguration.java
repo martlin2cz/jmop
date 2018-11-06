@@ -1,13 +1,36 @@
 package cz.martlin.jmop.core.config;
 
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
+/**
+ * The main application configuration base interface.
+ * 
+ * @author martin
+ *
+ */
 public interface BaseConfiguration {
 
-	TrackFileFormat getSaveFormat();
+	/**
+	 * Returns format in-which the saved files may be in (preffered is MP3).
+	 * 
+	 * @return
+	 */
+	public TrackFileFormat getSaveFormat();
 
-	String getAllTracksPlaylistName();
+	/**
+	 * Returns name (note: not the file name) of the playlist with the all
+	 * tracks.
+	 * 
+	 * @return
+	 */
+	public String getAllTracksPlaylistName();
 
-	int getOfflineRetryTimeout();
+	/**
+	 * Returns number of seconds, how long may the playlister wait offline until
+	 * next retry of online.
+	 * 
+	 * @return
+	 */
+	public int getOfflineRetryTimeout();
 
 }

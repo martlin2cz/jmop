@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.config.DefaultConfiguration;
+import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -19,6 +19,7 @@ import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
@@ -26,7 +27,6 @@ import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.remotes.TestingDownloader;
 import cz.martlin.jmop.misc.TestingTools;
@@ -98,7 +98,7 @@ public class JavaFXMediaPlayerTest {
 	}
 
 	private BaseLocalSource prepareLocal() throws IOException {
-		DefaultConfiguration config = new DefaultConfiguration();
+		ConstantConfiguration config = new ConstantConfiguration();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		File root = new File("/tmp/jmop-gui/");

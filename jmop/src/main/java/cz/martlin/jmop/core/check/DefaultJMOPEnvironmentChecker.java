@@ -3,6 +3,13 @@ package cz.martlin.jmop.core.check;
 import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
 
+/**
+ * The default checker checking just only by downloader's and converter's check
+ * method.
+ * 
+ * @author martin
+ *
+ */
 public class DefaultJMOPEnvironmentChecker implements BaseJMOPEnvironmentChecker {
 	private final BaseSourceDownloader downloader;
 	private final BaseSourceConverter converter;
@@ -32,6 +39,11 @@ public class DefaultJMOPEnvironmentChecker implements BaseJMOPEnvironmentChecker
 		return error;
 	}
 
+	/**
+	 * Checks downloader.
+	 * 
+	 * @return error message or null if no such
+	 */
 	private String checkDownloader() {
 		boolean ok = downloader.check();
 		if (!ok) {
@@ -41,6 +53,11 @@ public class DefaultJMOPEnvironmentChecker implements BaseJMOPEnvironmentChecker
 		}
 	}
 
+	/**
+	 * Check converter.
+	 * 
+	 * @return error message or null if no such
+	 */
 	private String checkConverter() {
 		boolean ok = converter.check();
 		if (!ok) {

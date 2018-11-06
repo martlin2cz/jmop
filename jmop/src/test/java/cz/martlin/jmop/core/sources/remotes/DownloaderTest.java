@@ -3,13 +3,12 @@ package cz.martlin.jmop.core.sources.remotes;
 import java.io.File;
 import java.io.IOException;
 
-import cz.martlin.jmop.core.config.DefaultConfiguration;
+import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.ProgressListener;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
@@ -19,6 +18,7 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
+import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
 import javafx.util.Duration;
 
@@ -33,7 +33,7 @@ public class DownloaderTest {
 		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
 		final SourceKind source = SourceKind.YOUTUBE;
 
-		DefaultConfiguration config = new DefaultConfiguration();
+		ConstantConfiguration config = new ConstantConfiguration();
 		InternetConnectionStatus connection = new InternetConnectionStatus(config);
 		AbstractRemoteSource remote = new YoutubeSource(connection);
 

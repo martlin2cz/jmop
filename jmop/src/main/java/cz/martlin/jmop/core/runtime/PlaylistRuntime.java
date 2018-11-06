@@ -11,9 +11,12 @@ import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.ObservableObject;
 
 /**
- * The runtime class of playlist. Holds list of tracks and position of current
- * track. Specifies current, previous (last played) and next (next to be played)
- * tracks, and performs actions like toNext, toPreivous or play choosen.
+ * The runtime class of playlist(er). Holds list of tracks and position of
+ * current track. Specifies current, previous (last played) and next (next to be
+ * played) tracks, and performs actions like toNext, toPreivous or play choosen.
+ * 
+ * When changed fires event. To create instance use static methods
+ * {@link #of(Playlist)} or {@link #of(Tracklist)}.
  * 
  * @author martin
  *
@@ -277,11 +280,23 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Constructs runtime for given tracklist.
+	 * 
+	 * @param tracklist
+	 * @return
+	 */
 	public static PlaylistRuntime of(Tracklist tracklist) {
 		List<Track> tracks = tracklist.getTracks();
 		return new PlaylistRuntime(tracks);
 	}
 
+	/**
+	 * Constructs runtime for given playlist.
+	 * 
+	 * @param playlist
+	 * @return
+	 */
 	public static PlaylistRuntime of(Playlist playlist) {
 		List<Track> tracks = playlist.getTracks().getTracks();
 		int currentTrack = playlist.getCurrentTrackIndex();

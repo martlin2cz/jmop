@@ -16,12 +16,28 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
 
+/**
+ * Parser and composer of playlists in the XSPF format.
+ * 
+ * @author martin
+ *
+ */
 public class XSPFParserComposer {
 	public static final String FILE_EXTENSION = "xspf";
 
 	private static final String NAMESPACE = "http://xspf.org/ns/0/";
 	private static final String APPLICATION = "https://github.com/martlin2cz/jmop";
 
+	/**
+	 * Parses XSPF file and loads its contents. If onlyMetadata is set to true,
+	 * loads only the informations about the playlist and bundle, not the
+	 * tracks.
+	 * 
+	 * @param bundle
+	 * @param document
+	 * @param playlist
+	 * @param onlyMetadata
+	 */
 	public void parse(Bundle bundle, Document document, PlaylistFileData playlist, boolean onlyMetadata) {
 		Element root = document.getDocumentElement();
 		checkRoot(root);
@@ -32,6 +48,11 @@ public class XSPFParserComposer {
 		}
 	}
 
+	/**
+	 * Checks root element and playlist file format version.
+	 * 
+	 * @param root
+	 */
 	private void checkRoot(Element root) {
 		if (!"playlist".equals(root.getTagName())) {
 			throw new IllegalArgumentException("Not a playlist file");
@@ -42,16 +63,35 @@ public class XSPFParserComposer {
 		}
 	}
 
+	/**
+	 * Transfers metadata from playlist file's root element into data.
+	 * 
+	 * @param root
+	 * @param playlist
+	 */
 	private void processHeaders(Element root, PlaylistFileData playlist) {
 		processTitle(root, playlist);
 		processExtension(root, playlist);
 	}
 
+	/**
+	 * Transfers title of playlist from xml to data.
+	 * 
+	 * @param root
+	 * @param playlist
+	 */
 	private void processTitle(Element root, PlaylistFileData playlist) {
 		Element title = getChild(root, "title");
 		playlist.setPlaylistName(title.getTextContent());
 	}
 
+	/**
+	 * Transfers JMOP extension data (source kind, bundle name, current track
+	 * index) from xml to data.
+	 * 
+	 * @param root
+	 * @param playlist
+	 */
 	private void processExtension(Element root, PlaylistFileData playlist) {
 		Element extension = getChild(root, "extension");
 		Element jmop = getChild(extension, "jmop");
@@ -77,6 +117,14 @@ public class XSPFParserComposer {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Returns (first) child of given element with given tak name. If no such
+	 * found, throws exception.
+	 * 
+	 * @param element
+	 * @param tagName
+	 * @return
+	 */
 	private static Element getChild(Element element, String tagName) {
 		for (Node node = element.getFirstChild(); node != null; node = node.getNextSibling()) {
 			if (node instanceof Element && tagName.equals(node.getNodeName())) {
@@ -87,6 +135,13 @@ public class XSPFParserComposer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Transfers tracks from xml to data.
+	 * 
+	 * @param bundle
+	 * @param root
+	 * @param playlist
+	 */
 	private void processTracks(Bundle bundle, Element root, PlaylistFileData playlist) {
 		Element trackList = getChild(root, "trackList");
 
@@ -111,6 +166,13 @@ public class XSPFParserComposer {
 		playlist.setTracklist(tracklist);
 	}
 
+	/**
+	 * Transfers track element from xml to data.
+	 * 
+	 * @param bundle
+	 * @param trackElem
+	 * @return
+	 */
 	private Track processTrack(Bundle bundle, Element trackElem) {
 		Element titleElem = getChild(trackElem, "title");
 		String title = titleElem.getTextContent();
@@ -130,11 +192,24 @@ public class XSPFParserComposer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Saves given data into given (empty) xml document.
+	 * 
+	 * @param playlist
+	 * @param document
+	 */
 	public void compose(PlaylistFileData playlist, Document document) {
 		Element root = createRoot(playlist, document);
 		document.appendChild(root);
 	}
 
+	/**
+	 * Creates root element with both metadata and tracks.
+	 * 
+	 * @param playlist
+	 * @param document
+	 * @return
+	 */
 	private Element createRoot(PlaylistFileData playlist, Document document) {
 		Element root = createRootElement(document);
 		processHeaders(root, playlist, document);
@@ -145,6 +220,12 @@ public class XSPFParserComposer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Creates empty playlist root element.
+	 * 
+	 * @param document
+	 * @return
+	 */
 	private Element createRootElement(Document document) {
 		Element root = document.createElementNS(NAMESPACE, "playlist");
 
@@ -154,6 +235,13 @@ public class XSPFParserComposer {
 		return root;
 	}
 
+	/**
+	 * Transfers metadata from data into xml element and appends it to the root.
+	 * 
+	 * @param root
+	 * @param playlist
+	 * @param document
+	 */
 	private void processHeaders(Element root, PlaylistFileData playlist, Document document) {
 		Element title = document.createElementNS(NAMESPACE, "title");
 		title.setTextContent(playlist.getPlaylistName());
@@ -180,6 +268,13 @@ public class XSPFParserComposer {
 		root.appendChild(extension);
 	}
 
+	/**
+	 * Transfers tracks from from data into xml element and appends it to root.
+	 * 
+	 * @param root
+	 * @param playlist
+	 * @param document
+	 */
 	private void processTracks(Element root, PlaylistFileData playlist, Document document) {
 		Element trackList = document.createElementNS(NAMESPACE, "trackList");
 
@@ -191,6 +286,14 @@ public class XSPFParserComposer {
 		root.appendChild(trackList);
 	}
 
+	/**
+	 * Transfers given track from data into xml element and returns the newly
+	 * created element.
+	 * 
+	 * @param track
+	 * @param document
+	 * @return
+	 */
 	private Element processTrack(Track track, Document document) {
 		Element trackElem = document.createElementNS(NAMESPACE, "track");
 

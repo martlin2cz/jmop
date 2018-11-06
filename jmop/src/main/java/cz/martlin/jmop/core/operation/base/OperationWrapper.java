@@ -1,5 +1,6 @@
 package cz.martlin.jmop.core.operation.base;
 
+import cz.martlin.jmop.core.misc.BaseWrapper;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
@@ -8,12 +9,26 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class OperationWrapper<IT, OT> implements OperationChangeListener {
+/**
+ * The wrapper for some {@link BaseOperation}. Provides properties for status,
+ * data and progress.
+ * 
+ * @author martin
+ *
+ * @param <IT>
+ * @param <OT>
+ */
+public class OperationWrapper<IT, OT> implements OperationChangeListener, BaseWrapper<BaseOperation<IT, OT>> {
 	private final BaseOperation<IT, OT> operation;
 	private final StringProperty status;
 	private final StringProperty data;
 	private final DoubleProperty progress;
 
+	/**
+	 * Wraps given operation.
+	 * 
+	 * @param operation
+	 */
 	public OperationWrapper(BaseOperation<IT, OT> operation) {
 		super();
 		this.operation = operation;
@@ -32,6 +47,12 @@ public class OperationWrapper<IT, OT> implements OperationChangeListener {
 
 	public ReadOnlyDoubleProperty progressProperty() {
 		return progress;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public void initBindings() {
+		// no binding required here
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////

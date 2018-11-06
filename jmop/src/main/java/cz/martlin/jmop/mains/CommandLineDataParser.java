@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import cz.martlin.jmop.core.config.CommandlineData;
+import cz.martlin.jmop.core.data.CommandlineData;
 
 public class CommandLineDataParser {
 

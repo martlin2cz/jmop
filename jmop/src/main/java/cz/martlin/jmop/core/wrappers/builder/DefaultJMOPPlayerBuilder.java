@@ -4,11 +4,10 @@ import java.io.File;
 import java.io.IOException;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.config.CommandlineData;
-import cz.martlin.jmop.core.config.DefaultConfiguration;
+import cz.martlin.jmop.core.config.ConstantConfiguration;
+import cz.martlin.jmop.core.data.CommandlineData;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
@@ -19,6 +18,7 @@ import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
+import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader;
 import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
@@ -71,7 +71,7 @@ public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 
 	@Override
 	public BaseConfiguration createConfiguration(CommandlineData data) {
-		return new DefaultConfiguration();
+		return new ConstantConfiguration();
 	}
 
 }

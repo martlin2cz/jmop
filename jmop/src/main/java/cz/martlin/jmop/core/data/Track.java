@@ -2,6 +2,15 @@ package cz.martlin.jmop.core.data;
 
 import javafx.util.Duration;
 
+/**
+ * The data structure for track. Track contains reference to bundle,
+ * idenfitifer, title, description length (duration). Instance of this class is
+ * immutable. To create instance, use
+ * {@link Bundle#createTrack(String, String, String)}
+ * 
+ * @author martin
+ *
+ */
 public class Track {
 	private final Bundle bundle;
 	private final String identifier;
@@ -11,7 +20,8 @@ public class Track {
 	// TODO thumbnail
 
 	/**
-	 * Use {@link Bundle#createTrack(String, String, String)} instead.
+	 * If possible use {@link Bundle#createTrack(String, String, String)}
+	 * instead.
 	 * 
 	 * @param bundle
 	 * @param identifier

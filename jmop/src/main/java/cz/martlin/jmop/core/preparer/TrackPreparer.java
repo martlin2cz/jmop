@@ -15,15 +15,22 @@ import cz.martlin.jmop.core.operation.operations.Operations;
 import cz.martlin.jmop.core.operation.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
-import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Main entry point to operations with the tracks. Encapsulates track
+ * operations, to be running both in foreground and background, so with
+ * reporting the status and progress of all of them.
+ * 
+ * @author martin
+ *
+ */
 public class TrackPreparer {
 
 	private final ErrorReporter reporter;
@@ -54,6 +61,15 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Start loading of track (in given bundle) by given query, and to
+	 * {@link PlayerEngine#add(Track)} to given engine, when completed; in
+	 * background.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @param engine
+	 */
 	public void startSearchAndLoadInBg(Bundle bundle, String query, PlayerEngine engine) {
 		SearchData data = new SearchData(bundle, query);
 		BaseOperation<SearchData, Track> search = operations.searchAndLoadOperation();
@@ -61,6 +77,14 @@ public class TrackPreparer {
 		runInBackground(search, data, (t) -> appendAndStartPlaying(t, engine));
 	}
 
+	/**
+	 * Start loading of track (in given bundle) with given query, processing by
+	 * given consumer, when completed; in background.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @param onLoaded
+	 */
 	public void startSearchAndLoadInBg(Bundle bundle, String query, Consumer<Track> onLoaded) {
 		SearchData data = new SearchData(bundle, query);
 		BaseOperation<SearchData, Track> search = operations.searchAndLoadOperation();
@@ -69,12 +93,27 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Start loading next track of given bundle, and to
+	 * {@link PlayerEngine#add(Track)} to given engine, when completed; in
+	 * background.
+	 * 
+	 * @param track
+	 * @param engine
+	 */
 	public void startLoadingNextOf(Track track, PlayerEngine engine) {
 		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
 
 		runInBackground(nexts, track, (t) -> append(t, engine));
 	}
 
+	/**
+	 * Start loading next track of given bundle, and to handle with given
+	 * consumer, when completed; in background.
+	 * 
+	 * @param track
+	 * @param onLoaded
+	 */
 	public void startLoadingNextOfInBg(Track track, Consumer<Track> onLoaded) {
 		BaseOperation<Track, Track> nexts = operations.nextAndLoadOperation();
 
@@ -82,6 +121,11 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Load in foregound files of given track.
+	 * 
+	 * @param track
+	 */
 	public void checkAndLoadTrack(Track track) {
 		BaseOperation<Track, Track> load = operations.loadOperation();
 
@@ -89,7 +133,13 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
+	/**
+	 * Append to given engine (by {@link PlayerEngine#add(Track)}) and then
+	 * start playing (next track to play, not nescesairly the newly appended).
+	 * 
+	 * @param track
+	 * @param engine
+	 */
 	private void appendAndStartPlaying(Track track, PlayerEngine engine) {
 		try {
 			engine.add(track);
@@ -101,6 +151,12 @@ public class TrackPreparer {
 		}
 	}
 
+	/**
+	 * Only appends the given track.
+	 * 
+	 * @param track
+	 * @param engine
+	 */
 	private void append(Track track, PlayerEngine engine) {
 		try {
 			engine.add(track);
@@ -109,15 +165,16 @@ public class TrackPreparer {
 		}
 	}
 
-	private void append(Track track, BasePlaylisterStrategy addTo) {
-		try {
-			addTo.addTrack(track);
-		} catch (Exception e) {
-			reporter.internal(e);
-		}
-	}
 	/////////////////////////////////////////////////////////////////////////////////////
-
+	/**
+	 * Runs given operation in backgroud, with given input data and when
+	 * completed, invokes given consumer. In fact, creates task, adds to current
+	 * tasks and runs the task in separate thread.
+	 * 
+	 * @param operation
+	 * @param data
+	 * @param onCompleted
+	 */
 	private <IT, OT> void runInBackground(BaseOperation<IT, OT> operation, IT data, Consumer<OT> onCompleted) {
 		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
 
@@ -132,6 +189,13 @@ public class TrackPreparer {
 		thr.start();
 	}
 
+	/**
+	 * Runs given operation in backgroud, with given input data. In fact,
+	 * creates task, adds to current tasks and runs the task.
+	 * 
+	 * @param operation
+	 * @param data
+	 */
 	private <IT, OT> void runInForeground(BaseOperation<IT, OT> operation, IT data) {
 		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
 
@@ -149,6 +213,14 @@ public class TrackPreparer {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handler of taks in background completed. In fact, removes the task from
+	 * running tasks and invokes given consumer.
+	 * 
+	 * @param task
+	 * @param wrapper
+	 * @param onCompleted
+	 */
 	private <IT, OT> void taskInBgCompleted(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper,
 			Consumer<OT> onCompleted) {
 		OT result = task.getValue();
@@ -157,10 +229,24 @@ public class TrackPreparer {
 		currentTasks.remove(wrapper);
 	}
 
+	/**
+	 * Handler of task in foreground completed. In fact, only removes the task
+	 * from running tasks.
+	 * 
+	 * @param task
+	 * @param wrapper
+	 */
 	private <IT, OT> void taskInFgCompleted(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper) {
 		currentTasks.remove(wrapper);
 	}
 
+	/**
+	 * Handler of task in foreground failed. In fact, only removes the task from
+	 * running tasks.
+	 * 
+	 * @param task
+	 * @param wrapper
+	 */
 	private <IT, OT> void taskFailed(TrackOperationTask<IT, OT> task, OperationWrapper<IT, OT> wrapper) {
 		currentTasks.remove(wrapper);
 	}

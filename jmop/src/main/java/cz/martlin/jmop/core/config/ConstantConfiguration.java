@@ -1,8 +1,14 @@
 package cz.martlin.jmop.core.config;
 
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
-public class DefaultConfiguration implements BaseConfiguration {
+/**
+ * The simple configuration, simply returning constantly specified values.
+ * 
+ * @author martin
+ *
+ */
+public class ConstantConfiguration implements BaseConfiguration {
 
 	@Override
 	public TrackFileFormat getSaveFormat() {

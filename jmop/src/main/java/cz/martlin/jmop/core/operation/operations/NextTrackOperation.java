@@ -6,8 +6,13 @@ import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.operation.base.AbstractAtomicOperation;
 import cz.martlin.jmop.core.operation.base.OperationChangeListener;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
 
+/**
+ * Operation loading next track of some track.
+ * @author martin
+ *
+ */
 public class NextTrackOperation extends AbstractAtomicOperation<Track, Track> {
 	private final AbstractRemoteSource remote;
 
@@ -23,6 +28,13 @@ public class NextTrackOperation extends AbstractAtomicOperation<Track, Track> {
 		return loadNext(input, handler);
 	}
 
+	/**
+	 * Loads next track of given track.
+	 * @param track
+	 * @param handler
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private Track loadNext(Track track, OperationChangeListener handler) throws JMOPSourceException {
 
 		startSubOperation("Loading next ...", handler);

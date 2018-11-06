@@ -8,8 +8,14 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.operation.base.AbstractAtomicOperation;
 import cz.martlin.jmop.core.operation.base.OperationChangeListener;
 import cz.martlin.jmop.core.operation.operations.TrackSearchOperation.SearchData;
-import cz.martlin.jmop.core.sources.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
 
+/**
+ * Operation performing search by keyword(s).
+ * 
+ * @author martin
+ *
+ */
 public class TrackSearchOperation extends AbstractAtomicOperation<SearchData, Track> {
 
 	private final AbstractRemoteSource remote;
@@ -29,6 +35,15 @@ public class TrackSearchOperation extends AbstractAtomicOperation<SearchData, Tr
 		return search(bundle, query, handler);
 	}
 
+	/**
+	 * Runs the search.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @param handler
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private Track search(Bundle bundle, String query, OperationChangeListener handler) throws JMOPSourceException {
 
 		startSubOperation("Searching ...", handler);

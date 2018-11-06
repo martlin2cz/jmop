@@ -5,9 +5,14 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
 
+/**
+ * Converter doing simply no conversion, or even nothing.
+ * @author martin
+ *
+ */
 public class NoopConverter implements BaseSourceConverter {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());

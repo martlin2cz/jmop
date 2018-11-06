@@ -23,8 +23,11 @@ public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInfe
 		this.preparer = preparer;
 	}
 
+	/**
+	 * Loads next (in background) of given track (but only if not yet loading it).
+	 */
+	@Override
 	protected void loadNext(Track track) {
-		System.out.println("okay, trying to load next, but only if is true: " + !preparer.isCurrentlyRunningSome());
 		checkAndStartLoadingInBg(track);
 	}
 

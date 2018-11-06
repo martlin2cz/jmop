@@ -9,15 +9,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
-import cz.martlin.jmop.core.sources.locals.TrackFileFormat;
-import cz.martlin.jmop.core.sources.remote.AbstractProcessEncapusulation;
 import javafx.util.Duration;
 
+/**
+ * Simple testing player working by invoking aplay unix command.
+ * 
+ * Warning: does not support pause, resume and seek.
+ * 
+ * @author martin
+ *
+ */
 public class AplayPlayer extends AbstractPlayer {
 	private static final TrackFileFormat APLAY_PLAY_FORMAT = TrackFileFormat.WAV;
 
@@ -75,6 +83,13 @@ public class AplayPlayer extends AbstractPlayer {
 		LOG.warn("Seek not supported, will ignore");
 	}
 
+	/**
+	 * Runs the player process.
+	 * 
+	 * @param process
+	 * @param track
+	 * @param file
+	 */
 	private void runProcessInBackround(AplayProcess process, Track track, File file) {
 		Runnable run = () -> {
 			try {
@@ -92,6 +107,12 @@ public class AplayPlayer extends AbstractPlayer {
 		thread.start();
 	}
 
+	/**
+	 * Abstract aplay process encapsulation.
+	 * 
+	 * @author martin
+	 *
+	 */
 	public class AplayProcess extends AbstractProcessEncapusulation<File, Void> {
 
 		public AplayProcess() {
