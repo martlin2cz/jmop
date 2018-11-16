@@ -36,7 +36,7 @@ public class HelpDialog extends Dialog<Void> {
 	private ScrollPane createContent() {
 		WebView webpage = new WebView();
 		WebEngine engine = webpage.getEngine();
-		String helpName = "help.html";
+		String helpName = "help_en.html";
 
 		URL helpFile = getClass().getResource("/cz/martlin/jmop/gui/help/" + helpName);
 		String helpURL = helpFile.toExternalForm();
