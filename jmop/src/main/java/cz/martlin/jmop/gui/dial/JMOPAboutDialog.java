@@ -1,6 +1,7 @@
 package cz.martlin.jmop.gui.dial;
 
 import cz.martlin.jmop.gui.local.Msg;
+import cz.martlin.jmop.mains.JMOPGUIApp;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -19,7 +20,7 @@ public class JMOPAboutDialog extends Dialog<Void> {
 
 		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/logo.png")))); //$NON-NLS-1$
 
-		setHeaderText("JMOP 0.1, (c) m@rtlin, 2018"); //$NON-NLS-1$
+		setHeaderText("JMOP " + JMOPGUIApp.VERSION + ", (c) m@rtlin, 2018"); //$NON-NLS-1$
 
 		Label content = new Label("" // //$NON-NLS-1$
 				+ Msg.get("JMOP_is_open_source_music_player") // //$NON-NLS-1$

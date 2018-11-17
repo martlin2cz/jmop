@@ -57,7 +57,6 @@ public class PlaylistAndBundlePane extends VBox {
 	}
 
 	private void playlistPropertyChanged(Playlist oldPlaylistValue, Playlist newPlaylistValue) {
-		// System.out.println("PlaylistAndBundlePane.playlistPropertyChanged()");
 		playlistBinding.rebind(oldPlaylistValue, newPlaylistValue, (p) -> playlistChanged((Playlist) p));
 		playlistChanged(newPlaylistValue);
 	}

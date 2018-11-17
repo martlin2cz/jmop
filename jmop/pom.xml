@@ -4,7 +4,7 @@
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
 	<packaging>jar</packaging>
-	<version>0.4</version>
+	<version>1.0</version>
 	<name>jmop</name>
 	<url>https://github.com/martlin2cz/jmop</url>
 

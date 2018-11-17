@@ -47,7 +47,6 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 
 	@Override
 	protected void initializeComponents() {
-		System.out.println(playlistsNames);
 		ObservableList<String> names = FXCollections.observableArrayList(playlistsNames);
 		cmbPlaylistName.setItems(names);
 		cmbPlaylistName.setValue(defaultPlaylistName);

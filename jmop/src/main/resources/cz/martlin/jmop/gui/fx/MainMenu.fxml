@@ -116,7 +116,7 @@
 			onDynamicItemAction="#onBundleNameAction">
 			<staticItems>
 				<MenuItem mnemonicParsing="true" text="%Start__new_bundle"
-					fx:id="miStartNewBundle" onAction="#onStartNewBundleAction">
+					fx:id="miStartNewBundle" onAction="#onStartNewBundleAction" accelerator="Ctrl + N">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
@@ -204,7 +204,7 @@
 
 		<Menu mnemonicParsing="true" text="%_Help">
 			<items>
-				<MenuItem mnemonicParsing="true" text="%_Help" onAction="#onHelpAction">
+				<MenuItem mnemonicParsing="true" text="%_Help" onAction="#onHelpAction"  accelerator="F1">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
@@ -225,7 +225,7 @@
 						</ImageView>
 					</graphic>
 				</MenuItem>
-				<MenuItem mnemonicParsing="true" text="%_About" onAction="#onAboutAction">
+				<MenuItem mnemonicParsing="true" text="%_About" onAction="#onAboutAction"  accelerator="Alt + F1">
 					<graphic>
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
