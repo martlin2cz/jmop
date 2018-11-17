@@ -45,7 +45,7 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 	 * Marks the connection as offline.
 	 */
 	public void markOffline() {
-		LOG.info("The internet connection is offline");
+		LOG.info("The internet connection is offline"); //$NON-NLS-1$
 
 		offlineSince = Calendar.getInstance();
 
@@ -64,7 +64,7 @@ public class InternetConnectionStatus extends ObservableObject<InternetConnectio
 		if (is) {
 			boolean was = offline;
 			if (was) {
-				LOG.info("The internet connection could be back online");
+				LOG.info("The internet connection could be back online"); //$NON-NLS-1$
 
 				offline = false;
 				fireValueChangedEvent();

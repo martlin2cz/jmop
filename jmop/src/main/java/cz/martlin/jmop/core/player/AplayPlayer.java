@@ -62,13 +62,13 @@ public class AplayPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doPausePlaying() {
-		LOG.warn("Pause not supported, will stop plaing");
+		LOG.warn("Pause not supported, will stop plaing"); //$NON-NLS-1$
 		stop();
 	}
 
 	@Override
 	protected void doResumePlaying() {
-		LOG.warn("Resume not supported, will play from begin");
+		LOG.warn("Resume not supported, will play from begin"); //$NON-NLS-1$
 		try {
 			startPlaying(currentTrack);
 		} catch (JMOPSourceException e) {
@@ -80,7 +80,7 @@ public class AplayPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doSeek(Duration to) {
-		LOG.warn("Seek not supported, will ignore");
+		LOG.warn("Seek not supported, will ignore"); //$NON-NLS-1$
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class AplayPlayer extends AbstractPlayer {
 			trackFinished();
 		};
 
-		Thread thread = new Thread(run, "AplayPlayerThread");
+		Thread thread = new Thread(run, "AplayPlayerThread"); //$NON-NLS-1$
 		thread.start();
 	}
 
@@ -121,12 +121,12 @@ public class AplayPlayer extends AbstractPlayer {
 
 		@Override
 		protected List<String> createCommandLine(File input) throws Exception {
-			return Arrays.asList("aplay", input.getAbsolutePath());
+			return Arrays.asList("aplay", input.getAbsolutePath()); //$NON-NLS-1$
 		}
 
 		@Override
 		protected File getWorkingDirectory(File input) throws Exception {
-			return new File("."); // whatever
+			return new File("."); // whatever //$NON-NLS-1$
 		}
 
 		@Override

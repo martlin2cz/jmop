@@ -28,17 +28,17 @@ public class DurationUtilitiesTest {
 	@Test
 	public void testParseYoutubeDuration() {
 		Duration expectedShort = DurationUtilities.createDuration(0, 0, 5);
-		Duration actualShort = DurationUtilities.parseYoutubeDuration("PT5S");
+		Duration actualShort = DurationUtilities.parseYoutubeDuration("PT5S"); //$NON-NLS-1$
 
 		assertEquals(expectedShort, actualShort);
 
 		Duration expectedMiddle = DurationUtilities.createDuration(0, 4, 5);
-		Duration actualMiddle = DurationUtilities.parseYoutubeDuration("PT4M5S");
+		Duration actualMiddle = DurationUtilities.parseYoutubeDuration("PT4M5S"); //$NON-NLS-1$
 
 		assertEquals(expectedMiddle, actualMiddle);
 
 		Duration expectedLong = DurationUtilities.createDuration(1, 50, 42);
-		Duration actualLong = DurationUtilities.parseYoutubeDuration("PT1H50M42S");
+		Duration actualLong = DurationUtilities.parseYoutubeDuration("PT1H50M42S"); //$NON-NLS-1$
 
 		assertEquals(expectedLong, actualLong);
 	}
@@ -46,16 +46,16 @@ public class DurationUtilitiesTest {
 	@Test
 	public void testToHumanString() {
 		Duration inputShort = DurationUtilities.createDuration(0, 0, 5);
-		assertEquals("0:05", DurationUtilities.toHumanString(inputShort));
+		assertEquals("0:05", DurationUtilities.toHumanString(inputShort)); //$NON-NLS-1$
 
 		Duration inputMiddle = DurationUtilities.createDuration(0, 11, 12);
-		assertEquals("11:12", DurationUtilities.toHumanString(inputMiddle));
+		assertEquals("11:12", DurationUtilities.toHumanString(inputMiddle)); //$NON-NLS-1$
 
 		Duration inputLong = DurationUtilities.createDuration(99, 1, 1);
-		assertEquals("99:01:01", DurationUtilities.toHumanString(inputLong));
+		assertEquals("99:01:01", DurationUtilities.toHumanString(inputLong)); //$NON-NLS-1$
 
 		Duration inputMega = DurationUtilities.createDuration(1, 58, 33);
-		assertEquals("1:58:33", DurationUtilities.toHumanString(inputMega));
+		assertEquals("1:58:33", DurationUtilities.toHumanString(inputMega)); //$NON-NLS-1$
 
 	}
 

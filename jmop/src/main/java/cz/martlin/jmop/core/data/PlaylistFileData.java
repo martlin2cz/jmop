@@ -146,8 +146,8 @@ public class PlaylistFileData {
 
 	@Override
 	public String toString() {
-		return "PlaylistFileData [bundleName=" + bundleName + ", playlistName=" + playlistName + ", kind=" + kind
-				+ ", tracklist=" + tracklist + ", currentTrackIndex=" + currentTrackIndex + ", locked=" + locked + "]";
+		return "PlaylistFileData [bundleName=" + bundleName + ", playlistName=" + playlistName + ", kind=" + kind //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", tracklist=" + tracklist + ", currentTrackIndex=" + currentTrackIndex + ", locked=" + locked + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 }

@@ -17,10 +17,10 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
  */
 public class DefaultFilesNamer extends SimpleFilesNamer {
 
-	private static final String SEPARATOR = "_";
+	private static final String SEPARATOR = "_"; //$NON-NLS-1$
 
-	private static final String TEMP_DIR_NAME = "jmop";
-	private static final String CACHE_DIR_NAME = ".cache";
+	private static final String TEMP_DIR_NAME = "jmop"; //$NON-NLS-1$
+	private static final String CACHE_DIR_NAME = ".cache"; //$NON-NLS-1$
 
 	public DefaultFilesNamer() {
 		super();
@@ -75,7 +75,7 @@ public class DefaultFilesNamer extends SimpleFilesNamer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	protected static String clean(String text) {
-		return text.replaceAll("[^A-Za-z0-9\\-\\.\\_]", "_");
+		return text.replaceAll("[^A-Za-z0-9\\-\\.\\_]", "_"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 }

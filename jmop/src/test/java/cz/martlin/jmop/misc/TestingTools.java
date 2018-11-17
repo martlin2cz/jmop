@@ -42,7 +42,7 @@ public class TestingTools {
 
 	public static File testingTempDirectory(String name) {
 
-		String tmpDir = System.getProperty("java.io.tmpdir");
+		String tmpDir = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
 		File dir = new File(tmpDir, name);
 
 		return dir;

@@ -60,7 +60,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 
 			return finishProcess(input);
 		} catch (Exception e) {
-			throw new ExternalProgramException("Process failed", e);
+			throw new ExternalProgramException("Process failed", e); //$NON-NLS-1$
 		}
 	}
 
@@ -81,7 +81,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	 */
 	private void startProcess(INT input) throws Exception {
 		List<String> commandline = createCommandLine(input);
-		LOG.info("Starting process " + commandline);
+		LOG.info("Starting process " + commandline); //$NON-NLS-1$
 
 		ProcessBuilder builder = new ProcessBuilder(commandline);
 
@@ -140,7 +140,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 
 		process = null;
 
-		LOG.info("Process finished with code " + result);
+		LOG.info("Process finished with code " + result); //$NON-NLS-1$
 
 		return handleResult(result, input);
 	}

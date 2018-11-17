@@ -185,7 +185,7 @@ public class TrackPreparer {
 		task.setOnSucceeded((e) -> taskInBgCompleted(task, wrapper, onCompleted));
 		task.setOnFailed((e) -> taskFailed(task, wrapper));
 
-		Thread thr = new Thread(task, "TrackOperationTaskThread");
+		Thread thr = new Thread(task, "TrackOperationTaskThread"); //$NON-NLS-1$
 		thr.start();
 	}
 

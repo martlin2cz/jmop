@@ -39,7 +39,7 @@ public class DefaultPlaylistLoader implements AbstractPlaylistLoader {
 
 			return data;
 		} catch (Exception e) {
-			throw new IOException("Cannot load playlist file", e);
+			throw new IOException("Cannot load playlist file", e); //$NON-NLS-1$
 		}
 	}
 
@@ -55,13 +55,13 @@ public class DefaultPlaylistLoader implements AbstractPlaylistLoader {
 			TransformerFactory tFactory = TransformerFactory.newInstance();
 			Transformer transformer = tFactory.newTransformer();
 
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes"); //$NON-NLS-1$
 
 			DOMSource source = new DOMSource(document);
 			StreamResult result = new StreamResult(file);
 			transformer.transform(source, result);
 		} catch (Exception e) {
-			throw new IOException("Cannot save playlist file", e);
+			throw new IOException("Cannot save playlist file", e); //$NON-NLS-1$
 		}
 	}
 

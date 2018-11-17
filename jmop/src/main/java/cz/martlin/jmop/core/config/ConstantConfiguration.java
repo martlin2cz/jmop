@@ -17,7 +17,7 @@ public class ConstantConfiguration implements BaseConfiguration {
 
 	@Override
 	public String getAllTracksPlaylistName() {
-		return "all tracks";
+		return "all tracks"; //$NON-NLS-1$
 	}
 
 	@Override

@@ -35,14 +35,14 @@ public class YoutubeSource extends
 
 	@Override
 	protected String urlOfTrack(String id) {
-		return "https://www.youtube.com/watch?v=" + id;
+		return "https://www.youtube.com/watch?v=" + id; //$NON-NLS-1$
 	}
 
 	@Override
 	protected YouTube.Videos.List createLoadRequest(String id) throws Exception {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 
-		YouTube.Videos.List listVideosRequest = youtube.videos().list("contentDetails,snippet");
+		YouTube.Videos.List listVideosRequest = youtube.videos().list("contentDetails,snippet"); //$NON-NLS-1$
 		listVideosRequest.setId(id);
 		return listVideosRequest;
 	}
@@ -51,8 +51,8 @@ public class YoutubeSource extends
 	protected YouTube.Search.List createSearchRequest(String query) throws IOException {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 
-		YouTube.Search.List searchListByKeywordRequest = youtube.search().list("snippet");
-		searchListByKeywordRequest.setType("video");
+		YouTube.Search.List searchListByKeywordRequest = youtube.search().list("snippet"); //$NON-NLS-1$
+		searchListByKeywordRequest.setType("video"); //$NON-NLS-1$
 		searchListByKeywordRequest.setMaxResults(1l);
 		searchListByKeywordRequest.setQ(query);
 		return searchListByKeywordRequest;
@@ -62,8 +62,8 @@ public class YoutubeSource extends
 	protected YouTube.Search.List createLoadNextRequest(String id) throws IOException {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 
-		YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list("snippet");
-		searchListRelatedVideosRequest.setType("video");
+		YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list("snippet"); //$NON-NLS-1$
+		searchListRelatedVideosRequest.setType("video"); //$NON-NLS-1$
 		searchListRelatedVideosRequest.setRelatedToVideoId(id);
 		return searchListRelatedVideosRequest;
 	}

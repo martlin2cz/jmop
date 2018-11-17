@@ -89,9 +89,9 @@ public class CommandlineData {
 
 	@Override
 	public String toString() {
-		return "CommandlineData [isHelp=" + isHelp + ", isVersion=" + isVersion + ", root=" + root + ", language="
-				+ language + ", bundleToPlayName=" + bundleToPlayName + ", playlistToPlayName=" + playlistToPlayName
-				+ "]";
+		return "CommandlineData [isHelp=" + isHelp + ", isVersion=" + isVersion + ", root=" + root + ", language=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ language + ", bundleToPlayName=" + bundleToPlayName + ", playlistToPlayName=" + playlistToPlayName //$NON-NLS-1$ //$NON-NLS-2$
+				+ "]"; //$NON-NLS-1$
 	}
 
 }

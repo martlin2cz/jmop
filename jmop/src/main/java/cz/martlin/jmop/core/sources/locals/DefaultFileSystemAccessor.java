@@ -198,7 +198,7 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 		case TEMP:
 			return namer.tempBundleDir(bundleName);
 		default:
-			throw new IllegalArgumentException("Unknown location " + location);
+			throw new IllegalArgumentException("Unknown location " + location); //$NON-NLS-1$
 		}
 	}
 

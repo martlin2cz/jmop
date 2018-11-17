@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.MainFrameController;
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory;
 import javafx.application.Application;
@@ -33,12 +34,15 @@ public class JMOPMainGUIApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		try {
-			LOG.info("Starting GUI application ...");
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/main.fxml"));
+			LOG.info("Starting GUI application ..."); //$NON-NLS-1$
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/main.fxml")); //$NON-NLS-1$
+			
+			loader.setResources(Msg.getResourceBundle());
+			
 			Parent root = loader.load();
 
-			primaryStage.setTitle("JMOP");
-			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/logo.png")));
+			primaryStage.setTitle("JMOP"); //$NON-NLS-1$
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/logo.png"))); //$NON-NLS-1$
 
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
@@ -52,7 +56,7 @@ public class JMOPMainGUIApplication extends Application {
 
 			primaryStage.show();
 		} catch (Exception e) {
-			LOG.error("Application GUI could not start!", e);
+			LOG.error("Application GUI could not start!", e); //$NON-NLS-1$
 		}
 	}
 

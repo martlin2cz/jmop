@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.gui.dial.NewBundleDialog.NewBundleData;
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,18 +32,17 @@ public class NewBundleDialog extends BaseCommonFXMLDialog<NewBundleData> {
 
 	public NewBundleDialog() throws IOException {
 		super();
-		load("/cz/martlin/jmop/gui/fx/NewBundleDialog.fxml");
+		load("/cz/martlin/jmop/gui/fx/NewBundleDialog.fxml"); //$NON-NLS-1$
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 
 	@Override
 	protected void specifyCustomDialogSettings() {
-		setTitle("Create new bundle");
-		setHeaderText("Create new bundle of music, for instance\n" //
-				+ "music of one author, album, genre ...");
+		setTitle(Msg.get("Create_new_bundle")); //$NON-NLS-1$
+		setHeaderText(Msg.get("Create_new_bundle_of_music_for_instance_")); //$NON-NLS-1$
 
-		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-bundle.png"))));
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-bundle.png")))); //$NON-NLS-1$
 	}
 
 	@Override
@@ -60,15 +60,15 @@ public class NewBundleDialog extends BaseCommonFXMLDialog<NewBundleData> {
 	@Override
 	protected boolean validate() {
 		if (txtBundleName.getText().isEmpty()) {
-			GuiComplexActionsPerformer.showErrorDialog("Missing value", "Specify bundle name");
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("Missing_value"), Msg.get("Specify_bundle_name")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 		if (cmbSource.getValue() == null) {
-			GuiComplexActionsPerformer.showErrorDialog("Missing value", "Specify source");
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("Missing_value"), Msg.get("Specify_source")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 		if (txtQuery.getText().isEmpty()) {
-			GuiComplexActionsPerformer.showErrorDialog("Missing value", "Specify query");
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("Missing_value"), Msg.get("Specify_query")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 

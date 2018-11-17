@@ -99,7 +99,7 @@ public class TrackFileFormatLocationPreparer {
 			Files.copy(fromFile, toFile);
 			return true;
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot copy track file", e);
+			throw new JMOPSourceException("Cannot copy track file", e); //$NON-NLS-1$
 		}
 	}
 

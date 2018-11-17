@@ -15,17 +15,17 @@ public class YoutubeSourceTest {
 		InternetConnectionStatus connection = new InternetConnectionStatus(config);
 		YoutubeSource source = new YoutubeSource(connection);
 
-		final Bundle bundle = new Bundle(SourceKind.YOUTUBE, "house music");
-		final String query = "progressive house mix";
+		final Bundle bundle = new Bundle(SourceKind.YOUTUBE, "house music"); //$NON-NLS-1$
+		final String query = "progressive house mix"; //$NON-NLS-1$
 
 		Track current = source.search(bundle, query);
 
-		System.out.println("Track : " + current.getIdentifier() + ", " + current.getTitle() + ", "
+		System.out.println("Track : " + current.getIdentifier() + ", " + current.getTitle() + ", " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ DurationUtilities.toHumanString(current.getDuration()));
 		for (int i = 0; i < 10; i++) {
 			current = source.getNextTrackOf(current);
 
-			System.out.println("Track : " + current.getIdentifier() + ", " + current.getTitle() + ", "
+			System.out.println("Track : " + current.getIdentifier() + ", " + current.getTitle() + ", " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					+ DurationUtilities.toHumanString(current.getDuration()));
 
 			// try {

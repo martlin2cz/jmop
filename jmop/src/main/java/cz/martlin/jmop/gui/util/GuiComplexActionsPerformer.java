@@ -18,6 +18,7 @@ import cz.martlin.jmop.gui.dial.NewBundleDialog;
 import cz.martlin.jmop.gui.dial.NewPlaylistDialog;
 import cz.martlin.jmop.gui.dial.SavePlaylistDialog;
 import cz.martlin.jmop.gui.dial.StartBundleDialog;
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
@@ -215,11 +216,11 @@ public class GuiComplexActionsPerformer {
 		runAndHandleError(() -> {
 			String error = jmop.runCheck();
 			if (error == null) {
-				showInfo("Configuration check", "The configuration is OK",
-						"The JMOP have checked some basic system settings and it seems it is all OK. "
-								+ "If problems continues, see try to look into app logs.");
+				showInfo(Msg.get("Configuration_check"), Msg.get("The_configuration_is_OK"), //$NON-NLS-1$ //$NON-NLS-2$
+						Msg.get("The_JMOP_have_checked_") //$NON-NLS-1$
+								+ Msg.get("If_problem_continues_")); //$NON-NLS-1$
 			} else {
-				showErrorDialog("Configuration not OK", error);
+				showErrorDialog(Msg.get("Configuration_not_OK"), error); //$NON-NLS-1$
 			}
 			return null;
 		});
@@ -320,7 +321,7 @@ public class GuiComplexActionsPerformer {
 			scene.setCursor(Cursor.DEFAULT);
 		});
 
-		Thread thread = new Thread(task, "BackgroundGUIOperationThread");
+		Thread thread = new Thread(task, "BackgroundGUIOperationThread"); //$NON-NLS-1$
 		thread.start();
 		// Platform.runLater(() -> {
 		// runAndHandleError(run);
@@ -375,7 +376,7 @@ public class GuiComplexActionsPerformer {
 
 	public static void showErrorDialog(String header, String message) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("An error occured");
+		alert.setTitle(Msg.get("An_error_occured")); //$NON-NLS-1$
 
 		alert.setHeaderText(header);
 		alert.setContentText(message);

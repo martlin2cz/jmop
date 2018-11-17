@@ -23,10 +23,10 @@ import javafx.util.Duration;
  *
  */
 public class XSPFParserComposer {
-	public static final String FILE_EXTENSION = "xspf";
+	public static final String FILE_EXTENSION = "xspf"; //$NON-NLS-1$
 
-	private static final String NAMESPACE = "http://xspf.org/ns/0/";
-	private static final String APPLICATION = "https://github.com/martlin2cz/jmop";
+	private static final String NAMESPACE = "http://xspf.org/ns/0/"; //$NON-NLS-1$
+	private static final String APPLICATION = "https://github.com/martlin2cz/jmop"; //$NON-NLS-1$
 
 	/**
 	 * Parses XSPF file and loads its contents. If onlyMetadata is set to true,
@@ -54,12 +54,12 @@ public class XSPFParserComposer {
 	 * @param root
 	 */
 	private void checkRoot(Element root) {
-		if (!"playlist".equals(root.getTagName())) {
-			throw new IllegalArgumentException("Not a playlist file");
+		if (!"playlist".equals(root.getTagName())) { //$NON-NLS-1$
+			throw new IllegalArgumentException("Not a playlist file"); //$NON-NLS-1$
 		}
 
-		if (!"1".equals(root.getAttribute("version"))) {
-			throw new IllegalArgumentException("Not version 1");
+		if (!"1".equals(root.getAttribute("version"))) { //$NON-NLS-1$ //$NON-NLS-2$
+			throw new IllegalArgumentException("Not version 1"); //$NON-NLS-1$
 		}
 	}
 
@@ -81,7 +81,7 @@ public class XSPFParserComposer {
 	 * @param playlist
 	 */
 	private void processTitle(Element root, PlaylistFileData playlist) {
-		Element title = getChild(root, "title");
+		Element title = getChild(root, "title"); //$NON-NLS-1$
 		playlist.setPlaylistName(title.getTextContent());
 	}
 
@@ -93,23 +93,23 @@ public class XSPFParserComposer {
 	 * @param playlist
 	 */
 	private void processExtension(Element root, PlaylistFileData playlist) {
-		Element extension = getChild(root, "extension");
-		Element jmop = getChild(extension, "jmop");
+		Element extension = getChild(root, "extension"); //$NON-NLS-1$
+		Element jmop = getChild(extension, "jmop"); //$NON-NLS-1$
 
-		String source = jmop.getAttribute("source");
+		String source = jmop.getAttribute("source"); //$NON-NLS-1$
 		SourceKind kind = SourceKind.valueOf(source);
 		playlist.setKind(kind);
 
-		String bundleName = jmop.getAttribute("bundleName");
+		String bundleName = jmop.getAttribute("bundleName"); //$NON-NLS-1$
 		playlist.setBundleName(bundleName);
 
-		String currentTrackOrNot = jmop.getAttribute("currentTrack");
+		String currentTrackOrNot = jmop.getAttribute("currentTrack"); //$NON-NLS-1$
 		if (currentTrackOrNot != null && !currentTrackOrNot.isEmpty()) {
 			int currentTrack = Integer.parseInt(currentTrackOrNot);
 			playlist.setCurrentTrackIndex(currentTrack);
 		}
 
-		String lockedOrNot = jmop.getAttribute("locked");
+		String lockedOrNot = jmop.getAttribute("locked"); //$NON-NLS-1$
 		if (lockedOrNot != null && !lockedOrNot.isEmpty()) {
 			boolean locked = Boolean.parseBoolean(lockedOrNot);
 			playlist.setLocked(locked);
@@ -131,7 +131,7 @@ public class XSPFParserComposer {
 				return (Element) node;
 			}
 		}
-		throw new IllegalArgumentException("Element " + tagName + " not found");
+		throw new IllegalArgumentException("Element " + tagName + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +143,7 @@ public class XSPFParserComposer {
 	 * @param playlist
 	 */
 	private void processTracks(Bundle bundle, Element root, PlaylistFileData playlist) {
-		Element trackList = getChild(root, "trackList");
+		Element trackList = getChild(root, "trackList"); //$NON-NLS-1$
 
 		List<Track> tracks = new ArrayList<>(trackList.getChildNodes().getLength());
 		for (int i = 0; i < trackList.getChildNodes().getLength(); i++) {
@@ -154,8 +154,8 @@ public class XSPFParserComposer {
 			}
 			Element trackElem = (Element) child;
 
-			if (!("track".equals(child.getNodeName()))) {
-				throw new IllegalArgumentException("Expected track element, found" + trackElem.getTagName());
+			if (!("track".equals(child.getNodeName()))) { //$NON-NLS-1$
+				throw new IllegalArgumentException("Expected track element, found" + trackElem.getTagName()); //$NON-NLS-1$
 			}
 
 			Track track = processTrack(bundle, trackElem);
@@ -174,16 +174,16 @@ public class XSPFParserComposer {
 	 * @return
 	 */
 	private Track processTrack(Bundle bundle, Element trackElem) {
-		Element titleElem = getChild(trackElem, "title");
+		Element titleElem = getChild(trackElem, "title"); //$NON-NLS-1$
 		String title = titleElem.getTextContent();
 
-		Element idElem = getChild(trackElem, "identifier");
+		Element idElem = getChild(trackElem, "identifier"); //$NON-NLS-1$
 		String identifier = idElem.getTextContent();
 
-		Element annotationElem = getChild(trackElem, "annotation");
+		Element annotationElem = getChild(trackElem, "annotation"); //$NON-NLS-1$
 		String description = annotationElem.getTextContent();
 
-		Element durationElem = getChild(trackElem, "duration");
+		Element durationElem = getChild(trackElem, "duration"); //$NON-NLS-1$
 		String durationStr = durationElem.getTextContent();
 		Duration duration = DurationUtilities.parseMilisDuration(durationStr);
 
@@ -227,9 +227,9 @@ public class XSPFParserComposer {
 	 * @return
 	 */
 	private Element createRootElement(Document document) {
-		Element root = document.createElementNS(NAMESPACE, "playlist");
+		Element root = document.createElementNS(NAMESPACE, "playlist"); //$NON-NLS-1$
 
-		root.setAttribute("version", "1");
+		root.setAttribute("version", "1"); //$NON-NLS-1$ //$NON-NLS-2$
 		// FIXME hack: attr not under NS
 
 		return root;
@@ -243,26 +243,26 @@ public class XSPFParserComposer {
 	 * @param document
 	 */
 	private void processHeaders(Element root, PlaylistFileData playlist, Document document) {
-		Element title = document.createElementNS(NAMESPACE, "title");
+		Element title = document.createElementNS(NAMESPACE, "title"); //$NON-NLS-1$
 		title.setTextContent(playlist.getPlaylistName());
 		root.appendChild(title);
 
-		Element creator = document.createElementNS(NAMESPACE, "creator");
-		creator.setTextContent("jmop application");
+		Element creator = document.createElementNS(NAMESPACE, "creator"); //$NON-NLS-1$
+		creator.setTextContent("jmop application"); //$NON-NLS-1$
 		root.appendChild(creator);
 
-		Element date = document.createElementNS(NAMESPACE, "date");
+		Element date = document.createElementNS(NAMESPACE, "date"); //$NON-NLS-1$
 		date.setTextContent(java.util.Calendar.getInstance().getTime().toString());
 		root.appendChild(date);
 
-		Element extension = document.createElementNS(NAMESPACE, "extension");
-		Element jmop = document.createElement("jmop");
+		Element extension = document.createElementNS(NAMESPACE, "extension"); //$NON-NLS-1$
+		Element jmop = document.createElement("jmop"); //$NON-NLS-1$
 
-		jmop.setAttribute("source", playlist.getKind().name());
-		jmop.setAttribute("bundleName", playlist.getBundleName());
-		jmop.setAttribute("application", APPLICATION);
-		jmop.setAttribute("currentTrack", Integer.toString(playlist.getCurrentTrackIndex()));
-		jmop.setAttribute("locked", Boolean.toString(playlist.isLocked()));
+		jmop.setAttribute("source", playlist.getKind().name()); //$NON-NLS-1$
+		jmop.setAttribute("bundleName", playlist.getBundleName()); //$NON-NLS-1$
+		jmop.setAttribute("application", APPLICATION); //$NON-NLS-1$
+		jmop.setAttribute("currentTrack", Integer.toString(playlist.getCurrentTrackIndex())); //$NON-NLS-1$
+		jmop.setAttribute("locked", Boolean.toString(playlist.isLocked())); //$NON-NLS-1$
 
 		extension.appendChild(jmop);
 		root.appendChild(extension);
@@ -276,7 +276,7 @@ public class XSPFParserComposer {
 	 * @param document
 	 */
 	private void processTracks(Element root, PlaylistFileData playlist, Document document) {
-		Element trackList = document.createElementNS(NAMESPACE, "trackList");
+		Element trackList = document.createElementNS(NAMESPACE, "trackList"); //$NON-NLS-1$
 
 		for (Track track : playlist.getTracklist().getTracks()) {
 			Element trackElem = processTrack(track, document);
@@ -295,21 +295,21 @@ public class XSPFParserComposer {
 	 * @return
 	 */
 	private Element processTrack(Track track, Document document) {
-		Element trackElem = document.createElementNS(NAMESPACE, "track");
+		Element trackElem = document.createElementNS(NAMESPACE, "track"); //$NON-NLS-1$
 
-		Element identifier = document.createElementNS(NAMESPACE, "identifier");
+		Element identifier = document.createElementNS(NAMESPACE, "identifier"); //$NON-NLS-1$
 		identifier.setTextContent(track.getIdentifier());
 		trackElem.appendChild(identifier);
 
-		Element title = document.createElementNS(NAMESPACE, "title");
+		Element title = document.createElementNS(NAMESPACE, "title"); //$NON-NLS-1$
 		title.setTextContent(track.getTitle());
 		trackElem.appendChild(title);
 
-		Element annotation = document.createElementNS(NAMESPACE, "annotation");
+		Element annotation = document.createElementNS(NAMESPACE, "annotation"); //$NON-NLS-1$
 		annotation.setTextContent(track.getDescription());
 		trackElem.appendChild(annotation);
 
-		Element duration = document.createElementNS(NAMESPACE, "duration");
+		Element duration = document.createElementNS(NAMESPACE, "duration"); //$NON-NLS-1$
 		duration.setTextContent(DurationUtilities.toMilis(track.getDuration()));
 		trackElem.appendChild(duration);
 

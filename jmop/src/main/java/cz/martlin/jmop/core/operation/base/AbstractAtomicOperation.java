@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.gui.local.Msg;
 
 /**
  * Operation, which is just simply atomic. This class shall be used as a base
@@ -83,7 +84,7 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 		handler.updateData(data);
 		handler.updateProgress(0.0);
 
-		LOG.info("Starting atomic operation " + name + " with " + data);
+		LOG.info("Starting atomic operation " + name + " with " + data); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -106,7 +107,7 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 		handler.updateStatus(sub);
 		handler.updateProgress(0.0);
 
-		LOG.debug("Atomic operation " + name + " starting sub-operation " + sub);
+		LOG.debug("Atomic operation " + name + " starting sub-operation " + sub); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -116,10 +117,10 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 	 * @param handler
 	 */
 	protected void handleFinish(OperationChangeListener handler) {
-		handler.updateStatus(name + " (completing)");
+		handler.updateStatus(name + " " +Msg.get("completing_")); //$NON-NLS-1$
 		handler.updateProgress(OperationChangeListener.THE_100_PERCENT);
 
-		LOG.info("Atomic operation " + name + " completed");
+		LOG.info("Atomic operation " + name + " completed"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 

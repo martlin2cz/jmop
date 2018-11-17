@@ -29,11 +29,11 @@ import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter.TrackConvertData;
 public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertData, Boolean>
 		implements BaseSourceConverter {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-	private static final String DURATION_SEPARATOR = ":";
-	private static final String DURATION_REGEX = "\\d{2}\\:\\d{2}\\:\\d{2}";
+	private static final String DURATION_SEPARATOR = ":"; //$NON-NLS-1$
+	private static final String DURATION_REGEX = "\\d{2}\\:\\d{2}\\:\\d{2}"; //$NON-NLS-1$
 
-	private static final String DURATION_LINE_REGEX = "^.*Duration: " + DURATION_REGEX + ".*$";
-	private static final String PROGRESS_LINE_REGEX = "^size\\=[ \\dkMG]+B time\\=" + DURATION_REGEX + ".*$";
+	private static final String DURATION_LINE_REGEX = "^.*Duration: " + DURATION_REGEX + ".*$"; //$NON-NLS-1$ //$NON-NLS-2$
+	private static final String PROGRESS_LINE_REGEX = "^size\\=[ \\dkMG]+B time\\=" + DURATION_REGEX + ".*$"; //$NON-NLS-1$ //$NON-NLS-2$
 	private static final Pattern DURATION_PATTERN = Pattern.compile(DURATION_REGEX);
 	private static final int TIME_UNIT_MULTIPLICATOR = 60;
 	private static final int RESULT_CODE_OK = 0;
@@ -52,7 +52,7 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 	public boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
 			TrackFileLocation toLocation, TrackFileFormat toFormat) throws Exception {
 
-		LOG.info("Converting track " + track + " from " + fromFormat + " to " + toFormat);
+		LOG.info("Converting track " + track + " from " + fromFormat + " to " + toFormat); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		TrackConvertData data = new TrackConvertData(track, fromLocation, fromFormat, toLocation, toFormat);
 		return run(data);
 	}
@@ -99,7 +99,7 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 
 	@Override
 	public boolean check() {
-		return runAndCheckForResult("ffmpeg -version") == RESULT_CODE_OK;
+		return runAndCheckForResult("ffmpeg -version") == RESULT_CODE_OK; //$NON-NLS-1$
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +144,7 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 	 */
 	private List<String> creteCommandLine(String inputFile, String outputFile) {
 		return Arrays.asList( //
-				"ffmpeg", "-stats", "-y", "-i", inputFile, outputFile);
+				"ffmpeg", "-stats", "-y", "-i", inputFile, outputFile); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

@@ -7,7 +7,7 @@ package cz.martlin.jmop.core.sources.local;
  *
  */
 public enum TrackFileFormat {
-	MP3("mp3"), OPUS("opus"), WAV("wav");
+	MP3("mp3"), OPUS("opus"), WAV("wav"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 	/**
 	 * The file extension.

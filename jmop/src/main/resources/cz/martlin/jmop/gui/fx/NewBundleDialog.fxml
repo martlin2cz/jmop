@@ -20,24 +20,24 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Bundle name" />
-      <TextField fx:id="txtBundleName" promptText="'Hard rock' or 'Moby'" GridPane.columnIndex="1">
+      <Label text="%Bundle_name" />
+      <TextField fx:id="txtBundleName" promptText="%Hard_rock_or_Moby" GridPane.columnIndex="1">
       	<tooltip>
-      		<Tooltip text="Specify name of the bundle. The bundle name may correspond to author, album or the whole genre." />
+      		<Tooltip text="%Specify_name_of_the_bundle_" />
       	</tooltip>
       </TextField>
       
-      <Label text="Source" GridPane.rowIndex="1" />
+      <Label text="%Source" GridPane.rowIndex="1" />
       <ComboBox fx:id="cmbSource" prefHeight="26.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
       <tooltip>
-      		<Tooltip text="Choose the source, where all the tracks will be loaded from." />
+      		<Tooltip text="%Choose_the_source_" />
       	</tooltip>
       </ComboBox>
       
-      <Label text="Start with" GridPane.rowIndex="2" />
-      <TextField fx:id="txtQuery" promptText="The very best one!" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Label text="%Start_with" GridPane.rowIndex="2" />
+      <TextField fx:id="txtQuery" promptText="%The_very_best_one_" GridPane.columnIndex="1" GridPane.rowIndex="2">
       <tooltip>
-      		<Tooltip text="Specify the initial track. This value will be sent to the choosen source as search query." />
+      		<Tooltip text="%Specify_the_initial_track_" />
       	</tooltip>
       </TextField>
    </children>

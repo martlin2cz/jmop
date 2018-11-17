@@ -77,13 +77,13 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 
 	@Override
 	public synchronized void startPlaying(Track track) throws JMOPSourceException {
-		LOG.info("Starting playing");
+		LOG.info("Starting playing"); //$NON-NLS-1$
 		if (!stopped) {
 			doStopPlaying();
 		}
 
 		File file = local.fileOfTrack(track, tracksLocation, supportedFormat);
-		LOG.debug("Will play file " + file);
+		LOG.debug("Will play file " + file); //$NON-NLS-1$
 		doStartPlaying(track, file);
 
 		over = false;
@@ -105,7 +105,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 
 	@Override
 	public synchronized void stop() {
-		LOG.info("Stopping playing");
+		LOG.info("Stopping playing"); //$NON-NLS-1$
 		if (stopped) {
 			return;
 		}
@@ -125,7 +125,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public synchronized void pause() {
-		LOG.info("Pausing playing");
+		LOG.info("Pausing playing"); //$NON-NLS-1$
 		if (paused) {
 			return;
 		}
@@ -143,7 +143,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 
 	@Override
 	public synchronized void resume() {
-		LOG.info("Resuming playing");
+		LOG.info("Resuming playing"); //$NON-NLS-1$
 		if (!paused) {
 			return;
 		}
@@ -162,7 +162,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void seek(Duration to) {
-		LOG.info("Seeking to " + DurationUtilities.toHumanString(to));
+		LOG.info("Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
 
 		doSeek(to);
 		fireValueChangedEvent();
@@ -181,7 +181,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	 * Marks as finished playing track. No need to aditional checks.
 	 */
 	protected void trackFinished() {
-		LOG.info("Track play finished");
+		LOG.info("Track play finished"); //$NON-NLS-1$
 
 		over = true;
 		fireValueChangedEvent();

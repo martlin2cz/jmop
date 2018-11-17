@@ -86,15 +86,15 @@ public class TestingLocalSource implements BaseLocalSource {
 
 		String title = track.getTitle();
 		try {
-			String prefix = "_" + location.name() + "_";
-			String suffix = "." + format.getExtension();
+			String prefix = "_" + location.name() + "_"; //$NON-NLS-1$ //$NON-NLS-2$
+			String suffix = "." + format.getExtension(); //$NON-NLS-1$
 			String name = prefix + title;
 			File file = File.createTempFile(name, suffix);
 			Files.copy(ins, file.toPath(), StandardCopyOption.REPLACE_EXISTING); // TODO
 																					// wtf?
 			return file;
 		} catch (IOException e) {
-			throw new JMOPSourceException("Failed", e);
+			throw new JMOPSourceException("Failed", e); //$NON-NLS-1$
 		}
 
 	}
@@ -107,15 +107,15 @@ public class TestingLocalSource implements BaseLocalSource {
 
 	public void print(PrintStream to) {
 		for (Bundle bundle : bundles.values()) {
-			to.println("BUNDLE: " + bundle.getName() + ", kind: " + bundle.getKind());
+			to.println("BUNDLE: " + bundle.getName() + ", kind: " + bundle.getKind()); //$NON-NLS-1$ //$NON-NLS-2$
 
 			for (Playlist playlist : playlists.get(bundle).values()) {
 				to.println(
-						" - PLAYLIST: " + playlist.getName() + ", track: " + playlist.getTracks().getTracks().size());
+						" - PLAYLIST: " + playlist.getName() + ", track: " + playlist.getTracks().getTracks().size()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 			for (Track track : tracks.get(bundle).values()) {
-				to.println(" - TRACK: " + track.getTitle() + ", id: " + track.getIdentifier() + ", description: "
+				to.println(" - TRACK: " + track.getTitle() + ", id: " + track.getIdentifier() + ", description: " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						+ track.getDescription());
 			}
 

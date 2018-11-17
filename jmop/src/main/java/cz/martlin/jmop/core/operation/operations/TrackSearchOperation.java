@@ -9,6 +9,7 @@ import cz.martlin.jmop.core.operation.base.AbstractAtomicOperation;
 import cz.martlin.jmop.core.operation.base.OperationChangeListener;
 import cz.martlin.jmop.core.operation.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
+import cz.martlin.jmop.gui.local.Msg;
 
 /**
  * Operation performing search by keyword(s).
@@ -21,7 +22,7 @@ public class TrackSearchOperation extends AbstractAtomicOperation<SearchData, Tr
 	private final AbstractRemoteSource remote;
 
 	public TrackSearchOperation(ErrorReporter reporter, BaseConfiguration config, AbstractRemoteSource remote) {
-		super(reporter, "Track query");
+		super(reporter, Msg.get("TrackSearchOperation.Track_query")); //$NON-NLS-1$
 		this.remote = remote;
 	}
 
@@ -46,7 +47,7 @@ public class TrackSearchOperation extends AbstractAtomicOperation<SearchData, Tr
 	 */
 	private Track search(Bundle bundle, String query, OperationChangeListener handler) throws JMOPSourceException {
 
-		startSubOperation("Searching ...", handler);
+		startSubOperation(Msg.get("TrackSearchOperation.Searching_"), handler); //$NON-NLS-1$
 
 		Track track = remote.search(bundle, query);
 

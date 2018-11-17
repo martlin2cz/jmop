@@ -37,7 +37,7 @@ public class DurationUtilities {
 	 * @return
 	 */
 	public static Duration parseYoutubeDuration(String string) {
-		String[] parts = string.split("(PT|H|M|S)");
+		String[] parts = string.split("(PT|H|M|S)"); //$NON-NLS-1$
 		int hours, minutes, seconds;
 
 		if (parts.length == 2) {
@@ -53,7 +53,7 @@ public class DurationUtilities {
 			minutes = Integer.parseInt(parts[2]);
 			seconds = Integer.parseInt(parts[3]);
 		} else {
-			throw new UnsupportedOperationException("Unknown format od duration: " + string);
+			throw new UnsupportedOperationException("Unknown format od duration: " + string); //$NON-NLS-1$
 		}
 
 		return createDuration(hours, minutes, seconds);
@@ -97,9 +97,9 @@ public class DurationUtilities {
 		int seconds = (int) TimeUnit.MILLISECONDS.toSeconds(remaining);
 
 		if (hours == 0) {
-			return String.format("%d:%02d", minutes, seconds);
+			return String.format("%d:%02d", minutes, seconds); //$NON-NLS-1$
 		} else {
-			return String.format("%d:%02d:%02d", hours, minutes, seconds);
+			return String.format("%d:%02d:%02d", hours, minutes, seconds); //$NON-NLS-1$
 		}
 	}
 

@@ -10,10 +10,10 @@ public class YoutubeDlDownloaderTest {
 
 	@Test
 	public void testParsePercent() {
-		String line1 = "[youtube] 1eQCzql3dzI: Downloading webpage";
-		String line2 = "[download]   0.0% of 60.02MiB at Unknown speed ETA Unknown ETA";
-		String line3 = "[download]  42.9% of 60.02MiB at  9.07MiB/s ETA 00:05";
-		String line4 = "[download] unknown";
+		String line1 = "[youtube] 1eQCzql3dzI: Downloading webpage"; //$NON-NLS-1$
+		String line2 = "[download]   0.0% of 60.02MiB at Unknown speed ETA Unknown ETA"; //$NON-NLS-1$
+		String line3 = "[download]  42.9% of 60.02MiB at  9.07MiB/s ETA 00:05"; //$NON-NLS-1$
+		String line4 = "[download] unknown"; //$NON-NLS-1$
 
 		assertEquals(null, YoutubeDlDownloader.tryToParsePercentFromLine(line1));
 		assertEquals(null, YoutubeDlDownloader.tryToParsePercentFromLine(line4));
@@ -24,8 +24,8 @@ public class YoutubeDlDownloaderTest {
 
 	@Test
 	public void testRemoveSuffix() {
-		assertEquals("foo", YoutubeDlDownloader.removeSuffix("foo.xxx"));
-		assertEquals("foo.bar", YoutubeDlDownloader.removeSuffix("foo.bar.42"));
+		assertEquals("foo", YoutubeDlDownloader.removeSuffix("foo.xxx")); //$NON-NLS-1$ //$NON-NLS-2$
+		assertEquals("foo.bar", YoutubeDlDownloader.removeSuffix("foo.bar.42")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 }

@@ -55,7 +55,7 @@ public class DurationsPane extends HBox implements Initializable {
 	}
 
 	private void loadFXML() throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/DurationsPane.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/DurationsPane.fxml")); //$NON-NLS-1$
 
 		loader.setController(this);
 		Parent root = loader.load();
@@ -88,7 +88,7 @@ public class DurationsPane extends HBox implements Initializable {
 			if (currentTime != null) {
 				currentStr = DurationUtilities.toHumanString(currentTime);
 			} else {
-				currentStr = "-";
+				currentStr = "-"; //$NON-NLS-1$
 			}
 			lblDone.setText(currentStr);
 
@@ -96,7 +96,7 @@ public class DurationsPane extends HBox implements Initializable {
 			if (remainingTime != null) {
 				remainingStr = DurationUtilities.toHumanString(remainingTime);
 			} else {
-				remainingStr = "-";
+				remainingStr = "-"; //$NON-NLS-1$
 			}
 			lblRemaining.setText(remainingStr);
 		});

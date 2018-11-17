@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.RequiresJMOP;
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.BindingsUtils;
 import cz.martlin.jmop.gui.util.BindingsUtils.DoubleMilisToDurationBinding;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
@@ -68,8 +69,9 @@ public class PlayerPane extends GridPane implements Initializable, RequiresJMOP 
 	///////////////////////////////////////////////////////////////////////////
 
 	private void loadFXML() throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/PlayerPane.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/PlayerPane.fxml")); //$NON-NLS-1$
 
+		loader.setResources(Msg.getResourceBundle());
 		loader.setController(this);
 		Parent root = loader.load();
 		getChildren().addAll(root);

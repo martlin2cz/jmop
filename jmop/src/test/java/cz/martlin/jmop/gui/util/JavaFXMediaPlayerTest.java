@@ -79,7 +79,7 @@ public class JavaFXMediaPlayerTest {
 
 	private Track prepareTrack() {
 		SourceKind kind = SourceKind.YOUTUBE;
-		String name = "testing-kind";
+		String name = "testing-kind"; //$NON-NLS-1$
 		Bundle bundle = new Bundle(kind, name);
 		// TODO: local.createBundle, but just once!
 		// try {
@@ -89,9 +89,9 @@ public class JavaFXMediaPlayerTest {
 		// e.printStackTrace();
 		// }
 
-		String identifier = "xxx42yyy";
-		String description = "Lorem Ipsum ...";
-		String title = "test-track";
+		String identifier = "xxx42yyy"; //$NON-NLS-1$
+		String description = "Lorem Ipsum ..."; //$NON-NLS-1$
+		String title = "test-track"; //$NON-NLS-1$
 		Duration duration = DurationUtilities.createDuration(0, 1, 1);
 		Track track = bundle.createTrack(identifier, title, description, duration);
 		return track;
@@ -101,7 +101,7 @@ public class JavaFXMediaPlayerTest {
 		ConstantConfiguration config = new ConstantConfiguration();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		File root = new File("/tmp/jmop-gui/");
+		File root = new File("/tmp/jmop-gui/"); //$NON-NLS-1$
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
 		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		return local;

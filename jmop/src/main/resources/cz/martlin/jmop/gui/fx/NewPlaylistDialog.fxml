@@ -18,17 +18,17 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Playlist name" />
-      <TextField fx:id="txtPlaylistName" promptText="'Best hits' or 'New album'" GridPane.columnIndex="1">
+      <Label text="%Playlist_name" />
+      <TextField fx:id="txtPlaylistName" promptText="%Best_hits_or_New_album" GridPane.columnIndex="1">
       	<tooltip>
-      		<Tooltip text="Specify name of the playlist." />
+      		<Tooltip text="%Specify_name_of_the_playlist" />
       	</tooltip>
       </TextField>
       
-      <Label text="Start with" GridPane.rowIndex="1" />
-      <TextField fx:id="txtQuery" promptText="The very best one!" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label text="%Start_with" GridPane.rowIndex="1" />
+      <TextField fx:id="txtQuery" promptText="%The_very_best_one_" GridPane.columnIndex="1" GridPane.rowIndex="1">
       <tooltip>
-      		<Tooltip text="Specify the initial track of the playlist. This value will be sent to the choosen source as search query." />
+      		<Tooltip text="%Specify_the_initial_track_" />
       	</tooltip>
       </TextField>
    </children>

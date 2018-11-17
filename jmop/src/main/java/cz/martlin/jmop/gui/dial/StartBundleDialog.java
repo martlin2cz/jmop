@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import cz.martlin.jmop.gui.dial.StartBundleDialog.StartBundleData;
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,16 +33,16 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 		this.playlistsNames = playlistsNames;
 		this.defaultPlaylistName = defaultPlaylistName;
 
-		load("/cz/martlin/jmop/gui/fx/StartBundleDialog.fxml");
+		load("/cz/martlin/jmop/gui/fx/StartBundleDialog.fxml"); //$NON-NLS-1$
 	}
 
 	@Override
 	protected void specifyCustomDialogSettings() {
-		setTitle("Start playing bundle");
-		setHeaderText("Specify playlist which should be started.");
+		setTitle(Msg.get("StartBundleDialog.Start_playing_bundle")); //$NON-NLS-1$
+		setHeaderText(Msg.get("StartBundleDialog.Specify_playlist_which_should_be_started")); //$NON-NLS-1$
 
 		setGraphic(
-				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/play-bundle.png"))));
+				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/play-bundle.png")))); //$NON-NLS-1$
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 	@Override
 	protected boolean validate() {
 		if (cmbPlaylistName.getValue() == null) {
-			GuiComplexActionsPerformer.showErrorDialog("Missing value", "Choose playlist");
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("StartBundleDialog.Missing_value"), Msg.get("StartBundleDialog.Choose_playlist")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 

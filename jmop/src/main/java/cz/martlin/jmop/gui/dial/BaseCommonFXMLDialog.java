@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -44,6 +45,8 @@ public abstract class BaseCommonFXMLDialog<R> extends Dialog<R> implements Initi
 
 	protected void initializeContent(String fxmlFilePath) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFilePath));
+		
+		loader.setResources(Msg.getResourceBundle());
 		loader.setController(this);
 
 		Parent root = loader.load();

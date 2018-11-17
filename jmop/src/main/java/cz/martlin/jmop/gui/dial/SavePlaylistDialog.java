@@ -3,6 +3,7 @@ package cz.martlin.jmop.gui.dial;
 import java.io.IOException;
 
 import cz.martlin.jmop.gui.dial.SavePlaylistDialog.SavePlaylistData;
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -26,16 +27,16 @@ public class SavePlaylistDialog extends BaseCommonFXMLDialog<SavePlaylistData> {
 
 		this.currentPlaylistName = currentPlaylistName;
 
-		load("/cz/martlin/jmop/gui/fx/SavePlaylistDialog.fxml");
+		load("/cz/martlin/jmop/gui/fx/SavePlaylistDialog.fxml"); //$NON-NLS-1$
 	}
 
 	@Override
 	protected void specifyCustomDialogSettings() {
-		setTitle("Save playlist");
-		setHeaderText("Specify the new name for this playlist.");
+		setTitle(Msg.get("Save_playlist")); //$NON-NLS-1$
+		setHeaderText(Msg.get("Specify_the_new_name_for_this_playlist")); //$NON-NLS-1$
 
 		setGraphic(
-				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/save-playlist.png"))));
+				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/save-playlist.png")))); //$NON-NLS-1$
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class SavePlaylistDialog extends BaseCommonFXMLDialog<SavePlaylistData> {
 	@Override
 	protected boolean validate() {
 		if (txtPlaylistName.getText().isEmpty()) {
-			GuiComplexActionsPerformer.showErrorDialog("Missing value", "Specify playlist name");
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("Missing_value"), Msg.get("Specify_playlist_name")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 

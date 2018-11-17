@@ -52,7 +52,7 @@ public class PlayerEngine {
 	 * @param playlist
 	 */
 	public void startPlayingPlaylist(Playlist playlist) {
-		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName());
+		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		playlister.startPlayingPlaylist(this, playlist);
 	}
@@ -62,7 +62,7 @@ public class PlayerEngine {
 	 * @param currentPlaylist
 	 */
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
-		LOG.info("Stopping to play playlist " + currentPlaylist.getName() + " of bundle "
+		LOG.info("Stopping to play playlist " + currentPlaylist.getName() + " of bundle " //$NON-NLS-1$ //$NON-NLS-2$
 				+ currentPlaylist.getBundle().getName());
 
 		playlister.stopPlayingPlaylist(currentPlaylist);
@@ -73,7 +73,7 @@ public class PlayerEngine {
 	 * @throws JMOPSourceException
 	 */
 	public void playNext() throws JMOPSourceException {
-		LOG.info("Playing next to play");
+		LOG.info("Playing next to play"); //$NON-NLS-1$
 
 		Track track = playlister.playNext();
 		preparer.checkAndLoadTrack(track);
@@ -86,7 +86,7 @@ public class PlayerEngine {
 	 * @throws JMOPSourceException
 	 */
 	public void play(int index) throws JMOPSourceException {
-		LOG.info("Playing " + index + " th");
+		LOG.info("Playing " + index + " th"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		Track track = playlister.play(index);
 		preparer.checkAndLoadTrack(track);
@@ -97,7 +97,7 @@ public class PlayerEngine {
 	 * Stop playing.
 	 */
 	public void stop() {
-		LOG.info("Stopping playing");
+		LOG.info("Stopping playing"); //$NON-NLS-1$
 		player.stop();
 	}
 
@@ -105,7 +105,7 @@ public class PlayerEngine {
 	 * Pause playing.
 	 */
 	public void pause() {
-		LOG.info("Pausing");
+		LOG.info("Pausing"); //$NON-NLS-1$
 		player.pause();
 	}
 
@@ -113,7 +113,7 @@ public class PlayerEngine {
 	 * Resume playing.
 	 */
 	public void resume() {
-		LOG.info("Resuming");
+		LOG.info("Resuming"); //$NON-NLS-1$
 		player.resume();
 	}
 
@@ -122,7 +122,7 @@ public class PlayerEngine {
 	 * @param to
 	 */
 	public void seek(Duration to) {
-		LOG.info("Seeking to " + DurationUtilities.toHumanString(to));
+		LOG.info("Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
 		player.seek(to);
 	}
 
@@ -131,7 +131,7 @@ public class PlayerEngine {
 	 * @throws JMOPSourceException
 	 */
 	public void toNext() throws JMOPSourceException {
-		LOG.info("Playing next");
+		LOG.info("Playing next"); //$NON-NLS-1$
 
 		Track track = playlister.toNext();
 		preparer.checkAndLoadTrack(track);
@@ -143,7 +143,7 @@ public class PlayerEngine {
 	 * @throws JMOPSourceException
 	 */
 	public void toPrevious() throws JMOPSourceException {
-		LOG.info("Playing previous");
+		LOG.info("Playing previous"); //$NON-NLS-1$
 
 		Track track = playlister.toPrevious();
 		preparer.checkAndLoadTrack(track);
@@ -155,7 +155,7 @@ public class PlayerEngine {
 	 * @param track
 	 */
 	public void add(Track track) {
-		LOG.info("Adding track " + track.getTitle() + ", id " + track.getIdentifier());
+		LOG.info("Adding track " + track.getTitle() + ", id " + track.getIdentifier()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		playlister.add(track);
 	}
@@ -164,7 +164,7 @@ public class PlayerEngine {
 	 * Remove all the track after the current one.
 	 */
 	public void clearRemaining() {
-		LOG.info("Clearing remaining");
+		LOG.info("Clearing remaining"); //$NON-NLS-1$
 
 		playlister.clearRemaining();
 	}

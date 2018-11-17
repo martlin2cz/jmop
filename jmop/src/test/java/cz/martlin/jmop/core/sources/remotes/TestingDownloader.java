@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
 
 public class TestingDownloader implements BaseSourceDownloader {
 
-	public static final String TESTING_SAMPLE_FILE = "samples/sample.opus";
+	public static final String TESTING_SAMPLE_FILE = "samples/sample.opus"; //$NON-NLS-1$
 
 	private final TrackFileFormat downloadFormat;
 	private final BaseLocalSource local;

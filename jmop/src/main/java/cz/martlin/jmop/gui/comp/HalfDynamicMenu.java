@@ -2,6 +2,7 @@ package cz.martlin.jmop.gui.comp;
 
 import java.util.List;
 
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.beans.DefaultProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -106,7 +107,7 @@ public class HalfDynamicMenu extends Menu {
 	}
 
 	private static MenuItem createNoItemsItem() {
-		MenuItem mi = new MenuItem("No items");
+		MenuItem mi = new MenuItem(Msg.get("No_items")); //$NON-NLS-1$
 		mi.setDisable(true);
 		return mi;
 	}

@@ -5,7 +5,7 @@ package cz.martlin.jmop.core.sources;
  *
  */
 public enum SourceKind {
-	YOUTUBE("YouTube.com");
+	YOUTUBE("YouTube.com"); //$NON-NLS-1$
 
 	/**
 	 * Human readable name of the source.

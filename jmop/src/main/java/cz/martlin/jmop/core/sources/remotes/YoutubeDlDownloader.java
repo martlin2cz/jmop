@@ -34,9 +34,9 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	public static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
-	private static final String PROGRESS_LINE_START = "[download]";
-	private static final String COLUMNS_SEPARATOR_REGEX = " +";
-	private static final String PERCENT_REGEX = "\\d{1,3}\\.\\d{1}\\%";
+	private static final String PROGRESS_LINE_START = "[download]"; //$NON-NLS-1$
+	private static final String COLUMNS_SEPARATOR_REGEX = " +"; //$NON-NLS-1$
+	private static final String PERCENT_REGEX = "\\d{1,3}\\.\\d{1}\\%"; //$NON-NLS-1$
 	private static final int RESULT_CODE_OK = 0;
 
 	private final InternetConnectionStatus connection;
@@ -60,7 +60,7 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 
 	@Override
 	public boolean download(Track track, TrackFileLocation location) throws ExternalProgramException {
-		LOG.info("Downloading track " + track);
+		LOG.info("Downloading track " + track); //$NON-NLS-1$
 		DownloadData data = new DownloadData(track, location);
 		return run(data);
 	}
@@ -99,7 +99,7 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 
 	@Override
 	public boolean check() {
-		return runAndCheckForResult("youtube-dl --version") == RESULT_CODE_OK;
+		return runAndCheckForResult("youtube-dl --version") == RESULT_CODE_OK; //$NON-NLS-1$
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -156,8 +156,8 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	 */
 	private List<String> createCommandLine(String url, String path) {
 		return Arrays.asList( //
-				"youtube-dl", "--newline", "--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(),
-				"--output", path, url);
+				"youtube-dl", "--newline", "--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				"--output", path, url); //$NON-NLS-1$
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

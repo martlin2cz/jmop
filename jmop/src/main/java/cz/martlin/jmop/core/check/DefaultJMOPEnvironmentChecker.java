@@ -47,7 +47,7 @@ public class DefaultJMOPEnvironmentChecker implements BaseJMOPEnvironmentChecker
 	private String checkDownloader() {
 		boolean ok = downloader.check();
 		if (!ok) {
-			return "The downloader (" + downloader.getClass().getSimpleName() + ") seems to be not able to work.";
+			return "The downloader (" + downloader.getClass().getSimpleName() + ") seems to be not able to work."; //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
 			return null;
 		}
@@ -61,7 +61,7 @@ public class DefaultJMOPEnvironmentChecker implements BaseJMOPEnvironmentChecker
 	private String checkConverter() {
 		boolean ok = converter.check();
 		if (!ok) {
-			return "The converter (" + converter.getClass().getSimpleName() + ") seems to be not able to work.";
+			return "The converter (" + converter.getClass().getSimpleName() + ") seems to be not able to work."; //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
 			return null;
 		}

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.operation.base.OperationWrapper;
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.application.Platform;
 import javafx.beans.binding.StringBinding;
 import javafx.collections.FXCollections;
@@ -55,7 +56,9 @@ public class OperationsPane extends HBox {
 	}
 
 	private void loadFXML() throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/OperationsPane.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/OperationsPane.fxml")); //$NON-NLS-1$
+
+		loader.setResources(Msg.getResourceBundle());
 		loader.setController(this);
 
 		Parent root = loader.load();
@@ -85,7 +88,7 @@ public class OperationsPane extends HBox {
 					handleOperationsRemoved(change);
 				}
 			} catch (Exception e) {
-				LOG.warn("Could not show operations", e);
+				LOG.warn("Could not show operations", e); //$NON-NLS-1$
 			}
 		});
 	}
@@ -154,19 +157,19 @@ public class OperationsPane extends HBox {
 		lblData.textProperty().unbind();
 		lblData.getTooltip().textProperty().unbind();
 
-		lblStatus.textProperty().set("-");
-		lblData.textProperty().set("-");
-		lblData.getTooltip().setText("-");
+		lblStatus.textProperty().set("-"); //$NON-NLS-1$
+		lblData.textProperty().set("-"); //$NON-NLS-1$
+		lblData.getTooltip().setText("-"); //$NON-NLS-1$
 	}
 
 	private void changeAnothers(int operationsCount, List<? extends OperationWrapper<?, ?>> operations) {
 		if (operationsCount > 1) {
 			int anothers = operationsCount - 1;
-			lblAnothers.setText(" + " + anothers + " more");
+			lblAnothers.setText(Msg.get("OperationsPane.5") + anothers + Msg.get("OperationsPane.6")); //$NON-NLS-1$ //$NON-NLS-2$
 			lblAnothers.setVisible(true);
 		} else {
 			lblAnothers.setVisible(false);
-			lblAnothers.setText(" + no more");
+			lblAnothers.setText(Msg.get("OperationsPane.7")); //$NON-NLS-1$
 		}
 
 		if (lblAnothers.getTooltip().textProperty().isBound()) {
@@ -198,8 +201,8 @@ public class OperationsPane extends HBox {
 		@Override
 		protected String computeValue() {
 			return operations.stream() //
-					.map((o) -> o.statusProperty().get() + ": " + o.dataProperty().get()) //
-					.collect(Collectors.joining("\n"));
+					.map((o) -> o.statusProperty().get() + ": " + o.dataProperty().get()) // //$NON-NLS-1$
+					.collect(Collectors.joining("\n")); //$NON-NLS-1$
 		}
 
 	}

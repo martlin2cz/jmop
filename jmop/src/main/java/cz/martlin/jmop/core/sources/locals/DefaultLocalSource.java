@@ -51,21 +51,21 @@ public class DefaultLocalSource implements BaseLocalSource {
 
 	@Override
 	public List<String> listBundlesNames() throws JMOPSourceException {
-		LOG.info("Listing bundle names");
+		LOG.info("Listing bundle names"); //$NON-NLS-1$
 		try {
 			return listBundlesNamesInternal();
 		} catch (IOException | ExceptionInLoop e) {
-			throw new JMOPSourceException("Cannot list bundles", e);
+			throw new JMOPSourceException("Cannot list bundles", e); //$NON-NLS-1$
 		}
 	}
 
 	@Override
 	public Bundle getBundle(String name) throws JMOPSourceException {
-		LOG.info("Loading bundle " + name);
+		LOG.info("Loading bundle " + name); //$NON-NLS-1$
 		try {
 			return getBundleInternal(name);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot load bundle", e);
+			throw new JMOPSourceException("Cannot load bundle", e); //$NON-NLS-1$
 		}
 	}
 
@@ -74,7 +74,7 @@ public class DefaultLocalSource implements BaseLocalSource {
 		try {
 			createBundleInternal(bundle);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot create bundle", e);
+			throw new JMOPSourceException("Cannot create bundle", e); //$NON-NLS-1$
 		}
 	}
 
@@ -83,7 +83,7 @@ public class DefaultLocalSource implements BaseLocalSource {
 		try {
 			saveBundleInternal(bundle);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot create bundle", e);
+			throw new JMOPSourceException("Cannot create bundle", e); //$NON-NLS-1$
 		}
 	}
 
@@ -91,31 +91,31 @@ public class DefaultLocalSource implements BaseLocalSource {
 
 	@Override
 	public List<String> listPlaylistNames(Bundle bundle) throws JMOPSourceException {
-		LOG.info("Listing playlists of bundle " + bundle.getName());
+		LOG.info("Listing playlists of bundle " + bundle.getName()); //$NON-NLS-1$
 		try {
 			return listsPlaylistNamesInternal(bundle);
 		} catch (IOException | ExceptionInLoop e) {
-			throw new JMOPSourceException("Cannot list playlists", e);
+			throw new JMOPSourceException("Cannot list playlists", e); //$NON-NLS-1$
 		}
 	}
 
 	@Override
 	public Playlist getPlaylist(Bundle bundle, String name) throws JMOPSourceException {
-		LOG.info("Loading playlist " + name + " of bundle " + bundle.getName());
+		LOG.info("Loading playlist " + name + " of bundle " + bundle.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 		try {
 			return getPlaylistInternal(bundle, name);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot load playlist", e);
+			throw new JMOPSourceException("Cannot load playlist", e); //$NON-NLS-1$
 		}
 	}
 
 	@Override
 	public void savePlaylist(Bundle bundle, Playlist playlist) throws JMOPSourceException {
-		LOG.info("Saving playlist " + playlist.getName() + " of bundle " + bundle.getName());
+		LOG.info("Saving playlist " + playlist.getName() + " of bundle " + bundle.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 		try {
 			savePlaylistInternal(bundle, playlist);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot save playlist", e);
+			throw new JMOPSourceException("Cannot save playlist", e); //$NON-NLS-1$
 		}
 	}
 
@@ -123,29 +123,29 @@ public class DefaultLocalSource implements BaseLocalSource {
 
 	@Override
 	public Track getTrack(Bundle bundle, String id) throws JMOPSourceException {
-		LOG.info("Loading track " + id + " of bundle " + bundle.getName());
+		LOG.info("Loading track " + id + " of bundle " + bundle.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 		return bundle.getTrack(id);
 	}
 
 	@Override
 	public File fileOfTrack(Track track, TrackFileLocation location, TrackFileFormat format)
 			throws JMOPSourceException {
-		LOG.info("Infering file of track " + track.getTitle() + " in " + location + " as " + format);
+		LOG.info("Infering file of track " + track.getTitle() + " in " + location + " as " + format); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		try {
 			return fileOfTrackInternal(track, location, format);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot infer file of track", e);
+			throw new JMOPSourceException("Cannot infer file of track", e); //$NON-NLS-1$
 		}
 	}
 
 	@Override
 	public boolean exists(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
-		LOG.info("Checking existence of track " + (track != null ? track.getTitle() : null) + " in " + location + " as "
+		LOG.info("Checking existence of track " + (track != null ? track.getTitle() : null) + " in " + location + " as " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ format);
 		try {
 			return existsInternal(track, location, format);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannnot check file existence", e);
+			throw new JMOPSourceException("Cannnot check file existence", e); //$NON-NLS-1$
 		}
 	}
 
@@ -190,7 +190,7 @@ public class DefaultLocalSource implements BaseLocalSource {
 		String bundleDirName = fileSystem.bundleDirectoryName(name);
 		PlaylistFileData data = loadAllTracksPlaylistMetadata(bundleDirName);
 		if (data == null) {
-			throw new FileNotFoundException("All tracks playlist not found");
+			throw new FileNotFoundException("All tracks playlist not found"); //$NON-NLS-1$
 		}
 		SourceKind kind = data.getKind();
 		Bundle bundle = new Bundle(kind, name);

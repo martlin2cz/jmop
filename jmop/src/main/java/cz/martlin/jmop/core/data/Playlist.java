@@ -121,12 +121,12 @@ public class Playlist extends ObservableObject<Playlist> {
 
 	@Override
 	public String toString() {
-		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + tracks + "]";
+		return "Playlist [bundle=" + bundle + ", name=" + name + ", tracks=" + tracks + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	public String toHumanString() {
-		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" + tracks.toHumanString();
+		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" + tracks.toHumanString(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 }

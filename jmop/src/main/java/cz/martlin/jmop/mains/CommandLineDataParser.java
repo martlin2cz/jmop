@@ -30,7 +30,7 @@ public class CommandLineDataParser {
 	}
 
 	private void setDefaultRootDir(CommandlineData data) {
-		String path = System.getProperty("user.dir");
+		String path = System.getProperty("user.dir"); //$NON-NLS-1$
 		File root = new File(path);
 		data.setRoot(root);
 	}
@@ -47,25 +47,25 @@ public class CommandLineDataParser {
 
 	private void processArg(String arg, Queue<String> remainingArgs, CommandlineData data) {
 		switch (arg) {
-		case "--help":
-		case "-h":
+		case "--help": //$NON-NLS-1$
+		case "-h": //$NON-NLS-1$
 			processHelp(data);
 			break;
-		case "--version":
-		case "-v":
+		case "--version": //$NON-NLS-1$
+		case "-v": //$NON-NLS-1$
 			processVersion(data);
 			break;
-		case "-lang":
+		case "-lang": //$NON-NLS-1$
 			processLang(remainingArgs, data);
 			break;
-		case "-dir":
+		case "-dir": //$NON-NLS-1$
 			processDirectory(remainingArgs, data);
 			break;
-		case "-play":
+		case "-play": //$NON-NLS-1$
 			processPlay(remainingArgs, data);
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid argument: " + arg);
+			throw new IllegalArgumentException("Invalid argument: " + arg); //$NON-NLS-1$
 		}
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ public class CommandLineDataParser {
 
 	private static String getNextOrFail(Queue<String> remainingArgs) {
 		if (remainingArgs.isEmpty()) {
-			throw new IllegalArgumentException("Required at least one more argument");
+			throw new IllegalArgumentException("Required at least one more argument"); //$NON-NLS-1$
 		} else {
 			return remainingArgs.poll();
 		}

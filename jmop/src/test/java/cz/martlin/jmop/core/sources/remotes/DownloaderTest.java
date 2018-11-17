@@ -25,12 +25,12 @@ import javafx.util.Duration;
 public class DownloaderTest {
 
 	public static void main(String[] args) throws IOException {
-		final String id = "TAOQWSmkofA";
-		final String title = "sample";
-		final String description = "Sample sound track";
-		final String bundleName = "testing-tracks";
+		final String id = "TAOQWSmkofA"; //$NON-NLS-1$
+		final String title = "sample"; //$NON-NLS-1$
+		final String description = "Sample sound track"; //$NON-NLS-1$
+		final String bundleName = "testing-tracks"; //$NON-NLS-1$
 		final Duration duration = DurationUtilities.createDuration(0, 0, 9);
-		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
+		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe //$NON-NLS-1$ //$NON-NLS-2$
 		final SourceKind source = SourceKind.YOUTUBE;
 
 		ConstantConfiguration config = new ConstantConfiguration();
@@ -54,7 +54,7 @@ public class DownloaderTest {
 		try {
 
 			boolean success = downloader.download(track, location);
-			System.err.println("Success? " + success);
+			System.err.println("Success? " + success); //$NON-NLS-1$
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

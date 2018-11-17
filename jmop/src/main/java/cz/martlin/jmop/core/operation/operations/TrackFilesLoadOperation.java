@@ -15,6 +15,7 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.TrackFileFormatLocationPreparer;
 import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
 import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.util.Duration;
 
 /**
@@ -40,7 +41,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 
 	public TrackFilesLoadOperation(ErrorReporter reporter, BaseConfiguration config, AbstractTrackFileLocator locator,
 			BaseLocalSource local, BaseSourceDownloader downloader, BaseSourceConverter converter, BasePlayer player) {
-		super(reporter, "Download and convert");
+		super(reporter, Msg.get("Download_and_convert")); //$NON-NLS-1$
 
 		this.local = local;
 		this.downloader = downloader;
@@ -95,7 +96,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	 */
 	private boolean checkAndDownload(Track track, OperationChangeListener handler) throws Exception {
 
-		startSubOperation("Downloading ...", handler);
+		startSubOperation(Msg.get("Downloading_"), handler); //$NON-NLS-1$
 
 		boolean ready = existsSaved(track) && existsToPlay(track);
 		if (ready) {
@@ -122,7 +123,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	 */
 	private boolean checkAndConvert(Track track, OperationChangeListener handler) throws Exception {
 
-		startSubOperation("Converting ...", handler);
+		startSubOperation(Msg.get("Converting_"), handler); //$NON-NLS-1$
 
 		boolean exists = existsSaved(track);
 		if (exists) {
@@ -144,7 +145,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	 */
 	private boolean checkAndPrepare(Track track, OperationChangeListener handler) throws Exception {
 
-		startSubOperation("Preparing to play ...", handler);
+		startSubOperation(Msg.get("Preparing_to_play_"), handler); //$NON-NLS-1$
 
 		boolean exists = existsToPlay(track);
 		if (exists) {
@@ -209,7 +210,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 		Duration duration = track.getDuration();
 		String durationStr = DurationUtilities.toHumanString(duration);
 
-		return title + " (" + durationStr + ")";
+		return title + " (" + durationStr + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 }

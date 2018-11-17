@@ -120,7 +120,7 @@ public class Bundle extends ObservableObject<Bundle> {
 
 	@Override
 	public String toString() {
-		return "Bundle [name=" + name + "]";
+		return "Bundle [name=" + name + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 }

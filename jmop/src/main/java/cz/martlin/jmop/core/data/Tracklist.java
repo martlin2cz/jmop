@@ -61,14 +61,14 @@ public class Tracklist {
 
 	@Override
 	public String toString() {
-		return "Tracklist" + tracks + "";
+		return "Tracklist" + tracks + ""; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	public String toHumanString() {
 		StringBuilder stb = new StringBuilder();
 
-		tracks.forEach((t) -> stb.append("  " + t.getTitle() + "\n"));
+		tracks.forEach((t) -> stb.append("  " + t.getTitle() + "\n")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		return stb.toString();
 	}

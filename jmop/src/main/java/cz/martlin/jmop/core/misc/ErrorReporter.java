@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.misc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 
 /**
@@ -28,9 +29,9 @@ public class ErrorReporter {
 	 * @param e
 	 */
 	public void report(Exception e) {
-		LOG.error("An error occured", e);
+		LOG.error("An error occured", e); //$NON-NLS-1$
 
-		GuiComplexActionsPerformer.showErrorDialog("Error occured", "The operation could not be completed.");
+		GuiComplexActionsPerformer.showErrorDialog(Msg.get("Error_occured"), Msg.get("The_operation_could_not_be_completed")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -42,11 +43,11 @@ public class ErrorReporter {
 	 * @param e
 	 */
 	public void internal(Exception e) {
-		LOG.error("An internal error occured", e);
+		LOG.error("An internal error occured", e); //$NON-NLS-1$
 
-		GuiComplexActionsPerformer.showErrorDialog("Internal error occured",
-				"Internal error occured, probably by bug in the application. "
-						+ "If problem persist, close and reopen the application.");
+		GuiComplexActionsPerformer.showErrorDialog(Msg.get("Internal_error_occured"), //$NON-NLS-1$
+				Msg.get("Internal_error_occured_probably_by_bug_") //$NON-NLS-1$
+						+ Msg.get("If_problem_persist_")); //$NON-NLS-1$
 	}
 
 }

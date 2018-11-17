@@ -16,7 +16,7 @@ import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
  */
 public abstract class SimpleFilesNamer implements BaseFilesNamer {
 
-	protected static final String DOT = ".";
+	protected static final String DOT = "."; //$NON-NLS-1$
 
 	public SimpleFilesNamer() {
 		super();
@@ -56,7 +56,7 @@ public abstract class SimpleFilesNamer implements BaseFilesNamer {
 	}
 
 	private File getSystemTempDirectory() {
-		String path = System.getProperty("java.io.tmpdir");
+		String path = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
 		return new File(path);
 	}
 

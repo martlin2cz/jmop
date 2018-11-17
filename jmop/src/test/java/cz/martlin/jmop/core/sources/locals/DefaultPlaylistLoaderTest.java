@@ -21,12 +21,12 @@ public class DefaultPlaylistLoaderTest {
 
 	@Test
 	public void test() throws IOException {
-		final File file = File.createTempFile("playlist-", ".xspf");
-		System.out.println("Working with file " + file.getAbsolutePath());
+		final File file = File.createTempFile("playlist-", ".xspf"); //$NON-NLS-1$ //$NON-NLS-2$
+		System.out.println("Working with file " + file.getAbsolutePath()); //$NON-NLS-1$
 
-		final Bundle bundle = new Bundle(SourceKind.YOUTUBE, "testing bundle");
+		final Bundle bundle = new Bundle(SourceKind.YOUTUBE, "testing bundle"); //$NON-NLS-1$
 
-		String playlistName = "testing playlist";
+		String playlistName = "testing playlist"; //$NON-NLS-1$
 		SourceKind kind = SourceKind.YOUTUBE;
 
 		Duration duration1 = DurationUtilities.createDuration(0, 0, 42);
@@ -34,9 +34,9 @@ public class DefaultPlaylistLoaderTest {
 		Duration duration3 = DurationUtilities.createDuration(23, 59, 59);
 
 		List<Track> tracks = Arrays.asList( //
-				bundle.createTrack("123456", "foo", "Lorem ispum dolor sit amet.", duration1), //
-				bundle.createTrack("aBcDeFg", "Nothing by Noone", "Just simply nothing.", duration2), //
-				bundle.createTrack("xy42+99z", "Silence!", "24 hours of awesome silence.", duration3) //
+				bundle.createTrack("123456", "foo", "Lorem ispum dolor sit amet.", duration1), // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				bundle.createTrack("aBcDeFg", "Nothing by Noone", "Just simply nothing.", duration2), // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				bundle.createTrack("xy42+99z", "Silence!", "24 hours of awesome silence.", duration3) // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		);
 
 		Tracklist tracklist = new Tracklist(tracks);
@@ -59,8 +59,8 @@ public class DefaultPlaylistLoaderTest {
 
 		// second try
 
-		final File secondFile = File.createTempFile("second-playlist-", ".xspf");
-		System.out.println("And with " + file.getAbsolutePath());
+		final File secondFile = File.createTempFile("second-playlist-", ".xspf"); //$NON-NLS-1$ //$NON-NLS-2$
+		System.out.println("And with " + file.getAbsolutePath()); //$NON-NLS-1$
 
 		loader.save(outputData, secondFile);
 		PlaylistFileData anotherData = loader.load(bundle, secondFile, false);

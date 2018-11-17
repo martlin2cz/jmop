@@ -3,6 +3,7 @@ package cz.martlin.jmop.gui.dial;
 import java.io.IOException;
 
 import cz.martlin.jmop.gui.dial.AddTrackDialog.AddTrackData;
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -22,15 +23,15 @@ public class AddTrackDialog extends BaseCommonFXMLDialog<AddTrackData> {
 	public AddTrackDialog() throws IOException {
 		super();
 
-		load("/cz/martlin/jmop/gui/fx/AddTrackDialog.fxml");
+		load("/cz/martlin/jmop/gui/fx/AddTrackDialog.fxml"); //$NON-NLS-1$
 	}
 
 	@Override
 	protected void specifyCustomDialogSettings() {
-		setTitle("Add track");
-		setHeaderText("Specify the new track to be added.");
+		setTitle(Msg.get("Add_track")); //$NON-NLS-1$
+		setHeaderText(Msg.get("Specify_the_new_track_to_be_added")); //$NON-NLS-1$
 
-		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/add-track.png"))));
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/add-track.png")))); //$NON-NLS-1$
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class AddTrackDialog extends BaseCommonFXMLDialog<AddTrackData> {
 	@Override
 	protected boolean validate() {
 		if (txtQuery.getText().isEmpty()) {
-			GuiComplexActionsPerformer.showErrorDialog("Missing value", "Specify query");
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("Missing_value"), Msg.get("Specify_query")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 

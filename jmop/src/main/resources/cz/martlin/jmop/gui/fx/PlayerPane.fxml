@@ -97,10 +97,10 @@
 				</ImageView>
 			</secondStateGraphics>
 			<firstStateTooltip>
-				<Tooltip text="Start playing (Shift + S or Enter)" />
+				<Tooltip text="%Start_playing_" />
 			</firstStateTooltip>
 			<secondStateTooltip>
-				<Tooltip text="Stop playing (S)" />
+				<Tooltip text="%Stop_playing_" />
 			</secondStateTooltip>
 		</TwoStateButton>
 
@@ -126,10 +126,10 @@
 				</ImageView>
 			</secondStateGraphics>
 			<firstStateTooltip>
-				<Tooltip text="Resume playing (Shift + P or Enter)" />
+				<Tooltip text="%Resume_playing_" />
 			</firstStateTooltip>
 			<secondStateTooltip>
-				<Tooltip text="Pause playing (P or Enter)" />
+				<Tooltip text="%Pause_playing_" />
 			</secondStateTooltip>
 		</TwoStateButton>
 
@@ -147,7 +147,7 @@
 				</ImageView>
 			</graphic>
 			<tooltip>
-				<Tooltip text="Previous track (Shift + N)" />
+				<Tooltip text="%Previous_track_" />
 			</tooltip>
 		</Button>
 		<!-- Next button -->
@@ -163,7 +163,7 @@
 				</ImageView>
 			</graphic>
 			<tooltip>
-				<Tooltip text="Next track (N)" />
+				<Tooltip text="%Next_track_" />
 			</tooltip>
 		</Button>
 

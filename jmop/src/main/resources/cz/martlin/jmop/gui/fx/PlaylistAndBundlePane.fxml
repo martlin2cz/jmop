@@ -11,14 +11,14 @@
 	<children>
 		<HBox prefHeight="16.0" prefWidth="300.0">
 			<children>
-				<Label text="Bundle: " />
-				<Label text="bundle name" fx:id="lblBundleName" />
+				<Label text="%Bundle_" />
+				<Label text="%bundle_name" fx:id="lblBundleName" />
 			</children>
 		</HBox>
 		<HBox prefHeight="16.0" prefWidth="300.0">
 			<children>
-				<Label text="Playlist: " />
-				<Label text="playlist name" fx:id="lblPlaylistName" />
+				<Label text="%Playlist_" />
+				<Label text="%playlist_name" fx:id="lblPlaylistName" />
 			</children>
 		</HBox>
 	</children>

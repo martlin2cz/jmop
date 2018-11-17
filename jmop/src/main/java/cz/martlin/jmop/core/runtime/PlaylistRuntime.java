@@ -252,11 +252,11 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	/////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public String toString() {
-		return "PlaylistRuntime [count=" + count() + ", currentTrackIndex=" + currentTrackIndex() //
-				+ ", played=" + played().stream().map((t) -> t.getTitle()).collect(Collectors.joining(",")) //
-				+ ", current=" + current().getTitle() //
-				+ ", toBePlayed=" + toBePlayed().stream().map((t) -> t.getTitle()).collect(Collectors.joining(",")) //
-				+ "]";
+		return "PlaylistRuntime [count=" + count() + ", currentTrackIndex=" + currentTrackIndex() // //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", played=" + played().stream().map((t) -> t.getTitle()).collect(Collectors.joining(",")) // //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", current=" + current().getTitle() // //$NON-NLS-1$
+				+ ", toBePlayed=" + toBePlayed().stream().map((t) -> t.getTitle()).collect(Collectors.joining(",")) // //$NON-NLS-1$ //$NON-NLS-2$
+				+ "]"; //$NON-NLS-1$
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 

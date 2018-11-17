@@ -46,13 +46,13 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 
 	@Override
 	public URL urlOf(Track track) throws JMOPSourceException {
-		LOG.info("Generating url of track " + track.getTitle());
+		LOG.info("Generating url of track " + track.getTitle()); //$NON-NLS-1$
 		String id = track.getIdentifier();
 		String url = urlOfTrack(id);
 		try {
 			return new URL(url);
 		} catch (MalformedURLException e) {
-			throw new JMOPSourceException("URL of track corrupted", e);
+			throw new JMOPSourceException("URL of track corrupted", e); //$NON-NLS-1$
 		}
 	}
 
@@ -68,14 +68,14 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 
 	@Override
 	public Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException {
-		LOG.info("Loading track with id " + identifier);
+		LOG.info("Loading track with id " + identifier); //$NON-NLS-1$
 
 		return loadTrack(bundle, identifier);
 	}
 
 	@Override
 	public Track search(Bundle bundle, String query) throws JMOPSourceException {
-		LOG.info("Performing search of " + query);
+		LOG.info("Performing search of " + query); //$NON-NLS-1$
 
 		Track track = loadSearchResult(bundle, query);
 		return track;
@@ -83,7 +83,7 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 
 	@Override
 	public Track getNextTrackOf(Track track) throws JMOPSourceException {
-		LOG.info("Loading next track of " + track.getTitle());
+		LOG.info("Loading next track of " + track.getTitle()); //$NON-NLS-1$
 
 		Bundle bundle = track.getBundle();
 		String identifier = track.getIdentifier();
@@ -111,7 +111,7 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 		} catch (Exception e) {
 			connection.markOffline();
 
-			throw new JMOPSourceException("Cannot load track", e);
+			throw new JMOPSourceException("Cannot load track", e); //$NON-NLS-1$
 		}
 	}
 
@@ -132,7 +132,7 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 		} catch (Exception e) {
 			connection.markOffline();
 
-			throw new JMOPSourceException("Cannot load search result", e);
+			throw new JMOPSourceException("Cannot load search result", e); //$NON-NLS-1$
 		}
 	}
 
@@ -152,7 +152,7 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 			return convertLoadNextResponse(bundle, response);
 		} catch (Exception e) {
 			connection.markOffline();
-			throw new JMOPSourceException("Cannot load next track", e);
+			throw new JMOPSourceException("Cannot load next track", e); //$NON-NLS-1$
 		}
 	}
 	///////////////////////////////////////////////////////////////////////////

@@ -105,8 +105,8 @@ public class Track {
 
 	@Override
 	public String toString() {
-		return "Track [bundle=" + bundle.getName() + ", identifier=" + identifier + ", title=" + title
-				+ ", description=" + "..." + "]";
+		return "Track [bundle=" + bundle.getName() + ", identifier=" + identifier + ", title=" + title //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", description=" + "..." + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 }

@@ -23,12 +23,12 @@ import javafx.util.Duration;
 
 public class ConverterTest {
 	public static void main(String[] args) throws IOException {
-		final String id = "3V7EugoweM4";
-		final String title = "Something";
-		final String description = "Something interresting";
+		final String id = "3V7EugoweM4"; //$NON-NLS-1$
+		final String title = "Something"; //$NON-NLS-1$
+		final String description = "Something interresting"; //$NON-NLS-1$
 		final Duration duration = DurationUtilities.createDuration(1, 2, 3);
-		final String bundleName = "testing-tracks";
-		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe
+		final String bundleName = "testing-tracks"; //$NON-NLS-1$
+		final File rootDir = File.createTempFile("xxx", "xxx").getParentFile(); // hehe //$NON-NLS-1$ //$NON-NLS-2$
 		final SourceKind source = SourceKind.YOUTUBE;
 
 		ConstantConfiguration config = new ConstantConfiguration();
@@ -55,7 +55,7 @@ public class ConverterTest {
 		try {
 
 			boolean success = converter.convert(track, inputLocation, inputFormat, outputLocation, outputFormat);
-			System.err.println("Success? " + success);
+			System.err.println("Success? " + success); //$NON-NLS-1$
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
