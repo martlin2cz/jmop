@@ -1,12 +1,17 @@
 package cz.martlin.jmop.core.operation.base;
 
 /**
- * Twoset operation is just simply two operations run in row. The result of first is passed as input of the second.
+ * Twoset operation is just simply two operations run in row. The result of
+ * first is passed as input of the second.
+ * 
  * @author martin
  *
- * @param <IT> input type
- * @param <MT> middle type (result of first and input of second)
- * @param <OT> output type
+ * @param <IT>
+ *            input type
+ * @param <MT>
+ *            middle type (result of first and input of second)
+ * @param <OT>
+ *            output type
  */
 public class TwosetOperation<IT, MT, OT> implements BaseOperation<IT, OT> {
 
@@ -15,6 +20,7 @@ public class TwosetOperation<IT, MT, OT> implements BaseOperation<IT, OT> {
 
 	/**
 	 * Creates instance.
+	 * 
 	 * @param first
 	 * @param second
 	 */

@@ -32,7 +32,7 @@ public class CommandLineDataParserTest {
 		run("-play foo", false, false, null, null, "foo", null); //$NON-NLS-1$ //$NON-NLS-2$
 		run("-play foo bar", false, false, null, null, "foo", "bar"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
-	
+
 	@Test
 	public void testCombined() {
 		run("-dir foo/bar -lang CZ", false, false, "foo/bar", "CZ", null, null); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -46,13 +46,13 @@ public class CommandLineDataParserTest {
 		run("-lang CZ -dir foo/bar -play Lorem Ipsum", false, false, "foo/bar", "CZ", "Lorem", "Ipsum"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		run("-play Lorem Ipsum -lang CZ -dir foo/bar", false, false, "foo/bar", "CZ", "Lorem", "Ipsum"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 	}
-	
+
 	@Test
 	public void testAmbigious() {
 		run("-dir -lang", false, false, "-lang", null, null, null); //$NON-NLS-1$ //$NON-NLS-2$
 		run("-play -dir -lang", false, false, null, null, "-dir", "-lang"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
-	
+
 	@Test
 	public void testCorrupted() {
 		invalid("foobar"); //$NON-NLS-1$

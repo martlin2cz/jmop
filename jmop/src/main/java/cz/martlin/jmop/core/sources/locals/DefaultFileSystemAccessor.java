@@ -148,6 +148,7 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	/**
 	 * Converts given playlist to playlist file data.
+	 * 
 	 * @param playlist
 	 * @return
 	 */
@@ -164,7 +165,9 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 	}
 
 	/**
-	 * Returns file for track at given location and of given format. Creates directories, if do not exist.
+	 * Returns file for track at given location and of given format. Creates
+	 * directories, if do not exist.
+	 * 
 	 * @param bundle
 	 * @param track
 	 * @param location
@@ -184,6 +187,7 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	/**
 	 * Returns path of the bundle directory based on the location.
+	 * 
 	 * @param bundle
 	 * @param location
 	 * @return

@@ -49,6 +49,7 @@ public class PlayerEngine {
 	/////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Mark as playing given playist.
+	 * 
 	 * @param playlist
 	 */
 	public void startPlayingPlaylist(Playlist playlist) {
@@ -59,6 +60,7 @@ public class PlayerEngine {
 
 	/**
 	 * Mark as not playing given playlist.
+	 * 
 	 * @param currentPlaylist
 	 */
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
@@ -70,6 +72,7 @@ public class PlayerEngine {
 
 	/**
 	 * Play next track in the queque.
+	 * 
 	 * @throws JMOPSourceException
 	 */
 	public void playNext() throws JMOPSourceException {
@@ -82,6 +85,7 @@ public class PlayerEngine {
 
 	/**
 	 * Play the index-th track in the (current) playlist.
+	 * 
 	 * @param index
 	 * @throws JMOPSourceException
 	 */
@@ -119,6 +123,7 @@ public class PlayerEngine {
 
 	/**
 	 * Seek to given time.
+	 * 
 	 * @param to
 	 */
 	public void seek(Duration to) {
@@ -128,6 +133,7 @@ public class PlayerEngine {
 
 	/**
 	 * Go to (start playing) next track.
+	 * 
 	 * @throws JMOPSourceException
 	 */
 	public void toNext() throws JMOPSourceException {
@@ -140,6 +146,7 @@ public class PlayerEngine {
 
 	/**
 	 * Go to (start playing) previous track.
+	 * 
 	 * @throws JMOPSourceException
 	 */
 	public void toPrevious() throws JMOPSourceException {
@@ -152,6 +159,7 @@ public class PlayerEngine {
 
 	/**
 	 * Add given track to the play (probably to the playlist).
+	 * 
 	 * @param track
 	 */
 	public void add(Track track) {
@@ -173,6 +181,7 @@ public class PlayerEngine {
 
 	/**
 	 * Handle track have been played. In fact, if has next, play next.
+	 * 
 	 * @param track
 	 */
 	private void onTrackPlayed(Track track) {
@@ -190,6 +199,7 @@ public class PlayerEngine {
 
 	/**
 	 * Has next? Just and shorthand method.
+	 * 
 	 * @return
 	 */
 	private boolean hasNext() {

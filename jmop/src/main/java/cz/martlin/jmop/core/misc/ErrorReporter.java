@@ -31,7 +31,8 @@ public class ErrorReporter {
 	public void report(Exception e) {
 		LOG.error("An error occured", e); //$NON-NLS-1$
 
-		GuiComplexActionsPerformer.showErrorDialog(Msg.get("Error_occured"), Msg.get("The_operation_could_not_be_completed")); //$NON-NLS-1$ //$NON-NLS-2$
+		GuiComplexActionsPerformer.showErrorDialog(Msg.get("Error_occured"), //$NON-NLS-1$
+				Msg.get("The_operation_could_not_be_completed")); //$NON-NLS-1$
 	}
 
 	/**

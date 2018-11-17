@@ -1,6 +1,9 @@
 package cz.martlin.jmop.core.sources;
+
 /**
- * Kinds (or types) used for loading (downloading) of tracks. Currently only YouTube source is supported.
+ * Kinds (or types) used for loading (downloading) of tracks. Currently only
+ * YouTube source is supported.
+ * 
  * @author martin
  *
  */

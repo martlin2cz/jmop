@@ -117,7 +117,7 @@ public abstract class AbstractAtomicOperation<IT, OT> implements BaseOperation<I
 	 * @param handler
 	 */
 	protected void handleFinish(OperationChangeListener handler) {
-		handler.updateStatus(name + " " +Msg.get("completing_")); //$NON-NLS-1$
+		handler.updateStatus(name + " " + Msg.get("completing_")); //$NON-NLS-1$
 		handler.updateProgress(OperationChangeListener.THE_100_PERCENT);
 
 		LOG.info("Atomic operation " + name + " completed"); //$NON-NLS-1$ //$NON-NLS-2$

@@ -76,7 +76,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		JMOPPlayer jmop = new JMOPPlayer(config, reporter, engine, localWrapper, preparer, checker);
 
 		// level 5 things
-		
+
 		checkAndStartPlayling(data, config, jmop);
 
 		return jmop;
@@ -87,13 +87,13 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		if (data.getBundleToPlayName() != null) {
 			String bundleName = data.getBundleToPlayName();
 			String playlistName;
-			
+
 			if (data.getPlaylistToPlayName() != null) {
 				playlistName = data.getPlaylistToPlayName();
 			} else {
 				playlistName = config.getAllTracksPlaylistName();
 			}
-			
+
 			jmop.startPlaylist(bundleName, playlistName);
 		}
 	}

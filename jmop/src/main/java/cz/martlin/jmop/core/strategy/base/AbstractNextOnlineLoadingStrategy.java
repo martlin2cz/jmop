@@ -24,7 +24,8 @@ public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInfe
 	}
 
 	/**
-	 * Loads next (in background) of given track (but only if not yet loading it).
+	 * Loads next (in background) of given track (but only if not yet loading
+	 * it).
 	 */
 	@Override
 	protected void loadNext(Track track) {

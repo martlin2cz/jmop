@@ -44,6 +44,7 @@ public abstract class SimpleFilesNamer implements BaseFilesNamer {
 
 	/**
 	 * Returns name of cache directory.
+	 * 
 	 * @return
 	 */
 	public abstract String directoryNameOfCache();
@@ -61,7 +62,9 @@ public abstract class SimpleFilesNamer implements BaseFilesNamer {
 	}
 
 	/**
-	 * Returns name of temporary directory (directory located in the operating system temp dir).
+	 * Returns name of temporary directory (directory located in the operating
+	 * system temp dir).
+	 * 
 	 * @return
 	 */
 	public abstract String temporaryDirectoryName();

@@ -22,7 +22,7 @@ public class WelcomePane extends VBox implements Initializable {
 
 	private void loadFXML() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/WelcomePane.fxml")); //$NON-NLS-1$
-		
+
 		loader.setResources(Msg.getResourceBundle());
 		loader.setController(this);
 

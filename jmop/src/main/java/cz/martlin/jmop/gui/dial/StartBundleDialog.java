@@ -58,7 +58,8 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 	@Override
 	protected boolean validate() {
 		if (cmbPlaylistName.getValue() == null) {
-			GuiComplexActionsPerformer.showErrorDialog(Msg.get("StartBundleDialog.Missing_value"), Msg.get("StartBundleDialog.Choose_playlist")); //$NON-NLS-1$ //$NON-NLS-2$
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("StartBundleDialog.Missing_value"), //$NON-NLS-1$
+					Msg.get("StartBundleDialog.Choose_playlist")); //$NON-NLS-1$
 			return false;
 		}
 

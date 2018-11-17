@@ -36,9 +36,9 @@ public class JMOPMainGUIApplication extends Application {
 		try {
 			LOG.info("Starting GUI application ..."); //$NON-NLS-1$
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/main.fxml")); //$NON-NLS-1$
-			
+
 			loader.setResources(Msg.getResourceBundle());
-			
+
 			Parent root = loader.load();
 
 			primaryStage.setTitle("JMOP"); //$NON-NLS-1$

@@ -84,7 +84,7 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 
 	private void loadFXML() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/MainMenu.fxml")); //$NON-NLS-1$
-		
+
 		fxmlLoader.setResources(Msg.getResourceBundle());
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);

@@ -15,7 +15,7 @@ import javafx.application.Application;
 public class JMOPGUIApp {
 	private static final Logger LOG = LoggerFactory.getLogger(JMOPGUIApp.class);
 	private static final String VERSION = "0.4"; //$NON-NLS-1$
-	
+
 	private static JMOPPlayer jmop;
 
 	public static void main(String[] args) {
@@ -23,7 +23,7 @@ public class JMOPGUIApp {
 		if (data == null) {
 			return;
 		}
-		
+
 		if (data.isHelp()) {
 			printHelpAndEnd();
 			return;
@@ -73,7 +73,7 @@ public class JMOPGUIApp {
 	}
 
 	private static void printVersionAndEnd() {
-		System.out.println("JMOP "+ VERSION); //$NON-NLS-1$
+		System.out.println("JMOP " + VERSION); //$NON-NLS-1$
 		System.exit(0);
 	}
 

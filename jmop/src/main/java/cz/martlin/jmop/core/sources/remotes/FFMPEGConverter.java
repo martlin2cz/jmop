@@ -230,6 +230,7 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 
 	/**
 	 * The input to the process (track, input and output location and format).
+	 * 
 	 * @author martin
 	 *
 	 */

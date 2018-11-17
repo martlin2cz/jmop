@@ -12,8 +12,6 @@ public class CommandLineDataParser {
 	public CommandLineDataParser() {
 	}
 
-
-	
 	public CommandlineData extractCommandLineData(String[] args) {
 		CommandlineData data = new CommandlineData();
 		Queue<String> remainingArgs = new LinkedList<>(Arrays.asList(args));

@@ -11,6 +11,7 @@ import cz.martlin.jmop.gui.local.Msg;
 
 /**
  * Operation loading next track of some track.
+ * 
  * @author martin
  *
  */
@@ -31,6 +32,7 @@ public class NextTrackOperation extends AbstractAtomicOperation<Track, Track> {
 
 	/**
 	 * Loads next track of given track.
+	 * 
 	 * @param track
 	 * @param handler
 	 * @return

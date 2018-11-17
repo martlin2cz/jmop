@@ -10,6 +10,7 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 /**
  * Converter doing simply no conversion, or even nothing.
+ * 
  * @author martin
  *
  */

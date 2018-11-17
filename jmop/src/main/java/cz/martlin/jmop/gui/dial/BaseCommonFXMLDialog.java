@@ -45,7 +45,7 @@ public abstract class BaseCommonFXMLDialog<R> extends Dialog<R> implements Initi
 
 	protected void initializeContent(String fxmlFilePath) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFilePath));
-		
+
 		loader.setResources(Msg.getResourceBundle());
 		loader.setController(this);
 

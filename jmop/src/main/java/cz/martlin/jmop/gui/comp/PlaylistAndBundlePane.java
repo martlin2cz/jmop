@@ -44,7 +44,7 @@ public class PlaylistAndBundlePane extends VBox {
 	private void loadFXML() throws IOException {
 		FXMLLoader loader = new FXMLLoader(
 				getClass().getResource("/cz/martlin/jmop/gui/fx/PlaylistAndBundlePane.fxml")); //$NON-NLS-1$
-		
+
 		loader.setResources(Msg.getResourceBundle());
 		loader.setController(this);
 
