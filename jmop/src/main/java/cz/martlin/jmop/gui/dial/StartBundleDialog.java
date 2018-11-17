@@ -38,8 +38,8 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 
 	@Override
 	protected void specifyCustomDialogSettings() {
-		setTitle(Msg.get("StartBundleDialog.Start_playing_bundle")); //$NON-NLS-1$
-		setHeaderText(Msg.get("StartBundleDialog.Specify_playlist_which_should_be_started")); //$NON-NLS-1$
+		setTitle(Msg.get("Start_playing_bundle")); //$NON-NLS-1$
+		setHeaderText(Msg.get("Specify_playlist_which_should_be_started")); //$NON-NLS-1$
 
 		setGraphic(
 				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/play-bundle.png")))); //$NON-NLS-1$
@@ -58,8 +58,8 @@ public class StartBundleDialog extends BaseCommonFXMLDialog<StartBundleData> {
 	@Override
 	protected boolean validate() {
 		if (cmbPlaylistName.getValue() == null) {
-			GuiComplexActionsPerformer.showErrorDialog(Msg.get("StartBundleDialog.Missing_value"), //$NON-NLS-1$
-					Msg.get("StartBundleDialog.Choose_playlist")); //$NON-NLS-1$
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("Missing_value"), //$NON-NLS-1$
+					Msg.get("Choose_playlist")); //$NON-NLS-1$
 			return false;
 		}
 

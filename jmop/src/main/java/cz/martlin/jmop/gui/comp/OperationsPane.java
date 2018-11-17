@@ -165,11 +165,11 @@ public class OperationsPane extends HBox {
 	private void changeAnothers(int operationsCount, List<? extends OperationWrapper<?, ?>> operations) {
 		if (operationsCount > 1) {
 			int anothers = operationsCount - 1;
-			lblAnothers.setText(Msg.get("OperationsPane.5") + anothers + Msg.get("OperationsPane.6")); //$NON-NLS-1$ //$NON-NLS-2$
+			lblAnothers.setText(Msg.get("plus") + anothers + Msg.get("more")); //$NON-NLS-1$ //$NON-NLS-2$
 			lblAnothers.setVisible(true);
 		} else {
 			lblAnothers.setVisible(false);
-			lblAnothers.setText(Msg.get("OperationsPane.7")); //$NON-NLS-1$
+			lblAnothers.setText(Msg.get("plus_no_more")); //$NON-NLS-1$
 		}
 
 		if (lblAnothers.getTooltip().textProperty().isBound()) {

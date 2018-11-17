@@ -40,8 +40,10 @@ public class JMOPGUIApp {
 
 	private static void preprocesCommandLineData(CommandlineData data) {
 		String language = data.getLanguage();
-		Locale locale = new Locale(language);
-		Msg.setLocale(locale);
+		if (language != null) {
+			Locale locale = new Locale(language);
+			Msg.setLocale(locale);
+		}
 	}
 
 	private static CommandlineData extracCommandLineData(String[] args) {

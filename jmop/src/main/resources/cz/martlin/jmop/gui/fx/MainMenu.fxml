@@ -28,7 +28,7 @@
 	</fx:define>
 
 	<menus>
-		<Menu mnemonicParsing="true" text="_File">
+		<Menu mnemonicParsing="true" text="%_File">
 			<items>
 				<MenuItem mnemonicParsing="true" text="%P_lay" fx:id="miPlay"
 					onAction="#onPlayAction" accelerator="Shift + S">
