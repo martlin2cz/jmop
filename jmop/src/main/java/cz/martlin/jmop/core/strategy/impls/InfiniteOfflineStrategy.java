@@ -6,8 +6,8 @@ import java.util.Random;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.strategy.base.AbstractNextInferringStrategy;
 
 /**
@@ -29,7 +29,7 @@ public class InfiniteOfflineStrategy extends AbstractNextInferringStrategy {
 	@Override
 	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist, PlaylistRuntime runtime) {
 		this.bundle = playlist.getBundle();
-		
+
 		super.startPlayingPlaylist(engine, playlist, runtime);
 	}
 
@@ -55,6 +55,11 @@ public class InfiniteOfflineStrategy extends AbstractNextInferringStrategy {
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Returns random track from all the bundle tracks.
+	 * 
+	 * @return
+	 */
 	private Track pickRandom() {
 		List<Track> allTracks = bundle.tracks().getTracks();
 		int count = allTracks.size();

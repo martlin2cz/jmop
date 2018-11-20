@@ -7,6 +7,7 @@ import java.util.Optional;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.dial.AddTrackDialog;
@@ -17,6 +18,7 @@ import cz.martlin.jmop.gui.dial.NewBundleDialog;
 import cz.martlin.jmop.gui.dial.NewPlaylistDialog;
 import cz.martlin.jmop.gui.dial.SavePlaylistDialog;
 import cz.martlin.jmop.gui.dial.StartBundleDialog;
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
@@ -30,10 +32,12 @@ import javafx.util.Duration;
 public class GuiComplexActionsPerformer {
 
 	private Scene scene;
+	private final ErrorReporter reporter;
 	private final JMOPPlayer jmop;
 
 	public GuiComplexActionsPerformer(JMOPPlayer jmop) {
 		this.jmop = jmop;
+		this.reporter = jmop.getErrorReporter();
 	}
 
 	public void specifyScene(Scene scene) {
@@ -41,8 +45,6 @@ public class GuiComplexActionsPerformer {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-
-
 
 	public void startNewBundle() {
 		runInBackgroundWithDialog(() -> {
@@ -112,22 +114,20 @@ public class GuiComplexActionsPerformer {
 			jmop.savePlaylistAs(playlistName);
 		});
 	}
-	
-	
+
 	public void lockUnlockPlaylist() {
 		runInForegound(() -> {
 			jmop.togglePlaylistLockedStatus();
 			return null;
 		});
 	}
-	
+
 	public void clearRemaining() {
 		runInForegound(() -> {
 			jmop.clearRemainingTracks();
 			return null;
 		});
 	}
-
 
 	public void addTrack() {
 		runInBackgroundWithDialog(() -> {
@@ -139,7 +139,6 @@ public class GuiComplexActionsPerformer {
 		});
 
 	}
-
 
 	public void playTrack(int index) {
 		runInForegound(() -> {
@@ -217,11 +216,11 @@ public class GuiComplexActionsPerformer {
 		runAndHandleError(() -> {
 			String error = jmop.runCheck();
 			if (error == null) {
-				showInfo("Configuration check", "The configuration is OK",
-						"The JMOP have checked some basic system settings and it seems it is all OK. "
-								+ "If problems continues, see try to look into app logs.");
+				showInfo(Msg.get("Configuration_check"), Msg.get("The_configuration_is_OK"), //$NON-NLS-1$ //$NON-NLS-2$
+						Msg.get("The_JMOP_have_checked_") //$NON-NLS-1$
+								+ Msg.get("If_problem_continues_")); //$NON-NLS-1$
 			} else {
-				showErrorDialog("Configuration not OK", error);
+				showErrorDialog(Msg.get("Configuration_not_OK"), error); //$NON-NLS-1$
 			}
 			return null;
 		});
@@ -262,7 +261,7 @@ public class GuiComplexActionsPerformer {
 			return playlist.getTracks().getTracks();
 		});
 	}
-	
+
 	public int inferCurrentTrackIndex() {
 		return runAndHandleError(() -> {
 			Playlist playlist = jmop.getData().playlistProperty().get();
@@ -272,15 +271,8 @@ public class GuiComplexActionsPerformer {
 			return playlist.getCurrentTrackIndex();
 		});
 	}
-	
-	
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
-	@Deprecated
-	protected void changeCursor(Cursor cursor) {
-		scene.getRoot().setCursor(cursor);
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	private <T> void runInForegound(RunnableWithException<T> run) {
@@ -308,7 +300,7 @@ public class GuiComplexActionsPerformer {
 		// runAndHandleError(run);
 		// });
 	}
-	
+
 	private <T> void runInBackground(RunnableWithException<T> run) {
 		Task<T> task = new Task<T>() {
 			@Override
@@ -329,7 +321,7 @@ public class GuiComplexActionsPerformer {
 			scene.setCursor(Cursor.DEFAULT);
 		});
 
-		Thread thread = new Thread(task, "BackgroundGUIOperationThread");
+		Thread thread = new Thread(task, "BackgroundGUIOperationThread"); //$NON-NLS-1$
 		thread.start();
 		// Platform.runLater(() -> {
 		// runAndHandleError(run);
@@ -365,7 +357,7 @@ public class GuiComplexActionsPerformer {
 		try {
 			return run.run();
 		} catch (Exception e) {
-			showExceptionDialog(e);
+			reporter.internal(e);
 			return null;
 		}
 	}
@@ -384,29 +376,10 @@ public class GuiComplexActionsPerformer {
 
 	public static void showErrorDialog(String header, String message) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("An error occured");
+		alert.setTitle(Msg.get("An_error_occured")); //$NON-NLS-1$
 
 		alert.setHeaderText(header);
 		alert.setContentText(message);
-
-		alert.show();
-	}
-
-	private static void showExceptionDialog(Exception e) {
-		e.printStackTrace();
-		// TODO log by logger
-
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("An error occured");
-
-		if (e.getCause() != null) {
-			alert.setHeaderText("The error " + e.getClass().getName() + " caused by "
-					+ e.getCause().getClass().getName() + " occured");
-		} else {
-			alert.setHeaderText("The error " + e.getClass().getName() + " occured");
-		}
-
-		alert.setContentText(e.toString());
 
 		alert.show();
 	}
@@ -422,6 +395,5 @@ public class GuiComplexActionsPerformer {
 	public static interface ConsumerWithException<T> {
 		public void consume(T object) throws Exception;
 	}
-
 
 }

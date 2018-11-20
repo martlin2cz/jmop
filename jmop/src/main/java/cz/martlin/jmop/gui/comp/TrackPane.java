@@ -2,6 +2,7 @@ package cz.martlin.jmop.gui.comp;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -12,7 +13,7 @@ import javafx.scene.text.Font;
 
 public class TrackPane extends VBox {
 
-	private static final Tooltip NO_TRACK_TOOLTIP = new Tooltip("No track");
+	private static final Tooltip NO_TRACK_TOOLTIP = new Tooltip(Msg.get("No_track")); //$NON-NLS-1$
 
 	private Label lblTitle;
 	private Label lblDuration;
@@ -68,8 +69,8 @@ public class TrackPane extends VBox {
 	}
 
 	private void changeToNoTrack() {
-		lblTitle.setText("No track");
-		lblDuration.setText("");
+		lblTitle.setText(Msg.get("No_track")); //$NON-NLS-1$
+		lblDuration.setText(""); //$NON-NLS-1$
 
 		lblTitle.setDisable(true);
 		lblDuration.setDisable(true);

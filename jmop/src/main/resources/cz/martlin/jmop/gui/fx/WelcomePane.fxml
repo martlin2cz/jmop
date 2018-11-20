@@ -16,7 +16,7 @@
 	minHeight="120.0" prefWidth="640.0" minWidth="280.0">
 
 	<children>
-		<Label text="Welcome to JMOP!" VBox.vgrow="ALWAYS">
+		<Label text="%Welcome_to_JMOP" VBox.vgrow="ALWAYS">
 			<font>
 				<Font size="18.0" />
 			</font>
@@ -27,13 +27,7 @@
 			</graphic>
 		</Label>
 
-		<Label alignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
-			To start
-			playing use menu 'Bundle'.
-			Choose 'Bundle - bundle name' to start
-			playing existing bundle
-			or 'Bundle - Start new bundle' to create and
-			play new one.</Label>
+		<Label alignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" text="%To_start_playing_use_"></Label>
 
 	</children>
 </VBox>

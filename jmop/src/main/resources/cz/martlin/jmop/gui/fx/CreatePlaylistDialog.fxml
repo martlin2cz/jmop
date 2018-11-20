@@ -20,17 +20,17 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-   		<Label text="Bundle" GridPane.rowIndex="1" />
+   		<Label text="%Bundle" GridPane.rowIndex="1" />
       <ComboBox fx:id="cmbBundleName" prefHeight="26.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
       <tooltip>
-      		<Tooltip text="Optionaly change the bundle of the playlist." />
+      		<Tooltip text="%Optionaly_change_the_bundle_of_the_playlist" />
       	</tooltip>
       </ComboBox>
    
-      <Label text="Playlist name" />
-      <TextField fx:id="txtPlaylistName" promptText="'Best hits' or 'New album'" GridPane.columnIndex="1">
+      <Label text="%Playlist_name" />
+      <TextField fx:id="txtPlaylistName" promptText="%Best_hits_or_New_album" GridPane.columnIndex="1">
       	<tooltip>
-      		<Tooltip text="Specify name of the playlist." />
+      		<Tooltip text="%Specify_name_of_the_playlist" />
       	</tooltip>
       </TextField>
       

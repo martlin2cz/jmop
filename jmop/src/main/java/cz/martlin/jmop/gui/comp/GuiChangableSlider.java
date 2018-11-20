@@ -39,8 +39,7 @@ public class GuiChangableSlider extends Slider {
 		// TODO anything more here?
 
 	}
-/////////////////////////////////////////////////////////////////
-
+	/////////////////////////////////////////////////////////////////
 
 	private void onKeyReleased(KeyEvent e) {
 		changeGuiChangingStatus(false);
@@ -59,9 +58,8 @@ public class GuiChangableSlider extends Slider {
 		changeGuiChangingStatus(true);
 	}
 
-/////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////
 
-	
 	private void changeGuiChangingStatus(boolean isChanging) {
 		guiChanging.set(isChanging);
 	}

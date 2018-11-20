@@ -14,14 +14,20 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.remote.SimpleRemoteSource;
 import javafx.util.Duration;
 
+/**
+ * The youtube.com remote source implemented by youtube API.
+ * 
+ * @author martin
+ *
+ */
 public class YoutubeSource extends
 		SimpleRemoteSource<//
 				YouTube.Videos.List, VideoListResponse, //
 				YouTube.Search.List, SearchListResponse, //
 				YouTube.Search.List, SearchListResponse> {
-
 
 	public YoutubeSource(InternetConnectionStatus connection) {
 		super(connection);
@@ -29,14 +35,14 @@ public class YoutubeSource extends
 
 	@Override
 	protected String urlOfTrack(String id) {
-		return "https://www.youtube.com/watch?v=" + id;
+		return "https://www.youtube.com/watch?v=" + id; //$NON-NLS-1$
 	}
 
 	@Override
 	protected YouTube.Videos.List createLoadRequest(String id) throws Exception {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 
-		YouTube.Videos.List listVideosRequest = youtube.videos().list("contentDetails,snippet");
+		YouTube.Videos.List listVideosRequest = youtube.videos().list("contentDetails,snippet"); //$NON-NLS-1$
 		listVideosRequest.setId(id);
 		return listVideosRequest;
 	}
@@ -45,8 +51,8 @@ public class YoutubeSource extends
 	protected YouTube.Search.List createSearchRequest(String query) throws IOException {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 
-		YouTube.Search.List searchListByKeywordRequest = youtube.search().list("snippet");
-		searchListByKeywordRequest.setType("video");
+		YouTube.Search.List searchListByKeywordRequest = youtube.search().list("snippet"); //$NON-NLS-1$
+		searchListByKeywordRequest.setType("video"); //$NON-NLS-1$
 		searchListByKeywordRequest.setMaxResults(1l);
 		searchListByKeywordRequest.setQ(query);
 		return searchListByKeywordRequest;
@@ -56,8 +62,8 @@ public class YoutubeSource extends
 	protected YouTube.Search.List createLoadNextRequest(String id) throws IOException {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 
-		YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list("snippet");
-		searchListRelatedVideosRequest.setType("video");
+		YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list("snippet"); //$NON-NLS-1$
+		searchListRelatedVideosRequest.setType("video"); //$NON-NLS-1$
 		searchListRelatedVideosRequest.setRelatedToVideoId(id);
 		return searchListRelatedVideosRequest;
 	}
@@ -101,6 +107,13 @@ public class YoutubeSource extends
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Converts videolist into track.
+	 * 
+	 * @param bundle
+	 * @param response
+	 * @return
+	 */
 	private Track convertVideoListResponse(Bundle bundle, VideoListResponse response) {
 		List<Video> results = response.getItems();
 		Video result = results.get(0);
@@ -108,6 +121,13 @@ public class YoutubeSource extends
 		return track;
 	}
 
+	/**
+	 * Converts video to track.
+	 * 
+	 * @param bundle
+	 * @param result
+	 * @return
+	 */
 	private Track videoToTrack(Bundle bundle, Video result) {
 		String identifier = result.getId();
 		String title = result.getSnippet().getTitle();
@@ -119,11 +139,25 @@ public class YoutubeSource extends
 		return bundle.createTrack(identifier, title, description, duration);
 	}
 
+	/**
+	 * Converts search result to track id.
+	 * 
+	 * @param result
+	 * @return
+	 */
 	private String searchResultToId(SearchResult result) {
 		String identifier = result.getId().getVideoId();
 		return identifier;
 	}
 
+	/**
+	 * Converts seachlist to track.
+	 * 
+	 * @param bundle
+	 * @param response
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private Track convertSearchListResponse(Bundle bundle, SearchListResponse response) throws JMOPSourceException {
 		List<SearchResult> results = response.getItems();
 		SearchResult result = results.get(0);
@@ -131,25 +165,6 @@ public class YoutubeSource extends
 
 		Track track = getTrack(bundle, identifier);
 		return track;
-	}
-
-	@Deprecated
-	private Track _old_convertSearchListResponse(Bundle bundle, SearchListResponse response) {
-		List<SearchResult> results = response.getItems();
-		SearchResult result = results.get(0);
-		Track track = snippetToTrack(bundle, result);
-		return track;
-	}
-
-	@Deprecated
-	private Track snippetToTrack(Bundle bundle, SearchResult result) {
-		String identifier = result.getId().getVideoId();
-		String title = result.getSnippet().getTitle();
-		String description = result.getSnippet().getDescription();
-		String durationStr = null;
-		Duration duration = DurationUtilities.parseYoutubeDuration(durationStr);
-
-		return bundle.createTrack(identifier, title, description, duration);
 	}
 
 }

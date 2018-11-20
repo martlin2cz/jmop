@@ -2,9 +2,17 @@ package cz.martlin.jmop.core.sources.local.location;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.player.BasePlayer;
-import cz.martlin.jmop.core.sources.download.BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
 
+/**
+ * The default locator is quite improoved {@link PrimitiveLocator}. If format of
+ * downloader (player) is equal to save format given by configuration, downloads
+ * (prepares to play) simply directly into the save location.
+ * 
+ * @author martin
+ *
+ */
 public class DefaultLocator implements AbstractTrackFileLocator {
 
 	private final TrackFileFormat saveFormat;

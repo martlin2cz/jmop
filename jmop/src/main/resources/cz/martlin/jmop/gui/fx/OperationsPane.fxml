@@ -24,7 +24,7 @@
 						<Tooltip />
 					</tooltip>
 				</Label>
-				<Label fx:id="lblAnothers" text="+ another 0">
+				<Label fx:id="lblAnothers" text="%plus_another_0">
 					<tooltip>
 						<Tooltip />
 					</tooltip>

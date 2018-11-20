@@ -13,6 +13,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ObservableListenerBinding;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.RequiresJMOP;
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
@@ -82,8 +83,9 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	}
 
 	private void loadFXML() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/MainMenu.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cz/martlin/jmop/gui/fx/MainMenu.fxml")); //$NON-NLS-1$
 
+		fxmlLoader.setResources(Msg.getResourceBundle());
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		fxmlLoader.load();
@@ -279,11 +281,11 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 	private void playlistChanged(Playlist playlist) {
 
 		if (playlist.isLocked()) {
-			miLockUnlockThisPlaylist.setText("Un_lock this playlist");
-			changeImage("/cz/martlin/jmop/gui/img/unlock-playlist.svg");
+			miLockUnlockThisPlaylist.setText(Msg.get("Un_lock_this_playlist")); //$NON-NLS-1$
+			changeImage("/cz/martlin/jmop/gui/img/unlock-playlist.svg"); //$NON-NLS-1$
 		} else {
-			miLockUnlockThisPlaylist.setText("_Lock this playlist");
-			changeImage("/cz/martlin/jmop/gui/img/lock-playlist.svg");
+			miLockUnlockThisPlaylist.setText(Msg.get("_Lock_this_playlist")); //$NON-NLS-1$
+			changeImage("/cz/martlin/jmop/gui/img/lock-playlist.svg"); //$NON-NLS-1$
 		}
 	}
 

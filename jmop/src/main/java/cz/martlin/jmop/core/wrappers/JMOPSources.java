@@ -10,6 +10,13 @@ import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 
+/**
+ * The JMOP wrapper responsible for sources (list/save bundles, playlists, load
+ * track etc.) stuff. Do not invoke directly, use JMOPPlayer instead.
+ * 
+ * @author martin
+ *
+ */
 public class JMOPSources {
 	private final LocalSourceWrapper local;
 	private final TrackPreparer preparer;
@@ -19,13 +26,24 @@ public class JMOPSources {
 		this.local = local;
 		this.preparer = preparer;
 	}
-	
+
 	public TrackPreparer getPreparer() {
 		return preparer;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Create new bundle with the new playlist and start searching the initial
+	 * track.
+	 * 
+	 * @param kind
+	 * @param bundleName
+	 * @param query
+	 * @param engine
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	public Playlist createNewBundleAndPrepare(SourceKind kind, String bundleName, String query, PlayerEngine engine)
 			throws JMOPSourceException {
 		Bundle bundle = createBundle(kind, bundleName);
@@ -36,6 +54,15 @@ public class JMOPSources {
 		return playlist;
 	}
 
+	/**
+	 * Create new playlist.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @param engine
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	public Playlist createNewPlaylist(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
 		Playlist playlist = new Playlist(bundle, query);
 
@@ -43,7 +70,17 @@ public class JMOPSources {
 		return playlist;
 	}
 
-	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine) throws JMOPSourceException {
+	/**
+	 * Load playlist.
+	 * 
+	 * @param bundleName
+	 * @param playlistName
+	 * @param engine
+	 * @return
+	 * @throws JMOPSourceException
+	 */
+	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine)
+			throws JMOPSourceException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
 
@@ -51,48 +88,68 @@ public class JMOPSources {
 
 	}
 
+	/**
+	 * Save playlist.
+	 * 
+	 * @param playlist
+	 * @param newPlaylistName
+	 * @throws JMOPSourceException
+	 */
 	public void savePlaylist(Playlist playlist, String newPlaylistName) throws JMOPSourceException {
 		playlist.setName(newPlaylistName);
 		Bundle bundle = playlist.getBundle();
 		local.savePlaylist(bundle, playlist);
 	}
 
+	/**
+	 * Query given query and load the found track.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @param engine
+	 * @throws JMOPSourceException
+	 */
 	public void queryAndLoad(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
 		preparer.startSearchAndLoadInBg(bundle, query, engine);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * List all bundles.
+	 * 
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	public List<String> listAllBundles() throws JMOPSourceException {
 		return local.listBundlesNames();
 	}
 
+	/**
+	 * List all playlists in the given bundle.
+	 * 
+	 * @param bundleName
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	public List<String> listPlaylists(String bundleName) throws JMOPSourceException {
 		Bundle bundle = local.getBundle(bundleName);
 		return local.listPlaylistNames(bundle);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Create bundle.
+	 * 
+	 * @param kind
+	 * @param bundleName
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	private Bundle createBundle(SourceKind kind, String bundleName) throws JMOPSourceException {
 		Bundle bundle = new Bundle(kind, bundleName);
 		local.createBundle(bundle);
 		return bundle;
 	}
-
-	// @Deprecated
-	// private Track prepareInitialTrack(Bundle bundle, String querySeed) throws
-	// JMOPSourceException {
-	// Track track = remote.search(bundle, querySeed);
-	// // preparer.load(track);
-	// return track;
-	// }
-	//
-	// private Playlist createInitialPlaylist(Bundle bundle, String query) {
-	// BetterPlaylistRuntime runtime = new BetterPlaylistRuntime();
-	// Playlist playlist = new Playlist(bundle, query, runtime);
-	// return playlist;
-	// }
-
-	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.ObservableListenerBinding;
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -26,7 +27,7 @@ public class PlaylistAndBundlePane extends VBox {
 	public PlaylistAndBundlePane() throws IOException {
 		this.playlistBinding = new ObservableListenerBinding<>();
 		this.playlistProperty = new SimpleObjectProperty<>();
-		
+
 		initialize();
 	}
 
@@ -42,7 +43,9 @@ public class PlaylistAndBundlePane extends VBox {
 
 	private void loadFXML() throws IOException {
 		FXMLLoader loader = new FXMLLoader(
-				getClass().getResource("/cz/martlin/jmop/gui/fx/PlaylistAndBundlePane.fxml"));
+				getClass().getResource("/cz/martlin/jmop/gui/fx/PlaylistAndBundlePane.fxml")); //$NON-NLS-1$
+
+		loader.setResources(Msg.getResourceBundle());
 		loader.setController(this);
 
 		Parent root = loader.load();
@@ -54,7 +57,6 @@ public class PlaylistAndBundlePane extends VBox {
 	}
 
 	private void playlistPropertyChanged(Playlist oldPlaylistValue, Playlist newPlaylistValue) {
-//		System.out.println("PlaylistAndBundlePane.playlistPropertyChanged()");
 		playlistBinding.rebind(oldPlaylistValue, newPlaylistValue, (p) -> playlistChanged((Playlist) p));
 		playlistChanged(newPlaylistValue);
 	}
@@ -68,8 +70,8 @@ public class PlaylistAndBundlePane extends VBox {
 				bundleName = playlist.getBundle().getName();
 				playlistName = playlist.getName();
 			} else {
-				bundleName = "-";
-				playlistName = "-";
+				bundleName = "-"; //$NON-NLS-1$
+				playlistName = "-"; //$NON-NLS-1$
 			}
 			lblBundleName.setText(bundleName);
 			lblPlaylistName.setText(playlistName);

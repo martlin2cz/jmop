@@ -2,8 +2,7 @@ package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.playlist.PlaylistRuntime;
-import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 
 /**
  * Playlister, which *somehow* loads the next track when there are no more track
@@ -14,8 +13,6 @@ import cz.martlin.jmop.core.playlister.PlayerEngine;
  */
 public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStrategy {
 
-	// private InvalidationListener runtimeListener;
-
 	public AbstractNextInferringStrategy() {
 		super();
 	}
@@ -23,27 +20,9 @@ public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStra
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist, PlaylistRuntime runtime) {
-		super.startPlayingPlaylist(engine, playlist, runtime);
-
-		// runtimeListener = (val) -> runtimeChanged();
-		// runtime.addListener(runtimeListener);
-
-		// checkAndInferNext();
-	}
-
-	@Override
-	public void stopPlayingPlaylist() {
-		// PlaylistRuntime runtime = getRuntime();
-		// runtime.removeListener(runtimeListener);
-
-		super.stopPlayingPlaylist();
-	}
-
-	@Override
 	public void playlistChanged(Playlist playlist, PlaylistRuntime runtime) {
 		super.playlistChanged(playlist, runtime);
-		
+
 		checkAndInferNext();
 	}
 
@@ -68,15 +47,12 @@ public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStra
 		checkAndInferNext();
 		return super.hasNext();
 	}
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	// private void runtimeChanged() {
-	// // this is invoked by all playlister, bot offline and online
-	// // and thats terribly wrong
-	// checkAndInferNext();
-	// }
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Check whether has at least one track (to even be able to load next of
+	 * anything), and if so checks and if needed loads next.
+	 */
 	private void checkAndInferNext() {
 		if (hasAtLeastOneTrack()) {
 			Track track = super.getCurrent();
@@ -91,14 +67,6 @@ public abstract class AbstractNextInferringStrategy extends SimplePlaylisterStra
 	 * 
 	 */
 	private void checkAndInferNext(Track current) {
-//		System.out.println("Okay, loading next of " + current.getTitle() + " by " + this);
-		// PlaylistRuntime runtime = getRuntime();
-		// if (runtime.count() == 0) {
-		// return;
-		// }
-		//
-		// Track current = getCurrent();
-
 		if (!super.hasNext()) {
 			loadNext(current);
 		}

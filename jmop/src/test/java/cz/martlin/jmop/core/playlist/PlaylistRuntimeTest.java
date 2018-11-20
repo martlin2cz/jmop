@@ -13,18 +13,19 @@ import org.junit.Test;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
 
 public class PlaylistRuntimeTest {
-	private final Bundle bundle = new Bundle(SourceKind.YOUTUBE, "testing bundle");
+	private final Bundle bundle = new Bundle(SourceKind.YOUTUBE, "testing bundle"); //$NON-NLS-1$
 	private final Duration duration = DurationUtilities.createDuration(0, 10, 11);
 
-	private final Track trackFoo = bundle.createTrack("foo", "Foo", "foo bar", duration);
-	private final Track trackBar = bundle.createTrack("bar", "Bar", "bar baz", duration);
-	private final Track trackBaz = bundle.createTrack("baz", "Baz", "baz aux", duration);
-	private final Track trackAux = bundle.createTrack("aux", "Aux", "aux qux", duration);
-	private final Track trackQux = bundle.createTrack("Qux", "Qux", "qux qux", duration);
+	private final Track trackFoo = bundle.createTrack("foo", "Foo", "foo bar", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackBar = bundle.createTrack("bar", "Bar", "bar baz", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackBaz = bundle.createTrack("baz", "Baz", "baz aux", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackAux = bundle.createTrack("aux", "Aux", "aux qux", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackQux = bundle.createTrack("Qux", "Qux", "qux qux", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 	@Before
 	public void setUp() throws Exception {
@@ -121,7 +122,7 @@ public class PlaylistRuntimeTest {
 		List<Track> allTracks1 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
 		check(runtime, allTracks1, Arrays.asList(trackFoo, trackBar), trackBaz, Arrays.asList(trackAux, trackQux));
 		runtime.popUp(4);
-		
+
 		List<Track> allTracks2 = Arrays.asList(trackFoo, trackBar, trackQux, trackBaz, trackAux);
 		check(runtime, allTracks2, Arrays.asList(trackFoo, trackBar), trackQux, Arrays.asList(trackBaz, trackAux));
 		runtime.popUp(0);
@@ -176,7 +177,7 @@ public class PlaylistRuntimeTest {
 	private void check(PlaylistRuntime runtime, //
 			Track expectedPreviousOrNull, Track expectedCurrent, Track expectedNextOrNull) {
 
-		System.out.println("T: " + runtime);
+		System.out.println("T: " + runtime); //$NON-NLS-1$
 		if (expectedPreviousOrNull != null) {
 			assertTrue(runtime.hasPlayed());
 			Track expectedPrevious = runtime.lastWasPlayed();
@@ -200,23 +201,23 @@ public class PlaylistRuntimeTest {
 	private void check(PlaylistRuntime runtime, //
 			int expectedCount, int expectedCurrentIndex, int expectedPlayedCount, int expectedRemainingCount) {
 
-		System.out.println("C: " + runtime);
+		System.out.println("C: " + runtime); //$NON-NLS-1$
 
-		assertEquals("Track count missmatch", expectedCount, runtime.count());
-		assertEquals("Current index missmatch", expectedCurrentIndex, runtime.currentTrackIndex());
-		assertEquals("Played count missmatch", expectedPlayedCount, runtime.playedCount());
-		assertEquals("Remaining count missmatch", expectedRemainingCount, runtime.remainingCount());
+		assertEquals("Track count missmatch", expectedCount, runtime.count()); //$NON-NLS-1$
+		assertEquals("Current index missmatch", expectedCurrentIndex, runtime.currentTrackIndex()); //$NON-NLS-1$
+		assertEquals("Played count missmatch", expectedPlayedCount, runtime.playedCount()); //$NON-NLS-1$
+		assertEquals("Remaining count missmatch", expectedRemainingCount, runtime.remainingCount()); //$NON-NLS-1$
 	}
 
 	private void check(PlaylistRuntime runtime, List<Track> expectedAllTracks, List<Track> expectedPlayedTracks,
 			Track expectedCurrentTrack, List<Track> expectedToBePlayedTracks) {
 
-		System.out.println("L: " + runtime);
+		System.out.println("L: " + runtime); //$NON-NLS-1$
 
-		assertEquals("All tracks missmatch", expectedAllTracks, runtime.listAll());
-		assertEquals("Played tracks missmatch", expectedPlayedTracks, runtime.played());
-		assertEquals("Current track missmatch", expectedCurrentTrack, runtime.current());
-		assertEquals("Remaining tracks missmatch", expectedToBePlayedTracks, runtime.toBePlayed());
+		assertEquals("All tracks missmatch", expectedAllTracks, runtime.listAll()); //$NON-NLS-1$
+		assertEquals("Played tracks missmatch", expectedPlayedTracks, runtime.played()); //$NON-NLS-1$
+		assertEquals("Current track missmatch", expectedCurrentTrack, runtime.current()); //$NON-NLS-1$
+		assertEquals("Remaining tracks missmatch", expectedToBePlayedTracks, runtime.toBePlayed()); //$NON-NLS-1$
 	}
 
 }

@@ -2,6 +2,15 @@ package cz.martlin.jmop.core.data;
 
 import javafx.util.Duration;
 
+/**
+ * The data structure for track. Track contains reference to bundle,
+ * idenfitifer, title, description length (duration). Instance of this class is
+ * immutable. To create instance, use
+ * {@link Bundle#createTrack(String, String, String)}
+ * 
+ * @author martin
+ *
+ */
 public class Track {
 	private final Bundle bundle;
 	private final String identifier;
@@ -10,14 +19,15 @@ public class Track {
 	private final Duration duration;
 	// TODO thumbnail
 
-
 	/**
-	 * Use {@link Bundle#createTrack(String, String, String)} instead.
+	 * If possible use {@link Bundle#createTrack(String, String, String)}
+	 * instead.
+	 * 
 	 * @param bundle
 	 * @param identifier
 	 * @param title
 	 * @param description
-	 * @param duration 
+	 * @param duration
 	 */
 	protected Track(Bundle bundle, String identifier, String title, String description, Duration duration) {
 		super();
@@ -47,7 +57,7 @@ public class Track {
 	public Duration getDuration() {
 		return duration;
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -95,8 +105,8 @@ public class Track {
 
 	@Override
 	public String toString() {
-		return "Track [bundle=" + bundle.getName() + ", identifier=" + identifier + ", title=" + title + ", description=" + "..."
-				+ "]";
+		return "Track [bundle=" + bundle.getName() + ", identifier=" + identifier + ", title=" + title //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", description=" + "..." + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 }

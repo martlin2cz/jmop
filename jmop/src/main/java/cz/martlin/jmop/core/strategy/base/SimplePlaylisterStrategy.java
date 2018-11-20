@@ -2,8 +2,8 @@ package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 
 /**
  * The base playlister, which simply everything delegates to the runtime. Feel
@@ -35,7 +35,7 @@ public abstract class SimplePlaylisterStrategy implements BasePlaylisterStrategy
 	public void stopPlayingPlaylist() {
 		this.runtime = null;
 	}
-	
+
 	@Override
 	public void playlistChanged(Playlist playlist, PlaylistRuntime runtime) {
 		// overrride me if needed!
@@ -46,7 +46,7 @@ public abstract class SimplePlaylisterStrategy implements BasePlaylisterStrategy
 	public boolean hasAtLeastOneTrack() {
 		return runtime.count() > 0;
 	}
-	
+
 	@Override
 	public boolean hasPrevious() {
 		return runtime.hasPlayed();

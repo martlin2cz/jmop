@@ -20,7 +20,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeScopes;
 
 /**
- * Based on
+ * All the technical stuff for working with youtube API. Based on
  * https://github.com/youtube/api-samples/blob/master/java/src/main/java/com/google/api/services/samples/youtube/cmdline/data/Quickstart.java
  * 
  * @author martin
@@ -29,11 +29,11 @@ import com.google.api.services.youtube.YouTubeScopes;
 public class YoutubeUtilities {
 
 	/** Application name. */
-	private static final String APPLICATION_NAME = "jmop";
+	private static final String APPLICATION_NAME = "jmop"; //$NON-NLS-1$
 
 	/** Directory to store user credentials for this application. */
-	private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"),
-			".credentials/youtube-java-quickstart");
+	private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"), //$NON-NLS-1$
+			".credentials/youtube-java-quickstart"); //$NON-NLS-1$
 
 	/** Global instance of the {@link FileDataStoreFactory}. */
 	private static FileDataStoreFactory DATA_STORE_FACTORY;
@@ -58,7 +58,7 @@ public class YoutubeUtilities {
 			DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
 		} catch (Throwable t) {
 			t.printStackTrace();
-			System.exit(1);
+			// System.exit(1);
 		}
 	}
 
@@ -76,13 +76,13 @@ public class YoutubeUtilities {
 	 */
 	public static Credential authorize() throws IOException {
 		// Load client secrets.
-		InputStream in = YoutubeUtilities.class.getResourceAsStream("/cz/martlin/jmop/apis/youtube_client_secret.json");
+		InputStream in = YoutubeUtilities.class.getResourceAsStream("/cz/martlin/jmop/apis/youtube_client_secret.json"); //$NON-NLS-1$
 		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
 		// Build flow and trigger user authorization request.
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
-				clientSecrets, SCOPES).setDataStoreFactory(DATA_STORE_FACTORY).setAccessType("offline").build();
-		Credential credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+				clientSecrets, SCOPES).setDataStoreFactory(DATA_STORE_FACTORY).setAccessType("offline").build(); //$NON-NLS-1$
+		Credential credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user"); //$NON-NLS-1$
 		return credential;
 	}
 

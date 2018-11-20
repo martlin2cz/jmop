@@ -2,13 +2,38 @@ package cz.martlin.jmop.core.data;
 
 import cz.martlin.jmop.core.sources.SourceKind;
 
+/**
+ * The simple data structure quite simillar to {@link Playlist}, but contains
+ * more raw data and also is not immutable.
+ * 
+ * @author martin
+ * @see Playlist
+ *
+ */
 public class PlaylistFileData {
-
+	/**
+	 * Name of bundle the playlist belongs to.
+	 */
 	private String bundleName;
+	/**
+	 * Name of playlist this represents.
+	 */
 	private String playlistName;
+	/**
+	 * Source kind.
+	 */
 	private SourceKind kind;
+	/**
+	 * List of tracks.
+	 */
 	private Tracklist tracklist;
+	/**
+	 * Index of current track.
+	 */
 	private int currentTrackIndex;
+	/**
+	 * Is locked?
+	 */
 	private boolean locked;
 
 	public PlaylistFileData() {
@@ -121,10 +146,8 @@ public class PlaylistFileData {
 
 	@Override
 	public String toString() {
-		return "PlaylistFileData [bundleName=" + bundleName + ", playlistName=" + playlistName + ", kind=" + kind
-				+ ", tracklist=" + tracklist + ", currentTrackIndex=" + currentTrackIndex + ", locked=" + locked + "]";
+		return "PlaylistFileData [bundleName=" + bundleName + ", playlistName=" + playlistName + ", kind=" + kind //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", tracklist=" + tracklist + ", currentTrackIndex=" + currentTrackIndex + ", locked=" + locked + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
-
-
 
 }

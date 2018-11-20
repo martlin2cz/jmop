@@ -20,10 +20,10 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Playlist" GridPane.rowIndex="1" />
+      <Label text="%Playlist" GridPane.rowIndex="1" />
       <ComboBox fx:id="cmbPlaylistName" prefHeight="26.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
       <tooltip>
-      		<Tooltip text="Choose the playlist you wish to be played." />
+      		<Tooltip text="%Choose_the_playlist_you_wish_to_be_played" />
       	</tooltip>
       </ComboBox>
    </children>

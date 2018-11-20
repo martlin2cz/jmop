@@ -2,8 +2,8 @@ package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 
 /**
  * Base playlister strategy, class performing going thought playlist (playlist
@@ -48,10 +48,10 @@ public interface BasePlaylisterStrategy {
 	/**
 	 * Returns the runtime played within this playlister. Runtime may be set by
 	 * {@link #startPlayingPlaylist(PlayerEngine, Playlist, PlaylistRuntime)}.
+	 * Use with care!
 	 * 
 	 * @return
 	 */
-	@Deprecated
 	public PlaylistRuntime getRuntime();
 
 	/////////////////////////////////////////////////////////////////////////////////////////

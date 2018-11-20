@@ -13,6 +13,16 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Duration;
 
+/**
+ * Wrapper for {@link BasePlayer}. Specifies properties for the status (in play
+ * mode, stopped, paused), current track and duration.
+ * 
+ * To specify what to do, when the track is over, use
+ * {@link #setOnTrackPlayed(Consumer)}.
+ * 
+ * @author martin
+ *
+ */
 public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 
 	private final BasePlayer player;
@@ -33,7 +43,7 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 		this.trackProperty = new SimpleObjectProperty<>();
 		this.timeProperty = new SimpleObjectProperty<>();
 		this.inPlayModeProperty = new SimpleBooleanProperty();
-		
+
 		initBindings();
 	}
 
@@ -63,44 +73,71 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 	public ReadOnlyObjectProperty<Duration> timeProperty() {
 		return timeProperty;
 	}
-	
+
 	public BooleanProperty inPlayModeProperty() {
 		return inPlayModeProperty;
 	}
-	///////////////////////////////////////////////////////////////////////////////
 
+	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Start playing given track.
+	 * 
+	 * @param track
+	 * @throws JMOPSourceException
+	 */
 	public synchronized void startPlaying(Track track) throws JMOPSourceException {
 		player.startPlaying(track);
 	}
 
+	/**
+	 * Stop playing.
+	 */
 	public synchronized void stop() {
 		player.stop();
 	}
 
+	/**
+	 * Pause playing.
+	 */
 	public synchronized void pause() {
 		player.pause();
 	}
 
+	/**
+	 * Resume playing.
+	 */
 	public synchronized void resume() {
 		player.resume();
 	}
 
+	/**
+	 * Seek to given time.
+	 * 
+	 * @param to
+	 */
 	public void seek(Duration to) {
 		player.seek(to);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Handles changed player. If track is over fires {@link #onTrackPlayed}, if
+	 * not updates all the properties.
+	 */
 	private void playerChanged() {
 		boolean over = player.isPlayOver();
 
 		if (over) {
 			fireTrackPlayed();
 		} else {
-			updateVariables();
+			updateProperties();
 		}
 	}
 
-	private void updateVariables() {
+	/**
+	 * Updates values of properties to match the player.
+	 */
+	private void updateProperties() {
 		boolean stopped = player.isStopped();
 		stoppedProperty.set(stopped);
 
@@ -112,11 +149,14 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 
 		Duration time = player.currentTime();
 		timeProperty.set(time);
-		
+
 		boolean inPlayMode = inPlayModeProperty.get() || !stopped;
 		inPlayModeProperty.set(inPlayMode);
 	}
 
+	/**
+	 * Fires the {@link #onTrackPlayed}.
+	 */
 	private void fireTrackPlayed() {
 		Track track = player.getPlayedTrack();
 

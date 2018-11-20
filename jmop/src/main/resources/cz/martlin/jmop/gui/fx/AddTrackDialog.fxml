@@ -17,10 +17,10 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Search query" />
-      <TextField fx:id="txtQuery" promptText="Track name and author" GridPane.columnIndex="1">
+      <Label text="%Search_query" />
+      <TextField fx:id="txtQuery" promptText="%Track_name_and_author" GridPane.columnIndex="1">
       <tooltip>
-      		<Tooltip text="Specify the search query for the track." />
+      		<Tooltip text="%Specify_the_search_query_for_the_track" />
       	</tooltip>
       </TextField>
    </children>

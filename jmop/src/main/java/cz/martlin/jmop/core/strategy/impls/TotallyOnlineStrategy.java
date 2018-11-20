@@ -1,8 +1,8 @@
 package cz.martlin.jmop.core.strategy.impls;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.playlist.PlaylistRuntime;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.strategy.base.AbstractNextOnlineLoadingStrategy;
 
 /**

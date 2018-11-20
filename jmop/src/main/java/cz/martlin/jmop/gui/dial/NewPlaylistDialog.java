@@ -3,6 +3,7 @@ package cz.martlin.jmop.gui.dial;
 import java.io.IOException;
 
 import cz.martlin.jmop.gui.dial.NewPlaylistDialog.NewPlaylistData;
+import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -25,16 +26,16 @@ public class NewPlaylistDialog extends BaseCommonFXMLDialog<NewPlaylistData> {
 
 	public NewPlaylistDialog() throws IOException {
 		super();
-		load("/cz/martlin/jmop/gui/fx/NewPlaylistDialog.fxml");
+		load("/cz/martlin/jmop/gui/fx/NewPlaylistDialog.fxml"); //$NON-NLS-1$
 	}
 
 	@Override
 	protected void specifyCustomDialogSettings() {
-		setTitle("Create new playlist");
-		setHeaderText("Create new playlist, for instance for album \n" //
-				+ "or just you favourite set.");
-		
-		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-playlist.png"))));
+		setTitle(Msg.get("Create_new_playlist")); //$NON-NLS-1$
+		setHeaderText(Msg.get("Create_new_playlist_for_instance_")); //$NON-NLS-1$
+
+		setGraphic(
+				new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/new-playlist.png")))); //$NON-NLS-1$
 	}
 
 	@Override
@@ -47,11 +48,11 @@ public class NewPlaylistDialog extends BaseCommonFXMLDialog<NewPlaylistData> {
 	@Override
 	protected boolean validate() {
 		if (txtPlaylistName.getText().isEmpty()) {
-			GuiComplexActionsPerformer.showErrorDialog("Missing value", "Specify playlist name");
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("Missing_value"), Msg.get("Specify_playlist_name")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 		if (txtQuery.getText().isEmpty()) {
-			GuiComplexActionsPerformer.showErrorDialog("Missing value", "Specify query");
+			GuiComplexActionsPerformer.showErrorDialog(Msg.get("Missing_value"), Msg.get("Specify_query")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 

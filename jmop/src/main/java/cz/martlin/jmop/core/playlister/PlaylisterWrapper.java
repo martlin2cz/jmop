@@ -6,7 +6,7 @@ import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.playlist.PlaylistRuntime;
+import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -14,6 +14,14 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * The wrapper for {@link Playlister}. Holds properties for current playlist,
+ * previous and next tracks and booleans "has some track", "has previous track"
+ * and "has next track".
+ * 
+ * @author martin
+ *
+ */
 public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	private final Playlister playlister;
 
@@ -42,7 +50,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	public ObjectProperty<Playlist> playlistProperty() {
 		return playlistProperty;
 	}
-	
+
 	public BooleanProperty hasSomeTrackProperty() {
 		return hasSomeTrackProperty;
 	}
@@ -71,6 +79,12 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Marks as playing given playlist.
+	 * 
+	 * @param engine
+	 * @param playlist
+	 */
 	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist) {
 		playlister.startPlayingPlaylist(engine, playlist);
 
@@ -82,6 +96,11 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		updateNextAndPreviousProperties();
 	}
 
+	/**
+	 * Marks as NOT playing given playlist.
+	 * 
+	 * @param playlist
+	 */
 	public void stopPlayingPlaylist(Playlist playlist) {
 		playlister.stopPlayingPlaylist(playlist);
 
@@ -93,33 +112,66 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Marks as playing "next" (in fact current) track.
+	 * 
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	public Track playNext() throws JMOPSourceException {
 		return playlister.playNext();
 	}
 
+	/**
+	 * Marks as playing track at specified index.
+	 * 
+	 * @param index
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	public Track play(int index) throws JMOPSourceException {
 		Track track = playlister.play(index);
 		playlisterChanged();
 		return track;
 	}
 
+	/**
+	 * Marks as playing next track (after the current one).
+	 * 
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	public Track toNext() throws JMOPSourceException {
 		Track track = playlister.toNext();
 		playlisterChanged();
 		return track;
 	}
 
+	/**
+	 * Marks as playing previous track (before the current one).
+	 * 
+	 * @return
+	 * @throws JMOPSourceException
+	 */
 	public Track toPrevious() throws JMOPSourceException {
 		Track track = playlister.toPrevious();
 		playlisterChanged();
 		return track;
 	}
 
+	/**
+	 * Adds given track.
+	 * 
+	 * @param track
+	 */
 	public void add(Track track) {
 		playlister.add(track);
 		playlisterChanged();
 	}
 
+	/**
+	 * Removes all track after the current one.
+	 */
 	public void clearRemaining() {
 		playlister.clearRemaining();
 		playlisterChanged();
@@ -127,19 +179,35 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Handles changed value of offline status. In fact just updates some
+	 * properties.
+	 */
 	private void offlineChanged() {
 		updateNextAndPreviousProperties();
 	}
 
+	/**
+	 * Handles changed playlist. In fact just delegates to playlister.
+	 * 
+	 * @param playlist
+	 */
 	private void playlistValueChanged(Playlist playlist) {
 		playlister.playlistChanged(playlist);
 	}
 
+	/**
+	 * Handles changed playister. In fact pushes changes into playlist and
+	 * updates properties.
+	 */
 	private void playlisterChanged() {
 		updatePlaylist();
 		updateNextAndPreviousProperties();
 	}
 
+	/**
+	 * Pushes updated runtime into (current) playist.
+	 */
 	private void updatePlaylist() {
 		PlaylistRuntime runtime = playlister.getRuntime();
 
@@ -152,6 +220,9 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		playlist.setCurrentTrackIndex(currentIndex);
 	}
 
+	/**
+	 * Yea, does exactly what it sounds like.
+	 */
 	private void updateNextAndPreviousProperties() {
 		boolean hasSome = playlister.hasSomeTrack();
 		boolean hasPrev = playlister.hasPrevious();
@@ -169,7 +240,7 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		} else {
 			next = null;
 		}
-		
+
 		hasSomeTrackProperty.set(hasSome);
 		hasPreviousProperty.set(hasPrev);
 		hasNextProperty.set(hasNext);

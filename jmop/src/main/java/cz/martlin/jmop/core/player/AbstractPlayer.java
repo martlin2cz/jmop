@@ -15,6 +15,13 @@ import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import javafx.util.Duration;
 
+/**
+ * The general {@link BasePlayer} with some common functions. Holds all required
+ * values in fields and when the internal status changes, fires event.
+ * 
+ * @author martin
+ *
+ */
 public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implements BasePlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -70,13 +77,13 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 
 	@Override
 	public synchronized void startPlaying(Track track) throws JMOPSourceException {
-		LOG.info("Starting playing");
+		LOG.info("Starting playing"); //$NON-NLS-1$
 		if (!stopped) {
 			doStopPlaying();
 		}
 
 		File file = local.fileOfTrack(track, tracksLocation, supportedFormat);
-		LOG.debug("Will play file " + file);
+		LOG.debug("Will play file " + file); //$NON-NLS-1$
 		doStartPlaying(track, file);
 
 		over = false;
@@ -87,11 +94,18 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Start playing given track with given file. No need to additional checks
+	 * or stop.
+	 * 
+	 * @param track
+	 * @param file
+	 */
 	protected abstract void doStartPlaying(Track track, File file);
 
 	@Override
 	public synchronized void stop() {
-		LOG.info("Stopping playing");
+		LOG.info("Stopping playing"); //$NON-NLS-1$
 		if (stopped) {
 			return;
 		}
@@ -103,12 +117,15 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Stop playing current track. No need to aditional checks.
+	 */
 	protected abstract void doStopPlaying();
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public synchronized void pause() {
-		LOG.info("Pausing playing");
+		LOG.info("Pausing playing"); //$NON-NLS-1$
 		if (paused) {
 			return;
 		}
@@ -119,11 +136,14 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Pauses playing current track. No need to aditional checks.
+	 */
 	protected abstract void doPausePlaying();
 
 	@Override
 	public synchronized void resume() {
-		LOG.info("Resuming playing");
+		LOG.info("Resuming playing"); //$NON-NLS-1$
 		if (!paused) {
 			return;
 		}
@@ -134,23 +154,34 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Resumes playing current track. No need to aditional checks.
+	 */
 	protected abstract void doResumePlaying();
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void seek(Duration to) {
-		LOG.info("Seeking to " + DurationUtilities.toHumanString(to));
+		LOG.info("Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
 
 		doSeek(to);
 		fireValueChangedEvent();
 	}
 
+	/**
+	 * Seeks to given time. No need to aditional checks.
+	 * 
+	 * @param to
+	 */
 	protected abstract void doSeek(Duration to);
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Marks as finished playing track. No need to aditional checks.
+	 */
 	protected void trackFinished() {
-		LOG.info("Track play finished");
+		LOG.info("Track play finished"); //$NON-NLS-1$
 
 		over = true;
 		fireValueChangedEvent();

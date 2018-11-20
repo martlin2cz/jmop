@@ -9,26 +9,26 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.config.DefaultConfiguration;
+import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.download.FFMPEGConverter;
-import cz.martlin.jmop.core.sources.download.TestingDownloader;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
-import cz.martlin.jmop.core.sources.local.DefaultFileSystemAccessor;
-import cz.martlin.jmop.core.sources.local.DefaultFilesNamer;
-import cz.martlin.jmop.core.sources.local.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.local.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
+import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
+import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
+import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
+import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
+import cz.martlin.jmop.core.sources.remotes.TestingDownloader;
 import cz.martlin.jmop.misc.TestingTools;
 import javafx.util.Duration;
 
@@ -79,7 +79,7 @@ public class JavaFXMediaPlayerTest {
 
 	private Track prepareTrack() {
 		SourceKind kind = SourceKind.YOUTUBE;
-		String name = "testing-kind";
+		String name = "testing-kind"; //$NON-NLS-1$
 		Bundle bundle = new Bundle(kind, name);
 		// TODO: local.createBundle, but just once!
 		// try {
@@ -89,19 +89,19 @@ public class JavaFXMediaPlayerTest {
 		// e.printStackTrace();
 		// }
 
-		String identifier = "xxx42yyy";
-		String description = "Lorem Ipsum ...";
-		String title = "test-track";
+		String identifier = "xxx42yyy"; //$NON-NLS-1$
+		String description = "Lorem Ipsum ..."; //$NON-NLS-1$
+		String title = "test-track"; //$NON-NLS-1$
 		Duration duration = DurationUtilities.createDuration(0, 1, 1);
 		Track track = bundle.createTrack(identifier, title, description, duration);
 		return track;
 	}
 
 	private BaseLocalSource prepareLocal() throws IOException {
-		DefaultConfiguration config = new DefaultConfiguration();
+		ConstantConfiguration config = new ConstantConfiguration();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();
-		File root = new File("/tmp/jmop-gui/");
+		File root = new File("/tmp/jmop-gui/"); //$NON-NLS-1$
 		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
 		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		return local;

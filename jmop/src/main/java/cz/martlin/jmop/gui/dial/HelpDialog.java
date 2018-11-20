@@ -2,6 +2,7 @@ package cz.martlin.jmop.gui.dial;
 
 import java.net.URL;
 
+import cz.martlin.jmop.gui.local.Msg;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.Dialog;
@@ -19,11 +20,11 @@ public class HelpDialog extends Dialog<Void> {
 	}
 
 	private void initialize() {
-		setTitle("Help");
+		setTitle(Msg.get("Help")); //$NON-NLS-1$
 
-		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/help.png"))));
+		setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/cz/martlin/jmop/gui/img/help.png")))); //$NON-NLS-1$
 
-		setHeaderText("JMOP Help");
+		setHeaderText(Msg.get("JMOP_Help")); //$NON-NLS-1$
 		setResizable(true);
 
 		Control content = createContent();
@@ -36,9 +37,9 @@ public class HelpDialog extends Dialog<Void> {
 	private ScrollPane createContent() {
 		WebView webpage = new WebView();
 		WebEngine engine = webpage.getEngine();
-		String helpName = "help.html";
+		String helpName = Msg.get("html_help_file"); //$NON-NLS-1$
 
-		URL helpFile = getClass().getResource("/cz/martlin/jmop/gui/help/" + helpName);
+		URL helpFile = getClass().getResource("/cz/martlin/jmop/gui/help/" + helpName); //$NON-NLS-1$
 		String helpURL = helpFile.toExternalForm();
 		engine.load(helpURL);
 
