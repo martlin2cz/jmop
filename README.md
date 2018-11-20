@@ -28,5 +28,9 @@ You can modify JMOP behaviour quite a lot by changing line `BaseJMOPBuilder buil
 # TODO
  - [ ] add more sources (Soundcloud for instance)
  - [ ] add dynamic search and autocomplete
+ - [ ] add more proper configuration check
+ - [ ] avoid using youtube-dl and ffmpeg
  - [ ] allow to import playlists
+ - [ ] add nogui mode (play from console)
+ - [ ] add RMI/client-server support
  - [ ] fix various bugs
