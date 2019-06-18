@@ -49,6 +49,7 @@ public class TestingTools {
 	}
 
 	public static void runAsJavaFX(Runnable runnable) {
+		//FIXME commented out
 		new JFXPanel(); // Initializes the JavaFx Platform
 
 		Platform.runLater(runnable);

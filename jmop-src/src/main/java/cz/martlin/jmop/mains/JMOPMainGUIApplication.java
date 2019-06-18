@@ -9,7 +9,7 @@ import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.gui.control.MainFrameController;
 import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
-import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory;
+//XXX import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -68,7 +68,7 @@ public class JMOPMainGUIApplication extends Application {
 	}
 
 	private static void beforeFX() {
-		SvgImageLoaderFactory.install();
+		//XXX: SvgImageLoaderFactory.install();
 	}
 
 }

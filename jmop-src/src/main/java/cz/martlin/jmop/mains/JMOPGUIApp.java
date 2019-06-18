@@ -94,6 +94,15 @@ public class JMOPGUIApp {
 	}
 
 	public static JMOPPlayer getJmop() {
+		//FIXME java 11 mvn hack
+		if (jmop == null) {
+			try {
+				jmop = new DefaultJMOPPlayerBuilder().create(new CommandlineData());
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
 		return jmop;
 	}
 
