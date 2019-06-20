@@ -36,7 +36,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/play.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/play.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -47,7 +47,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/stop.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/stop.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -58,7 +58,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/pause.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/pause.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -69,7 +69,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/resume.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/resume.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -80,7 +80,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/previous.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/previous.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -91,7 +91,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/next.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/next.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -103,7 +103,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/exit.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/exit.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -121,7 +121,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/new-bundle.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/new-bundle.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -141,7 +141,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/new-playlist.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/new-playlist.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -152,7 +152,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/save-playlist.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/save-playlist.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -163,7 +163,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/lock-playlist.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/lock-playlist.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -174,7 +174,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/clear-remaining.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/clear-remaining.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -193,7 +193,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/add-track.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/add-track.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -209,7 +209,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/help.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/help.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -220,7 +220,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/check-config.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/check-config.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -230,7 +230,7 @@
 						<ImageView fitHeight="$MENUITEM_ICON_SIZE" fitWidth="$MENUITEM_ICON_SIZE"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@/cz/martlin/jmop/gui/img/about.svg" />
+								<Image url="@/cz/martlin/jmop/gui/img/about.png" />
 							</image>
 						</ImageView>
 					</graphic>
