@@ -282,10 +282,10 @@ public class JMOPMainMenu extends MenuBar implements Initializable, RequiresJMOP
 
 		if (playlist.isLocked()) {
 			miLockUnlockThisPlaylist.setText(Msg.get("Un_lock_this_playlist")); //$NON-NLS-1$
-			changeImage("/cz/martlin/jmop/gui/img/unlock-playlist.svg"); //$NON-NLS-1$
+			changeImage("/cz/martlin/jmop/gui/img/unlock-playlist.png"); //$NON-NLS-1$
 		} else {
 			miLockUnlockThisPlaylist.setText(Msg.get("_Lock_this_playlist")); //$NON-NLS-1$
-			changeImage("/cz/martlin/jmop/gui/img/lock-playlist.svg"); //$NON-NLS-1$
+			changeImage("/cz/martlin/jmop/gui/img/lock-playlist.png"); //$NON-NLS-1$
 		}
 	}
 

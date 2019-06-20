@@ -84,7 +84,7 @@
 				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
 					pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@/cz/martlin/jmop/gui/img/play.svg" />
+						<Image url="@/cz/martlin/jmop/gui/img/play.png" />
 					</image>
 				</ImageView>
 			</firstStateGraphics>
@@ -92,7 +92,7 @@
 				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
 					pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@/cz/martlin/jmop/gui/img/stop.svg" />
+						<Image url="@/cz/martlin/jmop/gui/img/stop.png" />
 					</image>
 				</ImageView>
 			</secondStateGraphics>
@@ -113,7 +113,7 @@
 				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
 					pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@/cz/martlin/jmop/gui/img/resume.svg" />
+						<Image url="@/cz/martlin/jmop/gui/img/resume.png" />
 					</image>
 				</ImageView>
 			</firstStateGraphics>
@@ -121,7 +121,7 @@
 				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
 					pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@/cz/martlin/jmop/gui/img/pause.svg" />
+						<Image url="@/cz/martlin/jmop/gui/img/pause.png" />
 					</image>
 				</ImageView>
 			</secondStateGraphics>
@@ -142,7 +142,7 @@
 				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
 					pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@/cz/martlin/jmop/gui/img/previous.svg" />
+						<Image url="@/cz/martlin/jmop/gui/img/previous.png" />
 					</image>
 				</ImageView>
 			</graphic>
@@ -158,7 +158,7 @@
 				<ImageView fitHeight="$BUTTONS_ICON_SIZE" fitWidth="$BUTTONS_ICON_SIZE"
 					pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@/cz/martlin/jmop/gui/img/next.svg" />
+						<Image url="@/cz/martlin/jmop/gui/img/next.png" />
 					</image>
 				</ImageView>
 			</graphic>
