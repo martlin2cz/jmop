@@ -235,7 +235,9 @@ public class DefaultLocalSource implements BaseLocalSource {
 		String bundleDirName = fileSystem.bundleDirectoryName(bundleName);
 		PlaylistFileData data = fileSystem.getPlaylistOfName(bundle, bundleDirName, name);
 		Tracklist tracklist = data.getTracklist();
-		return new Playlist(bundle, name, tracklist);
+		int currentTrackIndex = data.getCurrentTrackIndex();
+		boolean locked = data.isLocked();
+		return new Playlist(bundle, name, tracklist, currentTrackIndex, locked);
 	}
 
 	private void savePlaylistInternal(Bundle bundle, Playlist playlist) throws IOException {
