@@ -40,15 +40,19 @@ public class DurationUtilities {
 		String[] parts = string.split("(PT|H|M|S)"); //$NON-NLS-1$
 		int hours, minutes, seconds;
 
-		if (parts.length == 2) {
+		if (string.matches("PT(\\d+)S")) { //$NON-NLS-1$
 			hours = 0;
 			minutes = 0;
 			seconds = Integer.parseInt(parts[1]);
-		} else if (parts.length == 3) {
+		} else if (string.matches("PT(\\d+)M(\\d+)S")) { //$NON-NLS-1$
 			hours = 0;
 			minutes = Integer.parseInt(parts[1]);
 			seconds = Integer.parseInt(parts[2]);
-		} else if (parts.length == 4) {
+		} else if (string.matches("PT(\\d+)H(\\d+)S")) { //$NON-NLS-1$
+			hours = Integer.parseInt(parts[1]);
+			minutes = 0;
+			seconds = Integer.parseInt(parts[2]);
+		} else if (string.matches("PT(\\d+)H(\\d+)M(\\d+)S")) { //$NON-NLS-1$
 			hours = Integer.parseInt(parts[1]);
 			minutes = Integer.parseInt(parts[2]);
 			seconds = Integer.parseInt(parts[3]);
