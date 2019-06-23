@@ -79,8 +79,7 @@ public class PlayerEngine {
 		LOG.info("Playing next to play"); //$NON-NLS-1$
 
 		Track track = playlister.playNext();
-		preparer.checkAndLoadTrack(track);
-		player.startPlaying(track);
+		playChecked(track);
 	}
 
 	/**
@@ -93,8 +92,7 @@ public class PlayerEngine {
 		LOG.info("Playing " + index + " th"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		Track track = playlister.play(index);
-		preparer.checkAndLoadTrack(track);
-		player.startPlaying(track);
+		playChecked(track);
 	}
 
 	/**
@@ -140,8 +138,7 @@ public class PlayerEngine {
 		LOG.info("Playing next"); //$NON-NLS-1$
 
 		Track track = playlister.toNext();
-		preparer.checkAndLoadTrack(track);
-		player.startPlaying(track);
+		playChecked(track);
 	}
 
 	/**
@@ -153,8 +150,7 @@ public class PlayerEngine {
 		LOG.info("Playing previous"); //$NON-NLS-1$
 
 		Track track = playlister.toPrevious();
-		preparer.checkAndLoadTrack(track);
-		player.startPlaying(track);
+		playChecked(track);
 	}
 
 	/**
@@ -204,6 +200,23 @@ public class PlayerEngine {
 	 */
 	private boolean hasNext() {
 		return playlister.hasNextProperty().get();
+	}
+
+	/**
+	 * Checks (and if needed, performs so) check of the existence of given track's
+	 * files. After that plays it.
+	 * 
+	 * @param track
+	 * @throws JMOPSourceException
+	 */
+	private void playChecked(Track track) throws JMOPSourceException {
+		preparer.checkAndLoadTrack(track, (t) -> {
+			try {
+				player.startPlaying(track);
+			} catch (JMOPSourceException e) {
+				reporter.report(e);
+			}
+		});
 	}
 
 }

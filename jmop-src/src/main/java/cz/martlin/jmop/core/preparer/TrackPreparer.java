@@ -12,6 +12,7 @@ import cz.martlin.jmop.core.operation.base.BaseOperation;
 import cz.martlin.jmop.core.operation.base.OperationWrapper;
 import cz.martlin.jmop.core.operation.base.TrackOperationTask;
 import cz.martlin.jmop.core.operation.operations.Operations;
+import cz.martlin.jmop.core.operation.operations.TrackFilesLoadOperation;
 import cz.martlin.jmop.core.operation.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
@@ -122,14 +123,14 @@ public class TrackPreparer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Load in foregound files of given track.
+	 * Load in background files of given track.
 	 * 
 	 * @param track
+	 * @param onTrackReady
 	 */
-	public void checkAndLoadTrack(Track track) {
-		BaseOperation<Track, Track> load = operations.loadOperation();
-
-		runInForeground(load, track);
+	public void checkAndLoadTrack(Track track, Consumer<Track> onTrackReady) {
+		TrackFilesLoadOperation load = operations.loadOperation();
+		runInBackground(load, track, onTrackReady);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -195,7 +196,9 @@ public class TrackPreparer {
 	 * 
 	 * @param operation
 	 * @param data
+	 * @deprecated do not run anything in foregound!
 	 */
+	@Deprecated
 	private <IT, OT> void runInForeground(BaseOperation<IT, OT> operation, IT data) {
 		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
 
