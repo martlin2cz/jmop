@@ -210,13 +210,7 @@ public class PlayerEngine {
 	 * @throws JMOPSourceException
 	 */
 	private void playChecked(Track track) throws JMOPSourceException {
-		preparer.checkAndLoadTrack(track, (t) -> {
-			try {
-				player.startPlaying(track);
-			} catch (JMOPSourceException e) {
-				reporter.report(e);
-			}
-		});
+		preparer.checkAndLoadTrack(track, player);
 	}
 
 }
