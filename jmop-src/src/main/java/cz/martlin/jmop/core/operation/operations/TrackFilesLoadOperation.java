@@ -108,7 +108,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 			return true;
 		}
 
-		boolean downloaded = downloader.download(track, downloadLocation);
+		boolean downloaded = downloader.download(track, downloadLocation, handler);
 		return downloaded;
 	}
 
@@ -130,7 +130,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 			return true;
 		}
 
-		boolean converted = preparer.prepare(track, downloadFormat, downloadLocation, saveFormat, saveLocation);
+		boolean converted = preparer.prepare(track, downloadFormat, downloadLocation, saveFormat, saveLocation, handler);
 		return converted;
 	}
 
@@ -152,7 +152,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 			return true;
 		}
 
-		boolean prepared = preparer.prepare(track, downloadFormat, downloadLocation, playerFormat, playerLocation);
+		boolean prepared = preparer.prepare(track, downloadFormat, downloadLocation, playerFormat, playerLocation, handler);
 		return prepared;
 	}
 

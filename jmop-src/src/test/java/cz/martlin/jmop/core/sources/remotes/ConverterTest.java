@@ -48,13 +48,13 @@ public class ConverterTest {
 
 		BaseSourceConverter converter = new FFMPEGConverter(local);
 		// BaseSourceConverter converter = new NoopConverter();
-		converter.specifyListener(listener);
+		//converter.specifyListener(listener);
 
 		Track track = bundle.createTrack(id, title, description, duration);
 
 		try {
 
-			boolean success = converter.convert(track, inputLocation, inputFormat, outputLocation, outputFormat);
+			boolean success = converter.convert(track, inputLocation, inputFormat, outputLocation, outputFormat, listener);
 			System.err.println("Success? " + success); //$NON-NLS-1$
 		} catch (Exception e) {
 			e.printStackTrace();

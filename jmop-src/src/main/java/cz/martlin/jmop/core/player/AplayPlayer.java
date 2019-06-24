@@ -93,7 +93,7 @@ public class AplayPlayer extends AbstractPlayer {
 	private void runProcessInBackround(AplayProcess process, Track track, File file) {
 		Runnable run = () -> {
 			try {
-				process.run(file);
+				process.run(file, null);
 			} catch (ExternalProgramException e) {
 				reporter.report(e);
 			} catch (Exception e) {
@@ -113,7 +113,7 @@ public class AplayPlayer extends AbstractPlayer {
 	 * @author martin
 	 *
 	 */
-	public class AplayProcess extends AbstractProcessEncapusulation<File, Void> {
+	public static class AplayProcess extends AbstractProcessEncapusulation<File, Void> {
 
 		public AplayProcess() {
 			super();

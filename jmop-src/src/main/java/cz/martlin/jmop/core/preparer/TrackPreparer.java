@@ -187,7 +187,7 @@ public class TrackPreparer {
 	 */
 	private <IT, OT> void runInBackground(BaseOperation<IT, OT> operation, IT data, Consumer<OT> onCompleted) {
 		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
-
+		//TODO if not yet already running ...
 		TrackOperationTask<IT, OT> task = new TrackOperationTask<>(wrapper, data);
 
 		currentTasks.add(wrapper);

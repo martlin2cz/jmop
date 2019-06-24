@@ -15,6 +15,7 @@ import cz.martlin.jmop.core.misc.AbstractProcessEncapusulation;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
@@ -59,10 +60,10 @@ public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadD
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public boolean download(Track track, TrackFileLocation location) throws ExternalProgramException {
+	public boolean download(Track track, TrackFileLocation location, ProgressListener listener) throws ExternalProgramException {
 		LOG.info("Downloading track " + track); //$NON-NLS-1$
 		DownloadData data = new DownloadData(track, location);
-		return run(data);
+		return run(data, listener);
 	}
 
 	@Override

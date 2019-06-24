@@ -1,11 +1,13 @@
 package cz.martlin.jmop.core.sources.remotes;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -31,14 +33,25 @@ public class TestingDownloader implements BaseSourceDownloader {
 	}
 
 	@Override
-	public boolean download(Track track, TrackFileLocation location) throws Exception {
-		InputStream ins = getClass().getClassLoader().getResourceAsStream(TESTING_SAMPLE_FILE);
-
+	public boolean download(Track track, TrackFileLocation location, ProgressListener listener) throws Exception {
 		File targetFile = local.fileOfTrack(track, location, downloadFormat);
 
-		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		copyTestingFileTo(targetFile);
 
 		return true;
+	}
+
+	/**
+	 * Copies testing file to given file.
+	 * 
+	 * @param targetFile
+	 * @throws JMOPSourceException
+	 * @throws IOException
+	 */
+	public static void copyTestingFileTo(File targetFile) throws JMOPSourceException, IOException {
+		InputStream ins = TestingDownloader.class.getClassLoader().getResourceAsStream(TESTING_SAMPLE_FILE);
+
+		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
 
 	@Override

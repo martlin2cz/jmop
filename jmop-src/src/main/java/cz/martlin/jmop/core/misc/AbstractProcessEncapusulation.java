@@ -21,16 +21,16 @@ import com.google.common.io.Files;
  * 
  * @author martin
  *
- * @param <INT>
- *            type of input data
- * @param <OUT>
- *            type of output data
+ * @param <INT> type of input data
+ * @param <OUT> type of output data
  */
 public abstract class AbstractProcessEncapusulation<INT, OUT> implements ProgressGenerator {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
+	@Deprecated
 	private ProgressListener listener;
-	protected Process process;
+	@Deprecated
+	private Process process;
 
 	public AbstractProcessEncapusulation() {
 		super();
@@ -38,6 +38,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	}
 
 	@Override
+	@Deprecated
 	public void specifyListener(ProgressListener listener) {
 		this.listener = listener;
 	}
@@ -47,18 +48,18 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	/**
 	 * Runs the process with the given input.
 	 * 
-	 * @param input
-	 *            the input
+	 * @param input the input
+	 * @param listener
 	 * @return the output
 	 * @throws ExternalProgramException
 	 */
-	public OUT run(INT input) throws ExternalProgramException {
+	public OUT run(INT input, ProgressListener listener) throws ExternalProgramException {
 		try {
-			startProcess(input);
+			Process process = startProcess(input);
 
-			handleProcessOutput();
+			handleProcessOutput(process);
 
-			return finishProcess(input);
+			return finishProcess(process, input);
 		} catch (Exception e) {
 			throw new ExternalProgramException("Process failed", e); //$NON-NLS-1$
 		}
@@ -77,9 +78,10 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	 * {@link #createCommandLine(Object)}, java Process and starts it.
 	 * 
 	 * @param input
+	 * @return 
 	 * @throws Exception
 	 */
-	private void startProcess(INT input) throws Exception {
+	private Process startProcess(INT input) throws Exception {
 		List<String> commandline = createCommandLine(input);
 		LOG.info("Starting process " + commandline); //$NON-NLS-1$
 
@@ -88,16 +90,18 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 		File directory = getWorkingDirectory(input);
 		builder.directory(directory);
 
-		process = builder.start();
+		Process process = builder.start();
+		return process;
 	}
 
 	/**
 	 * Reads the output of the process and passes it into
 	 * {@link #processLineOfOutput(String)}.
+	 * @param process 
 	 * 
 	 * @throws Exception
 	 */
-	private void handleProcessOutput() throws Exception {
+	private void handleProcessOutput(Process process) throws Exception {
 		InputStream ins = getOutputStream(process);
 		Reader r = new InputStreamReader(ins);
 		Scanner s = new Scanner(r);
@@ -130,12 +134,13 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	/**
 	 * Waits until the process ends and then handles the result code (by
 	 * {@link #handleResult(int, Object)}).
+	 * @param process 
 	 * 
 	 * @param input
 	 * @return
 	 * @throws Exception
 	 */
-	private OUT finishProcess(INT input) throws Exception {
+	private OUT finishProcess(Process process, INT input) throws Exception {
 		int result = process.waitFor();
 
 		process = null;
@@ -183,9 +188,9 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	protected abstract InputStream getOutputStream(Process process) throws Exception;
 
 	/**
-	 * Process somehow line of output at stderr/stdout. Return non-null value,
-	 * if line contains some progress information (if so, it shall be
-	 * percentage, i.e. value from 0.0).
+	 * Process somehow line of output at stderr/stdout. Return non-null value, if
+	 * line contains some progress information (if so, it shall be percentage, i.e.
+	 * value from 0.0).
 	 * 
 	 * @param line
 	 * @return
@@ -215,8 +220,8 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	}
 
 	/**
-	 * Simply executes given command, awaits the finish and returns the result
-	 * code. Usefull for checks, like "foo --version".
+	 * Simply executes given command, awaits the finish and returns the result code.
+	 * Usefull for checks, like "foo --version".
 	 * 
 	 * @param command
 	 * @return
