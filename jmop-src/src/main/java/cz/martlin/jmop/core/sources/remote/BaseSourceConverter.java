@@ -1,7 +1,6 @@
 package cz.martlin.jmop.core.sources.remote;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.ProgressGenerator;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
@@ -19,7 +18,7 @@ import cz.martlin.jmop.core.sources.locals.TrackFileFormatLocationPreparer;
  * 
  *
  */
-public interface BaseSourceConverter extends ProgressGenerator {
+public interface BaseSourceConverter /*extends ProgressGenerator*/ {
 
 	/**
 	 * Converts given track fron given input format at given input location into

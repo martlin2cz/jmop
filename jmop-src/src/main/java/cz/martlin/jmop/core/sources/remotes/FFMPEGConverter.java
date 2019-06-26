@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.AbstractProcessEncapusulation;
+import cz.martlin.jmop.core.misc.AbstractProgramEncapusulation;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
@@ -27,7 +27,7 @@ import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter.TrackConvertData;
  * @author martin
  *
  */
-public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertData, Boolean>
+public class FFMPEGConverter extends AbstractProgramEncapusulation<TrackConvertData, Boolean>
 		implements BaseSourceConverter {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private static final String DURATION_SEPARATOR = ":"; //$NON-NLS-1$

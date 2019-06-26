@@ -1,7 +1,6 @@
 package cz.martlin.jmop.core.sources.remote;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.ProgressGenerator;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
@@ -15,7 +14,7 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * @author martin
  *
  */
-public interface BaseSourceDownloader extends ProgressGenerator {
+public interface BaseSourceDownloader /*extends ProgressGenerator*/ {
 
 	/**
 	 * Downloads given track to given location.

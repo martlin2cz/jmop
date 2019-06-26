@@ -10,13 +10,13 @@ import cz.martlin.jmop.core.player.AplayPlayer.AplayProcess;
 import cz.martlin.jmop.core.sources.remotes.TestingDownloader;
 
 /**
- * Some simple test for {@link AbstractProcessEncapusulation}. Currently, checks
+ * Some simple test for {@link AbstractProgramEncapusulation}. Currently, checks
  * only the basic usage, without progress reporting.
  * 
  * @author martin
  *
  */
-public class AbstractProcessEncapsulationTest {
+public class AbstractProgramEncapsulationTest {
 
 	/**
 	 * Just runs {@link AplayProcess}.

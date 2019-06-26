@@ -30,12 +30,12 @@ public class NoopConverter implements BaseSourceConverter {
 
 		return true;
 	}
-
+/*
 	@Override
 	public void specifyListener(ProgressListener listener) {
 		// nothing
 	}
-
+*/
 	@Override
 	public boolean check() {
 		return true;

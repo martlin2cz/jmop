@@ -60,9 +60,6 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	@Override
 	protected Track runInternal(Track input, OperationChangeListener handler) throws Exception {
 
-		downloader.specifyListener(handler);
-		preparer.specifyListener(handler);
-
 		boolean downloaded = checkAndDownload(input, handler);
 		if (!downloaded) {
 			return input;
@@ -77,10 +74,6 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 		if (!prepared) {
 			return input;
 		}
-
-		// FIXME wont be invoked if return belowe is
-		downloader.specifyListener(null);
-		preparer.specifyListener(null);
 
 		return input;
 	}

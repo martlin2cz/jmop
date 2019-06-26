@@ -31,15 +31,6 @@ public class TrackFileFormatLocationPreparer {
 		this.converter = converter;
 	}
 
-	/**
-	 * Set listener.
-	 * 
-	 * @param progressListener
-	 */
-	public void specifyListener(ProgressListener progressListener) {
-		this.converter.specifyListener(progressListener);
-	}
-
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	/**

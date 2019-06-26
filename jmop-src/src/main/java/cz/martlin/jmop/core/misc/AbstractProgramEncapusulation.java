@@ -24,23 +24,12 @@ import com.google.common.io.Files;
  * @param <INT> type of input data
  * @param <OUT> type of output data
  */
-public abstract class AbstractProcessEncapusulation<INT, OUT> implements ProgressGenerator {
+public abstract class AbstractProgramEncapusulation<INT, OUT> {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	@Deprecated
-	private ProgressListener listener;
-	@Deprecated
-	private Process process;
 
-	public AbstractProcessEncapusulation() {
+	public AbstractProgramEncapusulation() {
 		super();
-		this.listener = null;
-	}
-
-	@Override
-	@Deprecated
-	public void specifyListener(ProgressListener listener) {
-		this.listener = listener;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +46,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 		try {
 			Process process = startProcess(input);
 
-			handleProcessOutput(process);
+			handleProcessOutput(process, listener);
 
 			return finishProcess(process, input);
 		} catch (Exception e) {
@@ -68,8 +57,9 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	/**
 	 * Kills the process.
 	 */
+	@Deprecated
 	public void stop() {
-		killTheProcess();
+		throw new UnsupportedOperationException("Process is method internal");
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -98,10 +88,11 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	 * Reads the output of the process and passes it into
 	 * {@link #processLineOfOutput(String)}.
 	 * @param process 
+	 * @param listener
 	 * 
 	 * @throws Exception
 	 */
-	private void handleProcessOutput(Process process) throws Exception {
+	private void handleProcessOutput(Process process, ProgressListener listener) throws Exception {
 		InputStream ins = getOutputStream(process);
 		Reader r = new InputStreamReader(ins);
 		Scanner s = new Scanner(r);
@@ -112,7 +103,7 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 
 			Double progressOrNot = processLineOfOutput(line);
 			if (progressOrNot != null) {
-				reportProgress(progressOrNot);
+				reportProgress(progressOrNot, listener);
 			}
 
 		}
@@ -121,11 +112,12 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 	}
 
 	/**
-	 * Reports given progress to {@link #listener} (if some).
+	 * Reports given progress to listener (if some).
 	 * 
 	 * @param progress
+	 * @param listener
 	 */
-	private void reportProgress(double progress) {
+	private void reportProgress(double progress, ProgressListener listener) {
 		if (listener != null) {
 			listener.progressChanged(progress);
 		}
@@ -148,13 +140,6 @@ public abstract class AbstractProcessEncapusulation<INT, OUT> implements Progres
 		LOG.info("Process finished with code " + result); //$NON-NLS-1$
 
 		return handleResult(result, input);
-	}
-
-	/**
-	 * Does kill the process.
-	 */
-	private void killTheProcess() {
-		process.destroy();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

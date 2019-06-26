@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.AbstractProcessEncapusulation;
+import cz.martlin.jmop.core.misc.AbstractProgramEncapusulation;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -29,7 +29,7 @@ import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader.DownloadData;
  * @author martin
  *
  */
-public class YoutubeDlDownloader extends AbstractProcessEncapusulation<DownloadData, Boolean>
+public class YoutubeDlDownloader extends AbstractProgramEncapusulation<DownloadData, Boolean>
 		implements BaseSourceDownloader {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());

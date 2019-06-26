@@ -53,12 +53,12 @@ public class TestingDownloader implements BaseSourceDownloader {
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
-
+/*
 	@Override
 	public void specifyListener(ProgressListener listener) {
 		// nothing
 	}
-
+*/
 	@Override
 	public boolean check() {
 		return true;
