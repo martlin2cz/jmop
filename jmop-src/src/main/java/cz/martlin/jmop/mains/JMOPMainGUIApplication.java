@@ -11,6 +11,8 @@ import cz.martlin.jmop.gui.local.Msg;
 import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 //XXX import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory;
 import javafx.application.Application;
+import javafx.application.Preloader.StateChangeNotification;
+import javafx.application.Preloader.StateChangeNotification.Type;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,10 +22,6 @@ import javafx.stage.Stage;
 public class JMOPMainGUIApplication extends Application {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-
-	static {
-		beforeFX();
-	}
 
 	private final JMOPPlayer jmop;
 
@@ -57,6 +55,8 @@ public class JMOPMainGUIApplication extends Application {
 			primaryStage.show();
 		} catch (Exception e) {
 			LOG.error("Application GUI could not start!", e); //$NON-NLS-1$
+		} finally {
+			notifyPreloader(new StateChangeNotification(null));
 		}
 	}
 
@@ -65,10 +65,6 @@ public class JMOPMainGUIApplication extends Application {
 		actions.specifyScene(scene);
 
 		controller.setupJMOP(jmop, actions);
-	}
-
-	private static void beforeFX() {
-		//XXX: SvgImageLoaderFactory.install();
 	}
 
 }

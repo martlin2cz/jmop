@@ -5,6 +5,8 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sun.javafx.application.LauncherImpl;
+
 import cz.martlin.jmop.core.data.CommandlineData;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.core.wrappers.builder.BaseJMOPBuilder;
@@ -67,7 +69,8 @@ public class JMOPGUIApp {
 		}
 
 		try {
-			Application.launch(JMOPMainGUIApplication.class);
+			LauncherImpl.launchApplication(JMOPMainGUIApplication.class, JMOPPreloader.class, new String[] {});
+			//Application.launch(JMOPMainGUIApplication.class);
 		} catch (Exception e) {
 			System.err.println("Cannot start GUI:" + e); //$NON-NLS-1$
 			LOG.error("Cannot start GUI", e); //$NON-NLS-1$
