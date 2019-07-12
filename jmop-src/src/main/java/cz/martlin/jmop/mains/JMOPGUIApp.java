@@ -12,7 +12,6 @@ import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.core.wrappers.builder.BaseJMOPBuilder;
 import cz.martlin.jmop.core.wrappers.builder.DefaultJMOPPlayerBuilder;
 import cz.martlin.jmop.gui.local.Msg;
-import javafx.application.Application;
 
 public class JMOPGUIApp {
 	private static final Logger LOG = LoggerFactory.getLogger(JMOPGUIApp.class);

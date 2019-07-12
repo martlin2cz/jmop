@@ -12,7 +12,6 @@ import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
 //XXX import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory;
 import javafx.application.Application;
 import javafx.application.Preloader.StateChangeNotification;
-import javafx.application.Preloader.StateChangeNotification.Type;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
