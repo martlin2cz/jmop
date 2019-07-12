@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Nápověda k JMOPu</title>
+</head>
+<body>
+
+	<h1>JMOP</h1>
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Úvod</h2>
+	<p>JMOP je hudební přehrávač vytvořený v Javě, pochybující se na
+		rozhraní online a offline světa. Kombinuje oba tyto přístupy - každá
+		skladba je při prvním přehrátí stažena s určitého zdroje. Při dalším
+		přehrátí je přehrána z pevného disku.</p>
+
+	<p>Kvůli tomu JMOP není obyčejný přehrávač - není možné jen tak
+		přehrávat libovolné skladby. Základní myšlenkou JMOPu je přehrávač,
+		který začne přehrávat na základě nějakého "semínka" (například jméno
+		autora nebo žánru), na základě kterého JMOP začne přehrávat -
+		teoreticky - nekonečný proud hudby.</p>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Terminologie</h2>
+	<p>Než začnete používat JMOP je dobré seznámit se některými základními pojmy.</p>
+	
+	<p>Prvním je <strong>kořenový adresář</strong>. Kořenový adresář je vlastně jen pracovní adresář JMOPu. Je to adresářř na disku, kde si JMOP ukládá všechny své bundly, playlisty a skladby (viz níže) a případně nějakou konfiguraci (která v této verzi zatím není žádná). Pokud kořenový adresář není specifikován pomocí příkazové řádky, je použit aktuální pracovní adresář.</p>
+	<p>Dalším pojmem je <strong>bundle</strong>. Bundle je nějaký "balík" hudby. Například hudba jednoho autora, kanálu nebo žánru. Každý bundle má (automaticky vytvářenou) složku v kořenovém adresáři. Tato složka obsahuje všechny skladby a soubory playlistů tohoto bundlu. Bundle dále obsahuje tzv. playlist všech skladeb (soubor pojmenovaný <em>all_tracks.xspf</em>). Tento soubor slouží jako databáze všech skladeb bundlu a je taktéž vytvářen automaticky. V tomto souboru jsou dále uloženy informace o bundlu, například zdroj, ze kterého jsou sklady stahovány. Aktuálně je podporován jeden jedinný - <a href="http://youtube.com">YouTube.com</a>.
+	<p>Dalším pojmem je <strong>playlist</strong>, neboli někdy též česky "seznam stop". Playlist je pojmenovaná sekvence skladeb uvnitř nějakého bundlu (JMOP playlist nemůže obsahovat skladby napříč bundly). Playlist mohou být <em>uzamčené</em> nebo <em>odemčené</em>. Je-li playlist uzamčen, znamená to, že již nenačítá žádné další kladby, tedy přehraje jen ty, které obsahuje a tím zkončí. Oproti tomu odemčený playlist po každé načítá další a další kladby.</p>
+	<p>Posledním pojmem je <strong>skladba</strong>. Skladba je prostě skladba - písnička, song. Každá skladba vždycky náleží do nějakého bundlu (případně muže být duplicitně ve více bundlech). Každá skladba je ukládána ve formátu <em>MP3</em> do adresáře svého bundlu.</p>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Online a offline režim</h2>
+	 <p>Jednou z největších výhod JMOPu je, že automaticky přepíná mezi <em>online</em> a <em>offline</em> módem. Pokud JMOP rozpozná problémy s internetovým připojením (zjevně jste tedy byli zcela odpojeni), automaticky přejde do offline módu. V offline módu, namísto toho, aby JMOP skladby stahoval ze zdroje, bere náhodně již stažené skladby z bundlu. Po určité době (přibližně 1 minuta) se pak opět pokouší fungovat online.</p>
+	 
+	 <p>Poznámka: předchozí odstavec platí pouze pro odemčené playlisty. Uzamčené playlisty se chovají pořád stejně bez ohledu na mód, v jakém se přehrávač nachází.</p>
+	 
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Licencování a právo</h2>
+	<p><strong>Upozornění: mějte na paměti, že JMOP stahuje hudbu nějakého autora. To není úplně 100% legální a někoho tím možná naštvete. Prosím, nešiřte takto staženou hudbu a používejte ji jen pro osobní potřebu!</strong></p>
+	 
+	 
+ 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Požadavky</h2>
+	<p>Tato verze JMOPu vyžaduje dva externí programy. Jsou to <em>youtube-dl</em> a <em>ffmpeg</em>. 
+		Oba jsou zdarma (youtube-dl je ke stažení <a
+			href="https://rg3.github.io/youtube-dl/download.html">zde</a> a
+		ffmpeg <a href="https://www.ffmpeg.org/download.html">zde</a>) a měly by fungovat na všech běžných platformách a operačních systémech. Pokud má vaše platforma balíčkovacího manažera (rpm, aptitude, ...) měly by být tam.</p>
+		<p>Pokud si nejste jisti, jestli máte tyto programy nainstalovány, použijte <em>Nápověda - Test konfiguirace</em>.</p>
+		
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Ovládání</h2>
+	<p>Všechny akce přehrávače lze obsloužit pomocí nabídky <em>Soubor</em>, pomocí velkých tlačítek v hlavní části okna, klávesovými zkratkami nebo prostými stisky kláves. Klávesové zkratky a funkční klávesy jsou vyobrazeny při přejetí myší nad patřičným tlačítkem v hlavním okně. Nejpoužívanější akce (spusť přehrávání, pozastav přehrávání, obnov přehrávání) mohou být provedeny stiskem mezerníku.</p>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Nastavení</h2>
+	<p>Tato verze nemá žádné nastavení vyjma parametrů příkazové řádky.</p>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Příkazová řádka</h2>
+	<p>Základní konfiguraci JMOPu poskytuje příkazová řádka. Pomocí parametrů při spouštění JMOPu lze nastavit jazyk aplikace, kořenový adresář a případně rovnou spustit nějaký bundle (všechny jeho skladby) a nebo playlist. Konkrétní informace jsou k dostání při spuštění JMOPu s přepínačem <code>--help</code>. 
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Rešení problémů</h2>
+	<p>Prosím, mějte na paměti, že JMOP je především hobby projekt. Je velmi pravděpodobné, že zde stále bude spousta bugů a chyb. Pokud nějaká chyba nastane, zkuste následující:
+	<ul>
+		<li>Smažte soubor skladby, která dělá problémy (pokud taková je)</li>
+		<li>Smažte soubor skladby, která dělá problémy, z adresáře <em>.cache</em> (pokud taková je)
+		</li>
+		<li>Zavřete a otevřete aplikaci znovu</li>
+		<li>Restartuje počítač (tohle zřejmě ničemu nepomůže, ale budou vám to radit všichni)</li>
+		<li>Pohlédněte do logu (soubor log.txt v kořenovém adresáři)</li>
+		<li>Kontaktujte autora</li>
+	</ul>
+	
+	<p><strong>JMOP si ukládá všechny skladby do cache (keše). V určitých situacích, velikost adresáře <em>.cache</em> může narůst do nekřesťanských hodnot. V takovém případě se nebojte tento adresářsmazat (ale doporučuji, když není JMOP zpanutý).</strong></p>
+	
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<h2>Kontat</h2>
+	<p>
+		Pokud vás zajímá více informací, nebo chcete nahlásit nějaké problémy (nebo se podílet na vývoji), navštivte
+		 <a
+			href="https://github.com/martlin2cz/jmop">GitHub stránku projektu</a>.
+	</p>
+	
+	
+</body>
+</html>
+
+
+
+
+<p>
