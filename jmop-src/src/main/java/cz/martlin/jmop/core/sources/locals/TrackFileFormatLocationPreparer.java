@@ -31,15 +31,6 @@ public class TrackFileFormatLocationPreparer {
 		this.converter = converter;
 	}
 
-	/**
-	 * Set listener.
-	 * 
-	 * @param progressListener
-	 */
-	public void specifyListener(ProgressListener progressListener) {
-		this.converter.specifyListener(progressListener);
-	}
-
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -51,11 +42,12 @@ public class TrackFileFormatLocationPreparer {
 	 * @param fromLocation
 	 * @param toFormat
 	 * @param toLocation
+	 * @param listener 
 	 * @return
 	 * @throws Exception
 	 */
 	public boolean prepare(Track track, TrackFileFormat fromFormat, TrackFileLocation fromLocation,
-			TrackFileFormat toFormat, TrackFileLocation toLocation) throws Exception {
+			TrackFileFormat toFormat, TrackFileLocation toLocation, ProgressListener listener) throws Exception {
 
 		boolean equalFormat = fromFormat.equals(toFormat);
 		boolean equalLocation = fromLocation.equals(toLocation);
@@ -69,11 +61,11 @@ public class TrackFileFormatLocationPreparer {
 		}
 
 		if (!equalFormat && equalLocation) {
-			return justConvert(track, fromLocation, fromFormat, toFormat);
+			return justConvert(track, fromLocation, fromFormat, toFormat, listener);
 		}
 
 		if (!equalFormat && !equalLocation) {
-			return convertWithCopy(track, fromLocation, toLocation, fromFormat, toFormat);
+			return convertWithCopy(track, fromLocation, toLocation, fromFormat, toFormat, listener);
 		}
 
 		return false;
@@ -110,13 +102,14 @@ public class TrackFileFormatLocationPreparer {
 	 * @param location
 	 * @param fromFormat
 	 * @param toFormat
+	 * @param listener 
 	 * @return
 	 * @throws Exception
 	 */
 	private boolean justConvert(Track track, //
-			TrackFileLocation location, TrackFileFormat fromFormat, TrackFileFormat toFormat) throws Exception {
+			TrackFileLocation location, TrackFileFormat fromFormat, TrackFileFormat toFormat, ProgressListener listener) throws Exception {
 
-		return converter.convert(track, location, fromFormat, location, toFormat);
+		return converter.convert(track, location, fromFormat, location, toFormat, listener);
 	}
 
 	/**
@@ -127,14 +120,15 @@ public class TrackFileFormatLocationPreparer {
 	 * @param toLocation
 	 * @param fromFormat
 	 * @param toFormat
+	 * @param listener 
 	 * @return
 	 * @throws Exception
 	 */
 	private boolean convertWithCopy(Track track, //
 			TrackFileLocation fromLocation, TrackFileLocation toLocation, //
-			TrackFileFormat fromFormat, TrackFileFormat toFormat) throws Exception {
+			TrackFileFormat fromFormat, TrackFileFormat toFormat, ProgressListener listener) throws Exception {
 
-		return converter.convert(track, fromLocation, fromFormat, toLocation, toFormat);
+		return converter.convert(track, fromLocation, fromFormat, toLocation, toFormat, listener);
 
 	}
 

@@ -24,18 +24,18 @@ public class NoopConverter implements BaseSourceConverter {
 
 	@Override
 	public boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat) throws Exception {
+			TrackFileLocation toLocation, TrackFileFormat toFormat, ProgressListener listener) throws Exception {
 
 		LOG.info("NOT Converting track " + track); //$NON-NLS-1$
 
 		return true;
 	}
-
+/*
 	@Override
 	public void specifyListener(ProgressListener listener) {
 		// nothing
 	}
-
+*/
 	@Override
 	public boolean check() {
 		return true;

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.AbstractProcessEncapusulation;
+import cz.martlin.jmop.core.misc.AbstractProgramEncapusulation;
 import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -93,7 +93,7 @@ public class AplayPlayer extends AbstractPlayer {
 	private void runProcessInBackround(AplayProcess process, Track track, File file) {
 		Runnable run = () -> {
 			try {
-				process.run(file);
+				process.run(file, null);
 			} catch (ExternalProgramException e) {
 				reporter.report(e);
 			} catch (Exception e) {
@@ -113,7 +113,7 @@ public class AplayPlayer extends AbstractPlayer {
 	 * @author martin
 	 *
 	 */
-	public class AplayProcess extends AbstractProcessEncapusulation<File, Void> {
+	public static class AplayProcess extends AbstractProgramEncapusulation<File, Void> {
 
 		public AplayProcess() {
 			super();

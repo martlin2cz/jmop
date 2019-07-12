@@ -47,13 +47,13 @@ public class DownloaderTest {
 
 		BaseSourceDownloader downloader = new YoutubeDlDownloader(connection, local, remote);
 		// BaseSourceDownloader downloader = new TestingDownloader(sources);
-		downloader.specifyListener(listener);
+		//downloader.specifyListener(listener);
 
 		Track track = bundle.createTrack(id, title, description, duration);
 		TrackFileLocation location = TrackFileLocation.TEMP;
 		try {
 
-			boolean success = downloader.download(track, location);
+			boolean success = downloader.download(track, location, listener);
 			System.err.println("Success? " + success); //$NON-NLS-1$
 		} catch (Exception e) {
 			e.printStackTrace();

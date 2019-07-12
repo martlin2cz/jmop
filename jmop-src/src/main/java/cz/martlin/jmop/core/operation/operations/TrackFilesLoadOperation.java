@@ -60,9 +60,6 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	@Override
 	protected Track runInternal(Track input, OperationChangeListener handler) throws Exception {
 
-		downloader.specifyListener(handler);
-		preparer.specifyListener(handler);
-
 		boolean downloaded = checkAndDownload(input, handler);
 		if (!downloaded) {
 			return input;
@@ -77,10 +74,6 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 		if (!prepared) {
 			return input;
 		}
-
-		// FIXME wont be invoked if return belowe is
-		downloader.specifyListener(null);
-		preparer.specifyListener(null);
 
 		return input;
 	}
@@ -108,7 +101,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 			return true;
 		}
 
-		boolean downloaded = downloader.download(track, downloadLocation);
+		boolean downloaded = downloader.download(track, downloadLocation, handler);
 		return downloaded;
 	}
 
@@ -130,7 +123,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 			return true;
 		}
 
-		boolean converted = preparer.prepare(track, downloadFormat, downloadLocation, saveFormat, saveLocation);
+		boolean converted = preparer.prepare(track, downloadFormat, downloadLocation, saveFormat, saveLocation, handler);
 		return converted;
 	}
 
@@ -152,7 +145,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 			return true;
 		}
 
-		boolean prepared = preparer.prepare(track, downloadFormat, downloadLocation, playerFormat, playerLocation);
+		boolean prepared = preparer.prepare(track, downloadFormat, downloadLocation, playerFormat, playerLocation, handler);
 		return prepared;
 	}
 
@@ -165,7 +158,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	 * @return
 	 * @throws JMOPSourceException
 	 */
-	private boolean existsDownloaded(Track track) throws JMOPSourceException {
+	public boolean existsDownloaded(Track track) throws JMOPSourceException {
 		return local.exists(track, downloadLocation, downloadFormat);
 	}
 
@@ -176,7 +169,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	 * @return
 	 * @throws JMOPSourceException
 	 */
-	private boolean existsSaved(Track track) throws JMOPSourceException {
+	public boolean existsSaved(Track track) throws JMOPSourceException {
 		return local.exists(track, saveLocation, saveFormat);
 	}
 
@@ -188,7 +181,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	 * @return
 	 * @throws JMOPSourceException
 	 */
-	private boolean existsToPlay(Track track) throws JMOPSourceException {
+	public boolean existsToPlay(Track track) throws JMOPSourceException {
 		return local.exists(track, playerLocation, playerFormat);
 	}
 

@@ -5,8 +5,12 @@ package cz.martlin.jmop.core.misc;
  * be handled by {@link ProgressListener}.
  * 
  * @author martin
+ * @deprecated Currently, this interface is not beeing used. Thoose who generate
+ *             progress does it differently, and the others simply doesn't
+ *             generate it. It may be reworked, so don't throw out this class ultimatelly, but for now it is useless.
  *
  */
+@Deprecated
 public interface ProgressGenerator {
 
 	/**

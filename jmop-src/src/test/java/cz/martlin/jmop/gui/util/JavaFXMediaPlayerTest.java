@@ -13,6 +13,7 @@ import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
@@ -46,12 +47,13 @@ public class JavaFXMediaPlayerTest {
 				TrackFileLocation playLocation = TrackFileLocation.SAVE;
 				TrackFileFormat downloadFormat = TrackFileFormat.OPUS;
 				TrackFileFormat playFormat = TrackFileFormat.MP3;
-
+				ProgressListener listener = null; //FIXME ?
+				
 				TestingDownloader downloader = new TestingDownloader(local, downloadFormat);
-				downloader.download(track, downloadLocation);
+				downloader.download(track, downloadLocation, listener);
 
 				FFMPEGConverter converter = new FFMPEGConverter(local);
-				converter.convert(track, downloadLocation, downloadFormat, playLocation, playFormat);
+				converter.convert(track, downloadLocation, downloadFormat, playLocation, playFormat, listener);
 
 				AbstractTrackFileLocator locator = new PrimitiveLocator();
 				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local, locator);

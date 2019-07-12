@@ -32,6 +32,7 @@ public class TwosetOperation<IT, MT, OT> implements BaseOperation<IT, OT> {
 
 	@Override
 	public OT run(IT input, OperationChangeListener handler) {
+		//TODO if canceled ...
 		MT mid = first.run(input, handler);
 		return second.run(mid, handler);
 	}

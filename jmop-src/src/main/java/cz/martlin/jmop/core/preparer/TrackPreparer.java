@@ -12,8 +12,10 @@ import cz.martlin.jmop.core.operation.base.BaseOperation;
 import cz.martlin.jmop.core.operation.base.OperationWrapper;
 import cz.martlin.jmop.core.operation.base.TrackOperationTask;
 import cz.martlin.jmop.core.operation.operations.Operations;
+import cz.martlin.jmop.core.operation.operations.TrackFilesLoadOperation;
 import cz.martlin.jmop.core.operation.operations.TrackSearchOperation.SearchData;
 import cz.martlin.jmop.core.player.BasePlayer;
+import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
@@ -108,8 +110,8 @@ public class TrackPreparer {
 	}
 
 	/**
-	 * Start loading next track of given bundle, and to handle with given
-	 * consumer, when completed; in background.
+	 * Start loading next track of given bundle, and to handle with given consumer,
+	 * when completed; in background.
 	 * 
 	 * @param track
 	 * @param onLoaded
@@ -122,20 +124,28 @@ public class TrackPreparer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Load in foregound files of given track.
+	 * Load in background files of given track. After that start to play them.
 	 * 
 	 * @param track
+	 * @param player
 	 */
-	public void checkAndLoadTrack(Track track) {
-		BaseOperation<Track, Track> load = operations.loadOperation();
-
-		runInForeground(load, track);
+	public void checkAndLoadTrack(Track track, PlayerWrapper player) {
+		final TrackFilesLoadOperation load = operations.loadOperation();
+		runInBackground(load, track, (t) -> {
+			try {
+				if (load.existsToPlay(track)) {
+					player.startPlaying(t);
+				}
+			} catch (JMOPSourceException e) {
+				reporter.report(e);
+			}
+		});
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Append to given engine (by {@link PlayerEngine#add(Track)}) and then
-	 * start playing (next track to play, not nescesairly the newly appended).
+	 * Append to given engine (by {@link PlayerEngine#add(Track)}) and then start
+	 * playing (next track to play, not nescesairly the newly appended).
 	 * 
 	 * @param track
 	 * @param engine
@@ -167,9 +177,9 @@ public class TrackPreparer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	/**
-	 * Runs given operation in backgroud, with given input data and when
-	 * completed, invokes given consumer. In fact, creates task, adds to current
-	 * tasks and runs the task in separate thread.
+	 * Runs given operation in backgroud, with given input data and when completed,
+	 * invokes given consumer. In fact, creates task, adds to current tasks and runs
+	 * the task in separate thread.
 	 * 
 	 * @param operation
 	 * @param data
@@ -177,7 +187,7 @@ public class TrackPreparer {
 	 */
 	private <IT, OT> void runInBackground(BaseOperation<IT, OT> operation, IT data, Consumer<OT> onCompleted) {
 		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
-
+		//TODO if not yet already running ...
 		TrackOperationTask<IT, OT> task = new TrackOperationTask<>(wrapper, data);
 
 		currentTasks.add(wrapper);
@@ -190,12 +200,14 @@ public class TrackPreparer {
 	}
 
 	/**
-	 * Runs given operation in backgroud, with given input data. In fact,
-	 * creates task, adds to current tasks and runs the task.
+	 * Runs given operation in backgroud, with given input data. In fact, creates
+	 * task, adds to current tasks and runs the task.
 	 * 
 	 * @param operation
 	 * @param data
+	 * @deprecated do not run anything in foregound!
 	 */
+	@Deprecated
 	private <IT, OT> void runInForeground(BaseOperation<IT, OT> operation, IT data) {
 		OperationWrapper<IT, OT> wrapper = new OperationWrapper<>(operation);
 
@@ -230,8 +242,8 @@ public class TrackPreparer {
 	}
 
 	/**
-	 * Handler of task in foreground completed. In fact, only removes the task
-	 * from running tasks.
+	 * Handler of task in foreground completed. In fact, only removes the task from
+	 * running tasks.
 	 * 
 	 * @param task
 	 * @param wrapper

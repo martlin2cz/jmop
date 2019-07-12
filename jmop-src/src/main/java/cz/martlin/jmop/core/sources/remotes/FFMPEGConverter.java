@@ -11,8 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.AbstractProcessEncapusulation;
+import cz.martlin.jmop.core.misc.AbstractProgramEncapusulation;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 //import  cz.martlin.jmop.core.sources.download.FFMPEGConverterTest.Trac;
@@ -26,7 +27,7 @@ import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter.TrackConvertData;
  * @author martin
  *
  */
-public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertData, Boolean>
+public class FFMPEGConverter extends AbstractProgramEncapusulation<TrackConvertData, Boolean>
 		implements BaseSourceConverter {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private static final String DURATION_SEPARATOR = ":"; //$NON-NLS-1$
@@ -50,11 +51,11 @@ public class FFMPEGConverter extends AbstractProcessEncapusulation<TrackConvertD
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat) throws Exception {
+			TrackFileLocation toLocation, TrackFileFormat toFormat, ProgressListener listener) throws Exception {
 
 		LOG.info("Converting track " + track + " from " + fromFormat + " to " + toFormat); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		TrackConvertData data = new TrackConvertData(track, fromLocation, fromFormat, toLocation, toFormat);
-		return run(data);
+		return run(data, listener);
 	}
 
 	@Override
