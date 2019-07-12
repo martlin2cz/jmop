@@ -72,7 +72,7 @@ public class JMOPGUIApp {
 			LauncherImpl.launchApplication(JMOPMainGUIApplication.class, JMOPPreloader.class, new String[] {});
 			//Application.launch(JMOPMainGUIApplication.class);
 		} catch (Exception e) {
-			System.err.println("Cannot start GUI:" + e); //$NON-NLS-1$
+			System.err.println("Cannot start GUI: " + e); //$NON-NLS-1$
 			LOG.error("Cannot start GUI", e); //$NON-NLS-1$
 		}
 	}
