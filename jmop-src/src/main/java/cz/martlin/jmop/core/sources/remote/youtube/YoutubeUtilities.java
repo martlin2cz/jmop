@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.youtube;
+package cz.martlin.jmop.core.sources.remote.youtube;
 
 import java.io.IOException;
 import java.io.InputStream;

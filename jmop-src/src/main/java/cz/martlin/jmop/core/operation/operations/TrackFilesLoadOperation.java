@@ -13,8 +13,8 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.TrackFileFormatLocationPreparer;
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 import cz.martlin.jmop.gui.local.Msg;
 import javafx.util.Duration;
 
@@ -28,7 +28,7 @@ import javafx.util.Duration;
 public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Track> {
 
 	private final BaseLocalSource local;
-	private final BaseSourceDownloader downloader;
+	private final XXX_BaseSourceDownloader downloader;
 	private final TrackFileFormatLocationPreparer preparer;
 
 	private final TrackFileLocation downloadLocation;
@@ -40,7 +40,7 @@ public class TrackFilesLoadOperation extends AbstractAtomicOperation<Track, Trac
 	private final TrackFileFormat playerFormat;
 
 	public TrackFilesLoadOperation(ErrorReporter reporter, BaseConfiguration config, AbstractTrackFileLocator locator,
-			BaseLocalSource local, BaseSourceDownloader downloader, BaseSourceConverter converter, BasePlayer player) {
+			BaseLocalSource local, XXX_BaseSourceDownloader downloader, XXX_BaseSourceConverter converter, BasePlayer player) {
 		super(reporter, Msg.get("Download_and_convert")); //$NON-NLS-1$
 
 		this.local = local;

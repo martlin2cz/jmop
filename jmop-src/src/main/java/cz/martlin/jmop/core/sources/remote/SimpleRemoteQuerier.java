@@ -71,7 +71,7 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	}
 
 	@Override
-	public List<Track> runSearch(Bundle bundle, String query, int page) throws JMOPSourceException {
+	public List<Track> runSearch(Bundle bundle, String query) throws JMOPSourceException {
 		LOG.info("Performing search of " + query); //$NON-NLS-1$
 
 		List<Track> tracks = loadSearchResult(bundle, query);

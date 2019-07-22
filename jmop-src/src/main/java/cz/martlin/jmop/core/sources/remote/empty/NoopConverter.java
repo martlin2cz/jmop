@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.remote;
+package cz.martlin.jmop.core.sources.remote.empty;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +7,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
 
 /**
  * Converter doing simply no conversion, or even nothing.

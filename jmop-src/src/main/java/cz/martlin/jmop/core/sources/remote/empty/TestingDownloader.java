@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.remotes;
+package cz.martlin.jmop.core.sources.remote.empty;
 
 import java.io.File;
 import java.io.IOException;
