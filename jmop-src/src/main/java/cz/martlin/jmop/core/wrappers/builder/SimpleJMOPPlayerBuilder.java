@@ -17,9 +17,9 @@ import cz.martlin.jmop.core.preparer.TrackPreparer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
-import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader;
 import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
@@ -41,11 +41,11 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		InternetConnectionStatus connection = createInternetConnectionStatus(data, config);
 
 		// level 1 things
-		AbstractRemoteSource remote = createRemoteSource(data, config, connection);
+		XXX_AbstractRemoteSource remote = createRemoteSource(data, config, connection);
 		BaseLocalSource local = createLocalSource(data, config);
 
-		BaseSourceDownloader downloader = createDownloader(data, config, connection, remote, local);
-		BaseSourceConverter converter = createConverter(data, config, local);
+		XXX_BaseSourceDownloader downloader = createDownloader(data, config, connection, remote, local);
+		XXX_BaseSourceConverter converter = createConverter(data, config, local);
 
 		AbstractTrackFileLocator locator = createLocator(data, config);
 		BasePlayer player = createPlayer(data, config, local, locator);
@@ -99,8 +99,8 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 	}
 
 	private BaseJMOPEnvironmentChecker createEnvironmentChecker(CommandlineData data, BaseConfiguration config,
-			BaseLocalSource local, AbstractRemoteSource remote, BaseSourceDownloader downloader,
-			BaseSourceConverter converter) {
+			BaseLocalSource local, XXX_AbstractRemoteSource remote, XXX_BaseSourceDownloader downloader,
+			XXX_BaseSourceConverter converter) {
 
 		return new DefaultJMOPEnvironmentChecker(downloader, converter);
 	}
@@ -123,7 +123,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 	public abstract InternetConnectionStatus createInternetConnectionStatus(CommandlineData data,
 			BaseConfiguration config) throws Exception;
 
-	public abstract AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
+	public abstract XXX_AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
 			InternetConnectionStatus connection) throws Exception;
 
 	public abstract BaseLocalSource createLocalSource(CommandlineData data, BaseConfiguration config) throws Exception;
@@ -135,7 +135,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 			BaseLocalSource local, AbstractTrackFileLocator locator) throws Exception;
 
 	public abstract YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
-			InternetConnectionStatus connection, AbstractRemoteSource remote, BaseLocalSource local) throws Exception;
+			InternetConnectionStatus connection, XXX_AbstractRemoteSource remote, BaseLocalSource local) throws Exception;
 
 	public abstract FFMPEGConverter createConverter(CommandlineData data, BaseConfiguration config,
 			BaseLocalSource local) throws Exception;

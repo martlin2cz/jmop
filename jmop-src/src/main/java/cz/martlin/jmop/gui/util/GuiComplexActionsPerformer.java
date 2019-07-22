@@ -387,6 +387,7 @@ public class GuiComplexActionsPerformer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@FunctionalInterface
+	@Deprecated
 	public static interface RunnableWithException<T> {
 		public T run() throws Exception;
 	}

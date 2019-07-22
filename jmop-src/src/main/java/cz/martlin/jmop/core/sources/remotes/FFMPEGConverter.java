@@ -18,7 +18,7 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 //import  cz.martlin.jmop.core.sources.download.FFMPEGConverterTest.Trac;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
 import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter.TrackConvertData;
 
 /**
@@ -28,7 +28,7 @@ import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter.TrackConvertData;
  *
  */
 public class FFMPEGConverter extends AbstractProgramEncapusulation<TrackConvertData, Boolean>
-		implements BaseSourceConverter {
+		implements XXX_BaseSourceConverter {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private static final String DURATION_SEPARATOR = ":"; //$NON-NLS-1$
 	private static final String DURATION_REGEX = "\\d{2}\\:\\d{2}\\:\\d{2}"; //$NON-NLS-1$

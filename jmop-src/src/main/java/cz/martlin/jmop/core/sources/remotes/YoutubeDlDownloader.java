@@ -19,8 +19,8 @@ import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader.DownloadData;
 
 /**
@@ -30,7 +30,7 @@ import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader.DownloadData;
  *
  */
 public class YoutubeDlDownloader extends AbstractProgramEncapusulation<DownloadData, Boolean>
-		implements BaseSourceDownloader {
+		implements XXX_BaseSourceDownloader {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -42,10 +42,10 @@ public class YoutubeDlDownloader extends AbstractProgramEncapusulation<DownloadD
 
 	private final InternetConnectionStatus connection;
 	private final BaseLocalSource local;
-	private final AbstractRemoteSource remote;
+	private final XXX_AbstractRemoteSource remote;
 
 	public YoutubeDlDownloader(InternetConnectionStatus connection, BaseLocalSource local,
-			AbstractRemoteSource remote) {
+			XXX_AbstractRemoteSource remote) {
 		super();
 		this.connection = connection;
 		this.local = local;
@@ -106,7 +106,7 @@ public class YoutubeDlDownloader extends AbstractProgramEncapusulation<DownloadD
 	/////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Generates url parameter. In fact calls
-	 * {@link AbstractRemoteSource#urlOf(Track)}.
+	 * {@link XXX_AbstractRemoteSource#urlOf(Track)}.
 	 * 
 	 * @param data
 	 * @return

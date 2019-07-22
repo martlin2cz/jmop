@@ -12,9 +12,9 @@ import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 
-public class TestingDownloader implements BaseSourceDownloader {
+public class TestingDownloader implements XXX_BaseSourceDownloader {
 
 	public static final String TESTING_SAMPLE_FILE = "samples/sample.opus"; //$NON-NLS-1$
 

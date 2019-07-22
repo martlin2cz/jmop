@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * @author martin
  *
  */
-public class NoopConverter implements BaseSourceConverter {
+public class NoopConverter implements XXX_BaseSourceConverter {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 

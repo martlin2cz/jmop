@@ -18,7 +18,7 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
 import javafx.util.Duration;
 
 public class ConverterTest {
@@ -46,7 +46,7 @@ public class ConverterTest {
 
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 
-		BaseSourceConverter converter = new FFMPEGConverter(local);
+		XXX_BaseSourceConverter converter = new FFMPEGConverter(local);
 		// BaseSourceConverter converter = new NoopConverter();
 		//converter.specifyListener(listener);
 

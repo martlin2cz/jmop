@@ -11,11 +11,11 @@ import cz.martlin.jmop.core.misc.ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
 
 /**
  * An utility class for "not only converting". This is extension of
- * {@link BaseSourceConverter} for cases where only copy is needed (the input
+ * {@link XXX_BaseSourceConverter} for cases where only copy is needed (the input
  * and output format are the same).
  * 
  * @author martin
@@ -23,9 +23,9 @@ import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
  */
 public class TrackFileFormatLocationPreparer {
 	private final BaseLocalSource local;
-	private final BaseSourceConverter converter;
+	private final XXX_BaseSourceConverter converter;
 
-	public TrackFileFormatLocationPreparer(BaseLocalSource local, BaseSourceConverter converter) {
+	public TrackFileFormatLocationPreparer(BaseLocalSource local, XXX_BaseSourceConverter converter) {
 		super();
 		this.local = local;
 		this.converter = converter;

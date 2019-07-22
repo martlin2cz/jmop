@@ -11,6 +11,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
  * @author martin
  *
  */
+@Deprecated
 public interface BaseSourceImpl {
 
 	/**

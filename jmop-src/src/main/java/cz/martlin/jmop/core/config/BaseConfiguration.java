@@ -18,8 +18,7 @@ public interface BaseConfiguration {
 	public TrackFileFormat getSaveFormat();
 
 	/**
-	 * Returns name (note: not the file name) of the playlist with the all
-	 * tracks.
+	 * Returns name (note: not the file name) of the playlist with the all tracks.
 	 * 
 	 * @return
 	 */
@@ -32,5 +31,12 @@ public interface BaseConfiguration {
 	 * @return
 	 */
 	public int getOfflineRetryTimeout();
+
+	/**
+	 * Returns the number of tracks loaded during the search request.
+	 * 
+	 * @return
+	 */
+	public int getSearchCount();
 
 }

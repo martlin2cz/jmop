@@ -8,9 +8,9 @@ import cz.martlin.jmop.core.operation.operations.TrackSearchOperation.SearchData
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
-import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 
 /**
  * An utility class holding all the operations needed in the JMOP.
@@ -25,8 +25,8 @@ public class Operations {
 	private final TrackFilesLoadOperation load;
 
 	public Operations(ErrorReporter reporter, BaseConfiguration config, AbstractTrackFileLocator locator,
-			AbstractRemoteSource remote, BaseLocalSource local, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, BasePlayer player) {
+			XXX_AbstractRemoteSource remote, BaseLocalSource local, XXX_BaseSourceDownloader downloader,
+			XXX_BaseSourceConverter converter, BasePlayer player) {
 		super();
 
 		TrackSearchOperation search = new TrackSearchOperation(reporter, config, remote);

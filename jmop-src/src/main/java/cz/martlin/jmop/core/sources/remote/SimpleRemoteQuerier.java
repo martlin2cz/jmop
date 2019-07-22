@@ -2,6 +2,8 @@ package cz.martlin.jmop.core.sources.remote;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +14,7 @@ import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 /**
- * The general base remote source. Assumes working with some internal
+ * The general base remote source querier. Assumes working with some internal
  * representation.
  * 
  * <strong>If some of requests implemented here fails, it marks
@@ -20,31 +22,24 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
  * 
  * @author martin
  *
- * @param <GtRqt>
- *            request type of get track
- * @param <GtRst>
- *            response type of get track
- * @param <SeaRqt>
- *            request type of track search
- * @param <SeaRst>
- *            response type of track search
- * @param <GntRqt>
- *            request type of next track load
- * @param <GntRst>
- *            response type of next track load
+ * @param <GtRqt>  request type of get track
+ * @param <GtRst>  response type of get track
+ * @param <SeaRqt> request type of track search
+ * @param <SeaRst> response type of track search
+ * @param <GntRqt> request type of next track load
+ * @param <GntRst> response type of next track load
  */
-public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, GntRst> implements AbstractRemoteSource {
+public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, GntRst> extends AbstractRemoteQuerier {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final InternetConnectionStatus connection;
 
-	public SimpleRemoteSource(InternetConnectionStatus connection) {
+	public SimpleRemoteQuerier(InternetConnectionStatus connection) {
 		super();
 		this.connection = connection;
 	}
 
-	@Override
 	public URL urlOf(Track track) throws JMOPSourceException {
 		LOG.info("Generating url of track " + track.getTitle()); //$NON-NLS-1$
 		String id = track.getIdentifier();
@@ -66,23 +61,25 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 
 	///////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException {
-		LOG.info("Loading track with id " + identifier); //$NON-NLS-1$
+	public List<Track> runLoadTracks(Bundle bundle, String... ids) throws JMOPSourceException {
+		List<String> idsList = Arrays.asList(ids);
+		LOG.info("Loading tracks " + idsList); //$NON-NLS-1$
 
-		return loadTrack(bundle, identifier);
+		List<Track> tracks = loadTracks(bundle, idsList);
+		return tracks;
+
 	}
 
 	@Override
-	public Track search(Bundle bundle, String query) throws JMOPSourceException {
+	public List<Track> runSearch(Bundle bundle, String query, int page) throws JMOPSourceException {
 		LOG.info("Performing search of " + query); //$NON-NLS-1$
 
-		Track track = loadSearchResult(bundle, query);
-		return track;
+		List<Track> tracks = loadSearchResult(bundle, query);
+		return tracks;
 	}
 
 	@Override
-	public Track getNextTrackOf(Track track) throws JMOPSourceException {
+	public Track runLoadNext(Track track) throws JMOPSourceException {
 		LOG.info("Loading next track of " + track.getTitle()); //$NON-NLS-1$
 
 		Bundle bundle = track.getBundle();
@@ -95,17 +92,17 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 	///////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Loads track. In fact creates load request, executes it and converts
-	 * response to Track.
+	 * Loads track(s). In fact creates load request, executes it and converts
+	 * response to Track(s).
 	 * 
 	 * @param bundle
-	 * @param id
+	 * @param ids
 	 * @return
 	 * @throws JMOPSourceException
 	 */
-	private Track loadTrack(Bundle bundle, String id) throws JMOPSourceException {
+	private List<Track> loadTracks(Bundle bundle, List<String> ids) throws JMOPSourceException {
 		try {
-			GtRqt request = createLoadRequest(id);
+			GtRqt request = createLoadRequest(ids);
 			GtRst response = executeLoadRequest(request);
 			return convertLoadResponse(bundle, response);
 		} catch (Exception e) {
@@ -116,24 +113,37 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 	}
 
 	/**
-	 * Searches. In fact creates search request, executes it and converts
-	 * response to Track.
+	 * Searches. In fact creates search request, executes it and loads found tracks.
 	 * 
 	 * @param bundle
 	 * @param query
 	 * @return
 	 * @throws JMOPSourceException
 	 */
-	private Track loadSearchResult(Bundle bundle, String query) throws JMOPSourceException {
+	private List<Track> loadSearchResult(Bundle bundle, String query) throws JMOPSourceException {
 		try {
-			SeaRqt request = createSearchRequest(query);
-			SeaRst response = executeSearchRequest(request);
-			return convertSearchResponse(bundle, response);
+			List<String> ids = doTheSearchRequest(bundle, query);
+			return loadTracks(bundle, ids);
 		} catch (Exception e) {
 			connection.markOffline();
 
 			throw new JMOPSourceException("Cannot load search result", e); //$NON-NLS-1$
 		}
+	}
+
+	/**
+	 * Executes the search request. Returns the track ids.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @return
+	 * @throws Exception
+	 */
+	private List<String> doTheSearchRequest(Bundle bundle, String query) throws Exception {
+		SeaRqt request = createSearchRequest(query);
+		SeaRst response = executeSearchRequest(request);
+		List<String> ids = convertSearchResponse(response);
+		return ids;
 	}
 
 	/**
@@ -147,25 +157,37 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 	 */
 	private Track loadNextOf(Bundle bundle, String id) throws JMOPSourceException {
 		try {
-			GntRqt request = createLoadNextRequest(id);
-			GntRst response = executeLoadNextRequest(request);
-			return convertLoadNextResponse(bundle, response);
+			List<String> ids = doTheLoadNextRequest(id);
+			List<Track> tracks = loadTracks(bundle, ids);
+			return chooseNext(tracks, id);
 		} catch (Exception e) {
 			connection.markOffline();
 			throw new JMOPSourceException("Cannot load next track", e); //$NON-NLS-1$
 		}
+	}
+
+	/**
+	 * Perfroms the load next request.
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	private List<String> doTheLoadNextRequest(String id) throws Exception {
+		GntRqt request = createLoadNextRequest(id);
+		GntRst response = executeLoadNextRequest(request);
+		List<String> ids = convertLoadNextResponse(response);
+		return ids;
 	}
 	///////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Converts response of load track request into track.
 	 * 
-	 * @param bundle
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
-	protected abstract Track convertLoadResponse(Bundle bundle, GtRst response) throws Exception;
+	protected abstract List<Track> convertLoadResponse(Bundle bundle, GtRst response) throws Exception;
 
 	/**
 	 * Executes the load track request.
@@ -177,23 +199,23 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 	protected abstract GtRst executeLoadRequest(GtRqt request) throws Exception;
 
 	/**
-	 * Creates the load track request.
+	 * Creates the load tracks request.
 	 * 
-	 * @param id
+	 * @param ids
 	 * @return
 	 * @throws Exception
 	 */
-	protected abstract GtRqt createLoadRequest(String id) throws Exception;
+	protected abstract GtRqt createLoadRequest(List<String> ids) throws Exception;
 
 	/**
-	 * Converts response of search request into track.
+	 * Converts response of search request into IDs.
 	 * 
 	 * @param bundle
 	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
-	protected abstract Track convertSearchResponse(Bundle bundle, SeaRst response) throws Exception;
+	protected abstract List<String> convertSearchResponse(SeaRst response) throws Exception;
 
 	/**
 	 * Executes the search request.
@@ -221,7 +243,7 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 	 * @return
 	 * @throws Exception
 	 */
-	protected abstract Track convertLoadNextResponse(Bundle bundle, GntRst response) throws Exception;
+	protected abstract List<String> convertLoadNextResponse(GntRst response) throws Exception;
 
 	/**
 	 * Executes the load next request.
@@ -241,4 +263,13 @@ public abstract class SimpleRemoteSource<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, G
 	 */
 	protected abstract GntRqt createLoadNextRequest(String id) throws Exception;
 
+	/**
+	 * Chooses the next track based on given tracks list.
+	 * 
+	 * @param tracks
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	protected abstract Track chooseNext(List<Track> tracks, String id) throws Exception;
 }

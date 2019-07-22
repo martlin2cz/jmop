@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.check;
 
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 
 /**
  * The default checker checking just only by downloader's and converter's check
@@ -11,10 +11,10 @@ import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
  *
  */
 public class DefaultJMOPEnvironmentChecker implements BaseJMOPEnvironmentChecker {
-	private final BaseSourceDownloader downloader;
-	private final BaseSourceConverter converter;
+	private final XXX_BaseSourceDownloader downloader;
+	private final XXX_BaseSourceConverter converter;
 
-	public DefaultJMOPEnvironmentChecker(BaseSourceDownloader downloader, BaseSourceConverter converter) {
+	public DefaultJMOPEnvironmentChecker(XXX_BaseSourceDownloader downloader, XXX_BaseSourceConverter converter) {
 		super();
 		this.downloader = downloader;
 		this.converter = converter;
