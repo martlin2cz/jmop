@@ -18,8 +18,8 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 import javafx.util.Duration;
 
 public class DownloaderTest {
@@ -35,7 +35,7 @@ public class DownloaderTest {
 
 		ConstantConfiguration config = new ConstantConfiguration();
 		InternetConnectionStatus connection = new InternetConnectionStatus(config);
-		AbstractRemoteSource remote = new YoutubeSource(connection);
+		XXX_AbstractRemoteSource remote = new YoutubeQuerier(connection);
 
 		BaseFilesNamer namer = new DefaultFilesNamer();
 		AbstractPlaylistLoader loader = null;
@@ -45,7 +45,7 @@ public class DownloaderTest {
 		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
 		ProgressListener listener = new SimpleLoggingListener(System.out);
 
-		BaseSourceDownloader downloader = new YoutubeDlDownloader(connection, local, remote);
+		XXX_BaseSourceDownloader downloader = new YoutubeDlDownloader(connection, local, remote);
 		// BaseSourceDownloader downloader = new TestingDownloader(sources);
 		//downloader.specifyListener(listener);
 

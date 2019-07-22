@@ -14,7 +14,8 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * @author martin
  *
  */
-public interface BaseSourceDownloader /*extends ProgressGenerator*/ {
+@Deprecated
+public interface XXX_BaseSourceDownloader {
 
 	/**
 	 * Downloads given track to given location.

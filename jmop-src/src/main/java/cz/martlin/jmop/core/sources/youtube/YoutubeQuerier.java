@@ -1,7 +1,8 @@
-package cz.martlin.jmop.core.sources.remotes;
+package cz.martlin.jmop.core.sources.youtube;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
@@ -9,12 +10,13 @@ import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 
+import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.remote.SimpleRemoteSource;
+import cz.martlin.jmop.core.sources.remote.SimpleRemoteQuerier;
 import javafx.util.Duration;
 
 /**
@@ -23,27 +25,32 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class YoutubeSource extends
-		SimpleRemoteSource<//
-				YouTube.Videos.List, VideoListResponse, //
-				YouTube.Search.List, SearchListResponse, //
-				YouTube.Search.List, SearchListResponse> {
+public class YoutubeQuerier extends SimpleRemoteQuerier<//
+		YouTube.Videos.List, VideoListResponse, //
+		YouTube.Search.List, SearchListResponse, //
+		YouTube.Search.List, SearchListResponse> {
 
-	public YoutubeSource(InternetConnectionStatus connection) {
+	private final BaseConfiguration config;
+
+	public YoutubeQuerier(BaseConfiguration config, InternetConnectionStatus connection) {
 		super(connection);
+
+		this.config = config;
 	}
 
-	@Override
 	protected String urlOfTrack(String id) {
 		return "https://www.youtube.com/watch?v=" + id; //$NON-NLS-1$
 	}
 
 	@Override
-	protected YouTube.Videos.List createLoadRequest(String id) throws Exception {
+	protected YouTube.Videos.List createLoadRequest(List<String> ids) throws Exception {
 		YouTube youtube = YoutubeUtilities.getYouTubeService();
 
 		YouTube.Videos.List listVideosRequest = youtube.videos().list("contentDetails,snippet"); //$NON-NLS-1$
-		listVideosRequest.setId(id);
+
+		String idsStr = ids.stream().collect(Collectors.joining(","));
+		listVideosRequest.setId(idsStr);
+
 		return listVideosRequest;
 	}
 
@@ -53,7 +60,7 @@ public class YoutubeSource extends
 
 		YouTube.Search.List searchListByKeywordRequest = youtube.search().list("snippet"); //$NON-NLS-1$
 		searchListByKeywordRequest.setType("video"); //$NON-NLS-1$
-		searchListByKeywordRequest.setMaxResults(1l);
+		searchListByKeywordRequest.setMaxResults((long) config.getSearchCount());
 		searchListByKeywordRequest.setQ(query);
 		return searchListByKeywordRequest;
 	}
@@ -65,6 +72,7 @@ public class YoutubeSource extends
 		YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list("snippet"); //$NON-NLS-1$
 		searchListRelatedVideosRequest.setType("video"); //$NON-NLS-1$
 		searchListRelatedVideosRequest.setRelatedToVideoId(id);
+		searchListRelatedVideosRequest.setMaxResults(2l);
 		return searchListRelatedVideosRequest;
 	}
 
@@ -91,34 +99,47 @@ public class YoutubeSource extends
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	protected Track convertLoadResponse(Bundle bundle, VideoListResponse response) throws Exception {
+	protected List<Track> convertLoadResponse(Bundle bundle, VideoListResponse response) throws Exception {
 		return convertVideoListResponse(bundle, response);
 	}
 
 	@Override
-	protected Track convertSearchResponse(Bundle bundle, SearchListResponse response) throws Exception {
-		return convertSearchListResponse(bundle, response);
+	protected List<String> convertSearchResponse(SearchListResponse response) throws Exception {
+		return convertSearchListResponse(response);
 	}
 
 	@Override
-	protected Track convertLoadNextResponse(Bundle bundle, SearchListResponse response) throws Exception {
-		return convertSearchListResponse(bundle, response);
+	protected List<String> convertLoadNextResponse(SearchListResponse response) throws Exception {
+		return convertSearchListResponse(response);
+	}
+	
+	@Override
+	protected Track chooseNext(List<Track> tracks, String id) throws Exception {
+		Track first = tracks.get(0);
+		Track second = tracks.get(1);
+		
+		if (first.getIdentifier().equals(id)) {
+			return second;
+		} else {
+			return first;
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Converts videolist into track.
+	 * Converts videolist into track(s).
 	 * 
 	 * @param bundle
 	 * @param response
 	 * @return
 	 */
-	private Track convertVideoListResponse(Bundle bundle, VideoListResponse response) {
+	private List<Track> convertVideoListResponse(Bundle bundle, VideoListResponse response) {
 		List<Video> results = response.getItems();
-		Video result = results.get(0);
-		Track track = videoToTrack(bundle, result);
-		return track;
+
+		return results.stream() //
+				.map((v) -> videoToTrack(bundle, v)) //
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -151,20 +172,19 @@ public class YoutubeSource extends
 	}
 
 	/**
-	 * Converts seachlist to track.
+	 * Converts seachlist to ids.
 	 * 
-	 * @param bundle
 	 * @param response
 	 * @return
 	 * @throws JMOPSourceException
 	 */
-	private Track convertSearchListResponse(Bundle bundle, SearchListResponse response) throws JMOPSourceException {
+	private List<String> convertSearchListResponse(SearchListResponse response) throws JMOPSourceException {
 		List<SearchResult> results = response.getItems();
-		SearchResult result = results.get(0);
-		String identifier = searchResultToId(result);
 
-		Track track = getTrack(bundle, identifier);
-		return track;
+		return results.stream() //
+				.map((r) -> searchResultToId(r)) //
+				.collect(Collectors.toList());
+
 	}
 
 }

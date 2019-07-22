@@ -1,51 +1,39 @@
 package cz.martlin.jmop.core.sources.remote;
 
-import java.net.URL;
+public class AbstractRemoteSource implements BaseRemoteSource {
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.BaseSourceImpl;
+	private final BaseRemoteStatusHandler statuser;
+	private final BaseRemoteSourceQuerier querier;
+	private final BaseDownloader downloader;
+	private final BaseConverter converter;
 
-/**
- * Base remote source. Specifies methods for loading of track by ID, searching
- * of track by keywords and inferring next track.
- * 
- * @author martin
- *
- */
-public interface AbstractRemoteSource extends BaseSourceImpl {
-
-	/**
-	 * Returns the URL to download the given track.
-	 * 
-	 * @param track
-	 * @return
-	 * @throws JMOPSourceException
-	 */
-	public URL urlOf(Track track) throws JMOPSourceException;
+	public AbstractRemoteSource(BaseRemoteStatusHandler statuser, BaseRemoteSourceQuerier querier,
+			BaseDownloader downloader, BaseConverter converter) {
+		super();
+		this.statuser = statuser;
+		this.querier = querier;
+		this.downloader = downloader;
+		this.converter = converter;
+	}
 
 	@Override
-	public Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException;
+	public BaseRemoteStatusHandler statuser() {
+		return statuser;
+	}
 
-	/**
-	 * Performs search for the given query. Returns first matching track.
-	 * 
-	 * @param bundle
-	 * @param query
-	 * @return
-	 * @throws JMOPSourceException
-	 */
-	public Track search(Bundle bundle, String query) throws JMOPSourceException;
+	@Override
+	public BaseRemoteSourceQuerier querier() {
+		return querier;
+	}
 
-	/**
-	 * Loads the most simillar track ("which shall be nextly played after") to
-	 * the given track.
-	 * 
-	 * @param track
-	 * @return
-	 * @throws JMOPSourceException
-	 */
-	public Track getNextTrackOf(Track track) throws JMOPSourceException;
+	@Override
+	public BaseDownloader downloader() {
+		return downloader;
+	}
+
+	@Override
+	public BaseConverter converter() {
+		return converter;
+	}
 
 }

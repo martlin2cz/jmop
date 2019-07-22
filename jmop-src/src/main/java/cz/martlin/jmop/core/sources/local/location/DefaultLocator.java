@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.sources.local.location;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 
 /**
  * The default locator is quite improoved {@link PrimitiveLocator}. If format of
@@ -23,7 +23,7 @@ public class DefaultLocator implements AbstractTrackFileLocator {
 	}
 
 	@Override
-	public TrackFileLocation locationOfDownload(BaseSourceDownloader downloader) {
+	public TrackFileLocation locationOfDownload(XXX_BaseSourceDownloader downloader) {
 		TrackFileFormat downloadFormat = downloader.formatOfDownload();
 
 		if (downloadFormat.equals(saveFormat)) {

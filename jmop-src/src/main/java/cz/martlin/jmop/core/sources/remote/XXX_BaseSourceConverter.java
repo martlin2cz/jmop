@@ -18,7 +18,8 @@ import cz.martlin.jmop.core.sources.locals.TrackFileFormatLocationPreparer;
  * 
  *
  */
-public interface BaseSourceConverter /*extends ProgressGenerator*/ {
+@Deprecated
+public interface XXX_BaseSourceConverter {
 
 	/**
 	 * Converts given track fron given input format at given input location into

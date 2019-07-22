@@ -19,9 +19,9 @@ import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
-import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
-import cz.martlin.jmop.core.sources.remote.BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -39,9 +39,9 @@ public class TrackPreparer {
 	private final Operations operations;
 	private final ObservableList<OperationWrapper<?, ?>> currentTasks;
 
-	public TrackPreparer(ErrorReporter reporter, BaseConfiguration config, AbstractRemoteSource remote,
-			BaseLocalSource local, AbstractTrackFileLocator locator, BaseSourceDownloader downloader,
-			BaseSourceConverter converter, BasePlayer player) {
+	public TrackPreparer(ErrorReporter reporter, BaseConfiguration config, XXX_AbstractRemoteSource remote,
+			BaseLocalSource local, AbstractTrackFileLocator locator, XXX_BaseSourceDownloader downloader,
+			XXX_BaseSourceConverter converter, BasePlayer player) {
 
 		this.reporter = reporter;
 

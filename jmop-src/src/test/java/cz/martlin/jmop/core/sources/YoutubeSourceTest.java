@@ -6,14 +6,14 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
+import cz.martlin.jmop.core.sources.remotes.XXX_YoutubeSource;
 
 public class YoutubeSourceTest {
 
 	public static void main(String[] args) throws JMOPSourceException {
 		ConstantConfiguration config = new ConstantConfiguration();
 		InternetConnectionStatus connection = new InternetConnectionStatus(config);
-		YoutubeSource source = new YoutubeSource(connection);
+		XXX_YoutubeSource source = new XXX_YoutubeSource(connection);
 
 		final Bundle bundle = new Bundle(SourceKind.YOUTUBE, "house music"); //$NON-NLS-1$
 		final String query = "progressive house mix"; //$NON-NLS-1$

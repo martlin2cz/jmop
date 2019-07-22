@@ -13,6 +13,7 @@ package cz.martlin.jmop.core.operation.base;
  * @param <OT>
  *            output type
  */
+@Deprecated
 public interface BaseOperation<IT, OT> {
 	/**
 	 * Run this operation with given input reporting status into given handler.
