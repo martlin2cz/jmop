@@ -7,6 +7,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.operation.base.AbstractAtomicOperation;
 import cz.martlin.jmop.core.operation.base.OperationChangeListener;
 import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
 import cz.martlin.jmop.gui.local.Msg;
 
 /**
@@ -16,9 +17,9 @@ import cz.martlin.jmop.gui.local.Msg;
  *
  */
 public class NextTrackOperation extends AbstractAtomicOperation<Track, Track> {
-	private final AbstractRemoteSource remote;
+	private final XXX_AbstractRemoteSource remote;
 
-	public NextTrackOperation(ErrorReporter reporter, BaseConfiguration config, AbstractRemoteSource remote) {
+	public NextTrackOperation(ErrorReporter reporter, BaseConfiguration config, XXX_AbstractRemoteSource remote) {
 		super(reporter, Msg.get("Next_track")); //$NON-NLS-1$
 		this.remote = remote;
 	}

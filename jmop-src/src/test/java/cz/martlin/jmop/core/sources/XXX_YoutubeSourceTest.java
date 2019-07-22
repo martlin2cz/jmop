@@ -8,7 +8,7 @@ import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.remotes.XXX_YoutubeSource;
 
-public class YoutubeSourceTest {
+public class XXX_YoutubeSourceTest {
 
 	public static void main(String[] args) throws JMOPSourceException {
 		ConstantConfiguration config = new ConstantConfiguration();

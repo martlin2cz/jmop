@@ -10,9 +10,9 @@ import cz.martlin.jmop.core.misc.ops.ShortOperation;
 public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 	@Override
-	public ShortOperation search(Bundle bundle, String query, int page) throws JMOPSourceException {
+	public ShortOperation search(Bundle bundle, String query) throws JMOPSourceException {
 		return new ShortOperation("Querying", query, //
-				() -> runSearch(bundle, query, page));
+				() -> runSearch(bundle, query));
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public abstract List<Track> runSearch(Bundle bundle, String query, int page) throws JMOPSourceException;
+	public abstract List<Track> runSearch(Bundle bundle, String query) throws JMOPSourceException;
 
 	public abstract Track runLoadNext(Track track) throws JMOPSourceException;
 

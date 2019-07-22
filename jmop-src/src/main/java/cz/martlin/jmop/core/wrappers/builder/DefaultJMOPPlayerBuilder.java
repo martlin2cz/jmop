@@ -21,7 +21,6 @@ import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader;
-import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
 
 public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 
@@ -61,7 +60,7 @@ public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 	public XXX_AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
 			InternetConnectionStatus connection) {
 		// TODO replace with Factory for SourceKind
-		return new YoutubeSource(connection);
+		return null; //FIXME
 	}
 
 	@Override

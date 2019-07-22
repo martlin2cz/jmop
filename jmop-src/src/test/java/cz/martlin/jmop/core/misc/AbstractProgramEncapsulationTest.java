@@ -7,7 +7,7 @@ import java.io.File;
 import org.junit.Test;
 
 import cz.martlin.jmop.core.player.AplayPlayer.AplayProcess;
-import cz.martlin.jmop.core.sources.remotes.TestingDownloader;
+import cz.martlin.jmop.core.sources.remote.empty.TestingDownloader;
 
 /**
  * Some simple test for {@link AbstractProgramEncapusulation}. Currently, checks
