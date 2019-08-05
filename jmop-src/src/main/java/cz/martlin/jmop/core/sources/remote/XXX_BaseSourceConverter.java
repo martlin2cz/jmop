@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.sources.remote;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.TrackFileFormatLocationPreparer;
@@ -36,7 +36,7 @@ public interface XXX_BaseSourceConverter {
 	 * @throws Exception
 	 */
 	boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat, ProgressListener listener) throws Exception;
+			TrackFileLocation toLocation, TrackFileFormat toFormat, XXX_ProgressListener listener) throws Exception;
 
 	/**
 	 * Returns true if this converter is ready to be used (like no libraries are

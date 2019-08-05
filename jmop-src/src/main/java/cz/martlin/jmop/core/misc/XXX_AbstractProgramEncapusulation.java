@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.io.Files;
 
+import sun.net.ProgressListener;
+
 /**
  * Class encapsulating system process, program started by execution of some
  * command. This class specifies abstract way how to convert input data into
@@ -24,11 +26,12 @@ import com.google.common.io.Files;
  * @param <INT> type of input data
  * @param <OUT> type of output data
  */
-public abstract class AbstractProgramEncapusulation<INT, OUT> {
+@Deprecated
+public abstract class XXX_AbstractProgramEncapusulation<INT, OUT> {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 
-	public AbstractProgramEncapusulation() {
+	public XXX_AbstractProgramEncapusulation() {
 		super();
 	}
 
@@ -93,7 +96,7 @@ public abstract class AbstractProgramEncapusulation<INT, OUT> {
 	 * @throws Exception
 	 */
 	private void handleProcessOutput(Process process, ProgressListener listener) throws Exception {
-		InputStream ins = getOutputStream(process);
+		InputStream ins = getStreamWithOutput(process);
 		Reader r = new InputStreamReader(ins);
 		Scanner s = new Scanner(r);
 

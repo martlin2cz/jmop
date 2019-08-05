@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.operation.base;
 
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 
 /**
  * Listener for changes within the operation computation. Operation can using
@@ -9,7 +9,7 @@ import cz.martlin.jmop.core.misc.ProgressListener;
  * @author martin
  *
  */
-public interface OperationChangeListener extends ProgressListener {
+public interface OperationChangeListener extends XXX_ProgressListener {
 	/**
 	 * Status of operation updated to given value.
 	 * 

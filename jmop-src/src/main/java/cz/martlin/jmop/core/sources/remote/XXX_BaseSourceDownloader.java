@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.sources.remote;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
@@ -26,7 +26,7 @@ public interface XXX_BaseSourceDownloader {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean download(Track track, TrackFileLocation location, ProgressListener listener) throws Exception;
+	public boolean download(Track track, TrackFileLocation location, XXX_ProgressListener listener) throws Exception;
 
 	/**
 	 * Returns the format this downloader downloads into.

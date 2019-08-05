@@ -8,7 +8,7 @@ import java.nio.file.StandardCopyOption;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
@@ -33,7 +33,7 @@ public class TestingDownloader implements XXX_BaseSourceDownloader {
 	}
 
 	@Override
-	public boolean download(Track track, TrackFileLocation location, ProgressListener listener) throws Exception {
+	public boolean download(Track track, TrackFileLocation location, XXX_ProgressListener listener) throws Exception {
 		File targetFile = local.fileOfTrack(track, location, downloadFormat);
 
 		copyTestingFileTo(targetFile);

@@ -7,7 +7,7 @@ import com.google.common.io.Files;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
@@ -47,7 +47,7 @@ public class TrackFileFormatLocationPreparer {
 	 * @throws Exception
 	 */
 	public boolean prepare(Track track, TrackFileFormat fromFormat, TrackFileLocation fromLocation,
-			TrackFileFormat toFormat, TrackFileLocation toLocation, ProgressListener listener) throws Exception {
+			TrackFileFormat toFormat, TrackFileLocation toLocation, XXX_ProgressListener listener) throws Exception {
 
 		boolean equalFormat = fromFormat.equals(toFormat);
 		boolean equalLocation = fromLocation.equals(toLocation);
@@ -107,7 +107,7 @@ public class TrackFileFormatLocationPreparer {
 	 * @throws Exception
 	 */
 	private boolean justConvert(Track track, //
-			TrackFileLocation location, TrackFileFormat fromFormat, TrackFileFormat toFormat, ProgressListener listener) throws Exception {
+			TrackFileLocation location, TrackFileFormat fromFormat, TrackFileFormat toFormat, XXX_ProgressListener listener) throws Exception {
 
 		return converter.convert(track, location, fromFormat, location, toFormat, listener);
 	}
@@ -126,7 +126,7 @@ public class TrackFileFormatLocationPreparer {
 	 */
 	private boolean convertWithCopy(Track track, //
 			TrackFileLocation fromLocation, TrackFileLocation toLocation, //
-			TrackFileFormat fromFormat, TrackFileFormat toFormat, ProgressListener listener) throws Exception {
+			TrackFileFormat fromFormat, TrackFileFormat toFormat, XXX_ProgressListener listener) throws Exception {
 
 		return converter.convert(track, fromLocation, fromFormat, toLocation, toFormat, listener);
 

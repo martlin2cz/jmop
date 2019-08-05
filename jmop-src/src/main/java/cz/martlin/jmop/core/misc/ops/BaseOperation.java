@@ -1,11 +1,10 @@
 package cz.martlin.jmop.core.misc.ops;
 
-public interface BaseOperation {
+public interface BaseOperation<InT, OutT> {
 	public String getName();
 	
 	public String getInputDataAsString();
 	
-	public void run() throws Exception;
+	public OutT run(BaseProgressListener listener) throws Exception;
 	
-	//TODO oncomplete?
 }

@@ -37,7 +37,7 @@ public interface XXX_AbstractRemoteSource extends BaseSourceImpl {
 	 * @return
 	 * @throws JMOPSourceException
 	 */
-	public Track search(Bundle bundle, String query) throws JMOPSourceException;
+	public SimpleShortOperation<String, List<Track>> search(Bundle bundle, String query) throws JMOPSourceException;
 
 	/**
 	 * Loads the most simillar track ("which shall be nextly played after") to

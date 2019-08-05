@@ -11,17 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.AbstractProgramEncapusulation;
+import cz.martlin.jmop.core.misc.XXX_AbstractProgramEncapusulation;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
-import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader.DownloadData;
+import cz.martlin.jmop.core.sources.remotes.XXX_YoutubeDlDownloader.DownloadData;
 
 /**
  * The downloader working by youtube-dl.
@@ -29,7 +29,8 @@ import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader.DownloadData;
  * @author martin
  *
  */
-public class YoutubeDlDownloader extends AbstractProgramEncapusulation<DownloadData, Boolean>
+@Deprecated
+public class XXX_YoutubeDlDownloader extends XXX_AbstractProgramEncapusulation<DownloadData, Boolean>
 		implements XXX_BaseSourceDownloader {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -44,7 +45,7 @@ public class YoutubeDlDownloader extends AbstractProgramEncapusulation<DownloadD
 	private final BaseLocalSource local;
 	private final XXX_AbstractRemoteSource remote;
 
-	public YoutubeDlDownloader(InternetConnectionStatus connection, BaseLocalSource local,
+	public XXX_YoutubeDlDownloader(InternetConnectionStatus connection, BaseLocalSource local,
 			XXX_AbstractRemoteSource remote) {
 		super();
 		this.connection = connection;
@@ -60,7 +61,7 @@ public class YoutubeDlDownloader extends AbstractProgramEncapusulation<DownloadD
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public boolean download(Track track, TrackFileLocation location, ProgressListener listener) throws ExternalProgramException {
+	public boolean download(Track track, TrackFileLocation location, XXX_ProgressListener listener) throws ExternalProgramException {
 		LOG.info("Downloading track " + track); //$NON-NLS-1$
 		DownloadData data = new DownloadData(track, location);
 		return run(data, listener);

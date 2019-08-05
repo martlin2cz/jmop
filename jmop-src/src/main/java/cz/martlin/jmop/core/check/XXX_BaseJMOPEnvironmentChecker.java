@@ -9,7 +9,8 @@ package cz.martlin.jmop.core.check;
  * @author martin
  *
  */
-public interface BaseJMOPEnvironmentChecker {
+@Deprecated
+public interface XXX_BaseJMOPEnvironmentChecker {
 	/**
 	 * Performs the check. Returns null, if there is no failure, and non-null
 	 * string (containing the error message) if something is not allright.

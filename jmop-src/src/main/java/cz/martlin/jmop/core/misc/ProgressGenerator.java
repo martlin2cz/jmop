@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.misc;
 
 /**
  * Progress generator is class which produces some progress. This progress may
- * be handled by {@link ProgressListener}.
+ * be handled by {@link XXX_ProgressListener}.
  * 
  * @author martin
  * @deprecated Currently, this interface is not beeing used. Thoose who generate
@@ -19,5 +19,5 @@ public interface ProgressGenerator {
 	 * 
 	 * @param listener
 	 */
-	public void specifyListener(ProgressListener listener);
+	public void specifyListener(XXX_ProgressListener listener);
 }
