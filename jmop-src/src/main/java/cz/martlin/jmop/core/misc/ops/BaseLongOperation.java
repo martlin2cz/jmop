@@ -8,10 +8,10 @@ package cz.martlin.jmop.core.misc.ops;
  * @author martin
  *
  */
-public interface BaseLongOperation extends BaseOperation {
+public interface BaseLongOperation<InT, OutT> extends BaseOperation<InT, OutT> {
 
 	@Override
-	public void run() throws Exception;
+	public OutT run(BaseProgressListener listener) throws Exception;
 
 	void reportProgress(double progress);
 	

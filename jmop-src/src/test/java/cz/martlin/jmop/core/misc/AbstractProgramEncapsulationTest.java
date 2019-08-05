@@ -10,7 +10,7 @@ import cz.martlin.jmop.core.player.AplayPlayer.AplayProcess;
 import cz.martlin.jmop.core.sources.remote.empty.TestingDownloader;
 
 /**
- * Some simple test for {@link AbstractProgramEncapusulation}. Currently, checks
+ * Some simple test for {@link XXX_AbstractProgramEncapusulation}. Currently, checks
  * only the basic usage, without progress reporting.
  * 
  * @author martin
@@ -26,7 +26,7 @@ public class AbstractProgramEncapsulationTest {
 	@Test
 	public void testSimplyOneRun() throws ExternalProgramException {
 		File input = prepareTestingFile();
-		ProgressListener listener = null;
+		XXX_ProgressListener listener = null;
 
 		AplayProcess process = new AplayProcess();
 
@@ -67,7 +67,7 @@ public class AbstractProgramEncapsulationTest {
 	 * @throws ExternalProgramException
 	 */
 	private Thread runInThread(AplayProcess process, File input) throws ExternalProgramException {
-		final ProgressListener listeners = null;
+		final XXX_ProgressListener listeners = null;
 		Thread thread = new Thread(() -> {
 			System.out.println("Starting with " + input);
 			try {

@@ -11,15 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.AbstractProgramEncapusulation;
+import cz.martlin.jmop.core.misc.XXX_AbstractProgramEncapusulation;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 //import  cz.martlin.jmop.core.sources.download.FFMPEGConverterTest.Trac;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
-import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter.TrackConvertData;
+import cz.martlin.jmop.core.sources.remotes.XXX_FFMPEGConverter.TrackConvertData;
 
 /**
  * The converted working by ffmpeg program.
@@ -27,7 +27,8 @@ import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter.TrackConvertData;
  * @author martin
  *
  */
-public class FFMPEGConverter extends AbstractProgramEncapusulation<TrackConvertData, Boolean>
+@Deprecated
+public class XXX_FFMPEGConverter extends XXX_AbstractProgramEncapusulation<TrackConvertData, Boolean>
 		implements XXX_BaseSourceConverter {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	private static final String DURATION_SEPARATOR = ":"; //$NON-NLS-1$
@@ -42,7 +43,7 @@ public class FFMPEGConverter extends AbstractProgramEncapusulation<TrackConvertD
 	private final BaseLocalSource local;
 	private Integer inputDuration;
 
-	public FFMPEGConverter(BaseLocalSource local) {
+	public XXX_FFMPEGConverter(BaseLocalSource local) {
 		super();
 
 		this.local = local;
@@ -51,7 +52,7 @@ public class FFMPEGConverter extends AbstractProgramEncapusulation<TrackConvertD
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat, ProgressListener listener) throws Exception {
+			TrackFileLocation toLocation, TrackFileFormat toFormat, XXX_ProgressListener listener) throws Exception {
 
 		LOG.info("Converting track " + track + " from " + fromFormat + " to " + toFormat); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		TrackConvertData data = new TrackConvertData(track, fromLocation, fromFormat, toLocation, toFormat);

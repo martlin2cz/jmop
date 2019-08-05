@@ -19,20 +19,20 @@ import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
-import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader;
+import cz.martlin.jmop.core.sources.remotes.XXX_FFMPEGConverter;
+import cz.martlin.jmop.core.sources.remotes.XXX_YoutubeDlDownloader;
 
 public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 
 	@Override
-	public FFMPEGConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
-		return new FFMPEGConverter(local);
+	public XXX_FFMPEGConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
+		return new XXX_FFMPEGConverter(local);
 	}
 
 	@Override
-	public YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
+	public XXX_YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
 			InternetConnectionStatus connection, XXX_AbstractRemoteSource remote, BaseLocalSource local) {
-		return new YoutubeDlDownloader(connection, local, remote);
+		return new XXX_YoutubeDlDownloader(connection, local, remote);
 	}
 
 	@Override

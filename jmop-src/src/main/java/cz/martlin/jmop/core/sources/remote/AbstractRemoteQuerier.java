@@ -5,20 +5,22 @@ import java.util.List;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.ops.ShortOperation;
+import cz.martlin.jmop.core.misc.ops.SimpleShortOperation;
 
 public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 	@Override
-	public ShortOperation search(Bundle bundle, String query) throws JMOPSourceException {
-		return new ShortOperation("Querying", query, //
-				() -> runSearch(bundle, query));
+	public SimpleShortOperation<String, List<Track>> search(Bundle bundle, String query) throws JMOPSourceException {
+		return new SimpleShortOperation<>("Querying", query, //
+				(q) -> q, //
+				(q) -> runSearch(bundle, q)); //
 	}
 
 	@Override
-	public ShortOperation loadNext(Track track) throws JMOPSourceException {
-		return new ShortOperation("Loading next", trackToString(track), //
-				() -> runLoadNext(track));
+	public SimpleShortOperation<Track, Track> loadNext(Track track) throws JMOPSourceException {
+		return new SimpleShortOperation<>("Loading next", track, //
+				(t) -> trackToString(t), //
+				(t) -> runLoadNext(t)); //
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

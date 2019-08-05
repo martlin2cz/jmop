@@ -8,7 +8,7 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
@@ -43,7 +43,7 @@ public class DownloaderTest {
 		Bundle bundle = new Bundle(source, bundleName);
 
 		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
-		ProgressListener listener = new SimpleLoggingListener(System.out);
+		XXX_ProgressListener listener = new SimpleLoggingListener(System.out);
 
 		XXX_BaseSourceDownloader downloader = new YoutubeDlDownloader(connection, local, remote);
 		// BaseSourceDownloader downloader = new TestingDownloader(sources);

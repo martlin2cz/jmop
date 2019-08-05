@@ -11,7 +11,8 @@ package cz.martlin.jmop.core.misc;
  *
  */
 @FunctionalInterface
-public interface ProgressListener {
+@Deprecated
+public interface XXX_ProgressListener {
 	public static final double THE_100_PERCENT = 100.0;
 
 	/**

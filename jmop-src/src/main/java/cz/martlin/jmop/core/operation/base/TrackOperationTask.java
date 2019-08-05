@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.operation.base;
 
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import javafx.concurrent.Task;
 
 /**
@@ -67,7 +67,7 @@ public class TrackOperationTask<IT, OT> extends Task<OT> {
 	 * @param progress
 	 */
 	private void progressChanged(Number progress) {
-		updateProgress(progress.doubleValue(), ProgressListener.THE_100_PERCENT);
+		updateProgress(progress.doubleValue(), XXX_ProgressListener.THE_100_PERCENT);
 	}
 
 }
