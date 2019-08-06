@@ -12,9 +12,9 @@ public class YoutubeDLProcessEncapsulation extends AbstractProcessEncapsulation 
 	
 	private static final String COMMAND_NAME = "youtube-dl";
 
-	public YoutubeDLProcessEncapsulation(BaseProgressListener listener, List<String> arguments,
+	public YoutubeDLProcessEncapsulation(List<String> arguments,
 			File workingDirectory) {
-		super(listener, COMMAND_NAME, arguments, workingDirectory);
+		super(COMMAND_NAME, arguments, workingDirectory);
 	}
 
 	@Override

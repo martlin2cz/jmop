@@ -65,11 +65,21 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	@Override
 	public Track runLoadNext(Track track) throws JMOPSourceException {
 		Bundle bundle = track.getBundle();
-		
+
 		Track nextData = pick();
 		Track next = renderTrack(bundle, nextData);
-		
+
 		return next;
+	}
+
+	@Override
+	protected String createUrlOfSearchResult(String query) {
+		return "http://localhost/?query=" + query;
+	}
+
+	@Override
+	protected String createUrlOfTrack(Track track) {
+		return "http://localhost/?track=" + track.getIdentifier();
 	}
 
 }

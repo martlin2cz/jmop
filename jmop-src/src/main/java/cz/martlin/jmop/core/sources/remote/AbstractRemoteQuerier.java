@@ -1,5 +1,7 @@
 package cz.martlin.jmop.core.sources.remote;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
@@ -31,7 +33,33 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
+	@Override
+	public URL urlOfTrack(Track track) {
+		String url = createUrlOfTrack(track);
+		return stringToURL(url);
+	}
+
+	protected abstract String createUrlOfTrack(Track track);
+
+	@Override
+	public URL urlOfSearchResult(String query) {
+		String url = createUrlOfSearchResult(query);
+		return stringToURL(url);
+	}
+
+	protected abstract String createUrlOfSearchResult(String query);
+
+/////////////////////////////////////////////////////////////////////////////////////
+
 	private static String trackToString(Track track) {
-		return track.getTitle(); //TODO + (duration)
+		return track.getTitle(); // TODO + (duration)
+	}
+
+	private static URL stringToURL(String url) {
+		try {
+			return new URL(url);
+		} catch (MalformedURLException e) {
+			throw new IllegalArgumentException("Invalid url: " + url, e);
+		}
 	}
 }

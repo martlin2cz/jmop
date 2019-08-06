@@ -13,7 +13,7 @@ public interface BaseLongOperation<InT, OutT> extends BaseOperation<InT, OutT> {
 	@Override
 	public OutT run(BaseProgressListener listener) throws Exception;
 
-	void reportProgress(double progress);
+	void reportProgress(BaseProgressListener listener, double progress);
 	
 	public void terminate();
 }
