@@ -1,7 +1,10 @@
 package cz.martlin.jmop.core.sources.remote;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
@@ -60,6 +63,14 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 			return new URL(url);
 		} catch (MalformedURLException e) {
 			throw new IllegalArgumentException("Invalid url: " + url, e);
+		}
+	}
+
+	protected static String encodeURLdata(String url) {
+		try {
+			return URLEncoder.encode(url, StandardCharsets.UTF_8.toString());
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalStateException("UTF-8 is unknown", e);
 		}
 	}
 }

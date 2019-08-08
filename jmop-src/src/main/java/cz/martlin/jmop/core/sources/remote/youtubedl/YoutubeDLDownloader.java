@@ -34,6 +34,11 @@ public class YoutubeDLDownloader implements BaseDownloader {
 	}
 
 	@Override
+	public TrackFileFormat downloadFormat() {
+		return DOWNLOAD_FILE_FORMAT;
+	}
+	
+	@Override
 	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
 			throws JMOPSourceException {
 		AbstractProcessEncapsulation process = prepareProcess(track, location);

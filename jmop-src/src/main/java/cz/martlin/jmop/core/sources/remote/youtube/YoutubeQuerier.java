@@ -38,7 +38,15 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 		this.config = config;
 	}
 
-	protected String urlOfTrack(String id) {
+	@Override
+	protected String createUrlOfSearchResult(String query) {
+		String encoded = encodeURLdata(query);
+		return "https://www.youtube.com/results?search_query=" + encoded; //$NON-NLS-1$
+	}
+
+	@Override
+	protected String createUrlOfTrack(Track track) {
+		String id = track.getIdentifier();
 		return "https://www.youtube.com/watch?v=" + id; //$NON-NLS-1$
 	}
 
@@ -112,12 +120,12 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	protected List<String> convertLoadNextResponse(SearchListResponse response) throws Exception {
 		return convertSearchListResponse(response);
 	}
-	
+
 	@Override
 	protected Track chooseNext(List<Track> tracks, String id) throws Exception {
 		Track first = tracks.get(0);
 		Track second = tracks.get(1);
-		
+
 		if (first.getIdentifier().equals(id)) {
 			return second;
 		} else {

@@ -1,7 +1,5 @@
 package cz.martlin.jmop.core.sources.remote;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,25 +37,6 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 		super();
 		this.connection = connection;
 	}
-
-	public URL urlOf(Track track) throws JMOPSourceException {
-		LOG.info("Generating url of track " + track.getTitle()); //$NON-NLS-1$
-		String id = track.getIdentifier();
-		String url = urlOfTrack(id);
-		try {
-			return new URL(url);
-		} catch (MalformedURLException e) {
-			throw new JMOPSourceException("URL of track corrupted", e); //$NON-NLS-1$
-		}
-	}
-
-	/**
-	 * Returns url of track as String.
-	 * 
-	 * @param id
-	 * @return
-	 */
-	protected abstract String urlOfTrack(String id);
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -168,6 +147,7 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 
 	/**
 	 * Perfroms the load next request.
+	 * 
 	 * @param id
 	 * @return
 	 * @throws Exception
