@@ -13,6 +13,9 @@ import javafx.util.Duration;
  */
 public class DurationUtilities {
 
+	private static final String DURATION_SEPARATOR = ":"; //$NON-NLS-1$
+	private static final int TIME_UNIT_MULTIPLICATOR = 60;
+
 	/**
 	 * Creates instace of duration with given hours, minutes and seconds.
 	 * 
@@ -105,6 +108,26 @@ public class DurationUtilities {
 		} else {
 			return String.format("%d:%02d:%02d", hours, minutes, seconds); //$NON-NLS-1$
 		}
+	}
+
+	/**
+	 * Parses string duration in human format into integer (number of seconds).
+	 * 
+	 * @param durationStr
+	 * @return
+	 */
+	public static Duration parseHumanDuration(String durationStr) { 
+		String[] parts = durationStr.split(DURATION_SEPARATOR);
+
+		int sum = 0;
+		for (String part : parts) {
+			sum *= TIME_UNIT_MULTIPLICATOR;
+			int value = Integer.parseInt(part);
+			sum += value;
+		}
+
+		int milis = (int) TimeUnit.SECONDS.toMillis(sum);
+		return new Duration(milis);
 	}
 
 }
