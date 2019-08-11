@@ -1,2 +1,0 @@
-package cz.martlin.jmop;
-

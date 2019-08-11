@@ -176,7 +176,7 @@ public class XXX_FFMPEGConverter extends XXX_AbstractProgramEncapusulation<Track
 		}
 
 		String durationStr = inferDuration(line);
-		int duration = parseDuration(durationStr);
+		int duration = parseHumanDuration(durationStr);
 
 		return duration;
 	}
@@ -195,7 +195,7 @@ public class XXX_FFMPEGConverter extends XXX_AbstractProgramEncapusulation<Track
 		}
 
 		String durationStr = inferDuration(line);
-		return parseDuration(durationStr);
+		return parseHumanDuration(durationStr);
 	}
 
 	/**

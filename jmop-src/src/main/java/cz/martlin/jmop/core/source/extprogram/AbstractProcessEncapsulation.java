@@ -22,15 +22,12 @@ public abstract class AbstractProcessEncapsulation {
 	private final File workingDirectory;
 
 	private Process process;
-	
-	public AbstractProcessEncapsulation(String command, List<String> arguments,
-			File workingDirectory) {
+
+	public AbstractProcessEncapsulation(String command, List<String> arguments, File workingDirectory) {
 		this(commandLine(command, arguments), workingDirectory);
 	}
-	
-	
-	protected AbstractProcessEncapsulation(List<String> commandLine,
-			File workingDirectory) {
+
+	protected AbstractProcessEncapsulation(List<String> commandLine, File workingDirectory) {
 		super();
 		this.commandLine = commandLine;
 		this.workingDirectory = workingDirectory;
@@ -64,7 +61,7 @@ public abstract class AbstractProcessEncapsulation {
 			builder.directory(workingDirectory);
 			return builder.start();
 		} catch (IOException e) {
-			throw new ExternalProgramException("Cannot start external program", e);
+			throw new ExternalProgramException("Cannot start external program: " + commandLine, e);
 		}
 	}
 
@@ -100,8 +97,9 @@ public abstract class AbstractProcessEncapsulation {
 
 	/**
 	 * Reports given progress to listener (if some).
-	 * @param progressOrNot 
-	 * @param listener 
+	 * 
+	 * @param progressOrNot
+	 * @param listener
 	 * 
 	 * @param progress
 	 * @param listener
@@ -131,16 +129,15 @@ public abstract class AbstractProcessEncapsulation {
 	private void killTheProcess() {
 		process.destroy();
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	
 	private static List<String> commandLine(String command, List<String> arguments) {
 		ArrayList<String> commandLine = new ArrayList<String>(arguments.size());
-		
+
 		commandLine.add(command);
 		commandLine.addAll(arguments);
-		
+
 		return commandLine;
 	}
 
