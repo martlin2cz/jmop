@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.wrappers.builder;
 
 import cz.martlin.jmop.core.check.XXX_BaseJMOPEnvironmentChecker;
-import cz.martlin.jmop.core.check.DefaultJMOPEnvironmentChecker;
+import cz.martlin.jmop.core.check.XXX_DefaultJMOPEnvironmentChecker;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.CommandlineData;
 import cz.martlin.jmop.core.misc.ErrorReporter;
@@ -102,7 +102,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 			BaseLocalSource local, XXX_AbstractRemoteSource remote, XXX_BaseSourceDownloader downloader,
 			XXX_BaseSourceConverter converter) {
 
-		return new DefaultJMOPEnvironmentChecker(downloader, converter);
+		return new XXX_DefaultJMOPEnvironmentChecker(downloader, converter);
 	}
 
 	private BasePlaylisterStrategy createLockedStrategy(CommandlineData data, BaseConfiguration config) {

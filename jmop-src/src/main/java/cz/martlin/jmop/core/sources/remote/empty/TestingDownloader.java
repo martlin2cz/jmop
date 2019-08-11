@@ -8,16 +8,18 @@ import java.nio.file.StandardCopyOption;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.misc.XXX_ProgressListener;
+import cz.martlin.jmop.core.misc.ops.AbstractLongOperation;
+import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
+import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
-public class TestingDownloader implements XXX_BaseSourceDownloader {
+public class TestingDownloader implements BaseDownloader {
 
-	public static final String TESTING_SAMPLE_FILE = "samples/sample.opus"; //$NON-NLS-1$
-	public static final TrackFileFormat TESTING_FILE_FORMAT = TrackFileFormat.OPUS;
+	private static final String TESTING_SAMPLE_FILE = "samples/sample.opus"; //$NON-NLS-1$
+	private static final TrackFileFormat TESTING_FILE_FORMAT = TrackFileFormat.OPUS;
 
 	private final TrackFileFormat downloadFormat;
 	private final BaseLocalSource local;
@@ -29,17 +31,16 @@ public class TestingDownloader implements XXX_BaseSourceDownloader {
 	}
 
 	@Override
-	public TrackFileFormat formatOfDownload() {
-		return downloadFormat;
+	public TrackFileFormat downloadFormat() {
+		return TESTING_FILE_FORMAT;
 	}
 
 	@Override
-	public boolean download(Track track, TrackFileLocation location, XXX_ProgressListener listener) throws Exception {
-		File targetFile = local.fileOfTrack(track, location, downloadFormat);
+	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
+			throws JMOPSourceException {
 
-		copyTestingFileTo(targetFile);
-
-		return true;
+		File file = local.fileOfTrack(track, location, downloadFormat);
+		return new TestingDownloaderOperation(track, file);
 	}
 
 	/**
@@ -54,15 +55,30 @@ public class TestingDownloader implements XXX_BaseSourceDownloader {
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
-/*
-	@Override
-	public void specifyListener(ProgressListener listener) {
-		// nothing
-	}
-*/
-	@Override
-	public boolean check() {
-		return true;
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	public static class TestingDownloaderOperation extends AbstractLongOperation<Track, Track> {
+		private final File file;
+
+		public TestingDownloaderOperation(Track track, File file) {
+			super("Testing downloading", track, (t) -> t.toHumanString());
+
+			this.file = file;
+		}
+
+		@Override
+		public Track run(BaseProgressListener listener) throws Exception {
+			copyTestingFileTo(file);
+
+			return getInput();
+		}
+
+		@Override
+		public void terminate() {
+			// termination not supported
+		}
+
 	}
 
 }

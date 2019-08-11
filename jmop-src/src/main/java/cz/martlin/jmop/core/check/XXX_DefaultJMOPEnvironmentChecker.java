@@ -10,11 +10,11 @@ import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
  * @author martin
  *
  */
-public class DefaultJMOPEnvironmentChecker implements XXX_BaseJMOPEnvironmentChecker {
+public class XXX_DefaultJMOPEnvironmentChecker implements XXX_BaseJMOPEnvironmentChecker {
 	private final XXX_BaseSourceDownloader downloader;
 	private final XXX_BaseSourceConverter converter;
 
-	public DefaultJMOPEnvironmentChecker(XXX_BaseSourceDownloader downloader, XXX_BaseSourceConverter converter) {
+	public XXX_DefaultJMOPEnvironmentChecker(XXX_BaseSourceDownloader downloader, XXX_BaseSourceConverter converter) {
 		super();
 		this.downloader = downloader;
 		this.converter = converter;

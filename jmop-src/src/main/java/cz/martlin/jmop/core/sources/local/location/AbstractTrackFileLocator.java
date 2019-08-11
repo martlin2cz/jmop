@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.sources.local.location;
 
 import cz.martlin.jmop.core.player.BasePlayer;
-import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
+import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
 /**
  * Specification, where downloaded, saved and prepared-to-play track files may
@@ -18,7 +18,7 @@ public interface AbstractTrackFileLocator {
 	 * @param downloader
 	 * @return
 	 */
-	public TrackFileLocation locationOfDownload(XXX_BaseSourceDownloader downloader);
+	public TrackFileLocation locationOfDownload(BaseDownloader downloader);
 
 	/**
 	 * Returns where to store saved files.
