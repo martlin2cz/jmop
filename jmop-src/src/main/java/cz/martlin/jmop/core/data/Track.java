@@ -1,5 +1,6 @@
 package cz.martlin.jmop.core.data;
 
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import javafx.util.Duration;
 
 /**
@@ -20,8 +21,7 @@ public class Track {
 	// TODO thumbnail
 
 	/**
-	 * If possible use {@link Bundle#createTrack(String, String, String)}
-	 * instead.
+	 * If possible use {@link Bundle#createTrack(String, String, String)} instead.
 	 * 
 	 * @param bundle
 	 * @param identifier
@@ -107,6 +107,10 @@ public class Track {
 	public String toString() {
 		return "Track [bundle=" + bundle.getName() + ", identifier=" + identifier + ", title=" + title //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", description=" + "..." + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	}
+
+	public String toHumanString() {
+		return title + " (" + DurationUtilities.toHumanString(duration) + ")";
 	}
 
 }

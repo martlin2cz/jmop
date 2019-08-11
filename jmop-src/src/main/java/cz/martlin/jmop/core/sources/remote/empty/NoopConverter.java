@@ -4,10 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.XXX_ProgressListener;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
+import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.BaseConverter;
+import cz.martlin.jmop.core.sources.remote.ConversionReason;
 
 /**
  * Converter doing simply no conversion, or even nothing.
@@ -15,31 +18,64 @@ import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
  * @author martin
  *
  */
-public class NoopConverter implements XXX_BaseSourceConverter {
+public class NoopConverter implements BaseConverter {
 
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
-
+	
 	public NoopConverter() {
 		super();
 	}
 
 	@Override
-	public boolean convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat, XXX_ProgressListener listener) throws Exception {
+	public BaseLongOperation<Track, Track> convert(Track track, TrackFileLocation fromLocation,
+			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason)
+			throws JMOPSourceException {
 
-		LOG.info("NOT Converting track " + track); //$NON-NLS-1$
-
-		return true;
-	}
-/*
-	@Override
-	public void specifyListener(ProgressListener listener) {
-		// nothing
-	}
-*/
-	@Override
-	public boolean check() {
-		return true;
+		return new NotConvertingLongOperation(track, fromLocation, fromFormat, toLocation, toFormat, reason);
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	public static class NotConvertingLongOperation implements BaseLongOperation<Track, Track> {
+
+		private final Logger LOG = LoggerFactory.getLogger(getClass());
+
+		
+		private final Track track;
+		private final ConversionReason reason;
+
+		public NotConvertingLongOperation(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
+				TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason) {
+			super();
+			this.track = track;
+			this.reason = reason;
+		}
+
+		@Override
+		public String getName() {
+			return reason.getHumanName();
+		}
+
+		@Override
+		public String getInputDataAsString() {
+			return track.toHumanString();
+		}
+
+		@Override
+		public Track run(BaseProgressListener listener) throws Exception {
+			LOG.info("NOT Converting track " + track); //$NON-NLS-1$
+
+			return null;
+		}
+
+		@Override
+		public void reportProgress(BaseProgressListener listener, double progress) {
+			listener.reportProgressChanged(progress);
+		}
+
+		@Override
+		public void terminate() {
+			// nothing needed
+		}
+
+	}
 }

@@ -33,6 +33,7 @@ import javafx.collections.ObservableList;
  * @author martin
  *
  */
+@Deprecated
 public class TrackPreparer {
 
 	private final ErrorReporter reporter;

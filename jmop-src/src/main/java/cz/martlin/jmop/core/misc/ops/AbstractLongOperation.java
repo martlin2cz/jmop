@@ -23,6 +23,11 @@ public abstract class AbstractLongOperation<InT, OutT> implements BaseLongOperat
 		return name;
 	}
 
+
+	public InT getInput() {
+		return input;
+	}
+	
 	@Override
 	public String getInputDataAsString() {
 		return dataToString.apply(input);
