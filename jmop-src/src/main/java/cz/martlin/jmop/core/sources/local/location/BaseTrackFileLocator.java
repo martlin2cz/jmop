@@ -10,7 +10,7 @@ import cz.martlin.jmop.core.sources.remote.BaseDownloader;
  * @author martin
  *
  */
-public interface AbstractTrackFileLocator {
+public interface BaseTrackFileLocator {
 	/**
 	 * Returns where to store downloaded files, if downloaded by given
 	 * downloader.

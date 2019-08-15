@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.sources.remote.BaseDownloader;
  * @author martin
  *
  */
-public class PrimitiveLocator implements AbstractTrackFileLocator {
+public class PrimitiveLocator implements BaseTrackFileLocator {
 
 	@Override
 	public TrackFileLocation locationOfDownload(BaseDownloader downloader) {

@@ -8,9 +8,20 @@ import javafx.beans.property.Property;
  * its/their change(s) and if so, particularry updates {@link Property}(ies).
  * 
  * @author martin
- *
+ * @deprecated The wrapper is not good idea. Let's (ping TODO) instead of
+ *             wrapping objects into another layer simply create standalone
+ *             object, which just handles the Properties stuff and possibly the
+ *             events handling.
+ * 
+ *             Convert "Wrapper delegates calls to object, object changes,
+ *             delegate updates its properties" approach to "object works
+ *             standalone, the so-called wrapper just listens its changes and
+ *             propagates them via properties"
+ * 
+ * 
  * @param <T>
  */
+@Deprecated
 public interface BaseWrapper<T> {
 	/**
 	 * Initializes bindings between the observable objects and properties.

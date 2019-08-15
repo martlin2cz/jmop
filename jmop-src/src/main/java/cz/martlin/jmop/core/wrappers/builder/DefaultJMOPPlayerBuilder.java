@@ -12,7 +12,7 @@ import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
-import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.DefaultLocator;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
@@ -37,12 +37,12 @@ public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 
 	@Override
 	public JavaFXMediaPlayer createPlayer(CommandlineData data, BaseConfiguration config, BaseLocalSource local,
-			AbstractTrackFileLocator locator) {
+			BaseTrackFileLocator locator) {
 		return new JavaFXMediaPlayer(local, locator);
 	}
 
 	@Override
-	public AbstractTrackFileLocator createLocator(CommandlineData data, BaseConfiguration config) {
+	public BaseTrackFileLocator createLocator(CommandlineData data, BaseConfiguration config) {
 		return new DefaultLocator(config);
 	}
 

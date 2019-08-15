@@ -47,6 +47,7 @@ public abstract class AbstractProcessEncapsulation {
 
 	public void terminate() {
 		killTheProcess();
+		//TODO delete the sub-result
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

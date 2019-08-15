@@ -6,7 +6,7 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
-import cz.martlin.jmop.core.preparer.TrackPreparer;
+import cz.martlin.jmop.core.preparer.XXX_TrackPreparer;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 
@@ -19,15 +19,15 @@ import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
  */
 public class JMOPSources {
 	private final LocalSourceWrapper local;
-	private final TrackPreparer preparer;
+	private final XXX_TrackPreparer preparer;
 
-	public JMOPSources(LocalSourceWrapper local, TrackPreparer preparer) {
+	public JMOPSources(LocalSourceWrapper local, XXX_TrackPreparer preparer) {
 		super();
 		this.local = local;
 		this.preparer = preparer;
 	}
 
-	public TrackPreparer getPreparer() {
+	public XXX_TrackPreparer getPreparer() {
 		return preparer;
 	}
 

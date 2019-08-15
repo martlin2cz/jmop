@@ -9,7 +9,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
-import cz.martlin.jmop.core.preparer.TrackPreparer;
+import cz.martlin.jmop.core.preparer.XXX_TrackPreparer;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
 import javafx.util.Duration;
@@ -30,7 +30,7 @@ public class JMOPPlayer {
 	private final JMOPData data;
 
 	public JMOPPlayer(BaseConfiguration config, ErrorReporter reporter, PlayerEngine engine, LocalSourceWrapper local,
-			TrackPreparer preparer, BaseJMOPEnvironmentChecker checker) {
+			XXX_TrackPreparer preparer, BaseJMOPEnvironmentChecker checker) {
 		this.config = config;
 		this.reporter = reporter;
 		this.sources = new JMOPSources(local, preparer);

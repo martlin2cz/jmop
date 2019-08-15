@@ -2,22 +2,27 @@ package cz.martlin.jmop.core.misc.ops;
 
 import javafx.concurrent.Task;
 
-public class OperationJob<InT, OutT> extends Task<OutT> implements BaseProgressListener {
+public class OperationTask<InT, OutT> extends Task<OutT> implements BaseProgressListener {
 
 	private final BaseOperation<InT, OutT> operation;
 
-	public OperationJob(BaseOperation<InT, OutT> operation) {
+	public OperationTask(BaseOperation<InT, OutT> operation) {
 		super();
 		this.operation = operation;
 	}
 
+	public BaseOperation<InT, OutT> getOperation() {
+		return operation;
+	}
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	@Override
 	protected OutT call() throws Exception {
 		prepare();
 
-		return invoke();
+		OutT result = invoke();
+		
+		return result;
 	}
 
 	private void prepare() {
@@ -32,11 +37,30 @@ public class OperationJob<InT, OutT> extends Task<OutT> implements BaseProgressL
 		return operation.run(this);
 	}
 
+	@Override
+	public boolean cancel(boolean mayInterruptIfRunning) {
+		if (operation instanceof BaseLongOperation) {
+			BaseLongOperation<InT, OutT> longOperation = (BaseLongOperation<InT, OutT>) operation;
+			longOperation.terminate();
+		}
+
+		return super.cancel(mayInterruptIfRunning);
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 
+	public String getName() {
+		return operation.getName();
+	}
+	
+	public String getInputAsString() {
+		return operation.getInputDataAsString();
+	}
+	
 	@Override
 	public void reportProgressChanged(double progress) {
 		this.updateProgress(progress, THE_100_PERCENT);
 	}
+
 
 }

@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import javafx.util.Duration;
 
@@ -34,7 +34,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	private boolean over;
 	private Track playedTrack;
 
-	public AbstractPlayer(BaseLocalSource local, AbstractTrackFileLocator locator, TrackFileFormat supportedFormat) {
+	public AbstractPlayer(BaseLocalSource local, BaseTrackFileLocator locator, TrackFileFormat supportedFormat) {
 		super();
 		this.local = local;
 

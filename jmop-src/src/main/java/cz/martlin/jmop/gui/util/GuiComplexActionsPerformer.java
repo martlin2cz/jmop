@@ -393,6 +393,7 @@ public class GuiComplexActionsPerformer {
 	}
 
 	@FunctionalInterface
+	@Deprecated
 	public static interface ConsumerWithException<T> {
 		public void consume(T object) throws Exception;
 	}
