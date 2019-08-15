@@ -13,7 +13,7 @@ import cz.martlin.jmop.core.sources.remote.BaseDownloader;
  * @author martin
  *
  */
-public class DefaultLocator implements AbstractTrackFileLocator {
+public class DefaultLocator implements BaseTrackFileLocator {
 
 	private final TrackFileFormat saveFormat;
 

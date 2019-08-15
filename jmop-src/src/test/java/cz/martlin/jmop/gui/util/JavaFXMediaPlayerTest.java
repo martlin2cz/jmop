@@ -21,7 +21,7 @@ import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.PrimitiveLocator;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
@@ -55,7 +55,7 @@ public class JavaFXMediaPlayerTest {
 				XXX_FFMPEGConverter converter = new XXX_FFMPEGConverter(local);
 				converter.convert(track, downloadLocation, downloadFormat, playLocation, playFormat, listener);
 
-				AbstractTrackFileLocator locator = new PrimitiveLocator();
+				BaseTrackFileLocator locator = new PrimitiveLocator();
 				JavaFXMediaPlayer player = new JavaFXMediaPlayer(local, locator);
 				// AbstractPlayer player = new AplayPlayer(local);
 

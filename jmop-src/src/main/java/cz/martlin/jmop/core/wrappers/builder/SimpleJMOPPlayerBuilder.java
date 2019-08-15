@@ -13,10 +13,10 @@ import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.playlister.Playlister;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
-import cz.martlin.jmop.core.preparer.TrackPreparer;
+import cz.martlin.jmop.core.preparer.XXX_TrackPreparer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
-import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
 import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceDownloader;
@@ -47,11 +47,11 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		XXX_BaseSourceDownloader downloader = createDownloader(data, config, connection, remote, local);
 		XXX_BaseSourceConverter converter = createConverter(data, config, local);
 
-		AbstractTrackFileLocator locator = createLocator(data, config);
+		BaseTrackFileLocator locator = createLocator(data, config);
 		BasePlayer player = createPlayer(data, config, local, locator);
 
 		// level 2 things
-		TrackPreparer preparer = new TrackPreparer(reporter, config, remote, local, locator, downloader, converter,
+		XXX_TrackPreparer preparer = new XXX_TrackPreparer(reporter, config, remote, local, locator, downloader, converter,
 				player);
 
 		BasePlaylisterStrategy lockedStrategy = createLockedStrategy(data, config);
@@ -114,7 +114,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 	}
 
 	private BasePlaylisterStrategy createOnlineStrategy(CommandlineData data, BaseConfiguration config,
-			TrackPreparer preparer) {
+			XXX_TrackPreparer preparer) {
 		return new StandartOnlineStrategy(preparer);
 	}
 
@@ -128,11 +128,11 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 
 	public abstract BaseLocalSource createLocalSource(CommandlineData data, BaseConfiguration config) throws Exception;
 
-	public abstract AbstractTrackFileLocator createLocator(CommandlineData data, BaseConfiguration config)
+	public abstract BaseTrackFileLocator createLocator(CommandlineData data, BaseConfiguration config)
 			throws Exception;
 
 	public abstract JavaFXMediaPlayer createPlayer(CommandlineData data, BaseConfiguration config,
-			BaseLocalSource local, AbstractTrackFileLocator locator) throws Exception;
+			BaseLocalSource local, BaseTrackFileLocator locator) throws Exception;
 
 	public abstract XXX_YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
 			InternetConnectionStatus connection, XXX_AbstractRemoteSource remote, BaseLocalSource local) throws Exception;
