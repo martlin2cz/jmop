@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.strategy.base;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
-import cz.martlin.jmop.core.preparer.XXX_TrackPreparer;
+//import cz.martlin.jmop.core.preparer.XXX_TrackPreparer;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 
 /**
@@ -15,12 +15,12 @@ import cz.martlin.jmop.core.runtime.PlaylistRuntime;
  */
 public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInferringStrategy {
 
-	protected final XXX_TrackPreparer preparer;
+//	protected final XXX_TrackPreparer preparer;
 	private PlayerEngine engine;
 
-	public AbstractNextOnlineLoadingStrategy(XXX_TrackPreparer preparer) {
+	public AbstractNextOnlineLoadingStrategy(/*XXX_TrackPreparer preparer*/) {
 		super();
-		this.preparer = preparer;
+//		this.preparer = preparer;
 	}
 
 	/**
@@ -48,9 +48,9 @@ public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInfe
 	 * @param track
 	 */
 	private void checkAndStartLoadingInBg(Track track) {
-		if (preparer.countOfCurrentlyRunning() <= 1) {
-			preparer.startLoadingNextOf(track, engine);
-		}
+//		if (preparer.countOfCurrentlyRunning() <= 1) {
+//			preparer.startLoadingNextOf(track, engine);
+//		}
 	}
 
 }

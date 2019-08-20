@@ -59,7 +59,7 @@ public class MainFrameController implements Initializable, RequiresJMOP {
 		playlistAndBundlePane.visibleProperty().bind(jmop.getData().inPlayModeProperty());
 		playlistAndBundlePane.playlistProperty().bind(jmop.getData().playlistProperty());
 
-		Bindings.bindContent(operationsPane.operationsProperty(), jmop.getData().currentOperationsProperty());
+//		Bindings.bindContent(operationsPane.operationsProperty(), jmop.getData().currentOperationsProperty());
 	}
 	//
 	// private void preparingChanged(boolean isSomePreparing) {

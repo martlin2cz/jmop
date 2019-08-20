@@ -9,7 +9,7 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.PlayerWrapper;
-import cz.martlin.jmop.core.preparer.TrackPreparer;
+//import cz.martlin.jmop.core.preparer.TrackPreparer;
 import javafx.util.Duration;
 
 /**
@@ -24,15 +24,15 @@ public class PlayerEngine {
 
 	private final ErrorReporter reporter;
 	private final PlaylisterWrapper playlister;
-	private final TrackPreparer preparer;
+//	private final TrackPreparer preparer;
 	private final PlayerWrapper player;
 
-	public PlayerEngine(ErrorReporter reporter, PlaylisterWrapper playlister, PlayerWrapper player,
-			TrackPreparer preparer) {
+	public PlayerEngine(ErrorReporter reporter, PlaylisterWrapper playlister, PlayerWrapper player/*,
+			TrackPreparer preparer*/) {
 		super();
 		this.reporter = reporter;
 		this.playlister = playlister;
-		this.preparer = preparer;
+//		this.preparer = preparer;
 		this.player = player;
 
 		player.setOnTrackPlayed((t) -> onTrackPlayed(t));
@@ -210,7 +210,7 @@ public class PlayerEngine {
 	 * @throws JMOPSourceException
 	 */
 	private void playChecked(Track track) throws JMOPSourceException {
-		preparer.checkAndLoadTrack(track, player);
+//		preparer.checkAndLoadTrack(track, player);
 	}
 
 }

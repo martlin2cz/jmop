@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.operation.base.OperationWrapper;
+//import cz.martlin.jmop.core.operation.base.OperationWrapper;
 import cz.martlin.jmop.gui.local.Msg;
 import javafx.application.Platform;
 import javafx.beans.binding.StringBinding;
@@ -34,8 +34,8 @@ public class OperationsPane extends HBox {
 	@FXML
 	private Label lblAnothers;
 
-	private ObservableList<OperationWrapper<?, ?>> operationsProperty;
-	private OperationWrapper<?, ?> shownOperation;
+//	private ObservableList<OperationWrapper<?, ?>> operationsProperty;
+//	private OperationWrapper<?, ?> shownOperation;
 
 	public OperationsPane() throws IOException {
 		super();
@@ -45,9 +45,9 @@ public class OperationsPane extends HBox {
 		changeToNoOperation();
 	}
 
-	public ObservableList<OperationWrapper<?, ?>> operationsProperty() {
-		return operationsProperty;
-	}
+//	public ObservableList<OperationWrapper<?, ?>> operationsProperty() {
+//		return operationsProperty;
+//	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	private void initialize() throws IOException {
@@ -70,79 +70,79 @@ public class OperationsPane extends HBox {
 		// operationProperty.addListener((observable, oldVal, newVal) ->
 		// operationChanged(newVal));
 
-		this.operationsProperty = FXCollections.observableArrayList();
-		this.operationsProperty.addListener((ListChangeListener<OperationWrapper<?, ?>>) (ch) -> operationsChanged(ch));
+//		this.operationsProperty = FXCollections.observableArrayList();
+//		this.operationsProperty.addListener((ListChangeListener<OperationWrapper<?, ?>>) (ch) -> operationsChanged(ch));
 
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void operationsChanged(Change<? extends OperationWrapper<?, ?>> change) {
+	private void operationsChanged(/*Change<? extends OperationWrapper<?, ?>> change*/) {
 		Platform.runLater(() -> {
 			try {
-				change.next();
+//				change.next();
 
-				if (change.wasAdded()) {
-					handleOperationsAdded(change);
-				}
-				if (change.wasRemoved()) {
-					handleOperationsRemoved(change);
-				}
+//				if (change.wasAdded()) {
+//					handleOperationsAdded(change);
+//				}
+//				if (change.wasRemoved()) {
+//					handleOperationsRemoved(change);
+//				}
 			} catch (Exception e) {
 				LOG.warn("Could not show operations", e); //$NON-NLS-1$
 			}
 		});
 	}
 
-	private void handleOperationsAdded(Change<? extends OperationWrapper<?, ?>> change) {
-		List<? extends OperationWrapper<?, ?>> operations = change.getList();
+//	private void handleOperationsAdded(Change<? extends OperationWrapper<?, ?>> change) {
+//		List<? extends OperationWrapper<?, ?>> operations = change.getList();
+//
+//		if (shownOperation == null) {
+//			showFirstOperation(change, operations);
+//		} else {
+//			changeAnothers(operations.size(), operations);
+//		}
+//	}
 
-		if (shownOperation == null) {
-			showFirstOperation(change, operations);
-		} else {
-			changeAnothers(operations.size(), operations);
-		}
-	}
+//	private void handleOperationsRemoved(Change<? extends OperationWrapper<?, ?>> change) {
+//		List<? extends OperationWrapper<?, ?>> operations = change.getList();
+//
+//		List<? extends OperationWrapper<?, ?>> removedOperations = change.getRemoved();
+//		if (removedOperations.contains(shownOperation)) {
+//			changeToNoOperation();
+//			shownOperation = null;
+//
+//			if (!operations.isEmpty()) {
+//				changeToFirstOf(operations);
+//			}
+//		} else {
+//			changeAnothers(operations.size(), operations);
+//		}
+//	}
 
-	private void handleOperationsRemoved(Change<? extends OperationWrapper<?, ?>> change) {
-		List<? extends OperationWrapper<?, ?>> operations = change.getList();
-
-		List<? extends OperationWrapper<?, ?>> removedOperations = change.getRemoved();
-		if (removedOperations.contains(shownOperation)) {
-			changeToNoOperation();
-			shownOperation = null;
-
-			if (!operations.isEmpty()) {
-				changeToFirstOf(operations);
-			}
-		} else {
-			changeAnothers(operations.size(), operations);
-		}
-	}
-
-	private void showFirstOperation(Change<? extends OperationWrapper<?, ?>> change,
-			List<? extends OperationWrapper<?, ?>> operations) {
-		if (operations.isEmpty()) {
-			// for case of concurency failure
-			return;
-		}
-
-		List<? extends OperationWrapper<?, ?>> addedOperations = change.getAddedSubList();
-		changeToFirstOf(addedOperations);
-	}
-
-	private void changeToFirstOf(List<? extends OperationWrapper<?, ?>> addedOperations) {
-		OperationWrapper<?, ?> addedOperation = addedOperations.get(0);
-		changeToOperation(addedOperation);
-		shownOperation = addedOperation;
-	}
+//	private void showFirstOperation(Change<? extends OperationWrapper<?, ?>> change,
+//			List<? extends OperationWrapper<?, ?>> operations) {
+//		if (operations.isEmpty()) {
+//			// for case of concurency failure
+//			return;
+//		}
+//
+//		List<? extends OperationWrapper<?, ?>> addedOperations = change.getAddedSubList();
+//		changeToFirstOf(addedOperations);
+//	}
+//
+//	private void changeToFirstOf(List<? extends OperationWrapper<?, ?>> addedOperations) {
+//		OperationWrapper<?, ?> addedOperation = addedOperations.get(0);
+//		changeToOperation(addedOperation);
+//		shownOperation = addedOperation;
+//	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void changeToOperation(OperationWrapper<?, ?> operation) {
-		progressIndicator.progressProperty().bind(operation.progressProperty());
-		lblStatus.textProperty().bind(operation.statusProperty());
-		lblData.textProperty().bind(operation.dataProperty());
-		lblData.getTooltip().textProperty().bind(operation.dataProperty());
+	private void changeToOperation(/*OperationWrapper<?, ?> operation*/) {
+//		progressIndicator.progressProperty().bind(operation.progressProperty());
+//		lblStatus.textProperty().bind(operation.statusProperty());
+//		lblData.textProperty().bind(operation.dataProperty());
+//		lblData.getTooltip().textProperty().bind(operation.dataProperty());
 
 		this.setVisible(true);
 	}
@@ -162,7 +162,7 @@ public class OperationsPane extends HBox {
 		lblData.getTooltip().setText("-"); //$NON-NLS-1$
 	}
 
-	private void changeAnothers(int operationsCount, List<? extends OperationWrapper<?, ?>> operations) {
+	private void changeAnothers(int operationsCount/*, List<? extends OperationWrapper<?, ?>> operations*/) {
 		if (operationsCount > 1) {
 			int anothers = operationsCount - 1;
 			lblAnothers.setText(Msg.get("plus") + anothers + Msg.get("more")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -175,34 +175,35 @@ public class OperationsPane extends HBox {
 		if (lblAnothers.getTooltip().textProperty().isBound()) {
 			lblAnothers.getTooltip().textProperty().unbind();
 		}
-		lblAnothers.getTooltip().textProperty().bind(new OperationsListTooltipTextBinding(operations));
+//		lblAnothers.getTooltip().textProperty().bind(new OperationsListTooltipTextBinding(operations));
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static class OperationsListTooltipTextBinding extends StringBinding {
 
-		private final List<? extends OperationWrapper<?, ?>> operations;
+//		private final List<? extends OperationWrapper<?, ?>> operations;
 
-		public OperationsListTooltipTextBinding(List<? extends OperationWrapper<?, ?>> operations) {
+		public OperationsListTooltipTextBinding(/*List<? extends OperationWrapper<?, ?>> operations*/) {
 			super();
 
-			this.operations = operations;
+//			this.operations = operations;
 			bindTheOperations();
 		}
 
 		private void bindTheOperations() {
-			operations.forEach((o) -> {
-				bind(o.statusProperty());
-				bind(o.dataProperty());
-			});
+//			operations.forEach((o) -> {
+//				bind(o.statusProperty());
+//				bind(o.dataProperty());
+//			});
 		}
 
 		@Override
 		protected String computeValue() {
-			return operations.stream() //
-					.map((o) -> o.statusProperty().get() + ": " + o.dataProperty().get()) // //$NON-NLS-1$
-					.collect(Collectors.joining("\n")); //$NON-NLS-1$
+//			return operations.stream() //
+//					.map((o) -> o.statusProperty().get() + ": " + o.dataProperty().get()) // //$NON-NLS-1$
+//					.collect(Collectors.joining("\n")); //$NON-NLS-1$
+			return null;
 		}
 
 	}

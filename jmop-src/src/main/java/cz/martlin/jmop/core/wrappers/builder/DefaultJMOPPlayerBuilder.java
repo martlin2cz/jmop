@@ -18,22 +18,22 @@ import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remotes.XXX_FFMPEGConverter;
-import cz.martlin.jmop.core.sources.remotes.XXX_YoutubeDlDownloader;
+//import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
+//import cz.martlin.jmop.core.sources.remotes.XXX_FFMPEGConverter;
+//import cz.martlin.jmop.core.sources.remotes.XXX_YoutubeDlDownloader;
 
 public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 
-	@Override
-	public XXX_FFMPEGConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
-		return new XXX_FFMPEGConverter(local);
-	}
-
-	@Override
-	public XXX_YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
-			InternetConnectionStatus connection, XXX_AbstractRemoteSource remote, BaseLocalSource local) {
-		return new XXX_YoutubeDlDownloader(connection, local, remote);
-	}
+//	@Override
+//	public XXX_FFMPEGConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
+//		return new XXX_FFMPEGConverter(local);
+//	}
+//
+//	@Override
+//	public XXX_YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
+//			InternetConnectionStatus connection, XXX_AbstractRemoteSource remote, BaseLocalSource local) {
+//		return new XXX_YoutubeDlDownloader(connection, local, remote);
+//	}
 
 	@Override
 	public JavaFXMediaPlayer createPlayer(CommandlineData data, BaseConfiguration config, BaseLocalSource local,
@@ -56,12 +56,12 @@ public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 		return new DefaultLocalSource(config, fileSystem);
 	}
 
-	@Override
-	public XXX_AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
-			InternetConnectionStatus connection) {
-		// TODO replace with Factory for SourceKind
-		return null; //FIXME
-	}
+//	@Override
+//	public XXX_AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
+//			InternetConnectionStatus connection) {
+//		// TODO replace with Factory for SourceKind
+//		return null; //FIXME
+//	}
 
 	@Override
 	public InternetConnectionStatus createInternetConnectionStatus(CommandlineData data, BaseConfiguration config) {
