@@ -1,10 +1,14 @@
 package cz.martlin.jmop.core.misc.ops;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 
 public class OperationsManager {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final CurrentOperations currents;
 
@@ -19,6 +23,8 @@ public class OperationsManager {
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 	public <InT, OutT> void start(BaseOperation<InT, OutT> operation, ConsumerWithException<OutT> onComplete) {
+		LOG.info("Starting operation " + operation);
+
 		OperationTask<InT, OutT> task = prepareTask(operation, onComplete);
 
 		currents.add(task);
@@ -28,14 +34,16 @@ public class OperationsManager {
 
 	public <T> void start(T input, BaseOperationsChain<T> chain, ConsumerWithException<T> onChainComplete)
 			throws JMOPSourceException {
+		LOG.info("Starting operations chain: " + chain);
+
 		startNextStepOfChain(chain, 0, input, onChainComplete);
 	}
 
 	private <T> void startNextStepOfChain(BaseOperationsChain<T> chain, int index, T input,
 			ConsumerWithException<T> onChainComplete) throws JMOPSourceException {
 		BaseOperation<T, T> operation = chain.createOperation(index, input);
-		
-		//TODO chaeck interrupted
+
+		// TODO chaeck interrupted
 		if (operation != null) {
 			start(operation, (r) -> startNextStepOfChain(chain, index + 1, r, onChainComplete));
 		} else {
@@ -69,8 +77,15 @@ public class OperationsManager {
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-	public void stopAll() {
-		// TODO stop all running
+	public synchronized void stopAll() {
+		LOG.info("Stopping all operations");
+
+		for (OperationTask<?, ?> task : currents.all()) {
+			boolean success = task.cancel();
+			if (!success) {
+				LOG.warn("The cancelation of " + task + " failed");
+			}
+		}
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////

@@ -36,27 +36,42 @@ public abstract class AbstractProcessEncapsulation {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public void run(BaseProgressListener listener) throws ExternalProgramException {
+		LOG.info("Running process " + commandLine + " in " + workingDirectory);
+
 		try {
 			prepareProcess();
 			handleProcessOutput(listener);
 			finishProcess();
 		} catch (Exception e) {
+			try {
+				deleteSubResult();
+			} catch (Exception e2) {
+				LOG.warn("Cannot delete corrupted subresult", e2);
+			}
+
 			throw new ExternalProgramException("The external process failed", e);
 		}
 	}
 
 	public void terminate() {
+		LOG.info("Terminating process " + commandLine);
+
 		killTheProcess();
-		//TODO delete the sub-result
+		
+		try {
+			deleteSubResult();
+		} catch (Exception e) {
+			LOG.warn("Deletion of subresult failed", e);
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void prepareProcess() throws ExternalProgramException {
-		process = createEclipseProcess();
+		process = createJavaProcess();
 	}
 
-	private Process createEclipseProcess() throws ExternalProgramException {
+	private Process createJavaProcess() throws ExternalProgramException {
 		try {
 			ProcessBuilder builder = new ProcessBuilder(commandLine);
 			builder.directory(workingDirectory);
@@ -81,7 +96,7 @@ public abstract class AbstractProcessEncapsulation {
 			try {
 				progressOrNot = processLineOfOutput(line);
 			} catch (Exception e) {
-				LOG.warn("TODO", e);
+				LOG.warn("Progress extraction from line " + line + " failed", e);
 			}
 			if (progressOrNot != null) {
 				reportProgress(listener, progressOrNot);
@@ -94,7 +109,7 @@ public abstract class AbstractProcessEncapsulation {
 
 	protected abstract InputStream getStreamWithOutput(Process process);
 
-	protected abstract Double processLineOfOutput(String line);
+	protected abstract Double processLineOfOutput(String line) throws Exception;
 
 	/**
 	 * Reports given progress to listener (if some).
@@ -127,9 +142,13 @@ public abstract class AbstractProcessEncapsulation {
 
 	protected abstract int getExpectedResultCode();
 
+	/////////////////////////////////////////////////////////////////////////////////////
+
 	private void killTheProcess() {
 		process.destroy();
 	}
+
+	protected abstract void deleteSubResult() throws Exception;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -140,6 +159,11 @@ public abstract class AbstractProcessEncapsulation {
 		commandLine.addAll(arguments);
 
 		return commandLine;
+	}
+	
+	public static File currentDirectory() {
+		String path = System.getProperty("user.dir");
+		return new File(path);
 	}
 
 }

@@ -1,10 +1,16 @@
 package cz.martlin.jmop.core.misc;
 
+import java.io.File;
+
 import cz.martlin.jmop.core.misc.ops.BaseOperation;
 import cz.martlin.jmop.core.misc.ops.BaseOperationsChain;
+import cz.martlin.jmop.core.misc.ops.ConsumerWithException;
 import cz.martlin.jmop.core.misc.ops.OperationsManager;
 import cz.martlin.jmop.core.misc.ops.TestingCountingLongOperation;
 import cz.martlin.jmop.core.misc.ops.TestingCountingOperationsChain;
+import cz.martlin.jmop.core.misc.ops.TestingOperations;
+import cz.martlin.jmop.core.sources.remote.BaseUIInterractor;
+import cz.martlin.jmop.core.sources.remote.ConsoleUIInteractor;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,22 +36,22 @@ public class TestingFXApplication extends Application {
 		FlowPane root = new FlowPane();
 		initializeControls(root);
 
-		primaryStage.setScene(new Scene(root, 200, 200));
+		primaryStage.setScene(new Scene(root, 800, 300));
 		primaryStage.show();
 	}
 
 	private void initializeControls(FlowPane root) {
 		createRunOperationButt(root);
+		createRunMoreOperationsButt(root);
 		createRunOperationsChainButt(root);
+		createTestConsoleInteractorButt(root);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 
 	private void createRunOperationButt(FlowPane root) {
-		Button butt = new Button("Run Operation");
-		butt.setOnAction((e) -> runOperation());
+		addTestingActionButton(root, "Run Operation", (v) -> runOperation());
 
-		root.getChildren().add(butt);
 	}
 
 	private void runOperation() {
@@ -56,11 +62,29 @@ public class TestingFXApplication extends Application {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	private void createRunOperationsChainButt(FlowPane root) {
-		Button butt = new Button("Run Operations chain");
-		butt.setOnAction((e) -> runOperationsChain());
 
-		root.getChildren().add(butt);
+	private void createRunMoreOperationsButt(FlowPane root) {
+		addTestingActionButton(root, "Run more operations", (v) -> runMoreOperations());
+
+	}
+
+	private void runMoreOperations() throws InterruptedException {
+		OperationsManager manager = new OperationsManager();
+
+		Thread t = new Thread(() -> {
+			try {
+				TestingOperations.runMore(manager);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}, "StartMoreOperationsThread");
+
+		t.start();
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	private void createRunOperationsChainButt(FlowPane root) {
+		addTestingActionButton(root, "Run Operations chain", (e) -> runOperationsChain());
 	}
 
 	private void runOperationsChain() {
@@ -73,7 +97,36 @@ public class TestingFXApplication extends Application {
 			e.printStackTrace();
 		}
 	}
+///////////////////////////////////////////////////////////////////////////
+
+	private void createTestConsoleInteractorButt(FlowPane root) {
+		ConsoleUIInteractor interactor = new ConsoleUIInteractor();
+		addTestingActionButton(root, "Interact via console", (e) -> runInteractions(interactor));
+	}
+
+	private void runInteractions(BaseUIInterractor interactor) {
+		boolean ready = interactor.confirm("Are you ready?");
+		String text = interactor.prompt("Gimme some text, please");
+		File file = interactor.promptFile("Locate file:", "*");
+
+		interactor.displayError("Failure: you have filled " + ready + ", " + text + ", " + file);
+		
+		System.out.println("Filled " + ready + ", " + text + ", " + file);
+	}
+
+///////////////////////////////////////////////////////////////////////////
 
 	///////////////////////////////////////////////////////////////////////////
+	private static void addTestingActionButton(FlowPane root, String name, ConsumerWithException<Void> action) {
+		Button butt = new Button(name);
+		butt.setOnAction((ev) -> {
+			try {
+				action.consume(null);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		});
 
+		root.getChildren().add(butt);
+	}
 }

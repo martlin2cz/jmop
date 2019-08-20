@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.misc.ops;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@Deprecated
 public class OperationsManagerTest {
 
 	@Test

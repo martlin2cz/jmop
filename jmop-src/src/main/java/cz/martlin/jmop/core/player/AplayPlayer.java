@@ -146,6 +146,11 @@ public class AplayPlayer extends AbstractPlayer {
 			return null;
 		}
 
+		@Override
+		protected void deleteSubResult() {
+			// we don't have anything like that
+
+		}
 	}
 
 }

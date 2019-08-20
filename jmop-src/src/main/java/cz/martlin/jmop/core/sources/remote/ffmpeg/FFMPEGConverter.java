@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.google.common.io.Files;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -21,9 +22,10 @@ import cz.martlin.jmop.core.sources.remote.ConversionReason;
 import javafx.util.Duration;
 
 public class FFMPEGConverter implements BaseConverter {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private static final String FFMPEG_COMMAND_NAME = "ffmpeg";
-	
+
 	private final BaseLocalSource local;
 
 	public FFMPEGConverter(BaseLocalSource local) {
@@ -35,6 +37,9 @@ public class FFMPEGConverter implements BaseConverter {
 	public BaseLongOperation<Track, Track> convert(Track track, TrackFileLocation fromLocation,
 			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason)
 			throws JMOPSourceException {
+
+		LOG.info("Preparing conversion of " + track + " via ffmpeg converter");
+
 		AbstractProcessEncapsulation process = prepareProcess(track, fromLocation, fromFormat, toLocation, toFormat);
 
 		String name = reason.getHumanName();
@@ -50,13 +55,15 @@ public class FFMPEGConverter implements BaseConverter {
 			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat)
 			throws JMOPSourceException {
 
-		File workingDirectory = Files.createTempDir(); // FIXME jmop temp dir?
+		File workingDirectory = AbstractProcessEncapsulation.currentDirectory();
+		File targetFile = createTargetFileFile(track, toLocation, toFormat);
 		List<String> arguments = createArguments(track, fromLocation, fromFormat, toLocation, toFormat);
 		Duration duration = track.getDuration();
 
 		String command = FFMPEG_COMMAND_NAME;
+
 		AbstractProcessEncapsulation process = new FFMPEGProcessEncapsulation(command, arguments, workingDirectory,
-				duration);
+				targetFile, duration);
 		return process;
 	}
 

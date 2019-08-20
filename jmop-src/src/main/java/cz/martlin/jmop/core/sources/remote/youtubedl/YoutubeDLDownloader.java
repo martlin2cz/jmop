@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.google.common.io.Files;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -21,6 +22,7 @@ import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 
 public class YoutubeDLDownloader implements BaseDownloader {
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
 
@@ -37,10 +39,12 @@ public class YoutubeDLDownloader implements BaseDownloader {
 	public TrackFileFormat downloadFormat() {
 		return DOWNLOAD_FILE_FORMAT;
 	}
-	
+
 	@Override
 	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
 			throws JMOPSourceException {
+		LOG.info("Preparing download of " + track + " via YoutubeDl downloader");
+
 		AbstractProcessEncapsulation process = prepareProcess(track, location);
 
 		String name = "Downloading";
@@ -55,9 +59,12 @@ public class YoutubeDLDownloader implements BaseDownloader {
 	private AbstractProcessEncapsulation prepareProcess(Track track, TrackFileLocation location)
 			throws JMOPSourceException {
 
-		File workingDirectory = Files.createTempDir(); // FIXME jmop temp dir?
+		File workingDirectory = AbstractProcessEncapsulation.currentDirectory();
+		File targetFile = createTargetFileFile(track, location);
 		List<String> arguments = createArguments(track, location);
-		AbstractProcessEncapsulation process = new YoutubeDLProcessEncapsulation(arguments, workingDirectory);
+
+		AbstractProcessEncapsulation process = new YoutubeDLProcessEncapsulation(arguments, workingDirectory,
+				targetFile);
 		return process;
 	}
 

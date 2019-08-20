@@ -7,6 +7,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -14,8 +17,18 @@ import cz.martlin.jmop.core.misc.ops.SimpleShortOperation;
 
 public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+
+	public AbstractRemoteQuerier() {
+		super();
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
 	@Override
 	public SimpleShortOperation<String, List<Track>> search(Bundle bundle, String query) throws JMOPSourceException {
+		LOG.info("Preparing search of " + query);
+
 		return new SimpleShortOperation<>("Querying", query, //
 				(q) -> q, //
 				(q) -> runSearch(bundle, q)); //
@@ -23,6 +36,8 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 	@Override
 	public SimpleShortOperation<Track, Track> loadNext(Track track) throws JMOPSourceException {
+		LOG.info("Preparing load next of " + track);
+
 		return new SimpleShortOperation<>("Loading next", track, //
 				(t) -> trackToString(t), //
 				(t) -> runLoadNext(t)); //
@@ -55,7 +70,7 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 /////////////////////////////////////////////////////////////////////////////////////
 
 	private static String trackToString(Track track) {
-		return track.getTitle(); // TODO + (duration)
+		return track.toHumanString();
 	}
 
 	private static URL stringToURL(String url) {

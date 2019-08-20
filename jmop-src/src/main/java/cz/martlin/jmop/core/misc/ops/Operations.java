@@ -25,7 +25,8 @@ public class Operations {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	public void runSearch(Bundle bundle, String query, ConsumerWithException<List<Track>> resultHandler) throws JMOPSourceException {
+	public void runSearch(Bundle bundle, String query, ConsumerWithException<List<Track>> resultHandler)
+			throws JMOPSourceException {
 		BaseRemoteSourceQuerier querier = remote.querier();
 		BaseOperation<String, List<Track>> operation = querier.search(bundle, query);
 		manager.start(operation, resultHandler);
@@ -44,6 +45,4 @@ public class Operations {
 		manager.start(track, chain, resultHandler);
 	}
 
-
-	
 }
