@@ -2,21 +2,26 @@ package cz.martlin.jmop.core.sources.remote.youtubedl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 
 public class YoutubeDLProcessEncapsulation extends AbstractProcessEncapsulation {
 	private static final String COMMAND_NAME = "youtube-dl"; //$NON-NLS-1$
-	
+
 	private static final String PROGRESS_LINE_START = "[download]"; //$NON-NLS-1$
 	private static final String COLUMNS_SEPARATOR_REGEX = " +"; //$NON-NLS-1$
 	private static final String PERCENT_REGEX = "\\d{1,3}\\.\\d{1}\\%"; //$NON-NLS-1$
 	private static final int RESULT_CODE_OK = 0;
 
-	public YoutubeDLProcessEncapsulation(List<String> arguments,
-			File workingDirectory) {
+	private final File targetFile;
+
+	public YoutubeDLProcessEncapsulation(List<String> arguments, File workingDirectory, File targetFile) {
 		super(COMMAND_NAME, arguments, workingDirectory);
+
+		this.targetFile = targetFile;
 	}
 
 	@Override
@@ -33,11 +38,18 @@ public class YoutubeDLProcessEncapsulation extends AbstractProcessEncapsulation 
 	protected int getExpectedResultCode() {
 		return RESULT_CODE_OK;
 	}
-	///////////////////////////////////////////////////////////////////////////
+
+	@Override
+	protected void deleteSubResult() throws Exception {
+		Path targetPath = targetFile.toPath();
+		Files.delete(targetPath);
+	}
 	
+	///////////////////////////////////////////////////////////////////////////
+
 	/**
-	 * Infers the progress from the command. In fact checks the line start and
-	 * if so, extracts the progress value.
+	 * Infers the progress from the command. In fact checks the line start and if
+	 * so, extracts the progress value.
 	 * 
 	 * @param line
 	 * @return
@@ -61,6 +73,5 @@ public class YoutubeDLProcessEncapsulation extends AbstractProcessEncapsulation 
 		double percent = Double.parseDouble(percentStr);
 		return percent;
 	}
-	
 
 }

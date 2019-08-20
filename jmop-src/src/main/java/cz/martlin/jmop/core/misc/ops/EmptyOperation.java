@@ -24,4 +24,11 @@ public class EmptyOperation<T> implements BaseOperation<T, T> {
 		return input;
 	}
 
+	@Override
+	public String toString() {
+		return "EmptyOperation [input=" + input + "]";
+	}
+	
+	
+
 }
