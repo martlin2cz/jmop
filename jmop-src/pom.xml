@@ -5,7 +5,7 @@
 
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<version>1.1</version>
 
 	<name>jmop</name>
@@ -159,4 +159,10 @@
 
 		</plugins>
 	</build>
+	<modules>
+		<module>jmop-core</module>
+		<module>jmop-remotes</module>
+		<module>jmop-locals</module>
+		<module>jmop-gui</module>
+	</modules>
 </project>
