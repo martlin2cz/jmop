@@ -5,7 +5,7 @@
     <artifactId>jmop</artifactId>
     <version>1.1</version>
   </parent>
-  <artifactId>jmop-core</artifactId>
-  <name>JMOP core</name>
-  <description>The JMOP core module. Collects all the features from the core modules and provides them to the GUI module.</description>
+  <artifactId>jmop-base</artifactId>
+  <name>JMOP base</name>
+  <description>The JMOP base module. Contains all the common features and abstract specifications of the JMOP.</description>
 </project>
