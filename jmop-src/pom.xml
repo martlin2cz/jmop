@@ -160,9 +160,12 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>jmop-core</module>
+		<module>jmop-base</module>
 		<module>jmop-remotes</module>
 		<module>jmop-locals</module>
+		<module>jmop-play</module>
+		<module>jmop-core</module>
 		<module>jmop-gui</module>
+		<module>jmop-app</module>
 	</modules>
 </project>
