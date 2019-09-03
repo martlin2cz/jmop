@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.ErrorReporter;
+import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
@@ -31,11 +31,11 @@ public class AplayPlayer extends AbstractPlayer {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private final ErrorReporter reporter;
+	private final BaseErrorReporter reporter;
 	private AplayProcess process;
 	private Track currentTrack;
 
-	public AplayPlayer(ErrorReporter reporter, BaseLocalSource local, BaseTrackFileLocator locator) {
+	public AplayPlayer(BaseErrorReporter reporter, BaseLocalSource local, BaseTrackFileLocator locator) {
 		super(local, locator, APLAY_PLAY_FORMAT);
 
 		this.reporter = reporter;
