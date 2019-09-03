@@ -1,11 +1,39 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>cz.martlin</groupId>
-    <artifactId>jmop</artifactId>
-    <version>1.1</version>
-  </parent>
-  <artifactId>jmop-core</artifactId>
-  <name>JMOP core</name>
-  <description>The JMOP core module. Collects all the features from the core modules and provides them to the GUI module.</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cz.martlin</groupId>
+		<artifactId>jmop</artifactId>
+		<version>${revision}</version>
+	</parent>
+	<artifactId>jmop-core</artifactId>
+	<name>JMOP core</name>
+	<description>The JMOP core module. Collects all the features from the core modules and provides them to the GUI module.</description>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-base</artifactId>
+			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-locals</artifactId>
+			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-remotes</artifactId>
+			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-play</artifactId>
+			<version>${revision}</version>
+		</dependency>
+	</dependencies>
+
+
 </project>

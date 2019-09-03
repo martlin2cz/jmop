@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.preparer.TrackPreparer;
@@ -22,12 +22,12 @@ import javafx.util.Duration;
 public class PlayerEngine {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private final ErrorReporter reporter;
+	private final BaseErrorReporter reporter;
 	private final PlaylisterWrapper playlister;
 	private final TrackPreparer preparer;
 	private final PlayerWrapper player;
 
-	public PlayerEngine(ErrorReporter reporter, PlaylisterWrapper playlister, PlayerWrapper player,
+	public PlayerEngine(BaseErrorReporter reporter, PlaylisterWrapper playlister, PlayerWrapper player,
 			TrackPreparer preparer) {
 		super();
 		this.reporter = reporter;

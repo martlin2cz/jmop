@@ -12,10 +12,10 @@ import cz.martlin.jmop.gui.util.GuiComplexActionsPerformer;
  * @author martin
  *
  */
-public class ErrorReporter {
+public class GuiErrorReporter implements BaseErrorReporter {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public ErrorReporter() {
+	public GuiErrorReporter() {
 		super();
 	}
 
@@ -28,6 +28,7 @@ public class ErrorReporter {
 	 * 
 	 * @param e
 	 */
+	@Override
 	public void report(Exception e) {
 		LOG.error("An error occured", e); //$NON-NLS-1$
 
@@ -43,6 +44,7 @@ public class ErrorReporter {
 	 * 
 	 * @param e
 	 */
+	@Override
 	public void internal(Exception e) {
 		LOG.error("An internal error occured", e); //$NON-NLS-1$
 

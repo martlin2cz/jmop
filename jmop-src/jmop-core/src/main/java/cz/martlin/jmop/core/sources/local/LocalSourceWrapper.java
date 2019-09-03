@@ -4,6 +4,7 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.BundleBinding;
 import cz.martlin.jmop.core.misc.ErrorReporter;
@@ -19,14 +20,14 @@ import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
  *
  */
 public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
-	private final ErrorReporter reporter;
+	private final BaseErrorReporter reporter;
 	private final BaseLocalSource local;
 	private final PlaylisterWrapper playlister;
 
 	private final ObservableListenerBinding<Playlist> playlistBinding;
 	private final ObservableListenerBinding<Playlist> bundleBinding;
 
-	public LocalSourceWrapper(ErrorReporter reporter, BaseLocalSource local, PlaylisterWrapper playlister) {
+	public LocalSourceWrapper(BaseErrorReporter reporter, BaseLocalSource local, PlaylisterWrapper playlister) {
 		super();
 		this.reporter = reporter;
 		this.local = local;
