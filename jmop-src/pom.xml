@@ -168,5 +168,7 @@
 		<module>jmop-core</module>
 		<module>jmop-gui</module>
 		<module>jmop-app</module>
+		<module>jmop-player</module>
+		<module>jmop-playlister</module>
 	</modules>
 </project>
