@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals;
+package cz.martlin.jmop.core.sources.locals.funky;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,10 +20,10 @@ public class TestLocalSource {
 		// create local
 		final File rootDir = File.createTempFile("xxx", "yyy").getParentFile(); // hehe //$NON-NLS-1$ //$NON-NLS-2$
 		ConstantConfiguration config = new ConstantConfiguration();
-		BaseFilesNamer namer = new DefaultFilesNamer();
+		BaseFilesNamer namer = new FunkyFilesNamer();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
-		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(rootDir, namer, loader);
-		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
+		AbstractFileSystemAccessor fileSystem = new FunkyFileSystemAccessor(rootDir, namer, loader);
+		BaseLocalSource local = new FunkyLocalSource(config, fileSystem);
 		// TestingLocalSource local = new TestingLocalSource();
 
 		// create some content ...

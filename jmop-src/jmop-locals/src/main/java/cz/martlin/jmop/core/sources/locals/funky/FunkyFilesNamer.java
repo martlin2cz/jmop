@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals;
+package cz.martlin.jmop.core.sources.locals.funky;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -15,14 +15,14 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
  * @author martin
  *
  */
-public class DefaultFilesNamer extends SimpleFilesNamer {
+public class FunkyFilesNamer extends SimpleFilesNamer {
 
 	private static final String SEPARATOR = "_"; //$NON-NLS-1$
 
 	private static final String TEMP_DIR_NAME = "jmop"; //$NON-NLS-1$
 	private static final String CACHE_DIR_NAME = ".cache"; //$NON-NLS-1$
 
-	public DefaultFilesNamer() {
+	public FunkyFilesNamer() {
 		super();
 	}
 

@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals;
+package cz.martlin.jmop.core.sources.locals.funky;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,13 +35,13 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * @author martin
  *
  */
-public class DefaultLocalSource implements BaseLocalSource {
+public class FunkyLocalSource implements BaseLocalSource {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseConfiguration config;
 	private final AbstractFileSystemAccessor fileSystem;
 
-	public DefaultLocalSource(BaseConfiguration config, AbstractFileSystemAccessor fileSystem) {
+	public FunkyLocalSource(BaseConfiguration config, AbstractFileSystemAccessor fileSystem) {
 		super();
 		this.config = config;
 		this.fileSystem = fileSystem;

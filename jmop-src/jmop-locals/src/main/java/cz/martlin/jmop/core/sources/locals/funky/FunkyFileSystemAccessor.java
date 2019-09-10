@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals;
+package cz.martlin.jmop.core.sources.locals.funky;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,13 +29,13 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * @author martin
  *
  */
-public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
+public class FunkyFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	private final File root;
 	private final BaseFilesNamer namer;
 	private final AbstractPlaylistLoader loader;
 
-	public DefaultFileSystemAccessor(File root, BaseFilesNamer namer, AbstractPlaylistLoader loader)
+	public FunkyFileSystemAccessor(File root, BaseFilesNamer namer, AbstractPlaylistLoader loader)
 			throws IOException {
 		super();
 		this.root = root;
@@ -87,7 +87,7 @@ public class DefaultFileSystemAccessor implements AbstractFileSystemAccessor {
 
 		String name = file.getName();
 		String extension = loader.getFileExtension();
-		String suffix = DefaultFilesNamer.DOT + extension;
+		String suffix = FunkyFilesNamer.DOT + extension;
 
 		return name.endsWith(suffix);
 	}
