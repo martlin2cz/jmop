@@ -18,21 +18,27 @@ import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remotes.XXX_FFMPEGConverter;
-import cz.martlin.jmop.core.sources.remotes.XXX_YoutubeDlDownloader;
+import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remote.BaseConverter;
+import cz.martlin.jmop.core.sources.remote.BaseDownloader;
+import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
+import cz.martlin.jmop.core.sources.remote.ffmpeg.FFMPEGConverter;
+import cz.martlin.jmop.core.sources.remote.youtube.YoutubeQuerier;
+import cz.martlin.jmop.core.sources.remote.youtubedl.YoutubeDLDownloader;
 
 public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 
 	@Override
-	public XXX_FFMPEGConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
-		return new XXX_FFMPEGConverter(local);
+	public BaseConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
+		return new FFMPEGConverter(local);
 	}
 
 	@Override
-	public XXX_YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
-			InternetConnectionStatus connection, XXX_AbstractRemoteSource remote, BaseLocalSource local) {
-		return new XXX_YoutubeDlDownloader(connection, local, remote);
+	public BaseDownloader createDownloader(CommandlineData data, BaseConfiguration config,
+			InternetConnectionStatus connection, AbstractRemoteSource remote, BaseLocalSource local) {
+		BaseRemoteSourceQuerier querier = new YoutubeQuerier(config, connection); 
+		//FIXME extract as param
+		return new YoutubeDLDownloader(querier , local);
 	}
 
 	@Override
@@ -57,7 +63,7 @@ public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 	}
 
 	@Override
-	public XXX_AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
+	public  AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
 			InternetConnectionStatus connection) {
 		// TODO replace with Factory for SourceKind
 		return null; //FIXME

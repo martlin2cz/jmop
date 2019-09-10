@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.strategy.impls;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.preparer.XXX_TrackPreparer;
+import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.strategy.base.AbstractNextOnlineLoadingStrategy;
 
@@ -15,8 +15,8 @@ import cz.martlin.jmop.core.strategy.base.AbstractNextOnlineLoadingStrategy;
  */
 public class StandartOnlineStrategy extends AbstractNextOnlineLoadingStrategy {
 
-	public StandartOnlineStrategy(XXX_TrackPreparer preparer) {
-		super(preparer);
+	public StandartOnlineStrategy(BaseOperations operations) {
+		super(operations);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import com.google.common.io.Files;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
@@ -22,7 +23,6 @@ import cz.martlin.jmop.core.sources.remote.BaseConverter;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteStatusHandler;
-import cz.martlin.jmop.core.sources.remote.BaseUIInterractor;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
 import javafx.util.Duration;
 

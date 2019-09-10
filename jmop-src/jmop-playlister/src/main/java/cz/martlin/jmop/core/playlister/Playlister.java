@@ -4,6 +4,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
 
@@ -17,7 +18,7 @@ import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
  * @author martin
  *
  */
-public class Playlister {
+public class Playlister extends ObservableObject<Playlister> {
 	private final InternetConnectionStatus connection;
 	private Playlist currentPlaylist;
 
@@ -51,13 +52,13 @@ public class Playlister {
 	 * @param engine
 	 * @param playlist
 	 */
-	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist) {
+	public void startPlayingPlaylist(Playlist playlist) {
 		currentPlaylist = playlist;
 		runtime = PlaylistRuntime.of(playlist);
 
-		lockedPlaylister.startPlayingPlaylist(engine, playlist, runtime);
-		offlinePlaylister.startPlayingPlaylist(engine, playlist, runtime);
-		onlinePlaylister.startPlayingPlaylist(engine, playlist, runtime);
+		lockedPlaylister.startPlayingPlaylist(playlist, runtime);
+		offlinePlaylister.startPlayingPlaylist(playlist, runtime);
+		onlinePlaylister.startPlayingPlaylist(playlist, runtime);
 
 	}
 

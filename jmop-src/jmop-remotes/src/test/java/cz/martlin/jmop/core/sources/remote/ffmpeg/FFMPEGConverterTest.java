@@ -31,6 +31,7 @@ import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
+import cz.martlin.jmop.core.sources.locals.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
 import cz.martlin.jmop.core.sources.remote.empty.TestingDownloader;
 
@@ -71,7 +72,7 @@ public class FFMPEGConverterTest {
 	private void prepareTesingTrackFile(BaseLocalSource local, Track track, TrackFileLocation location)
 			throws JMOPSourceException, IOException {
 
-		TrackFileFormat format = TestingDownloader.TESTING_FILE_FORMAT;
+		TrackFileFormat format = TestingTrackFileAccessor.TESTING_FILE_FORMAT;
 		File file = local.fileOfTrack(track, location, format);
 
 		TestingDownloader.copyTestingFileTo(file);

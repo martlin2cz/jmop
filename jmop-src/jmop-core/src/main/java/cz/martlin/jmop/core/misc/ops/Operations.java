@@ -9,7 +9,7 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 
-public class Operations {
+public class Operations implements BaseOperations {
 	private final OperationsManager manager;
 	private final FormatsLocationsUtility flu;
 	private final BaseRemoteSource remote;
@@ -25,6 +25,7 @@ public class Operations {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	@Override
 	public void runSearch(Bundle bundle, String query, ConsumerWithException<List<Track>> resultHandler)
 			throws JMOPSourceException {
 		BaseRemoteSourceQuerier querier = remote.querier();
@@ -32,6 +33,7 @@ public class Operations {
 		manager.start(operation, resultHandler);
 	}
 
+	@Override
 	public void runLoadNext(Track track, ConsumerWithException<Track> resultHandler) throws JMOPSourceException {
 		BaseRemoteSourceQuerier querier = remote.querier();
 		BaseOperation<Track, Track> operation = querier.loadNext(track);
@@ -40,6 +42,7 @@ public class Operations {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
+	@Override
 	public void prepareFiles(Track track, ConsumerWithException<Track> resultHandler) throws JMOPSourceException {
 		BaseOperationsChain<Track> chain = new PrepareTrackFilesOperationChain(flu, remote, local);
 		manager.start(track, chain, resultHandler);

@@ -5,10 +5,10 @@ import java.util.List;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
-import cz.martlin.jmop.core.preparer.XXX_TrackPreparer;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
+import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 
 /**
  * The JMOP wrapper responsible for sources (list/save bundles, playlists, load
@@ -18,17 +18,17 @@ import cz.martlin.jmop.core.sources.local.LocalSourceWrapper;
  *
  */
 public class JMOPSources {
-	private final LocalSourceWrapper local;
-	private final XXX_TrackPreparer preparer;
+	private final BaseLocalSource local;
+	private final BaseOperations operations;
 
-	public JMOPSources(LocalSourceWrapper local, XXX_TrackPreparer preparer) {
+	public JMOPSources(BaseLocalSource local, BaseOperations operations) {
 		super();
 		this.local = local;
-		this.preparer = preparer;
+		this.operations = operations;
 	}
 
-	public XXX_TrackPreparer getPreparer() {
-		return preparer;
+	public BaseOperations getOperations() {
+		return operations;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////

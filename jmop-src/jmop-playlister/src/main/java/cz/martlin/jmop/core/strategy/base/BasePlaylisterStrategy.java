@@ -2,7 +2,6 @@ package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 
 /**
@@ -28,7 +27,7 @@ public interface BasePlaylisterStrategy {
 	 * @param playlist
 	 * @param runtime
 	 */
-	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist, PlaylistRuntime runtime);
+	public void startPlayingPlaylist(Playlist playlist, PlaylistRuntime runtime);
 
 	/**
 	 * Stops playing playlist (may not be working after this method).
@@ -47,7 +46,7 @@ public interface BasePlaylisterStrategy {
 
 	/**
 	 * Returns the runtime played within this playlister. Runtime may be set by
-	 * {@link #startPlayingPlaylist(PlayerEngine, Playlist, PlaylistRuntime)}.
+	 * {@link #startPlayingPlaylist(Playlist, PlaylistRuntime)}.
 	 * Use with care!
 	 * 
 	 * @return

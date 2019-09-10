@@ -2,8 +2,7 @@ package cz.martlin.jmop.core.strategy.base;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.playlister.PlayerEngine;
-import cz.martlin.jmop.core.preparer.XXX_TrackPreparer;
+import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 
 /**
@@ -15,12 +14,11 @@ import cz.martlin.jmop.core.runtime.PlaylistRuntime;
  */
 public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInferringStrategy {
 
-	protected final XXX_TrackPreparer preparer;
-	private PlayerEngine engine;
+	protected final BaseOperations operations;
 
-	public AbstractNextOnlineLoadingStrategy(XXX_TrackPreparer preparer) {
+	public AbstractNextOnlineLoadingStrategy(BaseOperations operations) {
 		super();
-		this.preparer = preparer;
+		this.operations = operations;
 	}
 
 	/**
@@ -33,10 +31,9 @@ public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInfe
 	}
 
 	@Override
-	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist, PlaylistRuntime runtime) {
-		super.startPlayingPlaylist(engine, playlist, runtime);
+	public void startPlayingPlaylist(Playlist playlist, PlaylistRuntime runtime) {
+		super.startPlayingPlaylist(playlist, runtime);
 
-		this.engine = engine;
 	}
 
 	/**
@@ -48,9 +45,8 @@ public abstract class AbstractNextOnlineLoadingStrategy extends AbstractNextInfe
 	 * @param track
 	 */
 	private void checkAndStartLoadingInBg(Track track) {
-		if (preparer.countOfCurrentlyRunning() <= 1) {
-			preparer.startLoadingNextOf(track, engine);
-		}
+		//operations.runLoadNext(track, resultHandler );
+		throw new UnsupportedOperationException("HERE, load next and play");
 	}
 
 }

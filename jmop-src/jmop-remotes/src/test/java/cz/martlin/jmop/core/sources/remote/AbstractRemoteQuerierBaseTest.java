@@ -10,7 +10,7 @@ import org.junit.Test;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.test.TestingPrinter;
+import cz.martlin.jmop.core.misc.TestingPrinter;
 
 public abstract class AbstractRemoteQuerierBaseTest {
 

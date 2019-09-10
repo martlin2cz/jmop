@@ -40,7 +40,9 @@ public interface BasePlayer extends ObservableValue<BasePlayer> {
 	 * @return
 	 */
 	public boolean isPlayOver();
-
+	
+	//TODO enum PlayerStatus {STOPPED, PAUSED, PLAYING, OVER}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	/**

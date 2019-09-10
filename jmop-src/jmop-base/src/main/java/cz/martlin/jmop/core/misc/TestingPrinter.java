@@ -1,10 +1,9 @@
-package cz.martlin.jmop.core.test;
+package cz.martlin.jmop.core.misc;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.DurationUtilities;
 
 public class TestingPrinter {
 

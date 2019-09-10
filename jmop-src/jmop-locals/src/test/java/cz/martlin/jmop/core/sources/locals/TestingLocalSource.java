@@ -18,7 +18,6 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.empty.TestingDownloader;
 
 public class TestingLocalSource implements BaseLocalSource {
 
@@ -82,15 +81,15 @@ public class TestingLocalSource implements BaseLocalSource {
 	public File fileOfTrack(Track track, TrackFileLocation location, TrackFileFormat format)
 			throws JMOPSourceException {
 
-		InputStream ins = getClass().getClassLoader().getResourceAsStream(TestingDownloader.TESTING_SAMPLE_FILE);
-
 		String title = track.getTitle();
 		try {
 			String prefix = "_" + location.name() + "_"; //$NON-NLS-1$ //$NON-NLS-2$
 			String suffix = "." + format.getExtension(); //$NON-NLS-1$
 			String name = prefix + title;
 			File file = File.createTempFile(name, suffix);
-			Files.copy(ins, file.toPath(), StandardCopyOption.REPLACE_EXISTING); // TODO
+			
+			InputStream ins = TestingTrackFileAccessor.read();
+			Files.copy(ins , file.toPath(), StandardCopyOption.REPLACE_EXISTING); // TODO
 																					// wtf?
 			return file;
 		} catch (IOException e) {
