@@ -27,11 +27,11 @@ import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
-import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
-import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
 import cz.martlin.jmop.core.sources.locals.TestingTrackFileAccessor;
+import cz.martlin.jmop.core.sources.locals.funky.FunkyFileSystemAccessor;
+import cz.martlin.jmop.core.sources.locals.funky.FunkyFilesNamer;
+import cz.martlin.jmop.core.sources.locals.funky.FunkyLocalSource;
+import cz.martlin.jmop.core.sources.locals.funky.FunkyPlaylistLoader;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
 import cz.martlin.jmop.core.sources.remote.empty.TestingDownloader;
 
@@ -79,11 +79,11 @@ public class FFMPEGConverterTest {
 	}
 
 	private BaseLocalSource createLocal(BaseConfiguration config) throws IOException {
-		BaseFilesNamer namer = new DefaultFilesNamer();
+		BaseFilesNamer namer = new FunkyFilesNamer();
 		File root = Files.createTempDir();
-		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
-		AbstractFileSystemAccessor fileSystem = new DefaultFileSystemAccessor(root, namer, loader);
-		BaseLocalSource local = new DefaultLocalSource(config, fileSystem);
+		AbstractPlaylistLoader loader = new FunkyPlaylistLoader();
+		AbstractFileSystemAccessor fileSystem = new FunkyFileSystemAccessor(root, namer, loader);
+		BaseLocalSource local = new FunkyLocalSource(config, fileSystem);
 		return local;
 	}
 }

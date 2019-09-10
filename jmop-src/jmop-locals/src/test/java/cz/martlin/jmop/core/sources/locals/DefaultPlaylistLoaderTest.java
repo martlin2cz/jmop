@@ -15,6 +15,7 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.SourceKind;
+import cz.martlin.jmop.core.sources.locals.funky.FunkyPlaylistLoader;
 import javafx.util.Duration;
 
 public class DefaultPlaylistLoaderTest {
@@ -46,7 +47,7 @@ public class DefaultPlaylistLoaderTest {
 		final PlaylistFileData inputData = new PlaylistFileData(bundle.getName(), playlistName, kind, tracklist,
 				currentTrackIndex, locked);
 
-		DefaultPlaylistLoader loader = new DefaultPlaylistLoader();
+		FunkyPlaylistLoader loader = new FunkyPlaylistLoader();
 
 		loader.save(inputData, file);
 

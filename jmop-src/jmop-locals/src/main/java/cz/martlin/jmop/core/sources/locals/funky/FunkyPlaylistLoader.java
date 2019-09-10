@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals;
+package cz.martlin.jmop.core.sources.locals.funky;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
  * @author martin
  *
  */
-public class DefaultPlaylistLoader implements AbstractPlaylistLoader {
+public class FunkyPlaylistLoader implements AbstractPlaylistLoader {
 
 	private final static XSPFParserComposer PARSER_COMPOSER = new XSPFParserComposer();
 
