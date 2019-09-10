@@ -28,7 +28,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	private final BaseLocalSource local;
 	private final TrackFileLocation tracksLocation;
 	private final TrackFileFormat supportedFormat;
-
+	
 	private boolean stopped;
 	private boolean paused;
 	private boolean over;
@@ -40,7 +40,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 
 		this.supportedFormat = supportedFormat;
 		this.tracksLocation = locator.locationOfPlay(this);
-
+		
 		this.stopped = true;
 		this.paused = false;
 		this.over = false;

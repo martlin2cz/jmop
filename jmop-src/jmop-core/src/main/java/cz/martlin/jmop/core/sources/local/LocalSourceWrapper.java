@@ -7,7 +7,6 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.BundleBinding;
-import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ObservableListenerBinding;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
@@ -19,6 +18,7 @@ import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
  * @author martin
  *
  */
+@Deprecated
 public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
 	private final BaseErrorReporter reporter;
 	private final BaseLocalSource local;

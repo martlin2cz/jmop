@@ -75,6 +75,8 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	public void initBindings() {
 		InternetConnectionStatus connection = playlister.getConnection();
 		connection.addListener((observable) -> offlineChanged());
+		
+		this.playlister.addListener((p) -> playlisterChanged()); 
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -85,8 +87,8 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 	 * @param engine
 	 * @param playlist
 	 */
-	public void startPlayingPlaylist(PlayerEngine engine, Playlist playlist) {
-		playlister.startPlayingPlaylist(engine, playlist);
+	public void startPlayingPlaylist(Playlist playlist) {
+		playlister.startPlayingPlaylist(playlist);
 
 		playlistProperty.set(playlist);
 
@@ -110,72 +112,6 @@ public class PlaylisterWrapper implements BaseWrapper<Playlister> {
 		updateNextAndPreviousProperties();
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Marks as playing "next" (in fact current) track.
-	 * 
-	 * @return
-	 * @throws JMOPSourceException
-	 */
-	public Track playNext() throws JMOPSourceException {
-		return playlister.playNext();
-	}
-
-	/**
-	 * Marks as playing track at specified index.
-	 * 
-	 * @param index
-	 * @return
-	 * @throws JMOPSourceException
-	 */
-	public Track play(int index) throws JMOPSourceException {
-		Track track = playlister.play(index);
-		playlisterChanged();
-		return track;
-	}
-
-	/**
-	 * Marks as playing next track (after the current one).
-	 * 
-	 * @return
-	 * @throws JMOPSourceException
-	 */
-	public Track toNext() throws JMOPSourceException {
-		Track track = playlister.toNext();
-		playlisterChanged();
-		return track;
-	}
-
-	/**
-	 * Marks as playing previous track (before the current one).
-	 * 
-	 * @return
-	 * @throws JMOPSourceException
-	 */
-	public Track toPrevious() throws JMOPSourceException {
-		Track track = playlister.toPrevious();
-		playlisterChanged();
-		return track;
-	}
-
-	/**
-	 * Adds given track.
-	 * 
-	 * @param track
-	 */
-	public void add(Track track) {
-		playlister.add(track);
-		playlisterChanged();
-	}
-
-	/**
-	 * Removes all track after the current one.
-	 */
-	public void clearRemaining() {
-		playlister.clearRemaining();
-		playlisterChanged();
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

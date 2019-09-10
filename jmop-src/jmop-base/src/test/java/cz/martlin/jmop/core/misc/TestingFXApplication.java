@@ -9,8 +9,6 @@ import cz.martlin.jmop.core.misc.ops.OperationsManager;
 import cz.martlin.jmop.core.misc.ops.TestingCountingLongOperation;
 import cz.martlin.jmop.core.misc.ops.TestingCountingOperationsChain;
 import cz.martlin.jmop.core.misc.ops.TestingOperations;
-import cz.martlin.jmop.core.sources.remote.BaseUIInterractor;
-import cz.martlin.jmop.core.sources.remote.ConsoleUIInteractor;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

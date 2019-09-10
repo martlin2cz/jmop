@@ -23,5 +23,11 @@
 			<artifactId>jmop-locals</artifactId>
 			<version>${revision}</version>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>cz.martlin</groupId> -->
+<!-- 			<artifactId>jmop-locals</artifactId> -->
+<!-- 			<version>${revision}</version> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
 	</dependencies>
 </project>

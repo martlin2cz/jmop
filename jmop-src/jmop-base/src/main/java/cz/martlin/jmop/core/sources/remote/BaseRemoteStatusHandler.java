@@ -1,5 +1,6 @@
 package cz.martlin.jmop.core.sources.remote;
 
+import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public interface BaseRemoteStatusHandler {

@@ -8,8 +8,8 @@ import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.player.PlayerWrapper;
-import cz.martlin.jmop.core.preparer.TrackPreparer;
+import cz.martlin.jmop.core.misc.ops.BaseOperations;
+import cz.martlin.jmop.core.player.BasePlayer;
 import javafx.util.Duration;
 
 /**
@@ -23,26 +23,25 @@ public class PlayerEngine {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseErrorReporter reporter;
-	private final PlaylisterWrapper playlister;
-	private final TrackPreparer preparer;
-	private final PlayerWrapper player;
+	private final Playlister playlister;
+	private final BaseOperations operations;
+	private final BasePlayer player;
 
-	public PlayerEngine(BaseErrorReporter reporter, PlaylisterWrapper playlister, PlayerWrapper player,
-			TrackPreparer preparer) {
+	public PlayerEngine(BaseErrorReporter reporter, Playlister playlister, BasePlayer player, BaseOperations operations) {
 		super();
 		this.reporter = reporter;
 		this.playlister = playlister;
-		this.preparer = preparer;
+		this.operations = operations;
 		this.player = player;
 
-		player.setOnTrackPlayed((t) -> onTrackPlayed(t));
+		player.addListener((o) -> playerChanged());
 	}
 
-	public PlaylisterWrapper getPlaylister() {
+	public Playlister getPlaylister() {
 		return playlister;
 	}
 
-	public PlayerWrapper getPlayer() {
+	public BasePlayer getPlayer() {
 		return player;
 	}
 
@@ -55,7 +54,7 @@ public class PlayerEngine {
 	public void startPlayingPlaylist(Playlist playlist) {
 		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 
-		playlister.startPlayingPlaylist(this, playlist);
+		playlister.startPlayingPlaylist(playlist);
 	}
 
 	/**
@@ -175,6 +174,13 @@ public class PlayerEngine {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	private void playerChanged() {
+		if (player.isPlayOver()) {
+			Track track = playlister.getCurrent();
+			onTrackPlayed(track);
+		}
+	}
+
 	/**
 	 * Handle track have been played. In fact, if has next, play next.
 	 * 
@@ -199,7 +205,8 @@ public class PlayerEngine {
 	 * @return
 	 */
 	private boolean hasNext() {
-		return playlister.hasNextProperty().get();
+		return playlister.hasNext();
+		// TODO used to use Property, why?
 	}
 
 	/**
@@ -210,7 +217,9 @@ public class PlayerEngine {
 	 * @throws JMOPSourceException
 	 */
 	private void playChecked(Track track) throws JMOPSourceException {
-		preparer.checkAndLoadTrack(track, player);
+		throw new UnsupportedOperationException("HERE2, check and load track to play");
+//		ConsumerWithException<Track> resultHandler;
+//		operations.prepareFiles(track, resultHandler);
 	}
 
 }

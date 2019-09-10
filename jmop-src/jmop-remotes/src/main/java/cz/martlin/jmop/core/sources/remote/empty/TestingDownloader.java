@@ -14,12 +14,13 @@ import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.locals.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
 public class TestingDownloader implements BaseDownloader {
 
-	private static final String TESTING_SAMPLE_FILE = "samples/sample.opus"; //$NON-NLS-1$
-	private static final TrackFileFormat TESTING_FILE_FORMAT = TrackFileFormat.OPUS;
+
+
 
 	private final TrackFileFormat downloadFormat;
 	private final BaseLocalSource local;
@@ -32,7 +33,7 @@ public class TestingDownloader implements BaseDownloader {
 
 	@Override
 	public TrackFileFormat downloadFormat() {
-		return TESTING_FILE_FORMAT;
+		return TestingTrackFileAccessor.TESTING_FILE_FORMAT;
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class TestingDownloader implements BaseDownloader {
 	 * @throws IOException
 	 */
 	public static void copyTestingFileTo(File targetFile) throws JMOPSourceException, IOException {
-		InputStream ins = TestingDownloader.class.getClassLoader().getResourceAsStream(TESTING_SAMPLE_FILE);
+		InputStream ins = TestingTrackFileAccessor.read();
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}

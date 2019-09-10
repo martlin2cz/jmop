@@ -30,7 +30,12 @@
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
-			<artifactId>jmop-play</artifactId>
+			<artifactId>jmop-player</artifactId>
+			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-playlister</artifactId>
 			<version>${revision}</version>
 		</dependency>
 	</dependencies>
