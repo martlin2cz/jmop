@@ -19,15 +19,15 @@ import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
  *
  */
 @Deprecated
-public class LocalSourceWrapper implements BaseWrapper<BaseLocalSource> {
+public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 	private final BaseErrorReporter reporter;
-	private final BaseLocalSource local;
+	private final XXX_BaseLocalSource local;
 	private final PlaylisterWrapper playlister;
 
 	private final ObservableListenerBinding<Playlist> playlistBinding;
 	private final ObservableListenerBinding<Playlist> bundleBinding;
 
-	public LocalSourceWrapper(BaseErrorReporter reporter, BaseLocalSource local, PlaylisterWrapper playlister) {
+	public LocalSourceWrapper(BaseErrorReporter reporter, XXX_BaseLocalSource local, PlaylisterWrapper playlister) {
 		super();
 		this.reporter = reporter;
 		this.local = local;

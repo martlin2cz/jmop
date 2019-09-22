@@ -15,9 +15,9 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import cz.martlin.jmop.core.source.extprogram.ExternalProcessLongOperation;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 
@@ -27,9 +27,9 @@ public class YoutubeDLDownloader implements BaseDownloader {
 	private static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
 
 	private final BaseRemoteSourceQuerier querier;
-	private final BaseLocalSource local;
+	private final XXX_BaseLocalSource local;
 
-	public YoutubeDLDownloader(BaseRemoteSourceQuerier querier, BaseLocalSource local) {
+	public YoutubeDLDownloader(BaseRemoteSourceQuerier querier, XXX_BaseLocalSource local) {
 		super();
 		this.querier = querier;
 		this.local = local;

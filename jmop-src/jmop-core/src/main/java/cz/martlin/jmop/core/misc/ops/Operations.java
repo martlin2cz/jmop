@@ -5,7 +5,7 @@ import java.util.List;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 
@@ -13,10 +13,10 @@ public class Operations implements BaseOperations {
 	private final OperationsManager manager;
 	private final FormatsLocationsUtility flu;
 	private final BaseRemoteSource remote;
-	private final BaseLocalSource local;
+	private final XXX_BaseLocalSource local;
 
 	public Operations(OperationsManager manager, FormatsLocationsUtility flu, BaseRemoteSource remote,
-			BaseLocalSource local) {
+			XXX_BaseLocalSource local) {
 		super();
 		this.manager = manager;
 		this.flu = flu;

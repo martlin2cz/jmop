@@ -15,7 +15,7 @@ import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.playlister.Playlister;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
@@ -40,7 +40,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 
 		// level 1 things
 		AbstractRemoteSource remote = createRemoteSource(data, config, connection);
-		BaseLocalSource local = createLocalSource(data, config);
+		XXX_BaseLocalSource local = createLocalSource(data, config);
 
 		BaseDownloader downloader = createDownloader(data, config, connection, remote, local);
 		BaseConverter converter = createConverter(data, config, local);
@@ -115,18 +115,18 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 	public abstract AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
 			InternetConnectionStatus connection) throws Exception;
 
-	public abstract BaseLocalSource createLocalSource(CommandlineData data, BaseConfiguration config) throws Exception;
+	public abstract XXX_BaseLocalSource createLocalSource(CommandlineData data, BaseConfiguration config) throws Exception;
 
 	public abstract BaseTrackFileLocator createLocator(CommandlineData data, BaseConfiguration config)
 			throws Exception;
 
 	public abstract JavaFXMediaPlayer createPlayer(CommandlineData data, BaseConfiguration config,
-			BaseLocalSource local, BaseTrackFileLocator locator) throws Exception;
+			XXX_BaseLocalSource local, BaseTrackFileLocator locator) throws Exception;
 
 	public abstract BaseDownloader createDownloader(CommandlineData data, BaseConfiguration config,
-			InternetConnectionStatus connection, AbstractRemoteSource remote, BaseLocalSource local) throws Exception;
+			InternetConnectionStatus connection, AbstractRemoteSource remote, XXX_BaseLocalSource local) throws Exception;
 
 	public abstract BaseConverter createConverter(CommandlineData data, BaseConfiguration config,
-			BaseLocalSource local) throws Exception;
+			XXX_BaseLocalSource local) throws Exception;
 
 }

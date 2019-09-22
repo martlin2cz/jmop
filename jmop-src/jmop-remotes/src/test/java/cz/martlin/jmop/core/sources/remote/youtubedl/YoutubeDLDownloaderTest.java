@@ -24,9 +24,9 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyFilesNamer;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyLocalSource;
@@ -43,7 +43,7 @@ public class YoutubeDLDownloaderTest {
 
 		BaseRemoteSourceQuerier querier = new YoutubeQuerier(config, connection);
 
-		BaseLocalSource local = createLocal(config);
+		XXX_BaseLocalSource local = createLocal(config);
 		YoutubeDLDownloader downloader = new YoutubeDLDownloader(querier, local);
 
 		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "bundle");
@@ -71,12 +71,12 @@ public class YoutubeDLDownloaderTest {
 		assertTrue(file.exists());
 	}
 
-	private BaseLocalSource createLocal(BaseConfiguration config) throws IOException {
+	private XXX_BaseLocalSource createLocal(BaseConfiguration config) throws IOException {
 		BaseFilesNamer namer = new FunkyFilesNamer();
 		File root = Files.createTempDir();
 		AbstractPlaylistLoader loader = new FunkyPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new FunkyFileSystemAccessor(root, namer, loader);
-		BaseLocalSource local = new FunkyLocalSource(config, fileSystem);
+		XXX_BaseLocalSource local = new FunkyLocalSource(config, fileSystem);
 		return local;
 	}
 

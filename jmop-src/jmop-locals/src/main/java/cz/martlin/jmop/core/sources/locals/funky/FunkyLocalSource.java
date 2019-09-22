@@ -20,9 +20,9 @@ import cz.martlin.jmop.core.misc.MapperWithException;
 import cz.martlin.jmop.core.misc.MapperWithException.ExceptionInLoop;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 
 /**
  * The default local source implementation. Uses file system for storing all of
@@ -35,7 +35,8 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * @author martin
  *
  */
-public class FunkyLocalSource implements BaseLocalSource {
+@Deprecated
+public class FunkyLocalSource implements XXX_BaseLocalSource {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseConfiguration config;
@@ -258,4 +259,5 @@ public class FunkyLocalSource implements BaseLocalSource {
 		Bundle bundle = track.getBundle();
 		return fileSystem.existsTrack(bundle, track, location, format);
 	}
+
 }

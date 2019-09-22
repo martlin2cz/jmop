@@ -18,7 +18,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class Bundle extends ObservableObject<Bundle> {
+public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundle> {
 	private final SourceKind kind;
 	private final String name;
 	private final Map<String, Track> tracks;
@@ -118,6 +118,11 @@ public class Bundle extends ObservableObject<Bundle> {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	@Override
+	public int compareTo(Bundle another) {
+		return this.name.compareTo(another.name);
+	}
+	
 	@Override
 	public String toString() {
 		return "Bundle [name=" + name + "]"; //$NON-NLS-1$ //$NON-NLS-2$

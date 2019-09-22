@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.AbstractLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.TestingTrackFileAccessor;
@@ -23,9 +23,9 @@ public class TestingDownloader implements BaseDownloader {
 
 
 	private final TrackFileFormat downloadFormat;
-	private final BaseLocalSource local;
+	private final XXX_BaseLocalSource local;
 
-	public TestingDownloader(BaseLocalSource local, TrackFileFormat downloadFormat) {
+	public TestingDownloader(XXX_BaseLocalSource local, TrackFileFormat downloadFormat) {
 		super();
 		this.local = local;
 		this.downloadFormat = downloadFormat;

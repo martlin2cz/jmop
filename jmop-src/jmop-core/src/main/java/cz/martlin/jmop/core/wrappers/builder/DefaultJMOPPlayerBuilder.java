@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.DefaultLocator;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
@@ -29,20 +29,20 @@ import cz.martlin.jmop.core.sources.remote.youtubedl.YoutubeDLDownloader;
 public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 
 	@Override
-	public BaseConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
+	public BaseConverter createConverter(CommandlineData data, BaseConfiguration config, XXX_BaseLocalSource local) {
 		return new FFMPEGConverter(local);
 	}
 
 	@Override
 	public BaseDownloader createDownloader(CommandlineData data, BaseConfiguration config,
-			InternetConnectionStatus connection, AbstractRemoteSource remote, BaseLocalSource local) {
+			InternetConnectionStatus connection, AbstractRemoteSource remote, XXX_BaseLocalSource local) {
 		BaseRemoteSourceQuerier querier = new YoutubeQuerier(config, connection); 
 		//FIXME extract as param
 		return new YoutubeDLDownloader(querier , local);
 	}
 
 	@Override
-	public JavaFXMediaPlayer createPlayer(CommandlineData data, BaseConfiguration config, BaseLocalSource local,
+	public JavaFXMediaPlayer createPlayer(CommandlineData data, BaseConfiguration config, XXX_BaseLocalSource local,
 			BaseTrackFileLocator locator) {
 		return new JavaFXMediaPlayer(local, locator);
 	}
@@ -53,7 +53,7 @@ public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 	}
 
 	@Override
-	public BaseLocalSource createLocalSource(CommandlineData data, BaseConfiguration config) throws IOException {
+	public XXX_BaseLocalSource createLocalSource(CommandlineData data, BaseConfiguration config) throws IOException {
 		File root = data.getRoot();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		BaseFilesNamer namer = new DefaultFilesNamer();

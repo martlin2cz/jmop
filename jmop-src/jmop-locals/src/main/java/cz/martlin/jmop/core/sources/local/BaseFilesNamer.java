@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
 
+import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 
 /**
@@ -40,7 +41,18 @@ public interface BaseFilesNamer {
 	 * @param format
 	 * @return
 	 */
+	@Deprecated
 	public String fileNameOfTrack(Track track, TrackFileFormat format);
+	
+	/**
+	 * TODO doc
+	 * @param bundle
+	 * @param track
+	 * @param location
+	 * @param format
+	 * @return
+	 */
+	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format);
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -51,6 +63,7 @@ public interface BaseFilesNamer {
 	 * @param bundleDirName
 	 * @return
 	 */
+	@Deprecated
 	public File bundleDirOfBundleDirName(File root, String bundleDirName);
 
 	/**
@@ -60,6 +73,7 @@ public interface BaseFilesNamer {
 	 * @param bundleName
 	 * @return
 	 */
+	@Deprecated
 	public File bundleDirOfBundleName(File root, String bundleName);
 
 	/**
@@ -70,6 +84,7 @@ public interface BaseFilesNamer {
 	 * @param bundleName
 	 * @return
 	 */
+	@Deprecated
 	public File cacheBundleDir(File root, String bundleName);
 
 	/**
@@ -78,6 +93,7 @@ public interface BaseFilesNamer {
 	 * @param bundleName
 	 * @return
 	 */
+	@Deprecated
 	public File tempBundleDir(String bundleName);
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +108,7 @@ public interface BaseFilesNamer {
 	 * @param playlistFileExtension
 	 * @return
 	 */
+	@Deprecated
 	public File playlistFileOfPlaylist(File root, String bundleDirName, String playlistName,
 			String playlistFileExtension);
 
@@ -104,7 +121,10 @@ public interface BaseFilesNamer {
 	 * @param playlistFileName
 	 * @return
 	 */
+	@Deprecated
 	public File playlistFileOfFile(File root, String bundleDirName, String playlistFileName);
+
+
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

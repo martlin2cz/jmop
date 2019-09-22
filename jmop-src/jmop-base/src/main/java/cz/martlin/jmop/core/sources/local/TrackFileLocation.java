@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.local.location;
+package cz.martlin.jmop.core.sources.local;
 
 /**
  * The symbolic location of track file.
