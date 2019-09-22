@@ -3,8 +3,8 @@ package cz.martlin.jmop.core.misc.ops;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
 public class FormatsLocationsUtility {

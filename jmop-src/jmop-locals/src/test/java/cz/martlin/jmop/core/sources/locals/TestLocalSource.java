@@ -12,7 +12,7 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 
 public class TestLocalSource {
 
@@ -23,7 +23,7 @@ public class TestLocalSource {
 		BaseFilesNamer namer = new FunkyFilesNamer();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new FunkyFileSystemAccessor(rootDir, namer, loader);
-		BaseLocalSource local = new FunkyLocalSource(config, fileSystem);
+		XXX_BaseLocalSource local = new FunkyLocalSource(config, fileSystem);
 		// TestingLocalSource local = new TestingLocalSource();
 
 		// create some content ...

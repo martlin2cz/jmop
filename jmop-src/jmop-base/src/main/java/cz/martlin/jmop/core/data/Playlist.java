@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.misc.ObservableObject;
  * @author martin
  *
  */
-public class Playlist extends ObservableObject<Playlist> {
+public class Playlist extends ObservableObject<Playlist> implements Comparable<Playlist> {
 	private final Bundle bundle;
 
 	private String name;
@@ -117,6 +117,11 @@ public class Playlist extends ObservableObject<Playlist> {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Playlist other) {
+		return this.name.compareTo(other.name);
 	}
 
 	@Override

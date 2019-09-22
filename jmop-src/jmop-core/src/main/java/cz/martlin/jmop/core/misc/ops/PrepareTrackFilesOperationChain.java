@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
@@ -18,10 +18,10 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 
 	private final FormatsLocationsUtility flu;
 	private final BaseRemoteSource remote;
-	private final BaseLocalSource local;
+	private final XXX_BaseLocalSource local;
 
 	public PrepareTrackFilesOperationChain(FormatsLocationsUtility flu, BaseRemoteSource remote,
-			BaseLocalSource local) {
+			XXX_BaseLocalSource local) {
 		super();
 		this.flu = flu;
 		this.remote = remote;

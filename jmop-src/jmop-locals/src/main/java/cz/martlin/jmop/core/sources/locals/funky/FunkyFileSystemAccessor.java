@@ -17,7 +17,7 @@ import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 
 /**
  * The default implementation of {@link AbstractFileSystemAccessor}. Simply
@@ -29,6 +29,7 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * @author martin
  *
  */
+@Deprecated
 public class FunkyFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	private final File root;

@@ -1,6 +1,7 @@
 package cz.martlin.jmop.core.sources.local.location;
 
 import cz.martlin.jmop.core.player.BasePlayer;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
 /**

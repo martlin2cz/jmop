@@ -8,7 +8,6 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.PlaylistFileData;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 /**
  * Abstract encapsulation of file system operations to be used in the JMOP
@@ -17,8 +16,9 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * the same name), probably located witin particullar bundle dir.
  * 
  * @author martin
- *
+ * @deprecated use {@link BaseFileSystemAccessor} instead
  */
+@Deprecated
 public interface AbstractFileSystemAccessor {
 
 	/**

@@ -14,9 +14,9 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import cz.martlin.jmop.core.source.extprogram.ExternalProcessLongOperation;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
 import javafx.util.Duration;
@@ -26,9 +26,9 @@ public class FFMPEGConverter implements BaseConverter {
 
 	private static final String FFMPEG_COMMAND_NAME = "ffmpeg";
 
-	private final BaseLocalSource local;
+	private final XXX_BaseLocalSource local;
 
-	public FFMPEGConverter(BaseLocalSource local) {
+	public FFMPEGConverter(XXX_BaseLocalSource local) {
 		super();
 		this.local = local;
 	}

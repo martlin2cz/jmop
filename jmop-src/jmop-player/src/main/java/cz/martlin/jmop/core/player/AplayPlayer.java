@@ -13,7 +13,7 @@ import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import javafx.util.Duration;
@@ -35,7 +35,7 @@ public class AplayPlayer extends AbstractPlayer {
 	private AplayProcess process;
 	private Track currentTrack;
 
-	public AplayPlayer(BaseErrorReporter reporter, BaseLocalSource local, BaseTrackFileLocator locator) {
+	public AplayPlayer(BaseErrorReporter reporter, XXX_BaseLocalSource local, BaseTrackFileLocator locator) {
 		super(local, locator, APLAY_PLAY_FORMAT);
 
 		this.reporter = reporter;

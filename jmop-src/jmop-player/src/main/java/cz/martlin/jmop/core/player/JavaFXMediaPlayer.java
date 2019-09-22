@@ -4,7 +4,7 @@ import java.io.File;
 import java.net.URI;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import javafx.beans.value.ChangeListener;
@@ -32,7 +32,7 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 		initializeFX();
 	}
 
-	public JavaFXMediaPlayer(BaseLocalSource local, BaseTrackFileLocator locator) {
+	public JavaFXMediaPlayer(XXX_BaseLocalSource local, BaseTrackFileLocator locator) {
 		super(local, locator, PLAYER_FORMAT);
 	}
 

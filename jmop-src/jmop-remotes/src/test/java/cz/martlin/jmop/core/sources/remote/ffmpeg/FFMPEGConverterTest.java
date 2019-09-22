@@ -24,9 +24,9 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyFilesNamer;
@@ -40,7 +40,7 @@ public class FFMPEGConverterTest {
 	@Test
 	public void test() throws Exception {
 		BaseConfiguration config = new ConstantConfiguration();
-		BaseLocalSource local = createLocal(config);
+		XXX_BaseLocalSource local = createLocal(config);
 		FFMPEGConverter converter = new FFMPEGConverter(local);
 
 		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "the-bundle");
@@ -69,7 +69,7 @@ public class FFMPEGConverterTest {
 		assertNotNull(result);
 	}
 
-	private void prepareTesingTrackFile(BaseLocalSource local, Track track, TrackFileLocation location)
+	private void prepareTesingTrackFile(XXX_BaseLocalSource local, Track track, TrackFileLocation location)
 			throws JMOPSourceException, IOException {
 
 		TrackFileFormat format = TestingTrackFileAccessor.TESTING_FILE_FORMAT;
@@ -78,12 +78,12 @@ public class FFMPEGConverterTest {
 		TestingDownloader.copyTestingFileTo(file);
 	}
 
-	private BaseLocalSource createLocal(BaseConfiguration config) throws IOException {
+	private XXX_BaseLocalSource createLocal(BaseConfiguration config) throws IOException {
 		BaseFilesNamer namer = new FunkyFilesNamer();
 		File root = Files.createTempDir();
 		AbstractPlaylistLoader loader = new FunkyPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new FunkyFileSystemAccessor(root, namer, loader);
-		BaseLocalSource local = new FunkyLocalSource(config, fileSystem);
+		XXX_BaseLocalSource local = new FunkyLocalSource(config, fileSystem);
 		return local;
 	}
 }

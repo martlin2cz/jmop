@@ -15,11 +15,11 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 
-public class TestingLocalSource implements BaseLocalSource {
+public class TestingLocalSource implements XXX_BaseLocalSource {
 
 	private final Map<String, Bundle> bundles;
 	private final Map<Bundle, Map<String, Playlist>> playlists;

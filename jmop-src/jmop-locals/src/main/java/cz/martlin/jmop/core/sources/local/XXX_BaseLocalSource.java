@@ -8,7 +8,6 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.BaseSourceImpl;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 
 /**
  * General local source. Specifies methods for "loading and saving of bundles,
@@ -19,7 +18,8 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
  * @author martin
  *
  */
-public interface BaseLocalSource extends BaseSourceImpl {
+@Deprecated
+public interface XXX_BaseLocalSource extends BaseSourceImpl {
 
 	/**
 	 * Loads and lists alls bundles names.

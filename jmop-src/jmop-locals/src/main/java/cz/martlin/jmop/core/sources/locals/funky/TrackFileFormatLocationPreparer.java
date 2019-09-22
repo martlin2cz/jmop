@@ -10,9 +10,9 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.BaseOperation;
 import cz.martlin.jmop.core.misc.ops.EmptyOperation;
 import cz.martlin.jmop.core.misc.ops.SimpleShortOperation;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
 
@@ -25,10 +25,10 @@ import cz.martlin.jmop.core.sources.remote.ConversionReason;
  *
  */
 public class TrackFileFormatLocationPreparer {
-	private final BaseLocalSource local;
+	private final XXX_BaseLocalSource local;
 	private final BaseConverter converter;
 
-	public TrackFileFormatLocationPreparer(BaseLocalSource local, BaseConverter converter) {
+	public TrackFileFormatLocationPreparer(XXX_BaseLocalSource local, BaseConverter converter) {
 		super();
 		this.local = local;
 		this.converter = converter;

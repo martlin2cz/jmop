@@ -8,7 +8,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 
 /**
  * The JMOP wrapper responsible for sources (list/save bundles, playlists, load
@@ -18,10 +18,10 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
  *
  */
 public class JMOPSources {
-	private final BaseLocalSource local;
+	private final XXX_BaseLocalSource local;
 	private final BaseOperations operations;
 
-	public JMOPSources(BaseLocalSource local, BaseOperations operations) {
+	public JMOPSources(XXX_BaseLocalSource local, BaseOperations operations) {
 		super();
 		this.local = local;
 		this.operations = operations;
