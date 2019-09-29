@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import cz.martlin.jmop.core.misc.ObservableObject;
@@ -21,8 +22,10 @@ import javafx.util.Duration;
 public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundle> {
 	private final SourceKind kind;
 	private final String name;
+	private Metadata metadata;
 	private final Map<String, Track> tracks;
 
+	@Deprecated
 	public Bundle(SourceKind kind, String name) {
 		super();
 		this.kind = kind;
@@ -30,10 +33,25 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		this.tracks = new LinkedHashMap<>();
 	}
 
+	@Deprecated
 	public Bundle(SourceKind kind, String name, Tracklist tracks) {
 		super();
 		this.kind = kind;
 		this.name = name;
+		this.tracks = toMap(tracks);
+	}
+
+	public Bundle(SourceKind kind, String name, Metadata metadata) {
+		this.kind = kind;
+		this.name = name;
+		this.metadata = metadata;
+		this.tracks = new TreeMap<>(); //TODO tree map?
+	}
+	
+	public Bundle(SourceKind kind, String name, Metadata metadata, Tracklist tracks) {
+		this.kind = kind;
+		this.name = name;
+		this.metadata = metadata;
 		this.tracks = toMap(tracks);
 	}
 
@@ -45,6 +63,9 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		return name;
 	}
 
+	public Metadata getMetadata() {
+		return metadata;
+	}
 	///////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -56,13 +77,23 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	 * @param duration
 	 * @return
 	 */
-	public Track createTrack(String identifier, String title, String description, Duration duration) {
-		Track track = new Track(this, identifier, title, description, duration);
+	public Track createTrack(String identifier, String title, String description, Duration duration, Metadata metadata) {
+		Track track = new Track(this, identifier, title, description, duration, metadata);
 		this.tracks.put(identifier, track);
 
 		fireValueChangedEvent();
 
 		return track;
+	}
+
+	public Playlist createPlaylist(String name, int currentTrack, boolean locked, Metadata metadata, Tracklist tracks) {
+		return new Playlist(this, name, currentTrack, locked, metadata, tracks);
+		//TODO fire event?
+	}
+	
+	public Playlist createNewPlaylist(String name) {
+		return new Playlist(this, name);
+		//TODO fire event?
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -78,8 +109,8 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	}
 
 	/**
-	 * Returns true if this bundle contains given track. In fact, track with
-	 * same ID.
+	 * Returns true if this bundle contains given track. In fact, track with same
+	 * ID.
 	 * 
 	 * @param track
 	 * @return
@@ -122,7 +153,7 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	public int compareTo(Bundle another) {
 		return this.name.compareTo(another.name);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Bundle [name=" + name + "]"; //$NON-NLS-1$ //$NON-NLS-2$

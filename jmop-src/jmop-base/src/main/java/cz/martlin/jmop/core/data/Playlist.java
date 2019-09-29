@@ -18,7 +18,9 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	private Tracklist tracks;
 	private int currentTrackIndex;
 	private boolean locked;
+	private Metadata metadata;
 
+	@Deprecated
 	public Playlist(Bundle bundle, String name, Tracklist tracks, int currentTrackIndex, boolean locked) {
 		super();
 		this.bundle = bundle;
@@ -28,6 +30,7 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		this.locked = locked;
 	}
 
+	@Deprecated
 	public Playlist(Bundle bundle, String name, Tracklist tracks) {
 		super();
 		this.bundle = bundle;
@@ -44,6 +47,17 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		this.tracks = new Tracklist();
 		this.currentTrackIndex = 0;
 		this.locked = false;
+		this.metadata = Metadata.createNew();
+	}
+
+	public Playlist(Bundle bundle, String name, int currentTrack, boolean locked, Metadata metadata, Tracklist tracks) {
+		super();
+		this.bundle = bundle;
+		this.name = name;
+		this.tracks = tracks;
+		this.currentTrackIndex = currentTrack;
+		this.locked = locked;
+		this.metadata = metadata;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,6 +99,10 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 		fireValueChangedEvent();
+	}
+	
+	public Metadata getMetadata() {
+		return metadata; 
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,5 +151,7 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	public String toHumanString() {
 		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" + tracks.toHumanString(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
+
+	
 
 }

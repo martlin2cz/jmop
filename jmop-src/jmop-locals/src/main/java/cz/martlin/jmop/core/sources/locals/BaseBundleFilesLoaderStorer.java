@@ -6,13 +6,14 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
-public interface BasePlaylistFilesLoaderStorer {
+public interface BaseBundleFilesLoaderStorer {
 
 	public String extensionOfFile();
 
 	/////////////////////////////////////////////////////////////////
 
-	public void saveBundle(Bundle bundle, File file) throws JMOPSourceException;
+	public Bundle loadBundle(File file) throws JMOPSourceException;
 
-	public void savePlaylist(Bundle bundle, Playlist playlist, File file) throws JMOPSourceException;
+	public Playlist loadPlaylist(Bundle bundle, File file)throws JMOPSourceException;
+
 }

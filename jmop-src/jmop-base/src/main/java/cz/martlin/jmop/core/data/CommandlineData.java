@@ -9,6 +9,7 @@ import java.io.File;
  * @author martin
  *
  */
+//TODO move to app module's data package?
 public class CommandlineData {
 	/**
 	 * Was given -h or --help flag?

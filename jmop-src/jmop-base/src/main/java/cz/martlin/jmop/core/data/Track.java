@@ -18,7 +18,8 @@ public class Track {
 	private final String title;
 	private final String description;
 	private final Duration duration;
-	// TODO thumbnail
+	private final Metadata metadata;
+
 
 	/**
 	 * If possible use {@link Bundle#createTrack(String, String, String)} instead.
@@ -29,13 +30,14 @@ public class Track {
 	 * @param description
 	 * @param duration
 	 */
-	protected Track(Bundle bundle, String identifier, String title, String description, Duration duration) {
+	protected Track(Bundle bundle, String identifier, String title, String description, Duration duration, Metadata metadata) {
 		super();
 		this.bundle = bundle;
 		this.identifier = identifier;
 		this.title = title;
 		this.description = description;
 		this.duration = duration;
+		this.metadata = metadata;
 	}
 
 	public Bundle getBundle() {
@@ -58,6 +60,9 @@ public class Track {
 		return duration;
 	}
 
+	public Metadata getMetadata() {
+		return metadata;
+	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

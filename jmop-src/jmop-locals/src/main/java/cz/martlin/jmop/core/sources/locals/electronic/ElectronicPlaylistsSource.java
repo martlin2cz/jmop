@@ -75,13 +75,13 @@ public class ElectronicPlaylistsSource implements BasePlaylistsLocalSource {
 	}
 
 	private Playlist loadPlaylist(Bundle bundle, File file) {
-		return pfls.load(bundle, file);
+		return pfls.loadPlaylist(bundle, file);
 	}
 
 	private void savePlaylist(Playlist playlist) {
 		Bundle bundle = playlist.getBundle();
 		File file = locator.getFileOfPlaylist(bundle, playlist);
-		pfls.save(bundle, playlist, file);
+		pfls.savePlaylist(bundle, playlist, file);
 	}
 
 }
