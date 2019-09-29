@@ -40,28 +40,28 @@ public class XSPFParserComposer {
 	 */
 	public void parse(Bundle bundle, Document document, PlaylistFileData playlist, boolean onlyMetadata) {
 		Element root = document.getDocumentElement();
-		checkRoot(root);
+//		checkRoot(root);
 		processHeaders(root, playlist);
 
 		if (!onlyMetadata) {
 			processTracks(bundle, root, playlist);
 		}
 	}
-
-	/**
-	 * Checks root element and playlist file format version.
-	 * 
-	 * @param root
-	 */
-	private void checkRoot(Element root) {
-		if (!"playlist".equals(root.getTagName())) { //$NON-NLS-1$
-			throw new IllegalArgumentException("Not a playlist file"); //$NON-NLS-1$
-		}
-
-		if (!"1".equals(root.getAttribute("version"))) { //$NON-NLS-1$ //$NON-NLS-2$
-			throw new IllegalArgumentException("Not version 1"); //$NON-NLS-1$
-		}
-	}
+//
+//	/**
+//	 * Checks root element and playlist file format version.
+//	 * 
+//	 * @param root
+//	 */
+//	private void checkRoot(Element root) {
+//		if (!"playlist".equals(root.getTagName())) { //$NON-NLS-1$
+//			throw new IllegalArgumentException("Not a playlist file"); //$NON-NLS-1$
+//		}
+//
+//		if (!"1".equals(root.getAttribute("version"))) { //$NON-NLS-1$ //$NON-NLS-2$
+//			throw new IllegalArgumentException("Not version 1"); //$NON-NLS-1$
+//		}
+//	}
 
 	/**
 	 * Transfers metadata from playlist file's root element into data.
@@ -70,125 +70,125 @@ public class XSPFParserComposer {
 	 * @param playlist
 	 */
 	private void processHeaders(Element root, PlaylistFileData playlist) {
-		processTitle(root, playlist);
+//		processTitle(root, playlist);
 		processExtension(root, playlist);
 	}
 
-	/**
-	 * Transfers title of playlist from xml to data.
-	 * 
-	 * @param root
-	 * @param playlist
-	 */
-	private void processTitle(Element root, PlaylistFileData playlist) {
-		Element title = getChild(root, "title"); //$NON-NLS-1$
-		playlist.setPlaylistName(title.getTextContent());
-	}
+//	/**
+//	 * Transfers title of playlist from xml to data.
+//	 * 
+//	 * @param root
+//	 * @param playlist
+//	 */
+//	private void processTitle(Element root, PlaylistFileData playlist) {
+//		Element title = getChild(root, "title"); //$NON-NLS-1$
+//		playlist.setPlaylistName(title.getTextContent());
+//	}
 
-	/**
-	 * Transfers JMOP extension data (source kind, bundle name, current track
-	 * index) from xml to data.
-	 * 
-	 * @param root
-	 * @param playlist
-	 */
-	private void processExtension(Element root, PlaylistFileData playlist) {
-		Element extension = getChild(root, "extension"); //$NON-NLS-1$
-		Element jmop = getChild(extension, "jmop"); //$NON-NLS-1$
-
-		String source = jmop.getAttribute("source"); //$NON-NLS-1$
-		SourceKind kind = SourceKind.valueOf(source);
-		playlist.setKind(kind);
-
-		String bundleName = jmop.getAttribute("bundleName"); //$NON-NLS-1$
-		playlist.setBundleName(bundleName);
-
-		String currentTrackOrNot = jmop.getAttribute("currentTrack"); //$NON-NLS-1$
-		if (currentTrackOrNot != null && !currentTrackOrNot.isEmpty()) {
-			int currentTrack = Integer.parseInt(currentTrackOrNot);
-			playlist.setCurrentTrackIndex(currentTrack);
-		}
-
-		String lockedOrNot = jmop.getAttribute("locked"); //$NON-NLS-1$
-		if (lockedOrNot != null && !lockedOrNot.isEmpty()) {
-			boolean locked = Boolean.parseBoolean(lockedOrNot);
-			playlist.setLocked(locked);
-		}
-	}
+//	/**
+//	 * Transfers JMOP extension data (source kind, bundle name, current track
+//	 * index) from xml to data.
+//	 * 
+//	 * @param root
+//	 * @param playlist
+//	 */
+//	private void processExtension(Element root, PlaylistFileData playlist) {
+//		Element extension = getChild(root, "extension"); //$NON-NLS-1$
+//		Element jmop = getChild(extension, "jmop"); //$NON-NLS-1$
+//
+//		String source = jmop.getAttribute("source"); //$NON-NLS-1$
+//		SourceKind kind = SourceKind.valueOf(source);
+//		playlist.setKind(kind);
+//
+//		String bundleName = jmop.getAttribute("bundleName"); //$NON-NLS-1$
+//		playlist.setBundleName(bundleName);
+//
+//		String currentTrackOrNot = jmop.getAttribute("currentTrack"); //$NON-NLS-1$
+//		if (currentTrackOrNot != null && !currentTrackOrNot.isEmpty()) {
+//			int currentTrack = Integer.parseInt(currentTrackOrNot);
+//			playlist.setCurrentTrackIndex(currentTrack);
+//		}
+//
+//		String lockedOrNot = jmop.getAttribute("locked"); //$NON-NLS-1$
+//		if (lockedOrNot != null && !lockedOrNot.isEmpty()) {
+//			boolean locked = Boolean.parseBoolean(lockedOrNot);
+//			playlist.setLocked(locked);
+//		}
+//	}
 	/////////////////////////////////////////////////////////////////////////////////////
+//
+//	/**
+//	 * Returns (first) child of given element with given tak name. If no such
+//	 * found, throws exception.
+//	 * 
+//	 * @param element
+//	 * @param tagName
+//	 * @return
+//	 */
+//	private static Element getChild(Element element, String tagName) {
+//		for (Node node = element.getFirstChild(); node != null; node = node.getNextSibling()) {
+//			if (node instanceof Element && tagName.equals(node.getNodeName())) {
+//				return (Element) node;
+//			}
+//		}
+//		throw new IllegalArgumentException("Element " + tagName + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
+//	}
 
-	/**
-	 * Returns (first) child of given element with given tak name. If no such
-	 * found, throws exception.
-	 * 
-	 * @param element
-	 * @param tagName
-	 * @return
-	 */
-	private static Element getChild(Element element, String tagName) {
-		for (Node node = element.getFirstChild(); node != null; node = node.getNextSibling()) {
-			if (node instanceof Element && tagName.equals(node.getNodeName())) {
-				return (Element) node;
-			}
-		}
-		throw new IllegalArgumentException("Element " + tagName + " not found"); //$NON-NLS-1$ //$NON-NLS-2$
-	}
+	/////////////////////////////////////////////////////////////////////////////
+//	/**
+//	 * Transfers tracks from xml to data.
+//	 * 
+//	 * @param bundle
+//	 * @param root
+//	 * @param playlist
+//	 */
+//	private void processTracks(Bundle bundle, Element root, PlaylistFileData playlist) {
+//		Element trackList = getChild(root, "trackList"); //$NON-NLS-1$
+//
+//		List<Track> tracks = new ArrayList<>(trackList.getChildNodes().getLength());
+//		for (int i = 0; i < trackList.getChildNodes().getLength(); i++) {
+//			Node child = trackList.getChildNodes().item(i);
+//
+//			if (!(child instanceof Element)) {
+//				continue;
+//			}
+//			Element trackElem = (Element) child;
+//
+//			if (!("track".equals(child.getNodeName()))) { //$NON-NLS-1$
+//				throw new IllegalArgumentException("Expected track element, found" + trackElem.getTagName()); //$NON-NLS-1$
+//			}
+//
+//			Track track = processTrack(bundle, trackElem);
+//			tracks.add(track);
+//		}
+//
+//		Tracklist tracklist = new Tracklist(tracks);
+//		playlist.setTracklist(tracklist);
+//	}
 
-	/////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Transfers tracks from xml to data.
-	 * 
-	 * @param bundle
-	 * @param root
-	 * @param playlist
-	 */
-	private void processTracks(Bundle bundle, Element root, PlaylistFileData playlist) {
-		Element trackList = getChild(root, "trackList"); //$NON-NLS-1$
-
-		List<Track> tracks = new ArrayList<>(trackList.getChildNodes().getLength());
-		for (int i = 0; i < trackList.getChildNodes().getLength(); i++) {
-			Node child = trackList.getChildNodes().item(i);
-
-			if (!(child instanceof Element)) {
-				continue;
-			}
-			Element trackElem = (Element) child;
-
-			if (!("track".equals(child.getNodeName()))) { //$NON-NLS-1$
-				throw new IllegalArgumentException("Expected track element, found" + trackElem.getTagName()); //$NON-NLS-1$
-			}
-
-			Track track = processTrack(bundle, trackElem);
-			tracks.add(track);
-		}
-
-		Tracklist tracklist = new Tracklist(tracks);
-		playlist.setTracklist(tracklist);
-	}
-
-	/**
-	 * Transfers track element from xml to data.
-	 * 
-	 * @param bundle
-	 * @param trackElem
-	 * @return
-	 */
-	private Track processTrack(Bundle bundle, Element trackElem) {
-		Element titleElem = getChild(trackElem, "title"); //$NON-NLS-1$
-		String title = titleElem.getTextContent();
-
-		Element idElem = getChild(trackElem, "identifier"); //$NON-NLS-1$
-		String identifier = idElem.getTextContent();
-
-		Element annotationElem = getChild(trackElem, "annotation"); //$NON-NLS-1$
-		String description = annotationElem.getTextContent();
-
-		Element durationElem = getChild(trackElem, "duration"); //$NON-NLS-1$
-		String durationStr = durationElem.getTextContent();
-		Duration duration = DurationUtilities.parseMilisDuration(durationStr);
-
-		return bundle.createTrack(identifier, title, description, duration);
-	}
+//	/**
+//	 * Transfers track element from xml to data.
+//	 * 
+//	 * @param bundle
+//	 * @param trackElem
+//	 * @return
+//	 */
+//	private Track processTrack(Bundle bundle, Element trackElem) {
+//		Element titleElem = getChild(trackElem, "title"); //$NON-NLS-1$
+//		String title = titleElem.getTextContent();
+//
+//		Element idElem = getChild(trackElem, "identifier"); //$NON-NLS-1$
+//		String identifier = idElem.getTextContent();
+//
+//		Element annotationElem = getChild(trackElem, "annotation"); //$NON-NLS-1$
+//		String description = annotationElem.getTextContent();
+//
+//		Element durationElem = getChild(trackElem, "duration"); //$NON-NLS-1$
+//		String durationStr = durationElem.getTextContent();
+//		Duration duration = DurationUtilities.parseMilisDuration(durationStr);
+//
+//		return bundle.createTrack(identifier, title, description, duration);
+//	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -220,20 +220,20 @@ public class XSPFParserComposer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	/**
-	 * Creates empty playlist root element.
-	 * 
-	 * @param document
-	 * @return
-	 */
-	private Element createRootElement(Document document) {
-		Element root = document.createElementNS(NAMESPACE, "playlist"); //$NON-NLS-1$
-
-		root.setAttribute("version", "1"); //$NON-NLS-1$ //$NON-NLS-2$
-		// FIXME hack: attr not under NS
-
-		return root;
-	}
+//	/**
+//	 * Creates empty playlist root element.
+//	 * 
+//	 * @param document
+//	 * @return
+//	 */
+//	private Element createRootElement(Document document) {
+//		Element root = document.createElementNS(NAMESPACE, "playlist"); //$NON-NLS-1$
+//
+//		root.setAttribute("version", "1"); //$NON-NLS-1$ //$NON-NLS-2$
+//		// FIXME hack: attr not under NS
+//
+//		return root;
+//	}
 
 	/**
 	 * Transfers metadata from data into xml element and appends it to the root.

@@ -1,5 +1,7 @@
 package cz.martlin.jmop.core.sources;
 
+import java.util.stream.Stream;
+
 /**
  * Kinds (or types) used for loading (downloading) of tracks. Currently only
  * YouTube source is supported.
@@ -21,5 +23,11 @@ public enum SourceKind {
 
 	public String getName() {
 		return name;
+	}
+
+	public static SourceKind ofName(String name) {
+		return Stream.of(values()) //
+				.filter((k) -> k.name.equals(name)) //
+				.findAny().get();
 	}
 }

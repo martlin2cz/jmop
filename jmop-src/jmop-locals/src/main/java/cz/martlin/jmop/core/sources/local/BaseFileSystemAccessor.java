@@ -4,41 +4,32 @@ import java.io.File;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import cz.martlin.jmop.core.misc.JMOPSourceException;
+
 public interface BaseFileSystemAccessor {
 
-//	List<String> listPlaylistsFiles(Bundle bundle);
-//
-//	Playlist loadPlaylist(Bundle bundle, String fileName);
-//
-//	void savePlaylist(Playlist playlist);
-//
-//	void deletePlaylist(Playlist playlist);
+	///////////////////////////////////////////////////////
+
+	public boolean existsDirectory(File directory) throws JMOPSourceException;
+
+	public void createDirectory(File directory) throws JMOPSourceException;
+
+	public void deleteDirectory(File directory) throws JMOPSourceException;
+
+	public void renameDirectory(File oldDirectory, File newDirectory) throws JMOPSourceException;
+
+	public Set<File> listDirectoriesMatching(File directory, Predicate<File> matcher) throws JMOPSourceException;
 
 	///////////////////////////////////////////////////////
 
-	public boolean existsDirectory(File directory);
+	public boolean existsFile(File file) throws JMOPSourceException;
 
-	public void createDirectory(File directory);
+	public void deleteFile(File file) throws JMOPSourceException;
 
-	public void deleteDirectory(File directory);
+	public void moveFile(File oldFile, File newFile) throws JMOPSourceException;
 
-	public void renameDirectory(File oldDirectory, File newDirectory);
-
-	public Set<File> listDirectoriesMatching(File directory, Predicate<File> matcher);
+	public Set<File> listFilesMatching(File directory, Predicate<File> matcher) throws JMOPSourceException;
 
 	///////////////////////////////////////////////////////
-
-	public boolean existsFile(File file);
-
-	public void deleteFile(File file);
-
-	public void moveFile(File oldFile, File newFile);
-
-	public Set<File> listFilesMatching(File directory, Predicate<File> matcher);
-
-	///////////////////////////////////////////////////////
-
-	
-//	Set<File> listBundleDirectories();
 
 }

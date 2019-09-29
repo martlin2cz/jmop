@@ -55,6 +55,12 @@ public interface BaseFilesNamer {
 	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format);
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	public String nameOfTempDir();
+	public String nameOfCacheDir();
+	
+/////////////////////////////////////////////////////////////////////////////////////
+
+	
 	/**
 	 * Returns directory of bundle with given bundle dirname and relative to
 	 * given root.
