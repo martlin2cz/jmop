@@ -21,14 +21,15 @@ public class XSPFDocumentUtility {
 
 	private XSPFDocumentUtility() {
 	}
+
 ///////////////////////////////////////////////////////////////////////////
 	public static void createCommentWithText(Document document, Element owner, String value) {
 		Comment comment = document.createComment(value);
 		owner.appendChild(comment);
 	}
-	
-	public static Element createElementWithText(Document document, Element owner, String elemNS, String elemName,
-			String value) {
+
+	public static Element createElementWithText(Document document, Element owner, XSPFDocumentNamespaces elemNS,
+			String elemName, String value) {
 		Element element = createElement(document, owner, elemNS, elemName);
 
 		element.setTextContent(value);
@@ -36,22 +37,22 @@ public class XSPFDocumentUtility {
 		return element;
 	}
 
-	public static String getElementText(Element owner, String elemNS, String elemName) {
+	public static String getElementText(Element owner, XSPFDocumentNamespaces elemNS, String elemName) {
 		Element element = getChildOr(owner, elemNS, elemName, //
 				() -> fail(owner, elemNS, elemName));
 
 		return element.getTextContent();
 	}
 
-	public static Element getChildOrFail(Element element, String elemNS, String elemName) {
+	public static Element getChildOrFail(Element element, XSPFDocumentNamespaces elemNS, String elemName) {
 		return getChildOr(element, elemNS, elemName, //
-				() -> fail(element, elemNS,elemName));
+				() -> fail(element, elemNS, elemName));
 	}
 
 ///////////////////////////////////////////////////////////////////////////
-	public static void iterateOverChildren(Element element, String childElemNS, String childElemName,
+	public static void iterateOverChildren(Element element, XSPFDocumentNamespaces childElemNS, String childElemName,
 			Consumer<Element> doWithChildElem) {
-		NodeList children = element.getElementsByTagName/*NS*/(/*childElemNS,*/ childElemName);
+		NodeList children = element.getElementsByTagName/* NS */(/* childElemNS, */ childElemName);
 
 		for (int i = 0; i < children.getLength(); i++) {
 			Node childNode = children.item(i);
@@ -61,8 +62,8 @@ public class XSPFDocumentUtility {
 		}
 	}
 
-	public static void iterateOverChildrenWithCheck(Element element, String childNS, String childElemName,
-			Consumer<Element> ifValidChild, Consumer<Element> ifInvalid) {
+	public static void iterateOverChildrenWithCheck(Element element, XSPFDocumentNamespaces childNS,
+			String childElemName, Consumer<Element> ifValidChild, Consumer<Element> ifInvalid) {
 		iterateOverChildren(element, childNS, childElemName, //
 				(e) -> {
 					// FIXME haack
@@ -74,7 +75,7 @@ public class XSPFDocumentUtility {
 				});
 	}
 
-	public static void iterateOverChildrenOrFail(Element element, String childNS, String childElemName,
+	public static void iterateOverChildrenOrFail(Element element, XSPFDocumentNamespaces childNS, String childElemName,
 			Consumer<Element> todo) {
 		iterateOverChildrenWithCheck(element, childNS, childElemName, todo, //
 				(e) -> fail(element, childNS, childElemName));
@@ -85,25 +86,23 @@ public class XSPFDocumentUtility {
 	public static String getExtensionValue(Element element, String jmopExtensionElementName, String attrName) {
 		Element jmopExtension = getJMOPExtensionElementOrFail(element, jmopExtensionElementName);
 
-		String namespacedAttrName =  XSPFPlaylistFilesLoaderStorer.JMOP_PREFIX + ":" + attrName;
-		return jmopExtension.getAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE,*/ namespacedAttrName);
+		return jmopExtension.getAttribute/* NS */(/* XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE, */ attrName);
 	}
 
 	private static Element getJMOPExtensionElementOrFail(Element element, String jmopExtensionElementName) {
 		Element xspfExtension = getXspfExtensionElementOrFail(element);
-		String namespacedElemName = XSPFPlaylistFilesLoaderStorer.JMOP_PREFIX + ":" + jmopExtensionElementName;
 
 		return getChildOr(xspfExtension, //
-				XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE, namespacedElemName, //
-				() -> fail(xspfExtension, XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE, namespacedElemName)); //
+				XSPFDocumentNamespaces.JMOP, jmopExtensionElementName, //
+				() -> fail(xspfExtension, XSPFDocumentNamespaces.JMOP, jmopExtensionElementName)); //
 	}
 
 	private static Element getXspfExtensionElementOrFail(Element element) {
 		return getChildOr(element, //
-				XSPFPlaylistFilesLoaderStorer.XSPF_NAMESPACE, "extension", //
-				XSPFPlaylistFilesLoaderStorer.XSPF_NAMESPACE, "aplication", //
+				XSPFDocumentNamespaces.XSPF, "extension", //
+				XSPFDocumentNamespaces.XSPF, "aplication", //
 				XSPFPlaylistFilesLoaderStorer.APPLICATION_URL, //
-				() -> fail(element, XSPFPlaylistFilesLoaderStorer.XSPF_NAMESPACE, "extension"));
+				() -> fail(element, XSPFDocumentNamespaces.XSPF, "extension"));
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -111,30 +110,28 @@ public class XSPFDocumentUtility {
 			String attrName, String attrValue) {
 		Element jmopExtension = getJMOPExtensionElementOrCreate(document, element, jmopExtensionElementName);
 
-		String namespacedAttrName = XSPFPlaylistFilesLoaderStorer.JMOP_PREFIX + ":" + attrName;
-		jmopExtension.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE,*/ namespacedAttrName, attrValue);
+		jmopExtension.setAttribute/* NS */(/* XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE, */ attrName, attrValue);
 	}
 
 	private static Element getJMOPExtensionElementOrCreate(Document document, Element element,
 			String jmopExtensionElementName) {
 
 		Element xspfExtension = getXspfExtensionElementOrCreate(document, element);
-		String namespacedElemName = XSPFPlaylistFilesLoaderStorer.JMOP_PREFIX + ":" + jmopExtensionElementName;
 
 		return getChildOr(xspfExtension, //
-				XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE, namespacedElemName, //
+				XSPFDocumentNamespaces.JMOP, jmopExtensionElementName, //
 				() -> createElement(document, xspfExtension, //
-						XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE, namespacedElemName)); //
+						XSPFDocumentNamespaces.JMOP, jmopExtensionElementName)); //
 	}
 
 	private static Element getXspfExtensionElementOrCreate(Document document, Element element) {
 		return getChildOr(element, //
-				XSPFPlaylistFilesLoaderStorer.XSPF_NAMESPACE, "extension", //
-				XSPFPlaylistFilesLoaderStorer.XSPF_NAMESPACE, "aplication", //
+				XSPFDocumentNamespaces.XSPF, "extension", //
+				XSPFDocumentNamespaces.XSPF, "aplication", //
 				XSPFPlaylistFilesLoaderStorer.APPLICATION_URL, //
 				() -> createElementWithAttr(document, element, //
-						XSPFPlaylistFilesLoaderStorer.XSPF_NAMESPACE, "extension", //
-						null, "aplication", //
+						XSPFDocumentNamespaces.XSPF, "extension", //
+						XSPFDocumentNamespaces.XSPF, "aplication", //
 						XSPFPlaylistFilesLoaderStorer.APPLICATION_URL)); //
 	}
 ///////////////////////////////////////////////////////////////////////////
@@ -154,27 +151,29 @@ public class XSPFDocumentUtility {
 //				() -> fail(element, elemName)); //
 //	}
 //
-	public static Element getChildOrCreate(Document document, Element element, String elemNS, String elemName) {
+	public static Element getChildOrCreate(Document document, Element element, XSPFDocumentNamespaces elemNS,
+			String elemName) {
 		return getChildOr(element, elemNS, elemName, //
 				() -> createElement(document, element, elemNS, elemName));
 	}
 
-	public static Element getChildOrCreate(Document document, Element element, String elemNS, String elemName,
-			String hasAttrNS, String hasAttrName, String hasAttrValue) {
+	public static Element getChildOrCreate(Document document, Element element, XSPFDocumentNamespaces elemNS,
+			String elemName, XSPFDocumentNamespaces hasAttrNS, String hasAttrName, String hasAttrValue) {
 		return getChildOr(element, elemNS, elemName, //
 				(e) -> isElementWithAttr(e, hasAttrNS, hasAttrName, hasAttrValue), //
 				() -> createElementWithAttr(document, element, elemNS, elemName, hasAttrNS, hasAttrName, hasAttrValue));
 	}
 
-	public static Element getChildOr(Element element, String elemNS, String elemName, Supplier<Element> ifNot) {
+	public static Element getChildOr(Element element, XSPFDocumentNamespaces elemNS, String elemName,
+			Supplier<Element> ifNot) {
 
 		return getChildOr(element, elemNS, elemName, //
 				(e) -> true, //
 				ifNot);
 	}
 
-	public static Element getChildOr(Element element, String elemNS, String elemName, String hasAttrNS,
-			String hasAttrName, String hasAttrValue, Supplier<Element> ifNot) {
+	public static Element getChildOr(Element element, XSPFDocumentNamespaces elemNS, String elemName,
+			XSPFDocumentNamespaces hasAttrNS, String hasAttrName, String hasAttrValue, Supplier<Element> ifNot) {
 
 		return getChildOr(element, elemNS, elemName, //
 				(e) -> isElementWithAttr(e, hasAttrNS, hasAttrName, hasAttrValue), //
@@ -188,35 +187,43 @@ public class XSPFDocumentUtility {
 //				&& elemName.equals(element.getNodeName());
 //	}
 
-	private static boolean isElementWithAttr(Element element, String hasAttrNS, String hasAttrName,
+	private static boolean isElementWithAttr(Element element, XSPFDocumentNamespaces hasAttrNS, String hasAttrName,
 			String hasAttrValue) {
 
-		return hasAttrValue.equals(element.getAttribute/*NS*/(/*hasAttrNS, */hasAttrName));
+		return hasAttrValue.equals(element.getAttribute/* NS */(/* hasAttrNS, */hasAttrName));
 	}
 
-	private static Element createElement(Document document, Element owner, String elemNS, String elemName) {
-		Element element = document.createElement/*NS*/(/*elemNS, */elemName);
+	protected static Element createElement(Document document, Element owner, XSPFDocumentNamespaces elemNS,
+			String elemName) {
+		
+		String nsElemName = elemNS.namify(elemName);
+		Element element = document.createElement(nsElemName);
+		
 		owner.appendChild(element);
 		return element;
 	}
 
-	private static Element createElementWithAttr(Document document, Element owner, String elemNS, String elemName,
-			String attrNS, String attrName, String attrValue) {
+	protected static Element createElementWithAttr(Document document, Element owner, XSPFDocumentNamespaces elemNS,
+			String elemName, XSPFDocumentNamespaces attrNS, String attrName, String attrValue) {
 
-		Element element = document.createElement/*NS*/(/*elemNS, */elemName);
-		element.setAttribute/*NS*/(/*attrNS, */attrName, attrValue);
+		String nsElemName = elemNS.namify(elemName);
+		Element element = document.createElement(nsElemName);
+		
+		String nsAttrName = attrNS.namify(attrName);
+		element.setAttribute(nsAttrName, attrValue);
 
 		owner.appendChild(element);
 		return element;
 	}
 
-	private static Element fail(Element element, String elemNS, String elemName) {
-		throw new IllegalArgumentException("Missing '" + elemName + "' inside of '" + element.getNodeName() + "' (NS:" + elemNS + ")");
+	private static Element fail(Element element, XSPFDocumentNamespaces elemNS, String elemName) {
+		throw new IllegalArgumentException(
+				"Missing '" + elemName + "' inside of '" + element.getNodeName() + "' (NS:" + elemNS + ")");
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 
-	private static Element getChildOr(Element element, String childElemNS, String childElemName,
+	private static Element getChildOr(Element element, XSPFDocumentNamespaces childElemNS, String childElemName,
 			Predicate<Element> filter, Supplier<Element> ifNot) {
 		Element child = getChildMatching(element, childElemNS, childElemName, filter);
 
@@ -227,10 +234,11 @@ public class XSPFDocumentUtility {
 		return child;
 	}
 
-	private static Element getChildMatching(Element element, String childElemNS, String childElemName,
+	private static Element getChildMatching(Element element, XSPFDocumentNamespaces childElemNS, String childElemName,
 			Predicate<Element> filter) {
 
-		NodeList children = element.getElementsByTagName/*NS*/(/*childElemNS, */childElemName);
+		String nsChildElemName = childElemNS.namify(childElemName);
+		NodeList children = element.getElementsByTagName(nsChildElemName);
 
 		for (int i = 0; i < children.getLength(); i++) {
 			Node childNode = children.item(i);
@@ -267,7 +275,5 @@ public class XSPFDocumentUtility {
 		Date date = calendar.getTime();
 		return DATE_FORMAT.format(date);
 	}
-
-	
 
 }

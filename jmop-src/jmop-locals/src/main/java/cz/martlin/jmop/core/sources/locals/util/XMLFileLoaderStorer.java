@@ -47,7 +47,7 @@ public class XMLFileLoaderStorer {
 			StreamResult result = new StreamResult(file);
 			transformer.transform(source, result);
 		} catch (Exception e) {
-			throw new IOException("Cannot load file", e);
+			throw new IOException("Cannot save file", e);
 		}
 	}
 }

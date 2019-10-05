@@ -23,7 +23,7 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	private final SourceKind kind;
 	private final String name;
 	private Metadata metadata;
-	
+
 	private final Map<String, Track> tracks;
 	private final Map<String, Playlist> playlists;
 
@@ -49,10 +49,10 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		this.kind = kind;
 		this.name = name;
 		this.metadata = metadata;
-		this.tracks = new TreeMap<>(); //TODO tree map?
+		this.tracks = new TreeMap<>(); // TODO tree map?
 		this.playlists = new LinkedHashMap<>();
 	}
-	
+
 	public Bundle(SourceKind kind, String name, Metadata metadata, Tracklist tracks) {
 		this.kind = kind;
 		this.name = name;
@@ -83,7 +83,8 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	 * @param duration
 	 * @return
 	 */
-	public Track createTrack(String identifier, String title, String description, Duration duration, Metadata metadata) {
+	public Track createTrack(String identifier, String title, String description, Duration duration,
+			Metadata metadata) {
 		Track track = new Track(this, identifier, title, description, duration, metadata);
 		this.tracks.put(identifier, track);
 
@@ -94,19 +95,19 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 
 	public Playlist createPlaylist(String name, int currentTrack, boolean locked, Metadata metadata, Tracklist tracks) {
 		Playlist playlist = new Playlist(this, name, currentTrack, locked, metadata, tracks);
-		
+
 		this.playlists.put(name, playlist);
-		//TODO fire event?
-		
+		// TODO fire event?
+
 		return playlist;
 	}
-	
+
 	public Playlist createNewPlaylist(String name) {
 		Playlist playlist = new Playlist(this, name);
-		
+
 		this.playlists.put(name, playlist);
-		//TODO fire event?
-		
+		// TODO fire event?
+
 		return playlist;
 	}
 
@@ -121,7 +122,6 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	public Track getTrack(String id) {
 		return tracks.get(id);
 	}
-	
 
 	public Playlist getPlaylist(String name) {
 		return playlists.get(name);
@@ -174,9 +174,48 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((kind == null) ? 0 : kind.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((playlists == null) ? 0 : playlists.hashCode());
+		result = prime * result + ((tracks == null) ? 0 : tracks.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bundle other = (Bundle) obj;
+		if (kind != other.kind)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (playlists == null) {
+			if (other.playlists != null)
+				return false;
+		} else if (!playlists.equals(other.playlists))
+			return false;
+		if (tracks == null) {
+			if (other.tracks != null)
+				return false;
+		} else if (!tracks.equals(other.tracks))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "Bundle [name=" + name + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
-
 
 }

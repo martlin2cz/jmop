@@ -127,7 +127,7 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		if (bundle == null) {
 			if (other.bundle != null)
 				return false;
-		} else if (!bundle.equals(other.bundle))
+		} else if (!bundle.getName().equals(other.bundle.getName()))
 			return false;
 		if (name == null) {
 			if (other.name != null)

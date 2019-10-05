@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="bundle">
+		<xsd:attribute name="name" type="xs:string" use="required" />
+		<xsd:attribute name="source" type="xs:string" use="required" />
+
+		<xsd:attribute name="created" type="xs:string" use="required" /><!-- in fact datetime, but in custom format -->
+		<xsd:attribute name="numberOfPlays" . type="xs:integer" use="required" />
+		<xsd:attribute name="lastPlayed"  type="xs:string" use="required" /><!-- in fact datetime, but in custom format -->
+	</xsd:element>
+	<xsd:element name="playlist">
+		<xsd:attribute name="currentTrack" type="xs:integer" use="required" />
+		<xsd:attribute name="locked" type="xs:boolean" use="required" />
+
+		<xsd:attribute name="created" type="xs:string" use="required" /><!-- in fact datetime, but in custom format -->
+		<xsd:attribute name="numberOfPlays" . type="xs:integer" use="required" />
+		<xsd:attribute name="lastPlayed"  type="xs:string" use="required" /><!-- in fact datetime, but in custom format -->
+	</xsd:element>
+	<xsd:element name="track">
+		<xsd:attribute name="created" type="xs:string" use="required" /><!-- in fact datetime, but in custom format -->
+		<xsd:attribute name="numberOfPlays" . type="xs:integer" use="required" />
+		<xsd:attribute name="lastPlayed"  type="xs:string" use="required" /><!-- in fact datetime, but in custom format -->
+	</xsd:element>
+
+</xsd:schema>
