@@ -88,7 +88,7 @@ public class Track {
 		if (bundle == null) {
 			if (other.bundle != null)
 				return false;
-		} else if (!bundle.equals(other.bundle))
+		} else if (!bundle.getName().equals(other.bundle.getName()))
 			return false;
 		if (description == null) {
 			if (other.description != null)

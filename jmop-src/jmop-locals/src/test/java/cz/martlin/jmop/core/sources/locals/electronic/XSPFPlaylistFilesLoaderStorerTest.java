@@ -1,5 +1,7 @@
 package cz.martlin.jmop.core.sources.locals.electronic;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,6 +24,7 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 	@Test
 	public void testBundleFile() throws IOException, JMOPSourceException {
 		Bundle bundle = createTestingBundle();
+		System.out.println(TestingPrinter.print(bundle));
 
 		File file = File.createTempFile("bundle-file", ".xspf");
 		System.out.println("Working with " + file.getAbsolutePath());
@@ -33,10 +36,11 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		
 		Bundle rebundle = xpfls.loadBundle(file);
 		
-		System.out.println(rebundle);
-		System.out.println(TestingPrinter.print(rebundle.tracks().getTracks()));
+		System.out.println(TestingPrinter.print(rebundle));
 		
-		//TODO test parse
+		
+		assertEquals(bundle.toString(), rebundle.toString());
+		assertEquals(bundle, rebundle);
 		
 	}
 
