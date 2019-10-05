@@ -40,7 +40,7 @@ public class XSPFFileDocumentTest {
 
 		Element ipsum = XSPFDocumentUtility.getChildOr(root, NSBAR, "ipsum", NSBAR, "ipsum-val", "42", () -> null);
 		assertNotNull(ipsum);
-		assertEquals("42", ipsum.getAttributeNS(NSBAR, "ipsum-val"));
+		assertEquals("42", ipsum.getAttribute/*NS*/(/*NSBAR, */"ipsum-val"));
 	}
 
 	private void testGetOrCreate(Document document, Element root) {
@@ -84,7 +84,14 @@ public class XSPFFileDocumentTest {
 	}
 
 	private Element createRoot(Document document) {
-		Element root = document.createElementNS(NSFOO, "root");
+		Element root = document.createElement/*NS*/(/*NSFOO, */"root");
+		
+		root.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.XMLNS_NAMESPACE, */"xmlns:foo", NSFOO);
+		root.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.XMLNS_NAMESPACE, */"xmlns:bar", NSBAR);
+		
+		root.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.XMLNS_NAMESPACE, */"xmlns", XSPFPlaylistFilesLoaderStorer.XSPF_NAMESPACE);
+		root.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.XMLNS_NAMESPACE, */"xmlns:jmop", XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE);
+		
 		document.appendChild(root);
 		return root;
 	}

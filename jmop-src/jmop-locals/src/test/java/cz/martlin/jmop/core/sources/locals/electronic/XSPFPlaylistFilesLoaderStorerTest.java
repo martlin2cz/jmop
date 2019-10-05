@@ -1,15 +1,16 @@
 package cz.martlin.jmop.core.sources.locals.electronic;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import org.junit.Test;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Metadata;
+import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -21,24 +22,37 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 	@Test
 	public void testBundleFile() throws IOException, JMOPSourceException {
 		Bundle bundle = createTestingBundle();
-		
+
 		File file = File.createTempFile("bundle-file", ".xspf");
-		
-		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer();
-		
+		System.out.println("Working with " + file.getAbsolutePath());
+
+		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer("all tracks");
+
 		xpfls.saveBundle(bundle, file);
+		//TODO try to open created file in different player
 		
-		System.out.println(file.getAbsolutePath());
+		Bundle rebundle = xpfls.loadBundle(file);
+		
+		System.out.println(rebundle);
+		System.out.println(TestingPrinter.print(rebundle.tracks().getTracks()));
+		
+		//TODO test parse
+		
 	}
-	
+
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	private Bundle createTestingBundle() {
 		Bundle bundle = createEmptyTestingBundle();
 
-		bundle.createTrack("1234", "foo bar", "Lorem Ipsum", //
+		Track foo = bundle.createTrack("1234", "foo", "Lorem Ipsum", //
 				DurationUtilities.createDuration(0, 3, 15), //
 				metadata(3, 3, 3, 29, 9)); //
+
+		@SuppressWarnings("unused")
+		Playlist allTracks = bundle.createPlaylist("all tracks", 4, false, //
+				metadata(2, 2, 2, 2, 2), //
+				new Tracklist(Arrays.asList(foo)));
 		
 		return bundle;
 	}
@@ -50,9 +64,8 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		Bundle bundle = new Bundle(kind, name, metadata);
 		return bundle;
 	}
-	
+
 	//////////////////////////////////////////////////////////////////////////////////////
-	
 
 	private Metadata metadata(int numberOfPlays, int createdDay, int createdMonth, int lastPlayedDay,
 			int lastPlayedMonth) {
@@ -64,9 +77,9 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 
 	private Calendar datetime(int dayAndMinute, int monthAndHour) {
 		Calendar calendar = Calendar.getInstance();
-		
+
 		calendar.set(2019, monthAndHour, dayAndMinute, monthAndHour, dayAndMinute, 30);
-		
+
 		return calendar;
 	}
 

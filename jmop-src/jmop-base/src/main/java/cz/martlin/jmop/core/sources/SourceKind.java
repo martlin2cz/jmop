@@ -27,7 +27,7 @@ public enum SourceKind {
 
 	public static SourceKind ofName(String name) {
 		return Stream.of(values()) //
-				.filter((k) -> k.name.equals(name)) //
+				.filter((k) -> k.name.equalsIgnoreCase(name)) //
 				.findAny().get();
 	}
 }
