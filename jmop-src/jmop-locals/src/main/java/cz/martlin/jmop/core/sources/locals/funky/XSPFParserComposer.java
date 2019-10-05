@@ -22,6 +22,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
+@Deprecated
 public class XSPFParserComposer {
 	public static final String FILE_EXTENSION = "xspf"; //$NON-NLS-1$
 
