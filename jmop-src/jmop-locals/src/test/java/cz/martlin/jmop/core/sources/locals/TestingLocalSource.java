@@ -16,6 +16,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
+import cz.martlin.jmop.core.sources.locals.testing.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 

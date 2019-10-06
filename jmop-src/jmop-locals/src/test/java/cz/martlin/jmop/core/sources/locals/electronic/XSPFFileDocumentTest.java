@@ -19,9 +19,6 @@ import cz.martlin.jmop.core.sources.locals.util.XMLFileLoaderStorer;
 
 public class XSPFFileDocumentTest {
 
-	private static final String NSFOO = "foo";
-	private static final String NSBAR = "bar";
-
 	@Test
 	public void testGetCreateOrFail() {
 		Document document = createDocument();
@@ -35,19 +32,31 @@ public class XSPFFileDocumentTest {
 	}
 
 	private void testGet(Document document, Element root) {
-		Element lorem = XSPFDocumentUtility.getChildOr(root, NSFOO, "lorem", () -> null);
+		Element lorem = XSPFDocumentUtility.getChildOr(root, //
+				XSPFDocumentNamespaces.XSPF, "lorem", //
+				() -> null);
 		assertNotNull(lorem);
 
-		Element ipsum = XSPFDocumentUtility.getChildOr(root, NSBAR, "ipsum", NSBAR, "ipsum-val", "42", () -> null);
+		Element ipsum = XSPFDocumentUtility.getChildOr(root, //
+				XSPFDocumentNamespaces.JMOP, "ipsum", //
+				XSPFDocumentNamespaces.JMOP, "ipsum-val", "42", //
+				() -> null);
 		assertNotNull(ipsum);
-		assertEquals("42", ipsum.getAttribute/*NS*/(/*NSBAR, */"ipsum-val"));
+		
+		assertEquals("42", ipsum.getAttribute(XSPFDocumentNamespaces.JMOP.namify("ipsum-val")));
 	}
 
 	private void testGetOrCreate(Document document, Element root) {
-		XSPFDocumentUtility.getChildOrCreate(document, root, NSFOO, "lorem");
+		XSPFDocumentUtility.getChildOrCreate(document, root, //
+				XSPFDocumentNamespaces.XSPF, "lorem");
 
-		XSPFDocumentUtility.getChildOrCreate(document, root, NSBAR, "ipsum", NSBAR, "ipsum-val", "42");
-		XSPFDocumentUtility.getChildOrCreate(document, root, NSBAR, "ipsum", NSBAR, "ipsum-val", "99");
+		XSPFDocumentUtility.getChildOrCreate(document, root, //
+				XSPFDocumentNamespaces.JMOP, "ipsum", //
+				XSPFDocumentNamespaces.JMOP, "ipsum-val", "42");
+		
+		XSPFDocumentUtility.getChildOrCreate(document, root, //
+				XSPFDocumentNamespaces.JMOP, "ipsum", //
+				XSPFDocumentNamespaces.JMOP, "ipsum-val", "99");
 	}
 
 ///////////////////////////////////////////////////////////////////////////
@@ -60,11 +69,11 @@ public class XSPFFileDocumentTest {
 
 		XSPFDocumentUtility.setExtensionValue(document, root, "karel", "width", "42");
 		XSPFDocumentUtility.setExtensionValue(document, root, "karel", "height", "99");
-		
+
 		XSPFDocumentUtility.setExtensionValue(document, root, "jirka", "name", "jura");
 
 		print(document);
-		
+
 		String karelWidth = XSPFDocumentUtility.getExtensionValue(root, "karel", "width");
 		assertEquals("42", karelWidth);
 
@@ -84,16 +93,20 @@ public class XSPFFileDocumentTest {
 	}
 
 	private Element createRoot(Document document) {
-		Element root = document.createElement/*NS*/(/*NSFOO, */"root");
-		
-		root.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.XMLNS_NAMESPACE, */"xmlns:foo", NSFOO);
-		root.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.XMLNS_NAMESPACE, */"xmlns:bar", NSBAR);
-		
-		root.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.XMLNS_NAMESPACE, */"xmlns", XSPFPlaylistFilesLoaderStorer.XSPF_NAMESPACE);
-		root.setAttribute/*NS*/(/*XSPFPlaylistFilesLoaderStorer.XMLNS_NAMESPACE, */"xmlns:jmop", XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE);
-		
+		Element root = document.createElement(XSPFDocumentNamespaces.XSPF.namify("root"));
+
+		for (XSPFDocumentNamespaces namespace : XSPFDocumentNamespaces.values()) {
+			addNSattributes(root, namespace);
+		}
 		document.appendChild(root);
 		return root;
+	}
+
+	private void addNSattributes(Element root, XSPFDocumentNamespaces namespace) {
+		String attrName = namespace.namifyXMLNS();
+		String atrrValue = namespace.getUrl();
+
+		root.setAttribute(attrName, atrrValue);
 	}
 
 	private static void print(Document doc) {

@@ -27,11 +27,11 @@ import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyFilesNamer;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyLocalSource;
 import cz.martlin.jmop.core.sources.locals.funky.FunkyPlaylistLoader;
+import cz.martlin.jmop.core.sources.locals.testing.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
 import cz.martlin.jmop.core.sources.remote.empty.TestingDownloader;
 

@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.TestingTrackFileAccessor;
+import cz.martlin.jmop.core.sources.locals.testing.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
 public class TestingDownloader implements BaseDownloader {

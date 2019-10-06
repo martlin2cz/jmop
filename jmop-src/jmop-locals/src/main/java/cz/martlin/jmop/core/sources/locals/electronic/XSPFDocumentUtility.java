@@ -52,7 +52,7 @@ public class XSPFDocumentUtility {
 ///////////////////////////////////////////////////////////////////////////
 	public static void iterateOverChildren(Element element, XSPFDocumentNamespaces childElemNS, String childElemName,
 			Consumer<Element> doWithChildElem) {
-		NodeList children = element.getElementsByTagName/* NS */(/* childElemNS, */ childElemName);
+		NodeList children = element.getElementsByTagName(/* childElemNS, */ childElemName);
 
 		for (int i = 0; i < children.getLength(); i++) {
 			Node childNode = children.item(i);
@@ -62,23 +62,22 @@ public class XSPFDocumentUtility {
 		}
 	}
 
-	public static void iterateOverChildrenWithCheck(Element element, XSPFDocumentNamespaces childNS,
-			String childElemName, Consumer<Element> ifValidChild, Consumer<Element> ifInvalid) {
-		iterateOverChildren(element, childNS, childElemName, //
-				(e) -> {
-					// FIXME haack
-//					if (isElement(e, childNS, childElemName)) {
-					ifValidChild.accept(e);
-//					} else {
-//						ifInvalid.accept(e);
-//					}
-				});
-	}
+//	public static void iterateOverChildrenWithCheck(Element element, XSPFDocumentNamespaces childNS,
+//			String childElemName, Consumer<Element> ifValidChild, Consumer<Element> ifInvalid) {
+//		iterateOverChildren(element, childNS, childElemName, //
+//				(e) -> {
+//					// FIXME haack
+////					if (isElement(e, childNS, childElemName)) {
+//					ifValidChild.accept(e);
+////					} else {
+////						ifInvalid.accept(e);
+////					}
+//				});
+//	}
 
 	public static void iterateOverChildrenOrFail(Element element, XSPFDocumentNamespaces childNS, String childElemName,
 			Consumer<Element> todo) {
-		iterateOverChildrenWithCheck(element, childNS, childElemName, todo, //
-				(e) -> fail(element, childNS, childElemName));
+		iterateOverChildren(element, childNS, childElemName, todo);
 	}
 
 ///////////////////////////////////////////////////////////////////////////
@@ -86,7 +85,7 @@ public class XSPFDocumentUtility {
 	public static String getExtensionValue(Element element, String jmopExtensionElementName, String attrName) {
 		Element jmopExtension = getJMOPExtensionElementOrFail(element, jmopExtensionElementName);
 
-		return jmopExtension.getAttribute/* NS */(/* XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE, */ attrName);
+		return jmopExtension.getAttribute(attrName);
 	}
 
 	private static Element getJMOPExtensionElementOrFail(Element element, String jmopExtensionElementName) {
@@ -110,7 +109,7 @@ public class XSPFDocumentUtility {
 			String attrName, String attrValue) {
 		Element jmopExtension = getJMOPExtensionElementOrCreate(document, element, jmopExtensionElementName);
 
-		jmopExtension.setAttribute/* NS */(/* XSPFPlaylistFilesLoaderStorer.JMOP_NAMESPACE, */ attrName, attrValue);
+		jmopExtension.setAttribute(attrName, attrValue);
 	}
 
 	private static Element getJMOPExtensionElementOrCreate(Document document, Element element,
@@ -190,7 +189,9 @@ public class XSPFDocumentUtility {
 	private static boolean isElementWithAttr(Element element, XSPFDocumentNamespaces hasAttrNS, String hasAttrName,
 			String hasAttrValue) {
 
-		return hasAttrValue.equals(element.getAttribute/* NS */(/* hasAttrNS, */hasAttrName));
+		String nsHasAttrName = hasAttrNS.namify(hasAttrName);
+		String value = element.getAttribute(nsHasAttrName);
+		return hasAttrValue.equals(value);
 	}
 
 	protected static Element createElement(Document document, Element owner, XSPFDocumentNamespaces elemNS,
@@ -218,7 +219,7 @@ public class XSPFDocumentUtility {
 
 	private static Element fail(Element element, XSPFDocumentNamespaces elemNS, String elemName) {
 		throw new IllegalArgumentException(
-				"Missing '" + elemName + "' inside of '" + element.getNodeName() + "' (NS:" + elemNS + ")");
+				"Missing '" + elemName + "' inside of '" + element.getNodeName() + "' (NS: " + elemNS + ")");
 	}
 
 	///////////////////////////////////////////////////////////////////////////
