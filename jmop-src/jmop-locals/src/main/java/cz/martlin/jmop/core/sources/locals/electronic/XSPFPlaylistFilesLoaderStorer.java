@@ -7,6 +7,7 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Playlist;
@@ -23,10 +24,10 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 
 	private final String allTracksPlaylistName;
 
-	public XSPFPlaylistFilesLoaderStorer(String allTracksPlaylistName) {
+	public XSPFPlaylistFilesLoaderStorer(BaseConfiguration config) {
 		super(FILE_EXTENSION);
 
-		this.allTracksPlaylistName = allTracksPlaylistName;
+		this.allTracksPlaylistName = config.getAllTracksPlaylistName();
 	}
 
 	///////////////////////////////////////////////////////////////////////////

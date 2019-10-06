@@ -10,10 +10,16 @@ import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 
 public abstract class AbstractFilesLocator implements BaseFilesLocator {
 
+
+	@Override
+	public File getFileOfPlaylist(String bundleDirName, String playlistName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	@Override
-	public File getDirectoryOfBundle(Bundle bundle) {
+	public File getDirectoryOfBundle(String bundleName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -25,12 +31,6 @@ public abstract class AbstractFilesLocator implements BaseFilesLocator {
 	}
 	
 
-
-	@Override
-	public File getFileOfPlaylist(Bundle bundle, Playlist playlist) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public abstract File getTempRootDirectory();
 	public abstract File getSaveRootDirectory();

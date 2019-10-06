@@ -12,7 +12,7 @@ public interface BasePlaylistFilesLoaderStorer {
 
 	/////////////////////////////////////////////////////////////////
 
-	public void saveBundle(Bundle bundle, File file) throws JMOPSourceException;
+	public Playlist loadPlaylist(Bundle bundle, File file) throws JMOPSourceException;
 
 	public void savePlaylist(Bundle bundle, Playlist playlist, File file) throws JMOPSourceException;
 }
