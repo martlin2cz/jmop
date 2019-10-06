@@ -52,7 +52,7 @@ public class TestingDirectoryAccessor {
 		LOG.info("Deleting testing directory " + dir.toAbsolutePath().toString() + " ... ");
 
 		try {
-			Files.delete(dir);
+			deleteRecursivelly(dir.toFile());
 		} catch (IOException e) {
 			LOG.error("Cannot create testing directory " + name + "!");
 			throw e;
@@ -61,6 +61,7 @@ public class TestingDirectoryAccessor {
 		LOG.info("Deleted testing directory " + name + "!");
 		return null;
 	}
+///////////////////////////////////////////////////////////////////////////
 
 	public void checkAndCreate() throws IOException {
 		if (!exists()) {
@@ -89,7 +90,15 @@ public class TestingDirectoryAccessor {
 	private Path createDirectory() throws IOException {
 		String prefix = "jmop-" + name + "-";
 		return Files.createTempDirectory(prefix);
+	}
 
+	private void deleteRecursivelly(File resource) throws IOException {
+		if (resource.isDirectory()) {
+			for (File child : resource.listFiles()) {
+				deleteRecursivelly(child);
+			}
+		}
+		Files.delete(resource.toPath());
 	}
 
 }
