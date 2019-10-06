@@ -17,7 +17,7 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
 
 public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleFilesLoaderStorer {
-	private static final String XSPF_VERSION = "1";  //$NON-NLS-1$
+	private static final String XSPF_VERSION = "1"; //$NON-NLS-1$
 	public static final String FILE_EXTENSION = "xspf"; //$NON-NLS-1$
 	protected static final String APPLICATION_URL = "https://github.com/martlin2cz/jmop"; //$NON-NLS-1$
 
@@ -25,7 +25,7 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 
 	public XSPFPlaylistFilesLoaderStorer(String allTracksPlaylistName) {
 		super(FILE_EXTENSION);
-		
+
 		this.allTracksPlaylistName = allTracksPlaylistName;
 	}
 
@@ -57,7 +57,7 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 
 		pushBundleDataIntoDocument(document, root, bundle);
 
-		Playlist allTracksPlaylist = bundle.getPlaylist(allTracksPlaylistName); //FIXME hack?
+		Playlist allTracksPlaylist = bundle.getPlaylist(allTracksPlaylistName); // FIXME hack?
 		pushPlaylistDataIntoDocument(document, root, allTracksPlaylist);
 
 	}
@@ -85,7 +85,7 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 		String name = extractName(root);
 		int currentTrack = extractPlaylistCurrentTrack(root);
 		boolean locked = extractPlaylistLocked(root);
-		Metadata metadata = extractMetadata(root, "bundle");
+		Metadata metadata = extractMetadata(root, "playlist");
 		Tracklist tracks = extractTracks(bundle, root);
 
 		return bundle.createPlaylist(name, currentTrack, locked, metadata, tracks);
@@ -123,13 +123,13 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 	 * @param root
 	 */
 	private void checkRoot(Element root) {
-		String nsName = XSPFDocumentNamespaces.XSPF.namify("playlist"); //$NON-NLS-1$ 
-		if (!nsName.equals(root.getTagName())) { //$NON-NLS-1$
+		String nsName = XSPFDocumentNamespaces.XSPF.namify("playlist"); //$NON-NLS-1$
+		if (!nsName.equals(root.getTagName())) { // $NON-NLS-1$
 			throw new IllegalArgumentException("Not a playlist file"); //$NON-NLS-1$
 		}
 
-		String nsVersion = XSPFDocumentNamespaces.XSPF.namify("version"); //$NON-NLS-1$ 
-		if (!XSPF_VERSION.equals(root.getAttribute(nsVersion))) { //$NON-NLS-1$ //$NON-NLS-2$
+		String nsVersion = XSPFDocumentNamespaces.XSPF.namify("version"); //$NON-NLS-1$
+		if (!XSPF_VERSION.equals(root.getAttribute(nsVersion))) { // $NON-NLS-1$ //$NON-NLS-2$
 			throw new IllegalArgumentException("Not version " + XSPF_VERSION); //$NON-NLS-1$
 		}
 	}
@@ -141,18 +141,14 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 	 * @return
 	 */
 	private Element createRootElement(Document document) {
-//		XSPFDocumentUtility.createElementWithAttr(document, document, //
-//				XSPFDocumentNamespaces.XSPF, "playlist", //
-//				XSPFDocumentNamespaces.XSPF, "version", "1");
-		
-		String nsName = XSPFDocumentNamespaces.XSPF.namify("playlist"); //$NON-NLS-1$ 
-		Element root = document.createElement(nsName); 
+		String nsName = XSPFDocumentNamespaces.XSPF.namify("playlist"); //$NON-NLS-1$
+		Element root = document.createElement(nsName);
 
-		for (XSPFDocumentNamespaces namespace: XSPFDocumentNamespaces.values()) {
+		for (XSPFDocumentNamespaces namespace : XSPFDocumentNamespaces.values()) {
 			addNSattributes(root, namespace);
 		}
 
-		String nsVersion = XSPFDocumentNamespaces.XSPF.namify("version"); //$NON-NLS-1$ 
+		String nsVersion = XSPFDocumentNamespaces.XSPF.namify("version"); //$NON-NLS-1$
 		root.setAttribute(nsVersion, XSPF_VERSION);
 
 		document.appendChild(root);
@@ -162,7 +158,7 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 	private void addNSattributes(Element root, XSPFDocumentNamespaces namespace) {
 		String attrName = namespace.namifyXMLNS();
 		String atrrValue = namespace.getUrl();
-		
+
 		root.setAttribute(attrName, atrrValue);
 	}
 
@@ -170,7 +166,7 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 	private void pushName(Document document, Element root, String name) {
 		XSPFDocumentUtility.createElementWithText(document, root, XSPFDocumentNamespaces.XSPF, "title", name);
 	}
-	
+
 	private void pushBundleName(Document document, Element root, String name) {
 		XSPFDocumentUtility.setExtensionValue(document, root, "bundle", "name", name);
 	}
@@ -202,14 +198,16 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 	}
 
 	private void pushTracks(Document document, Element root, Tracklist tracks) {
-		Element tracklist = XSPFDocumentUtility.getChildOrCreate(document, root, XSPFDocumentNamespaces.XSPF, "tracklist");
+		Element tracklist = XSPFDocumentUtility.getChildOrCreate(document, root, XSPFDocumentNamespaces.XSPF,
+				"tracklist");
 
 		tracks.getTracks().forEach( //
 				(t) -> pushTrack(document, tracklist, t));
 	}
 
-	private void pushTrack(Document document, Element tracklist, Track track) {
-		Element trackElem = XSPFDocumentUtility.getChildOrCreate(document, tracklist, XSPFDocumentNamespaces.XSPF, "track");
+	protected Element pushTrack(Document document, Element tracklist, Track track) {
+		Element trackElem = XSPFDocumentUtility.createElement(document, tracklist, XSPFDocumentNamespaces.XSPF,
+				"track");
 
 		String name = track.getTitle();
 		XSPFDocumentUtility.createElementWithText(document, trackElem, XSPFDocumentNamespaces.XSPF, "title", name);
@@ -217,30 +215,31 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 		String id = track.getIdentifier();
 		XSPFDocumentUtility.createElementWithText(document, trackElem, XSPFDocumentNamespaces.XSPF, "identifier", id);
 
-		//TODO identifier into extension?
-		//TODO full url -> identifier (use remote querier)?
-		
+		// TODO identifier into extension?
+		// TODO full url -> identifier (use remote querier)?
+
 		String annot = track.getDescription();
-		XSPFDocumentUtility.createElementWithText(document, trackElem, XSPFDocumentNamespaces.XSPF, "annotation", annot);
+		XSPFDocumentUtility.createElementWithText(document, trackElem, XSPFDocumentNamespaces.XSPF, "annotation",
+				annot);
 
 		String durationStr = DurationUtilities.toMilis(track.getDuration());
 		String durationHumanStr = DurationUtilities.toHumanString(track.getDuration());
-		XSPFDocumentUtility.createElementWithText(document, trackElem, XSPFDocumentNamespaces.XSPF, "duration", durationStr);
+		XSPFDocumentUtility.createElementWithText(document, trackElem, XSPFDocumentNamespaces.XSPF, "duration",
+				durationStr);
 		XSPFDocumentUtility.createCommentWithText(document, trackElem, durationHumanStr);
 
 		Metadata metadata = track.getMetadata();
 		pushMetadata(document, trackElem, "track", metadata);
-		
-		//TODO file
-		//TODO thumbnail?
+
+		return trackElem;
 	}
-	
+
 ///////////////////////////////////////////////////////////////////////////
 
 	private String extractName(Element root) {
 		return XSPFDocumentUtility.getElementText(root, XSPFDocumentNamespaces.XSPF, "title");
 	}
-	
+
 	private String extractBundleName(Element root) {
 		return XSPFDocumentUtility.getExtensionValue(root, "bundle", "name");
 	}
@@ -290,7 +289,7 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 		return new Tracklist(tracks);
 	}
 
-	private Track extractTrack(Bundle bundle, Element trackElem) {
+	protected Track extractTrack(Bundle bundle, Element trackElem) {
 		String title = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "title");
 		String identifier = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "identifier");
 		String description = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "annotation");
