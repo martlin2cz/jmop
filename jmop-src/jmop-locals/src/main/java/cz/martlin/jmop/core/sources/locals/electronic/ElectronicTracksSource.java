@@ -4,6 +4,7 @@ import java.io.File;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -27,14 +28,14 @@ public class ElectronicTracksSource implements BaseTracksLocalSource {
 	}
 
 	@Override
-	public boolean exists(Track track, TrackFileLocation location, TrackFileFormat format) {
+	public boolean exists(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
 		File file = file(track, location, format);
 
 		return filesystem.existsFile(file);
 	}
 
 	@Override
-	public void deleteIfExists(Track track, TrackFileLocation location, TrackFileFormat format) {
+	public void deleteIfExists(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
 		File file = file(track, location, format);
 
 		if (filesystem.existsFile(file)) {
@@ -43,7 +44,7 @@ public class ElectronicTracksSource implements BaseTracksLocalSource {
 	}
 
 	@Override
-	public void move(Track oldTrack, Track newTrack, TrackFileLocation location, TrackFileFormat format) {
+	public void move(Track oldTrack, Track newTrack, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
 		File oldFile = file(oldTrack, location, format);
 		File newFile = file(newTrack, location, format);
 

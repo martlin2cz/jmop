@@ -5,6 +5,7 @@ import java.io.File;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.FormatsLocationsUtility;
@@ -16,8 +17,8 @@ public class XSPFpflsWithFiles extends XSPFPlaylistFilesLoaderStorer {
 	private final BaseTracksLocalSource tracks;
 	private final FormatsLocationsUtility flu;
 
-	public XSPFpflsWithFiles(BaseTracksLocalSource tracks, FormatsLocationsUtility flu, String allTracksPlaylistName) {
-		super(allTracksPlaylistName);
+	public XSPFpflsWithFiles(BaseConfiguration config, BaseTracksLocalSource tracks, FormatsLocationsUtility flu) {
+		super(config);
 
 		this.tracks = tracks;
 		this.flu = flu;

@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import cz.martlin.jmop.core.config.BaseConfiguration;
+import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.TestingDataCreator;
@@ -29,7 +31,8 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		File file = File.createTempFile("bundle-file", ".xspf");
 		System.out.println("Saving bundle into " + file.getAbsolutePath());
 
-		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer("all tracks");
+		BaseConfiguration config = new ConstantConfiguration();
+		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer(config);
 
 		xpfls.saveBundle(bundle, file);
 		//TODO try to open created file in different player
@@ -52,7 +55,8 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		File file = File.createTempFile("playlist-file", ".xspf");
 		System.out.println("Saving playlist into " + file.getAbsolutePath());
 
-		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer("all tracks");
+		BaseConfiguration config = new ConstantConfiguration();
+		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer(config);
 
 		xpfls.savePlaylist(bundle, playlist, file);
 		//TODO try to open created file in different player
@@ -79,7 +83,9 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 
 		BaseTracksLocalSource tracks = new TestingTracksSource();
 		FormatsLocationsUtility flu = new TestingFormatsLocationsUtility(TrackFileFormat.WAV, TrackFileLocation.CACHE);
-		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFpflsWithFiles(tracks, flu, "all tracks");
+
+		BaseConfiguration config = new ConstantConfiguration();
+		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFpflsWithFiles(config, tracks, flu);
 
 		xpfls.saveBundle(bundle, file);
 	}
