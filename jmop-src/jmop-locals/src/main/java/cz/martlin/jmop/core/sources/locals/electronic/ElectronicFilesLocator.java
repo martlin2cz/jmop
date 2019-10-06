@@ -2,20 +2,37 @@ package cz.martlin.jmop.core.sources.locals.electronic;
 
 import java.io.File;
 
+import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
+import cz.martlin.jmop.core.sources.locals.BasePlaylistFilesLoaderStorer;
 
 public class ElectronicFilesLocator extends AbstractFilesLocator {
 
 	private final File root;
-	private final BaseFilesNamer namer;
+	/* private final BaseFilesNamer namer; */
 
-	public ElectronicFilesLocator(File root, BaseFilesNamer namer) {
-		super();
+	public ElectronicFilesLocator(File root/* , BaseFilesNamer namer */, BasePlaylistFilesLoaderStorer pfls) {
+		super(pfls, root);
 		this.root = root;
-		this.namer = namer;
+		/* this.namer = namer; */
 	}
 
 	/////////////////////////////////////////////////////////////////
+
+	@Override
+	protected String getBasenameOfPlaylistFile(String playlistName) {
+		return playlistName; // FIXME properly
+	}
+
+	@Override
+	protected String getBundleDirName(String bundleName) {
+		return bundleName;// FIXME properly
+	}
+
+	@Override
+	protected String getTrackFileBasename(Track track) {
+		return "track-" + track.getIdentifier();// FIXME properly
+	}
 
 	@Override
 	public File getRootDirectory() {
@@ -24,9 +41,11 @@ public class ElectronicFilesLocator extends AbstractFilesLocator {
 
 	@Override
 	public File getTempRootDirectory() {
-		String tempDirName = namer.nameOfTempDir();
-		// TODO temp dir
-		return new File(root, "temp-" + tempDirName);
+		throw new UnsupportedOperationException();
+		/*
+		 * String tempDirName = namer.nameOfTempDir(); // TODO temp dir return new
+		 * File(root, "temp-" + tempDirName);
+		 */
 	}
 
 	@Override
@@ -36,8 +55,11 @@ public class ElectronicFilesLocator extends AbstractFilesLocator {
 
 	@Override
 	public File getCacheRootDirectory() {
-		String cacheDirName = namer.nameOfCacheDir();
-		return new File(root, cacheDirName);
+		throw new UnsupportedOperationException();
+		/*
+		 * String cacheDirName = namer.nameOfCacheDir(); return new File(root,
+		 * cacheDirName);
+		 */
 	}
 
 }

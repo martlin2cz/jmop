@@ -38,6 +38,7 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 	public void deleteDirectory(File directory) throws JMOPSourceException {
 		try {
 			Path path = directory.toPath();
+			//TODO recursivelly
 			Files.delete(path);
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannot delete directory", e);

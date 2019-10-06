@@ -1,45 +1,47 @@
 package cz.martlin.jmop.core.sources.locals.electronic;
 
+import java.io.File;
+
 import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.sources.local.AbstractLocalSource;
 import cz.martlin.jmop.core.sources.local.BaseBundlesLocalSource;
 import cz.martlin.jmop.core.sources.local.BaseFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
+import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.BasePlaylistsLocalSource;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
-import cz.martlin.jmop.core.sources.locals.BaseBundleFilesLoaderStorer;
-import cz.martlin.jmop.core.sources.locals.BasePlaylistFilesLoaderStorer;
 
-public class ElectronicLocalSource extends AbstractLocalSource {
+public class ElectronicLocalSource implements BaseLocalSource {
 
-	private final BaseConfiguration config;
-	private final BaseFilesLocator locator;
-	private final BaseFileSystemAccessor filesystem;
-	private final BasePlaylistFilesLoaderStorer pfls;
-	private final BaseBundleFilesLoaderStorer bfls;
+	private final BaseBundlesLocalSource bundles;
+	private final BaseTracksLocalSource tracks;
+	private final BasePlaylistsLocalSource playlists;
 
-	public ElectronicLocalSource(BaseConfiguration config, BaseFilesLocator locator, BaseFileSystemAccessor filesystem,
-			BasePlaylistFilesLoaderStorer pfls, BaseBundleFilesLoaderStorer bfls) {
+	public ElectronicLocalSource(BaseConfiguration config, File root) {
 		super();
-		this.config = config;
-		this.locator = locator;
-		this.filesystem = filesystem;
-		this.pfls = pfls;
-		this.bfls = bfls;
+
+//		BaseFilesNamer namer = new ElectronicFilesNamer();
+		BaseFileSystemAccessor filesystem = new ElectronicFileSystemAccessor();
+		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer(config);
+		BaseFilesLocator locator = new ElectronicFilesLocator(root, xpfls);
+		
+		this.bundles = new ElectronicBundlesSource(config, locator, filesystem, xpfls);
+		this.tracks = new ElectronicTracksSource(locator, filesystem);
+		this.playlists = new ElectronicPlaylistsSource(locator, filesystem, xpfls);
 	}
 
 	@Override
-	protected BaseTracksLocalSource createTracksSource() {
-		return new ElectronicTracksSource(locator, filesystem);
+	public BaseBundlesLocalSource bundles() {
+		return bundles;
 	}
 
 	@Override
-	protected BaseBundlesLocalSource createBundlesSource() {
-		return new ElectronicBundlesSource(config, locator, filesystem, bfls);
+	public BaseTracksLocalSource tracks() {
+		return tracks;
 	}
 
 	@Override
-	protected BasePlaylistsLocalSource createPlaylistsSource() {
-		return new ElectronicPlaylistsSource(locator, filesystem, pfls);
+	public BasePlaylistsLocalSource playlists() {
+		return playlists;
 	}
 
 }
