@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.sources.locals.funky;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
+import cz.martlin.jmop.core.sources.local.XXX_BaseFilesNamer;
 
 /**
  * The simple, but abstract implementation of files namer. Specifies abstract
@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
  * @author martin
  *
  */
-public abstract class SimpleFilesNamer implements BaseFilesNamer {
+public abstract class SimpleFilesNamer implements XXX_BaseFilesNamer {
 
 	protected static final String DOT = "."; //$NON-NLS-1$
 

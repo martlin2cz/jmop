@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
+import cz.martlin.jmop.core.sources.local.XXX_BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 
 public class TestLocalSource {
@@ -20,7 +20,7 @@ public class TestLocalSource {
 		// create local
 		final File rootDir = File.createTempFile("xxx", "yyy").getParentFile(); // hehe //$NON-NLS-1$ //$NON-NLS-2$
 		ConstantConfiguration config = new ConstantConfiguration();
-		BaseFilesNamer namer = new FunkyFilesNamer();
+		XXX_BaseFilesNamer namer = new FunkyFilesNamer();
 		AbstractPlaylistLoader loader = new DefaultPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new FunkyFileSystemAccessor(rootDir, namer, loader);
 		XXX_BaseLocalSource local = new FunkyLocalSource(config, fileSystem);

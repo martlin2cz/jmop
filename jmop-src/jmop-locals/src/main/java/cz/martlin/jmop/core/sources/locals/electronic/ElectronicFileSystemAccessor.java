@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -38,12 +39,13 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 	public void deleteDirectory(File directory) throws JMOPSourceException {
 		try {
 			Path path = directory.toPath();
-			//TODO recursivelly
-			Files.delete(path);
+			
+			deleteRecursivelly(path);
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannot delete directory", e);
 		}
 	}
+
 
 	@Override
 	public void renameDirectory(File oldDirectory, File newDirectory) throws JMOPSourceException {
@@ -111,6 +113,20 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannot list files", e);
 		}
+	}
+	/////////////////////////////////////////////////////////////////
+
+
+	private void deleteRecursivelly(Path path) throws IOException {
+		if (Files.isDirectory(path)) {
+			List<Path> children = Files.list(path).collect(Collectors.toList());
+			
+			for (Path child: children) {
+				deleteRecursivelly(child);
+			}
+		}
+		
+		Files.delete(path);
 	}
 
 }

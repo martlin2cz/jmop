@@ -1,86 +1,51 @@
 package cz.martlin.jmop.core.sources.locals.electronic;
 
-import java.io.File;
-
-import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 
 public class ElectronicFilesNamer implements BaseFilesNamer {
+	private static final String ILLEGAL_CHAR_REGEX = "[^A-Za-z0-9\\-\\.\\_]";
 
+	private static final String SEPARATOR = "_"; //$NON-NLS-1$
+
+	private static final String TEMP_DIR_NAME = "jmop"; //$NON-NLS-1$
+	private static final String CACHE_DIR_NAME = ".cache"; //$NON-NLS-1$
+
+	public ElectronicFilesNamer() {
+		super();
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	
 	@Override
 	public String directoryNameOfBundle(String bundleName) {
-		// TODO Auto-generated method stub
-		return null;
+		return clean(bundleName);
 	}
 
 	@Override
-	public String fileNameOfPlaylist(String playlistName, String playlistFileExtension) {
-		// TODO Auto-generated method stub
-		return null;
+	public String fileBasenameOfPlaylist(String playlistName) {
+		return clean(playlistName);
 	}
 
 	@Override
-	public String fileNameOfTrack(Track track, TrackFileFormat format) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) {
-		// TODO Auto-generated method stub
-		return null;
+	public String fileBasenameOfTrack(Track track) {
+		String name = track.getTitle() + SEPARATOR + track.getIdentifier();
+		return clean(name);
 	}
 
 	@Override
 	public String nameOfTempDir() {
-		// TODO Auto-generated method stub
-		return null;
+		return TEMP_DIR_NAME;
 	}
 
 	@Override
 	public String nameOfCacheDir() {
-		// TODO Auto-generated method stub
-		return null;
+		return CACHE_DIR_NAME;
 	}
+	///////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public File bundleDirOfBundleDirName(File root, String bundleDirName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	protected static String clean(String name) {
+		return name.replaceAll(ILLEGAL_CHAR_REGEX, SEPARATOR);
 
-	@Override
-	public File bundleDirOfBundleName(File root, String bundleName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public File cacheBundleDir(File root, String bundleName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public File tempBundleDir(String bundleName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public File playlistFileOfPlaylist(File root, String bundleDirName, String playlistName,
-			String playlistFileExtension) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public File playlistFileOfFile(File root, String bundleDirName, String playlistFileName) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
