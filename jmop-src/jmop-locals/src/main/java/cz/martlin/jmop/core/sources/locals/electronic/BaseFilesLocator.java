@@ -11,7 +11,7 @@ public interface BaseFilesLocator {
 
 	public File getRootDirectory();
 	
-	public File getDirectoryOfBundle(String bundleName);
+	public File getDirectoryOfBundle(String bundleName, TrackFileLocation location);
 	
 	public File getFileOfPlaylist(String bundleDirectoryName, String playlistName);
 	

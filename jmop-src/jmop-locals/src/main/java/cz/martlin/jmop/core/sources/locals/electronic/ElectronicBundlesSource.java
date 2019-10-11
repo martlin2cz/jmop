@@ -9,11 +9,16 @@ import java.util.stream.Collectors;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.ops.ConsumerWithException;
 import cz.martlin.jmop.core.sources.local.BaseBundlesLocalSource;
 import cz.martlin.jmop.core.sources.local.BaseFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.BaseBundleFilesLoaderStorer;
 
 public class ElectronicBundlesSource implements BaseBundlesLocalSource {
+
+	private static final TrackFileLocation ALL_TRACKS_PLAYLIST_FILE_LOCATION = //
+			ElectronicPlaylistsSource.LOCATION_OF_PLAYLIST_FILES;
 
 	private final BaseFilesLocator locator;
 	private final BaseFileSystemAccessor filesystem;
@@ -46,24 +51,19 @@ public class ElectronicBundlesSource implements BaseBundlesLocalSource {
 
 	@Override
 	public void createBundle(Bundle bundle) throws JMOPSourceException {
-		File directory = directoryOfBundle(bundle);
-		filesystem.createDirectory(directory);
+		createDirectoriesOfBundle(bundle);
 
 		saveBundle(bundle);
 	}
 
 	@Override
 	public void deleteBundle(Bundle bundle) throws JMOPSourceException {
-		File directory = directoryOfBundle(bundle);
-		filesystem.deleteDirectory(directory);
+		deleteDirectoriesOfBundle(bundle);
 	}
 
 	@Override
 	public void renameBundle(Bundle oldBundle, Bundle newBundle) throws JMOPSourceException {
-		File oldDirectory = directoryOfBundle(oldBundle);
-		File newDirectory = directoryOfBundle(newBundle);
-
-		filesystem.renameDirectory(oldDirectory, newDirectory);
+		renameDirectoriesOfBundle(oldBundle, newBundle);
 		saveBundle(newBundle);
 		// TODO save all the playlists inside TODO will be needed?
 	}
@@ -74,9 +74,57 @@ public class ElectronicBundlesSource implements BaseBundlesLocalSource {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	private File directoryOfBundle(Bundle bundle) {
+
+	private void createDirectoriesOfBundle(Bundle bundle) throws JMOPSourceException {
+		doWithAllLocations((location) -> {
+			File directory = directoryOfBundle(bundle, location);
+
+			boolean exists = filesystem.existsDirectory(directory);
+			if (!exists) {
+				filesystem.createDirectory(directory);
+			}
+		});
+	}
+
+	private void deleteDirectoriesOfBundle(Bundle bundle) throws JMOPSourceException {
+		doWithAllLocations((location) -> {
+			File directory = directoryOfBundle(bundle, location);
+
+			boolean exists = filesystem.existsDirectory(directory);
+			if (exists) {
+				filesystem.deleteDirectory(directory);
+			}
+		});
+	}
+
+	private void renameDirectoriesOfBundle(Bundle oldBundle, Bundle newBundle) throws JMOPSourceException {
+		doWithAllLocations((location) -> {
+			File oldDirectory = directoryOfBundle(oldBundle, location);
+			File newDirectory = directoryOfBundle(newBundle, location);
+
+			boolean existsOld = filesystem.existsDirectory(oldDirectory);
+			boolean existsNew = filesystem.existsDirectory(newDirectory);
+			if (existsOld && !existsNew) {
+				filesystem.renameDirectory(oldDirectory, newDirectory);
+			}
+		});
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+
+	private void doWithAllLocations(ConsumerWithException<TrackFileLocation> run) throws JMOPSourceException {
+		for (TrackFileLocation location : TrackFileLocation.values()) {
+			try {
+				run.consume(location);
+			} catch (Exception e) {
+				throw new JMOPSourceException(e);
+			}
+		}
+	}
+
+	private File directoryOfBundle(Bundle bundle, TrackFileLocation location) {
 		String bundleName = bundle.getName();
-		File directory = locator.getDirectoryOfBundle(bundleName);
+		File directory = locator.getDirectoryOfBundle(bundleName, location);
 		return directory;
 	}
 
@@ -121,8 +169,11 @@ public class ElectronicBundlesSource implements BaseBundlesLocalSource {
 	}
 
 	private void saveBundle(Bundle bundle) throws JMOPSourceException {
-		File bundleDir = directoryOfBundle(bundle);
+		TrackFileLocation location = ALL_TRACKS_PLAYLIST_FILE_LOCATION;
+
+		File bundleDir = directoryOfBundle(bundle, location);
 		File file = allTracksPlaylistFile(bundleDir);
+
 		bfls.saveBundle(bundle, file);
 	}
 

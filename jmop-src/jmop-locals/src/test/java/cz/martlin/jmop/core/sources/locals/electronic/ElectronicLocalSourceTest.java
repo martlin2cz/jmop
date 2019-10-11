@@ -108,7 +108,7 @@ public class ElectronicLocalSourceTest {
 	}
 
 	@Test
-	public void testFiles() throws JMOPSourceException {
+	public void testTracks() throws JMOPSourceException {
 		ElectronicLocalSource local = createSource();
 		BaseTracksLocalSource tracks = local.tracks();
 		

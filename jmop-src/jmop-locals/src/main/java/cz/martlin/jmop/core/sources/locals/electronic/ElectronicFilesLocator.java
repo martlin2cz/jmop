@@ -42,18 +42,16 @@ public class ElectronicFilesLocator implements BaseFilesLocator {
 //	protected abstract String getBasenameOfPlaylistFile(String playlistName);
 
 	@Override
-	public File getDirectoryOfBundle(String bundleName) {
-		String bundleDirName = namer.directoryNameOfBundle(bundleName);
-		return new File(root, bundleDirName);
+	public File getDirectoryOfBundle(String bundleName, TrackFileLocation location) {
+		return obtainOwningDirectory(bundleName, location);
 	}
 
 //	protected abstract String getBundleDirName(String bundleName);
 
 	@Override
 	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) {
-		// TODO use location
-
-		File bundleDir = obtainOwningDirectory(bundle, location);
+		String bundleName = bundle.getName();
+		File bundleDir = obtainOwningDirectory(bundleName , location);
 
 		String trackFileBasename = namer.fileBasenameOfTrack(track);
 		String trackFileName = trackFileBasename + "." + format.getExtension();
@@ -62,12 +60,12 @@ public class ElectronicFilesLocator implements BaseFilesLocator {
 	}
 ///////////////////////////////////////////////////////////////////////////
 
-	private File obtainOwningDirectory(Bundle bundle, TrackFileLocation location) {
+	private File obtainOwningDirectory(String bundleName, TrackFileLocation location) {
 		switch (location) {
 		case CACHE:
 			return getCacheDirectory();
 		case SAVE:
-			return getSaveDirectory(bundle);
+			return getSaveDirectory(bundleName);
 		case TEMP:
 			return getTempDirectory();
 		default:
@@ -86,8 +84,7 @@ public class ElectronicFilesLocator implements BaseFilesLocator {
 		return new File(root, dirName);
 	}
 
-	private File getSaveDirectory(Bundle bundle) {
-		String bundleName = bundle.getName();
+	private File getSaveDirectory(String bundleName) {
 		String dirName = namer.directoryNameOfBundle(bundleName);
 
 		return new File(root, dirName);
