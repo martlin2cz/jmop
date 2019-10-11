@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals.funky;
+package cz.martlin.jmop.core.sources.local.util.xml;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,46 +13,31 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.PlaylistFileData;
-import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
-
-/**
- * The default playlist loader. Works with playlists in xspf format.
- * 
- * @author martin
- *
- */
-@Deprecated
-public class FunkyPlaylistLoader implements AbstractPlaylistLoader {
-
-	private final static XSPFParserComposer PARSER_COMPOSER = new XSPFParserComposer();
-
-	@Override
-	public PlaylistFileData load(Bundle bundle, File file, boolean onlyMetadata) throws IOException {
+public class XMLFileLoaderStorer {
+	public Document loadDocument(File file) throws IOException {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.parse(file);
-
-			PlaylistFileData data = new PlaylistFileData();
-			PARSER_COMPOSER.parse(bundle, document, data, onlyMetadata);
-
-			return data;
+			return document;
 		} catch (Exception e) {
-			throw new IOException("Cannot load playlist file", e); //$NON-NLS-1$
+			throw new IOException("Cannot load file", e);
 		}
 	}
 
-	@Override
-	public void save(PlaylistFileData data, File file) throws IOException {
+	public Document createEmptyDocument() throws IllegalStateException {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.newDocument();
+			return document;
+		} catch (Exception e) {
+			throw new IllegalStateException("Cannot create document", e);
+		}
+	}
 
-			PARSER_COMPOSER.compose(data, document);
-
+	public void saveDocument(Document document, File file) throws IOException {
+		try {
 			TransformerFactory tFactory = TransformerFactory.newInstance();
 			Transformer transformer = tFactory.newTransformer();
 
@@ -62,13 +47,7 @@ public class FunkyPlaylistLoader implements AbstractPlaylistLoader {
 			StreamResult result = new StreamResult(file);
 			transformer.transform(source, result);
 		} catch (Exception e) {
-			throw new IOException("Cannot save playlist file", e); //$NON-NLS-1$
+			throw new IOException("Cannot save file", e);
 		}
 	}
-
-	@Override
-	public String getFileExtension() {
-		return XSPFParserComposer.FILE_EXTENSION;
-	}
-
 }

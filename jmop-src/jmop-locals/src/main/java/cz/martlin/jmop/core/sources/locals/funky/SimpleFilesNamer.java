@@ -14,6 +14,7 @@ import cz.martlin.jmop.core.sources.local.XXX_BaseFilesNamer;
  * @author martin
  *
  */
+@Deprecated
 public abstract class SimpleFilesNamer implements XXX_BaseFilesNamer {
 
 	protected static final String DOT = "."; //$NON-NLS-1$
