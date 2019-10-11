@@ -12,7 +12,8 @@ import cz.martlin.jmop.core.data.Track;
  * @author martin
  *
  */
-public interface BaseFilesNamer {
+@Deprecated
+public interface XXX_BaseFilesNamer {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

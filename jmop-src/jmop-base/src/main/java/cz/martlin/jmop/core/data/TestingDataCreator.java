@@ -30,6 +30,9 @@ public class TestingDataCreator {
 	}
 
 	public static Playlist createTestingPlaylist(Bundle bundle) {
+		return createTestingPlaylist(bundle, "queue");
+	}
+	public static Playlist createTestingPlaylist(Bundle bundle, String name) {
 		Track foo = bundle.createTrack(FOO_TRACK_ID, "foo", "Lorem Ipsum", //
 				DurationUtilities.createDuration(0, 3, 15), //
 				metadata(3, 3, 3, 29, 9)); //
@@ -38,7 +41,7 @@ public class TestingDataCreator {
 				DurationUtilities.createDuration(0, 4, 59), //
 				metadata(2, 11, 21, 11, 23)); //
 
-		Playlist playlist = bundle.createPlaylist("queue", 1, true, //
+		Playlist playlist = bundle.createPlaylist(name, 1, true, //
 				metadata(3, 3, 3, 3, 3), //
 				new Tracklist(Arrays.asList(foo, bar)));
 

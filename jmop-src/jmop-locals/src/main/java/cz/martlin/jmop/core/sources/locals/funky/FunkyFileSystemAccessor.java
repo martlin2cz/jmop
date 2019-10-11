@@ -15,14 +15,14 @@ import cz.martlin.jmop.core.data.Tracklist;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
+import cz.martlin.jmop.core.sources.local.XXX_BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 
 /**
  * The default implementation of {@link AbstractFileSystemAccessor}. Simply
  * works with bundle dirs and playlist and track files as expected. The paths
- * and names of such files and dirs are specified by {@link BaseFilesNamer}, the
+ * and names of such files and dirs are specified by {@link XXX_BaseFilesNamer}, the
  * way how to load contents of playlist files are then implemented by
  * {@link AbstractPlaylistLoader} instance.
  * 
@@ -33,10 +33,10 @@ import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 public class FunkyFileSystemAccessor implements AbstractFileSystemAccessor {
 
 	private final File root;
-	private final BaseFilesNamer namer;
+	private final XXX_BaseFilesNamer namer;
 	private final AbstractPlaylistLoader loader;
 
-	public FunkyFileSystemAccessor(File root, BaseFilesNamer namer, AbstractPlaylistLoader loader)
+	public FunkyFileSystemAccessor(File root, XXX_BaseFilesNamer namer, AbstractPlaylistLoader loader)
 			throws IOException {
 		super();
 		this.root = root;

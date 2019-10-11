@@ -5,7 +5,6 @@ import java.io.File;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.sources.local.BaseBundlesLocalSource;
 import cz.martlin.jmop.core.sources.local.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.BasePlaylistsLocalSource;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
@@ -19,11 +18,12 @@ public class ElectronicLocalSource implements BaseLocalSource {
 	public ElectronicLocalSource(BaseConfiguration config, File root) {
 		super();
 
-//		BaseFilesNamer namer = new ElectronicFilesNamer();
 		BaseFileSystemAccessor filesystem = new ElectronicFileSystemAccessor();
+
 		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer(config);
-		BaseFilesLocator locator = new ElectronicFilesLocator(root, xpfls);
-		
+		BaseFilesNamer namer = new ElectronicFilesNamer();
+		BaseFilesLocator locator = new ElectronicFilesLocator(xpfls, namer, root);
+
 		this.bundles = new ElectronicBundlesSource(config, locator, filesystem, xpfls);
 		this.tracks = new ElectronicTracksSource(locator, filesystem);
 		this.playlists = new ElectronicPlaylistsSource(locator, filesystem, xpfls);

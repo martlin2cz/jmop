@@ -23,7 +23,7 @@ import cz.martlin.jmop.core.operation.PrintingListener;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
-import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
+import cz.martlin.jmop.core.sources.local.XXX_BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
@@ -79,7 +79,7 @@ public class FFMPEGConverterTest {
 	}
 
 	private XXX_BaseLocalSource createLocal(BaseConfiguration config) throws IOException {
-		BaseFilesNamer namer = new FunkyFilesNamer();
+		XXX_BaseFilesNamer namer = new FunkyFilesNamer();
 		File root = Files.createTempDir();
 		AbstractPlaylistLoader loader = new FunkyPlaylistLoader();
 		AbstractFileSystemAccessor fileSystem = new FunkyFileSystemAccessor(root, namer, loader);
