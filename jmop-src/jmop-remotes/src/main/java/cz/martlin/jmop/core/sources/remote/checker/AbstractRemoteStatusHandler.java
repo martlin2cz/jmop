@@ -90,7 +90,8 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 
 	private Bundle prepareTestingBundle() {
 		String name = "test";
-		return new Bundle(kind, name);
+		Metadata metadata = Metadata.createNew();
+		return new Bundle(kind, name, metadata );
 	}
 
 	private Track prepareTestingTrack() {
