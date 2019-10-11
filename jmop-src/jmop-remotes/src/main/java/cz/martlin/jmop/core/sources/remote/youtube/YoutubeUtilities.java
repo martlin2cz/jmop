@@ -77,7 +77,7 @@ public class YoutubeUtilities {
 	public static Credential authorize() throws IOException {
 		// Load client secrets.
 		InputStream in = YoutubeUtilities.class.getResourceAsStream("/cz/martlin/jmop/apis/youtube_client_secret.json"); //$NON-NLS-1$
-		GoogleClientSecrets clientSecrets = GoogleClientSecrets.loadPlaylist(JSON_FACTORY, new InputStreamReader(in));
+		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
 		// Build flow and trigger user authorization request.
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,

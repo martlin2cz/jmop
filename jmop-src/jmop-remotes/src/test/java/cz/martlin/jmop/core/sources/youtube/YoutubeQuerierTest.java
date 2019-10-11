@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.sources.youtube;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
@@ -43,9 +44,10 @@ public class YoutubeQuerierTest extends AbstractRemoteQuerierBaseTest {
 		
 		String title = "OMFG Hello";
 		Duration duration = DurationUtilities.createDuration(0, 3, 45);
-		String description = "Get the sound out of my head!!!";
+		String description = "Get the sound out of my head!!! REALLY!";
+		Metadata metadata = Metadata.createNew();
 		
-		return bundle.createTrack(identifier, title, description, duration);
+		return bundle.createTrack(identifier, title, description, duration, metadata);
 	}
 
 }

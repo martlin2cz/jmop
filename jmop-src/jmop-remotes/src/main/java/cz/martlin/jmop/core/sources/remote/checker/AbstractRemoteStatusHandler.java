@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.common.io.Files;
 
 import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -16,7 +17,7 @@ import cz.martlin.jmop.core.misc.ops.BaseOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.misc.ops.BaseShortOperation;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
@@ -32,17 +33,17 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	private final BaseRemoteSourceQuerier querier;
 	private final BaseDownloader downloader;
 	private final BaseConverter converter;
-	private final BaseLocalSource local;
+	private final BaseTracksLocalSource tracks;
 
 	public AbstractRemoteStatusHandler(SourceKind kind, BaseRemoteSourceQuerier querier, BaseDownloader downloader,
-			BaseConverter converter, BaseLocalSource local) {
+			BaseConverter converter, BaseTracksLocalSource tracks) {
 
 		super();
 		this.kind = kind;
 		this.querier = querier;
 		this.downloader = downloader;
 		this.converter = converter;
-		this.local = local;
+		this.tracks = tracks;
 	}
 
 	@Override
@@ -99,8 +100,9 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 		String title = "testing track";
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
 		String description = "This is just an testing track";
-
-		return bundle.createTrack(identifier, title, description, duration);
+		Metadata metadata = Metadata.createNew();
+		
+		return bundle.createTrack(identifier, title, description, duration, metadata);
 	}
 
 	protected abstract String prepareTestingTrackID();
@@ -111,7 +113,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 		String extension = fromFormat.getExtension();
 		File sourceFile = interactor.promptFile("", extension);
 
-		File targetFile = local.fileOfTrack(track, fromLocation, fromFormat);
+		File targetFile = tracks.fileOfTrack(track, fromLocation, fromFormat);
 		try {
 			Files.copy(sourceFile, targetFile);
 		} catch (IOException e) {

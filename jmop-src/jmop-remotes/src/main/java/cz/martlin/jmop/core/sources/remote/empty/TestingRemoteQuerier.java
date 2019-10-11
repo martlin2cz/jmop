@@ -6,6 +6,7 @@ import java.util.Random;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -28,7 +29,8 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	public TestingRemoteQuerier add(String identifier, String title, String description, int minutes, int seconds) {
 		Duration duration = DurationUtilities.createDuration(0, minutes, seconds);
 
-		Track track = NOPE_BUNDLE.createTrack(identifier, title, description, duration);
+		Metadata metadata = Metadata.createNew();
+		Track track = NOPE_BUNDLE.createTrack(identifier, title, description, duration, metadata);
 		tracksData.add(track);
 
 		return this;
@@ -44,7 +46,8 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 				data.getIdentifier(), //
 				data.getTitle(), //
 				data.getTitle(), //
-				data.getDuration());
+				data.getDuration(), //
+				data.getMetadata());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

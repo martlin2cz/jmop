@@ -12,6 +12,7 @@ import com.google.api.services.youtube.model.VideoListResponse;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
@@ -163,9 +164,10 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 		String description = result.getSnippet().getDescription();
 		String durationStr = result.getContentDetails().getDuration();
 		Duration duration = DurationUtilities.parseYoutubeDuration(durationStr);
+		Metadata metadata = Metadata.createNew();
 		// TODO get thumbnail
 
-		return bundle.createTrack(identifier, title, description, duration);
+		return bundle.createTrack(identifier, title, description, duration, metadata);
 	}
 
 	/**
