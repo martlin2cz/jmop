@@ -25,12 +25,12 @@ import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.XXX_BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.bases.funky.FunkyFileSystemAccessor;
+import cz.martlin.jmop.core.sources.local.bases.funky.FunkyFilesNamer;
+import cz.martlin.jmop.core.sources.local.bases.funky.FunkyLocalSource;
+import cz.martlin.jmop.core.sources.local.bases.funky.FunkyPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.funky.FunkyFileSystemAccessor;
-import cz.martlin.jmop.core.sources.locals.funky.FunkyFilesNamer;
-import cz.martlin.jmop.core.sources.locals.funky.FunkyLocalSource;
-import cz.martlin.jmop.core.sources.locals.funky.FunkyPlaylistLoader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.core.sources.remote.youtube.YoutubeQuerier;
 

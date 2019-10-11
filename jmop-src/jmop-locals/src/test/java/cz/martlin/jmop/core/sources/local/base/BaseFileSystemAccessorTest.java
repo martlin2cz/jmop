@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.local;
+package cz.martlin.jmop.core.sources.local.base;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -19,7 +19,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.util.LocalsTestUtility;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 
-public class BaseFileSystemAccessorTest {
+public abstract class BaseFileSystemAccessorTest {
 
 	private final LocalsTestUtility util;
 	private final BaseFileSystemAccessor accessor;
