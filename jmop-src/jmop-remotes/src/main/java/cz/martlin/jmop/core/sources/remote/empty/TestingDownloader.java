@@ -12,7 +12,7 @@ import cz.martlin.jmop.core.misc.ops.AbstractLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
-import cz.martlin.jmop.core.sources.local.misc.locator.TrackFileLocation;
+import cz.martlin.jmop.core.sources.local.base.misc.locator.TrackFileLocation;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.locals.testing.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
