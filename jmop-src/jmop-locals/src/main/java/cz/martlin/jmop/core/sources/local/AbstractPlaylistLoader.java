@@ -19,8 +19,7 @@ public interface AbstractPlaylistLoader {
 
 	/**
 	 * Loads contents of the given playlist file. If onlyMetada is set, only
-	 * metadata is loaded (like playlist name, bundle information; not the
-	 * tracks).
+	 * metadata is loaded (like playlist name, bundle information; not the tracks).
 	 * 
 	 * @param bundle
 	 * @param file

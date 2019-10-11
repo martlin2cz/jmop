@@ -111,7 +111,7 @@ public class ElectronicLocalSourceTest {
 	public void testTracks() throws JMOPSourceException {
 		ElectronicLocalSource local = createSource();
 		BaseTracksLocalSource tracks = local.tracks();
-		
+
 		Bundle bundle = TestingDataCreator.createTestingBundle();
 		local.bundles().createBundle(bundle);
 		assumeTrue(file("box").isDirectory());

@@ -44,7 +44,7 @@ public class XSPFFileDocumentTest {
 				XSPFDocumentNamespaces.JMOP, "ipsum-val", "42", //
 				() -> null);
 		assertNotNull(ipsum);
-		
+
 		assertEquals("42", ipsum.getAttribute(XSPFDocumentNamespaces.JMOP.namify("ipsum-val")));
 	}
 
@@ -55,7 +55,7 @@ public class XSPFFileDocumentTest {
 		XSPFDocumentUtility.getChildOrCreate(document, root, //
 				XSPFDocumentNamespaces.JMOP, "ipsum", //
 				XSPFDocumentNamespaces.JMOP, "ipsum-val", "42");
-		
+
 		XSPFDocumentUtility.getChildOrCreate(document, root, //
 				XSPFDocumentNamespaces.JMOP, "ipsum", //
 				XSPFDocumentNamespaces.JMOP, "ipsum-val", "99");

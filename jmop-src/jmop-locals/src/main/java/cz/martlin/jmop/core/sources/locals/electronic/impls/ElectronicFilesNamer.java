@@ -16,7 +16,7 @@ public class ElectronicFilesNamer implements BaseFilesNamer {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	@Override
 	public String directoryNameOfBundle(String bundleName) {
 		return clean(bundleName);

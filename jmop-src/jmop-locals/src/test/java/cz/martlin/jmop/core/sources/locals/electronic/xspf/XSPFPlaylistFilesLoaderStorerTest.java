@@ -37,17 +37,16 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer(config);
 
 		xpfls.saveBundle(bundle, file);
-		//TODO try to open created file in different player
-		
+		// TODO try to open created file in different player
+
 		Bundle rebundle = xpfls.loadBundle(file);
-		
+
 		System.out.println(TestingPrinter.print(rebundle));
-		
-		
+
 		assertEquals(bundle.toString(), rebundle.toString());
 		assertEquals(bundle, rebundle);
 	}
-	
+
 	@Test
 	public void testPlaylistFile() throws IOException, JMOPSourceException {
 		Bundle bundle = TestingDataCreator.createEmptyTestingBundle();
@@ -61,14 +60,12 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer(config);
 
 		xpfls.savePlaylist(bundle, playlist, file);
-		//TODO try to open created file in different player
-		
-		
+		// TODO try to open created file in different player
+
 		Playlist replaylist = xpfls.loadPlaylist(bundle, file);
-		
+
 		System.out.println(TestingPrinter.print(replaylist));
-		
-		
+
 		assertEquals(replaylist.toString(), replaylist.toString());
 		assertEquals(replaylist, playlist);
 	}
@@ -91,5 +88,5 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 
 		xpfls.saveBundle(bundle, file);
 	}
-	
+
 }

@@ -13,8 +13,7 @@ import cz.martlin.jmop.core.sources.remote.BaseDownloader;
  */
 public interface BaseTrackFileLocator {
 	/**
-	 * Returns where to store downloaded files, if downloaded by given
-	 * downloader.
+	 * Returns where to store downloaded files, if downloaded by given downloader.
 	 * 
 	 * @param downloader
 	 * @return
@@ -29,8 +28,8 @@ public interface BaseTrackFileLocator {
 	public TrackFileLocation locationOfSave();
 
 	/**
-	 * Returns where to store track files prepared to play, if prepared to be
-	 * played by given player.
+	 * Returns where to store track files prepared to play, if prepared to be played
+	 * by given player.
 	 * 
 	 * @param player
 	 * @return
