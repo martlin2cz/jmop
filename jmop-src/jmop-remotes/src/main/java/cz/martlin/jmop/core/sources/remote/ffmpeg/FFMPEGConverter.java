@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import cz.martlin.jmop.core.source.extprogram.ExternalProcessLongOperation;
-import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
@@ -26,11 +26,11 @@ public class FFMPEGConverter implements BaseConverter {
 
 	private static final String FFMPEG_COMMAND_NAME = "ffmpeg";
 
-	private final XXX_BaseLocalSource local;
+	private final BaseTracksLocalSource tracks;
 
-	public FFMPEGConverter(XXX_BaseLocalSource local) {
+	public FFMPEGConverter(BaseTracksLocalSource tracks) {
 		super();
-		this.local = local;
+		this.tracks = tracks;
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class FFMPEGConverter implements BaseConverter {
 
 	private File createTargetFileFile(Track track, TrackFileLocation location, TrackFileFormat format)
 			throws JMOPSourceException {
-		return local.fileOfTrack(track, location, format);
+		return tracks.fileOfTrack(track, location, format);
 	}
 
 }
