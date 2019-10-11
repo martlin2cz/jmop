@@ -9,8 +9,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
@@ -31,11 +29,10 @@ public class FFMPEGConverterTest {
 
 	@Test
 	public void test() throws Exception {
-		BaseConfiguration config = new ConstantConfiguration();
 		BaseTracksLocalSource local = createTracksLocal();
 		FFMPEGConverter converter = new FFMPEGConverter(local);
 
-		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "the-bundle");
+		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "the-bundle", Metadata.createNew());
 		Track track = bundle.createTrack("123456", "da-track", "...", DurationUtilities.createDuration(0, 0, 52), Metadata.createNew());
 
 		ConversionReason reason = ConversionReason.PREPARE_TO_PLAY;

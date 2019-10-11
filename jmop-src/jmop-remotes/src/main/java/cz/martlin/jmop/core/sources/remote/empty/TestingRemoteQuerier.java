@@ -14,7 +14,7 @@ import cz.martlin.jmop.core.sources.remote.AbstractRemoteQuerier;
 import javafx.util.Duration;
 
 public class TestingRemoteQuerier extends AbstractRemoteQuerier {
-	private Bundle NOPE_BUNDLE = new Bundle(null, null);
+	private Bundle NOPE_BUNDLE = new Bundle(null, null, (Metadata) null);
 
 	private final BaseConfiguration config;
 	private final List<Track> tracksData;

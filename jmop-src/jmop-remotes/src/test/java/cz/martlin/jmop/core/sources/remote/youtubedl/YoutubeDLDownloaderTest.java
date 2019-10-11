@@ -38,7 +38,7 @@ public class YoutubeDLDownloaderTest {
 		BaseTracksLocalSource local = createTracksLocal();
 		YoutubeDLDownloader downloader = new YoutubeDLDownloader(querier, local);
 
-		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "bundle");
+		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "bundle", Metadata.createNew());
 		String identifier = "PvnlpPWAcZc";
 		Track track = bundle.createTrack(identifier, "some track", "some desc",
 				DurationUtilities.createDuration(0, 4, 2), Metadata.createNew());

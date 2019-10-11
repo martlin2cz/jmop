@@ -11,6 +11,7 @@ import org.junit.Test;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
@@ -28,7 +29,7 @@ public class YoutubeQuerierTest {
 
 		BaseRemoteSourceQuerier querier = new YoutubeQuerier(config, connection);
 
-		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "bundle");
+		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "bundle", Metadata.createNew());
 		String query = "sample testing sound";
 
 		assertEquals("https://www.youtube.com/results?search_query=sample+testing+sound", //

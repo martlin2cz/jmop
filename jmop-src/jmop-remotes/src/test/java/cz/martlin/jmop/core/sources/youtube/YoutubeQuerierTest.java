@@ -28,8 +28,9 @@ public class YoutubeQuerierTest extends AbstractRemoteQuerierBaseTest {
 	protected Bundle createBundle() {
 		String name = "EDM?";
 		SourceKind kind = SourceKind.YOUTUBE;
+		Metadata metadata = Metadata.createNew();
 		
-		return new Bundle(kind, name);
+		return new Bundle(kind, name, metadata);
 	}
 
 	@Override
