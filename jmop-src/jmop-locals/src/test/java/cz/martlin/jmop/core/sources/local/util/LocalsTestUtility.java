@@ -25,7 +25,7 @@ public class LocalsTestUtility {
 
 		Files.delete(dir.toPath());
 
-		return null; //hoho
+		return null; // hoho
 	}
 
 	private File createTestingTempDirObject() {

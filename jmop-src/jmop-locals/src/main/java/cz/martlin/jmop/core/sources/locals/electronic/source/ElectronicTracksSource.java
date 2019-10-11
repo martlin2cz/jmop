@@ -36,7 +36,8 @@ public class ElectronicTracksSource implements BaseTracksLocalSource {
 	}
 
 	@Override
-	public void deleteIfExists(Track track, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
+	public void deleteIfExists(Track track, TrackFileLocation location, TrackFileFormat format)
+			throws JMOPSourceException {
 		File file = file(track, location, format);
 
 		if (filesystem.existsFile(file)) {
@@ -45,7 +46,8 @@ public class ElectronicTracksSource implements BaseTracksLocalSource {
 	}
 
 	@Override
-	public void move(Track oldTrack, Track newTrack, TrackFileLocation location, TrackFileFormat format) throws JMOPSourceException {
+	public void move(Track oldTrack, Track newTrack, TrackFileLocation location, TrackFileFormat format)
+			throws JMOPSourceException {
 		File oldFile = file(oldTrack, location, format);
 		File newFile = file(newTrack, location, format);
 

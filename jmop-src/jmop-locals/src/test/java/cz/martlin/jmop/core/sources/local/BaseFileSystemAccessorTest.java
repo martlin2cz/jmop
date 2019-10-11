@@ -145,7 +145,7 @@ public class BaseFileSystemAccessorTest {
 			accessor.createDirectory(dir42);
 			accessor.createDirectory(dir99);
 			accessor.createDirectory(dirNumber);
-			
+
 		} catch (JMOPSourceException e) {
 			assumeNoException(e);
 		}
@@ -166,7 +166,7 @@ public class BaseFileSystemAccessorTest {
 
 			accessor.deleteDirectory(ipsum);
 			accessor.deleteDirectory(lorem);
-			
+
 		} catch (JMOPSourceException e) {
 			assumeNoException(e);
 		}

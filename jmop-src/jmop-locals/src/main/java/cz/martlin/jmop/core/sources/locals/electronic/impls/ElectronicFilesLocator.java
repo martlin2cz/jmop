@@ -53,7 +53,7 @@ public class ElectronicFilesLocator implements BaseFilesLocator {
 	@Override
 	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) {
 		String bundleName = bundle.getName();
-		File bundleDir = obtainOwningDirectory(bundleName , location);
+		File bundleDir = obtainOwningDirectory(bundleName, location);
 
 		String trackFileBasename = namer.fileBasenameOfTrack(track);
 		String trackFileName = trackFileBasename + "." + format.getExtension();
@@ -91,7 +91,7 @@ public class ElectronicFilesLocator implements BaseFilesLocator {
 
 		return new File(root, dirName);
 	}
-	
+
 ///////////////////////////////////////////////////////////////////////////
 
 	private static final File getTempDir() {

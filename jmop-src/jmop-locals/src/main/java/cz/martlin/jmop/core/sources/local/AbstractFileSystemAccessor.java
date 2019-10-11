@@ -59,8 +59,7 @@ public interface AbstractFileSystemAccessor {
 	public List<String> listPlaylistsFiles(String bundleDirName) throws IOException;
 
 	/**
-	 * Returns true if playlist of given name exists within the given bundle
-	 * dir.
+	 * Returns true if playlist of given name exists within the given bundle dir.
 	 * 
 	 * @param bundleDirName
 	 * @param playlistName
@@ -70,8 +69,8 @@ public interface AbstractFileSystemAccessor {
 	public boolean existsPlaylist(String bundleDirName, String playlistName) throws IOException;
 
 	/**
-	 * Loads metadata of the playist of given playlist name within the given
-	 * bundle dir.
+	 * Loads metadata of the playist of given playlist name within the given bundle
+	 * dir.
 	 * 
 	 * @param bundleDirName
 	 * @param playlistName
@@ -81,8 +80,7 @@ public interface AbstractFileSystemAccessor {
 	public PlaylistFileData getPlaylistMetadataOfName(String bundleDirName, String playlistName) throws IOException;
 
 	/**
-	 * Loads metadata of playlist of given file name within the given bundle
-	 * dir.
+	 * Loads metadata of playlist of given file name within the given bundle dir.
 	 * 
 	 * @param bundleDirName
 	 * @param playlistFileName
@@ -115,8 +113,7 @@ public interface AbstractFileSystemAccessor {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Returns path to the file of track at given location and with given
-	 * format.
+	 * Returns path to the file of track at given location and with given format.
 	 * 
 	 * @param bundle
 	 * @param track
@@ -129,8 +126,7 @@ public interface AbstractFileSystemAccessor {
 			throws IOException;
 
 	/**
-	 * Returns true, if track file at given location and with given format
-	 * exists.
+	 * Returns true, if track file at given location and with given format exists.
 	 * 
 	 * @param bundle
 	 * @param track

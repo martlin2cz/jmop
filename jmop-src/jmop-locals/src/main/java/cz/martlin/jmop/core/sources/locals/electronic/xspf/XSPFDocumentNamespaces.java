@@ -19,7 +19,7 @@ public enum XSPFDocumentNamespaces {
 			return name;
 		}
 	}
-	
+
 	public String namifyXMLNS() {
 		if (prefix != null) {
 			return "xmlns:" + prefix;

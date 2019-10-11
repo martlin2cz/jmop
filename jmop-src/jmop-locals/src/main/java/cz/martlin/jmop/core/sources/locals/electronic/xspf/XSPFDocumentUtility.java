@@ -196,10 +196,10 @@ public class XSPFDocumentUtility {
 
 	protected static Element createElement(Document document, Element owner, XSPFDocumentNamespaces elemNS,
 			String elemName) {
-		
+
 		String nsElemName = elemNS.namify(elemName);
 		Element element = document.createElement(nsElemName);
-		
+
 		owner.appendChild(element);
 		return element;
 	}
@@ -209,7 +209,7 @@ public class XSPFDocumentUtility {
 
 		String nsElemName = elemNS.namify(elemName);
 		Element element = document.createElement(nsElemName);
-		
+
 		String nsAttrName = attrNS.namify(attrName);
 		element.setAttribute(nsAttrName, attrValue);
 

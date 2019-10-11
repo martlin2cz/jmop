@@ -37,7 +37,8 @@ public class XSPFpflsWithFiles extends XSPFPlaylistFilesLoaderStorer {
 	protected void pushTrackFile(Document document, Track track, Element trackElem) {
 		String fileName = nameOfFile(track);
 		if (fileName != null) {
-			XSPFDocumentUtility.createElementWithText(document, trackElem, XSPFDocumentNamespaces.XSPF, "file", fileName);
+			XSPFDocumentUtility.createElementWithText(document, trackElem, XSPFDocumentNamespaces.XSPF, "file",
+					fileName);
 		}
 	}
 
@@ -49,7 +50,7 @@ public class XSPFpflsWithFiles extends XSPFPlaylistFilesLoaderStorer {
 
 			return file.getName();
 		} catch (JMOPSourceException e) {
-			//TODO warn?
+			// TODO warn?
 			return null;
 		}
 	}

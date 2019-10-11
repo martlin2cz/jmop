@@ -49,8 +49,8 @@ public class TestingTracksSourceTest {
 		assertTrue(tracks.exists(fooTrack, TrackFileLocation.CACHE, TrackFileFormat.WAV));
 		tracks.deleteIfExists(fooTrack, TrackFileLocation.CACHE, TrackFileFormat.WAV);
 		assertFalse(tracks.exists(fooTrack, TrackFileLocation.CACHE, TrackFileFormat.WAV));
-		
-		//TODO test move
+
+		// TODO test move
 	}
 
 }

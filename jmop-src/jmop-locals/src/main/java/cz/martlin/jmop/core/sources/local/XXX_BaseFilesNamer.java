@@ -44,9 +44,10 @@ public interface XXX_BaseFilesNamer {
 	 */
 	@Deprecated
 	public String fileNameOfTrack(Track track, TrackFileFormat format);
-	
+
 	/**
 	 * TODO doc
+	 * 
 	 * @param bundle
 	 * @param track
 	 * @param location
@@ -57,14 +58,14 @@ public interface XXX_BaseFilesNamer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	public String nameOfTempDir();
+
 	public String nameOfCacheDir();
-	
+
 /////////////////////////////////////////////////////////////////////////////////////
 
-	
 	/**
-	 * Returns directory of bundle with given bundle dirname and relative to
-	 * given root.
+	 * Returns directory of bundle with given bundle dirname and relative to given
+	 * root.
 	 * 
 	 * @param root
 	 * @param bundleDirName
@@ -84,8 +85,7 @@ public interface XXX_BaseFilesNamer {
 	public File bundleDirOfBundleName(File root, String bundleName);
 
 	/**
-	 * Returns cache directory for bundle of given name and relative to given
-	 * root.
+	 * Returns cache directory for bundle of given name and relative to given root.
 	 * 
 	 * @param root
 	 * @param bundleName
@@ -130,8 +130,6 @@ public interface XXX_BaseFilesNamer {
 	 */
 	@Deprecated
 	public File playlistFileOfFile(File root, String bundleDirName, String playlistFileName);
-
-
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

@@ -76,8 +76,8 @@ public interface XXX_BaseLocalSource extends BaseSourceImpl {
 	public abstract Playlist getPlaylist(Bundle bundle, String name) throws JMOPSourceException;
 
 	/**
-	 * Saves given playlist into the local source. If not yet existed in the
-	 * source, may create it.
+	 * Saves given playlist into the local source. If not yet existed in the source,
+	 * may create it.
 	 * 
 	 * @param bundle
 	 * @param playlist
@@ -88,8 +88,8 @@ public interface XXX_BaseLocalSource extends BaseSourceImpl {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Infers informations about the track with given identifier within the
-	 * given bundle.
+	 * Infers informations about the track with given identifier within the given
+	 * bundle.
 	 */
 	@Override
 	public abstract Track getTrack(Bundle bundle, String identifier) throws JMOPSourceException;
