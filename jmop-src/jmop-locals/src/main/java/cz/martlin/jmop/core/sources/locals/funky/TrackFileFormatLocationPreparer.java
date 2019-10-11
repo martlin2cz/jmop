@@ -24,6 +24,7 @@ import cz.martlin.jmop.core.sources.remote.ConversionReason;
  * @author martin
  *
  */
+@Deprecated
 public class TrackFileFormatLocationPreparer {
 	private final XXX_BaseLocalSource local;
 	private final BaseConverter converter;

@@ -15,6 +15,7 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
  * @author martin
  *
  */
+@Deprecated
 public class FunkyFilesNamer extends SimpleFilesNamer {
 
 	private static final String SEPARATOR = "_"; //$NON-NLS-1$

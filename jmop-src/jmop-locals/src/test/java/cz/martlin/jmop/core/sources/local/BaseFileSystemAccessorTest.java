@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.util.LocalsTestUtility;
+import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 
 public class BaseFileSystemAccessorTest {
 

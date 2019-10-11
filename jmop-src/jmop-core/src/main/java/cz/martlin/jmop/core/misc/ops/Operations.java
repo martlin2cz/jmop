@@ -6,6 +6,7 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
+import cz.martlin.jmop.core.sources.local.misc.flu.FormatsLocationsUtility;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 

@@ -14,6 +14,7 @@ import cz.martlin.jmop.core.data.PlaylistFileData;
  * @author martin
  *
  */
+@Deprecated
 public interface AbstractPlaylistLoader {
 
 	/**
