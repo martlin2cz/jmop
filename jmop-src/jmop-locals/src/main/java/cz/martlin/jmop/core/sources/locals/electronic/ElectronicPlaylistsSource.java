@@ -11,10 +11,12 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.BasePlaylistsLocalSource;
+import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.BasePlaylistFilesLoaderStorer;
 
 public class ElectronicPlaylistsSource implements BasePlaylistsLocalSource {
 
+	protected static final TrackFileLocation LOCATION_OF_PLAYLIST_FILES = TrackFileLocation.SAVE;
 	private static final String DOT = ".";
 
 	private final BaseFilesLocator locator;
@@ -34,7 +36,8 @@ public class ElectronicPlaylistsSource implements BasePlaylistsLocalSource {
 	@Override
 	public List<Playlist> loadPlaylists(Bundle bundle) throws JMOPSourceException {
 		String bundleName = bundle.getName();
-		File directory = locator.getDirectoryOfBundle(bundleName);
+		TrackFileLocation location = LOCATION_OF_PLAYLIST_FILES;
+		File directory = locator.getDirectoryOfBundle(bundleName, location);
 		Predicate<File> matcher = (f) -> isPlaylistFile(f);
 
 		Set<File> files = filesystem.listFilesMatching(directory, matcher);
@@ -98,7 +101,8 @@ public class ElectronicPlaylistsSource implements BasePlaylistsLocalSource {
 
 	private File fileOfPlaylist(Playlist playlist) {
 		Bundle bundle = playlist.getBundle();
-		File directory = directoryOfBundle(bundle);
+		TrackFileLocation location = LOCATION_OF_PLAYLIST_FILES;
+		File directory = directoryOfBundle(bundle, location);
 		String bundleDirName = directory.getName();
 
 		String playlistName = playlist.getName();
@@ -106,8 +110,8 @@ public class ElectronicPlaylistsSource implements BasePlaylistsLocalSource {
 		return locator.getFileOfPlaylist(bundleDirName, playlistName);
 	}
 
-	private File directoryOfBundle(Bundle bundle) {
+	private File directoryOfBundle(Bundle bundle, TrackFileLocation location) {
 		String bundleName = bundle.getName();
-		return locator.getDirectoryOfBundle(bundleName);
+		return locator.getDirectoryOfBundle(bundleName, location);
 	}
 }
