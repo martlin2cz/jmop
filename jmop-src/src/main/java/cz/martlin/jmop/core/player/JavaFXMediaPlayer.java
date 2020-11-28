@@ -8,9 +8,9 @@ import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
 import javafx.beans.value.ChangeListener;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+//import javafx.embed.swing.JFXPanel;
+//import javafx.scene.media.Media;
+//import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 /**
@@ -22,7 +22,7 @@ import javafx.util.Duration;
 public class JavaFXMediaPlayer extends AbstractPlayer {
 	public static final TrackFileFormat PLAYER_FORMAT = TrackFileFormat.WAV;
 
-	private MediaPlayer mediaPlayer;
+//	private MediaPlayer mediaPlayer;
 	private Duration currentTime;
 
 	private Runnable endListener;
@@ -48,41 +48,46 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 		URI uri = file.toURI();
 		String path = uri.toString();
 
-		Media media = new Media(path);
-		mediaPlayer = new MediaPlayer(media);
+//		Media media = new Media(path);
+//		mediaPlayer = new MediaPlayer(media);
 
 		endListener = () -> trackFinished();
-		mediaPlayer.setOnEndOfMedia(endListener);
+//		mediaPlayer.setOnEndOfMedia(endListener);
 
 		timeListener = (observable, oldValue, newValue) -> timeChanged(newValue);
-		mediaPlayer.currentTimeProperty().addListener(timeListener);
+//		mediaPlayer.currentTimeProperty().addListener(timeListener);
 
-		mediaPlayer.play();
+//		mediaPlayer.play();
+		System.err.println("JavaFXMediaPlayer.doStartPlaying()");
 	}
 
 	@Override
 	protected void doStopPlaying() {
-		mediaPlayer.setOnEndOfMedia(null);
-		mediaPlayer.currentTimeProperty().removeListener(timeListener);
+//		mediaPlayer.setOnEndOfMedia(null);
+//		mediaPlayer.currentTimeProperty().removeListener(timeListener);
 
-		mediaPlayer.stop();
-		mediaPlayer = null;
+//		mediaPlayer.stop();
+//		mediaPlayer = null;
+		System.err.println("JavaFXMediaPlayer.doStopPlaying()");
 		currentTime = null;
 	}
 
 	@Override
 	protected void doPausePlaying() {
-		mediaPlayer.pause();
+//		mediaPlayer.pause();
+		System.err.println("JavaFXMediaPlayer.doPausePlaying()");
 	}
 
 	@Override
 	protected void doResumePlaying() {
-		mediaPlayer.play();
+//		mediaPlayer.play();
+		System.out.println("JavaFXMediaPlayer.doResumePlaying()");
 	}
 
 	@Override
 	protected void doSeek(Duration to) {
-		mediaPlayer.seek(to);
+//		mediaPlayer.seek(to);
+		System.out.println("JavaFXMediaPlayer.doSeek()");
 
 	}
 
@@ -91,7 +96,8 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 	 * Force-loads the FX framework.
 	 */
 	private static void initializeFX() {
-		new JFXPanel();
+		System.out.println("JavaFXMediaPlayer.initializeFX()");
+		//new JFXPanel();
 	}
 
 	/**

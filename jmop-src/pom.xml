@@ -6,7 +6,7 @@
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1</version>
+	<version>1.2</version>
 
 	<name>jmop</name>
 	<url>https://github.com/martlin2cz/jmop</url>
@@ -74,21 +74,21 @@
 		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
-			<version>1.23.0</version>
+			<version>1.30.0</version>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.oauth-client</groupId>
 			<artifactId>google-oauth-client-jetty</artifactId>
-			<version>1.23.0</version>
+			<version>1.30.5</version>
 			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-youtube</artifactId>
-			<version>v3-rev198-1.23.0</version>
+			<version>v3-rev221-1.25.0</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -103,60 +103,72 @@
 
 	</dependencies>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>gluon-releases</id>
+			<url>https://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<build>
+
 		<plugins>
-			<!-- https://github.com/openjfx/javafx-maven-plugin -->
-			<!-- Run: mvn javafx:compile -->
+
+		
+		
+      		<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <version>3.8.1</version>
+		        <configuration>
+                   <compilerArgs>
+		        	    <arg>--add-opens</arg>
+		        	    <arg>javafx.graphics/com.sun.javafx.application=jmop</arg>
+		        	    <arg>--add-module</arg>
+		        	    <arg>google.oauth.client,google.http.client.jackson2,google.api.services.youtube.v3.rev221</arg>
+        		  </compilerArgs>
+		        </configuration>
+		        
+	      	</plugin>
+	      
 			<plugin>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-maven-plugin</artifactId>
-				<version>0.0.2</version>
-				<configuration>
-					<source>11</source>
-					<target>11</target>
-					<release>11</release>
-					<mainClass>cz.martlin.jmop.mains.JMOPMainGUIApplication</mainClass>
-				</configuration>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx-maven-plugin</artifactId>
+			    <version>0.0.4</version>
+			    <configuration>
+			        <mainClass>cz.martlin.jmop.mains.JMOPMainGUIApplication</mainClass>
+			        <launcher>launch-jmop</launcher>
+			        <jlinkImageName>jmop-image</jlinkImageName>
+			        <jlinkZipName>jmop-zip</jlinkZipName>
+			    </configuration>
 			</plugin>
+			
+<!-- 			<plugin> -->
+<!-- 				<groupId>com.zenjava</groupId> -->
+<!-- 				<artifactId>javafx-maven-plugin</artifactId> -->
+<!-- 				<version>8.8.3</version> -->
+<!-- 				<configuration> -->
+<!-- 					<mainClass>cz.martlin.jmop.mains.JMOPMainGUIApplication</mainClass> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 
-
-			<!-- https://www.mkyong.com/maven/how-to-create-a-jar-file-with-maven/ -->
-			<!-- Run: mvn clean package -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.1</version>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<includeScope>runtime</includeScope>
-							<outputDirectory>${project.build.directory}/lib/</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- https://stackoverflow.com/questions/574594/how-can-i-create-an-executable-jar-with-dependencies-using-maven -->
-			<!-- Run: mvn clean compile assembly:single -->
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>cz.martlin.jmop.mains.JMOPGUIApp</mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-			</plugin>
-
+ 			<plugin> 
+ 				<groupId>com.gluonhq</groupId> 
+ 				<artifactId>client-maven-plugin</artifactId> 
+ 				<version>0.1.15</version> 
+ 				<configuration> 
+ 					<mainClass>cz.martlin.jmop.mains.JMOPGUIApp</mainClass> 
+ 					<reflectionList>
+ 						<list>org.apache.logging.log4j.message.DefaultFlowMessageFactory</list>
+ 						<list>org.apache.logging.log4j.message.ParameterizedMessageFactory</list>
+ 						<list>cz.martlin.jmop.mains.JMOPMainGUIApplication</list>
+ 					</reflectionList>
+ 					<bundlesList>
+ 						<list>cz.martlin.jmop.gui.local.messages</list>
+ 					</bundlesList>
+						<!--	<graalvmHome>/home/martin/applications/java-stuff/graalvm/graalvm-ce-java11-19.3.1</graalvmHome> -->
+				</configuration> 
+ 			</plugin> 
 		</plugins>
 	</build>
 </project>

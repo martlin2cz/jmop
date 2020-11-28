@@ -1,0 +1,81 @@
+module jmop {
+	exports cz.martlin.jmop.gui.comp;
+	exports cz.martlin.jmop.core.playlister;
+	exports cz.martlin.jmop.core.sources.remotes;
+	exports cz.martlin.jmop.misc;
+	exports cz.martlin.jmop.core.player;
+	exports cz.martlin.jmop.core.sources.remote;
+	exports cz.martlin.jmop.core.data;
+	exports cz.martlin.jmop.core.sources;
+	exports cz.martlin.jmop.core.wrappers;
+	exports cz.martlin.jmop.core.wrappers.builder;
+	exports cz.martlin.jmop.core.sources.local.location;
+	exports cz.martlin.jmop.core.misc;
+	exports cz.martlin.jmop.core.preparer;
+	exports cz.martlin.jmop.core.sources.local;
+	exports cz.martlin.jmop.gui.control;
+	exports cz.martlin.jmop.core.sources.locals;
+	exports cz.martlin.jmop.core.check;
+	exports cz.martlin.jmop.gui.dial;
+	exports cz.martlin.jmop.core.strategy.impls;
+	exports cz.martlin.jmop.gui.local;
+	exports cz.martlin.jmop.core.operation.base;
+	exports cz.martlin.jmop.core.config;
+	exports cz.martlin.jmop.mains;
+	exports cz.martlin.jmop.core.playlist;
+	exports cz.martlin.jmop.core.strategy.base;
+	exports cz.martlin.jmop.core.runtime;
+	exports cz.martlin.jmop.core.operation.operations;
+	exports cz.martlin.jmop.gui.util;
+
+	requires google.api.client;
+//	requires google.api.services.youtube.v3.rev198;
+//	requires google.http.client;
+//	requires google.http.client.jackson2;
+//	requires google.oauth.client;
+//	requires google.oauth.client.java6;
+//	requires google.oauth.client.jetty;
+//	requires guava.jdk5;
+//	requires java.desktop;
+//	requires java.xml;
+	requires javafx.base;
+	requires javafx.controls;
+	requires javafx.fxml;
+	requires javafx.graphics;
+	requires javafx.media;
+	requires javafx.swing;
+	requires javafx.web;
+	requires org.slf4j;
+	requires com.google.api.client;
+	//requires google.api.services.youtube.v3.rev221;
+	requires com.google.common;
+//	requires google.oauth.client;
+//	requires google.oauth.client.java6;
+//	requires google.oauth.client.jetty;
+//	requires google.http.client.jackson2;
+//	requires google.api.services.youtube.v3.rev221;
+	requires com.google.api.client.extensions.java6.auth;
+	requires com.google.api.client.extensions.jetty.auth;
+	requires google.oauth.client;
+	requires google.http.client.jackson2;
+	requires google.api.services.youtube.v3.rev221;
+	
+//	opens com.google.common.io;
+//	opens com.google.api.client.auth.oauth2;
+//	opens com.google.api.client.extensions.java6.auth.oauth2;
+//	opens com.google.api.client.extensions.jetty.auth.oauth2 ;
+//	opens com.google.api.client.googleapis.javanet;
+//	opens com.google.api.client.http;
+//	opens com.google.api.client.json;
+//	opens com.google.api.client.json.jackson2;
+//	opens com.google.api.client.util.store;
+//	opens com.google.api.services.youtube;
+//	opens com.sun.javafx.application;
+//	opens com.google.api.services.youtube.model;
+	
+	
+	//opens com.sun.javafx.application to jmop;
+	
+	opens cz.martlin.jmop.gui.comp to javafx.fxml;
+	opens cz.martlin.jmop.gui.control to javafx.fxml;
+}

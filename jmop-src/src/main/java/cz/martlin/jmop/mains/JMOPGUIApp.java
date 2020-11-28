@@ -5,17 +5,18 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.javafx.application.LauncherImpl;
+//import com.sun.javafx.application.LauncherImpl;
 
 import cz.martlin.jmop.core.data.CommandlineData;
 import cz.martlin.jmop.core.wrappers.JMOPPlayer;
 import cz.martlin.jmop.core.wrappers.builder.BaseJMOPBuilder;
 import cz.martlin.jmop.core.wrappers.builder.DefaultJMOPPlayerBuilder;
 import cz.martlin.jmop.gui.local.Msg;
+import javafx.application.Application;
 
 public class JMOPGUIApp {
 	private static final Logger LOG = LoggerFactory.getLogger(JMOPGUIApp.class);
-	public static final String VERSION = "1.1"; //$NON-NLS-1$
+	public static final String VERSION = "1.2"; //$NON-NLS-1$
 
 	private static JMOPPlayer jmop;
 
@@ -68,8 +69,9 @@ public class JMOPGUIApp {
 		}
 
 		try {
-			LauncherImpl.launchApplication(JMOPMainGUIApplication.class, JMOPPreloader.class, new String[] {});
-			//Application.launch(JMOPMainGUIApplication.class);
+			
+			//FIXME: LauncherImpl.launchApplication(JMOPMainGUIApplication.class, JMOPPreloader.class, new String[] {});
+			Application.launch(JMOPMainGUIApplication.class);
 		} catch (Exception e) {
 			System.err.println("Cannot start GUI: " + e); //$NON-NLS-1$
 			LOG.error("Cannot start GUI", e); //$NON-NLS-1$

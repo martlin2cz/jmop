@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<?import cz.martlin.jmop.gui.comp.JMOPMainMenu?>
+<?import cz.martlin.jmop.gui.comp.WelcomePane?>
+<?import cz.martlin.jmop.gui.comp.PlayerPane?>
+<?import cz.martlin.jmop.gui.comp.OperationsPane?>
+<?import cz.martlin.jmop.gui.comp.PlaylistAndBundlePane?>
+
+
+<BorderPane id="borderPane" xmlns="http://javafx.com/javafx/8.0.60"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.martlin.jmop.gui.control.MainFrameController"
+	prefHeight="250.0" minHeight="200.0" prefWidth="640.0" minWidth="280.0">
+
+	<top>
+		<JMOPMainMenu fx:id="mainMenu" prefHeight="30.0"
+			BorderPane.alignment="TOP_LEFT" />
+	</top>
+	<center>
+		<StackPane prefHeight="240.0">
+			<!-- Player pane -->
+			<PlayerPane fx:id="playerPane" />
+
+			<!-- Welcome pane -->
+			<WelcomePane fx:id="welcomePane" />
+		</StackPane>
+	</center>
+	<bottom>
+		<BorderPane prefHeight="40.0">
+			<left>
+				<!-- Playlist and bundle pane -->
+				<PlaylistAndBundlePane fx:id="playlistAndBundlePane"
+					prefHeight="40.0" />
+			</left>
+			<right>
+				<!-- Download pane -->
+				<OperationsPane fx:id="operationsPane" prefHeight="40.0" />
+			</right>
+		</BorderPane>
+	</bottom>
+
+</BorderPane>
