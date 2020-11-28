@@ -24,3 +24,5 @@ hs_err_pid*
 
 ## the eclipse workspace files
 eclipse-workspace
+
+*/target/
