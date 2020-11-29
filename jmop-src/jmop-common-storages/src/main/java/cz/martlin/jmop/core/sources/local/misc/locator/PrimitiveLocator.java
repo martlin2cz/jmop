@@ -2,7 +2,6 @@ package cz.martlin.jmop.core.sources.local.misc.locator;
 
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
 /**
  * The primitive locatior simply indicates to download everything into temp
@@ -11,11 +10,13 @@ import cz.martlin.jmop.core.sources.remote.BaseDownloader;
  * 
  * @author martin
  *
+ * @deprecated do not use
  */
+@Deprecated
 public class PrimitiveLocator implements BaseTrackFileLocator {
 
 	@Override
-	public TrackFileLocation locationOfDownload(BaseDownloader downloader) {
+	public TrackFileLocation locationOfDownload(Object downloader) {
 		return TrackFileLocation.TEMP;
 	}
 

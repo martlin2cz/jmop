@@ -35,7 +35,7 @@ public class AplayPlayer extends AbstractPlayer {
 	private AplayProcess process;
 	private Track currentTrack;
 
-	public AplayPlayer(BaseErrorReporter reporter, XXX_BaseLocalSource local, BaseTrackFileLocator locator) {
+	public AplayPlayer(BaseErrorReporter reporter, XXX_BaseLocalSource local, Object locator) {
 		super(local, locator, APLAY_PLAY_FORMAT);
 
 		this.reporter = reporter;

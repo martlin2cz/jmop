@@ -26,7 +26,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseLocalSource local;
-	private final TrackFileLocation tracksLocation;
+	private final Object tracksLocation;
 	private final TrackFileFormat supportedFormat;
 	
 	private boolean stopped;
@@ -34,12 +34,13 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	private boolean over;
 	private Track playedTrack;
 
-	public AbstractPlayer(BaseLocalSource local, BaseTrackFileLocator locator, TrackFileFormat supportedFormat) {
+	public AbstractPlayer(BaseLocalSource local, Object locator, TrackFileFormat supportedFormat) {
 		super();
 		this.local = local;
 
 		this.supportedFormat = supportedFormat;
-		this.tracksLocation = locator.locationOfPlay(this);
+//		this.tracksLocation = locator.locationOfPlay(this); //FIXME
+		this.tracksLocation = null;
 		
 		this.stopped = true;
 		this.paused = false;
