@@ -4,7 +4,6 @@ import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
 /**
  * The default locator is quite improoved {@link PrimitiveLocator}. If format of
@@ -13,7 +12,9 @@ import cz.martlin.jmop.core.sources.remote.BaseDownloader;
  * 
  * @author martin
  *
+ * @deprecated do not use
  */
+@Deprecated
 public class DefaultLocator implements BaseTrackFileLocator {
 
 	private final TrackFileFormat saveFormat;
@@ -24,14 +25,15 @@ public class DefaultLocator implements BaseTrackFileLocator {
 	}
 
 	@Override
-	public TrackFileLocation locationOfDownload(BaseDownloader downloader) {
-		TrackFileFormat downloadFormat = downloader.downloadFormat();
-
-		if (downloadFormat.equals(saveFormat)) {
-			return TrackFileLocation.SAVE;
-		} else {
-			return TrackFileLocation.TEMP;
-		}
+	public TrackFileLocation locationOfDownload(Object downloader) {
+		throw new UnsupportedOperationException("downloader");
+//		TrackFileFormat downloadFormat = downloader.downloadFormat();
+//
+//		if (downloadFormat.equals(saveFormat)) {
+//			return TrackFileLocation.SAVE;
+//		} else {
+//			return TrackFileLocation.TEMP;
+//		}
 	}
 
 	@Override

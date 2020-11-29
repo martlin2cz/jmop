@@ -5,15 +5,20 @@ import cz.martlin.jmop.core.player.BasePlayer;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.local.misc.locator.BaseTrackFileLocator;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 
+/**
+ * @deprecated no more needed
+ * @author martin
+ *
+ */
+@Deprecated
 public class FormatsLocationsUtility {
 	private final BaseConfiguration config;
 	private final BaseTrackFileLocator locator;
-	private final BaseDownloader downloader;
+	private final Object downloader;
 	private final BasePlayer player;
 
-	public FormatsLocationsUtility(BaseConfiguration config, BaseTrackFileLocator locator, BaseDownloader downloader,
+	public FormatsLocationsUtility(BaseConfiguration config, BaseTrackFileLocator locator, Object downloader,
 			BasePlayer player) {
 		super();
 		this.config = config;
@@ -23,7 +28,8 @@ public class FormatsLocationsUtility {
 	}
 
 	public TrackFileFormat downloadFormat() {
-		return downloader.downloadFormat();
+		throw new UnsupportedOperationException("downloader");
+//		return downloader.downloadFormat();
 	}
 
 	public TrackFileFormat saveFormat() {
@@ -35,7 +41,8 @@ public class FormatsLocationsUtility {
 	}
 
 	public TrackFileLocation downloadLocation() {
-		return locator.locationOfDownload(downloader);
+		throw new UnsupportedOperationException("downloader");
+//		return locator.locationOfDownload(downloader);
 	}
 
 	public TrackFileLocation saveLocation() {

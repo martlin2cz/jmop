@@ -16,8 +16,9 @@ import cz.martlin.jmop.core.config.BaseConfiguration;
  * {@link #isOffline()} marks connection back offline.
  * 
  * @author martin
- *
+ * @deprecated no more needed
  */
+@Deprecated
 public class InternetConnectionStatus extends ObservableObject<InternetConnectionStatus> {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());

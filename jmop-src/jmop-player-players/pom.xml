@@ -18,5 +18,11 @@
 			<artifactId>jmop-player-base</artifactId>
 			<version>${revision}</version>
 		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-storages</artifactId>
+			<version>${revision}</version>
+		</dependency>
 	</dependencies>
+	
 </project>
