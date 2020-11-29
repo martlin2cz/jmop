@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<revision>1.2</revision>
+		<revision>3.0.1</revision>
 	</properties>
 
 
@@ -174,15 +174,21 @@
 
 		</plugins>
 	</build>
+	
 	<modules>
-		<module>jmop-base</module>
-		<module>jmop-remotes</module>
-		<module>jmop-locals</module>
-		<module>jmop-play</module>
-		<module>jmop-core</module>
-		<module>jmop-gui</module>
-		<module>jmop-app</module>
-		<module>jmop-player</module>
-		<module>jmop-playlister</module>
+		<module>jmop-common-base</module>
+		<module>jmop-common-storages</module>
+		<module>jmop-common-musicbase</module>
+		
+		<module>jmop-player-base</module>
+		<module>jmop-player-players</module>
+		<module>jmop-player-playlister</module>
+		<module>jmop-player-engine </module>
+		<module>jmop-player-gui</module>
+		<module>jmop-player-app</module>
+		
+		<module>jmop-sourcery-base</module>
+		<module>jmop-sourcery-remotes</module>
+		<module>jmop-sourcery-appp</module>
 	</modules>
 </project>
