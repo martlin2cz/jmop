@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Metadata;
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Metadata;
+import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.Track;
 
 public class TestingPrinter {
 

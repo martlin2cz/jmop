@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.data;
+package cz.martlin.jmop.common.data;
 
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import javafx.util.Duration;
@@ -6,31 +6,21 @@ import javafx.util.Duration;
 /**
  * The data structure for track. Track contains reference to bundle,
  * idenfitifer, title, description length (duration). Instance of this class is
- * immutable. To create instance, use
- * {@link Bundle#createTrack(String, String, String)}
+ * mutable.
  * 
  * @author martin
  *
  */
 public class Track {
-	private final Bundle bundle;
-	private final String identifier;
-	private final String title;
-	private final String description;
-	private final Duration duration;
-	private final Metadata metadata;
+	private Bundle bundle;
+	private String identifier;
+	private String title;
+	private String description;
+	private Duration duration;
+	private Metadata metadata;
 
-
-	/**
-	 * If possible use {@link Bundle#createTrack(String, String, String)} instead.
-	 * 
-	 * @param bundle
-	 * @param identifier
-	 * @param title
-	 * @param description
-	 * @param duration
-	 */
-	protected Track(Bundle bundle, String identifier, String title, String description, Duration duration, Metadata metadata) {
+	public Track(Bundle bundle, String identifier, String title, String description, Duration duration,
+			Metadata metadata) {
 		super();
 		this.bundle = bundle;
 		this.identifier = identifier;
@@ -44,24 +34,48 @@ public class Track {
 		return bundle;
 	}
 
+	public void setBundle(Bundle bundle) {
+		this.bundle = bundle;
+	}
+
 	public String getIdentifier() {
 		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public String getDescription() {
 		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Duration getDuration() {
 		return duration;
 	}
 
+	public void setDuration(Duration duration) {
+		this.duration = duration;
+	}
+
 	public Metadata getMetadata() {
 		return metadata;
+	}
+
+	public void setMetadata(Metadata metadata) {
+		this.metadata = metadata;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 

@@ -59,7 +59,7 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 
 		pushBundleDataIntoDocument(document, root, bundle);
 
-		Playlist allTracksPlaylist = bundle.getPlaylist(allTracksPlaylistName); // FIXME hack?
+		Playlist allTracksPlaylist = bundle.getPlaylist(bundle, allTracksPlaylistName); // FIXME hack?
 		pushPlaylistDataIntoDocument(document, root, allTracksPlaylist);
 
 	}

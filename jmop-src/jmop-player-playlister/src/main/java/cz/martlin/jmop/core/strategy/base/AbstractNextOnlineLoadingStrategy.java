@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.strategy.base;
 
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 

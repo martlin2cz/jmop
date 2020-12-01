@@ -1,8 +1,16 @@
-package cz.martlin.jmop.core.data;
+package cz.martlin.jmop.common.data;
 
 import java.util.Calendar;
 
+/**
+ * An immutable structure holding the general metadata of bundle, playlist or track.
+ * @author martin
+ *
+ */
 public class Metadata {
+	//TODO replace Calendar with something more ...
+	//TODO make the fields final
+	
 	private final Calendar created;
 	private Calendar lastPlayed;
 	private int numberOfPlays;
@@ -28,6 +36,10 @@ public class Metadata {
 		return created;
 	}
 
+	/**
+	 * @deprecated replaced by {@link #played()}.
+	 */
+	@Deprecated
 	public void markPlayed() {
 		this.lastPlayed = Calendar.getInstance();
 		this.numberOfPlays++;
@@ -36,6 +48,14 @@ public class Metadata {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	public Metadata played() {
+		Calendar newCreated = this.created;
+		int newNumberOfPlays = numberOfPlays + 1;
+		Calendar newLastPlayed = Calendar.getInstance();
+		
+		return createExisting(newCreated, newLastPlayed, newNumberOfPlays);
+	}
+	
 	public static Metadata createNew() {
 		Calendar created = Calendar.getInstance();
 		Calendar lastPlayed = null;

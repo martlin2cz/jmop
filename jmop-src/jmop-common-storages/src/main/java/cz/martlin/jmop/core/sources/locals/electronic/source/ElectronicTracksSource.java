@@ -2,8 +2,8 @@ package cz.martlin.jmop.core.sources.locals.electronic.source;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;

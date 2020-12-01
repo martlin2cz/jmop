@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public interface BaseTracksLocalSource {

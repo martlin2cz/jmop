@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.data;
+package cz.martlin.jmop.common.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,20 +13,43 @@ import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
 
 /**
- * The data structure representing bundle. Contains its kind, name and also list
- * of all tracks. Changes of instance of this class fires invalidated events.
+ * The data structure representing bundle. Contains its name and metadata.
  * 
  * @author martin
  *
  */
 public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundle> {
+	@Deprecated
 	private final SourceKind kind;
-	private final String name;
+	
+	private String name;
 	private Metadata metadata;
 
+	@Deprecated
 	private final Map<String, Track> tracks;
+	@Deprecated
 	private final Map<String, Playlist> playlists;
 
+	/**
+	 * Creates the bundle.
+	 * @param name
+	 * @param metadata
+	 */
+	public Bundle(String name, Metadata metadata) {
+		this.name = name;
+		this.metadata = metadata;
+		
+		this.kind = null;
+		this.tracks = null;
+		this.playlists = null;
+	}
+	
+	/**
+	 * 
+	 * @param kind
+	 * @param name
+	 * @deprecated use the {@link #Bundle(String, Metadata)}.
+	 */
 	@Deprecated
 	public Bundle(SourceKind kind, String name) {
 		super();
@@ -36,6 +59,13 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		this.playlists = new LinkedHashMap<>();
 	}
 
+	/**
+	 * 
+	 * @param kind
+	 * @param name
+	 * @param tracks
+	 * @deprecated use the {@link #Bundle(String, Metadata)}.
+	 */
 	@Deprecated
 	public Bundle(SourceKind kind, String name, Tracklist tracks) {
 		super();
@@ -45,6 +75,14 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		this.playlists = new LinkedHashMap<>();
 	}
 
+	/**
+	 * 
+	 * @param kind
+	 * @param name
+	 * @param metadata
+	 * @deprecated use the {@link #Bundle(String, Metadata)}.
+	 */
+	@Deprecated
 	public Bundle(SourceKind kind, String name, Metadata metadata) {
 		this.kind = kind;
 		this.name = name;
@@ -53,6 +91,15 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		this.playlists = new LinkedHashMap<>();
 	}
 
+	/**
+	 * 
+	 * @param kind
+	 * @param name
+	 * @param metadata
+	 * @param tracks
+	 * @deprecated use the {@link #Bundle(String, Metadata)}.
+	 */
+	@Deprecated
 	public Bundle(SourceKind kind, String name, Metadata metadata, Tracklist tracks) {
 		this.kind = kind;
 		this.name = name;
@@ -61,6 +108,7 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		this.playlists = new LinkedHashMap<>();
 	}
 
+	@Deprecated
 	public SourceKind getKind() {
 		return kind;
 	}
@@ -68,10 +116,20 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	public String getName() {
 		return name;
 	}
+	
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Metadata getMetadata() {
 		return metadata;
 	}
+	
+	public void setMetadata(Metadata metadata) {
+		this.metadata = metadata;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -82,7 +140,9 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	 * @param description
 	 * @param duration
 	 * @return
+	 * @deprecated do not
 	 */
+	@Deprecated
 	public Track createTrack(String identifier, String title, String description, Duration duration,
 			Metadata metadata) {
 		Track track = new Track(this, identifier, title, description, duration, metadata);
@@ -93,6 +153,17 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		return track;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param currentTrack
+	 * @param locked
+	 * @param metadata
+	 * @param tracks
+	 * @return
+	 * @deprecated do not
+	 */
+	@Deprecated
 	public Playlist createPlaylist(String name, int currentTrack, boolean locked, Metadata metadata, Tracklist tracks) {
 		Playlist playlist = new Playlist(this, name, currentTrack, locked, metadata, tracks);
 
@@ -102,6 +173,13 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		return playlist;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @deprecated do not
+	 */
+	@Deprecated
 	public Playlist createNewPlaylist(String name) {
 		Playlist playlist = new Playlist(this, name);
 
@@ -118,11 +196,20 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	 * 
 	 * @param id
 	 * @return
+	 * @deprecated do not
 	 */
+	@Deprecated
 	public Track getTrack(String id) {
 		return tracks.get(id);
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @deprecated do not
+	 */
+	@Deprecated
 	public Playlist getPlaylist(String name) {
 		return playlists.get(name);
 	}
@@ -133,7 +220,9 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	 * 
 	 * @param track
 	 * @return
+	 * @deprecated do not
 	 */
+	@Deprecated
 	public boolean contains(Track track) {
 		String id = track.getIdentifier();
 		return tracks.containsKey(id);
@@ -143,7 +232,9 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	 * Lists all tracks as a tracklist.
 	 * 
 	 * @return
+	 * @deprecated do not
 	 */
+	@Deprecated
 	public Tracklist tracks() {
 		Collection<Track> col = tracks.values();
 		List<Track> list = new ArrayList<>(col);
@@ -157,7 +248,9 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	 * 
 	 * @param tracks
 	 * @return
+	 * @deprecated do not
 	 */
+	@Deprecated
 	private static Map<String, Track> toMap(Tracklist tracks) {
 		return tracks.getTracks().stream() //
 				.collect(Collectors.toMap( //
@@ -217,5 +310,6 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	public String toString() {
 		return "Bundle [name=" + name + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
+
 
 }

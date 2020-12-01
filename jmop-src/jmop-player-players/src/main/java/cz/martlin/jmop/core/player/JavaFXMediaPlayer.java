@@ -3,9 +3,9 @@ package cz.martlin.jmop.core.player;
 import java.io.File;
 import java.net.URI;
 
-import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.misc.locator.BaseTrackFileLocator;
+import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.JFXPanel;

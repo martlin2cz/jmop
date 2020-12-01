@@ -2,8 +2,8 @@ package cz.martlin.jmop.core.sources.local;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Track;
 
 /**
  * Abstract specificies for naming of various file-system items: bundle dir,
