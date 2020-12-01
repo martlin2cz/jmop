@@ -1,8 +1,8 @@
 package cz.martlin.jmop.core.playlister;
 
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.data.Tracklist;
+import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.data.Tracklist;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
 import cz.martlin.jmop.core.misc.JMOPSourceException;

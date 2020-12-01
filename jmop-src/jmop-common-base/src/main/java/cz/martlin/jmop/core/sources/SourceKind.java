@@ -7,8 +7,9 @@ import java.util.stream.Stream;
  * YouTube source is supported.
  * 
  * @author martin
- *
+ * @deprecated no more in use.
  */
+@Deprecated
 public enum SourceKind {
 	YOUTUBE("YouTube.com"); //$NON-NLS-1$
 

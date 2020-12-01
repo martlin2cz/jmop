@@ -1,13 +1,14 @@
 package cz.martlin.jmop.core.misc.ops;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 
 @Deprecated
 public class OperationsManagerTest {
 
 	@Test
-	@Ignore
+	@Disabled
 	public void testPrimitive() throws Throwable {
 		FxTester.runTheTests(() -> {
 			OperationsManager man = new OperationsManager();
@@ -17,7 +18,7 @@ public class OperationsManagerTest {
 	}
 
 	@Test
-	@Ignore
+	@Disabled
 	public void testMore() throws Throwable {
 		FxTester.runTheTests(() -> {
 			OperationsManager man = new OperationsManager();

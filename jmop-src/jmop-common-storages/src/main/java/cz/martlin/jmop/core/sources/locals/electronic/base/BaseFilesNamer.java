@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.sources.locals.electronic.base;
 
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Track;
 
 public interface BaseFilesNamer {
 

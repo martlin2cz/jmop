@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.sources.local;
 
 import java.util.List;
 
-import cz.martlin.jmop.core.data.Bundle;
+import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public interface BaseBundlesLocalSource {

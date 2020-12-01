@@ -16,12 +16,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.TestingDataCreator;
+import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.ConstantConfiguration;
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.TestingDataCreator;
-import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseBundlesLocalSource;
 import cz.martlin.jmop.core.sources.local.BasePlaylistsLocalSource;

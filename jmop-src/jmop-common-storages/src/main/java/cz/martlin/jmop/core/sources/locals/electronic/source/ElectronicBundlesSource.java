@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.ConsumerWithException;
 import cz.martlin.jmop.core.sources.local.BaseBundlesLocalSource;

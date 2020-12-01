@@ -3,9 +3,9 @@ package cz.martlin.jmop.core.sources.local;
 import java.io.File;
 import java.io.IOException;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.PlaylistFileData;
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.PlaylistFileData;
 
 /**
  * Base encapsulation for {@link Playlist} (in fact {@link PlaylistFileData})

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;

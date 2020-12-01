@@ -2,8 +2,8 @@ package cz.martlin.jmop.core.sources.locals.base;
 
 import java.io.File;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Playlist;
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public interface BasePlaylistFilesLoaderStorer {

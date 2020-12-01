@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.data;
+package cz.martlin.jmop.common.data;
 
 import java.util.Arrays;
 import java.util.Calendar;

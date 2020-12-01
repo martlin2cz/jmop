@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.player;
 
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.beans.value.ObservableValue;

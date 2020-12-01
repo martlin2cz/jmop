@@ -1,25 +1,53 @@
-package cz.martlin.jmop.core.data;
+package cz.martlin.jmop.common.data;
 
 import cz.martlin.jmop.core.misc.ObservableObject;
 
 /**
  * The data structure for playlist. Each playlist is associated with some
- * bundle, and has name, list of tracks and current track index, and also
- * indicator, whether is locked or not. Changes of instance of this class fires
+ * bundle, and has name, list of tracks and current track index.
+ * Changes of instance of this class fires
  * invalidated events.
  * 
  * @author martin
  *
  */
 public class Playlist extends ObservableObject<Playlist> implements Comparable<Playlist> {
-	private final Bundle bundle;
+	private Bundle bundle;
 
 	private String name;
 	private Tracklist tracks;
 	private int currentTrackIndex;
+	@Deprecated
 	private boolean locked;
 	private Metadata metadata;
 
+	public Playlist(Bundle bundle, String name, Metadata metadata) {
+		super();
+		this.bundle = bundle;
+		this.name = name;
+		this.tracks = new Tracklist();
+		this.currentTrackIndex = 0;
+		this.metadata = metadata;
+	}
+	
+	public Playlist(Bundle bundle, String name, Tracklist tracks, int currentTrackIndex, Metadata metadata) {
+		super();
+		this.bundle = bundle;
+		this.name = name;
+		this.tracks = tracks;
+		this.currentTrackIndex = currentTrackIndex;
+		this.metadata = metadata;
+	}
+	
+	/**
+	 * 
+	 * @param bundle
+	 * @param name
+	 * @param tracks
+	 * @param currentTrackIndex
+	 * @param locked
+	 * @deprecated use the {@link #Playlist(Bundle, String, Tracklist, int, Metadata))}
+	 */
 	@Deprecated
 	public Playlist(Bundle bundle, String name, Tracklist tracks, int currentTrackIndex, boolean locked) {
 		super();
@@ -30,6 +58,13 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		this.locked = locked;
 	}
 
+	/**
+	 * 
+	 * @param bundle
+	 * @param name
+	 * @param tracks
+	 * @deprecated use the {@link #Playlist(Bundle, String, Tracklist, int, Metadata))}
+	 */
 	@Deprecated
 	public Playlist(Bundle bundle, String name, Tracklist tracks) {
 		super();
@@ -40,6 +75,12 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		this.locked = false;
 	}
 
+	/**
+	 * @deprecated use the {@link #Playlist(Bundle, String, Tracklist, int, Metadata))}
+	 * @param bundle
+	 * @param name
+	 */
+	@Deprecated
 	public Playlist(Bundle bundle, String name) {
 		super();
 		this.bundle = bundle;
@@ -50,6 +91,16 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		this.metadata = Metadata.createNew();
 	}
 
+	/**
+	 * 
+	 * @param bundle
+	 * @param name
+	 * @param currentTrack
+	 * @param locked
+	 * @param metadata
+	 * @param tracks
+	 * @deprecated use the {@link #Playlist(Bundle, String, Tracklist, int, Metadata))}
+	 */
 	public Playlist(Bundle bundle, String name, int currentTrack, boolean locked, Metadata metadata, Tracklist tracks) {
 		super();
 		this.bundle = bundle;
@@ -64,6 +115,10 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	public Bundle getBundle() {
 		return bundle;
 	}
+	
+	public void setBundle(Bundle bundle) {
+		this.bundle = bundle;
+	}
 
 	public String getName() {
 		return name;
@@ -77,7 +132,18 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	public Tracklist getTracks() {
 		return tracks;
 	}
+	
+	public void addTrack(Track track) {
+		//TODO little tricky
+		tracks.getTracks().add(track);
+	}
+	
+	public void removeTrack(Track track) {
+		//TODO little tricky
+		tracks.getTracks().remove(track);
+	}
 
+	@Deprecated
 	public void setTracks(Tracklist tracks) {
 		this.tracks = tracks;
 		fireValueChangedEvent();
@@ -92,10 +158,12 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		fireValueChangedEvent();
 	}
 
+	@Deprecated
 	public boolean isLocked() {
 		return locked;
 	}
 
+	@Deprecated
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 		fireValueChangedEvent();
@@ -103,6 +171,10 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	
 	public Metadata getMetadata() {
 		return metadata; 
+	}
+	
+	public void setMetadata(Metadata metadata) {
+		this.metadata = metadata;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////

@@ -7,11 +7,11 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.TestingDataCreator;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.ConstantConfiguration;
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.TestingDataCreator;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.TestingPrinter;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;

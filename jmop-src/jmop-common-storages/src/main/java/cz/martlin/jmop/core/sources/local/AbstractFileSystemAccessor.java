@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.PlaylistFileData;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.PlaylistFileData;
+import cz.martlin.jmop.common.data.Track;
 
 /**
  * Abstract encapsulation of file system operations to be used in the JMOP
