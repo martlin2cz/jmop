@@ -1,11 +1,14 @@
-package cz.martlin.jmop.common.musicbase.simple;
+package cz.martlin.jmop.common.storages.simplefs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.File;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
@@ -16,9 +19,14 @@ import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
+import cz.martlin.jmop.core.sources.locals.electronic.impls.ElectronicFileSystemAccessor;
 
-public class SimpleInMemoryMusicbaseTest {
+public class SimpleFileSystemedMusicbaseTest {
 
+	@TempDir
+	public File root;
+	
 	private BaseMusicbase musicbase;
 
 	private Bundle testingBundle;
@@ -27,7 +35,11 @@ public class SimpleInMemoryMusicbaseTest {
 
 	@BeforeEach
 	public void before() {
-		BaseMusicbase musicbase = new SimpleInMemoryMusicbase();
+		System.out.println("Our root is " + root);
+		
+		BaseFileSystemAccessor fs = new ElectronicFileSystemAccessor();
+		
+		BaseMusicbase musicbase = new SimpleFileSystemedMusicbase(root, fs);
 
 		try {
 			prepareDefaultTestingContents(musicbase);
@@ -50,7 +62,7 @@ public class SimpleInMemoryMusicbaseTest {
 
 		testingPlaylist = musicbase.createPlaylist(testingBundle, "testing-playlist");
 
-		testingTrack = musicbase.createTrack(testingBundle, td("tt", "testing_track"));
+		testingTrack = musicbase.createTrack(testingBundle, td("tt"));
 		testingPlaylist.addTrack(testingTrack);
 
 	}
@@ -79,11 +91,13 @@ public class SimpleInMemoryMusicbaseTest {
 	@Test
 	public void testTracks() throws JMOPSourceException {
 		// tracks
-		Track holaTrack = musicbase.createTrack(testingBundle, td("ho2", "hola"));
-		assertEquals(holaTrack, musicbase.getTrack(testingBundle, "ho2"));
+		Track holaTrack = musicbase.createTrack(testingBundle, td("hola"));
+		assertEquals(holaTrack.toString(), musicbase.getTrack(testingBundle, "hola").toString());
+		assertEquals(holaTrack, musicbase.getTrack(testingBundle, "hola"));
 
-		Track alohaTrack = musicbase.createTrack(testingBundle, td("al3", "aloha"));
-		assertEquals(alohaTrack, musicbase.getTrack(testingBundle, "al3"));
+		Track alohaTrack = musicbase.createTrack(testingBundle, td("aloha"));
+		assertEquals(alohaTrack.toString(), musicbase.getTrack(testingBundle, "aloha").toString());
+		assertEquals(alohaTrack, musicbase.getTrack(testingBundle, "aloha"));
 
 //		// fill the playlists
 //		testingPlaylist.addTrack(holaTrack);
@@ -94,8 +108,9 @@ public class SimpleInMemoryMusicbaseTest {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private TrackData td(String id, String title) {
-		return new TrackData(id, title, "Desc", DurationUtilities.createDuration(0, 4, 11));
+	private TrackData td(String id) {
+		return new TrackData(id, id, id, DurationUtilities.createDuration(0, 3, 15));
 	}
+
 
 }

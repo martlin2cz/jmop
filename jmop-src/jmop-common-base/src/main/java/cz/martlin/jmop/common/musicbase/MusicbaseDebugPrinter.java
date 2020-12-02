@@ -7,10 +7,11 @@ import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.Tracklist;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class MusicbaseDebugPrinter {
 
-	public static void print(BaseMusicbase musicbase) {
+	public static void print(BaseMusicbase musicbase) throws JMOPSourceException {
 		List<String> bundleNames = musicbase.bundlesNames();
 
 		for (String bundleName : bundleNames) {
@@ -20,7 +21,7 @@ public class MusicbaseDebugPrinter {
 
 	}
 
-	private static void print(BaseMusicbase musicbase, Bundle bundle) {
+	private static void print(BaseMusicbase musicbase, Bundle bundle) throws JMOPSourceException {
 		String bundleName = bundle.getName();
 		System.out.println("Bundle '" + bundleName + "':");
 		print(bundle.getMetadata());
@@ -49,6 +50,6 @@ public class MusicbaseDebugPrinter {
 	}
 
 	private static void print(Metadata metadata) {
-		System.out.println("			(" + metadata.getCreated() + ")"); // TODO
+		System.out.println("			(" + metadata.getCreated().getTime() + ")"); // TODO
 	}
 }
