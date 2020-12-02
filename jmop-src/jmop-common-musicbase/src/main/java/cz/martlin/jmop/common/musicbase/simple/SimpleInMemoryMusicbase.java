@@ -10,6 +10,7 @@ import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.TrackData;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class SimpleInMemoryMusicbase implements BaseMusicbase {
 
@@ -124,6 +125,11 @@ public class SimpleInMemoryMusicbase implements BaseMusicbase {
 		playlist.setMetadata(newMetadata);
 	}
 
+	@Override
+	public void saveModifiedTracklist(Playlist playlist) throws JMOPSourceException {
+		// okay, already done
+	}
+	
 	@Override
 	public Track createTrack(Bundle bundle, TrackData data) {
 		Metadata metadata = Metadata.createNew();

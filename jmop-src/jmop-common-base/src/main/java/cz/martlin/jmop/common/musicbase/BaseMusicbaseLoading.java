@@ -5,22 +5,23 @@ import java.util.List;
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public interface BaseMusicbaseLoading {
 	///////////////////////////////////////////////////////////////////////////
-	public List<String> bundlesNames();
+	public List<String> bundlesNames() throws JMOPSourceException;
 
-	public Bundle getBundle(String name);
-
-	///////////////////////////////////////////////////////////////////////////
-	public List<String> playlistsNames(Bundle bundle);
-
-	public Playlist getPlaylist(Bundle bundle, String name);
+	public Bundle getBundle(String name) throws JMOPSourceException;
 
 	///////////////////////////////////////////////////////////////////////////
-	public List<String> listTracksIDs(Bundle bundle);
+	public List<String> playlistsNames(Bundle bundle) throws JMOPSourceException;
 
-	public Track getTrack(Bundle bundle, String id);
+	public Playlist getPlaylist(Bundle bundle, String name) throws JMOPSourceException;
+
+	///////////////////////////////////////////////////////////////////////////
+	public List<String> listTracksIDs(Bundle bundle) throws JMOPSourceException;
+
+	public Track getTrack(Bundle bundle, String id) throws JMOPSourceException;
 	
 	///////////////////////////////////////////////////////////////////////////
 }

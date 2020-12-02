@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import cz.martlin.jmop.common.data.Tracklist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 
@@ -80,6 +81,16 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 	}
 
 	@Override
+	public void createEmptyFile(File file) throws JMOPSourceException {
+		try {
+			Path path = file.toPath();
+			Files.createFile(path);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot create file", e);
+		}
+	}
+	
+	@Override
 	public void deleteFile(File file) throws JMOPSourceException {
 		try {
 			Path path = file.toPath();
@@ -111,6 +122,26 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 					.collect(Collectors.toSet()); //
 		} catch (IOException e) {
 			throw new JMOPSourceException("Cannot list files", e);
+		}
+	}
+	
+	@Override
+	public List<String> loadLines(File file) throws JMOPSourceException {
+		try {
+			Path path = file.toPath();
+			return Files.readAllLines(path);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot load file", e);
+		}
+	}
+	
+	@Override
+	public void saveLines(File file, List<String> lines) throws JMOPSourceException {
+		try {
+			Path path = file.toPath();
+			Files.write(path, lines);
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot write file", e);
 		}
 	}
 	/////////////////////////////////////////////////////////////////
