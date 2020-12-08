@@ -11,7 +11,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class Track {
+public class Track implements Comparable<Track> {
 	private Bundle bundle;
 	private String identifier; //TODO replace by uri
 	private String title;
@@ -79,6 +79,11 @@ public class Track {
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	@Override
+	public int compareTo(Track another) {
+		return this.title.compareToIgnoreCase(another.title);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

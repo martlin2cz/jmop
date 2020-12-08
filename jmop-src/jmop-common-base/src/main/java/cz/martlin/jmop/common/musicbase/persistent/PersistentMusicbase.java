@@ -1,9 +1,8 @@
 package cz.martlin.jmop.common.musicbase.persistent;
 
-import java.util.List;
+import java.util.Set;
 
 import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.TrackData;
@@ -27,8 +26,18 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public List<String> bundlesNames() throws JMOPSourceException {
-		return inmemory.bundlesNames();
+	public Set<Bundle> bundles() throws JMOPSourceException {
+		return inmemory.bundles();
+	}
+
+	@Override
+	public Set<Playlist> playlists(Bundle bundle) throws JMOPSourceException {
+		return inmemory.playlists(bundle);
+	}
+
+	@Override
+	public Set<Track> tracks(Bundle bundle) throws JMOPSourceException {
+		return inmemory.tracks(bundle);
 	}
 
 	@Override
@@ -36,16 +45,6 @@ public class PersistentMusicbase implements BaseMusicbase {
 		Bundle bundle = inmemory.createBundle(name);
 		storage.createBundle(bundle);
 		return bundle;
-	}
-
-	@Override
-	public Bundle getBundle(String name) throws JMOPSourceException {
-		return inmemory.getBundle(name);
-	}
-
-	@Override
-	public List<String> playlistsNames(Bundle bundle) throws JMOPSourceException {
-		return inmemory.playlistsNames(bundle);
 	}
 
 	@Override
@@ -62,19 +61,9 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public Playlist getPlaylist(Bundle bundle, String name) throws JMOPSourceException {
-		return inmemory.getPlaylist(bundle, name);
-	}
-
-	@Override
-	public void updateMetadata(Bundle bundle, Metadata newMetadata) throws JMOPSourceException {
-		inmemory.updateMetadata(bundle, newMetadata);
+	public void bundleUpdated(Bundle bundle) throws JMOPSourceException {
+		inmemory.bundleUpdated(bundle);
 		storage.saveUpdatedBundle(bundle);
-	}
-
-	@Override
-	public List<String> listTracksIDs(Bundle bundle) throws JMOPSourceException {
-		return inmemory.listTracksIDs(bundle);
 	}
 
 	@Override
@@ -82,11 +71,6 @@ public class PersistentMusicbase implements BaseMusicbase {
 		Playlist playlist = inmemory.createPlaylist(bundle, name);
 		storage.createPlaylist(playlist);
 		return playlist;
-	}
-
-	@Override
-	public Track getTrack(Bundle bundle, String id) throws JMOPSourceException {
-		return inmemory.getTrack(bundle, id);
 	}
 
 	@Override
@@ -110,14 +94,8 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public void updateMetadata(Playlist playlist, Metadata newMetadata) throws JMOPSourceException {
-		inmemory.updateMetadata(playlist, newMetadata);
-		storage.saveUpdatedPlaylist(playlist);
-	}
-
-	@Override
-	public void saveModifiedTracklist(Playlist playlist) throws JMOPSourceException {
-		inmemory.saveModifiedTracklist(playlist);
+	public void playlistUpdated(Playlist playlist) throws JMOPSourceException {
+		inmemory.playlistUpdated(playlist);
 		storage.saveUpdatedPlaylist(playlist);
 	}
 
@@ -149,8 +127,8 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public void updateMetadata(Track track, Metadata newMetadata) throws JMOPSourceException {
-		inmemory.updateMetadata(track, newMetadata);
+	public void trackUpdated(Track track) throws JMOPSourceException {
+		inmemory.trackUpdated(track);
 		storage.saveUpdatedTrack(track);
 	}
 

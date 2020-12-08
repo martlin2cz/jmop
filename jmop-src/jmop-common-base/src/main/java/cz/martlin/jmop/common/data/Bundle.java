@@ -263,7 +263,7 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 
 	@Override
 	public int compareTo(Bundle another) {
-		return this.name.compareTo(another.name);
+		return this.name.compareToIgnoreCase(another.name);
 	}
 
 	@Override

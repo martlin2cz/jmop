@@ -11,29 +11,24 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class MusicbaseDebugPrinter {
 
-	public static void print(BaseMusicbase musicbase) throws JMOPSourceException {
-		List<String> bundleNames = musicbase.bundlesNames();
-
-		for (String bundleName : bundleNames) {
-			Bundle bundle = musicbase.getBundle(bundleName);
+	public static void print(BaseMusicbaseLoading musicbase) throws JMOPSourceException {
+		for (Bundle bundle: musicbase.bundles()) {
 			print(musicbase, bundle);
 		}
 
 	}
 
-	private static void print(BaseMusicbase musicbase, Bundle bundle) throws JMOPSourceException {
+	private static void print(BaseMusicbaseLoading musicbase, Bundle bundle) throws JMOPSourceException {
 		String bundleName = bundle.getName();
 		System.out.println("Bundle '" + bundleName + "':");
 		print(bundle.getMetadata());
 
-		List<String> playlistNames = musicbase.playlistsNames(bundle);
-		for (String playlistName : playlistNames) {
-			Playlist playlist = musicbase.getPlaylist(bundle, playlistName);
+		for (Playlist playlist: musicbase.playlists(bundle)) {
 			print(musicbase, playlist);
 		}
 	}
 
-	private static void print(BaseMusicbase musicbase, Playlist playlist) {
+	private static void print(BaseMusicbaseLoading musicbase, Playlist playlist) {
 		String playlistName = playlist.getName();
 		System.out.println("	Playlist '" + playlistName + "':");
 		print(playlist.getMetadata());
