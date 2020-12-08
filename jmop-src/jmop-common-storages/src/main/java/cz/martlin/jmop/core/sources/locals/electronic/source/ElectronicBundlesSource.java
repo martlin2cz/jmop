@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.musicbase.commons.BaseFilesLocator;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.misc.ops.ConsumerWithException;
@@ -14,7 +15,6 @@ import cz.martlin.jmop.core.sources.local.BaseBundlesLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.base.BaseBundleFilesLoaderStorer;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesLocator;
 
 public class ElectronicBundlesSource implements BaseBundlesLocalSource {
 
@@ -151,7 +151,7 @@ public class ElectronicBundlesSource implements BaseBundlesLocalSource {
 
 	private Bundle loadBundleOrHandleError(File dir) {
 		try {
-			return loadBundle(dir);
+			return loadBundleData(dir);
 		} catch (JMOPSourceException e) {
 			// TODO handle error
 			return null;
@@ -160,7 +160,7 @@ public class ElectronicBundlesSource implements BaseBundlesLocalSource {
 
 	private Bundle loadBundle(File dir) throws JMOPSourceException {
 		File allTracksPlaylistFile = allTracksPlaylistFile(dir);
-		return bfls.loadBundle(allTracksPlaylistFile);
+		return bfls.loadBundleData(allTracksPlaylistFile);
 	}
 
 	private File allTracksPlaylistFile(File bundleDir) {

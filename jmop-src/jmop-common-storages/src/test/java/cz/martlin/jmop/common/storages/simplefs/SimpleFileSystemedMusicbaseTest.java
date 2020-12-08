@@ -58,11 +58,11 @@ public class SimpleFileSystemedMusicbaseTest {
 	}
 
 	private void prepareDefaultTestingContents(BaseMusicbaseModifing musicbase) throws JMOPSourceException {
-		testingBundle = musicbase.createBundle("TestingBundle");
+		testingBundle = musicbase.createNewBundle("TestingBundle");
 
-		testingPlaylist = musicbase.createPlaylist(testingBundle, "testing-playlist");
+		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
 
-		testingTrack = musicbase.createTrack(testingBundle, td("tt"));
+		testingTrack = musicbase.createNewTrack(testingBundle, td("tt"));
 		testingPlaylist.addTrack(testingTrack);
 
 	}
@@ -71,31 +71,31 @@ public class SimpleFileSystemedMusicbaseTest {
 
 	@Test
 	public void testBundles() throws JMOPSourceException {
-		Bundle fooBundle = musicbase.createBundle("FooBundle");
+		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
 		assertEquals(fooBundle, musicbase.getBundle("FooBundle"));
 
-		Bundle barBundle = musicbase.createBundle("BarBundle");
+		Bundle barBundle = musicbase.createNewBundle("BarBundle");
 		assertEquals(barBundle, musicbase.getBundle("BarBundle"));
 	}
 
 	@Test
 	public void testPlaylists() throws JMOPSourceException {
 		// playlists
-		Playlist loremPlaylist = musicbase.createPlaylist(testingBundle, "lorem-playlist");
+		Playlist loremPlaylist = musicbase.createNewPlaylist(testingBundle, "lorem-playlist");
 		assertEquals(loremPlaylist, musicbase.getPlaylist(testingBundle, "lorem-playlist"));
 
-		Playlist ipsumPlaylist = musicbase.createPlaylist(testingBundle, "ipsum-playlist");
+		Playlist ipsumPlaylist = musicbase.createNewPlaylist(testingBundle, "ipsum-playlist");
 		assertEquals(ipsumPlaylist, musicbase.getPlaylist(testingBundle, "ipsum-playlist"));
 	}
 
 	@Test
 	public void testTracks() throws JMOPSourceException {
 		// tracks
-		Track holaTrack = musicbase.createTrack(testingBundle, td("hola"));
+		Track holaTrack = musicbase.createNewTrack(testingBundle, td("hola"));
 		assertEquals(holaTrack.toString(), musicbase.getTrack(testingBundle, "hola").toString());
 		assertEquals(holaTrack, musicbase.getTrack(testingBundle, "hola"));
 
-		Track alohaTrack = musicbase.createTrack(testingBundle, td("aloha"));
+		Track alohaTrack = musicbase.createNewTrack(testingBundle, td("aloha"));
 		assertEquals(alohaTrack.toString(), musicbase.getTrack(testingBundle, "aloha").toString());
 		assertEquals(alohaTrack, musicbase.getTrack(testingBundle, "aloha"));
 

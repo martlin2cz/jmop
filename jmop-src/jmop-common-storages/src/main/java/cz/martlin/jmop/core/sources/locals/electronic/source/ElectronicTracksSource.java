@@ -4,12 +4,12 @@ import java.io.File;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.musicbase.commons.BaseFilesLocator;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesLocator;
 
 public class ElectronicTracksSource implements BaseTracksLocalSource {
 

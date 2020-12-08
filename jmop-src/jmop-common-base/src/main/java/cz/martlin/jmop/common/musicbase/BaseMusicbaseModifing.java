@@ -10,7 +10,7 @@ public interface BaseMusicbaseModifing {
 	
 	///////////////////////////////////////////////////////////////////////////
 	
-	public Bundle createBundle(String name) throws JMOPSourceException;
+	public Bundle createNewBundle(String name) throws JMOPSourceException;
 
 	public void renameBundle(Bundle bundle, String newName) throws JMOPSourceException;
 
@@ -20,7 +20,7 @@ public interface BaseMusicbaseModifing {
 
 	///////////////////////////////////////////////////////////////////////////
 	
-	public Playlist createPlaylist(Bundle bundle, String name) throws JMOPSourceException;
+	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPSourceException;
 
 	public void renamePlaylist(Playlist playlist, String newName) throws JMOPSourceException;
 
@@ -32,7 +32,7 @@ public interface BaseMusicbaseModifing {
 	
 	///////////////////////////////////////////////////////////////////////////
 	
-	public Track createTrack(Bundle bundle, TrackData data) throws JMOPSourceException;
+	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPSourceException;
 
 	public void renameTrack(Track track, String newTitle) throws JMOPSourceException;
 

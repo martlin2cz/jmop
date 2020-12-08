@@ -8,9 +8,14 @@ public interface BaseFilesNamer {
 
 	public String fileBasenameOfPlaylist(String playlistName);
 
+	public String fileBasenameOfTrack(String trackTitle);
+	
+	
+	@Deprecated
 	public String fileBasenameOfTrack(Track track);
 
+	@Deprecated
 	public String nameOfTempDir();
-
+	@Deprecated
 	public String nameOfCacheDir();
 }

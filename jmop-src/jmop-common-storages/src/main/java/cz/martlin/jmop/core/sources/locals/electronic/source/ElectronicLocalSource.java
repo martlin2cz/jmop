@@ -2,17 +2,17 @@ package cz.martlin.jmop.core.sources.locals.electronic.source;
 
 import java.io.File;
 
+import cz.martlin.jmop.common.musicbase.commons.BaseFilesLocator;
+import cz.martlin.jmop.common.musicbase.dflt.ElectronicFileSystemAccessor;
+import cz.martlin.jmop.common.musicbase.dflt.ElectronicFilesLocator;
+import cz.martlin.jmop.common.musicbase.dflt.ElectronicFilesNamer;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.sources.local.BaseBundlesLocalSource;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.BasePlaylistsLocalSource;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesLocator;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesNamer;
-import cz.martlin.jmop.core.sources.locals.electronic.impls.ElectronicFileSystemAccessor;
-import cz.martlin.jmop.core.sources.locals.electronic.impls.ElectronicFilesLocator;
-import cz.martlin.jmop.core.sources.locals.electronic.impls.ElectronicFilesNamer;
 import cz.martlin.jmop.core.sources.locals.electronic.xspf.XSPFPlaylistFilesLoaderStorer;
 
 public class ElectronicLocalSource implements BaseLocalSource {

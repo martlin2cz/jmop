@@ -39,7 +39,7 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		xpfls.saveBundle(bundle, file);
 		// TODO try to open created file in different player
 
-		Bundle rebundle = xpfls.loadBundle(file);
+		Bundle rebundle = xpfls.loadBundleData(file);
 
 		System.out.println(TestingPrinter.print(rebundle));
 

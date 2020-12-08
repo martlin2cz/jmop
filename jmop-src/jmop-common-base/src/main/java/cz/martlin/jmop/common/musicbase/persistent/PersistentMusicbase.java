@@ -41,8 +41,14 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public Bundle createBundle(String name) throws JMOPSourceException {
-		Bundle bundle = inmemory.createBundle(name);
+	public Bundle createBundle(Bundle bundleData) throws JMOPSourceException {
+		Bundle bundle = inmemory.createBundle(bundleData);
+		return bundle;
+	}
+	
+	@Override
+	public Bundle createNewBundle(String name) throws JMOPSourceException {
+		Bundle bundle = inmemory.createNewBundle(name);
 		storage.createBundle(bundle);
 		return bundle;
 	}
@@ -67,8 +73,14 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public Playlist createPlaylist(Bundle bundle, String name) throws JMOPSourceException {
-		Playlist playlist = inmemory.createPlaylist(bundle, name);
+	public Playlist createPlaylist(Playlist playlistData) throws JMOPSourceException {
+		Playlist playlist = inmemory.createPlaylist(playlistData);
+		return playlist;
+	}
+	
+	@Override
+	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPSourceException {
+		Playlist playlist = inmemory.createNewPlaylist(bundle, name);
 		storage.createPlaylist(playlist);
 		return playlist;
 	}
@@ -100,8 +112,14 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public Track createTrack(Bundle bundle, TrackData data) throws JMOPSourceException {
-		Track track = inmemory.createTrack(bundle, data);
+	public Track createTrack(Track trackData) throws JMOPSourceException {
+		Track track = inmemory.createTrack(trackData);
+		return track;
+	}
+	
+	@Override
+	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPSourceException {
+		Track track = inmemory.createNewTrack(bundle, data);
 		storage.createTrack(track);
 		return track;
 	}

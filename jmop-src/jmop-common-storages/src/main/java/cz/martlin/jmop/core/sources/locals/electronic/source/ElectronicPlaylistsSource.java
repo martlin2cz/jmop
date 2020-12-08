@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.musicbase.commons.BaseFilesLocator;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BasePlaylistsLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.base.BasePlaylistFilesLoaderStorer;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesLocator;
 
 public class ElectronicPlaylistsSource implements BasePlaylistsLocalSource {
 
