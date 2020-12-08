@@ -45,5 +45,7 @@ public interface BaseMusicbaseModifing {
 
 	public void updateMetadata(Track track, Metadata newMetadata) throws JMOPSourceException;
 
+	//TODO and what about updated description, origin, author, ... ?
+	
 	///////////////////////////////////////////////////////////////////////////
 }

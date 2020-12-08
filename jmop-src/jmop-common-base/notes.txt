@@ -1,0 +1,27 @@
+possibilities:
+	- firePropertyChanged(propertyName, oldValue, newValue):
+ 		- list of properties, constants, enums, strings?
+ 		- values as object?
+ 		- add/remove?
+ 		- need to keep track fo that
+ 	
+ 	- tons of setX(newValue):
+ 		- nah
+ 		- break back into the Bundles/Playlists/Tracks Musicbase?
+ 			- naah
+ 		
+ 	- updateX(name, description, duration, tracks, author, ...):
+ 		- uurgh ...
+ 		- will look like: x.updateX(newName, x.getDedscription(), x.getDuration(), x.getTracks(), x.getAuthor(), ...)
+ 		- however, would avoid unnecessary saves in cases like x.setName, x.setDescription, x.markPlayed
+ 		
+ 
+ forther issues:
+ 	- move playlist:
+ 		- move also its tracks?
+ 			- what if another playlists references them?
+ 		- or copy them?
+ 		- or leave it as empty ... skeleton?
+ 		
+ 	- when renamed/removed track:
+ 		- don't forget to update/save all its playlists as well, i guess

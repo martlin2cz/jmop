@@ -13,7 +13,7 @@ import javafx.util.Duration;
  */
 public class Track {
 	private Bundle bundle;
-	private String identifier;
+	private String identifier; //TODO replace by uri
 	private String title;
 	private String description;
 	private Duration duration;

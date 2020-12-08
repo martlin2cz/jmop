@@ -14,7 +14,9 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class SimpleInMemoryMusicbase implements BaseMusicbase {
 
-	private final List<Bundle> bundles;
+	//TODO replace with something like MappingWithNameAsAlphabeticallyOrderedKey with add,remove,rename API
+	//TODO thing about the case, where the key would be <Bundle, name>
+	private final List<Bundle> bundles; 
 	private final List<Playlist> playlists;
 	private final List<Track> tracks;
 
