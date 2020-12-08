@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals.electronic.impls;
+package cz.martlin.jmop.common.musicbase.dflt;
 
 import java.io.File;
 import java.io.IOException;

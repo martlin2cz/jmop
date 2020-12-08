@@ -49,11 +49,11 @@ public class DefaultInMemoryMusicbaseTest {
 	}
 
 	private void prepareDefaultTestingContents(BaseMusicbaseModifing musicbase) throws JMOPSourceException {
-		testingBundle = musicbase.createBundle("TestingBundle");
+		testingBundle = musicbase.createNewBundle("TestingBundle");
 
-		testingPlaylist = musicbase.createPlaylist(testingBundle, "testing-playlist");
+		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
 
-		testingTrack = musicbase.createTrack(testingBundle, td("tt", "testing_track"));
+		testingTrack = musicbase.createNewTrack(testingBundle, td("tt", "testing_track"));
 		testingPlaylist.addTrack(testingTrack);
 
 	}
@@ -62,7 +62,7 @@ public class DefaultInMemoryMusicbaseTest {
 
 	@Test
 	public void testBundles() throws JMOPSourceException {
-		Bundle fooBundle = musicbase.createBundle("FooBundle");
+		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
 		assertTrue(musicbase.bundles().contains(fooBundle));
 
 		musicbase.renameBundle(fooBundle, "BarBundle");
@@ -75,14 +75,14 @@ public class DefaultInMemoryMusicbaseTest {
 
 	@Test
 	public void testPlaylists() throws JMOPSourceException {
-		Playlist loremPlaylist = musicbase.createPlaylist(testingBundle, "lorem-playlist");
+		Playlist loremPlaylist = musicbase.createNewPlaylist(testingBundle, "lorem-playlist");
 		assertTrue(musicbase.playlists(testingBundle).contains(loremPlaylist));
 		
 		musicbase.renamePlaylist(loremPlaylist, "ipsumPlaylist");
 		assertTrue(musicbase.playlists(testingBundle).contains(loremPlaylist));
 		assertEquals("ipsumPlaylist", loremPlaylist.getName());
 		
-		Bundle fooBundle = musicbase.createBundle("FooBundle");
+		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
 		musicbase.movePlaylist(loremPlaylist, fooBundle);
 		assertFalse(musicbase.playlists(testingBundle).contains(loremPlaylist));
 		assertTrue(musicbase.playlists(fooBundle).contains(loremPlaylist));
@@ -95,14 +95,14 @@ public class DefaultInMemoryMusicbaseTest {
 
 	@Test
 	public void testTracks() throws JMOPSourceException {
-		Track holaTrack = musicbase.createTrack(testingBundle, td("ho2", "hola"));
+		Track holaTrack = musicbase.createNewTrack(testingBundle, td("ho2", "hola"));
 		assertTrue(musicbase.tracks(testingBundle).contains(holaTrack));
 		
 		musicbase.renameTrack(holaTrack, "aloha");
 		assertTrue(musicbase.tracks(testingBundle).contains(holaTrack));
 		assertEquals("aloha", holaTrack.getTitle());
 		
-		Bundle fooBundle = musicbase.createBundle("FooBundle");
+		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
 		musicbase.moveTrack(holaTrack, fooBundle);
 		assertFalse(musicbase.tracks(testingBundle).contains(holaTrack));
 		assertTrue(musicbase.tracks(fooBundle).contains(holaTrack));

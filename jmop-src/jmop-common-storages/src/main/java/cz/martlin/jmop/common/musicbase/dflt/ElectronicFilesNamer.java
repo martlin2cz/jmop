@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals.electronic.impls;
+package cz.martlin.jmop.common.musicbase.dflt;
 
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesNamer;
@@ -31,6 +31,11 @@ public class ElectronicFilesNamer implements BaseFilesNamer {
 	public String fileBasenameOfTrack(Track track) {
 		String name = track.getTitle() + SEPARATOR + track.getIdentifier();
 		return clean(name);
+	}
+	
+	@Override
+	public String fileBasenameOfTrack(String trackTitle) {
+		return clean(trackTitle);
 	}
 
 	@Override

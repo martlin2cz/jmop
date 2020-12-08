@@ -13,6 +13,7 @@ import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.TrackData;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import javafx.util.Duration;
 
 public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 
@@ -28,6 +29,8 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 		this.playlists = new LinkedList<>();
 		this.tracks = new LinkedList<>();
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	public Set<Bundle> bundles() {
 		return new TreeSet<>(bundles);
@@ -45,9 +48,20 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 				.collect(Collectors.toSet()); //
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////
+
 	@Override
-	public Bundle createBundle(String name) {
+	public Bundle createBundle(Bundle bundleData) throws JMOPSourceException {
+		return addBundle(bundleData.getName(), bundleData.getMetadata());
+	}
+
+	@Override
+	public Bundle createNewBundle(String name) {
 		Metadata metadata = Metadata.createNew();
+		return addBundle(name, metadata);
+	}
+
+	private Bundle addBundle(String name, Metadata metadata) {
 		Bundle bundle = new Bundle(name, metadata);
 
 		bundles.add(bundle);
@@ -70,8 +84,17 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public Playlist createPlaylist(Bundle bundle, String name) {
+	public Playlist createPlaylist(Playlist playlistData) throws JMOPSourceException {
+		return addPlaylist(playlistData.getBundle(), playlistData.getName(), playlistData.getMetadata());
+	}
+
+	@Override
+	public Playlist createNewPlaylist(Bundle bundle, String name) {
 		Metadata metadata = Metadata.createNew();
+		return addPlaylist(bundle, name, metadata);
+	}
+
+	private Playlist addPlaylist(Bundle bundle, String name, Metadata metadata) {
 		Playlist playlist = new Playlist(bundle, name, metadata);
 
 		playlists.add(playlist);
@@ -100,14 +123,19 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public Track createTrack(Bundle bundle, TrackData data) {
+	public Track createTrack(Track trackData) throws JMOPSourceException {
+		return addTrack(trackData.getBundle(), trackData.getIdentifier(), trackData.getTitle(), trackData.getDescription(), trackData.getDuration(), trackData.getMetadata());
+	}
+
+	@Override
+	public Track createNewTrack(Bundle bundle, TrackData data) {
 		Metadata metadata = Metadata.createNew();
-		Track track = new Track(bundle, //
-				data.getIdentifier(), //
-				data.getTitle(), //
-				data.getDescription(), //
-				data.getDuration(), //
-				metadata); //
+		return addTrack(bundle, data.getIdentifier(), data.getTitle(), data.getDescription(), data.getDuration(), metadata);
+	}
+
+	private Track addTrack(Bundle bundle, String identifier, String title, String description, Duration duration,
+			Metadata metadata) {
+		Track track = new Track(bundle, identifier, title, description, duration, metadata);
 
 		tracks.add(track);
 		return track;
@@ -133,4 +161,9 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 		// nothing to do here
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public String toString() {
+		return "DefaultInMemoryMusicbase [bundles=" + bundles + ", playlists=" + playlists + ", tracks=" + tracks + "]";
+	}
 }

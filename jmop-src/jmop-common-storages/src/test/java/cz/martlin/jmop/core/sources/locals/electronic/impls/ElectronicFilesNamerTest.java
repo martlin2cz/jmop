@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.core.sources.locals.electronic.impls.ElectronicFilesNamer;
+import cz.martlin.jmop.common.musicbase.dflt.ElectronicFilesNamer;
 
 public class ElectronicFilesNamerTest {
 

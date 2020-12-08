@@ -1,14 +1,15 @@
-package cz.martlin.jmop.core.sources.locals.electronic.impls;
+package cz.martlin.jmop.common.musicbase.dflt;
 
 import java.io.File;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.musicbase.commons.BaseFilesLocator;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.base.BasePlaylistFilesLoaderStorer;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesLocator;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesNamer;
+
 
 public class ElectronicFilesLocator implements BaseFilesLocator {
 
@@ -97,6 +98,27 @@ public class ElectronicFilesLocator implements BaseFilesLocator {
 	private static final File getTempDir() {
 		String path = System.getProperty("java.io.tmpdir");
 		return new File(path);
+	}
+//////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public File bundleDir(String bundleName) {
+		String bundleDirName = namer.directoryNameOfBundle(bundleName);
+		return new File(root, bundleDirName );
+	}
+
+	@Override
+	public File playlistFile(String bundleName, String playlistName) {
+		File bundleDir = bundleDir(bundleName);
+		String playlistFileName = namer.fileBasenameOfPlaylist(playlistName);
+		return new File(bundleDir, playlistFileName);
+	}
+
+	@Override
+	public File trackFile(String bundleName, String trackTitle) {
+		File bundleDir = bundleDir(bundleName);
+		String trackFileName = namer.fileBasenameOfTrack(trackTitle);
+		return new File(bundleDir, trackFileName);
 	}
 
 //	protected abstract String getTrackFileBasename(Track track);

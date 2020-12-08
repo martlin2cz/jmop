@@ -56,7 +56,7 @@ public class ElectronicLocalSourceTest {
 
 		assertThat(bundles.listBundles(), empty());
 
-		bundles.createBundle(bundle);
+		bundles.createNewBundle(bundle);
 		assertThat(bundles.listBundles(), contains(bundle));
 		assertTrue(file("box").isDirectory());
 		assertTrue(file("box", "all_tracks.xspf").isFile());
@@ -73,7 +73,7 @@ public class ElectronicLocalSourceTest {
 		BasePlaylistsLocalSource playlists = local.playlists();
 
 		Bundle bundle = TestingDataCreator.createTestingBundle();
-		local.bundles().createBundle(bundle);
+		local.bundles().createNewBundle(bundle);
 		assumeTrue(file("box").isDirectory());
 
 		Playlist allTracksPlaylists = bundle.getPlaylist("all tracks");
@@ -113,7 +113,7 @@ public class ElectronicLocalSourceTest {
 		BaseTracksLocalSource tracks = local.tracks();
 
 		Bundle bundle = TestingDataCreator.createTestingBundle();
-		local.bundles().createBundle(bundle);
+		local.bundles().createNewBundle(bundle);
 		assumeTrue(file("box").isDirectory());
 
 		Track fooTrack = bundle.getTrack(TestingDataCreator.FOO_TRACK_ID);

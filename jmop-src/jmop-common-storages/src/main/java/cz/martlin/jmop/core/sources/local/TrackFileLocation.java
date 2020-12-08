@@ -4,8 +4,9 @@ package cz.martlin.jmop.core.sources.local;
  * The symbolic location of track file.
  * 
  * @author martin
- *
+ * @deprecated no more in use!
  */
+@Deprecated
 public enum TrackFileLocation {
 	/**
 	 * Temporary location. This location could be deleted ASAP, or even at the
