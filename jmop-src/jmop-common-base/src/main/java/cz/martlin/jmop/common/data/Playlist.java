@@ -211,7 +211,7 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 
 	@Override
 	public int compareTo(Playlist other) {
-		return this.name.compareTo(other.name);
+		return this.name.compareToIgnoreCase(other.name);
 	}
 
 	@Override

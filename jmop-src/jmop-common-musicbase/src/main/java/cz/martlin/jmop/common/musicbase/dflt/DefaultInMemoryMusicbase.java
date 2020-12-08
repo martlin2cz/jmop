@@ -1,7 +1,9 @@
-package cz.martlin.jmop.common.musicbase.simple;
+package cz.martlin.jmop.common.musicbase.dflt;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import cz.martlin.jmop.common.data.Bundle;
@@ -9,68 +11,38 @@ import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.TrackData;
-import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
-public class SimpleInMemoryMusicbase implements BaseMusicbase {
+public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 
-	//TODO replace with something like MappingWithNameAsAlphabeticallyOrderedKey with add,remove,rename API
-	//TODO thing about the case, where the key would be <Bundle, name>
-	private final List<Bundle> bundles; 
+	// TODO replace with something like MappingWithNameAsAlphabeticallyOrderedKey
+	// with add,remove,rename API
+	// thing about the case, where the key would be Couple<Bundle, name>
+	private final List<Bundle> bundles;
 	private final List<Playlist> playlists;
 	private final List<Track> tracks;
 
-	public SimpleInMemoryMusicbase() {
+	public DefaultInMemoryMusicbase() {
 		this.bundles = new LinkedList<>();
 		this.playlists = new LinkedList<>();
 		this.tracks = new LinkedList<>();
 	}
 
-	@Override
-	public List<String> bundlesNames() {
-		return bundles.stream() //
-				.map(Bundle::getName) //
-				.collect(Collectors.toList()); //
-
+	public Set<Bundle> bundles() {
+		return new TreeSet<>(bundles);
 	}
 
-	@Override
-	public Bundle getBundle(String name) {
-		return bundles.stream() //
-				.filter(b -> b.getName().equals(name)) //
-				.findAny().get(); //
-	}
-
-	@Override
-	public List<String> playlistsNames(Bundle bundle) {
+	public Set<Playlist> playlists(Bundle bundle) {
 		return playlists.stream() //
 				.filter(p -> p.getBundle() == bundle) //
-				.map(p -> p.getName()) //
-				.collect(Collectors.toList()); //
+				.collect(Collectors.toSet()); //
 	}
 
-	@Override
-	public Playlist getPlaylist(Bundle bundle, String name) {
-		return playlists.stream() //
-				.filter(p -> p.getBundle() == bundle) //
-				.filter(p -> p.getName() == name) //
-				.findAny().get(); //
-	}
-
-	@Override
-	public List<String> listTracksIDs(Bundle bundle) {
+	public Set<Track> tracks(Bundle bundle) {
 		return tracks.stream() //
 				.filter(t -> t.getBundle() == bundle) //
-				.map(t -> t.getIdentifier()) //
-				.collect(Collectors.toList()); //
-	}
-
-	@Override
-	public Track getTrack(Bundle bundle, String id) {
-		return tracks.stream() //
-				.filter(t -> t.getBundle() == bundle) //
-				.filter(t -> t.getIdentifier() == id) //
-				.findAny().get(); //
+				.collect(Collectors.toSet()); //
 	}
 
 	@Override
@@ -93,8 +65,8 @@ public class SimpleInMemoryMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public void updateMetadata(Bundle bundle, Metadata newMetadata) {
-		bundle.setMetadata(newMetadata);
+	public void bundleUpdated(Bundle bundle) {
+		// nothing to do here
 	}
 
 	@Override
@@ -123,15 +95,10 @@ public class SimpleInMemoryMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public void updateMetadata(Playlist playlist, Metadata newMetadata) {
-		playlist.setMetadata(newMetadata);
+	public void playlistUpdated(Playlist playlist) throws JMOPSourceException {
+		// nothing to do here
 	}
 
-	@Override
-	public void saveModifiedTracklist(Playlist playlist) throws JMOPSourceException {
-		// okay, already done
-	}
-	
 	@Override
 	public Track createTrack(Bundle bundle, TrackData data) {
 		Metadata metadata = Metadata.createNew();
@@ -162,8 +129,8 @@ public class SimpleInMemoryMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public void updateMetadata(Track track, Metadata newMetadata) {
-		track.setMetadata(newMetadata);
+	public void trackUpdated(Track track) throws JMOPSourceException {
+		// nothing to do here
 	}
 
 }

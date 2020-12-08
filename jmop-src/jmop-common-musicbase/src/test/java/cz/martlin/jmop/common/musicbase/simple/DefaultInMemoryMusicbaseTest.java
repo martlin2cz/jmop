@@ -1,6 +1,8 @@
 package cz.martlin.jmop.common.musicbase.simple;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
@@ -11,15 +13,16 @@ import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.TrackData;
-import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
+import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
+import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
-public class SimpleInMemoryMusicbaseTest {
+public class DefaultInMemoryMusicbaseTest {
 
-	private BaseMusicbase musicbase;
+	private BaseInMemoryMusicbase musicbase;
 
 	private Bundle testingBundle;
 	private Playlist testingPlaylist;
@@ -27,7 +30,7 @@ public class SimpleInMemoryMusicbaseTest {
 
 	@BeforeEach
 	public void before() {
-		BaseMusicbase musicbase = new SimpleInMemoryMusicbase();
+		BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
 
 		try {
 			prepareDefaultTestingContents(musicbase);
@@ -60,38 +63,56 @@ public class SimpleInMemoryMusicbaseTest {
 	@Test
 	public void testBundles() throws JMOPSourceException {
 		Bundle fooBundle = musicbase.createBundle("FooBundle");
-		assertEquals(fooBundle, musicbase.getBundle("FooBundle"));
+		assertTrue(musicbase.bundles().contains(fooBundle));
 
-		Bundle barBundle = musicbase.createBundle("BarBundle");
-		assertEquals(barBundle, musicbase.getBundle("BarBundle"));
+		musicbase.renameBundle(fooBundle, "BarBundle");
+		assertTrue(musicbase.bundles().contains(fooBundle));
+		assertEquals("BarBundle", fooBundle.getName());
+		
+		musicbase.removeBundle(fooBundle);
+		assertFalse(musicbase.bundles().contains(fooBundle));
 	}
 
 	@Test
 	public void testPlaylists() throws JMOPSourceException {
-		// playlists
 		Playlist loremPlaylist = musicbase.createPlaylist(testingBundle, "lorem-playlist");
-		assertEquals(loremPlaylist, musicbase.getPlaylist(testingBundle, "lorem-playlist"));
-
-		Playlist ipsumPlaylist = musicbase.createPlaylist(testingBundle, "ipsum-playlist");
-		assertEquals(ipsumPlaylist, musicbase.getPlaylist(testingBundle, "ipsum-playlist"));
+		assertTrue(musicbase.playlists(testingBundle).contains(loremPlaylist));
+		
+		musicbase.renamePlaylist(loremPlaylist, "ipsumPlaylist");
+		assertTrue(musicbase.playlists(testingBundle).contains(loremPlaylist));
+		assertEquals("ipsumPlaylist", loremPlaylist.getName());
+		
+		Bundle fooBundle = musicbase.createBundle("FooBundle");
+		musicbase.movePlaylist(loremPlaylist, fooBundle);
+		assertFalse(musicbase.playlists(testingBundle).contains(loremPlaylist));
+		assertTrue(musicbase.playlists(fooBundle).contains(loremPlaylist));
+		assertEquals(fooBundle, loremPlaylist.getBundle());
+		musicbase.removeBundle(fooBundle);
+		
+		musicbase.removePlaylist(loremPlaylist);
+		assertFalse(musicbase.playlists(testingBundle).contains(loremPlaylist));
 	}
 
 	@Test
 	public void testTracks() throws JMOPSourceException {
-		// tracks
 		Track holaTrack = musicbase.createTrack(testingBundle, td("ho2", "hola"));
-		assertEquals(holaTrack, musicbase.getTrack(testingBundle, "ho2"));
-
-		Track alohaTrack = musicbase.createTrack(testingBundle, td("al3", "aloha"));
-		assertEquals(alohaTrack, musicbase.getTrack(testingBundle, "al3"));
-
-//		// fill the playlists
-//		testingPlaylist.addTrack(holaTrack);
-//		testingPlaylist.addTrack(alohaTrack);
-//		// FIXME: assertThat(loremPlaylist.getTracks().getTracks(), contains(holaTrack,
-//		// alohaTrack, olaTrack));
-
+		assertTrue(musicbase.tracks(testingBundle).contains(holaTrack));
+		
+		musicbase.renameTrack(holaTrack, "aloha");
+		assertTrue(musicbase.tracks(testingBundle).contains(holaTrack));
+		assertEquals("aloha", holaTrack.getTitle());
+		
+		Bundle fooBundle = musicbase.createBundle("FooBundle");
+		musicbase.moveTrack(holaTrack, fooBundle);
+		assertFalse(musicbase.tracks(testingBundle).contains(holaTrack));
+		assertTrue(musicbase.tracks(fooBundle).contains(holaTrack));
+		assertEquals(fooBundle, holaTrack.getBundle());
+		musicbase.removeBundle(fooBundle);
+		
+		musicbase.removeTrack(holaTrack);
+		assertFalse(musicbase.tracks(testingBundle).contains(holaTrack));
 	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private TrackData td(String id, String title) {
