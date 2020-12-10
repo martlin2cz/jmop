@@ -12,17 +12,22 @@ import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.Tracklist;
+import cz.martlin.jmop.common.utils.FileExtensionSpecifier;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.local.util.xml.AbstractXMLPlaylistAndBundleFilesLoaderStorer;
 import javafx.util.Duration;
 
 public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleFilesLoaderStorer {
 	private static final String XSPF_VERSION = "1"; //$NON-NLS-1$
+	/**
+	 * @deprecated See the {@link FileExtensionSpecifier}.
+	 */
+	@Deprecated
 	public static final String FILE_EXTENSION = "xspf"; //$NON-NLS-1$
 	protected static final String APPLICATION_URL = "https://github.com/martlin2cz/jmop"; //$NON-NLS-1$
 
 	public XSPFPlaylistFilesLoaderStorer() {
-		super(FILE_EXTENSION);
+		super();
 	}
 
 	///////////////////////////////////////////////////////////////////////////

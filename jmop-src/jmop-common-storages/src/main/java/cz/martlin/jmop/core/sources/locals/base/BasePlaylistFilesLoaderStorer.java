@@ -4,11 +4,11 @@ import java.io.File;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.musicbase.commons.BaseExtendedPlaylistSaver;
+import cz.martlin.jmop.common.musicbase.commons.BaseExtendedPlaylistManipulator;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 /**
- * @deprecated replaced by {@link BaseExtendedPlaylistSaver}.
+ * @deprecated replaced by {@link BaseExtendedPlaylistManipulator}.
  * @author martin
  *
  */

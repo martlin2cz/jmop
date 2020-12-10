@@ -17,12 +17,15 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	private final BaseFileSystemAccessor fs;
 	private final FilesLocatorExtension locator;
 	private final BaseMusicdataSaver saver;
+	private final BaseMusicdataLoader loader;
 
-	public BundlesDirsStorage(BaseFileSystemAccessor fs, BaseFilesLocator locator, BaseMusicdataSaver saver) {
+	public BundlesDirsStorage(BaseFileSystemAccessor fs, BaseFilesLocator locator, //
+			BaseMusicdataSaver saver, BaseMusicdataLoader loader) {
 		super();
 		this.fs = fs;
 		this.locator = new FilesLocatorExtension(locator);
 		this.saver = saver;
+		this.loader = loader;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -42,12 +45,12 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 
 	private void loadPlaylists(BaseInMemoryMusicbase inmemory, String bundleName, Bundle bundle,
 			Map<String, Track> tracks) throws JMOPSourceException {
-		
+
 		File bundleDir = locator.bundleDir(bundleName);
-		for (String playlistName : saver.loadPlaylistsNames(bundleDir, bundleName)) {
+		for (String playlistName : loader.loadPlaylistsNames(bundleDir, bundle, bundleName)) {
 			File playlistFile = locator.playlistFile(bundleName, playlistName);
-			
-			Playlist playlistData = saver.loadPlaylistData(playlistFile, bundle, tracks, playlistName);
+
+			Playlist playlistData = loader.loadPlaylistData(playlistFile, bundle, tracks, playlistName);
 
 			inmemory.createPlaylist(playlistData);
 		}
@@ -57,11 +60,11 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 			throws JMOPSourceException {
 
 		Map<String, Track> tracks = new HashMap<>();
-		
+
 		File bundleDir = locator.bundleDir(bundleName);
-		for (String trackTitle : saver.loadTracksTitles(bundleDir, bundleName)) {
+		for (String trackTitle : loader.loadTracksTitles(bundleDir, bundle, bundleName)) {
 			File trackFile = locator.trackFile(bundleName, trackTitle);
-			Track trackData = saver.loadTrackData(trackFile, bundle, trackTitle);
+			Track trackData = loader.loadTrackData(trackFile, bundle, trackTitle);
 
 			Track track = inmemory.createTrack(trackData);
 			tracks.put(trackTitle, track);
@@ -73,9 +76,9 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	private Map<String, Bundle> loadBundles(BaseInMemoryMusicbase inmemory) throws JMOPSourceException {
 		Map<String, Bundle> bundles = new HashMap<>();
 
-		for (String bundleName : saver.loadBundlesNames()) {
+		for (String bundleName : loader.loadBundlesNames()) {
 			File bundleDir = locator.bundleDir(bundleName);
-			Bundle bundleData = saver.loadBundleData(bundleDir, bundleName);
+			Bundle bundleData = loader.loadBundleData(bundleDir, bundleName);
 
 			Bundle bundle = inmemory.createBundle(bundleData);
 			bundles.put(bundleName, bundle);
@@ -89,7 +92,7 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	@Override
 	public void createBundle(Bundle bundle) throws JMOPSourceException {
 		File bundleDir = locator.bundleDir(bundle);
-		
+
 		fs.createDirectory(bundleDir);
 		saver.saveBundleData(bundleDir, bundle);
 	}
@@ -98,7 +101,7 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	public void renameBundle(Bundle bundle, String oldName, String newName) throws JMOPSourceException {
 		File oldBundleDir = locator.bundleDir(oldName);
 		File newBundleDir = locator.bundleDir(newName);
-		
+
 		fs.renameDirectory(oldBundleDir, newBundleDir);
 		saver.saveBundleData(newBundleDir, bundle);
 	}
@@ -106,21 +109,21 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	@Override
 	public void removeBundle(Bundle bundle) throws JMOPSourceException {
 		File bundleDir = locator.bundleDir(bundle);
-		
+
 		fs.deleteDirectory(bundleDir);
 	}
 
 	@Override
 	public void saveUpdatedBundle(Bundle bundle) throws JMOPSourceException {
 		File bundleDir = locator.bundleDir(bundle);
-		
+
 		saver.saveBundleData(bundleDir, bundle);
 	}
 
 	@Override
 	public void createPlaylist(Playlist playlist) throws JMOPSourceException {
 		File playlistFile = locator.playlistFile(playlist);
-		
+
 		saver.savePlaylistData(playlistFile, playlist);
 	}
 
@@ -129,7 +132,7 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 		Bundle bundle = playlist.getBundle();
 		File oldPlaylistFile = locator.playlistFile(bundle, oldName);
 		File newPlaylistFile = locator.playlistFile(bundle, newName);
-		
+
 		saver.savePlaylistData(newPlaylistFile, playlist);
 		fs.deleteFile(oldPlaylistFile);
 	}
@@ -138,7 +141,7 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	public void movePlaylist(Playlist playlist, Bundle oldBundle, Bundle newBundle) throws JMOPSourceException {
 		File newPlaylistFile = locator.playlistFile(newBundle, playlist);
 		File oldPlaylistFile = locator.playlistFile(oldBundle, playlist);
-		
+
 		saver.savePlaylistData(newPlaylistFile, playlist);
 		fs.deleteFile(oldPlaylistFile);
 	}
@@ -146,21 +149,21 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	@Override
 	public void removePlaylist(Playlist playlist) throws JMOPSourceException {
 		File oldPlaylistFile = locator.playlistFile(playlist);
-		
+
 		fs.deleteFile(oldPlaylistFile);
 	}
 
 	@Override
 	public void saveUpdatedPlaylist(Playlist playlist) throws JMOPSourceException {
 		File playlistFile = locator.playlistFile(playlist);
-		
+
 		saver.savePlaylistData(playlistFile, playlist);
 	}
 
 	@Override
 	public void createTrack(Track track) throws JMOPSourceException {
 		File trackFile = locator.trackFile(track);
-		
+
 		saver.saveTrackData(trackFile, track);
 	}
 
@@ -178,7 +181,7 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	public void moveTrack(Track track, Bundle oldBundle, Bundle newBundle) throws JMOPSourceException {
 		File oldTrackFile = locator.trackFile(oldBundle, track);
 		File newTrackFile = locator.trackFile(newBundle, track);
-		
+
 		fs.moveFile(oldTrackFile, newTrackFile);
 		saver.saveTrackData(newTrackFile, track);
 	}
@@ -192,7 +195,7 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	@Override
 	public void saveUpdatedTrack(Track track) throws JMOPSourceException {
 		File trackFile = locator.trackFile(track);
-		
+
 		saver.saveTrackData(trackFile, track);
 	}
 

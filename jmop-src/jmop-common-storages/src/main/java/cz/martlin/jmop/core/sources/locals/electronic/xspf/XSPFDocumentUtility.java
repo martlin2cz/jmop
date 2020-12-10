@@ -18,6 +18,7 @@ import org.w3c.dom.NodeList;
 public class XSPFDocumentUtility {
 
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+	private static final String NEVER = "(never)";
 
 	private XSPFDocumentUtility() {
 	}
@@ -259,6 +260,9 @@ public class XSPFDocumentUtility {
 	///////////////////////////////////////////////////////////////////////////
 
 	public static Calendar parseDatetime(String str) {
+		if (NEVER.equals(str)) {
+			return null;
+		}
 		Calendar calendar = Calendar.getInstance();
 
 		Date date;
@@ -273,6 +277,10 @@ public class XSPFDocumentUtility {
 	}
 
 	public static String stringifyDatetime(Calendar calendar) {
+		if (calendar == null) {
+			return NEVER;
+		}
+		
 		Date date = calendar.getTime();
 		return DATE_FORMAT.format(date);
 	}
