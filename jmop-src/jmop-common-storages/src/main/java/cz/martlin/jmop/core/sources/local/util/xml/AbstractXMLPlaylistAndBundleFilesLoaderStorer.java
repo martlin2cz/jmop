@@ -6,12 +6,15 @@ import org.w3c.dom.Document;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.data.Tracklist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.locals.base.BaseBundleFilesLoaderStorer;
-import cz.martlin.jmop.core.sources.locals.base.BasePlaylistFilesLoaderStorer;
 
-public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer {
+/**
+ * 
+ * @author martin
+ * @deprecated replaced by {@link AbstractXMLPlaylistAndBundleFilesLoaderStorer}
+ */
+@Deprecated
+public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer implements BasePlaylistAndBundleLoaderStorer {
 
 	private final XMLFileLoaderStorer xfls;
 
@@ -22,6 +25,7 @@ public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer {
 
 	/////////////////////////////////////////////////////////////////
 
+	@Override
 	public Bundle loadBundle(File file) throws JMOPSourceException {
 		try {
 			Document document = xfls.loadDocument(file);
@@ -35,6 +39,7 @@ public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer {
 
 	/////////////////////////////////////////////////////////////////
 
+	@Override
 	public Playlist loadPlaylist(Bundle bundle, File file) throws JMOPSourceException {
 		try {
 			Document document = xfls.loadDocument(file);
@@ -48,6 +53,7 @@ public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer {
 
 	/////////////////////////////////////////////////////////////////
 
+	@Override
 	public void savePlaylist(Playlist playlist, File file, boolean withBundleInfo, boolean withTrackInfo) throws JMOPSourceException {
 		try {
 			Document document = xfls.createEmptyDocument();

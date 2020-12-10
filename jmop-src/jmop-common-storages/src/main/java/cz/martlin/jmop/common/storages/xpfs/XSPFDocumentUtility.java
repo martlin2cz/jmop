@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals.electronic.xspf;
+package cz.martlin.jmop.common.storages.xpfs;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -101,7 +101,7 @@ public class XSPFDocumentUtility {
 		return getChildOr(element, //
 				XSPFDocumentNamespaces.XSPF, "extension", //
 				XSPFDocumentNamespaces.XSPF, "aplication", //
-				XSPFPlaylistFilesLoaderStorer.APPLICATION_URL, //
+				XSPFFilesManipulator.APPLICATION_URL, //
 				() -> fail(element, XSPFDocumentNamespaces.XSPF, "extension"));
 	}
 
@@ -128,11 +128,11 @@ public class XSPFDocumentUtility {
 		return getChildOr(element, //
 				XSPFDocumentNamespaces.XSPF, "extension", //
 				XSPFDocumentNamespaces.XSPF, "aplication", //
-				XSPFPlaylistFilesLoaderStorer.APPLICATION_URL, //
+				XSPFFilesManipulator.APPLICATION_URL, //
 				() -> createElementWithAttr(document, element, //
 						XSPFDocumentNamespaces.XSPF, "extension", //
 						XSPFDocumentNamespaces.XSPF, "aplication", //
-						XSPFPlaylistFilesLoaderStorer.APPLICATION_URL)); //
+						XSPFFilesManipulator.APPLICATION_URL)); //
 	}
 ///////////////////////////////////////////////////////////////////////////
 

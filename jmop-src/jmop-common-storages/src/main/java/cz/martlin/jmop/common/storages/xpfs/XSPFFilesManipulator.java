@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals.electronic.xspf;
+package cz.martlin.jmop.common.storages.xpfs;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,32 +12,23 @@ import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.Tracklist;
-import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentNamespaces;
-import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentUtility;
-import cz.martlin.jmop.common.storages.xpfs.XSPFFilesManipulator;
-import cz.martlin.jmop.common.utils.FileExtensionSpecifier;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.sources.local.util.xml.AbstractXMLPlaylistAndBundleFilesLoaderStorer;
 import javafx.util.Duration;
 
-/**
- * @deprecated replaced by {@link XSPFFilesManipulator}
- * @author martin
- *
- */
-@Deprecated
-public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleFilesLoaderStorer {
+public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator {
 	private static final String XSPF_VERSION = "1"; //$NON-NLS-1$
-	/**
-	 * @deprecated See the {@link FileExtensionSpecifier}.
-	 */
-	@Deprecated
 	public static final String FILE_EXTENSION = "xspf"; //$NON-NLS-1$
 	protected static final String APPLICATION_URL = "https://github.com/martlin2cz/jmop"; //$NON-NLS-1$
 
-	public XSPFPlaylistFilesLoaderStorer() {
+	public XSPFFilesManipulator() {
 		super();
 	}
+	
+	@Override
+	public String fileExtension() {
+		return FILE_EXTENSION;
+	}
+
 
 	///////////////////////////////////////////////////////////////////////////
 	@Override
@@ -283,4 +274,5 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 		return new Track(bundle, identifier, title, description, duration, metadata);
 	}
 
+	
 }

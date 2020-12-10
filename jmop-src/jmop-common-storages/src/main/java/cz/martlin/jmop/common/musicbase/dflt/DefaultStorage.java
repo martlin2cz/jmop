@@ -11,6 +11,7 @@ import cz.martlin.jmop.common.musicbase.commons.LoaderWithAllTrackPlaylist;
 import cz.martlin.jmop.common.musicbase.commons.SaverWithAllTrackPlaylist;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.storages.simplefs.SimpleLocator;
+import cz.martlin.jmop.common.storages.xpfs.XSPFFilesManipulator;
 import cz.martlin.jmop.common.storages.simplefs.SimpleExtendedPlaylistManipulator;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;

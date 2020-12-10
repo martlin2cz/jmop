@@ -6,6 +6,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentNamespaces;
+import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentUtility;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
@@ -13,6 +15,12 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.local.misc.flu.FormatsLocationsUtility;
 
+/**
+ * 
+ * @author martin
+ * @deprecated nope!
+ */
+@Deprecated
 public class XSPFpflsWithFiles extends XSPFPlaylistFilesLoaderStorer {
 	private final BaseTracksLocalSource tracks;
 	private final FormatsLocationsUtility flu;

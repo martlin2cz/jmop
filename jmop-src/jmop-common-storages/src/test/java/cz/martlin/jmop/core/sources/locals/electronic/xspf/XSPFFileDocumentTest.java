@@ -15,9 +15,9 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentNamespaces;
+import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentUtility;
 import cz.martlin.jmop.core.sources.local.util.xml.XMLFileLoaderStorer;
-import cz.martlin.jmop.core.sources.locals.electronic.xspf.XSPFDocumentNamespaces;
-import cz.martlin.jmop.core.sources.locals.electronic.xspf.XSPFDocumentUtility;
 
 public class XSPFFileDocumentTest {
 
