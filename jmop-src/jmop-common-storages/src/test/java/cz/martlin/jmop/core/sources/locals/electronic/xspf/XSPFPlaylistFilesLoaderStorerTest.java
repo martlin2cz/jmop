@@ -33,13 +33,12 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		File file = File.createTempFile("bundle-file", ".xspf");
 		System.out.println("Saving bundle into " + file.getAbsolutePath());
 
-		BaseConfiguration config = new ConstantConfiguration();
-		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer(config);
+		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer();
 
 		xpfls.saveBundle(bundle, file);
 		// TODO try to open created file in different player
 
-		Bundle rebundle = xpfls.loadBundleData(file);
+		Bundle rebundle = xpfls.loadBundle(file);
 
 		System.out.println(TestingPrinter.print(rebundle));
 
@@ -56,10 +55,9 @@ public class XSPFPlaylistFilesLoaderStorerTest {
 		File file = File.createTempFile("playlist-file", ".xspf");
 		System.out.println("Saving playlist into " + file.getAbsolutePath());
 
-		BaseConfiguration config = new ConstantConfiguration();
-		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer(config);
+		XSPFPlaylistFilesLoaderStorer xpfls = new XSPFPlaylistFilesLoaderStorer();
 
-		xpfls.savePlaylist(bundle, playlist, file);
+		xpfls.savePlaylist(playlist, file, true, true);
 		// TODO try to open created file in different player
 
 		Playlist replaylist = xpfls.loadPlaylist(bundle, file);
