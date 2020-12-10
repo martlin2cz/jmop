@@ -1,7 +1,5 @@
 package cz.martlin.jmop.common.musicbase;
 
-import java.util.List;
-
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;

@@ -27,24 +27,23 @@ public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 ///////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void saveBundleData(File bundleDir, Bundle bundle) throws JMOPSourceException {
+	public void saveBundleData(File bundleDir, Bundle bundle, SaveReason reason) throws JMOPSourceException {
 		Playlist allTracksPlaylist = obtainAllTracksPlaylist(bundle);
 		File allTracksPlaylistFile = locator.playlistFile(allTracksPlaylist);
 		save(allTracksPlaylist, allTracksPlaylistFile);
 	}
 
 	@Override
-	public void savePlaylistData(File playlistFile, Playlist playlist) throws JMOPSourceException {
+	public void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason) throws JMOPSourceException {
 		save(playlist, playlistFile);
 	}
 
 	@Override
-	public void saveTrackData(File trackFile, Track track) throws JMOPSourceException {
+	public void saveTrackData(File trackFile, Track track, SaveReason reason) throws JMOPSourceException {
 		Bundle bundle = track.getBundle();
 		Playlist allTracksPlaylist = obtainAllTracksPlaylist(bundle);
 
-		if (!allTracksPlaylist.getTracks().getTracks().contains(track)) { //FIXME HACK
-			System.err.println("Warning, re(adding) track into all tracks playlist"); 
+		if (reason == SaveReason.CREATED) { 
 			allTracksPlaylist.addTrack(track);
 		}
 		

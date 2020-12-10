@@ -23,7 +23,7 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
-class DefaultStorageTest {
+class DefaultMusicbaseTest {
 
 //	@TempDir
 //	public File root;
@@ -55,6 +55,9 @@ class DefaultStorageTest {
 		
 		loremPlaylist.addTrack(helloTrack);
 		musicbase.playlistUpdated(loremPlaylist);
+		
+		helloTrack.setMetadata(helloTrack.getMetadata().played());
+		musicbase.trackUpdated(helloTrack);
 		
 		MusicbaseDebugPrinter.print(musicbase);
 	}

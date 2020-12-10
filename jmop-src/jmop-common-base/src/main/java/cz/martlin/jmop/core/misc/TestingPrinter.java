@@ -10,7 +10,13 @@ import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
 
+/**
+ * @see MusicbaseDebugPrinter
+ * @author martin
+ *
+ */
 public class TestingPrinter {
 
 	public static String print(Track track) {

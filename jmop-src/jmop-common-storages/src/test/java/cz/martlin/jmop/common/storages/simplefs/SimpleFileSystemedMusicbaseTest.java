@@ -14,20 +14,17 @@ import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.TrackData;
-import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
-import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
+import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.sources.locals.electronic.impls.ElectronicFileSystemAccessor;
 
 public class SimpleFileSystemedMusicbaseTest {
 
 	@TempDir
 	public File root;
 	
-	private BaseMusicbase musicbase;
+	private BaseMusicbaseModifing musicbase;
 
 	private Bundle testingBundle;
 	private Playlist testingPlaylist;
@@ -37,9 +34,7 @@ public class SimpleFileSystemedMusicbaseTest {
 	public void before() {
 		System.out.println("Our root is " + root);
 		
-		BaseFileSystemAccessor fs = new ElectronicFileSystemAccessor();
-		
-		BaseMusicbase musicbase = new SimpleFileSystemedMusicbase(root, fs);
+		BaseMusicbaseModifing musicbase = new DefaultInMemoryMusicbase();
 
 		try {
 			prepareDefaultTestingContents(musicbase);
@@ -52,7 +47,7 @@ public class SimpleFileSystemedMusicbaseTest {
 
 	@AfterEach
 	public void after() throws JMOPSourceException {
-		MusicbaseDebugPrinter.print(musicbase);
+//		MusicbaseDebugPrinter.print(musicbase);
 
 		this.musicbase = null;
 	}
@@ -72,32 +67,35 @@ public class SimpleFileSystemedMusicbaseTest {
 	@Test
 	public void testBundles() throws JMOPSourceException {
 		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
-		assertEquals(fooBundle, musicbase.getBundle("FooBundle"));
+		assertEquals("FooBundle", fooBundle.getName());
 
 		Bundle barBundle = musicbase.createNewBundle("BarBundle");
-		assertEquals(barBundle, musicbase.getBundle("BarBundle"));
+		assertEquals("BarBundle", barBundle.getName());
 	}
 
 	@Test
 	public void testPlaylists() throws JMOPSourceException {
 		// playlists
 		Playlist loremPlaylist = musicbase.createNewPlaylist(testingBundle, "lorem-playlist");
-		assertEquals(loremPlaylist, musicbase.getPlaylist(testingBundle, "lorem-playlist"));
+		assertEquals(testingBundle, loremPlaylist.getBundle());
+		assertEquals("lorem-playlist", loremPlaylist.getName());
 
+		
 		Playlist ipsumPlaylist = musicbase.createNewPlaylist(testingBundle, "ipsum-playlist");
-		assertEquals(ipsumPlaylist, musicbase.getPlaylist(testingBundle, "ipsum-playlist"));
+		assertEquals(testingBundle, ipsumPlaylist.getBundle());
+		assertEquals("ipsum-playlist", ipsumPlaylist.getName());
 	}
 
 	@Test
 	public void testTracks() throws JMOPSourceException {
 		// tracks
 		Track holaTrack = musicbase.createNewTrack(testingBundle, td("hola"));
-		assertEquals(holaTrack.toString(), musicbase.getTrack(testingBundle, "hola").toString());
-		assertEquals(holaTrack, musicbase.getTrack(testingBundle, "hola"));
+		assertEquals(testingBundle, holaTrack.getBundle());
+		assertEquals("hola", holaTrack.getTitle());
 
 		Track alohaTrack = musicbase.createNewTrack(testingBundle, td("aloha"));
-		assertEquals(alohaTrack.toString(), musicbase.getTrack(testingBundle, "aloha").toString());
-		assertEquals(alohaTrack, musicbase.getTrack(testingBundle, "aloha"));
+		assertEquals(testingBundle, alohaTrack.getBundle());
+		assertEquals("aloha", alohaTrack.getTitle());
 
 //		// fill the playlists
 //		testingPlaylist.addTrack(holaTrack);

@@ -26,8 +26,8 @@ public class DefaultStorage extends BundlesDirsStorage {
 			String allTracksPlaylistName, TrackFileFormat format, BaseInMemoryMusicbase musicbase) {
 		
 		BaseFileSystemAccessor fs = new ElectronicFileSystemAccessor();
-		
-		BaseExtendedPlaylistManipulator manipulator = new SimpleExtendedPlaylistManipulator(fs);//new XSPFFilesManipulator();
+//		new SimpleExtendedPlaylistManipulator(fs);
+		BaseExtendedPlaylistManipulator manipulator = new XSPFFilesManipulator();
 		String playlistFileExtension = manipulator.fileExtension();
 		
 		String trackFileExtension = format.fileExtension();

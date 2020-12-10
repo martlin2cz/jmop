@@ -55,7 +55,7 @@ public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer {
 			
 			if (withBundleInfo) {
 				Bundle bundle = playlist.getBundle();
-				pushBundleIntoDocument(bundle, document);
+				pushBundleDataIntoDocument(bundle, document);
 			}
 
 			xfls.saveDocument(document, file);
@@ -65,7 +65,7 @@ public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer {
 	}
 
 	protected abstract void pushPlaylistIntoDocument(Playlist playlist, boolean withTrackInfo, Document document);
-	protected abstract void pushBundleIntoDocument(Bundle bundle, Document document);
+	protected abstract void pushBundleDataIntoDocument(Bundle bundle, Document document);
 
 	/////////////////////////////////////////////////////////////////
 

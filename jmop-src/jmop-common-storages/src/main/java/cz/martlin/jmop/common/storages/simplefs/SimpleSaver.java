@@ -21,18 +21,18 @@ public class SimpleSaver implements BaseMusicdataSaver {
 	}
 
 	@Override
-	public void saveBundleData(File bundleDir, Bundle bundle) {
+	public void saveBundleData(File bundleDir, Bundle bundle, SaveReason reason) {
 		// ignore, since we don't store metadata
 	}
 
 	@Override
-	public void savePlaylistData(File playlistFile, Playlist playlist) throws JMOPSourceException {
+	public void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason) throws JMOPSourceException {
 		Tracklist tracklist = playlist.getTracks();
 		saveTracklist(tracklist, playlistFile);
 	}
 
 	@Override
-	public void saveTrackData(File trackFile, Track track) {
+	public void saveTrackData(File trackFile, Track track, SaveReason reason) {
 		// ignore, since we don't store metadata
 	}
 

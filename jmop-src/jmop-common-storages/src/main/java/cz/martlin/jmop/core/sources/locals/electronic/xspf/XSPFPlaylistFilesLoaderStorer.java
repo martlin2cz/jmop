@@ -52,8 +52,9 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 	}
 
 	@Override
-	protected void pushBundleIntoDocument(Bundle bundle, Document document) {
-		Element root = createRootElement(document);
+	protected void pushBundleDataIntoDocument(Bundle bundle, Document document) {
+		//Note: call pushPlaylistData(...) first
+		Element root = document.getDocumentElement();
 
 		pushBundleDataIntoDocument(document, root, bundle);
 	}
