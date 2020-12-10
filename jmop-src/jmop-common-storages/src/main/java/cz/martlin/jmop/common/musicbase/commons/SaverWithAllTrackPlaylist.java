@@ -19,10 +19,8 @@ public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 	private final BaseExtendedPlaylistSaver saver;
 	private File root;
 	private BaseFileSystemAccessor fs;
-	private BaseFilesLocator locator;
-	
-	
-	
+	private FilesLocatorExtension locator;
+
 	public SaverWithAllTrackPlaylist(String allTracksPlaylistName, BaseInMemoryMusicbase musicbase,
 			BaseExtendedPlaylistSaver saver) {
 		super();
@@ -31,100 +29,89 @@ public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 		this.saver = saver;
 	}
 
+///////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void saveBundleData(Bundle bundle) throws JMOPSourceException {
+	public void saveBundleData(File bundleDir, Bundle bundle) throws JMOPSourceException {
 		Playlist allTracksPlaylist = obtainAllTracksPlaylist(bundle);
-		saver.savePlaylist(allTracksPlaylist);
-	}
-
-
-	@Override
-	public void savePlaylistData(Playlist playlist) throws JMOPSourceException {
-		saver.savePlaylist(playlist);
+		File allTracksPlaylistFile = locator.playlistFile(allTracksPlaylist);
+		save(allTracksPlaylist, allTracksPlaylistFile);
 	}
 
 	@Override
-	public void saveTrackData(Track track) throws JMOPSourceException {
+	public void savePlaylistData(File playlistFile, Playlist playlist) throws JMOPSourceException {
+		save(playlist, playlistFile);
+	}
+
+	@Override
+	public void saveTrackData(File trackFile, Track track) throws JMOPSourceException {
 		Bundle bundle = track.getBundle();
 		Playlist allTracksPlaylist = obtainAllTracksPlaylist(bundle);
-		saver.savePlaylist(allTracksPlaylist);
+		File allTracksPlaylistFile = locator.playlistFile(allTracksPlaylist);
+		save(allTracksPlaylist, allTracksPlaylistFile);
 	}
 
 	@Override
 	public List<String> loadBundlesNames() throws JMOPSourceException {
-		return fs.listDirectoriesMatching(root, d -> hasAllPlaylistFile(d)) //
-				.stream() //
-				.map(d -> allTracksPlaylistFile(d)) //
-				.map(f -> saver.loadBundleNameFromAllTracksPlaylist(f))
-				.collect(Collectors.toList());
+		return fs.listDirectories(root) //
+				.filter(d -> hasAllPlaylistFile(d)) //
+				.map(d -> locator.bundleName(d)) //
+				.collect(Collectors.toList()); //
 	}
-
-	private File allTracksPlaylistFile(File bundleDir) {
-		//FIXME to obtain all tracks playlist,
-		// we need to know the bundle name
-		// which we can get only by the all tracks playlist #fail
-		String bundleName = FAIL;  
-		return locator.playlistFile(bundleName , allTracksPlaylistName);
-	}
-
-
-	private boolean hasAllPlaylistFile(File bundleDir) {
-		return allTracksPlaylistFile(bundleDir).exists();
-	}
-
 
 	@Override
-	public Bundle loadBundleData(String bundleName) throws JMOPSourceException {
-		File bundleDir = locator.bundleDir(bundleName);
+	public Bundle loadBundleData(File bundleDir, String bundleName) throws JMOPSourceException {
 		File allTracksPlaylistFile = allTracksPlaylistFile(bundleDir);
 		return saver.loadBundleDataFromAllTracksPlaylist(allTracksPlaylistFile);
 	}
 
 	@Override
-	public List<String> loadPlaylistsNames(String bundleName) throws JMOPSourceException {
-		File bundleDir = locator.bundleDir(bundleName);
-		return fs.listFilesMatching(bundleDir, f -> isPlaylistFile(f)) //
-				.stream() //
-				.map(f -> saver.loadPlaylistNameFromPlaylistFile(f)) //
-				.collect(Collectors.toList());
+	public List<String> loadPlaylistsNames(File bundleDir, String bundleName) throws JMOPSourceException {
+		return fs.listFiles(bundleDir) //
+				.filter(f -> isPlaylistFile(f)) //
+				.map(f -> locator.playlistName(f)) //
+				.collect(Collectors.toList()); //
 	}
+
+	@Override
+	public Playlist loadPlaylistData(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
+			throws JMOPSourceException {
+		
+		return saver.loadPlaylistDataFromPlaylistFile(bundle, playlistFile);
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	private boolean isPlaylistFile(File file) {
-		return file.exists(); //TODO check its type as well
+		return file.exists(); // TODO check its type (extension) as well
 	}
 
-
-	@Override
-	public Playlist loadPlaylistData(Bundle bundle, Map<String, Track> tracks, String playlistName)
-			throws JMOPSourceException {
-		String bundleName = bundle.getName();
-		File playlistFile = locator.playlistFile(bundleName , playlistName);
-		return saver.loadPlaylistDataFromPlaylistFile(playlistFile);
+	private File allTracksPlaylistFile(File bundleDir) {
+		String bundleName = locator.bundleName(bundleDir);
+		return locator.playlistFile(bundleName, allTracksPlaylistName);
 	}
 
-	@Override
-	public List<String> loadTracksTitles(String bundleName) throws JMOPSourceException {
-		File bundleDir = locator.bundleDir(bundleName);
+	private boolean hasAllPlaylistFile(File bundleDir) {
 		File allTracksPlaylistFile = allTracksPlaylistFile(bundleDir);
-		return saver.loadTrackTitlesFromAllTracksPlaylist(allTracksPlaylistFile);
+		return allTracksPlaylistFile.exists();
 	}
 
-	@Override
-	public Track loadTrackData(Bundle bundle, String trackTitle) throws JMOPSourceException {
-		String bundleName = bundle.getName();
-		File bundleDir = locator.bundleDir(bundleName);
-		File allTracksPlaylistFile = allTracksPlaylistFile(bundleDir);
-		return saver.loadTrackDataFromAllTracksPlaylist(allTracksPlaylistFile, trackTitle);
+	private boolean isAllTracksPlaylist(Playlist playlist) {
+		return playlist.getName().equals(allTracksPlaylistName);
 	}
-	
-	/////////////////////////////////////////////////////////////////////////////////////
-	
 
 	private Playlist obtainAllTracksPlaylist(Bundle bundle) throws JMOPSourceException {
 		return musicbase.playlists(bundle).stream() //
-				.filter(p -> p.getName().equals(allTracksPlaylistName)) //
+				.filter(p -> isAllTracksPlaylist(p)) //
 				.findAny().get(); //
+	}
+
+	private void save(Playlist playlist, File playlistFile) throws JMOPSourceException {
+		if (isAllTracksPlaylist(playlist)) {
+			saver.savePlaylistWithBundle(playlist, playlistFile);
+		} else {
+			saver.saveOnlyPlaylist(playlist, playlistFile);
+		}
 	}
 
 }

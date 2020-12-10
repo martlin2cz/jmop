@@ -1,26 +1,26 @@
 package cz.martlin.jmop.common.musicbase.commons;
 
 import java.io.File;
-import java.util.List;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 
+/**
+ * An component responsible for storing the playlists, but also the tracks and
+ * bundle infos along them in one file.
+ * 
+ * @author martin
+ *
+ */
 public interface BaseExtendedPlaylistSaver {
 
-	void savePlaylist(Playlist playlist);
+	void savePlaylistWithBundle(Playlist playlist, File playlistFile) throws JMOPSourceException;
+	
+	void saveOnlyPlaylist(Playlist playlist, File playlistFile) throws JMOPSourceException;
 
-	String loadBundleNameFromAllTracksPlaylist(File allTracksPlaylistFile);
+	Bundle loadBundleDataFromAllTracksPlaylist(File allTracksPlaylistFile) throws JMOPSourceException;
 
-	Bundle loadBundleDataFromAllTracksPlaylist(File allTracksPlaylistFile);
-
-	List<String> loadTrackTitlesFromAllTracksPlaylist(File allTracksPlaylistFile);
-
-	Track loadTrackDataFromAllTracksPlaylist(File allTracksPlaylistFile, String trackTitle);
-
-	String loadPlaylistNameFromPlaylistFile(File playlistFile);
-
-	Playlist loadPlaylistDataFromPlaylistFile(File playlistFile);
+	Playlist loadPlaylistDataFromPlaylistFile(Bundle bundle, File playlistFile) throws JMOPSourceException;
 
 }

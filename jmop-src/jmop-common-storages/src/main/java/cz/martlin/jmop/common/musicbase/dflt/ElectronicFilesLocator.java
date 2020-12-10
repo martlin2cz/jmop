@@ -5,12 +5,18 @@ import java.io.File;
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.musicbase.commons.BaseFilesLocator;
+import cz.martlin.jmop.common.storages.simplefs.SimpleLocator;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.base.BasePlaylistFilesLoaderStorer;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesNamer;
 
-
+/**
+ * @deprecated replaced by {@link SimpleLocator}
+ * @author martin
+ *
+ */
+@Deprecated
 public class ElectronicFilesLocator implements BaseFilesLocator {
 
 	private final BasePlaylistFilesLoaderStorer pfls;
@@ -121,6 +127,26 @@ public class ElectronicFilesLocator implements BaseFilesLocator {
 		return new File(bundleDir, trackFileName);
 	}
 
+	@Override
+	public String bundleName(File bundleDir) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String playlistName(File playlistFile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String trackTitle(File trackFile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 //	protected abstract String getTrackFileBasename(Track track);
 
 //	public abstract File getTempRootDirectory();

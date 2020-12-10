@@ -7,14 +7,12 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Metadata;
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.data.Tracklist;
+import cz.martlin.jmop.common.data.Bundle;
+import cz.martlin.jmop.common.data.Metadata;
+import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.data.Tracklist;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.util.xml.AbstractXMLPlaylistAndBundleFilesLoaderStorer;
 import javafx.util.Duration;
 
@@ -23,12 +21,8 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 	public static final String FILE_EXTENSION = "xspf"; //$NON-NLS-1$
 	protected static final String APPLICATION_URL = "https://github.com/martlin2cz/jmop"; //$NON-NLS-1$
 
-	private final String allTracksPlaylistName;
-
-	public XSPFPlaylistFilesLoaderStorer(BaseConfiguration config) {
+	public XSPFPlaylistFilesLoaderStorer() {
 		super(FILE_EXTENSION);
-
-		this.allTracksPlaylistName = config.getAllTracksPlaylistName();
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -46,10 +40,9 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 
 	private Bundle extractBundleDataFromDocument(Element root) {
 		String name = extractBundleName(root);
-		SourceKind kind = extractBundleKind(root);
 		Metadata metadata = extractMetadata(root, "bundle");
 
-		Bundle bundle = new Bundle(kind, name, metadata);
+		Bundle bundle = new Bundle(name, metadata);
 		return bundle;
 	}
 
@@ -58,16 +51,9 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 		Element root = createRootElement(document);
 
 		pushBundleDataIntoDocument(document, root, bundle);
-
-		Playlist allTracksPlaylist = bundle.getPlaylist(bundle, allTracksPlaylistName); // FIXME hack?
-		pushPlaylistDataIntoDocument(document, root, allTracksPlaylist);
-
 	}
 
 	private void pushBundleDataIntoDocument(Document document, Element root, Bundle bundle) {
-		SourceKind kind = bundle.getKind();
-		pushBundleKind(document, root, kind);
-
 		String name = bundle.getName();
 		pushBundleName(document, root, name);
 
@@ -86,35 +72,31 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 	private Playlist extractPlaylistDataFromDocument(Bundle bundle, Element root) {
 		String name = extractName(root);
 		int currentTrack = extractPlaylistCurrentTrack(root);
-		boolean locked = extractPlaylistLocked(root);
 		Metadata metadata = extractMetadata(root, "playlist");
 		Tracklist tracks = extractTracks(bundle, root);
 
-		return bundle.createPlaylist(name, currentTrack, locked, metadata, tracks);
+		return new Playlist(bundle, name, tracks, currentTrack, metadata);
 	}
 
 	@Override
-	protected void pushPlaylistIntoDocument(Bundle bundle, Playlist playlist, Document document) {
+	protected void pushPlaylistIntoDocument(Playlist playlist, boolean withTrackInfo, Document document) {
 		Element root = createRootElement(document);
 
-		pushPlaylistDataIntoDocument(document, root, playlist);
+		pushPlaylistDataIntoDocument(document, root, playlist, withTrackInfo);
 	}
 
-	private void pushPlaylistDataIntoDocument(Document document, Element root, Playlist playlist) {
+	private void pushPlaylistDataIntoDocument(Document document, Element root, Playlist playlist, boolean withTrackInfo) {
 		String name = playlist.getName();
 		pushName(document, root, name);
 
 		int currentTrack = playlist.getCurrentTrackIndex();
 		pushPlaylistCurrentTrack(document, root, currentTrack);
 
-		boolean locked = playlist.isLocked();
-		pushPlaylistLocked(document, root, locked);
-
 		Metadata metadata = playlist.getMetadata();
 		pushMetadata(document, root, "playlist", metadata);
 
 		Tracklist tracks = playlist.getTracks();
-		pushTracks(document, root, tracks);
+		pushTracks(document, root, tracks, withTrackInfo);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -173,11 +155,6 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 		XSPFDocumentUtility.setExtensionValue(document, root, "bundle", "name", name);
 	}
 
-	private void pushBundleKind(Document document, Element root, SourceKind kind) {
-		String sourceStr = kind.getName();
-		XSPFDocumentUtility.setExtensionValue(document, root, "bundle", "source", sourceStr);
-	}
-
 	private void pushMetadata(Document document, Element element, String extensionElement, Metadata metadata) {
 		String createdStr = XSPFDocumentUtility.stringifyDatetime(metadata.getCreated());
 		XSPFDocumentUtility.setExtensionValue(document, element, extensionElement, "created", createdStr);
@@ -189,25 +166,20 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 		XSPFDocumentUtility.setExtensionValue(document, element, extensionElement, "lastPlayed", lastPlayedStr);
 	}
 
-	private void pushPlaylistLocked(Document document, Element root, boolean locked) {
-		String lockedStr = Boolean.toString(locked);
-		XSPFDocumentUtility.setExtensionValue(document, root, "playlist", "locked", lockedStr);
-	}
-
 	private void pushPlaylistCurrentTrack(Document document, Element root, int currentTrack) {
 		String currTrackStr = Integer.toString(currentTrack);
 		XSPFDocumentUtility.setExtensionValue(document, root, "playlist", "currentTrack", currTrackStr);
 	}
 
-	private void pushTracks(Document document, Element root, Tracklist tracks) {
+	private void pushTracks(Document document, Element root, Tracklist tracks, boolean withTrackInfo) {
 		Element tracklist = XSPFDocumentUtility.getChildOrCreate(document, root, XSPFDocumentNamespaces.XSPF,
 				"tracklist");
 
 		tracks.getTracks().forEach( //
-				(t) -> pushTrack(document, tracklist, t));
+				(t) -> pushTrack(document, tracklist, t, withTrackInfo));
 	}
 
-	protected Element pushTrack(Document document, Element tracklist, Track track) {
+	protected Element pushTrack(Document document, Element tracklist, Track track, boolean withTrackInfo) {
 		Element trackElem = XSPFDocumentUtility.createElement(document, tracklist, XSPFDocumentNamespaces.XSPF,
 				"track");
 
@@ -230,9 +202,11 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 				durationStr);
 		XSPFDocumentUtility.createCommentWithText(document, trackElem, durationHumanStr);
 
-		Metadata metadata = track.getMetadata();
-		pushMetadata(document, trackElem, "track", metadata);
-
+		if (withTrackInfo) {
+			Metadata metadata = track.getMetadata();
+			pushMetadata(document, trackElem, "track", metadata);
+		}
+		
 		return trackElem;
 	}
 
@@ -244,16 +218,6 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 
 	private String extractBundleName(Element root) {
 		return XSPFDocumentUtility.getExtensionValue(root, "bundle", "name");
-	}
-
-	private SourceKind extractBundleKind(Element root) {
-		String sourceStr = XSPFDocumentUtility.getExtensionValue(root, "bundle", "source");
-		return SourceKind.ofName(sourceStr);
-	}
-
-	private boolean extractPlaylistLocked(Element root) {
-		String lockedStr = XSPFDocumentUtility.getExtensionValue(root, "playlist", "locked");
-		return Boolean.parseBoolean(lockedStr);
 	}
 
 	private int extractPlaylistCurrentTrack(Element root) {
@@ -301,7 +265,7 @@ public class XSPFPlaylistFilesLoaderStorer extends AbstractXMLPlaylistAndBundleF
 
 		Metadata metadata = extractMetadata(trackElem, "track"); //$NON-NLS-1$
 
-		return bundle.createTrack(identifier, title, description, duration, metadata);
+		return new Track(bundle, identifier, title, description, duration, metadata);
 	}
 
 }

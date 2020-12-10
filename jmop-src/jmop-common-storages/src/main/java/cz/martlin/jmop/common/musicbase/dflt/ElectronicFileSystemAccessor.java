@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import cz.martlin.jmop.common.data.Tracklist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 
@@ -71,6 +71,18 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 			throw new JMOPSourceException("Cannot list directories", e);
 		}
 	}
+	
+	@Override
+	public Stream<File> listDirectories(File directory) throws JMOPSourceException {
+		try {
+			Path path = directory.toPath();
+			return Files.list(path)//
+					.filter(p -> Files.isDirectory(p)) //
+					.map(p -> p.toFile()); //
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot list directories", e);
+		}
+	}
 
 	/////////////////////////////////////////////////////////////////
 
@@ -124,6 +136,19 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 			throw new JMOPSourceException("Cannot list files", e);
 		}
 	}
+	
+	@Override
+	public Stream<File> listFiles(File directory) throws JMOPSourceException {
+		try {
+			Path path = directory.toPath();
+			return Files.list(path) //
+					.filter(p -> Files.isRegularFile(p)) // 
+					.map(p -> p.toFile()); //
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot list files", e);
+		}
+	}
+
 	
 	@Override
 	public List<String> loadLines(File file) throws JMOPSourceException {

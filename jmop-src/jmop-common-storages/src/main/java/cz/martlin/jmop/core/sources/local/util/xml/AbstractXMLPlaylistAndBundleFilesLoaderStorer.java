@@ -6,30 +6,22 @@ import org.w3c.dom.Document;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.Tracklist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.locals.base.BaseBundleFilesLoaderStorer;
 import cz.martlin.jmop.core.sources.locals.base.BasePlaylistFilesLoaderStorer;
 
-public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer
-		implements BasePlaylistFilesLoaderStorer, BaseBundleFilesLoaderStorer {
+public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer {
 
 	private final XMLFileLoaderStorer xfls;
-	private final String extension;
 
-	public AbstractXMLPlaylistAndBundleFilesLoaderStorer(String extension) {
+	public AbstractXMLPlaylistAndBundleFilesLoaderStorer() {
 		super();
 		this.xfls = new XMLFileLoaderStorer();
-		this.extension = extension;
-	}
-
-	@Override
-	public String extensionOfFile() {
-		return extension;
 	}
 
 	/////////////////////////////////////////////////////////////////
 
-	@Override
 	public Bundle loadBundle(File file) throws JMOPSourceException {
 		try {
 			Document document = xfls.loadDocument(file);
@@ -43,7 +35,6 @@ public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer
 
 	/////////////////////////////////////////////////////////////////
 
-	@Override
 	public Playlist loadPlaylist(Bundle bundle, File file) throws JMOPSourceException {
 		try {
 			Document document = xfls.loadDocument(file);
@@ -56,33 +47,25 @@ public abstract class AbstractXMLPlaylistAndBundleFilesLoaderStorer
 	protected abstract Playlist extractPlaylistFromDocument(Bundle bundle, Document document);
 
 	/////////////////////////////////////////////////////////////////
-	@Override
-	public void saveBundle(Bundle bundle, File file) throws JMOPSourceException {
+
+	public void savePlaylist(Playlist playlist, File file, boolean withBundleInfo, boolean withTrackInfo) throws JMOPSourceException {
 		try {
 			Document document = xfls.createEmptyDocument();
-			pushBundleIntoDocument(bundle, document);
-			xfls.saveDocument(document, file);
-		} catch (Exception e) {
-			throw new JMOPSourceException("Cannot save bundle", e);
-		}
-	}
+			pushPlaylistIntoDocument(playlist, withTrackInfo, document);
+			
+			if (withBundleInfo) {
+				Bundle bundle = playlist.getBundle();
+				pushBundleIntoDocument(bundle, document);
+			}
 
-	protected abstract void pushBundleIntoDocument(Bundle bundle, Document document);
-
-	/////////////////////////////////////////////////////////////////
-
-	@Override
-	public void savePlaylist(Bundle bundle, Playlist playlist, File file) throws JMOPSourceException {
-		try {
-			Document document = xfls.createEmptyDocument();
-			pushPlaylistIntoDocument(bundle, playlist, document);
 			xfls.saveDocument(document, file);
 		} catch (Exception e) {
 			throw new JMOPSourceException("Cannot save playlist", e);
 		}
 	}
 
-	protected abstract void pushPlaylistIntoDocument(Bundle bundle, Playlist playlist, Document document);
+	protected abstract void pushPlaylistIntoDocument(Playlist playlist, boolean withTrackInfo, Document document);
+	protected abstract void pushBundleIntoDocument(Bundle bundle, Document document);
 
 	/////////////////////////////////////////////////////////////////
 

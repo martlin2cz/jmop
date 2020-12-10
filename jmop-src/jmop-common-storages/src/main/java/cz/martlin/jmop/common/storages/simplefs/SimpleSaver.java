@@ -36,42 +36,38 @@ public class SimpleSaver implements BaseMusicdataSaver {
 	}
 
 	@Override
-	public Bundle loadBundleData(String bundleName) {
+	public Bundle loadBundleData(File bundleDir, String bundleName) {
 		Metadata metadata = Metadata.createNew();
 		return new Bundle(bundleName, metadata);
 	}
 
 	@Override
-	public List<String> loadPlaylistsNames(String bundleName) throws JMOPSourceException {
-		File dir = new File(root, bundleName);
-		return fs.listFilesMatching(dir, f -> isTracklistFile(f)) //
+	public List<String> loadPlaylistsNames(File bundleDir, String bundleName) throws JMOPSourceException {
+		return fs.listFilesMatching(bundleDir, f -> isTracklistFile(f)) //
 				.stream() //
 				.map(f -> tracklistFileToPlaylistName(f)) //
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public Playlist loadPlaylistData(Bundle bundle, Map<String, Track> tracks, String playlistName)
+	public Playlist loadPlaylistData(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
 			throws JMOPSourceException {
 		Metadata metadata = Metadata.createNew();
-		File bundleDir = new File(root, bundle.getName());
-		File playlistFile = new File(bundleDir, playlistName);
 		Tracklist tracklist = loadTracklist(bundle, playlistFile, tracks);
 		int currentTrackIndex = 0;
 		return new Playlist(bundle, playlistName, tracklist, currentTrackIndex, metadata);
 	}
 
 	@Override
-	public List<String> loadTracksTitles(String bundleName) throws JMOPSourceException {
-		File dir = new File(root, bundleName);
-		return fs.listFilesMatching(dir, f -> isTrackFile(f)) //
+	public List<String> loadTracksTitles(File bundleDir, String bundleName) throws JMOPSourceException {
+		return fs.listFilesMatching(bundleDir, f -> isTrackFile(f)) //
 				.stream() //
 				.map(f -> trackFileToTrackId(f)) //
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public Track loadTrackData(Bundle bundle, String trackTitle) {
+	public Track loadTrackData(File trackFile, Bundle bundle, String trackTitle) {
 		Metadata metadata = Metadata.createNew();
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
 		String id = trackTitle;
@@ -81,21 +77,18 @@ public class SimpleSaver implements BaseMusicdataSaver {
 	}
 
 	@Override
-	public void saveBundleData(Bundle bundle) {
+	public void saveBundleData(File bundleDir, Bundle bundle) {
 		// ignore, since we don't store metadata
 	}
 
 	@Override
-	public void savePlaylistData(Playlist playlist) throws JMOPSourceException {
-		Bundle bundle = playlist.getBundle();
-		File bundleDir = new File(root, bundle.getName());
-		File playlistFile = new File(bundleDir, playlist.getName());
+	public void savePlaylistData(File playlistFile, Playlist playlist) throws JMOPSourceException {
 		Tracklist tracklist = playlist.getTracks();
 		saveTracklist(tracklist, playlistFile);
 	}
 
 	@Override
-	public void saveTrackData(Track track) {
+	public void saveTrackData(File trackFile, Track track) {
 		// ignore, since we don't store metadata
 	}
 

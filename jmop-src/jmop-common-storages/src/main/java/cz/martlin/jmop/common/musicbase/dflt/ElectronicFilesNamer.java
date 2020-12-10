@@ -3,6 +3,13 @@ package cz.martlin.jmop.common.musicbase.dflt;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFilesNamer;
 
+/**
+ * @deprecated The "Namer" concept got deprecated completelly.
+ * 
+ * @author martin
+ *
+ */
+@Deprecated
 public class ElectronicFilesNamer implements BaseFilesNamer {
 	private static final String ILLEGAL_CHAR_REGEX = "[^A-Za-z0-9\\-\\.\\_]";
 
