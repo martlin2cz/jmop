@@ -18,5 +18,10 @@
 			<artifactId>jmop-common-base</artifactId>
 			<version>${revision}</version>
 		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-musicbase</artifactId>
+			<version>${revision}</version>
+		</dependency>
 	</dependencies>
 </project>
