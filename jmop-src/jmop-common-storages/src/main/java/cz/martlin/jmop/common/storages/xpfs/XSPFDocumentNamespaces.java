@@ -1,8 +1,9 @@
-package cz.martlin.jmop.core.sources.locals.electronic.xspf;
+package cz.martlin.jmop.common.storages.xpfs;
+
 
 public enum XSPFDocumentNamespaces {
 	XSPF(null, "http://xspf.org/ns/0/"),
-	JMOP("jmop", XSPFPlaylistFilesLoaderStorer.APPLICATION_URL + "/schemas/xspf-extension.xsd");
+	JMOP("jmop", XSPFFilesManipulator.APPLICATION_URL + "/schemas/xspf-extension.xsd");
 
 	private final String prefix;
 	private final String url;
