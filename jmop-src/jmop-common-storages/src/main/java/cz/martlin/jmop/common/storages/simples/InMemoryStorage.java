@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.storages.simplefs;
+package cz.martlin.jmop.common.storages.simples;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;

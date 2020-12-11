@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.musicbase.commons;
+package cz.martlin.jmop.common.storages.bundlesdir;
 
 import java.io.File;
 
@@ -6,6 +6,9 @@ import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
+import cz.martlin.jmop.common.storages.playlists.BaseExtendedPlaylistManipulator;
+import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
+import cz.martlin.jmop.common.storages.utils.FilesLocatorExtension;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {

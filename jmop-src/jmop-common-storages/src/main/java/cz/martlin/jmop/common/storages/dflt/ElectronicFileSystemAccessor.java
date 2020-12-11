@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.musicbase.dflt;
+package cz.martlin.jmop.common.storages.dflt;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +10,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 
 public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 

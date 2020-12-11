@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals.electronic.base;
+package cz.martlin.jmop.common.storages.utils;
 
 import java.io.File;
 import java.util.List;

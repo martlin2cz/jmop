@@ -10,6 +10,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import cz.martlin.jmop.common.storages.simples.TestingDirectoryAccessor;
+
 public class TestingDirectoryAccessorTest {
 
 	@Test

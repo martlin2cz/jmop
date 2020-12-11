@@ -1,15 +1,22 @@
-package cz.martlin.jmop.core.sources.locals.testing;
+package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.misc.ops.RunnableWithException;
 
+/**
+ * Replace by {@link TempDir} rule.
+ * @author martin
+ *
+ */
+@Deprecated
 public class TestingDirectoryAccessor {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
