@@ -3,6 +3,8 @@ package cz.martlin.jmop.common.storages.xpfs;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -14,6 +16,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.storages.playlists.AbstractXMLEdtendedPlaylistManipulator;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.misc.JMOPSourceException;
 import javafx.util.Duration;
 
 public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator {
@@ -39,7 +42,7 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 
 		Bundle bundle = extractBundleDataFromDocument(root);
 
-		extractPlaylistDataFromDocument(bundle, root);
+		extractPlaylistDataFromDocument(bundle, null, root);
 
 		return bundle;
 	}
@@ -69,20 +72,20 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 	}
 
 	@Override
-	protected Playlist extractPlaylistFromDocument(Bundle bundle, Document document) {
+	protected Playlist extractPlaylistFromDocument(Bundle bundle, Map<String, Track> tracks, Document document) {
 		Element root = document.getDocumentElement();
 		checkRoot(root);
 
-		return extractPlaylistDataFromDocument(bundle, root);
+		return extractPlaylistDataFromDocument(bundle, tracks, root);
 	}
 
-	private Playlist extractPlaylistDataFromDocument(Bundle bundle, Element root) {
+	private Playlist extractPlaylistDataFromDocument(Bundle bundle, Map<String, Track> tracks, Element root) {
 		String name = extractName(root);
 		int currentTrack = extractPlaylistCurrentTrack(root);
 		Metadata metadata = extractMetadata(root, "playlist");
-		Tracklist tracks = extractTracks(bundle, root);
+		Tracklist tracklist = extractTracks(bundle, tracks, root);
 
-		return new Playlist(bundle, name, tracks, currentTrack, metadata);
+		return new Playlist(bundle, name, tracklist, currentTrack, metadata);
 	}
 
 	@Override
@@ -249,17 +252,36 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 		return Metadata.createExisting(created, lastPlayed, numberOfPlays);
 	}
 
-	private Tracklist extractTracks(Bundle bundle, Element root) {
+	private Tracklist extractTracks(Bundle bundle, Map<String, Track> tracks, Element root) {
 		Element trackList = XSPFDocumentUtility.getChildOrFail(root, XSPFDocumentNamespaces.XSPF, "tracklist"); //$NON-NLS-1$
 
-		List<Track> tracks = new ArrayList<>(trackList.getChildNodes().getLength());
+		List<Track> result = new ArrayList<>(trackList.getChildNodes().getLength());
 
 		XSPFDocumentUtility.iterateOverChildrenOrFail(trackList, XSPFDocumentNamespaces.XSPF, "track", (te) -> {
-			Track track = extractTrack(bundle, te);
-			tracks.add(track);
+			Track track = pickOrExtractTrack(bundle, tracks, te);
+			result.add(track);
 		});
 
-		return new Tracklist(tracks);
+		return new Tracklist(result);
+	}
+
+	private Track pickOrExtractTrack(Bundle bundle, Map<String, Track> tracks, Element trackElem) {
+		if (tracks == null) {
+			return extractTrack(bundle, trackElem);
+		} else {
+			return pickTrack(bundle, tracks, trackElem);
+		}
+	}
+
+	private Track pickTrack(Bundle bundle, Map<String, Track> tracks, Element trackElem) {
+		String title = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "title");
+		
+		if (!tracks.containsKey(title)) {
+			throw new IllegalStateException("The track " + title + " not found in the playlist"); 
+		}
+		
+		Track track = tracks.get(title);
+		return track;
 	}
 
 	protected Track extractTrack(Bundle bundle, Element trackElem) {

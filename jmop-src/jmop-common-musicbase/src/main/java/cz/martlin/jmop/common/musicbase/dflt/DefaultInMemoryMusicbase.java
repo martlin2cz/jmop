@@ -51,8 +51,8 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public Bundle createBundle(Bundle bundleData) throws JMOPSourceException {
-		return addBundle(bundleData.getName(), bundleData.getMetadata());
+	public void addBundle(Bundle bundle) throws JMOPSourceException {
+		bundles.add(bundle);
 	}
 
 	@Override
@@ -84,8 +84,8 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public Playlist createPlaylist(Playlist playlistData) throws JMOPSourceException {
-		return addPlaylist(playlistData.getBundle(), playlistData.getName(), playlistData.getMetadata());
+	public void addPlaylist(Playlist playlist) throws JMOPSourceException {
+		playlists.add(playlist);
 	}
 
 	@Override
@@ -123,8 +123,8 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public Track createTrack(Track trackData) throws JMOPSourceException {
-		return addTrack(trackData.getBundle(), trackData.getIdentifier(), trackData.getTitle(), trackData.getDescription(), trackData.getDuration(), trackData.getMetadata());
+	public void addTrack(Track track) throws JMOPSourceException {
+		tracks.add(track);
 	}
 
 	@Override

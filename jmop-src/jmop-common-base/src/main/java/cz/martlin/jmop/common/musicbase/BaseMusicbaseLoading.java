@@ -10,11 +10,11 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 public interface BaseMusicbaseLoading {
 	///////////////////////////////////////////////////////////////////////////
 	
-	public Bundle createBundle(Bundle bundleData) throws JMOPSourceException;
+	public void addBundle(Bundle bundle) throws JMOPSourceException;
 	
-	public Playlist createPlaylist(Playlist playlistData) throws JMOPSourceException;
+	public void addPlaylist(Playlist playlist) throws JMOPSourceException;
 	
-	public Track createTrack(Track trackData) throws JMOPSourceException;
+	public void addTrack(Track track) throws JMOPSourceException;
 	
 	///////////////////////////////////////////////////////////////////////////
 	

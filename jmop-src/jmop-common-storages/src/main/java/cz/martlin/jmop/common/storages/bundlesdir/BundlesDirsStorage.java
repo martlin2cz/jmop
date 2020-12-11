@@ -53,9 +53,9 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 		for (String playlistName : loader.loadPlaylistsNames(bundleDir, bundle, bundleName)) {
 			File playlistFile = locator.playlistFile(bundleName, playlistName);
 
-			Playlist playlistData = loader.loadPlaylistData(playlistFile, bundle, tracks, playlistName);
+			Playlist playlist = loader.loadPlaylist(playlistFile, bundle, tracks, playlistName);
 
-			inmemory.createPlaylist(playlistData);
+			inmemory.addPlaylist(playlist);
 		}
 	}
 
@@ -67,9 +67,9 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 		File bundleDir = locator.bundleDir(bundleName);
 		for (String trackTitle : loader.loadTracksTitles(bundleDir, bundle, bundleName)) {
 			File trackFile = locator.trackFile(bundleName, trackTitle);
-			Track trackData = loader.loadTrackData(trackFile, bundle, trackTitle);
+			Track track = loader.loadTrack(trackFile, bundle, trackTitle);
 
-			Track track = inmemory.createTrack(trackData);
+			inmemory.addTrack(track);
 			tracks.put(trackTitle, track);
 		}
 
@@ -81,9 +81,9 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 
 		for (String bundleName : loader.loadBundlesNames()) {
 			File bundleDir = locator.bundleDir(bundleName);
-			Bundle bundleData = loader.loadBundleData(bundleDir, bundleName);
+			Bundle bundle = loader.loadBundle(bundleDir, bundleName);
 
-			Bundle bundle = inmemory.createBundle(bundleData);
+			inmemory.addBundle(bundle);
 			bundles.put(bundleName, bundle);
 		}
 

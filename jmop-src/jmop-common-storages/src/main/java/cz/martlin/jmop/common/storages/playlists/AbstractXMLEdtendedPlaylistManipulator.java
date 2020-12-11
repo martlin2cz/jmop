@@ -1,11 +1,13 @@
 package cz.martlin.jmop.common.storages.playlists;
 
 import java.io.File;
+import java.util.Map;
 
 import org.w3c.dom.Document;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExtendedPlaylistManipulator {
@@ -67,16 +69,16 @@ public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExte
 /////////////////////////////////////////////////////////////////
 
 	@Override
-	public Playlist loadOnlyPlaylist(Bundle bundle, File file) throws JMOPSourceException {
+	public Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file) throws JMOPSourceException {
 		try {
 			Document document = xfls.loadDocument(file);
-			return extractPlaylistFromDocument(bundle, document);
+			return extractPlaylistFromDocument(bundle, tracks, document);
 		} catch (Exception e) {
 			throw new JMOPSourceException("Cannot load playlist", e);
 		}
 	}
 
-	protected abstract Playlist extractPlaylistFromDocument(Bundle bundle, Document document);
+	protected abstract Playlist extractPlaylistFromDocument(Bundle bundle, Map<String, Track> tracks, Document document);
 	
 /////////////////////////////////////////////////////////////////
 

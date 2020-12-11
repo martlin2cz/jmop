@@ -39,7 +39,7 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public Bundle loadBundleData(File bundleDir, String bundleName) throws JMOPSourceException {
+	public Bundle loadBundle(File bundleDir, String bundleName) throws JMOPSourceException {
 		File allTracksPlaylistFile = allTracksPlaylistFile(bundleName);
 		return saver.loadOnlyBundle(allTracksPlaylistFile);
 	}
@@ -53,16 +53,16 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public Playlist loadPlaylistData(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
+	public Playlist loadPlaylist(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
 			throws JMOPSourceException {
 
-		return saver.loadOnlyPlaylist(bundle, playlistFile);
+		return saver.loadOnlyPlaylist(bundle, tracks, playlistFile);
 	}
 
 	@Override
 	public List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName) throws JMOPSourceException {
 		File allTracksPlaylistFile = allTracksPlaylistFile(bundleName);
-		return saver.loadOnlyPlaylist(bundle, allTracksPlaylistFile)
+		return saver.loadOnlyPlaylist(bundle, null, allTracksPlaylistFile)
 				//TODO little tricky
 				.getTracks() //
 				.getTracks() //
@@ -72,10 +72,10 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public Track loadTrackData(File trackFile, Bundle bundle, String trackTitle) throws JMOPSourceException {
+	public Track loadTrack(File trackFile, Bundle bundle, String trackTitle) throws JMOPSourceException {
 		String bundleName = bundle.getName();
 		File allTracksPlaylistFile = allTracksPlaylistFile(bundleName);
-		return saver.loadOnlyPlaylist(bundle, allTracksPlaylistFile) //
+		return saver.loadOnlyPlaylist(bundle, null, allTracksPlaylistFile) //
 				//TODO little tricky
 				.getTracks() //
 				.getTracks() //

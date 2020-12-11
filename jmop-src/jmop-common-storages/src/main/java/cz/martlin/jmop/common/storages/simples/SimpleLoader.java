@@ -36,7 +36,7 @@ public class SimpleLoader implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public Bundle loadBundleData(File bundleDir, String bundleName) throws JMOPSourceException {
+	public Bundle loadBundle(File bundleDir, String bundleName) throws JMOPSourceException {
 		Metadata metadata = Metadata.createNew();
 		return new Bundle(bundleName, metadata);
 	}
@@ -50,7 +50,7 @@ public class SimpleLoader implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public Playlist loadPlaylistData(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
+	public Playlist loadPlaylist(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
 			throws JMOPSourceException {
 		Metadata metadata = Metadata.createNew();
 		Tracklist tracklist = loadTracklist(bundle, playlistFile, tracks);
@@ -67,7 +67,7 @@ public class SimpleLoader implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public Track loadTrackData(File trackFile, Bundle bundle, String trackTitle) {
+	public Track loadTrack(File trackFile, Bundle bundle, String trackTitle) {
 		Metadata metadata = Metadata.createNew();
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
 		String id = trackTitle;
