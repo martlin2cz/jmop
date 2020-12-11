@@ -1,10 +1,10 @@
-package cz.martlin.jmop.common.storages.simplefs;
+package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Track;
-import cz.martlin.jmop.common.musicbase.commons.BaseFilesLocator;
+import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 

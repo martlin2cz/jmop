@@ -1,11 +1,11 @@
 package cz.martlin.jmop.core.sources.local.base;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNoException;
 import static org.junit.Assume.assumeTrue;
-import static org.hamcrest.Matchers.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +15,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 import cz.martlin.jmop.core.sources.local.util.LocalsTestUtility;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 
 public abstract class BaseFileSystemAccessorTest {
 

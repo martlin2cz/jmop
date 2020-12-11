@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.local.util.xml;
+package cz.martlin.jmop.common.storages.playlists;
 
 import java.io.File;
 import java.io.IOException;

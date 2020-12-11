@@ -1,20 +1,19 @@
-package cz.martlin.jmop.common.musicbase.dflt;
+package cz.martlin.jmop.common.storages.dflt;
 
 import java.io.File;
 
-import cz.martlin.jmop.common.musicbase.commons.BaseExtendedPlaylistManipulator;
-import cz.martlin.jmop.common.musicbase.commons.BaseFilesLocator;
-import cz.martlin.jmop.common.musicbase.commons.BaseMusicdataLoader;
-import cz.martlin.jmop.common.musicbase.commons.BaseMusicdataSaver;
-import cz.martlin.jmop.common.musicbase.commons.BundlesDirsStorage;
-import cz.martlin.jmop.common.musicbase.commons.LoaderWithAllTrackPlaylist;
-import cz.martlin.jmop.common.musicbase.commons.SaverWithAllTrackPlaylist;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
-import cz.martlin.jmop.common.storages.simplefs.SimpleLocator;
+import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataLoader;
+import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataSaver;
+import cz.martlin.jmop.common.storages.bundlesdir.BundlesDirsStorage;
+import cz.martlin.jmop.common.storages.bundlesdir.LoaderWithAllTrackPlaylist;
+import cz.martlin.jmop.common.storages.bundlesdir.SaverWithAllTrackPlaylist;
+import cz.martlin.jmop.common.storages.playlists.BaseExtendedPlaylistManipulator;
+import cz.martlin.jmop.common.storages.simples.SimpleLocator;
+import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
+import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
 import cz.martlin.jmop.common.storages.xpfs.XSPFFilesManipulator;
-import cz.martlin.jmop.common.storages.simplefs.SimpleExtendedPlaylistManipulator;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 
 public class DefaultStorage extends BundlesDirsStorage {
 

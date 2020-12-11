@@ -12,6 +12,7 @@ import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.Tracklist;
+import cz.martlin.jmop.common.storages.playlists.AbstractXMLEdtendedPlaylistManipulator;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import javafx.util.Duration;
 

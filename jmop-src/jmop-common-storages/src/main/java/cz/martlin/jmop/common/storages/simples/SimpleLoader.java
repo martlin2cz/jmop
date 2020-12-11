@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.storages.simplefs;
+package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
 import java.util.List;
@@ -10,10 +10,10 @@ import cz.martlin.jmop.common.data.Metadata;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
 import cz.martlin.jmop.common.data.Tracklist;
-import cz.martlin.jmop.common.musicbase.commons.BaseMusicdataLoader;
+import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataLoader;
+import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 import javafx.util.Duration;
 
 public class SimpleLoader implements BaseMusicdataLoader {

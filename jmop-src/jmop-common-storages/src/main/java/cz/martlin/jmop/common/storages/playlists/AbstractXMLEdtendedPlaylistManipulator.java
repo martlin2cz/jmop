@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.storages.xpfs;
+package cz.martlin.jmop.common.storages.playlists;
 
 import java.io.File;
 
@@ -6,9 +6,7 @@ import org.w3c.dom.Document;
 
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.musicbase.commons.BaseExtendedPlaylistManipulator;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.local.util.xml.XMLFileLoaderStorer;
 
 public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExtendedPlaylistManipulator {
 

@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.musicbase.commons;
+package cz.martlin.jmop.common.storages.playlists;
 
 import java.io.File;
 

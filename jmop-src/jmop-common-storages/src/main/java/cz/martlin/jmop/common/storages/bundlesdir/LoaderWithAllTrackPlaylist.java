@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.musicbase.commons;
+package cz.martlin.jmop.common.storages.bundlesdir;
 
 import java.io.File;
 import java.util.List;
@@ -8,8 +8,10 @@ import java.util.stream.Collectors;
 import cz.martlin.jmop.common.data.Bundle;
 import cz.martlin.jmop.common.data.Playlist;
 import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.storages.playlists.BaseExtendedPlaylistManipulator;
+import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
+import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.locals.electronic.base.BaseFileSystemAccessor;
 
 public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 
