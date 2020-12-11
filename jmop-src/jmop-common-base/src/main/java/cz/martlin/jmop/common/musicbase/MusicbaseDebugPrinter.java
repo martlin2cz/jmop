@@ -1,10 +1,10 @@
 package cz.martlin.jmop.common.musicbase;
 
-import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Metadata;
-import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.data.Track;
-import cz.martlin.jmop.common.data.Tracklist;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Metadata;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class MusicbaseDebugPrinter {

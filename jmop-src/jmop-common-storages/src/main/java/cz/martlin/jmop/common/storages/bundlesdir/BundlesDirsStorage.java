@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataSaver.SaveReason;

@@ -8,10 +8,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.data.Track;
-import cz.martlin.jmop.common.data.TrackData;
+import cz.martlin.jmop.common.data.misc.TrackData;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;

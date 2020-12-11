@@ -2,8 +2,8 @@ package cz.martlin.jmop.common.storages.playlists;
 
 import java.io.File;
 
-import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.utils.FileExtensionSpecifier;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 

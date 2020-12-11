@@ -2,8 +2,8 @@ package cz.martlin.jmop.core.misc.ops;
 
 import java.util.List;
 
-import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public interface BaseOperations {

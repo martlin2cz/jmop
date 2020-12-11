@@ -7,9 +7,9 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.data.TestingDataCreator;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.utils.TestingDataCreator;
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
@@ -23,7 +23,8 @@ import cz.martlin.jmop.core.sources.locals.electronic.xspf.XSPFPlaylistFilesLoad
 import cz.martlin.jmop.core.sources.locals.electronic.xspf.XSPFpflsWithFiles;
 import cz.martlin.jmop.core.sources.locals.testing.TestingTracksSource;
 
-public class XSPFPlaylistFilesLoaderStorerTest {
+@Deprecated
+public class XSPFPlaylistManipulatorTest {
 
 	@Test
 	public void testBundleFile() throws IOException, JMOPSourceException {

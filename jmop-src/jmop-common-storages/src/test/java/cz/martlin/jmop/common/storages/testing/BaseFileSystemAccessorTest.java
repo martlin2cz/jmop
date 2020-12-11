@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.local.base;
+package cz.martlin.jmop.common.storages.testing;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertFalse;
@@ -10,44 +10,25 @@ import static org.junit.Assume.assumeTrue;
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
-import cz.martlin.jmop.core.sources.local.util.LocalsTestUtility;
 
 public abstract class BaseFileSystemAccessorTest {
 
-	private final LocalsTestUtility util;
 	private final BaseFileSystemAccessor accessor;
-	private File root;
+	@TempDir
+	public File root;
 
 	public BaseFileSystemAccessorTest(BaseFileSystemAccessor accessor) {
 		super();
-		this.util = new LocalsTestUtility();
 		this.accessor = accessor;
 	}
 
-	@Before
-	public void prepareTestingDir() {
-		try {
-			root = util.createTempDirectory();
-		} catch (IOException e) {
-			assumeNoException(e);
-		}
-	}
-
-	@After
-	public void deleteTestingDir() {
-		try {
-			root = util.deleteTempDirectory();
-		} catch (IOException e) {
-			assumeNoException(e);
-		}
-	}
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -112,16 +93,19 @@ public abstract class BaseFileSystemAccessorTest {
 			create(lorem, ipsum, foo, bar, baz, qux, dir42, dir99, dirNumber);
 
 			// check
-			Set<File> txtsOfLorem = accessor.listFilesMatching(lorem, //
-					(f) -> f.getName().endsWith("txt"));
+			Set<File> txtsOfLorem = accessor.listFiles(lorem) //
+					.filter((f) -> f.getName().endsWith("txt")) //
+					.collect(Collectors.toSet());
 			assertThat(txtsOfLorem, containsInAnyOrder(foo, bar));
 
-			Set<File> pngsOfIpsum = accessor.listFilesMatching(ipsum, //
-					(f) -> f.getName().endsWith("png"));
+			Set<File> pngsOfIpsum = accessor.listFiles(ipsum) //
+					.filter((f) -> f.getName().endsWith("png"))//
+					.collect(Collectors.toSet());
 			assertThat(pngsOfIpsum, containsInAnyOrder(qux));
 
-			Set<File> numbersInIpsum = accessor.listDirectoriesMatching(ipsum, //
-					(f) -> f.getName().matches("[0-9]+"));
+			Set<File> numbersInIpsum = accessor.listDirectories(ipsum) //
+					.filter((f) -> f.getName().matches("[0-9]+"))//
+					.collect(Collectors.toSet());
 			assertThat(numbersInIpsum, containsInAnyOrder(dir42, dir99));
 
 		} finally {

@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.storages.simplefs;
+package cz.martlin.jmop.common.storages.simple;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,10 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.data.Track;
-import cz.martlin.jmop.common.data.TrackData;
+import cz.martlin.jmop.common.data.misc.TrackData;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.DurationUtilities;

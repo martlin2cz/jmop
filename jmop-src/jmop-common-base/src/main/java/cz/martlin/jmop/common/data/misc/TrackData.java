@@ -1,5 +1,6 @@
-package cz.martlin.jmop.common.data;
+package cz.martlin.jmop.common.data.misc;
 
+import cz.martlin.jmop.common.data.model.Track;
 import javafx.util.Duration;
 
 /**

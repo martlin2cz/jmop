@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.misc;
 
-import cz.martlin.jmop.common.data.Playlist;
+import cz.martlin.jmop.common.data.model.Playlist;
 import javafx.beans.InvalidationListener;
 
 /**
