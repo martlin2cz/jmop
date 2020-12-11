@@ -1,4 +1,4 @@
-package cz.martlin.jmop.common.data;
+package cz.martlin.jmop.common.data.misc;
 
 import java.io.File;
 

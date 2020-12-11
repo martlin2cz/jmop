@@ -1,5 +1,7 @@
-package cz.martlin.jmop.common.data;
+package cz.martlin.jmop.common.data.misc;
 
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.core.sources.SourceKind;
 
 /**

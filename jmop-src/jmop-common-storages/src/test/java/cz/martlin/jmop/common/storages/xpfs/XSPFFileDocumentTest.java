@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.locals.electronic.xspf;
+package cz.martlin.jmop.common.storages.xpfs;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

@@ -5,7 +5,7 @@ import java.net.URI;
 
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.misc.locator.BaseTrackFileLocator;
-import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.JFXPanel;

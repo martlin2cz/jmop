@@ -2,9 +2,9 @@ package cz.martlin.jmop.common.storages.bundlesdir;
 
 import java.io.File;
 
-import cz.martlin.jmop.common.data.Bundle;
-import cz.martlin.jmop.common.data.Playlist;
-import cz.martlin.jmop.common.data.Track;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public interface BaseMusicdataSaver {
