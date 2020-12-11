@@ -2,6 +2,7 @@ package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -51,13 +52,13 @@ public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistMa
 	}
 
 	@Override
-	public Playlist loadOnlyPlaylist(Bundle bundle, File file) throws JMOPSourceException {
+	public Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file) throws JMOPSourceException {
 		String name = file.getName().replace("." + fileExtension(), "");
 
 		Metadata metadata = Metadata.createNew();
 		int currentTrackIndex = 0;
-		Tracklist tracks = loadTracklist(bundle, file);
-		return new Playlist(bundle, name, tracks, currentTrackIndex, metadata);
+		Tracklist tracklist = loadTracklist(bundle, file);
+		return new Playlist(bundle, name, tracklist, currentTrackIndex, metadata);
 	}
 
 	private void saveTracklist(Tracklist tracklist, File file) throws JMOPSourceException {

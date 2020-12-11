@@ -41,9 +41,8 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public Bundle createBundle(Bundle bundleData) throws JMOPSourceException {
-		Bundle bundle = inmemory.createBundle(bundleData);
-		return bundle;
+	public void addBundle(Bundle bundle) throws JMOPSourceException {
+		inmemory.addBundle(bundle);
 	}
 	
 	@Override
@@ -73,9 +72,8 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public Playlist createPlaylist(Playlist playlistData) throws JMOPSourceException {
-		Playlist playlist = inmemory.createPlaylist(playlistData);
-		return playlist;
+	public void addPlaylist(Playlist playlist) throws JMOPSourceException {
+		inmemory.addPlaylist(playlist);
 	}
 	
 	@Override
@@ -112,9 +110,8 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public Track createTrack(Track trackData) throws JMOPSourceException {
-		Track track = inmemory.createTrack(trackData);
-		return track;
+	public void addTrack(Track track) throws JMOPSourceException {
+		inmemory.addTrack(track);
 	}
 	
 	@Override

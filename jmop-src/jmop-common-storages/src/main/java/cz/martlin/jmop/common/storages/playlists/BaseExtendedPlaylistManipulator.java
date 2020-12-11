@@ -1,9 +1,11 @@
 package cz.martlin.jmop.common.storages.playlists;
 
 import java.io.File;
+import java.util.Map;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.utils.FileExtensionSpecifier;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
@@ -47,13 +49,15 @@ public interface BaseExtendedPlaylistManipulator extends FileExtensionSpecifier 
 	Bundle loadOnlyBundle(File file) throws JMOPSourceException;
 
 	/**
-	 * Loads the playlist from the given file.
+	 * Loads the playlist from the given file and by using the specified tracks. If
+	 * the tracks is unspecfied, loads the whole tracks from the file.
 	 * 
 	 * @param bundle
+	 * @param tracks
 	 * @param file
 	 * @return
 	 * @throws JMOPSourceException
 	 */
-	Playlist loadOnlyPlaylist(Bundle bundle, File file) throws JMOPSourceException;
+	Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file) throws JMOPSourceException;
 
 }

@@ -4,10 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.junit.rules.TemporaryFolder;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -23,26 +24,47 @@ public class XSPFFilesManipulatorTest {
 	@TempDir
 	public File basedir;
 	private final XSPFFilesManipulator manipulator = new XSPFFilesManipulator();
+	
+///////////////////////////////////////////////////////////////////////////
 
+	private Bundle bundle;
+	private Playlist playlist;
+	private Track trackFirst;
+	private Track trackSecond;
+	private BaseInMemoryMusicbase musicbase;
+
+	@Before
+	public void before() {
+		musicbase = new DefaultInMemoryMusicbase();
+		
+		bundle = TestingDataCreator.bundle(musicbase);
+		playlist = TestingDataCreator.playlist(musicbase, bundle);
+		trackFirst = TestingDataCreator.track(musicbase, bundle, "first track");
+		trackSecond = TestingDataCreator.track(musicbase, bundle, "second track");
+
+		playlist.addTrack(trackFirst);
+		playlist.addTrack(trackSecond);
+		
+		trackFirst.setMetadata(trackFirst.getMetadata().played().played());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 
 	@Test
 	public void testPlaylist() throws JMOPSourceException {
-		Playlist playlist = prepare();
-		Bundle bundle = playlist.getBundle();
 
 		File playlistFile = new File(basedir, "playlist.xspf");
 		manipulator.saveOnlyPlaylist(playlist, playlistFile);
 		assertTrue(playlistFile.exists());
 
-		Playlist loaded = manipulator.loadOnlyPlaylist(bundle, playlistFile);
+		Map<String, Track> tracks = Map.of(trackFirst.getTitle(), trackFirst, trackSecond.getTitle(), trackSecond);
+		Playlist loaded = manipulator.loadOnlyPlaylist(bundle, tracks, playlistFile);
 		assertEquals(playlist.toString(), loaded.toString());
 		assertEquals(playlist, loaded);
 	}
 
 	@Test
 	public void testBundle() throws JMOPSourceException {
-		Playlist playlist = prepare();
 		Bundle bundle = playlist.getBundle();
 
 		File bundleFile = new File(basedir, "bundle.xspf");
@@ -56,16 +78,6 @@ public class XSPFFilesManipulatorTest {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	private Playlist prepare() {
-		BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
-		Bundle bundle = TestingDataCreator.bundle(musicbase);
-		Playlist playlist = TestingDataCreator.playlist(musicbase, bundle);
-		Track trackFirst = TestingDataCreator.track(musicbase, bundle, "first track");
-		Track trackSecond = TestingDataCreator.track(musicbase, bundle, "second track");
 
-		playlist.addTrack(trackFirst);
-		playlist.addTrack(trackSecond);
-		return playlist;
-	}
 
 }
