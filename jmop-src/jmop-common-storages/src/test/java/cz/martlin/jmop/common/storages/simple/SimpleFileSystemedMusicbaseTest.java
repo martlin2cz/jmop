@@ -2,13 +2,10 @@ package cz.martlin.jmop.common.storages.simple;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.File;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -21,9 +18,6 @@ import cz.martlin.jmop.core.misc.JMOPSourceException;
 
 public class SimpleFileSystemedMusicbaseTest {
 
-	@TempDir
-	public File root;
-	
 	private BaseMusicbaseModifing musicbase;
 
 	private Bundle testingBundle;
@@ -32,8 +26,6 @@ public class SimpleFileSystemedMusicbaseTest {
 
 	@BeforeEach
 	public void before() {
-		System.out.println("Our root is " + root);
-		
 		BaseMusicbaseModifing musicbase = new DefaultInMemoryMusicbase();
 
 		try {

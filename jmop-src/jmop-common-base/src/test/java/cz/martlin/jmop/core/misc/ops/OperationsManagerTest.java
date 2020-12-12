@@ -3,7 +3,12 @@ package cz.martlin.jmop.core.misc.ops;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-
+/**
+ * Do not, please.
+ * @author martin
+ *
+ */
+@Disabled
 @Deprecated
 public class OperationsManagerTest {
 

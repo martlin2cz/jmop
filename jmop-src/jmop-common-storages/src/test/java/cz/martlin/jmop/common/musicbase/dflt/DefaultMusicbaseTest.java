@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.musicbase.dflt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.File;
 
@@ -32,10 +33,15 @@ class DefaultMusicbaseTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
+		System.out.println("Running with " + root.getAbsolutePath());
+
+		assumeTrue(root.isDirectory(), "The root dir is not dir");
+		assumeTrue(root.list().length == 0, "The root dir is not empty");
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
+		System.out.println("Done, won't delete the testing dir contents");
 	}
 
 	///////////////////////////////////////////////////////////////////////////

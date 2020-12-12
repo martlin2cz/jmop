@@ -1,13 +1,15 @@
 package cz.martlin.jmop.core.sources.locals.electronic.xspf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -33,7 +35,7 @@ public class XSPFFilesManipulatorTest {
 	private Track trackSecond;
 	private BaseInMemoryMusicbase musicbase;
 
-	@Before
+	@BeforeEach
 	public void before() {
 		musicbase = new DefaultInMemoryMusicbase();
 		

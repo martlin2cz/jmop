@@ -1,8 +1,8 @@
 package cz.martlin.jmop.common.musicbase.simple;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
@@ -19,6 +19,7 @@ import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+
 
 public class DefaultInMemoryMusicbaseTest {
 
@@ -62,6 +63,7 @@ public class DefaultInMemoryMusicbaseTest {
 
 	@Test
 	public void testBundles() throws JMOPSourceException {
+		Assumptions.assumeTrue(musicbase != null, "the musicbase is null");
 		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
 		assertTrue(musicbase.bundles().contains(fooBundle));
 
