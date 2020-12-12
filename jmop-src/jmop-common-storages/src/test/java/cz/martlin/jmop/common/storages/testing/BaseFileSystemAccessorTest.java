@@ -1,18 +1,20 @@
 package cz.martlin.jmop.common.storages.testing;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeNoException;
-import static org.junit.Assume.assumeTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+//import org.junit.Assume;
+//import org.junit.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
@@ -131,7 +133,8 @@ public abstract class BaseFileSystemAccessorTest {
 			accessor.createDirectory(dirNumber);
 
 		} catch (JMOPSourceException e) {
-			assumeNoException(e);
+//			Assume.assumeNoException(e);
+			fail(e);
 		}
 	}
 
@@ -152,7 +155,8 @@ public abstract class BaseFileSystemAccessorTest {
 			accessor.deleteDirectory(lorem);
 
 		} catch (JMOPSourceException e) {
-			assumeNoException(e);
+//			Assume.assumeNoException(e);
+			fail(e);
 		}
 	}
 
