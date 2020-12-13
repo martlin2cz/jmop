@@ -46,7 +46,7 @@ public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 		Bundle bundle = track.getBundle();
 		Playlist allTracksPlaylist = obtainAllTracksPlaylist(bundle);
 
-		if (reason == SaveReason.CREATED) { 
+		if (reason == SaveReason.CREATED || reason == SaveReason.MOVED) { 
 			allTracksPlaylist.addTrack(track);
 		}
 		

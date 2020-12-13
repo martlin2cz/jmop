@@ -101,7 +101,8 @@ public class SimpleLocator implements BaseFilesLocator {
 	private static String stripExtension(String fileName, String extension) {
 		if (fileName.endsWith(extension)) {
 			// TODO TESTME
-			return fileName.substring(0, fileName.length() - extension.length());
+			//TODO FIXME quite tricky!
+			return fileName.substring(0, fileName.length() - extension.length() - 1);
 		} else {
 			throw new IllegalArgumentException("The file has not the desired extension: " + fileName);
 		}

@@ -1,5 +1,10 @@
 package cz.martlin.jmop.common.storages.simples;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -134,6 +139,16 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 	@Override
 	public void saveUpdatedTrack(Track track) {
 		// okay
+	}
+	
+	@Override
+	public File trackFile(Track track) throws JMOPSourceException {
+		try {
+			Path path = Files.createTempFile("track", track.getTitle());
+			return path.toFile();
+		} catch (IOException e) {
+			throw new JMOPSourceException("Cannot obtain track file", e);
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.musicbase.persistent;
 
+import java.io.File;
 import java.util.Set;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -145,6 +146,11 @@ public class PersistentMusicbase implements BaseMusicbase {
 	public void trackUpdated(Track track) throws JMOPSourceException {
 		inmemory.trackUpdated(track);
 		storage.saveUpdatedTrack(track);
+	}
+	
+	@Override
+	public File trackFile(Track track) throws JMOPSourceException {
+		return storage.trackFile(track);
 	}
 
 }

@@ -3,9 +3,10 @@ package cz.martlin.jmop.common.musicbase.persistent;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
 
-public interface BaseMusicbaseStorage {
+public interface BaseMusicbaseStorage extends TracksSource {
 
 	void load(BaseInMemoryMusicbase inmemory) throws JMOPSourceException;
 
