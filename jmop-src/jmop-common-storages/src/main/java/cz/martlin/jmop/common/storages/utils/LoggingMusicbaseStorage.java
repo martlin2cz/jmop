@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.storages.utils;
 
+import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -127,4 +129,11 @@ public class LoggingMusicbaseStorage implements BaseMusicbaseStorage {
 		delegee.saveUpdatedTrack(track);
 	}
 
+	@Override
+	public File trackFile(Track track) throws JMOPSourceException {
+		LOG.info("Picking track {} file", track.getTitle());
+
+		return delegee.trackFile(track);
+	}
+	
 }

@@ -80,7 +80,7 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 				.getTracks() //
 				.getTracks() //
 				.stream() //
-				.filter(t -> t.getTitle() == trackTitle) //
+				.filter(t -> t.getTitle().equals(trackTitle)) //
 				.findAny() //
 				.get(); //
 	}

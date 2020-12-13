@@ -176,7 +176,9 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 		File oldTrackFile = locator.trackFile(bundle, oldTitle);
 		File newTrackFile = locator.trackFile(bundle, newTitle);
 
-		fs.moveFile(oldTrackFile, newTrackFile);
+		if (oldTrackFile.exists()) {
+			fs.moveFile(oldTrackFile, newTrackFile);
+		}
 		saver.saveTrackData(newTrackFile, track, SaveReason.RENAMED);
 	}
 
@@ -185,7 +187,9 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 		File oldTrackFile = locator.trackFile(oldBundle, track);
 		File newTrackFile = locator.trackFile(newBundle, track);
 
-		fs.moveFile(oldTrackFile, newTrackFile);
+		if (oldTrackFile.exists()) {
+			fs.moveFile(oldTrackFile, newTrackFile);
+		}
 		saver.saveTrackData(newTrackFile, track, SaveReason.MOVED);
 	}
 
@@ -200,6 +204,12 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 		File trackFile = locator.trackFile(track);
 
 		saver.saveTrackData(trackFile, track, SaveReason.UPDATED);
+	}
+	
+	@Override
+	public File trackFile(Track track) {
+		File trackFile = locator.trackFile(track);
+		return trackFile;
 	}
 
 }
