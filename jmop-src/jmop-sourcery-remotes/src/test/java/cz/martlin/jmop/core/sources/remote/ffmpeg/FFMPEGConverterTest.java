@@ -13,7 +13,7 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.operation.PrintingListener;
@@ -59,7 +59,7 @@ public class FFMPEGConverterTest {
 	}
 
 	private void prepareTesingTrackFile(BaseTracksLocalSource tracks, Track track, TrackFileLocation location)
-			throws JMOPSourceException, IOException {
+			throws JMOPMusicbaseException, IOException {
 
 		TrackFileFormat format = TrackFileFormat.MP3;
 		File file = tracks.fileOfTrack(track, location, format);

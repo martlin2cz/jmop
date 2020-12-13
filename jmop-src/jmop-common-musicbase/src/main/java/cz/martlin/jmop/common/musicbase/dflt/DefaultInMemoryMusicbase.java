@@ -12,7 +12,7 @@ import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
 public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
@@ -51,7 +51,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void addBundle(Bundle bundle) throws JMOPSourceException {
+	public void addBundle(Bundle bundle) throws JMOPMusicbaseException {
 		bundles.add(bundle);
 	}
 
@@ -84,7 +84,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void addPlaylist(Playlist playlist) throws JMOPSourceException {
+	public void addPlaylist(Playlist playlist) throws JMOPMusicbaseException {
 		playlists.add(playlist);
 	}
 
@@ -118,12 +118,12 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void playlistUpdated(Playlist playlist) throws JMOPSourceException {
+	public void playlistUpdated(Playlist playlist) throws JMOPMusicbaseException {
 		// nothing to do here
 	}
 
 	@Override
-	public void addTrack(Track track) throws JMOPSourceException {
+	public void addTrack(Track track) throws JMOPMusicbaseException {
 		tracks.add(track);
 	}
 
@@ -157,7 +157,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void trackUpdated(Track track) throws JMOPSourceException {
+	public void trackUpdated(Track track) throws JMOPMusicbaseException {
 		// nothing to do here
 	}
 

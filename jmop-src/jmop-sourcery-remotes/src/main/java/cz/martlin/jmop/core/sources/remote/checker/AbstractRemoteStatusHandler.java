@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
@@ -47,7 +47,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	}
 
 	@Override
-	public boolean checkQuerier(BaseUIInterractor interactor) throws JMOPSourceException {
+	public boolean checkQuerier(BaseUIInterractor interactor) throws JMOPMusicbaseException {
 		Bundle bundle = prepareTestingBundle();
 		String query = prepareTestingQuery();
 
@@ -57,7 +57,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	}
 
 	@Override
-	public boolean checkDownloader(BaseUIInterractor interactor) throws JMOPSourceException {
+	public boolean checkDownloader(BaseUIInterractor interactor) throws JMOPMusicbaseException {
 		TrackFileLocation location = TrackFileLocation.TEMP;
 		Track track = prepareTestingTrack();
 
@@ -67,7 +67,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	}
 
 	@Override
-	public boolean checkConverter(BaseUIInterractor interactor) throws JMOPSourceException {
+	public boolean checkConverter(BaseUIInterractor interactor) throws JMOPMusicbaseException {
 		Track track = prepareTestingTrack();
 
 		TrackFileFormat fromFormat = TrackFileFormat.MP3;
@@ -109,7 +109,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	protected abstract String prepareTestingTrackID();
 
 	private void prepareTestingFile(Track track, TrackFileFormat fromFormat, TrackFileLocation fromLocation,
-			BaseUIInterractor interactor) throws JMOPSourceException {
+			BaseUIInterractor interactor) throws JMOPMusicbaseException {
 
 		String extension = fromFormat.getExtension();
 		File sourceFile = interactor.promptFile("", extension);
@@ -118,7 +118,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 		try {
 			Files.copy(sourceFile, targetFile);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot prepare sample file", e);
+			throw new JMOPMusicbaseException("Cannot prepare sample file", e);
 		}
 	}
 	///////////////////////////////////////////////////////////////////////////

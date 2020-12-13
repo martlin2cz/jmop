@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.misc.ops;
 
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public abstract class AbstractTriPhasedOperationsChain<T> implements BaseOperationsChain<T> {
 
@@ -8,7 +8,7 @@ public abstract class AbstractTriPhasedOperationsChain<T> implements BaseOperati
 	}
 
 	@Override
-	public BaseOperation<T, T> createOperation(int index, T input) throws JMOPSourceException {
+	public BaseOperation<T, T> createOperation(int index, T input) throws JMOPMusicbaseException {
 		switch (index) {
 		case 0:
 			return createFirstOperation(input);
@@ -23,10 +23,10 @@ public abstract class AbstractTriPhasedOperationsChain<T> implements BaseOperati
 		}
 	}
 
-	protected abstract BaseOperation<T, T> createFirstOperation(T input) throws JMOPSourceException;
+	protected abstract BaseOperation<T, T> createFirstOperation(T input) throws JMOPMusicbaseException;
 
-	protected abstract BaseOperation<T, T> createSecondOperation(T input) throws JMOPSourceException;
+	protected abstract BaseOperation<T, T> createSecondOperation(T input) throws JMOPMusicbaseException;
 
-	protected abstract BaseOperation<T, T> createThirdOperation(T input) throws JMOPSourceException;
+	protected abstract BaseOperation<T, T> createThirdOperation(T input) throws JMOPMusicbaseException;
 
 }

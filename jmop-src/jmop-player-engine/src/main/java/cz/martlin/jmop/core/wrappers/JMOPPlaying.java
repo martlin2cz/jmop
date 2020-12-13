@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.wrappers;
 
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import javafx.util.Duration;
 
@@ -42,9 +42,9 @@ public class JMOPPlaying {
 	 * 
 	 * @param playlist
 	 * @param startPlaying
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void startPlayingPlaylist(Playlist playlist, boolean startPlaying) throws JMOPSourceException {
+	public void startPlayingPlaylist(Playlist playlist, boolean startPlaying) throws JMOPMusicbaseException {
 		if (currentPlaylist != null) {
 			engine.stopPlayingPlaylist(currentPlaylist);
 		}
@@ -69,9 +69,9 @@ public class JMOPPlaying {
 	/**
 	 * Start playing.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void startPlaying() throws JMOPSourceException {
+	public void startPlaying() throws JMOPMusicbaseException {
 		engine.playNext();
 	}
 
@@ -99,18 +99,18 @@ public class JMOPPlaying {
 	/**
 	 * Jump to next track.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void toNext() throws JMOPSourceException {
+	public void toNext() throws JMOPMusicbaseException {
 		engine.toNext();
 	}
 
 	/**
 	 * Go back to the previous track.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void toPrevious() throws JMOPSourceException {
+	public void toPrevious() throws JMOPMusicbaseException {
 		engine.toPrevious();
 	}
 
@@ -136,9 +136,9 @@ public class JMOPPlaying {
 	 * Play track at specified index.
 	 * 
 	 * @param index
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void playTrack(int index) throws JMOPSourceException {
+	public void playTrack(int index) throws JMOPMusicbaseException {
 		engine.play(index);
 	}
 

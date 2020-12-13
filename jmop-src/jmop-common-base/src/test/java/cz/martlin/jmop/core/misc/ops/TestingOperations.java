@@ -2,7 +2,7 @@ package cz.martlin.jmop.core.misc.ops;
 
 import java.util.concurrent.TimeUnit;
 
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class TestingOperations {
 
@@ -47,7 +47,7 @@ public class TestingOperations {
 		TimeUnit.SECONDS.sleep(2);
 	}
 	
-	public static void runChain(OperationsManager man) throws JMOPSourceException, InterruptedException {
+	public static void runChain(OperationsManager man) throws JMOPMusicbaseException, InterruptedException {
 		
 		BaseOperationsChain<Integer> chain = new TestingCountingOperationsChain("X", 5);
 		man.start(5, chain, (r) -> System.out.println("The chain result is : " + r));

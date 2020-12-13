@@ -4,7 +4,7 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -42,10 +42,10 @@ public class JMOPSources {
 	 * @param query
 	 * @param engine
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
 	public Playlist createNewBundleAndPrepare(SourceKind kind, String bundleName, String query, PlayerEngine engine)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 		Bundle bundle = createBundle(kind, bundleName);
 		Playlist playlist = new Playlist(bundle, query);
 
@@ -61,9 +61,9 @@ public class JMOPSources {
 	 * @param query
 	 * @param engine
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public Playlist createNewPlaylist(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
+	public Playlist createNewPlaylist(Bundle bundle, String query, PlayerEngine engine) throws JMOPMusicbaseException {
 		Playlist playlist = new Playlist(bundle, query);
 
 		preparer.startSearchAndLoadInBg(bundle, query, engine);
@@ -77,10 +77,10 @@ public class JMOPSources {
 	 * @param playlistName
 	 * @param engine
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
 	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
 
@@ -93,9 +93,9 @@ public class JMOPSources {
 	 * 
 	 * @param playlist
 	 * @param newPlaylistName
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void savePlaylist(Playlist playlist, String newPlaylistName) throws JMOPSourceException {
+	public void savePlaylist(Playlist playlist, String newPlaylistName) throws JMOPMusicbaseException {
 		playlist.setName(newPlaylistName);
 		Bundle bundle = playlist.getBundle();
 		local.savePlaylist(bundle, playlist);
@@ -107,9 +107,9 @@ public class JMOPSources {
 	 * @param bundle
 	 * @param query
 	 * @param engine
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void queryAndLoad(Bundle bundle, String query, PlayerEngine engine) throws JMOPSourceException {
+	public void queryAndLoad(Bundle bundle, String query, PlayerEngine engine) throws JMOPMusicbaseException {
 		preparer.startSearchAndLoadInBg(bundle, query, engine);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,9 +118,9 @@ public class JMOPSources {
 	 * List all bundles.
 	 * 
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public List<String> listAllBundles() throws JMOPSourceException {
+	public List<String> listAllBundles() throws JMOPMusicbaseException {
 		return local.listBundlesNames();
 	}
 
@@ -129,9 +129,9 @@ public class JMOPSources {
 	 * 
 	 * @param bundleName
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public List<String> listPlaylists(String bundleName) throws JMOPSourceException {
+	public List<String> listPlaylists(String bundleName) throws JMOPMusicbaseException {
 		Bundle bundle = local.getBundle(bundleName);
 		return local.listPlaylistNames(bundle);
 	}
@@ -143,9 +143,9 @@ public class JMOPSources {
 	 * @param kind
 	 * @param bundleName
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	private Bundle createBundle(SourceKind kind, String bundleName) throws JMOPSourceException {
+	private Bundle createBundle(SourceKind kind, String bundleName) throws JMOPMusicbaseException {
 		Bundle bundle = new Bundle(kind, bundleName);
 		local.createBundle(bundle);
 		return bundle;

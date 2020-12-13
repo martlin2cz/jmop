@@ -7,7 +7,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class MusicbaseListingEncapsulator {
 	private final BaseMusicbase musicbase;
@@ -19,27 +19,27 @@ public class MusicbaseListingEncapsulator {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	public Set<Bundle> bundles() throws JMOPSourceException {
+	public Set<Bundle> bundles() throws JMOPMusicbaseException {
 		return musicbase.bundles();
 	}
 
-	public Set<Playlist> playlists(Bundle bundle) throws JMOPSourceException {
+	public Set<Playlist> playlists(Bundle bundle) throws JMOPMusicbaseException {
 		return musicbase.playlists(bundle);
 	}
 
-	public Set<Track> tracks(Bundle bundle) throws JMOPSourceException {
+	public Set<Track> tracks(Bundle bundle) throws JMOPMusicbaseException {
 		return musicbase.tracks(bundle);
 	}
 	
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	public Set<Bundle> findBundles(String infix) throws JMOPSourceException {
+	public Set<Bundle> findBundles(String infix) throws JMOPMusicbaseException {
 		return musicbase.bundles().stream() //
 				.filter(b -> matches(b, infix)) //
 				.collect(Collectors.toSet()); //
 	}
 	
-	public Set<Track> findTracks(String infix) throws JMOPSourceException {
+	public Set<Track> findTracks(String infix) throws JMOPMusicbaseException {
 		try {
 		return musicbase.bundles().stream() //
 				.map(b -> tracksOfBundle(b)) //
@@ -47,14 +47,14 @@ public class MusicbaseListingEncapsulator {
 				.filter(t -> matches(t, infix)) //
 				.collect(Collectors.toSet()); //
 		} catch (RuntimeException e) {
-			throw new JMOPSourceException(e); //TODO FIXME catch all th exceptions at all?
+			throw new JMOPMusicbaseException(e); //TODO FIXME catch all th exceptions at all?
 		}
 	}
 
 	private Set<Track> tracksOfBundle(Bundle bundle) {
 		try {
 			return musicbase.tracks(bundle);
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			throw new RuntimeException(e);
 		}
 	}

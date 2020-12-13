@@ -4,7 +4,7 @@ import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.CommandlineData;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.misc.ops.Operations;
 import cz.martlin.jmop.core.misc.ops.OperationsManager;
@@ -79,7 +79,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 	}
 
 	private void checkAndStartPlayling(CommandlineData data, BaseConfiguration config, JMOPPlayer jmop)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 		if (data.getBundleToPlayName() != null) {
 			String bundleName = data.getBundleToPlayName();
 			String playlistName;

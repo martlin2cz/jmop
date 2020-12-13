@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.TestingPrinter;
 
 public abstract class AbstractRemoteQuerierBaseTest {
@@ -28,7 +28,7 @@ public abstract class AbstractRemoteQuerierBaseTest {
 
 
 	@Test
-	public void testRunSearch() throws JMOPSourceException {
+	public void testRunSearch() throws JMOPMusicbaseException {
 		Bundle bundle = createBundle();
 		String query = createQuery();
 
@@ -45,7 +45,7 @@ public abstract class AbstractRemoteQuerierBaseTest {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Test
-	public void testRunLoadNext() throws JMOPSourceException {
+	public void testRunLoadNext() throws JMOPMusicbaseException {
 		Track track = createTrack();
 
 		System.out.println("Loading next of \n" + TestingPrinter.print(track));

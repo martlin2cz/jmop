@@ -7,7 +7,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.player.BasePlayer;
 import javafx.util.Duration;
@@ -72,9 +72,9 @@ public class PlayerEngine {
 	/**
 	 * Play next track in the queque.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void playNext() throws JMOPSourceException {
+	public void playNext() throws JMOPMusicbaseException {
 		LOG.info("Playing next to play"); //$NON-NLS-1$
 
 		Track track = playlister.playNext();
@@ -85,9 +85,9 @@ public class PlayerEngine {
 	 * Play the index-th track in the (current) playlist.
 	 * 
 	 * @param index
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void play(int index) throws JMOPSourceException {
+	public void play(int index) throws JMOPMusicbaseException {
 		LOG.info("Playing " + index + " th"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		Track track = playlister.play(index);
@@ -131,9 +131,9 @@ public class PlayerEngine {
 	/**
 	 * Go to (start playing) next track.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void toNext() throws JMOPSourceException {
+	public void toNext() throws JMOPMusicbaseException {
 		LOG.info("Playing next"); //$NON-NLS-1$
 
 		Track track = playlister.toNext();
@@ -143,9 +143,9 @@ public class PlayerEngine {
 	/**
 	 * Go to (start playing) previous track.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void toPrevious() throws JMOPSourceException {
+	public void toPrevious() throws JMOPMusicbaseException {
 		LOG.info("Playing previous"); //$NON-NLS-1$
 
 		Track track = playlister.toPrevious();
@@ -192,7 +192,7 @@ public class PlayerEngine {
 				toNext();
 			}
 			// TODO Park here and wait until has next
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			reporter.report(e);
 		} catch (Exception e) {
 			reporter.internal(e);
@@ -214,9 +214,9 @@ public class PlayerEngine {
 	 * files. After that plays it.
 	 * 
 	 * @param track
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	private void playChecked(Track track) throws JMOPSourceException {
+	private void playChecked(Track track) throws JMOPMusicbaseException {
 		throw new UnsupportedOperationException("HERE2, check and load track to play");
 //		ConsumerWithException<Track> resultHandler;
 //		operations.prepareFiles(track, resultHandler);

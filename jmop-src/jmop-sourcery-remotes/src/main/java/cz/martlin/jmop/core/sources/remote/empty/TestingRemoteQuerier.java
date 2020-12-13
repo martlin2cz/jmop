@@ -9,7 +9,7 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.remote.AbstractRemoteQuerier;
 import javafx.util.Duration;
 
@@ -53,7 +53,7 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public List<Track> runSearch(Bundle bundle, String query) throws JMOPSourceException {
+	public List<Track> runSearch(Bundle bundle, String query) throws JMOPMusicbaseException {
 		List<Track> result = new ArrayList<Track>(config.getSearchCount());
 
 		for (int i = 0; i < config.getSearchCount(); i++) {
@@ -66,7 +66,7 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	}
 
 	@Override
-	public Track runLoadNext(Track track) throws JMOPSourceException {
+	public Track runLoadNext(Track track) throws JMOPMusicbaseException {
 		Bundle bundle = track.getBundle();
 
 		Track nextData = pick();

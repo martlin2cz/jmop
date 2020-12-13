@@ -16,7 +16,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.storages.playlists.AbstractXMLEdtendedPlaylistManipulator;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
 public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator {

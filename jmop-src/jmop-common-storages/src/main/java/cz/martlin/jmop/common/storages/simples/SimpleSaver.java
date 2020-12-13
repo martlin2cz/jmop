@@ -9,7 +9,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataSaver;
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class SimpleSaver implements BaseMusicdataSaver {
 
@@ -26,7 +26,7 @@ public class SimpleSaver implements BaseMusicdataSaver {
 	}
 
 	@Override
-	public void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason) throws JMOPSourceException {
+	public void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason) throws JMOPMusicbaseException {
 		Tracklist tracklist = playlist.getTracks();
 		saveTracklist(tracklist, playlistFile);
 	}
@@ -38,7 +38,7 @@ public class SimpleSaver implements BaseMusicdataSaver {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private void saveTracklist(Tracklist tracklist, File playlistFile) throws JMOPSourceException {
+	private void saveTracklist(Tracklist tracklist, File playlistFile) throws JMOPMusicbaseException {
 		fs.saveLines(playlistFile, //
 				tracklist.getTracks().stream() //
 						.map(t -> (t.getIdentifier() + "mp3")) //

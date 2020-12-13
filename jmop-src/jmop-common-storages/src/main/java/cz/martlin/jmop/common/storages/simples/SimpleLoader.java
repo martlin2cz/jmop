@@ -13,7 +13,7 @@ import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataLoader;
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
 public class SimpleLoader implements BaseMusicdataLoader {
@@ -29,20 +29,20 @@ public class SimpleLoader implements BaseMusicdataLoader {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public List<String> loadBundlesNames() throws JMOPSourceException {
+	public List<String> loadBundlesNames() throws JMOPMusicbaseException {
 		return fs.listDirectories(root) //
 				.map(d -> d.getName()) //
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public Bundle loadBundle(File bundleDir, String bundleName) throws JMOPSourceException {
+	public Bundle loadBundle(File bundleDir, String bundleName) throws JMOPMusicbaseException {
 		Metadata metadata = Metadata.createNew();
 		return new Bundle(bundleName, metadata);
 	}
 
 	@Override
-	public List<String> loadPlaylistsNames(File bundleDir, Bundle bundle, String bundleName) throws JMOPSourceException {
+	public List<String> loadPlaylistsNames(File bundleDir, Bundle bundle, String bundleName) throws JMOPMusicbaseException {
 		return fs.listFiles(bundleDir) //
 				.filter(f -> isTracklistFile(f)) //
 				.map(f -> tracklistFileToPlaylistName(f)) //
@@ -51,7 +51,7 @@ public class SimpleLoader implements BaseMusicdataLoader {
 
 	@Override
 	public Playlist loadPlaylist(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 		Metadata metadata = Metadata.createNew();
 		Tracklist tracklist = loadTracklist(bundle, playlistFile, tracks);
 		int currentTrackIndex = 0;
@@ -59,7 +59,7 @@ public class SimpleLoader implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName) throws JMOPSourceException {
+	public List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName) throws JMOPMusicbaseException {
 		return fs.listFiles(bundleDir) //
 				.filter(f -> isTrackFile(f)) //
 				.map(f -> trackFileToTrackId(f)) //
@@ -95,7 +95,7 @@ public class SimpleLoader implements BaseMusicdataLoader {
 	}
 
 	private Tracklist loadTracklist(Bundle bundle, File playlistFile, Map<String, Track> tracks)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 		return new Tracklist( //
 				fs.loadLines(playlistFile) //
 						.stream() //

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -77,7 +77,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public synchronized void startPlaying(Track track) throws JMOPSourceException {
+	public synchronized void startPlaying(Track track) throws JMOPMusicbaseException {
 		LOG.info("Starting playing"); //$NON-NLS-1$
 		if (!stopped) {
 			doStopPlaying();

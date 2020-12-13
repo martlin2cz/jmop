@@ -7,7 +7,7 @@ import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.BundleBinding;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ObservableListenerBinding;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
 
@@ -52,9 +52,9 @@ public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 	 * 
 	 * @param bundleName
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public Bundle getBundle(String bundleName) throws JMOPSourceException {
+	public Bundle getBundle(String bundleName) throws JMOPMusicbaseException {
 		return local.getBundle(bundleName);
 	}
 
@@ -64,9 +64,9 @@ public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 	 * @param bundle
 	 * @param playlistName
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public Playlist getPlaylist(Bundle bundle, String playlistName) throws JMOPSourceException {
+	public Playlist getPlaylist(Bundle bundle, String playlistName) throws JMOPMusicbaseException {
 		return local.getPlaylist(bundle, playlistName);
 	}
 
@@ -74,9 +74,9 @@ public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 	 * Loads names of all bundles.
 	 * 
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public List<String> listBundlesNames() throws JMOPSourceException {
+	public List<String> listBundlesNames() throws JMOPMusicbaseException {
 		return local.listBundlesNames();
 	}
 
@@ -85,9 +85,9 @@ public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 	 * 
 	 * @param bundle
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public List<String> listPlaylistNames(Bundle bundle) throws JMOPSourceException {
+	public List<String> listPlaylistNames(Bundle bundle) throws JMOPMusicbaseException {
 		return local.listPlaylistNames(bundle);
 	}
 
@@ -95,9 +95,9 @@ public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 	 * Creates given bundle.
 	 * 
 	 * @param bundle
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void createBundle(Bundle bundle) throws JMOPSourceException {
+	public void createBundle(Bundle bundle) throws JMOPMusicbaseException {
 		local.createBundle(bundle);
 	}
 
@@ -106,9 +106,9 @@ public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 	 * 
 	 * @param bundle
 	 * @param playlist
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void savePlaylist(Bundle bundle, Playlist playlist) throws JMOPSourceException {
+	public void savePlaylist(Bundle bundle, Playlist playlist) throws JMOPMusicbaseException {
 		local.savePlaylist(bundle, playlist);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +139,7 @@ public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 		try {
 			Bundle bundle = playlist.getBundle();
 			local.savePlaylist(bundle, playlist);
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			reporter.report(e);
 		} catch (Exception e) {
 			reporter.internal(e);
@@ -155,7 +155,7 @@ public class LocalSourceWrapper implements BaseWrapper<XXX_BaseLocalSource> {
 	private void bundleChanged(Bundle bundle) {
 		try {
 			local.saveBundle(bundle);
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			reporter.report(e);
 		} catch (Exception e) {
 			reporter.internal(e);

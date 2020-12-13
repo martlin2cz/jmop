@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.SimpleShortOperation;
 
 public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
@@ -26,7 +26,7 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public SimpleShortOperation<String, List<Track>> search(Bundle bundle, String query) throws JMOPSourceException {
+	public SimpleShortOperation<String, List<Track>> search(Bundle bundle, String query) throws JMOPMusicbaseException {
 		LOG.info("Preparing search of " + query);
 
 		return new SimpleShortOperation<>("Querying", query, //
@@ -35,7 +35,7 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 	}
 
 	@Override
-	public SimpleShortOperation<Track, Track> loadNext(Track track) throws JMOPSourceException {
+	public SimpleShortOperation<Track, Track> loadNext(Track track) throws JMOPMusicbaseException {
 		LOG.info("Preparing load next of " + track);
 
 		return new SimpleShortOperation<>("Loading next", track, //
@@ -45,9 +45,9 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public abstract List<Track> runSearch(Bundle bundle, String query) throws JMOPSourceException;
+	public abstract List<Track> runSearch(Bundle bundle, String query) throws JMOPMusicbaseException;
 
-	public abstract Track runLoadNext(Track track) throws JMOPSourceException;
+	public abstract Track runLoadNext(Track track) throws JMOPMusicbaseException;
 
 /////////////////////////////////////////////////////////////////////////////////////
 
