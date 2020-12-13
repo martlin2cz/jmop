@@ -7,7 +7,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.utils.FileExtensionSpecifier;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 /**
  * An component responsible for storing the playlists, but also the tracks and
@@ -26,27 +26,27 @@ public interface BaseExtendedPlaylistManipulator extends FileExtensionSpecifier 
 	 * 
 	 * @param playlist
 	 * @param file
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	void savePlaylistWithBundle(Playlist playlist, File file) throws JMOPSourceException;
+	void savePlaylistWithBundle(Playlist playlist, File file) throws JMOPMusicbaseException;
 
 	/**
 	 * Saves the given playlist (but not the bundle) into the given file.
 	 * 
 	 * @param playlist
 	 * @param file
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	void saveOnlyPlaylist(Playlist playlist, File file) throws JMOPSourceException;
+	void saveOnlyPlaylist(Playlist playlist, File file) throws JMOPMusicbaseException;
 
 	/**
 	 * Loads the bundle from the given file.
 	 * 
 	 * @param file
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	Bundle loadOnlyBundle(File file) throws JMOPSourceException;
+	Bundle loadOnlyBundle(File file) throws JMOPMusicbaseException;
 
 	/**
 	 * Loads the playlist from the given file and by using the specified tracks. If
@@ -56,8 +56,8 @@ public interface BaseExtendedPlaylistManipulator extends FileExtensionSpecifier 
 	 * @param tracks
 	 * @param file
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file) throws JMOPSourceException;
+	Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file) throws JMOPMusicbaseException;
 
 }

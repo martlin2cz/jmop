@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 /**
  * The general base remote source querier. Assumes working with some internal
@@ -40,7 +40,7 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public List<Track> runLoadTracks(Bundle bundle, String... ids) throws JMOPSourceException {
+	public List<Track> runLoadTracks(Bundle bundle, String... ids) throws JMOPMusicbaseException {
 		List<String> idsList = Arrays.asList(ids);
 		LOG.info("Loading tracks " + idsList); //$NON-NLS-1$
 
@@ -50,7 +50,7 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	}
 
 	@Override
-	public List<Track> runSearch(Bundle bundle, String query) throws JMOPSourceException {
+	public List<Track> runSearch(Bundle bundle, String query) throws JMOPMusicbaseException {
 		LOG.info("Performing search of " + query); //$NON-NLS-1$
 
 		List<Track> tracks = loadSearchResult(bundle, query);
@@ -58,7 +58,7 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	}
 
 	@Override
-	public Track runLoadNext(Track track) throws JMOPSourceException {
+	public Track runLoadNext(Track track) throws JMOPMusicbaseException {
 		LOG.info("Loading next track of " + track.getTitle()); //$NON-NLS-1$
 
 		Bundle bundle = track.getBundle();
@@ -77,9 +77,9 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	 * @param bundle
 	 * @param ids
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	private List<Track> loadTracks(Bundle bundle, List<String> ids) throws JMOPSourceException {
+	private List<Track> loadTracks(Bundle bundle, List<String> ids) throws JMOPMusicbaseException {
 		try {
 			GtRqt request = createLoadRequest(ids);
 			GtRst response = executeLoadRequest(request);
@@ -87,7 +87,7 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 		} catch (Exception e) {
 			connection.markOffline();
 
-			throw new JMOPSourceException("Cannot load track", e); //$NON-NLS-1$
+			throw new JMOPMusicbaseException("Cannot load track", e); //$NON-NLS-1$
 		}
 	}
 
@@ -97,16 +97,16 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	 * @param bundle
 	 * @param query
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	private List<Track> loadSearchResult(Bundle bundle, String query) throws JMOPSourceException {
+	private List<Track> loadSearchResult(Bundle bundle, String query) throws JMOPMusicbaseException {
 		try {
 			List<String> ids = doTheSearchRequest(bundle, query);
 			return loadTracks(bundle, ids);
 		} catch (Exception e) {
 			connection.markOffline();
 
-			throw new JMOPSourceException("Cannot load search result", e); //$NON-NLS-1$
+			throw new JMOPMusicbaseException("Cannot load search result", e); //$NON-NLS-1$
 		}
 	}
 
@@ -132,16 +132,16 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	 * @param bundle
 	 * @param id
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	private Track loadNextOf(Bundle bundle, String id) throws JMOPSourceException {
+	private Track loadNextOf(Bundle bundle, String id) throws JMOPMusicbaseException {
 		try {
 			List<String> ids = doTheLoadNextRequest(id);
 			List<Track> tracks = loadTracks(bundle, ids);
 			return chooseNext(tracks, id);
 		} catch (Exception e) {
 			connection.markOffline();
-			throw new JMOPSourceException("Cannot load next track", e); //$NON-NLS-1$
+			throw new JMOPMusicbaseException("Cannot load next track", e); //$NON-NLS-1$
 		}
 	}
 

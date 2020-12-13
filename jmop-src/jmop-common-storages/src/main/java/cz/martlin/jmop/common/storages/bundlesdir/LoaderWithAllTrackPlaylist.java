@@ -11,7 +11,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.storages.playlists.BaseExtendedPlaylistManipulator;
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 
@@ -31,7 +31,7 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public List<String> loadBundlesNames() throws JMOPSourceException {
+	public List<String> loadBundlesNames() throws JMOPMusicbaseException {
 		return fs.listDirectories(locator.getRootDirectory()) //
 				.filter(d -> hasAllPlaylistFile(d)) //
 				.map(d -> locator.bundleName(d)) //
@@ -39,13 +39,13 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public Bundle loadBundle(File bundleDir, String bundleName) throws JMOPSourceException {
+	public Bundle loadBundle(File bundleDir, String bundleName) throws JMOPMusicbaseException {
 		File allTracksPlaylistFile = allTracksPlaylistFile(bundleName);
 		return saver.loadOnlyBundle(allTracksPlaylistFile);
 	}
 
 	@Override
-	public List<String> loadPlaylistsNames(File bundleDir, Bundle bundle, String bundleName) throws JMOPSourceException {
+	public List<String> loadPlaylistsNames(File bundleDir, Bundle bundle, String bundleName) throws JMOPMusicbaseException {
 		return fs.listFiles(bundleDir) //
 				.filter(f -> isPlaylistFile(f)) //
 				.map(f -> locator.playlistName(f)) //
@@ -54,13 +54,13 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 
 	@Override
 	public Playlist loadPlaylist(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 
 		return saver.loadOnlyPlaylist(bundle, tracks, playlistFile);
 	}
 
 	@Override
-	public List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName) throws JMOPSourceException {
+	public List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName) throws JMOPMusicbaseException {
 		File allTracksPlaylistFile = allTracksPlaylistFile(bundleName);
 		return saver.loadOnlyPlaylist(bundle, null, allTracksPlaylistFile)
 				//TODO little tricky
@@ -72,7 +72,7 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public Track loadTrack(File trackFile, Bundle bundle, String trackTitle) throws JMOPSourceException {
+	public Track loadTrack(File trackFile, Bundle bundle, String trackTitle) throws JMOPMusicbaseException {
 		String bundleName = bundle.getName();
 		File allTracksPlaylistFile = allTracksPlaylistFile(bundleName);
 		return saver.loadOnlyPlaylist(bundle, null, allTracksPlaylistFile) //

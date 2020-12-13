@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public abstract class BaseFileSystemAccessorTest {
 
@@ -35,7 +35,7 @@ public abstract class BaseFileSystemAccessorTest {
 	///////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void testFilesSimply() throws JMOPSourceException {
+	public void testFilesSimply() throws JMOPMusicbaseException {
 		File foo = new File(root, "foo.txt");
 		File bar = new File(root, "bar.txt");
 
@@ -56,7 +56,7 @@ public abstract class BaseFileSystemAccessorTest {
 	}
 
 	@Test
-	public void testDirectoriesSimply() throws JMOPSourceException {
+	public void testDirectoriesSimply() throws JMOPMusicbaseException {
 		File lorem = new File(root, "lorem");
 		File ipsum = new File(root, "ipsum");
 
@@ -77,7 +77,7 @@ public abstract class BaseFileSystemAccessorTest {
 	}
 
 	@Test
-	public void testListing() throws JMOPSourceException {
+	public void testListing() throws JMOPMusicbaseException {
 		File lorem = new File(root, "lorem");
 		File ipsum = new File(root, "ipsum");
 
@@ -132,14 +132,14 @@ public abstract class BaseFileSystemAccessorTest {
 			accessor.createDirectory(dir99);
 			accessor.createDirectory(dirNumber);
 
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 //			Assume.assumeNoException(e);
 			fail(e);
 		}
 	}
 
 	private void delete(File lorem, File ipsum, File foo, File bar, File baz, File qux, File dir42, File dir99,
-			File dirNumber) throws JMOPSourceException {
+			File dirNumber) throws JMOPMusicbaseException {
 
 		try {
 			accessor.deleteDirectory(dirNumber);
@@ -154,7 +154,7 @@ public abstract class BaseFileSystemAccessorTest {
 			accessor.deleteDirectory(ipsum);
 			accessor.deleteDirectory(lorem);
 
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 //			Assume.assumeNoException(e);
 			fail(e);
 		}

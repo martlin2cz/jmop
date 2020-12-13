@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 
@@ -27,39 +27,39 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 	}
 
 	@Override
-	public void createDirectory(File directory) throws JMOPSourceException {
+	public void createDirectory(File directory) throws JMOPMusicbaseException {
 		try {
 			Path path = directory.toPath();
 			Files.createDirectory(path);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot create directory", e);
+			throw new JMOPMusicbaseException("Cannot create directory", e);
 		}
 	}
 
 	@Override
-	public void deleteDirectory(File directory) throws JMOPSourceException {
+	public void deleteDirectory(File directory) throws JMOPMusicbaseException {
 		try {
 			Path path = directory.toPath();
 
 			deleteRecursivelly(path);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot delete directory", e);
+			throw new JMOPMusicbaseException("Cannot delete directory", e);
 		}
 	}
 
 	@Override
-	public void renameDirectory(File oldDirectory, File newDirectory) throws JMOPSourceException {
+	public void renameDirectory(File oldDirectory, File newDirectory) throws JMOPMusicbaseException {
 		try {
 			Path oldPath = oldDirectory.toPath();
 			Path newPath = newDirectory.toPath();
 			Files.move(oldPath, newPath);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot rename directory", e);
+			throw new JMOPMusicbaseException("Cannot rename directory", e);
 		}
 	}
 
 	@Override
-	public Set<File> listDirectoriesMatching(File directory, Predicate<File> matcher) throws JMOPSourceException {
+	public Set<File> listDirectoriesMatching(File directory, Predicate<File> matcher) throws JMOPMusicbaseException {
 		try {
 			Path path = directory.toPath();
 			return Files.list(path) //
@@ -68,19 +68,19 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 					.filter((f) -> matcher.test(f)) //
 					.collect(Collectors.toSet()); //
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot list directories", e);
+			throw new JMOPMusicbaseException("Cannot list directories", e);
 		}
 	}
 	
 	@Override
-	public Stream<File> listDirectories(File directory) throws JMOPSourceException {
+	public Stream<File> listDirectories(File directory) throws JMOPMusicbaseException {
 		try {
 			Path path = directory.toPath();
 			return Files.list(path)//
 					.filter(p -> Files.isDirectory(p)) //
 					.map(p -> p.toFile()); //
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot list directories", e);
+			throw new JMOPMusicbaseException("Cannot list directories", e);
 		}
 	}
 
@@ -93,38 +93,38 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 	}
 
 	@Override
-	public void createEmptyFile(File file) throws JMOPSourceException {
+	public void createEmptyFile(File file) throws JMOPMusicbaseException {
 		try {
 			Path path = file.toPath();
 			Files.createFile(path);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot create file", e);
+			throw new JMOPMusicbaseException("Cannot create file", e);
 		}
 	}
 	
 	@Override
-	public void deleteFile(File file) throws JMOPSourceException {
+	public void deleteFile(File file) throws JMOPMusicbaseException {
 		try {
 			Path path = file.toPath();
 			Files.delete(path);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot delete file", e);
+			throw new JMOPMusicbaseException("Cannot delete file", e);
 		}
 	}
 
 	@Override
-	public void moveFile(File oldFile, File newFile) throws JMOPSourceException {
+	public void moveFile(File oldFile, File newFile) throws JMOPMusicbaseException {
 		try {
 			Path oldPath = oldFile.toPath();
 			Path newPath = newFile.toPath();
 			Files.move(oldPath, newPath);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot move file", e);
+			throw new JMOPMusicbaseException("Cannot move file", e);
 		}
 	}
 
 	@Override
-	public Set<File> listFilesMatching(File directory, Predicate<File> matcher) throws JMOPSourceException {
+	public Set<File> listFilesMatching(File directory, Predicate<File> matcher) throws JMOPMusicbaseException {
 		try {
 			Path path = directory.toPath();
 			return Files.list(path) //
@@ -133,40 +133,40 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 					.filter((f) -> matcher.test(f)) //
 					.collect(Collectors.toSet()); //
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot list files", e);
+			throw new JMOPMusicbaseException("Cannot list files", e);
 		}
 	}
 	
 	@Override
-	public Stream<File> listFiles(File directory) throws JMOPSourceException {
+	public Stream<File> listFiles(File directory) throws JMOPMusicbaseException {
 		try {
 			Path path = directory.toPath();
 			return Files.list(path) //
 					.filter(p -> Files.isRegularFile(p)) // 
 					.map(p -> p.toFile()); //
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot list files", e);
+			throw new JMOPMusicbaseException("Cannot list files", e);
 		}
 	}
 
 	
 	@Override
-	public List<String> loadLines(File file) throws JMOPSourceException {
+	public List<String> loadLines(File file) throws JMOPMusicbaseException {
 		try {
 			Path path = file.toPath();
 			return Files.readAllLines(path);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot load file", e);
+			throw new JMOPMusicbaseException("Cannot load file", e);
 		}
 	}
 	
 	@Override
-	public void saveLines(File file, List<String> lines) throws JMOPSourceException {
+	public void saveLines(File file, List<String> lines) throws JMOPMusicbaseException {
 		try {
 			Path path = file.toPath();
 			Files.write(path, lines);
 		} catch (IOException e) {
-			throw new JMOPSourceException("Cannot write file", e);
+			throw new JMOPMusicbaseException("Cannot write file", e);
 		}
 	}
 	/////////////////////////////////////////////////////////////////

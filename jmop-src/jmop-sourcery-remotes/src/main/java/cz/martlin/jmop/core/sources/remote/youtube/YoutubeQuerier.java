@@ -16,7 +16,7 @@ import cz.martlin.jmop.core.data.Metadata;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.remote.SimpleRemoteQuerier;
 import javafx.util.Duration;
 
@@ -186,9 +186,9 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	 * 
 	 * @param response
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	private List<String> convertSearchListResponse(SearchListResponse response) throws JMOPSourceException {
+	private List<String> convertSearchListResponse(SearchListResponse response) throws JMOPMusicbaseException {
 		List<SearchResult> results = response.getItems();
 
 		return results.stream() //

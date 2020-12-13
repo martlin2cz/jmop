@@ -13,7 +13,7 @@ import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.storages.playlists.BaseExtendedPlaylistManipulator;
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
 public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistManipulator {
@@ -31,20 +31,20 @@ public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistMa
 	}
 
 	@Override
-	public void savePlaylistWithBundle(Playlist playlist, File file) throws JMOPSourceException {
+	public void savePlaylistWithBundle(Playlist playlist, File file) throws JMOPMusicbaseException {
 		Tracklist tracks = playlist.getTracks();
 		saveTracklist(tracks, file);
 		// we are ignoring the bundle info, #sorryjako
 	}
 
 	@Override
-	public void saveOnlyPlaylist(Playlist playlist, File file) throws JMOPSourceException {
+	public void saveOnlyPlaylist(Playlist playlist, File file) throws JMOPMusicbaseException {
 		Tracklist tracks = playlist.getTracks();
 		saveTracklist(tracks, file);
 	}
 
 	@Override
-	public Bundle loadOnlyBundle(File file) throws JMOPSourceException {
+	public Bundle loadOnlyBundle(File file) throws JMOPMusicbaseException {
 		String name = file.getParentFile().getName();
 
 		Metadata metadata = Metadata.createNew(); // as I said, we simply ignore the metatada and so
@@ -52,7 +52,7 @@ public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistMa
 	}
 
 	@Override
-	public Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file) throws JMOPSourceException {
+	public Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file) throws JMOPMusicbaseException {
 		String name = file.getName().replace("." + fileExtension(), "");
 
 		Metadata metadata = Metadata.createNew();
@@ -61,7 +61,7 @@ public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistMa
 		return new Playlist(bundle, name, tracklist, currentTrackIndex, metadata);
 	}
 
-	private void saveTracklist(Tracklist tracklist, File file) throws JMOPSourceException {
+	private void saveTracklist(Tracklist tracklist, File file) throws JMOPMusicbaseException {
 		List<String> lines = tracklist //
 				.getTracks() //
 				.stream() //
@@ -71,7 +71,7 @@ public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistMa
 		fs.saveLines(file, lines);
 	}
 
-	private Tracklist loadTracklist(Bundle bundle, File file) throws JMOPSourceException {
+	private Tracklist loadTracklist(Bundle bundle, File file) throws JMOPMusicbaseException {
 		Metadata metadata = Metadata.createNew();
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
 

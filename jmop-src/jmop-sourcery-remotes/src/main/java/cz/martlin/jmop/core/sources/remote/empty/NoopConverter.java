@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -28,7 +28,7 @@ public class NoopConverter implements BaseConverter {
 	@Override
 	public BaseLongOperation<Track, Track> convert(Track track, TrackFileLocation fromLocation,
 			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 
 		return new NotConvertingLongOperation(track, fromLocation, fromFormat, toLocation, toFormat, reason);
 	}

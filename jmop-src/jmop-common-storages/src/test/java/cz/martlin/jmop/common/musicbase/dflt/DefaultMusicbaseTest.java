@@ -26,7 +26,7 @@ import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
 import cz.martlin.jmop.common.storages.dflt.DefaultStorage;
 import cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
@@ -58,7 +58,7 @@ class DefaultMusicbaseTest {
 
 	@Order(value = 1)
 	@Test
-	void testSave() throws JMOPSourceException {
+	void testSave() throws JMOPMusicbaseException {
 		BaseMusicbase musicbase = prepareMusicbase();
 
 		// create bundle
@@ -86,7 +86,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 2)
 	@Test
-	void testLoad() throws JMOPSourceException {
+	void testLoad() throws JMOPMusicbaseException {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();
@@ -110,7 +110,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 3)
 	@Test
-	void testReload() throws JMOPSourceException {
+	void testReload() throws JMOPMusicbaseException {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		// load 
@@ -124,7 +124,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 4)
 	@Test
-	void testRenameBundle() throws JMOPSourceException {
+	void testRenameBundle() throws JMOPMusicbaseException {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();
@@ -141,7 +141,7 @@ class DefaultMusicbaseTest {
 
 	@Order(value = 5)
 	@Test
-	void testMoveTrack() throws JMOPSourceException {
+	void testMoveTrack() throws JMOPMusicbaseException {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();

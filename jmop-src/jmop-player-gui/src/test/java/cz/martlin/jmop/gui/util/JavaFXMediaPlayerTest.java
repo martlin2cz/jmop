@@ -86,7 +86,7 @@ public class JavaFXMediaPlayerTest {
 		// TODO: local.createBundle, but just once!
 		// try {
 		// prepareLocal().createBundle(bundle);
-		// } catch (JMOPSourceException e) {
+		// } catch (JMOPMusicbaseException e) {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }

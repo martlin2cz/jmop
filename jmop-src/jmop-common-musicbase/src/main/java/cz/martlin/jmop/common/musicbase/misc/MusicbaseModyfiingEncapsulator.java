@@ -5,7 +5,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class MusicbaseModyfiingEncapsulator {
 	private final BaseMusicbase musicbase;
@@ -16,76 +16,76 @@ public class MusicbaseModyfiingEncapsulator {
 	}
 	
 
-	public void load() throws JMOPSourceException {
+	public void load() throws JMOPMusicbaseException {
 		musicbase.load();
 	}
 
-	public void addBundle(Bundle bundle) throws JMOPSourceException {
+	public void addBundle(Bundle bundle) throws JMOPMusicbaseException {
 		musicbase.addBundle(bundle);
 	}
 
-	public Bundle createNewBundle(String name) throws JMOPSourceException {
+	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
 		return musicbase.createNewBundle(name);
 	}
 
-	public void addPlaylist(Playlist playlist) throws JMOPSourceException {
+	public void addPlaylist(Playlist playlist) throws JMOPMusicbaseException {
 		musicbase.addPlaylist(playlist);
 	}
 
-	public void renameBundle(Bundle bundle, String newName) throws JMOPSourceException {
+	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
 		musicbase.renameBundle(bundle, newName);
 	}
 
-	public void addTrack(Track track) throws JMOPSourceException {
+	public void addTrack(Track track) throws JMOPMusicbaseException {
 		musicbase.addTrack(track);
 	}
 
-	public void removeBundle(Bundle bundle) throws JMOPSourceException {
+	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
 		musicbase.removeBundle(bundle);
 	}
 
-	public void bundleUpdated(Bundle bundle) throws JMOPSourceException {
+	public void bundleUpdated(Bundle bundle) throws JMOPMusicbaseException {
 		musicbase.bundleUpdated(bundle);
 	}
 
-	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPSourceException {
+	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
 		return musicbase.createNewPlaylist(bundle, name);
 	}
 
 
-	public void renamePlaylist(Playlist playlist, String newName) throws JMOPSourceException {
+	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
 		musicbase.renamePlaylist(playlist, newName);
 	}
 
-	public void movePlaylist(Playlist playlist, Bundle newBundle) throws JMOPSourceException {
+	public void movePlaylist(Playlist playlist, Bundle newBundle) throws JMOPMusicbaseException {
 		musicbase.movePlaylist(playlist, newBundle);
 	}
 
-	public void removePlaylist(Playlist playlist) throws JMOPSourceException {
+	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
 		musicbase.removePlaylist(playlist);
 	}
 
-	public void playlistUpdated(Playlist playlist) throws JMOPSourceException {
+	public void playlistUpdated(Playlist playlist) throws JMOPMusicbaseException {
 		musicbase.playlistUpdated(playlist);
 	}
 
-	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPSourceException {
+	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
 		return musicbase.createNewTrack(bundle, data);
 	}
 
-	public void renameTrack(Track track, String newTitle) throws JMOPSourceException {
+	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {
 		musicbase.renameTrack(track, newTitle);
 	}
 
-	public void moveTrack(Track track, Bundle newBundle) throws JMOPSourceException {
+	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
 		musicbase.moveTrack(track, newBundle);
 	}
 
-	public void removeTrack(Track track) throws JMOPSourceException {
+	public void removeTrack(Track track) throws JMOPMusicbaseException {
 		musicbase.removeTrack(track);
 	}
 
-	public void trackUpdated(Track track) throws JMOPSourceException {
+	public void trackUpdated(Track track) throws JMOPMusicbaseException {
 		musicbase.trackUpdated(track);
 	}
 

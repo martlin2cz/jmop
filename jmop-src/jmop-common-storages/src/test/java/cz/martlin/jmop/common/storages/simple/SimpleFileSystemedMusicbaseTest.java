@@ -14,7 +14,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class SimpleFileSystemedMusicbaseTest {
 
@@ -30,7 +30,7 @@ public class SimpleFileSystemedMusicbaseTest {
 
 		try {
 			prepareDefaultTestingContents(musicbase);
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			Assumptions.assumeFalse(e == null, e.getMessage());
 		}
 
@@ -38,13 +38,13 @@ public class SimpleFileSystemedMusicbaseTest {
 	}
 
 	@AfterEach
-	public void after() throws JMOPSourceException {
+	public void after() throws JMOPMusicbaseException {
 //		MusicbaseDebugPrinter.print(musicbase);
 
 		this.musicbase = null;
 	}
 
-	private void prepareDefaultTestingContents(BaseMusicbaseModifing musicbase) throws JMOPSourceException {
+	private void prepareDefaultTestingContents(BaseMusicbaseModifing musicbase) throws JMOPMusicbaseException {
 		testingBundle = musicbase.createNewBundle("TestingBundle");
 
 		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
@@ -57,7 +57,7 @@ public class SimpleFileSystemedMusicbaseTest {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void testBundles() throws JMOPSourceException {
+	public void testBundles() throws JMOPMusicbaseException {
 		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
 		assertEquals("FooBundle", fooBundle.getName());
 
@@ -66,7 +66,7 @@ public class SimpleFileSystemedMusicbaseTest {
 	}
 
 	@Test
-	public void testPlaylists() throws JMOPSourceException {
+	public void testPlaylists() throws JMOPMusicbaseException {
 		// playlists
 		Playlist loremPlaylist = musicbase.createNewPlaylist(testingBundle, "lorem-playlist");
 		assertEquals(testingBundle, loremPlaylist.getBundle());
@@ -79,7 +79,7 @@ public class SimpleFileSystemedMusicbaseTest {
 	}
 
 	@Test
-	public void testTracks() throws JMOPSourceException {
+	public void testTracks() throws JMOPMusicbaseException {
 		// tracks
 		Track holaTrack = musicbase.createNewTrack(testingBundle, td("hola"));
 		assertEquals(testingBundle, holaTrack.getBundle());

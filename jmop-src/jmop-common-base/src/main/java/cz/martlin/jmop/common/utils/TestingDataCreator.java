@@ -11,7 +11,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
 
@@ -65,7 +65,7 @@ public class TestingDataCreator {
 	private static Bundle doCreateEmptyBundle(BaseMusicbaseModifing musicbase, String name) {
 		try {
 			return musicbase.createNewBundle(name);
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -73,7 +73,7 @@ public class TestingDataCreator {
 	private static Playlist doCreateEmptyPlaylist(BaseMusicbaseModifing musicbase, Bundle bundle, String name) {
 		try {
 			return musicbase.createNewPlaylist(bundle, name);
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -83,7 +83,7 @@ public class TestingDataCreator {
 		try {
 			TrackData data = new TrackData(id, title, description, duration);
 			return musicbase.createNewTrack(bundle, data);
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			throw new RuntimeException(e);
 		}
 	}

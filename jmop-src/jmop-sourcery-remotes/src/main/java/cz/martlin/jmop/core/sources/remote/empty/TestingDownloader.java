@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.AbstractLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
@@ -38,7 +38,7 @@ public class TestingDownloader implements BaseDownloader {
 
 	@Override
 	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 
 		File file = tracks.fileOfTrack(track, location, downloadFormat);
 		return new TestingDownloaderOperation(track, file);
@@ -48,10 +48,10 @@ public class TestingDownloader implements BaseDownloader {
 	 * Copies testing file to given file.
 	 * 
 	 * @param targetFile
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 * @throws IOException
 	 */
-	public void copyTestingFileTo(File targetFile) throws JMOPSourceException, IOException {
+	public void copyTestingFileTo(File targetFile) throws JMOPMusicbaseException, IOException {
 		InputStream ins = TestingTrackFileAccessor.read(downloadFormat);
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
