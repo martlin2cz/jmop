@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.musicbase.misc;
 
+import java.io.File;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,13 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
+/**
+ * The main entry point for the musicbase. This class encapsulates the
+ * listing/loading/queriing (i.e. read-only) operations.
+ * 
+ * @author martin
+ *
+ */
 public class MusicbaseListingEncapsulator {
 	private final BaseMusicbase musicbase;
 
@@ -30,7 +38,11 @@ public class MusicbaseListingEncapsulator {
 	public Set<Track> tracks(Bundle bundle) throws JMOPMusicbaseException {
 		return musicbase.tracks(bundle);
 	}
-	
+
+	public File trackFile(Track track) throws JMOPMusicbaseException {
+		return musicbase.trackFile(track);
+	}
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 	public Set<Bundle> findBundles(String infix) throws JMOPMusicbaseException {
@@ -38,16 +50,16 @@ public class MusicbaseListingEncapsulator {
 				.filter(b -> matches(b, infix)) //
 				.collect(Collectors.toSet()); //
 	}
-	
+
 	public Set<Track> findTracks(String infix) throws JMOPMusicbaseException {
 		try {
-		return musicbase.bundles().stream() //
-				.map(b -> tracksOfBundle(b)) //
-				.flatMap(ts -> ts.stream()) //
-				.filter(t -> matches(t, infix)) //
-				.collect(Collectors.toSet()); //
+			return musicbase.bundles().stream() //
+					.map(b -> tracksOfBundle(b)) //
+					.flatMap(ts -> ts.stream()) //
+					.filter(t -> matches(t, infix)) //
+					.collect(Collectors.toSet()); //
 		} catch (RuntimeException e) {
-			throw new JMOPMusicbaseException(e); //TODO FIXME catch all th exceptions at all?
+			throw new JMOPMusicbaseException(e); // TODO FIXME catch all th exceptions at all?
 		}
 	}
 
@@ -59,14 +71,14 @@ public class MusicbaseListingEncapsulator {
 		}
 	}
 
-	//TODO all the rest
-	
+	// TODO all the rest
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	private boolean matches(Bundle bundle, String infix) {
 		return bundle.getName().contains(infix);
 	}
-	
+
 	private boolean matches(Track track, String infix) {
 		return track.getTitle().contains(infix);
 	}

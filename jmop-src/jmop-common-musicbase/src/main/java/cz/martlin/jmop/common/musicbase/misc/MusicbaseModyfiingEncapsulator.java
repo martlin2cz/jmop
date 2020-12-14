@@ -7,6 +7,13 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
+/**
+ * The main entry point for the musicbase. This class encapsulates the modyfiing
+ * operations.
+ * 
+ * @author martin
+ *
+ */
 public class MusicbaseModyfiingEncapsulator {
 	private final BaseMusicbase musicbase;
 
@@ -14,30 +21,25 @@ public class MusicbaseModyfiingEncapsulator {
 		super();
 		this.musicbase = musicbase;
 	}
-	
 
+/////////////////////////////////////////////////////////////////////////////////////
+	
 	public void load() throws JMOPMusicbaseException {
 		musicbase.load();
 	}
 
-	public void addBundle(Bundle bundle) throws JMOPMusicbaseException {
-		musicbase.addBundle(bundle);
+	public void reload() throws JMOPMusicbaseException {
+		musicbase.load();
 	}
+	
+/////////////////////////////////////////////////////////////////////////////////////
 
 	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
 		return musicbase.createNewBundle(name);
 	}
 
-	public void addPlaylist(Playlist playlist) throws JMOPMusicbaseException {
-		musicbase.addPlaylist(playlist);
-	}
-
 	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
 		musicbase.renameBundle(bundle, newName);
-	}
-
-	public void addTrack(Track track) throws JMOPMusicbaseException {
-		musicbase.addTrack(track);
 	}
 
 	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
@@ -48,10 +50,11 @@ public class MusicbaseModyfiingEncapsulator {
 		musicbase.bundleUpdated(bundle);
 	}
 
+/////////////////////////////////////////////////////////////////////////////////////
+
 	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
 		return musicbase.createNewPlaylist(bundle, name);
 	}
-
 
 	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
 		musicbase.renamePlaylist(playlist, newName);
@@ -69,6 +72,8 @@ public class MusicbaseModyfiingEncapsulator {
 		musicbase.playlistUpdated(playlist);
 	}
 
+/////////////////////////////////////////////////////////////////////////////////////	
+	
 	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
 		return musicbase.createNewTrack(bundle, data);
 	}
@@ -88,5 +93,7 @@ public class MusicbaseModyfiingEncapsulator {
 	public void trackUpdated(Track track) throws JMOPMusicbaseException {
 		musicbase.trackUpdated(track);
 	}
+	
+/////////////////////////////////////////////////////////////////////////////////////
 
 }
