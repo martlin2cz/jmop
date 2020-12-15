@@ -21,6 +21,7 @@ import cz.martlin.jmop.core.misc.ObservableObject;
  * @author martin
  *
  */
+//TODO consider renaming to Playlister
 public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	private final List<Track> tracks;
 	private int currentTrack;

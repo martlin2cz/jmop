@@ -12,7 +12,10 @@ import cz.martlin.jmop.core.runtime.PlaylistRuntime;
  * 
  * @author martin
  *
+ * @deprecated now only one strategy is avaiable - offline and locked playlist, 
+ * 	thus all the whole concept of the strategies is ... useless
  */
+@Deprecated
 public interface BasePlaylisterStrategy {
 
 	/**

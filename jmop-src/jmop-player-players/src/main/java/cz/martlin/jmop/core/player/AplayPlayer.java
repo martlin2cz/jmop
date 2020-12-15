@@ -9,13 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
-import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import javafx.util.Duration;
 
 /**
@@ -35,7 +34,7 @@ public class AplayPlayer extends AbstractPlayer {
 	private AplayProcess process;
 	private Track currentTrack;
 
-	public AplayPlayer(BaseErrorReporter reporter, XXX_BaseLocalSource local, Object locator) {
+	public AplayPlayer(BaseErrorReporter reporter, TracksSource local, Object locator) {
 		super(local, locator, APLAY_PLAY_FORMAT);
 
 		this.reporter = reporter;

@@ -23,7 +23,10 @@ public interface BasePlayer extends ObservableValue<BasePlayer> {
 	 * Returns file format which this player supports.
 	 * 
 	 * @return
+	 * @deprecated do not, assume it either plays the saved file format,
+	 * or needs the convert it.
 	 */
+	@Deprecated
 	public TrackFileFormat getPlayableFormat();
 
 	/////////////////////////////////////////////////////////////////////////////////////

@@ -5,14 +5,12 @@ import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ObservableObject;
-import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.TrackFileLocation;
-import cz.martlin.jmop.core.sources.local.misc.locator.BaseTrackFileLocator;
 import javafx.util.Duration;
 
 /**
@@ -25,8 +23,16 @@ import javafx.util.Duration;
 public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implements BasePlayer {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private final BaseLocalSource local;
+	private final TracksSource local;
+	/**
+	 * @deprecated use the {@link TracksSource} instance.
+	 */
+	@Deprecated
 	private final Object tracksLocation;
+	/**
+	 * @deprecated no more needed.
+	 */
+	@Deprecated
 	private final TrackFileFormat supportedFormat;
 	
 	private boolean stopped;
@@ -34,7 +40,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	private boolean over;
 	private Track playedTrack;
 
-	public AbstractPlayer(BaseLocalSource local, Object locator, TrackFileFormat supportedFormat) {
+	public AbstractPlayer(TracksSource local, Object locator, TrackFileFormat supportedFormat) {
 		super();
 		this.local = local;
 
@@ -83,7 +89,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 			doStopPlaying();
 		}
 
-		File file = local.fileOfTrack(track, tracksLocation, supportedFormat);
+		File file = local.trackFile(track);
 		LOG.debug("Will play file " + file); //$NON-NLS-1$
 		doStartPlaying(track, file);
 

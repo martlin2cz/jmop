@@ -16,8 +16,9 @@ import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
  * situation chooses particullar strategy and delegates method to them.
  * 
  * @author martin
- *
+ * @deprecated since the strategies are now done, this class has no need to be present
  */
+@Deprecated
 public class Playlister extends ObservableObject<Playlister> {
 	private final InternetConnectionStatus connection;
 	private Playlist currentPlaylist;
