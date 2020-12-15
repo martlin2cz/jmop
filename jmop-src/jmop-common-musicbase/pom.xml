@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cz.martlin</groupId>
+		<artifactId>jmop</artifactId>
+		<version>3.0.1</version>
+	</parent>
+	
+	<artifactId>jmop-common-musicbase</artifactId>
+	<name>JMOP musicbase</name>
+	<description>Implements the (in-memory) database of the music</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-base</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+	</dependencies>
+</project>

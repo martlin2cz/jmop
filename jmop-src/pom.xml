@@ -5,8 +5,8 @@
 
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
-	<packaging>jar</packaging>
-	<version>1.1</version>
+	<packaging>pom</packaging>
+	<version>3.0.1</version>
 
 	<name>jmop</name>
 	<url>https://github.com/martlin2cz/jmop</url>
@@ -21,6 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
+		<revision>3.0.1</revision>
 	</properties>
 
 
@@ -28,9 +29,23 @@
 	<dependencies>
 		<!-- JUnit -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter-api</artifactId>
+	    <version>5.6.2</version>
+	    <scope>test</scope>
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.hamcrest</groupId> -->
+<!-- 					<artifactId>hamcrest-core</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+		</dependency>
+
+		<!-- hamcrest -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+			<version>2.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -61,6 +76,7 @@
 			<artifactId>javafx-swing</artifactId>
 			<version>11.0.2</version>
 		</dependency>
+		
 		<!-- logging -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -156,7 +172,42 @@
 					</descriptorRefs>
 				</configuration>
 			</plugin>
-
+	
+			<!--  https://stackoverflow.com/questions/36970384/surefire-is-not-picking-up-junit-5-tests-->
+		    <plugin>
+		      <artifactId>maven-surefire-plugin</artifactId>
+		      <!-- latest version (2.20.1) does not work well with JUnit5 -->
+		      <version>2.19.1</version>
+		      <dependencies>
+		        <dependency>
+		          <groupId>org.junit.platform</groupId>
+		          <artifactId>junit-platform-surefire-provider</artifactId>
+		          <version>1.0.3</version>
+		        </dependency>
+		        <dependency>
+		          <groupId>org.junit.jupiter</groupId>
+		          <artifactId>junit-jupiter-engine</artifactId>
+		          <version>5.0.3</version>
+		        </dependency>
+		      </dependencies>
+		    </plugin>
 		</plugins>
 	</build>
+	
+	<modules>
+		<module>jmop-common-base</module>
+		<module>jmop-common-storages</module>
+		<module>jmop-common-musicbase</module>
+		
+<!-- 		<module>jmop-player-base</module> -->
+<!-- 		<module>jmop-player-players</module> -->
+<!-- 		<module>jmop-player-playlister</module> -->
+<!-- 		<module>jmop-player-engine </module> -->
+<!-- 		<module>jmop-player-gui</module> -->
+<!-- 		<module>jmop-player-app</module> -->
+		
+<!-- 		<module>jmop-sourcery-base</module> -->
+<!-- 		<module>jmop-sourcery-remotes</module> -->
+<!-- 		<module>jmop-sourcery-appp</module> -->
+	</modules>
 </project>
