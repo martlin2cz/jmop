@@ -2,15 +2,12 @@ package cz.martlin.jmop.core.player;
 
 import java.io.File;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.TracksSource;
-import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ObservableObject;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.player.base.player.BasePlayer;
+import cz.martlin.jmop.core.player.base.player.PlayerStatus;
 import javafx.util.Duration;
 
 /**
@@ -21,82 +18,48 @@ import javafx.util.Duration;
  *
  */
 public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implements BasePlayer {
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
+//	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final TracksSource local;
-	/**
-	 * @deprecated use the {@link TracksSource} instance.
-	 */
-	@Deprecated
-	private final Object tracksLocation;
-	/**
-	 * @deprecated no more needed.
-	 */
-	@Deprecated
-	private final TrackFileFormat supportedFormat;
 	
-	private boolean stopped;
-	private boolean paused;
-	private boolean over;
-	private Track playedTrack;
+	private PlayerStatus status;
+	private Track track;
 
-	public AbstractPlayer(TracksSource local, Object locator, TrackFileFormat supportedFormat) {
+	public AbstractPlayer(TracksSource local) {
 		super();
 		this.local = local;
 
-		this.supportedFormat = supportedFormat;
-//		this.tracksLocation = locator.locationOfPlay(this); //FIXME
-		this.tracksLocation = null;
-		
-		this.stopped = true;
-		this.paused = false;
-		this.over = false;
+		this.status = PlayerStatus.NO_TRACK;
+		this.track = null;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public TrackFileFormat getPlayableFormat() {
-		return supportedFormat;
+	public PlayerStatus currentStatus() throws JMOPMusicbaseException {
+		return status;
 	}
-
+	
 	@Override
-	public Track getPlayedTrack() {
-		return playedTrack;
-	}
-
-	@Override
-	public boolean isStopped() {
-		return stopped;
-	}
-
-	@Override
-	public boolean isPaused() {
-		return paused;
-	}
-
-	@Override
-	public boolean isPlayOver() {
-		return over;
+	public Track actualTrack() {
+		return track;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public synchronized void startPlaying(Track track) throws JMOPMusicbaseException {
-		LOG.info("Starting playing"); //$NON-NLS-1$
-		if (!stopped) {
+//		LOG.info("Starting playing"); //$NON-NLS-1$
+		if (status.isNotPlayingTrack()) {
 			doStopPlaying();
 		}
 
 		File file = local.trackFile(track);
-		LOG.debug("Will play file " + file); //$NON-NLS-1$
+//		LOG.debug("Will play file " + file); //$NON-NLS-1$
 		doStartPlaying(track, file);
 
-		over = false;
-		stopped = false;
-		paused = false;
-		playedTrack = track;
+		status = PlayerStatus.PLAYING;
+		track = track;
 
 		fireValueChangedEvent();
 	}
@@ -112,15 +75,16 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 
 	@Override
 	public synchronized void stop() {
-		LOG.info("Stopping playing"); //$NON-NLS-1$
-		if (stopped) {
+//		LOG.info("Stopping playing"); //$NON-NLS-1$
+		if (status.isNotPlayingTrack()) {
 			return;
 		}
 
 		doStopPlaying();
 
-		playedTrack = null;
-		stopped = true;
+		track = null;
+		status = PlayerStatus.STOPPED;
+		
 		fireValueChangedEvent();
 	}
 
@@ -132,12 +96,12 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public synchronized void pause() {
-		LOG.info("Pausing playing"); //$NON-NLS-1$
-		if (paused) {
+//		LOG.info("Pausing playing"); //$NON-NLS-1$
+		if (status.isPlaying()) {
 			return;
 		}
 
-		paused = true;
+		status = PlayerStatus.PAUSED;
 
 		doPausePlaying();
 		fireValueChangedEvent();
@@ -150,14 +114,15 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 
 	@Override
 	public synchronized void resume() {
-		LOG.info("Resuming playing"); //$NON-NLS-1$
-		if (!paused) {
+//		LOG.info("Resuming playing"); //$NON-NLS-1$
+		if (status.isPaused()) {
 			return;
 		}
 
 		doResumePlaying();
 
-		paused = false;
+		status = PlayerStatus.PLAYING;
+		
 		fireValueChangedEvent();
 	}
 
@@ -169,7 +134,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void seek(Duration to) {
-		LOG.info("Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
+//		LOG.info("Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
 
 		doSeek(to);
 		fireValueChangedEvent();
@@ -188,9 +153,9 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	 * Marks as finished playing track. No need to aditional checks.
 	 */
 	protected void trackFinished() {
-		LOG.info("Track play finished"); //$NON-NLS-1$
+//		LOG.info("Track play finished"); //$NON-NLS-1$
 
-		over = true;
+		status = PlayerStatus.NO_TRACK;
 		fireValueChangedEvent();
 	}
 }

@@ -11,7 +11,7 @@ import cz.martlin.jmop.core.misc.ops.OperationsManager;
 import cz.martlin.jmop.core.player.JavaFXMediaPlayer;
 import cz.martlin.jmop.core.player.PlayerWrapper;
 import cz.martlin.jmop.core.player.base.player.BasePlayer;
-import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.playlister.SimplePlayerEngine;
 import cz.martlin.jmop.core.playlister.Playlister;
 import cz.martlin.jmop.core.playlister.PlaylisterWrapper;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
@@ -63,7 +63,7 @@ public abstract class SimpleJMOPPlayerBuilder implements BaseJMOPBuilder {
 		PlayerWrapper playerWrapper = new PlayerWrapper(player);
 		PlaylisterWrapper playlisterWrapper = new PlaylisterWrapper(playlister);
 
-		PlayerEngine engine = new PlayerEngine(reporter, playlister, player, operations);
+		SimplePlayerEngine engine = new SimplePlayerEngine(reporter, playlister, player, operations);
 
 		// level 4 things
 		JMOPPlayer jmop = new JMOPPlayer(config, reporter, engine, local, operations);

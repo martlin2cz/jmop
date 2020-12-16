@@ -2,7 +2,6 @@ package cz.martlin.jmop.core.player.base.player;
 
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.beans.value.ObservableValue;
 import javafx.util.Duration;
 
@@ -19,32 +18,22 @@ import javafx.util.Duration;
  */
 public interface BasePlayer extends ObservableValue<BasePlayer> {
 
-	/**
-	 * Returns file format which this player supports.
-	 * 
-	 * @return
-	 * @deprecated do not, assume it either plays the saved file format,
-	 * or needs the convert it.
-	 */
-	@Deprecated
-	public TrackFileFormat getPlayableFormat();
-
-	/////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Returns currently played track. If stopped returns null.
-	 * 
-	 * @return
-	 */
-	public Track getPlayedTrack();
-
-	/**
-	 * Returns true if the track to be played have been whole played.
-	 * 
-	 * @return
-	 */
-	public boolean isPlayOver();
 	
-	//TODO enum PlayerStatus {STOPPED, PAUSED, PLAYING, OVER}
+	/**
+	 * Returns the current status of the player.
+	 * 
+	 * @return
+	 * @throws JMOPMusicbaseException
+	 */
+	public PlayerStatus currentStatus() throws JMOPMusicbaseException;
+	
+	/**
+	 * Returns the actual track o the player.
+	 * 
+	 * @return
+	 * @throws JMOPMusicbaseException
+	 */
+	public Track actualTrack() throws JMOPMusicbaseException;
 	
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,13 +51,6 @@ public interface BasePlayer extends ObservableValue<BasePlayer> {
 	 */
 	public void stop();
 
-	/**
-	 * Returns true whether is stopped.
-	 * 
-	 * @return
-	 */
-	public boolean isStopped();
-
 	///////////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -80,13 +62,6 @@ public interface BasePlayer extends ObservableValue<BasePlayer> {
 	 * Resumes plaing. If not paused or not playing might do nothing.
 	 */
 	public void resume();
-
-	/**
-	 * Returns true if paused.
-	 * 
-	 * @return
-	 */
-	public boolean isPaused();
 
 	///////////////////////////////////////////////////////////////////////////////////
 	/**

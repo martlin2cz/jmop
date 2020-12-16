@@ -19,8 +19,6 @@ import javafx.util.Duration;
  *
  */
 public class JavaFXMediaPlayer extends AbstractPlayer {
-	public static final TrackFileFormat PLAYER_FORMAT = TrackFileFormat.WAV;
-
 	private MediaPlayer mediaPlayer;
 	private Duration currentTime;
 
@@ -31,8 +29,8 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 		initializeFX();
 	}
 
-	public JavaFXMediaPlayer(TracksSource local, Object locator) {
-		super(local, locator, PLAYER_FORMAT);
+	public JavaFXMediaPlayer(TracksSource local) {
+		super(local);
 	}
 
 	@Override

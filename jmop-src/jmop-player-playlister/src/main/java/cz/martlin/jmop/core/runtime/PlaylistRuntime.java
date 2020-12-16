@@ -191,11 +191,24 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	/**
+	 * Plays the choosen track.
+	 * 
+	 * @param index
+	 */
+	public Track play(int index) {
+		currentTrack = index;
+		fireValueChangedEvent();
+		
+		return current();
+	}
+	
+	/**
 	 * Skips (or rollbacks) up to given index. In other terms, marks track at
 	 * given index the current one.
 	 * 
 	 * @param index
 	 */
+	@Deprecated
 	public void markPlayedUpTo(int index) {
 		currentTrack = index;
 
@@ -207,6 +220,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * 
 	 * @param index
 	 */
+	@Deprecated
 	public void popUp(int index) {
 		Track track = tracks.remove(index);
 
@@ -223,6 +237,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * 
 	 * @param track
 	 */
+	@Deprecated
 	public void append(Track track) {
 		tracks.add(track);
 
@@ -235,6 +250,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * 
 	 * @param trackOrNull
 	 */
+	@Deprecated
 	public void replaceRest(Track trackOrNull) {
 		int start = currentTrack + 1;
 		int end = count();

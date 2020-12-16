@@ -26,7 +26,6 @@ import javafx.util.Duration;
  *
  */
 public class AplayPlayer extends AbstractPlayer {
-	private static final TrackFileFormat APLAY_PLAY_FORMAT = TrackFileFormat.WAV;
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -34,8 +33,8 @@ public class AplayPlayer extends AbstractPlayer {
 	private AplayProcess process;
 	private Track currentTrack;
 
-	public AplayPlayer(BaseErrorReporter reporter, TracksSource local, Object locator) {
-		super(local, locator, APLAY_PLAY_FORMAT);
+	public AplayPlayer(BaseErrorReporter reporter, TracksSource local) {
+		super(local);
 
 		this.reporter = reporter;
 	}

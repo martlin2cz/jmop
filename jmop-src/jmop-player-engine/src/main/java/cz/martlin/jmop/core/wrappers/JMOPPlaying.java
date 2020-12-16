@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.wrappers;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.playlister.SimplePlayerEngine;
 import javafx.util.Duration;
 
 /**
@@ -15,11 +15,11 @@ import javafx.util.Duration;
  *
  */
 public class JMOPPlaying {
-	private final PlayerEngine engine;
+	private final SimplePlayerEngine engine;
 
 	private Playlist currentPlaylist;
 
-	public JMOPPlaying(PlayerEngine engine) {
+	public JMOPPlaying(SimplePlayerEngine engine) {
 		super();
 		this.engine = engine;
 
@@ -30,7 +30,7 @@ public class JMOPPlaying {
 	 * 
 	 * @return
 	 */
-	protected PlayerEngine getEngine() {
+	protected SimplePlayerEngine getEngine() {
 		return engine;
 	}
 

@@ -6,7 +6,7 @@ import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
-import cz.martlin.jmop.core.playlister.PlayerEngine;
+import cz.martlin.jmop.core.playlister.SimplePlayerEngine;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 
@@ -44,7 +44,7 @@ public class JMOPSources {
 	 * @return
 	 * @throws JMOPMusicbaseException
 	 */
-	public Playlist createNewBundleAndPrepare(SourceKind kind, String bundleName, String query, PlayerEngine engine)
+	public Playlist createNewBundleAndPrepare(SourceKind kind, String bundleName, String query, SimplePlayerEngine engine)
 			throws JMOPMusicbaseException {
 		Bundle bundle = createBundle(kind, bundleName);
 		Playlist playlist = new Playlist(bundle, query);
@@ -63,7 +63,7 @@ public class JMOPSources {
 	 * @return
 	 * @throws JMOPMusicbaseException
 	 */
-	public Playlist createNewPlaylist(Bundle bundle, String query, PlayerEngine engine) throws JMOPMusicbaseException {
+	public Playlist createNewPlaylist(Bundle bundle, String query, SimplePlayerEngine engine) throws JMOPMusicbaseException {
 		Playlist playlist = new Playlist(bundle, query);
 
 		preparer.startSearchAndLoadInBg(bundle, query, engine);
@@ -79,7 +79,7 @@ public class JMOPSources {
 	 * @return
 	 * @throws JMOPMusicbaseException
 	 */
-	public Playlist loadPlaylist(String bundleName, String playlistName, PlayerEngine engine)
+	public Playlist loadPlaylist(String bundleName, String playlistName, SimplePlayerEngine engine)
 			throws JMOPMusicbaseException {
 		Bundle bundle = local.getBundle(bundleName);
 		Playlist playlist = local.getPlaylist(bundle, playlistName);
@@ -109,7 +109,7 @@ public class JMOPSources {
 	 * @param engine
 	 * @throws JMOPMusicbaseException
 	 */
-	public void queryAndLoad(Bundle bundle, String query, PlayerEngine engine) throws JMOPMusicbaseException {
+	public void queryAndLoad(Bundle bundle, String query, SimplePlayerEngine engine) throws JMOPMusicbaseException {
 		preparer.startSearchAndLoadInBg(bundle, query, engine);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
