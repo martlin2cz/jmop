@@ -3,13 +3,14 @@ package cz.martlin.jmop.core.playlister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
-import cz.martlin.jmop.core.player.BasePlayer;
+import cz.martlin.jmop.core.player.base.player.BasePlayer;
+import cz.martlin.jmop.player.base.engine.BasePlayerEngine;
 import javafx.util.Duration;
 
 /**
@@ -19,7 +20,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class PlayerEngine {
+public class PlayerEngine implements BasePlayerEngine {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseErrorReporter reporter;
@@ -51,6 +52,7 @@ public class PlayerEngine {
 	 * 
 	 * @param playlist
 	 */
+	@Override
 	public void startPlayingPlaylist(Playlist playlist) {
 		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -62,6 +64,7 @@ public class PlayerEngine {
 	 * 
 	 * @param currentPlaylist
 	 */
+	@Override
 	public void stopPlayingPlaylist(Playlist currentPlaylist) {
 		LOG.info("Stopping to play playlist " + currentPlaylist.getName() + " of bundle " //$NON-NLS-1$ //$NON-NLS-2$
 				+ currentPlaylist.getBundle().getName());
@@ -74,6 +77,7 @@ public class PlayerEngine {
 	 * 
 	 * @throws JMOPMusicbaseException
 	 */
+	@Override
 	public void playNext() throws JMOPMusicbaseException {
 		LOG.info("Playing next to play"); //$NON-NLS-1$
 
@@ -87,6 +91,7 @@ public class PlayerEngine {
 	 * @param index
 	 * @throws JMOPMusicbaseException
 	 */
+	@Override
 	public void play(int index) throws JMOPMusicbaseException {
 		LOG.info("Playing " + index + " th"); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -97,6 +102,7 @@ public class PlayerEngine {
 	/**
 	 * Stop playing.
 	 */
+	@Override
 	public void stop() {
 		LOG.info("Stopping playing"); //$NON-NLS-1$
 		player.stop();
@@ -105,6 +111,7 @@ public class PlayerEngine {
 	/**
 	 * Pause playing.
 	 */
+	@Override
 	public void pause() {
 		LOG.info("Pausing"); //$NON-NLS-1$
 		player.pause();
@@ -113,6 +120,7 @@ public class PlayerEngine {
 	/**
 	 * Resume playing.
 	 */
+	@Override
 	public void resume() {
 		LOG.info("Resuming"); //$NON-NLS-1$
 		player.resume();
@@ -123,6 +131,7 @@ public class PlayerEngine {
 	 * 
 	 * @param to
 	 */
+	@Override
 	public void seek(Duration to) {
 		LOG.info("Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
 		player.seek(to);
@@ -133,6 +142,7 @@ public class PlayerEngine {
 	 * 
 	 * @throws JMOPMusicbaseException
 	 */
+	@Override
 	public void toNext() throws JMOPMusicbaseException {
 		LOG.info("Playing next"); //$NON-NLS-1$
 
@@ -145,6 +155,7 @@ public class PlayerEngine {
 	 * 
 	 * @throws JMOPMusicbaseException
 	 */
+	@Override
 	public void toPrevious() throws JMOPMusicbaseException {
 		LOG.info("Playing previous"); //$NON-NLS-1$
 

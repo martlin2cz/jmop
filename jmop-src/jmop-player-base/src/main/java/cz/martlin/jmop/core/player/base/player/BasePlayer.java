@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.player;
+package cz.martlin.jmop.core.player.base.player;
 
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
