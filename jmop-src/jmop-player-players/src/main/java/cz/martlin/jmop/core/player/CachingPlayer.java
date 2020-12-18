@@ -1,53 +1,118 @@
 package cz.martlin.jmop.core.player;
 
-import java.io.File;
-
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksSource;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.core.misc.BaseErrorReporter;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.player.base.player.BasePlayer;
+import cz.martlin.jmop.core.player.base.player.PlayerStatus;
 import javafx.util.Duration;
 
 public class CachingPlayer extends AbstractPlayer {
 
-	public CachingPlayer(TracksSource local, Object locator, TrackFileFormat supportedFormat) {
-		super(local, locator, supportedFormat);
-		// TODO Auto-generated constructor stub
+	private final BaseErrorReporter reporter;
+	private final BaseCachingManager cacher;
+	private final BasePlayer player;
+
+	public CachingPlayer(BaseErrorReporter reporter, BaseCachingManager cacher, BasePlayer player) {
+		super();
+
+		this.reporter = reporter;
+		this.cacher = cacher;
+		this.player = player;
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	
 	@Override
 	public Duration currentTime() {
-		// TODO Auto-generated method stub
-		return null;
+		if (cacher.isCaching()) {
+			return Duration.ZERO;
+		} else {
+			return player.currentTime();
+		}
 	}
 
 	@Override
-	protected void doStartPlaying(Track track, File file) {
-		// TODO Auto-generated method stub
-
+	protected void doStartPlaying(Track track) throws JMOPMusicbaseException {
+		if (cacher.isCached(track)) {
+			player.startPlaying(track);
+		} else {
+			cacher.startCaching(track, this::onCached);
+		}
 	}
 
 	@Override
 	protected void doStopPlaying() {
-		// TODO Auto-generated method stub
-
+		if (cacher.isCaching()) {
+			// okay, just wait
+		} else {
+			player.stop();
+		}
 	}
 
 	@Override
 	protected void doPausePlaying() {
-		// TODO Auto-generated method stub
-
+		if (cacher.isCaching()) {
+			// okay, just wait
+		} else {
+			player.pause();
+		}
 	}
 
 	@Override
 	protected void doResumePlaying() {
-		// TODO Auto-generated method stub
-
+		if (cacher.isCaching()) {
+			// okay, just wait
+		} else {
+			player.resume();
+		}
 	}
 
 	@Override
 	protected void doSeek(Duration to) {
-		// TODO Auto-generated method stub
-
+		if (cacher.isCaching()) {
+			// okay, just wait
+		} else {
+			player.seek(to);
+		}
 	}
+	
+	@Override
+	protected void doTrackFinished() {
+		// okay
+	}
+	
+	///////////////////////////////////////////////////////////////////////////
+	
+	private void onCached(Track track) {
+		try {
+			PlayerStatus status = currentStatus();
+			triggerTheDesiredOperation(status, track);
+		} catch (JMOPMusicbaseException e) {
+			reporter.report(e);
+		}
+	}
+
+	private void triggerTheDesiredOperation(PlayerStatus status, Track track) throws JMOPMusicbaseException {
+		
+		switch (status) {
+		case NO_TRACK:
+			throw new IllegalStateException("This should never happen");
+		case PAUSED:
+			player.startPlaying(track);
+			player.pause();
+			break;
+		case PLAYING:
+			player.startPlaying(track);
+			break;
+		case STOPPED:
+			player.stop();
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid status: " + status);
+		}
+		
+	}
+
 
 }

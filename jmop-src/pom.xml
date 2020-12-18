@@ -198,9 +198,10 @@
 		<module>jmop-common-base</module>
 		<module>jmop-common-storages</module>
 		<module>jmop-common-musicbase</module>
+		<module>jmop-common-testing</module>
 		
-<!-- 		<module>jmop-player-base</module> -->
-<!-- 		<module>jmop-player-players</module> -->
+		<module>jmop-player-base</module>
+		<module>jmop-player-players</module>
 <!-- 		<module>jmop-player-playlister</module> -->
 <!-- 		<module>jmop-player-engine </module> -->
 <!-- 		<module>jmop-player-gui</module> -->

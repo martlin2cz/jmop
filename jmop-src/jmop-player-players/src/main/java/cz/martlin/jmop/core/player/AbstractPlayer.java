@@ -1,9 +1,6 @@
 package cz.martlin.jmop.core.player;
 
-import java.io.File;
-
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.player.base.player.BasePlayer;
@@ -18,28 +15,23 @@ import javafx.util.Duration;
  *
  */
 public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implements BasePlayer {
-//	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private final TracksSource local;
-	
 	private PlayerStatus status;
 	private Track track;
 
-	public AbstractPlayer(TracksSource local) {
+	public AbstractPlayer() {
 		super();
-		this.local = local;
 
 		this.status = PlayerStatus.NO_TRACK;
 		this.track = null;
 	}
-
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public PlayerStatus currentStatus() throws JMOPMusicbaseException {
+	public PlayerStatus currentStatus() {
 		return status;
 	}
-	
+
 	@Override
 	public Track actualTrack() {
 		return track;
@@ -49,42 +41,40 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 
 	@Override
 	public synchronized void startPlaying(Track track) throws JMOPMusicbaseException {
-//		LOG.info("Starting playing"); //$NON-NLS-1$
-		if (status.isNotPlayingTrack()) {
-			doStopPlaying();
+		if (status.isPlayingTrack()) {
+			throw new IllegalStateException("Already plaing track");
 		}
 
-		File file = local.trackFile(track);
-//		LOG.debug("Will play file " + file); //$NON-NLS-1$
-		doStartPlaying(track, file);
+		doStartPlaying(track);
 
-		status = PlayerStatus.PLAYING;
-		track = track;
+		this.status = PlayerStatus.PLAYING;
+		this.track = track;
 
 		fireValueChangedEvent();
 	}
 
 	/**
-	 * Start playing given track with given file. No need to additional checks
-	 * or stop.
+	 * Start playing given track with given file. No need to additional checks or
+	 * stop.
 	 * 
 	 * @param track
 	 * @param file
+	 * @throws JMOPMusicbaseException
 	 */
-	protected abstract void doStartPlaying(Track track, File file);
+	protected abstract void doStartPlaying(Track track) throws JMOPMusicbaseException;
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public synchronized void stop() {
-//		LOG.info("Stopping playing"); //$NON-NLS-1$
 		if (status.isNotPlayingTrack()) {
-			return;
+			throw new IllegalStateException("Not playing track");
 		}
 
 		doStopPlaying();
 
 		track = null;
 		status = PlayerStatus.STOPPED;
-		
+
 		fireValueChangedEvent();
 	}
 
@@ -92,13 +82,12 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	 * Stop playing current track. No need to aditional checks.
 	 */
 	protected abstract void doStopPlaying();
-
 	/////////////////////////////////////////////////////////////////////////////////////
+
 	@Override
 	public synchronized void pause() {
-//		LOG.info("Pausing playing"); //$NON-NLS-1$
-		if (status.isPlaying()) {
-			return;
+		if (status.isNotPlaying()) {
+			throw new IllegalStateException("Not plaing");
 		}
 
 		status = PlayerStatus.PAUSED;
@@ -111,18 +100,18 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	 * Pauses playing current track. No need to aditional checks.
 	 */
 	protected abstract void doPausePlaying();
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public synchronized void resume() {
-//		LOG.info("Resuming playing"); //$NON-NLS-1$
-		if (status.isPaused()) {
-			return;
+		if (status.isNotPaused()) {
+			throw new IllegalStateException("Not paused");
 		}
 
 		doResumePlaying();
 
 		status = PlayerStatus.PLAYING;
-		
+
 		fireValueChangedEvent();
 	}
 
@@ -130,11 +119,13 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	 * Resumes playing current track. No need to aditional checks.
 	 */
 	protected abstract void doResumePlaying();
-
 	/////////////////////////////////////////////////////////////////////////////////////
+
 	@Override
 	public void seek(Duration to) {
-//		LOG.info("Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
+		if (status.isNotPlayingTrack()) {
+			throw new IllegalStateException("Not playing track");
+		}
 
 		doSeek(to);
 		fireValueChangedEvent();
@@ -146,16 +137,21 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	 * @param to
 	 */
 	protected abstract void doSeek(Duration to);
-
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	protected void trackFinished() {
+		if (status.isNotPlayingTrack()) {
+			throw new IllegalStateException("Not playing track");
+		}
+
+		doTrackFinished();
+		status = PlayerStatus.NO_TRACK;
+		fireValueChangedEvent();
+	}
 
 	/**
 	 * Marks as finished playing track. No need to aditional checks.
 	 */
-	protected void trackFinished() {
-//		LOG.info("Track play finished"); //$NON-NLS-1$
+	protected abstract void doTrackFinished();
 
-		status = PlayerStatus.NO_TRACK;
-		fireValueChangedEvent();
-	}
 }

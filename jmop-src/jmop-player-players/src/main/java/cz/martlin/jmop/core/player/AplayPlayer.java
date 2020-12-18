@@ -14,7 +14,6 @@ import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
 /**
@@ -25,7 +24,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class AplayPlayer extends AbstractPlayer {
+public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -45,7 +44,7 @@ public class AplayPlayer extends AbstractPlayer {
 	}
 
 	@Override
-	protected void doStartPlaying(Track track, File file) {
+	protected void doStartPlaingFile(Track track, File file) {
 		AplayProcess process = new AplayProcess(file);
 
 		runProcessInBackround(process, track, file);
@@ -55,20 +54,22 @@ public class AplayPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doStopPlaying() {
-		this.process.terminate();
+		if (currentStatus().isPlaying()) {
+			this.process.terminate();
+		}
 	}
 
 	@Override
 	protected void doPausePlaying() {
 		LOG.warn("Pause not supported, will stop plaing"); //$NON-NLS-1$
-		stop();
+		doStopPlaying();
 	}
 
 	@Override
 	protected void doResumePlaying() {
 		LOG.warn("Resume not supported, will play from begin"); //$NON-NLS-1$
 		try {
-			startPlaying(currentTrack);
+			doStartPlaying(currentTrack);
 		} catch (JMOPMusicbaseException e) {
 			reporter.report(e);
 		} catch (Exception e) {
@@ -103,6 +104,11 @@ public class AplayPlayer extends AbstractPlayer {
 
 		Thread thread = new Thread(run, "AplayPlayerThread"); //$NON-NLS-1$
 		thread.start();
+	}
+
+	@Override
+	protected void doTrackFinished() {
+		// okay
 	}
 
 	/**

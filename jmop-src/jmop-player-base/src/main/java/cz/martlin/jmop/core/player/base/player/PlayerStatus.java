@@ -21,7 +21,16 @@ public enum PlayerStatus {
 		return this == PLAYING;
 	}
 
+	public boolean isNotPlaying() {
+		return this != PLAYING;
+	}
+	
 	public boolean isPaused() {
 		return this == PAUSED;
 	}
+
+	public boolean isNotPaused() {
+		return this != PAUSED;
+	}
+
 }

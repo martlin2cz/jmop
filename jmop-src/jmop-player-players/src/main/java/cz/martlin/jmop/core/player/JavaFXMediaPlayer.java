@@ -5,7 +5,6 @@ import java.net.URI;
 
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.TracksSource;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
@@ -18,7 +17,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class JavaFXMediaPlayer extends AbstractPlayer {
+public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 	private MediaPlayer mediaPlayer;
 	private Duration currentTime;
 
@@ -41,7 +40,7 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	protected void doStartPlaying(Track track, File file) {
+	protected void doStartPlaingFile(Track track, File file) {
 		URI uri = file.toURI();
 		String path = uri.toString();
 
@@ -80,7 +79,11 @@ public class JavaFXMediaPlayer extends AbstractPlayer {
 	@Override
 	protected void doSeek(Duration to) {
 		mediaPlayer.seek(to);
-
+	}
+	
+	@Override
+	protected void doTrackFinished() {
+		mediaPlayer = null;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

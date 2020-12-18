@@ -22,8 +22,9 @@ import javafx.util.Duration;
  * {@link #setOnTrackPlayed(Consumer)}.
  * 
  * @author martin
- *
+ * @deprecated do not use, just for now
  */
+@Deprecated
 public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 
 	private final BasePlayer player;
@@ -88,42 +89,42 @@ public class PlayerWrapper implements BaseWrapper<BasePlayer> {
 	 * not updates all the properties.
 	 */
 	private void playerChanged() {
-		boolean over = player.isPlayOver();
-
-		if (over) {
-			fireTrackPlayed();
-		} else {
-			updateProperties();
-		}
+//		boolean over = player.isPlayOver();
+//
+//		if (over) {
+//			fireTrackPlayed();
+//		} else {
+//			updateProperties();
+//		}
 	}
 
 	/**
 	 * Updates values of properties to match the player.
 	 */
 	private void updateProperties() {
-		boolean stopped = player.isStopped();
-		stoppedProperty.set(stopped);
-
-		boolean paused = player.isPaused();
-		pausedProperty.set(paused);
-
-		Track track = player.getPlayedTrack();
-		trackProperty.set(track);
-
-		Duration time = player.currentTime();
-		timeProperty.set(time);
-
-		boolean inPlayMode = inPlayModeProperty.get() || !stopped;
-		inPlayModeProperty.set(inPlayMode);
+//		boolean stopped = player.isStopped();
+//		stoppedProperty.set(stopped);
+//
+//		boolean paused = player.isPaused();
+//		pausedProperty.set(paused);
+//
+//		Track track = player.getPlayedTrack();
+//		trackProperty.set(track);
+//
+//		Duration time = player.currentTime();
+//		timeProperty.set(time);
+//
+//		boolean inPlayMode = inPlayModeProperty.get() || !stopped;
+//		inPlayModeProperty.set(inPlayMode);
 	}
 
 	/**
 	 * Fires the {@link #onTrackPlayed}.
 	 */
 	private void fireTrackPlayed() {
-		Track track = player.getPlayedTrack();
-
-		onTrackPlayed.accept(track);
+//		Track track = player.getPlayedTrack();
+//
+//		onTrackPlayed.accept(track);
 	}
 
 }

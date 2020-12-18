@@ -18,22 +18,19 @@ import javafx.util.Duration;
  */
 public interface BasePlayer extends ObservableValue<BasePlayer> {
 
-	
 	/**
 	 * Returns the current status of the player.
 	 * 
 	 * @return
-	 * @throws JMOPMusicbaseException
 	 */
-	public PlayerStatus currentStatus() throws JMOPMusicbaseException;
+	public PlayerStatus currentStatus();
 	
 	/**
 	 * Returns the actual track o the player.
 	 * 
 	 * @return
-	 * @throws JMOPMusicbaseException
 	 */
-	public Track actualTrack() throws JMOPMusicbaseException;
+	public Track actualTrack();
 	
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,6 +61,7 @@ public interface BasePlayer extends ObservableValue<BasePlayer> {
 	public void resume();
 
 	///////////////////////////////////////////////////////////////////////////////////
+	
 	/**
 	 * Seeks (jumps) to given time.
 	 * 
