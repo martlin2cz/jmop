@@ -25,7 +25,7 @@ public class CachingPlayer extends AbstractPlayer {
 	
 	@Override
 	public Duration currentTime() {
-		if (cacher.isCaching()) {
+		if (cacher.isCaching(actualTrack())) {
 			return Duration.ZERO;
 		} else {
 			return player.currentTime();
@@ -43,7 +43,7 @@ public class CachingPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doStopPlaying() {
-		if (cacher.isCaching()) {
+		if (cacher.isCaching(actualTrack())) {
 			// okay, just wait
 		} else {
 			player.stop();
@@ -52,7 +52,7 @@ public class CachingPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doPausePlaying() {
-		if (cacher.isCaching()) {
+		if (cacher.isCaching(actualTrack())) {
 			// okay, just wait
 		} else {
 			player.pause();
@@ -61,7 +61,7 @@ public class CachingPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doResumePlaying() {
-		if (cacher.isCaching()) {
+		if (cacher.isCaching(actualTrack())) {
 			// okay, just wait
 		} else {
 			player.resume();
@@ -70,7 +70,7 @@ public class CachingPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doSeek(Duration to) {
-		if (cacher.isCaching()) {
+		if (cacher.isCaching(actualTrack())) {
 			// okay, just wait
 		} else {
 			player.seek(to);

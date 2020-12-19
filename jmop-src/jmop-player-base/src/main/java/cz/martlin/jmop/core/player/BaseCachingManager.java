@@ -8,7 +8,7 @@ public interface BaseCachingManager {
 
 	boolean isCached(Track track);
 
-	boolean isCaching();
+	boolean isCaching(Track track);
 
 	void startCaching(Track track, Consumer<Track> onCached);
 

@@ -91,6 +91,12 @@
 			<version>2.11.0</version>
 		</dependency>
 
+		<!-- the audio converters -->
+		<dependency>
+			<groupId>com.googlecode.soundlibs</groupId>
+			<artifactId>mp3spi</artifactId>
+			<version>1.9.5.4</version>
+		</dependency>
 
 		<!-- youtube API libraries -->
 		<!-- https://developers.google.com/youtube/v3/quickstart/java -->
