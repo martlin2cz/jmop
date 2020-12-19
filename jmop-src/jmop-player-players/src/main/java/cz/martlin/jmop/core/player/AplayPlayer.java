@@ -30,6 +30,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 
 	private final BaseErrorReporter reporter;
 	private AplayProcess process;
+	private File currentTrackFile;
 	private Track currentTrack;
 
 	public AplayPlayer(BaseErrorReporter reporter, TracksSource local) {
@@ -38,58 +39,82 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 		this.reporter = reporter;
 	}
 
+	///////////////////////////////////////////////////////////////////////////s
+	
 	@Override
 	public Duration currentTime() {
+		LOG.warn("Current time not supported, returning zero"); //$NON-NLS-1$
 		return new Duration(0);
 	}
 
 	@Override
 	protected void doStartPlaingFile(Track track, File file) {
-		AplayProcess process = new AplayProcess(file);
-
-		runProcessInBackround(process, track, file);
-
-		this.process = process;
+		this.currentTrack = track;
+		this.currentTrackFile = file;
+		
+		startTheAplay();
 	}
 
 	@Override
 	protected void doStopPlaying() {
 		if (currentStatus().isPlaying()) {
-			this.process.terminate();
+			stopTheAplay();
+			
+			this.currentTrack = null;
+			this.currentTrackFile = null;
 		}
 	}
 
 	@Override
 	protected void doPausePlaying() {
-		LOG.warn("Pause not supported, will stop plaing"); //$NON-NLS-1$
-		doStopPlaying();
+		LOG.warn("Pause not supported, will stop playing"); //$NON-NLS-1$
+		stopTheAplay();
 	}
 
 	@Override
 	protected void doResumePlaying() {
 		LOG.warn("Resume not supported, will play from begin"); //$NON-NLS-1$
-		try {
-			doStartPlaying(currentTrack);
-		} catch (JMOPMusicbaseException e) {
-			reporter.report(e);
-		} catch (Exception e) {
-			reporter.internal(e);
-		}
+//		try {
+			startTheAplay();
+//		} catch (JMOPMusicbaseException e) {
+//			reporter.report(e);
+//		} catch (Exception e) {
+//			reporter.internal(e);
+//		}
 	}
 
 	@Override
 	protected void doSeek(Duration to) {
 		LOG.warn("Seek not supported, will ignore"); //$NON-NLS-1$
 	}
+	
+	@Override
+	protected void doTrackFinished() {
+		// okay
+	}
 
+	///////////////////////////////////////////////////////////////////////////
+
+	private void startTheAplay() {
+		AplayProcess process = new AplayProcess(currentTrackFile);
+
+		runProcessInBackround(process);
+
+		this.process = process;
+	}
+	
+	private void stopTheAplay() {
+		this.process.terminate();
+		this.process = null;
+	}
+
+	
 	/**
 	 * Runs the player process.
 	 * 
 	 * @param process
-	 * @param track
-	 * @param file
 	 */
-	private void runProcessInBackround(AplayProcess process, Track track, File file) {
+	private void runProcessInBackround(AplayProcess process) {
 		Runnable run = () -> {
 			try {
 				process.run(null);
@@ -99,17 +124,18 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 				reporter.internal(e);
 			}
 
-			trackFinished();
+			// the process terminated, but we don't know whether by
+			// finishing the track or by termination
+			if (currentStatus().isPlaying()) {
+				trackFinished();
+			}
 		};
 
 		Thread thread = new Thread(run, "AplayPlayerThread"); //$NON-NLS-1$
 		thread.start();
 	}
 
-	@Override
-	protected void doTrackFinished() {
-		// okay
-	}
+	///////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Abstract aplay process encapsulation.
@@ -120,7 +146,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 	public static class AplayProcess extends AbstractProcessEncapsulation {
 
 		private static final String COMMAND_NAME = "aplay";//$NON-NLS-1$
-		private static final int STATUS_CODE_SUCESS = 0;
+		private static final int STATUS_CODE_TERMINATED = 1;
 
 		public AplayProcess(File file) {
 			super(COMMAND_NAME, createCommandLine(file), getWorkingDirectory());
@@ -137,7 +163,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 
 		@Override
 		protected int getExpectedResultCode() {
-			return STATUS_CODE_SUCESS;
+			return STATUS_CODE_TERMINATED;
 		}
 
 		@Override

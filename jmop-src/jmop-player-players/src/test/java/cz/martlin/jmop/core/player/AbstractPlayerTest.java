@@ -68,13 +68,6 @@ public abstract class AbstractPlayerTest {
 		check(null, PlayerStatus.STOPPED);
 	}
 
-	private void waitAsecond() {
-		try {
-			TimeUnit.MILLISECONDS.sleep(1000);
-		} catch (InterruptedException e) {
-			fail(e);
-		}
-	}
 
 	@Test
 	public void testInvalids() throws JMOPMusicbaseException {
@@ -105,10 +98,35 @@ public abstract class AbstractPlayerTest {
 		waitAsecond();
 	}
 
+	@Test
+	public void testToFinish() throws JMOPMusicbaseException {
+		player.startPlaying(fooTrack);
+		check(fooTrack, PlayerStatus.PLAYING);
+		
+		try {
+			// 20s should be enough to play the whole testing track
+			TimeUnit.SECONDS.sleep(20);
+		} catch (InterruptedException e) {
+			fail(e);
+		}
+		
+		check(fooTrack, PlayerStatus.NO_TRACK);
+	}
+	
+	
 ////////////////////////////////////////////////////////////////////////////
 
+
+	private void waitAsecond() {
+		try {
+			TimeUnit.MILLISECONDS.sleep(100);
+		} catch (InterruptedException e) {
+			fail(e);
+		}
+	}
+	
 	private void check(Track expectedCurrentTrack, PlayerStatus expectedStatus) throws JMOPMusicbaseException {
-		assertEquals(player.actualTrack(), expectedCurrentTrack);
-		assertEquals(player.currentStatus(), expectedStatus);
+		assertEquals(expectedCurrentTrack, player.actualTrack());
+		assertEquals(expectedStatus, player.currentStatus());
 	}
 }
