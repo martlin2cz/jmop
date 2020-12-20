@@ -72,7 +72,7 @@ public class TestingTracksSource implements TracksSource {
 	 * @throws IOException
 	 */
 	private File prepareTrackFile(Track track) throws IOException {
-		String prefix = "track-" + track.getTitle();
+		String prefix = "track-" + track.getTitle() + "-";
 		String suffix = "." + format.fileExtension();
 		File file = File.createTempFile(prefix, suffix);
 		return file;

@@ -146,6 +146,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 	public static class AplayProcess extends AbstractProcessEncapsulation {
 
 		private static final String COMMAND_NAME = "aplay";//$NON-NLS-1$
+		private static final int STATUS_CODE_SUCESS = 0;
 		private static final int STATUS_CODE_TERMINATED = 1;
 
 		public AplayProcess(File file) {
@@ -161,8 +162,15 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 			return new File("."); // whatever //$NON-NLS-1$
 		}
 
+		
 		@Override
 		protected int getExpectedResultCode() {
+			//FIXME if the aplay ends normally by plaing the whole track,
+			// returns STATUS_CODE_SUCESS. However, when terminated prematurelly,
+			// returns STATUS_CODE_TERMINATED. Both of theese are valid and expected
+			// outcomes.
+			//TODO Override the finishProces method and rewrite this behaviour. 
+			// But that's hack AF.
 			return STATUS_CODE_TERMINATED;
 		}
 

@@ -14,9 +14,11 @@ class JavaConverterTest {
 
 	@Test
 	void testMp3ToWav() throws UnsupportedAudioFileException, IOException {
-		File mp3 = new File("~/music/dnb-n-dubstep/B-Complex/B-Complex - Ghost.mp3");
+//		File mp3 = new File("~/music/dnb-n-dubstep/B-Complex/B-Complex - Ghost.mp3");
 //		File mp3 = new File("~/music/dnb-n-dubstep/B-Complex/B-Complex - Different_Kind_Of_Masochist.mp3");
-		//File mp3 = new File("../jmop-common-testing/src/main/resources/cz/martlin/jmop/common/testing/sample.mp3");
+		
+		//TODO FIXME HAACK
+		File mp3 = new File("../jmop-common-testing/src/main/resources/cz/martlin/jmop/common/testing/sample.mp3");
 		assumeTrue(mp3.exists());
 		
 		File wav = new File("/tmp/out.wav");
