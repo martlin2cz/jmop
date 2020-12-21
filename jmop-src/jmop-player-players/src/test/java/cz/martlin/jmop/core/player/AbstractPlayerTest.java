@@ -20,9 +20,9 @@ import cz.martlin.jmop.core.player.base.player.PlayerStatus;
 
 public abstract class AbstractPlayerTest {
 
-	private BasePlayer player;
-	private Track fooTrack;
-	private Track barTrack;
+	protected BasePlayer player;
+	protected Track fooTrack;
+	protected Track barTrack;
 
 	public AbstractPlayerTest() {
 		super();
@@ -117,7 +117,7 @@ public abstract class AbstractPlayerTest {
 ////////////////////////////////////////////////////////////////////////////
 
 
-	private void waitAsecond() {
+	protected void waitAsecond() {
 		try {
 			TimeUnit.MILLISECONDS.sleep(100);
 		} catch (InterruptedException e) {
@@ -125,7 +125,7 @@ public abstract class AbstractPlayerTest {
 		}
 	}
 	
-	private void check(Track expectedCurrentTrack, PlayerStatus expectedStatus) throws JMOPMusicbaseException {
+	protected void check(Track expectedCurrentTrack, PlayerStatus expectedStatus) throws JMOPMusicbaseException {
 		assertEquals(expectedCurrentTrack, player.actualTrack());
 		assertEquals(expectedStatus, player.currentStatus());
 	}

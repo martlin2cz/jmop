@@ -1,8 +1,10 @@
-package cz.martlin.jmop.core.player;
+package cz.martlin.jmop.core.player.caching;
 
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.player.AbstractPlayer;
+import cz.martlin.jmop.core.player.BaseCachingManager;
 import cz.martlin.jmop.core.player.base.player.BasePlayer;
 import cz.martlin.jmop.core.player.base.player.PlayerStatus;
 import javafx.util.Duration;
@@ -21,8 +23,12 @@ public class CachingPlayer extends AbstractPlayer {
 		this.player = player;
 	}
 
+	public BasePlayer getPlayer() {
+		return player;
+	}
+
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	@Override
 	public Duration currentTime() {
 		if (cacher.isCaching(actualTrack())) {
@@ -34,10 +40,16 @@ public class CachingPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doStartPlaying(Track track) throws JMOPMusicbaseException {
-		if (cacher.isCached(track)) {
-			player.startPlaying(track);
-		} else {
-			cacher.startCaching(track, this::onCached);
+		synchronized (cacher) {
+			if (cacher.isCached(track)) {
+				player.startPlaying(track);
+			} else {
+				if (!cacher.isCaching(track)) {
+					cacher.startCaching(track, this::onCached);
+				} else {
+					cacher.whenCached(track, this::onCached);
+				}
+			}
 		}
 	}
 
@@ -76,14 +88,14 @@ public class CachingPlayer extends AbstractPlayer {
 			player.seek(to);
 		}
 	}
-	
+
 	@Override
 	protected void doTrackFinished() {
 		// okay
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	private void onCached(Track track) {
 		try {
 			PlayerStatus status = currentStatus();
@@ -94,7 +106,7 @@ public class CachingPlayer extends AbstractPlayer {
 	}
 
 	private void triggerTheDesiredOperation(PlayerStatus status, Track track) throws JMOPMusicbaseException {
-		
+
 		switch (status) {
 		case NO_TRACK:
 			throw new IllegalStateException("This should never happen");
@@ -111,8 +123,7 @@ public class CachingPlayer extends AbstractPlayer {
 		default:
 			throw new IllegalArgumentException("Invalid status: " + status);
 		}
-		
-	}
 
+	}
 
 }

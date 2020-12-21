@@ -12,4 +12,6 @@ public interface BaseCachingManager {
 
 	void startCaching(Track track, Consumer<Track> onCached);
 
+	void whenCached(Track track, Consumer<Track> onCached);
+
 }
