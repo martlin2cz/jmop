@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.playlist;
+package cz.martlin.jmop.player.engine.engines;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

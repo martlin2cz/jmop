@@ -226,14 +226,15 @@
 		
 		<module>jmop-player-base</module>
 		<module>jmop-player-players</module>
-<!-- 		<module>jmop-player-playlister</module> -->
-<!-- 		<module>jmop-player-engine </module> -->
+		<module>jmop-player-engine </module>
+		<module>jmop-player-fascade</module>
+		
 <!-- 		<module>jmop-player-gui</module> -->
 <!-- 		<module>jmop-player-app</module> -->
 		
 <!-- 		<module>jmop-sourcery-base</module> -->
 <!-- 		<module>jmop-sourcery-remotes</module> -->
 <!-- 		<module>jmop-sourcery-appp</module> -->
-		<module>jmop-player-fascade</module>
+		
 	</modules>
 </project>

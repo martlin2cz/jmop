@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.runtime;
+package cz.martlin.jmop.player.engine.runtime;
 
 import java.util.Collections;
 import java.util.LinkedList;

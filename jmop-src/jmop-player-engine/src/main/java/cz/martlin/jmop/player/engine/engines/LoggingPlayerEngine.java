@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.playlister;
+package cz.martlin.jmop.player.engine.engines;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
