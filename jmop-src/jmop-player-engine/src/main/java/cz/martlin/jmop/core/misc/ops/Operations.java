@@ -10,6 +10,12 @@ import cz.martlin.jmop.core.sources.local.misc.flu.FormatsLocationsUtility;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 
+/**
+ * @deprecated we don't need that anymore
+ * @author martin
+ *
+ */
+@Deprecated
 public class Operations implements BaseOperations {
 	private final OperationsManager manager;
 	private final FormatsLocationsUtility flu;

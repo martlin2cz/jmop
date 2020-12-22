@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.player.base.engine.BasePlayerEngine;
+import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import javafx.util.Duration;
 
 /**

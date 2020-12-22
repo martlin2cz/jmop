@@ -9,9 +9,9 @@ import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
-import cz.martlin.jmop.core.player.base.player.BasePlayer;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
-import cz.martlin.jmop.player.base.engine.BasePlayerEngine;
+import cz.martlin.jmop.player.engine.BasePlayerEngine;
+import cz.martlin.jmop.player.players.BasePlayer;
 import javafx.util.Duration;
 
 /**

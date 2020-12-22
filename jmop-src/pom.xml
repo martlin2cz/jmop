@@ -234,5 +234,6 @@
 <!-- 		<module>jmop-sourcery-base</module> -->
 <!-- 		<module>jmop-sourcery-remotes</module> -->
 <!-- 		<module>jmop-sourcery-appp</module> -->
+		<module>jmop-player-fascade</module>
 	</modules>
 </project>

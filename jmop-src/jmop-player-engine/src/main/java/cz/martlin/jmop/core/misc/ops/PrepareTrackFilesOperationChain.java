@@ -14,6 +14,12 @@ import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
 
+/**
+ * @deprecated we don't need that anymore
+ * @author martin
+ *
+ */
+@Deprecated
 public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperationsChain<Track> {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
