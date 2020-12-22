@@ -1,33 +1,35 @@
 package cz.martlin.jmop.player.engine.engines;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Metadata;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.runtime.PlaylistRuntime;
-import cz.martlin.jmop.core.sources.SourceKind;
+import cz.martlin.jmop.player.engine.runtime.PlaylistRuntime;
 import javafx.util.Duration;
 
 public class PlaylistRuntimeTest {
-	private final Bundle bundle = new Bundle(SourceKind.YOUTUBE, "testing bundle"); //$NON-NLS-1$
+	private final Bundle bundle = new Bundle("testing bundle", Metadata.createNew()); //$NON-NLS-1$
 	private final Duration duration = DurationUtilities.createDuration(0, 10, 11);
 
-	private final Track trackFoo = bundle.createTrack("foo", "Foo", "foo bar", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	private final Track trackBar = bundle.createTrack("bar", "Bar", "bar baz", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	private final Track trackBaz = bundle.createTrack("baz", "Baz", "baz aux", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	private final Track trackAux = bundle.createTrack("aux", "Aux", "aux qux", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	private final Track trackQux = bundle.createTrack("Qux", "Qux", "qux qux", duration); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackFoo = new Track(bundle, "foo", "Foo", "foo bar", duration, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackBar = new Track(bundle, "bar", "Bar", "bar baz", duration, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackBaz = new Track(bundle, "baz", "Baz", "baz aux", duration, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackAux = new Track(bundle, "aux", "Aux", "aux qux", duration, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackQux = new Track(bundle, "Qux", "Qux", "qux qux", duration, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		System.out.println();
 	}
@@ -93,6 +95,7 @@ public class PlaylistRuntimeTest {
 		check(runtime, tracks, Arrays.asList(trackFoo, trackBar, trackBaz, trackAux), trackQux, Arrays.asList());
 	}
 
+	@Disabled("The #markPlayerUpTo feature is deprecated")
 	@Test
 	public void testMarkPlayedUpTo() {
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
@@ -111,6 +114,7 @@ public class PlaylistRuntimeTest {
 		check(runtime, tracks, Arrays.asList(trackFoo, trackBar), trackBaz, Arrays.asList(trackAux, trackQux));
 	}
 
+	@Disabled("The #popUp feature is deprecated")
 	@Test
 	public void testPopUp() {
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
@@ -135,6 +139,7 @@ public class PlaylistRuntimeTest {
 		check(runtime, allTracks4, Arrays.asList(trackBar), trackFoo, Arrays.asList(trackQux, trackBaz, trackAux));
 	}
 
+	@Disabled("The #append feature is deprecated")
 	@Test
 	public void testAppend() {
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz);
@@ -153,6 +158,7 @@ public class PlaylistRuntimeTest {
 		check(runtime, allTracks3, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux, trackQux));
 	}
 
+	@Disabled("The #replaceRest feature is deprecated")
 	@Test
 	public void testReplaceRest() {
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux);
@@ -203,10 +209,10 @@ public class PlaylistRuntimeTest {
 
 		System.out.println("C: " + runtime); //$NON-NLS-1$
 
-		assertEquals("Track count missmatch", expectedCount, runtime.count()); //$NON-NLS-1$
-		assertEquals("Current index missmatch", expectedCurrentIndex, runtime.currentTrackIndex()); //$NON-NLS-1$
-		assertEquals("Played count missmatch", expectedPlayedCount, runtime.playedCount()); //$NON-NLS-1$
-		assertEquals("Remaining count missmatch", expectedRemainingCount, runtime.remainingCount()); //$NON-NLS-1$
+		assertEquals(expectedCount, runtime.count(), "Track count missmatch"); //$NON-NLS-1$
+		assertEquals(expectedCurrentIndex, runtime.currentTrackIndex(), "Current index missmatch"); //$NON-NLS-1$
+		assertEquals(expectedPlayedCount, runtime.playedCount(),"Played count missmatch"); //$NON-NLS-1$
+		assertEquals(expectedRemainingCount, runtime.remainingCount(), "Remaining count missmatch"); //$NON-NLS-1$
 	}
 
 	private void check(PlaylistRuntime runtime, List<Track> expectedAllTracks, List<Track> expectedPlayedTracks,
@@ -214,10 +220,10 @@ public class PlaylistRuntimeTest {
 
 		System.out.println("L: " + runtime); //$NON-NLS-1$
 
-		assertEquals("All tracks missmatch", expectedAllTracks, runtime.listAll()); //$NON-NLS-1$
-		assertEquals("Played tracks missmatch", expectedPlayedTracks, runtime.played()); //$NON-NLS-1$
-		assertEquals("Current track missmatch", expectedCurrentTrack, runtime.current()); //$NON-NLS-1$
-		assertEquals("Remaining tracks missmatch", expectedToBePlayedTracks, runtime.toBePlayed()); //$NON-NLS-1$
+		assertEquals(expectedAllTracks, runtime.listAll(), "All tracks missmatch"); //$NON-NLS-1$
+		assertEquals(expectedPlayedTracks, runtime.played(), "Played tracks missmatch"); //$NON-NLS-1$
+		assertEquals(expectedCurrentTrack, runtime.current(), "Current track missmatch"); //$NON-NLS-1$
+		assertEquals(expectedToBePlayedTracks, runtime.toBePlayed(), "Remaining tracks missmatch"); //$NON-NLS-1$
 	}
 
 }
