@@ -75,23 +75,16 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 
 	@Override
 	public void trackOver(Track track) throws JMOPMusicbaseException {
-		if (runtime.hasNextToPlay()) {
-			toNext();
-		}
+		ifHasPlayNext();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void playTrack(Track track) throws JMOPMusicbaseException {
-		if (player.currentStatus().isPlayingTrack()) {
-			stopTrack(track);
-		}
-
 		if (before.beforeTrackPlayed(this, track)) {
-			player.startPlaying(track);
+			stopAndPlayAnother(track);
 		}
 	}
-	
 
 	private void stopTrack(Track track) throws JMOPMusicbaseException {
 		after.beforeTrackEnded(this, track);

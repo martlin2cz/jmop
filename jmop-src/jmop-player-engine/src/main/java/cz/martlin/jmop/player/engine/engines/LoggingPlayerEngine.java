@@ -8,6 +8,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
+import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
 /**
@@ -64,6 +65,11 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	@Override
 	public Duration currentDuration() {
 		return delegee.currentDuration();
+	}
+	
+	@Override
+	public PlayerStatus currentStatus() {
+		return delegee.currentStatus();
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////

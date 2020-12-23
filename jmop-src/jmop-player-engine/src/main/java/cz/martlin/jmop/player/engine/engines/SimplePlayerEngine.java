@@ -14,35 +14,33 @@ import javafx.util.Duration;
  *
  */
 public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
-	
+
 	public SimplePlayerEngine(BasePlayer player) {
 		super(player);
 	}
-	
+
 	@Override
 	public Track currentTrack() {
 		return player.actualTrack();
 	}
-	
+
 	@Override
 	public Duration currentDuration() {
 		return player.currentTime();
 	}
-	
-	
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public void play() throws JMOPMusicbaseException {
 		Track track = runtime.current();
-		player.startPlaying(track);
+		stopAndPlayAnother(track);
 	}
 
 	@Override
 	public void play(int index) throws JMOPMusicbaseException {
 		Track track = runtime.play(index);
-		player.startPlaying(track);
+		stopAndPlayAnother(track);
 	}
 
 	@Override
@@ -68,19 +66,18 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 	@Override
 	public void toNext() throws JMOPMusicbaseException {
 		Track track = runtime.toNext();
-		player.startPlaying(track);
+		stopAndPlayAnother(track);
 	}
 
 	@Override
 	public void toPrevious() throws JMOPMusicbaseException {
 		Track track = runtime.toPrevious();
-		player.startPlaying(track);
+		stopAndPlayAnother(track);
 	}
-	
+
 	@Override
 	public void trackOver(Track track) throws JMOPMusicbaseException {
-		if (runtime.hasNextToPlay()) {
-			toNext();
-		}
+		ifHasPlayNext();
 	}
+
 }

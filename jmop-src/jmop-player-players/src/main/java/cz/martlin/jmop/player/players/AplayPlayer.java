@@ -127,7 +127,11 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 			// the process terminated, but we don't know whether by
 			// finishing the track or by termination
 			if (currentStatus().isPlaying()) {
-				trackFinished();
+				try {
+					trackFinished();
+				} catch (JMOPMusicbaseException e) {
+					reporter.report(e);
+				}
 			}
 		};
 

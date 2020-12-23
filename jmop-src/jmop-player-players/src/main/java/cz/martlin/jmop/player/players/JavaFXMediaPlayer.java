@@ -5,6 +5,7 @@ import java.net.URI;
 
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.TracksSource;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
@@ -47,7 +48,7 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 		Media media = new Media(path);
 		mediaPlayer = new MediaPlayer(media);
 
-		endListener = () -> trackFinished();
+		endListener = () -> onTrackFinished();
 		mediaPlayer.setOnEndOfMedia(endListener);
 
 		timeListener = (observable, oldValue, newValue) -> timeChanged(newValue);
@@ -55,6 +56,7 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 
 		mediaPlayer.play();
 	}
+
 
 	@Override
 	protected void doStopPlaying() {
@@ -84,6 +86,16 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 	@Override
 	protected void doTrackFinished() {
 		mediaPlayer = null;
+	}
+	
+
+	private void onTrackFinished() {
+		try {
+			trackFinished();
+		} catch (JMOPMusicbaseException e) {
+			//TODO handle the error
+			throw new RuntimeException("Cannot handle player finish", e);
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

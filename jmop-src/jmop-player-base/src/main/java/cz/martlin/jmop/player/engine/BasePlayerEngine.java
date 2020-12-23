@@ -3,6 +3,7 @@ package cz.martlin.jmop.player.engine;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
 public interface BasePlayerEngine {
@@ -48,6 +49,13 @@ public interface BasePlayerEngine {
 	 * @return
 	 */
 	Duration currentDuration();
+	
+	
+	/**
+	 * Returns the current player status. Never null.
+	 * @return
+	 */
+	PlayerStatus currentStatus();
 	
 
 	/////////////////////////////////////////////////////////////////////////////////////
