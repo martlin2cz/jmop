@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
+import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.player.engine.runtime.PlaylistRuntime;
 import javafx.util.Duration;
@@ -38,7 +40,7 @@ public class PlaylistRuntimeTest {
 	public void testTracks() {
 
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
-		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
+		PlaylistRuntime runtime = runtime(tracks);
 
 		check(runtime, null, trackFoo, trackBar);
 		runtime.toNext();
@@ -58,7 +60,7 @@ public class PlaylistRuntimeTest {
 	@Test
 	public void testCounts() {
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
-		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
+		PlaylistRuntime runtime = runtime(tracks);
 
 		check(runtime, 5, 0, 0, 4);
 		runtime.toNext();
@@ -78,7 +80,7 @@ public class PlaylistRuntimeTest {
 	@Test
 	public void testLists() {
 		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
-		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
+		PlaylistRuntime runtime = runtime(tracks);
 
 		check(runtime, tracks, Arrays.asList(), trackFoo, Arrays.asList(trackBar, trackBaz, trackAux, trackQux));
 		runtime.toNext();
@@ -95,88 +97,88 @@ public class PlaylistRuntimeTest {
 		check(runtime, tracks, Arrays.asList(trackFoo, trackBar, trackBaz, trackAux), trackQux, Arrays.asList());
 	}
 
-	@Disabled("The #markPlayerUpTo feature is deprecated")
-	@Test
-	public void testMarkPlayedUpTo() {
-		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
-		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
+//	@Disabled("The #markPlayerUpTo feature is deprecated")
+//	@Test
+//	public void testMarkPlayedUpTo() {
+//		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
+//		PlaylistRuntime runtime = runtime(tracks);
+//
+//		runtime.markPlayedUpTo(1);
+//		check(runtime, tracks, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux, trackQux));
+//
+//		runtime.markPlayedUpTo(1); // just identity
+//		check(runtime, tracks, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux, trackQux));
+//
+//		runtime.markPlayedUpTo(3);
+//		check(runtime, tracks, Arrays.asList(trackFoo, trackBar, trackBaz), trackAux, Arrays.asList(trackQux));
+//
+//		runtime.markPlayedUpTo(2); // go back
+//		check(runtime, tracks, Arrays.asList(trackFoo, trackBar), trackBaz, Arrays.asList(trackAux, trackQux));
+//	}
 
-		runtime.markPlayedUpTo(1);
-		check(runtime, tracks, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux, trackQux));
+//	@Disabled("The #popUp feature is deprecated")
+//	@Test
+//	public void testPopUp() {
+//		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
+//		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
+//
+//		runtime.toNext();
+//		runtime.toNext();
+//
+//		List<Track> allTracks1 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
+//		check(runtime, allTracks1, Arrays.asList(trackFoo, trackBar), trackBaz, Arrays.asList(trackAux, trackQux));
+//		runtime.popUp(4);
+//
+//		List<Track> allTracks2 = Arrays.asList(trackFoo, trackBar, trackQux, trackBaz, trackAux);
+//		check(runtime, allTracks2, Arrays.asList(trackFoo, trackBar), trackQux, Arrays.asList(trackBaz, trackAux));
+//		runtime.popUp(0);
+//
+//		List<Track> allTracks3 = Arrays.asList(trackBar, trackFoo, trackQux, trackBaz, trackAux);
+//		check(runtime, allTracks3, Arrays.asList(trackBar), trackFoo, Arrays.asList(trackQux, trackBaz, trackAux));
+//		runtime.popUp(runtime.currentTrackIndex()); // just for duplicity
+//
+//		List<Track> allTracks4 = Arrays.asList(trackBar, trackFoo, trackQux, trackBaz, trackAux);
+//		check(runtime, allTracks4, Arrays.asList(trackBar), trackFoo, Arrays.asList(trackQux, trackBaz, trackAux));
+//	}
 
-		runtime.markPlayedUpTo(1); // just identity
-		check(runtime, tracks, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux, trackQux));
+//	@Disabled("The #append feature is deprecated")
+//	@Test
+//	public void testAppend() {
+//		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz);
+//		PlaylistRuntime runtime = runtime(tracks);
+//		runtime.toNext();
+//
+//		List<Track> allTracks1 = Arrays.asList(trackFoo, trackBar, trackBaz);
+//		check(runtime, allTracks1, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz));
+//		runtime.append(trackAux);
+//
+//		List<Track> allTracks2 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux);
+//		check(runtime, allTracks2, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux));
+//		runtime.append(trackQux);
+//
+//		List<Track> allTracks3 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
+//		check(runtime, allTracks3, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux, trackQux));
+//	}
 
-		runtime.markPlayedUpTo(3);
-		check(runtime, tracks, Arrays.asList(trackFoo, trackBar, trackBaz), trackAux, Arrays.asList(trackQux));
-
-		runtime.markPlayedUpTo(2); // go back
-		check(runtime, tracks, Arrays.asList(trackFoo, trackBar), trackBaz, Arrays.asList(trackAux, trackQux));
-	}
-
-	@Disabled("The #popUp feature is deprecated")
-	@Test
-	public void testPopUp() {
-		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
-		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
-
-		runtime.toNext();
-		runtime.toNext();
-
-		List<Track> allTracks1 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
-		check(runtime, allTracks1, Arrays.asList(trackFoo, trackBar), trackBaz, Arrays.asList(trackAux, trackQux));
-		runtime.popUp(4);
-
-		List<Track> allTracks2 = Arrays.asList(trackFoo, trackBar, trackQux, trackBaz, trackAux);
-		check(runtime, allTracks2, Arrays.asList(trackFoo, trackBar), trackQux, Arrays.asList(trackBaz, trackAux));
-		runtime.popUp(0);
-
-		List<Track> allTracks3 = Arrays.asList(trackBar, trackFoo, trackQux, trackBaz, trackAux);
-		check(runtime, allTracks3, Arrays.asList(trackBar), trackFoo, Arrays.asList(trackQux, trackBaz, trackAux));
-		runtime.popUp(runtime.currentTrackIndex()); // just for duplicity
-
-		List<Track> allTracks4 = Arrays.asList(trackBar, trackFoo, trackQux, trackBaz, trackAux);
-		check(runtime, allTracks4, Arrays.asList(trackBar), trackFoo, Arrays.asList(trackQux, trackBaz, trackAux));
-	}
-
-	@Disabled("The #append feature is deprecated")
-	@Test
-	public void testAppend() {
-		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz);
-		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
-		runtime.toNext();
-
-		List<Track> allTracks1 = Arrays.asList(trackFoo, trackBar, trackBaz);
-		check(runtime, allTracks1, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz));
-		runtime.append(trackAux);
-
-		List<Track> allTracks2 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux);
-		check(runtime, allTracks2, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux));
-		runtime.append(trackQux);
-
-		List<Track> allTracks3 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux, trackQux);
-		check(runtime, allTracks3, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux, trackQux));
-	}
-
-	@Disabled("The #replaceRest feature is deprecated")
-	@Test
-	public void testReplaceRest() {
-		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux);
-		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
-
-		runtime.toNext();
-
-		List<Track> allTracks1 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux);
-		check(runtime, allTracks1, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux));
-		runtime.replaceRest(trackQux);
-
-		List<Track> allTracks2 = Arrays.asList(trackFoo, trackBar, trackQux);
-		check(runtime, allTracks2, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackQux));
-		runtime.replaceRest(trackQux); // just identity
-
-		List<Track> allTracks3 = Arrays.asList(trackFoo, trackBar, trackQux);
-		check(runtime, allTracks3, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackQux));
-	}
+//	@Disabled("The #replaceRest feature is deprecated")
+//	@Test
+//	public void testReplaceRest() {
+//		List<Track> tracks = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux);
+//		PlaylistRuntime runtime = runtime(tracks);
+//
+//		runtime.toNext();
+//
+//		List<Track> allTracks1 = Arrays.asList(trackFoo, trackBar, trackBaz, trackAux);
+//		check(runtime, allTracks1, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackBaz, trackAux));
+//		runtime.replaceRest(trackQux);
+//
+//		List<Track> allTracks2 = Arrays.asList(trackFoo, trackBar, trackQux);
+//		check(runtime, allTracks2, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackQux));
+//		runtime.replaceRest(trackQux); // just identity
+//
+//		List<Track> allTracks3 = Arrays.asList(trackFoo, trackBar, trackQux);
+//		check(runtime, allTracks3, Arrays.asList(trackFoo), trackBar, Arrays.asList(trackQux));
+//	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -226,4 +228,13 @@ public class PlaylistRuntimeTest {
 		assertEquals(expectedToBePlayedTracks, runtime.toBePlayed(), "Remaining tracks missmatch"); //$NON-NLS-1$
 	}
 
+
+	private PlaylistRuntime runtime(List<Track> tracks) {
+		Tracklist tracklist = new Tracklist(tracks);
+		Playlist playlist = new Playlist(bundle, "testing playlist", tracklist, 0, Metadata.createNew());
+		PlaylistRuntime runtime = new PlaylistRuntime(playlist);
+		return runtime;
+	}
+
+	
 }

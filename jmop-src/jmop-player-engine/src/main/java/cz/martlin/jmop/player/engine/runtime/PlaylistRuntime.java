@@ -21,19 +21,11 @@ import cz.martlin.jmop.core.misc.ObservableObject;
  * @author martin
  *
  */
-//TODO consider renaming to Playlister
 public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
-	private final List<Track> tracks;
-	private int currentTrack;
+	private final Playlist playlist;
 
-	public PlaylistRuntime() {
-		this.tracks = new LinkedList<>();
-		this.currentTrack = 0;
-	}
-
-	public PlaylistRuntime(List<Track> tracks) {
-		this.tracks = new LinkedList<>(tracks);
-		this.currentTrack = 0;
+	public PlaylistRuntime(Playlist playlist) {
+		this.playlist = playlist;
 	}
 
 	/**
@@ -42,7 +34,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public int count() {
-		return tracks.size();
+		return playlist.getTracks().getTracks().size();
 	}
 
 	/**
@@ -51,7 +43,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public int currentTrackIndex() {
-		return currentTrack;
+		return playlist.getCurrentTrackIndex();
 	}
 
 	/**
@@ -60,7 +52,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public int playedCount() {
-		return currentTrack;
+		return playlist.getCurrentTrackIndex();
 	}
 
 	/**
@@ -69,7 +61,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public int remainingCount() {
-		return tracks.size() - currentTrack - 1;
+		return playlist.getTracks().count() - playlist.getCurrentTrackIndex() - 1;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,7 +72,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track get(int index) {
-		return tracks.get(index);
+		return playlist.getTracks().getTrack(index);
 	}
 
 	/**
@@ -89,7 +81,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track lastWasPlayed() {
-		return tracks.get(currentTrack - 1);
+		return playlist.getTracks().getTrack(playlist.getCurrentTrackIndex() - 1);
 	}
 
 	/**
@@ -98,7 +90,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track current() {
-		return tracks.get(currentTrack);
+		return playlist.getTracks().getTrack(playlist.getCurrentTrackIndex());
 	}
 
 	/**
@@ -107,7 +99,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track nextToBePlayed() {
-		return tracks.get(currentTrack + 1);
+		return playlist.getTracks().getTrack(playlist.getCurrentTrackIndex() + 1);
 	}
 
 	/**
@@ -116,7 +108,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public List<Track> played() {
-		return tracks.subList(0, currentTrack);
+		return playlist.getTracks().subList(0, playlist.getCurrentTrackIndex());
 	}
 
 	/**
@@ -125,7 +117,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public List<Track> toBePlayed() {
-		return tracks.subList(currentTrack + 1, count());
+		return playlist.getTracks().subList(playlist.getCurrentTrackIndex() + 1, count());
 	}
 
 	/**
@@ -134,17 +126,9 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public List<Track> listAll() {
-		return Collections.unmodifiableList(tracks);
+		return Collections.unmodifiableList(playlist.getTracks().getTracks());
 	}
 
-	/**
-	 * Returns this runtime tracks as tracklist.
-	 * 
-	 * @return
-	 */
-	public Tracklist toTracklist() {
-		return new Tracklist(tracks);
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	/**
@@ -171,7 +155,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track toNext() {
-		currentTrack++;
+		playlist.setCurrentTrackIndex(playlist.getCurrentTrackIndex() + 1);
 		fireValueChangedEvent();
 
 		return current();
@@ -183,7 +167,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track toPrevious() {
-		currentTrack--;
+		playlist.setCurrentTrackIndex(playlist.getCurrentTrackIndex() - 1);
 		fireValueChangedEvent();
 
 		return current();
@@ -196,75 +180,12 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @param index
 	 */
 	public Track play(int index) {
-		currentTrack = index;
+		playlist.setCurrentTrackIndex(index);
 		fireValueChangedEvent();
 		
 		return current();
 	}
 	
-	/**
-	 * Skips (or rollbacks) up to given index. In other terms, marks track at
-	 * given index the current one.
-	 * 
-	 * @param index
-	 */
-	@Deprecated
-	public void markPlayedUpTo(int index) {
-		currentTrack = index;
-
-		fireValueChangedEvent();
-	}
-
-	/**
-	 * Moves track at given index to current track position.
-	 * 
-	 * @param index
-	 */
-	@Deprecated
-	public void popUp(int index) {
-		Track track = tracks.remove(index);
-
-		if (index < currentTrack) {
-			currentTrack--;
-		}
-		tracks.add(currentTrack, track);
-
-		fireValueChangedEvent();
-	}
-
-	/**
-	 * Simply adds given track to the end of the queue.
-	 * 
-	 * @param track
-	 */
-	@Deprecated
-	public void append(Track track) {
-		tracks.add(track);
-
-		fireValueChangedEvent();
-	}
-
-	/**
-	 * Replaces all the remaining tracks with given track (if specified, if not,
-	 * only removes remaining tracks).
-	 * 
-	 * @param trackOrNull
-	 */
-	@Deprecated
-	public void replaceRest(Track trackOrNull) {
-		int start = currentTrack + 1;
-		int end = count();
-
-		if (start < end) {
-			tracks.subList(start, end).clear();
-		}
-
-		if (trackOrNull != null) {
-			tracks.add(trackOrNull);
-		}
-
-		fireValueChangedEvent();
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -278,34 +199,15 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Synchronize this runtime to given playlist.
-	 * 
-	 * @param playlist
-	 */
-	public void updateTo(Playlist playlist) {
-		this.currentTrack = playlist.getCurrentTrackIndex();
-
-		List<Track> newTracks = playlist.getTracks().getTracks();
-
-		// optimalisation (check only for change)
-		if (newTracks.size() != this.tracks.size() || newTracks.equals(this.tracks)) {
-			this.tracks.clear();
-			tracks.addAll(newTracks);
-		}
-
-		fireValueChangedEvent();
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////
-
-	/**
 	 * Constructs runtime for given tracklist.
 	 * 
 	 * @param tracklist
 	 * @return
+	 * @deprecated call directly the c-tor
 	 */
+	@Deprecated
 	public static PlaylistRuntime of(Tracklist tracklist) {
-		List<Track> tracks = tracklist.getTracks();
-		return new PlaylistRuntime(tracks);
+		throw new UnsupportedOperationException("deprecated");
 	}
 
 	/**
@@ -313,15 +215,11 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * 
 	 * @param playlist
 	 * @return
+	 * @deprecated call directly the c-tor
 	 */
+	@Deprecated
 	public static PlaylistRuntime of(Playlist playlist) {
-		List<Track> tracks = playlist.getTracks().getTracks();
-		int currentTrack = playlist.getCurrentTrackIndex();
-
-		PlaylistRuntime runtime = new PlaylistRuntime(tracks);
-		runtime.markPlayedUpTo(currentTrack);
-
-		return runtime;
+		return new PlaylistRuntime(playlist);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
