@@ -53,10 +53,10 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 
 
 	@Override
-	public void playNext() throws JMOPMusicbaseException {
-		LOG.info("Playing next to play"); //$NON-NLS-1$
+	public void play() throws JMOPMusicbaseException {
+		LOG.info("Playing current to play"); //$NON-NLS-1$
 
-		delegee.playNext();
+		delegee.play();
 	}
 
 	@Override

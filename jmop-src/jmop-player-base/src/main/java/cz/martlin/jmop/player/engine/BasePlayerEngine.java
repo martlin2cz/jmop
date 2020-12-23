@@ -33,7 +33,7 @@ public interface BasePlayerEngine {
 	 * 
 	 * @throws JMOPMusicbaseException
 	 */
-	void playNext() throws JMOPMusicbaseException;
+	void play() throws JMOPMusicbaseException;
 
 	/**
 	 * Play the index-th track in the (current) playlist.

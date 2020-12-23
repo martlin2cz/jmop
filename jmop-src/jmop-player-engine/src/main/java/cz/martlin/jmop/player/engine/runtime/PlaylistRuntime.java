@@ -27,6 +27,12 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	public PlaylistRuntime(Playlist playlist) {
 		this.playlist = playlist;
 	}
+	
+	public Playlist getPlaylist() {
+		return playlist;
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Returns current count of tracks.

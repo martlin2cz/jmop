@@ -25,16 +25,18 @@ public class SimplePlayerEngine implements BasePlayerEngine {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseErrorReporter reporter;
-	private final BaseOperations operations;
 	private final BasePlayer player;
 	
+	/**
+	 * @deprecated the playlist instance gets stored inside of the runtime
+	 */
+	@Deprecated
 	private Playlist currentPlaylist = null;
 	private PlaylistRuntime runtime = null;
 	
-	public SimplePlayerEngine(BaseErrorReporter reporter, BasePlayer player, BaseOperations operations) {
+	public SimplePlayerEngine(BaseErrorReporter reporter, BasePlayer player) {
 		super();
 		this.reporter = reporter;
-		this.operations = operations;
 		this.player = player;
 	}
 
@@ -68,8 +70,8 @@ public class SimplePlayerEngine implements BasePlayerEngine {
 
 
 	@Override
-	public void playNext() throws JMOPMusicbaseException {
-//		LOG.info("Playing next to play"); //$NON-NLS-1$
+	public void play() throws JMOPMusicbaseException {
+//		LOG.info("Playing current to play"); //$NON-NLS-1$
 
 		Track track = runtime.current();
 		player.startPlaying(track);
