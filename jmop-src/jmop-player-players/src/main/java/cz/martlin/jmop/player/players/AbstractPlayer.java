@@ -16,15 +16,24 @@ import javafx.util.Duration;
  */
 public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implements BasePlayer {
 
+	private TrackFinishedListener listener;
 	private PlayerStatus status;
 	private Track track;
-
+	
 	public AbstractPlayer() {
 		super();
 
+		this.listener = null;
 		this.status = PlayerStatus.NO_TRACK;
 		this.track = null;
+		
 	}
+	
+	@Override
+	public void specifyListener(TrackFinishedListener listener) {
+		this.listener = listener;
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -42,7 +51,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	@Override
 	public synchronized void startPlaying(Track track) throws JMOPMusicbaseException {
 		if (status.isPlayingTrack()) {
-			throw new IllegalStateException("Already plaing track");
+			throw new IllegalStateException("Already playing track");
 		}
 
 		doStartPlaying(track);
@@ -87,7 +96,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	@Override
 	public synchronized void pause() {
 		if (status.isNotPlaying()) {
-			throw new IllegalStateException("Not plaing");
+			throw new IllegalStateException("Not playing");
 		}
 
 		status = PlayerStatus.PAUSED;
@@ -139,13 +148,22 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	protected abstract void doSeek(Duration to);
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	protected void trackFinished() {
+	protected void trackFinished() throws JMOPMusicbaseException {
 		if (status.isNotPlayingTrack()) {
 			throw new IllegalStateException("Not playing track");
 		}
 
 		doTrackFinished();
 		status = PlayerStatus.NO_TRACK;
+		
+		if (listener != null) {
+			try {
+				listener.trackOver(track);
+			} catch (JMOPMusicbaseException e) {
+				throw new JMOPMusicbaseException("The listener of track finish failed", e);
+			}
+		}
+		
 		fireValueChangedEvent();
 	}
 

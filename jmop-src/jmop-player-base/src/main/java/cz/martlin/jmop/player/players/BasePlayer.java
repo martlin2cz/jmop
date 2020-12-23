@@ -17,6 +17,16 @@ import javafx.util.Duration;
  *
  */
 public interface BasePlayer extends ObservableValue<BasePlayer> {
+	
+	/**
+	 * Specifies the handler, which gets notified when the plaing of the track finishes.
+	 * The player's responsibility is to do so.
+	 * 
+	 * @param listener
+	 */
+	public void specifyListener(TrackFinishedListener listener);
+
+	///////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Returns the current status of the player.
