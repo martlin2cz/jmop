@@ -13,7 +13,19 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	public EngineWithHandlers(BasePlayer player) {
 		super(player);
 	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////
 
+	@Override
+	public Track currentTrack() {
+		return player.actualTrack();
+	}
+	
+	@Override
+	public Duration currentDuration() {
+		return player.currentTime();
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -29,7 +41,7 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void stop() {
+	public void stop() throws JMOPMusicbaseException {
 		Track track = runtime.current();
 		stopTrack(track);
 	}
@@ -75,14 +87,14 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 			stopTrack(track);
 		}
 
-		if (before.beforeTrackPlayed(track)) {
+		if (before.beforeTrackPlayed(this, track)) {
 			player.startPlaying(track);
 		}
 	}
 	
 
-	private void stopTrack(Track track) {
-		after.beforeTrackEnded(track);
+	private void stopTrack(Track track) throws JMOPMusicbaseException {
+		after.beforeTrackEnded(this, track);
 		player.stop();
 	}
 

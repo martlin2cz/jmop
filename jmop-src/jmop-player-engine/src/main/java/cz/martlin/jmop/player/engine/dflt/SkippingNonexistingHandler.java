@@ -1,14 +1,19 @@
 package cz.martlin.jmop.player.engine.dflt;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.player.engine.engines.withhandlers.BeforeTrackPlayedHandler;
+import cz.martlin.jmop.common.musicbase.TracksSource;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.player.engine.BasePlayerEngine;
 
-public class SkippingNonexistingHandler implements BeforeTrackPlayedHandler {
+public class SkippingNonexistingHandler extends AbstractTrackExistenceCheckingHandler {
+
+	public SkippingNonexistingHandler(TracksSource tracks) {
+		super(tracks);
+	}
 
 	@Override
-	public boolean beforeTrackPlayed(Track track) {
-		// TODO: if does not exist, trigger #toNext on the provided engine
-		return false;
+	protected void beforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
+		engine.toNext();
 	}
 
 }

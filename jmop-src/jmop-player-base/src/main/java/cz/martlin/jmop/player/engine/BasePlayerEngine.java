@@ -1,6 +1,7 @@
 package cz.martlin.jmop.player.engine;
 
 import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
@@ -19,7 +20,7 @@ public interface BasePlayerEngine {
 	 * 
 	 * @param currentPlaylist
 	 */
-	void stopPlayingPlaylist(Playlist currentPlaylist);
+	void stopPlayingPlaylist();
 	
 
 	/**
@@ -27,6 +28,29 @@ public interface BasePlayerEngine {
 	 */
 	void playlistChanged();
 	
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * Returns the currently played playlist or null if no such.
+	 * @return
+	 */
+	Playlist currentPlaylist();
+	
+	/**
+	 * Returns the currently played track or null if not playing track.
+	 * @return
+	 */
+	Track currentTrack();
+	
+	/**
+	 * Returns the current duration of the track played or null if not any.
+	 * @return
+	 */
+	Duration currentDuration();
+	
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Play next track in the queque.
@@ -45,8 +69,10 @@ public interface BasePlayerEngine {
 
 	/**
 	 * Stop playing.
+	 * 
+	 * @throws JMOPMusicbaseException 
 	 */
-	void stop();
+	void stop() throws JMOPMusicbaseException;
 
 	/**
 	 * Pause playing.
@@ -64,6 +90,9 @@ public interface BasePlayerEngine {
 	 * @param to
 	 */
 	void seek(Duration to);
+	
+
+	/////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Go to (start playing) next track.

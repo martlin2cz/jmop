@@ -18,6 +18,18 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 	public SimplePlayerEngine(BasePlayer player) {
 		super(player);
 	}
+	
+	@Override
+	public Track currentTrack() {
+		return player.actualTrack();
+	}
+	
+	@Override
+	public Duration currentDuration() {
+		return player.currentTime();
+	}
+	
+	
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
@@ -35,11 +36,11 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	}
 
 	@Override
-	public void stopPlayingPlaylist(Playlist playlist) {
-		LOG.info("Stopping to play playlist " + playlist.getName() + " of bundle " //$NON-NLS-1$ //$NON-NLS-2$
-				+ playlist.getBundle().getName());
+	public void stopPlayingPlaylist() {
+		LOG.info("Stopping to play playlist " + currentPlaylist().getName() + " of bundle " //$NON-NLS-1$ //$NON-NLS-2$
+				+ currentPlaylist().getBundle().getName());
 
-		delegee.stopPlayingPlaylist(playlist);
+		delegee.stopPlayingPlaylist();
 	}
 
 	@Override
@@ -47,6 +48,22 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 		LOG.info("The playlist changed");
 
 		delegee.playlistChanged();
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public Playlist currentPlaylist() {
+		return delegee.currentPlaylist();
+	}
+	
+	@Override
+	public Track currentTrack() {
+		return delegee.currentTrack();
+	}
+	
+	@Override
+	public Duration currentDuration() {
+		return delegee.currentDuration();
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +84,7 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	}
 
 	@Override
-	public void stop() {
+	public void stop() throws JMOPMusicbaseException {
 		LOG.info("Stopping playing"); //$NON-NLS-1$
 		
 		delegee.stop();

@@ -26,7 +26,7 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 	}
 
 	@Override
-	public void stopPlayingPlaylist(Playlist playlist) {
+	public void stopPlayingPlaylist() {
 		runtime = null;
 	}
 
@@ -34,6 +34,11 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 	public void playlistChanged() {
 		Playlist currentPlaylist = runtime.getPlaylist();
 		runtime = new PlaylistRuntime(currentPlaylist);
+	}
+	
+	@Override
+	public Playlist currentPlaylist() {
+		return runtime.getPlaylist();
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
