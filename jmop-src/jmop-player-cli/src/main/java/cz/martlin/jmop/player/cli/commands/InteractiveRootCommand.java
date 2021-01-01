@@ -8,6 +8,7 @@ import picocli.CommandLine.Command;
 				ListBundlesCommand.class, //
 				ListPlaylistsCommand.class, //
 				ListTracksCommand.class, //
+				StatusCommand.class, //
 				PlayCommand.class })
 public class InteractiveRootCommand implements Runnable {
 

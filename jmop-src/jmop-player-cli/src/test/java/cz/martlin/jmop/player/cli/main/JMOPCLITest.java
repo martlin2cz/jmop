@@ -1,19 +1,27 @@
 package cz.martlin.jmop.player.cli.main;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
+import cz.martlin.jmop.player.fascade.dflt.DefaultPlayerFascadeBuilder;
 import picocli.CommandLine;
 
 class JMOPCLITest {
 
+	private JMOPPlayerFascade fascade;
+
 	@Test
-	void test() throws JMOPMusicbaseException {
-		CommandLine cl = JMOPCLI.prepareCL();
+	@Disabled
+	void testListCommands() throws JMOPMusicbaseException {
+		CommandLine cl = prepareCL();
 
 		exec(cl, "bundles");
 
@@ -22,9 +30,40 @@ class JMOPCLITest {
 
 		exec(cl, "tracks");
 		exec(cl, "tracks", "BarBundle");
-
 	}
 
+	@Test
+	void testStatusCommand() throws JMOPMusicbaseException {
+		CommandLine cl = prepareCL();
+
+		exec(cl, "status");
+		
+		Bundle bundle = fascade.adapter().bundleOfName("BarBundle");
+		Playlist playlist = fascade.adapter().playlistOfName(bundle, "all tracks");
+		fascade.startPlaying(playlist);
+
+		exec(cl, "status");
+		
+		fascade.pause();
+		exec(cl, "status");
+		
+		fascade.stopPlaying();
+		exec(cl, "status");
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
+	private CommandLine prepareCL() {
+		fascade = DefaultPlayerFascadeBuilder.createTesting();
+		try {
+			fascade.load();
+		} catch (JMOPMusicbaseException e) {
+			assumeFalse(e != null);
+		}
+		
+		return JMOPCLI.createCL(fascade);
+	}
+	
 	private void exec(CommandLine cl, String... command) {
 		System.err.println("=== EXECUTING " + Arrays.toString(command) + " ===");
 

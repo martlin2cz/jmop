@@ -12,6 +12,7 @@ import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
+import cz.martlin.jmop.player.fascade.dflt.BaseDefaultFascadeConfig;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
@@ -19,27 +20,33 @@ public class JMOPPlayerFascade {
 	private final BasePlayerEngine engine;
 	private final MusicbaseListingEncapsulator musicbaseListing;
 	private final MusicbaseModyfiingEncapsulator musicbaseModyfiing;
-	
-	private final JMOPPlayerAdapter adapter;
 
-	public JMOPPlayerFascade(BasePlayerEngine engine, BaseMusicbase musicbase) {
+	private final JMOPPlayerAdapter adapter;
+	private final BaseDefaultFascadeConfig config;
+
+	public JMOPPlayerFascade(BasePlayerEngine engine, BaseMusicbase musicbase, BaseDefaultFascadeConfig config) {
 		super();
 		this.engine = engine;
 		this.musicbaseListing = new MusicbaseListingEncapsulator(musicbase);
 		this.musicbaseModyfiing = new MusicbaseModyfiingEncapsulator(musicbase);
-		
-		this.adapter  = new JMOPPlayerAdapter(musicbase);
+
+		this.adapter = new JMOPPlayerAdapter(musicbase);
+		this.config = config;
 	}
-	
+
 	public JMOPPlayerAdapter adapter() {
 		return adapter;
+	}
+
+	public BaseDefaultFascadeConfig config() {
+		return config;
 	}
 
 	/////////////////////////////////////////////////////////////////
 	public void load() throws JMOPMusicbaseException {
 		musicbaseModyfiing.load();
 	}
-	
+
 	public void reload() throws JMOPMusicbaseException {
 		musicbaseModyfiing.reload();
 	}
@@ -49,83 +56,106 @@ public class JMOPPlayerFascade {
 		return musicbaseListing.bundles();
 	}
 	/////////////////////////////////////////////////////////////////
-	
+
 	public Set<Playlist> playlists(Bundle bundleOrNull) throws JMOPMusicbaseException {
 		return musicbaseListing.playlists(bundleOrNull);
 	}
-	
+
 	/////////////////////////////////////////////////////////////////
-	
+
 	public Set<Track> tracks(Bundle bundleOrNull) throws JMOPMusicbaseException {
 		return musicbaseListing.tracks(bundleOrNull);
 	}
-	
+
 	public Track getTrack(Bundle bundleOrNull, String trackTitleOrNot) throws JMOPMusicbaseException {
 		return musicbaseListing.getTrack(bundleOrNull, trackTitleOrNot);
 	}
-	
+
 	/////////////////////////////////////////////////////////////////
+
+	public Bundle currentBundle() {
+		if (engine.currentPlaylist() != null) {
+			return engine.currentPlaylist().getBundle(); // TODO move to some EngineEncapsulator
+		} else {
+			return null;
+		}
+	}
+
+	public Playlist currentPlaylist() {
+		return engine.currentPlaylist();
+	}
+
+	public Track currentTrack() {
+		return engine.currentTrack();
+	}
+
+	public Duration currentDuration() {
+		return engine.currentDuration();
+	}
+
+	public PlayerStatus currentStatus() {
+		return engine.currentStatus();
+	}
+
+	/////////////////////////////////////////////////////////////////
+	public void startPlaying(Playlist playlist) throws JMOPMusicbaseException {
+		engine.startPlayingPlaylist(playlist);
+		engine.play();
+	}
+
+	public void stopPlaying() throws JMOPMusicbaseException {
+		engine.stop();
+		engine.stopPlayingPlaylist();
+	}
+	
+	public void playlistChanged() {
+		//TODO if currently played track is no more in the playlist, toNext()
+		engine.playlistChanged();
+	}
+	
+	
+	public void play() throws JMOPMusicbaseException {
+		engine.play();
+	}
+
+	public void play(int index) throws JMOPMusicbaseException {
+		engine.play(index);
+	}
+
+	public void stop() throws JMOPMusicbaseException {
+		engine.stop();
+	}
+
+	public void pause() {
+		engine.pause();
+	}
+
+	public void resume() {
+		engine.resume();
+	}
+
+	public void seek(Duration to) {
+		engine.seek(to);
+	}
+
+	public void toNext() throws JMOPMusicbaseException {
+		engine.toNext();
+	}
+
+	public void toPrevious() throws JMOPMusicbaseException {
+		engine.toPrevious();
+	}
+	
+	
 //	
+	
 //
-//	public void startPlayingPlaylist(Playlist playlist) {
-//		engine.startPlayingPlaylist(playlist);
-//	}
 //
-//	public void stopPlayingPlaylist() {
-//		engine.stopPlayingPlaylist();
-//	}
+
 //
-//	public void playlistChanged() {
-//		engine.playlistChanged();
-//	}
 //
-//	public Playlist currentPlaylist() {
-//		return engine.currentPlaylist();
-//	}
 //
-//	public Track currentTrack() {
-//		return engine.currentTrack();
-//	}
-//
-//	public Duration currentDuration() {
-//		return engine.currentDuration();
-//	}
-//
-//	public PlayerStatus currentStatus() {
-//		return engine.currentStatus();
-//	}
-//
-//	public void play() throws JMOPMusicbaseException {
-//		engine.play();
-//	}
-//
-//	public void play(int index) throws JMOPMusicbaseException {
-//		engine.play(index);
-//	}
-//
-//	public void stop() throws JMOPMusicbaseException {
-//		engine.stop();
-//	}
-//
-//	public void pause() {
-//		engine.pause();
-//	}
-//
-//	public void resume() {
-//		engine.resume();
-//	}
-//
-//	public void seek(Duration to) {
-//		engine.seek(to);
-//	}
-//
-//	public void toNext() throws JMOPMusicbaseException {
-//		engine.toNext();
-//	}
-//
-//	public void toPrevious() throws JMOPMusicbaseException {
-//		engine.toPrevious();
-//	}
+
 //
 
 //
@@ -211,7 +241,4 @@ public class JMOPPlayerFascade {
 //		musicbase.trackUpdated(track);
 //	}
 
-
-	
-	
 }

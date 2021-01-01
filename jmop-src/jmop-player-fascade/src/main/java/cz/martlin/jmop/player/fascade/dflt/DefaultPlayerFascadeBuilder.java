@@ -31,7 +31,7 @@ public class DefaultPlayerFascadeBuilder {
 		BaseDefaultEngineConfig engineConfig = config;
 		BasePlayerEngine engine = DefaultEngine.create(player, musicbase, engineConfig);
 		
-		return new JMOPPlayerFascade(engine, musicbase);
+		return new JMOPPlayerFascade(engine, musicbase, config);
 	}
 	
 	public static JMOPPlayerFascade createTesting() {

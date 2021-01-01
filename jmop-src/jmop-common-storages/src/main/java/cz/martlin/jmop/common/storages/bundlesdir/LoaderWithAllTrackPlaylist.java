@@ -88,7 +88,8 @@ public class LoaderWithAllTrackPlaylist implements BaseMusicdataLoader {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private boolean isPlaylistFile(File file) {
-		return file.exists(); // TODO check its type (extension) as well
+		String extension = saver.fileExtension();
+		return file.exists() && file.getName().endsWith(extension); //TODO still not the best solution in the world
 	}
 
 //	private boolean isTrackFile(File file) {

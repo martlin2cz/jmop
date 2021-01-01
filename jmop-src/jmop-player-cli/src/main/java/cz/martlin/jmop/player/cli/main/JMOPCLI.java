@@ -14,7 +14,6 @@ import cz.martlin.jmop.player.cli.misc.InteractiveCommandsFactory;
 import cz.martlin.jmop.player.fascade.JMOPPlayerAdapter;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import cz.martlin.jmop.player.fascade.dflt.DefaultPlayerFascadeBuilder;
-import cz.martlin.jmop.player.fascade.dflt.config.ConstantDefaultFascadeConfig;
 import javafx.util.Duration;
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
@@ -23,19 +22,19 @@ public class JMOPCLI {
 
 	public static void main(String[] args) throws JMOPMusicbaseException {
 		System.out.println("JMOPCLI.main()");
-
-		CommandLine cl = prepareCL();
+		JMOPPlayerFascade fascade = DefaultPlayerFascadeBuilder.createTesting();
+		fascade.load();
+		
+		CommandLine cl = createCL(fascade);
 
 		//experimenting moved to Junit test
 		cl.execute("bundles");
 	}
 
-	protected static CommandLine prepareCL() throws JMOPMusicbaseException {
-		JMOPPlayerFascade fascade = DefaultPlayerFascadeBuilder.createTesting();
+	protected static CommandLine createCL(JMOPPlayerFascade fascade) {
 		JMOPPlayerAdapter adapter = fascade.adapter();
-		BaseDefaultStorageConfig config = new ConstantDefaultFascadeConfig(); // TODO FIXME
-		fascade.load();
-
+		BaseDefaultStorageConfig config = fascade.config();
+		
 		InteractiveRootCommand command = new InteractiveRootCommand(fascade);
 		IFactory factory = new InteractiveCommandsFactory(fascade);
 
