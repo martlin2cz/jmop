@@ -21,8 +21,10 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
+import cz.martlin.jmop.common.musicbase.dflt.DefaultMusicbaseTest.DefaultConfig;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
+import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
 import cz.martlin.jmop.common.storages.dflt.DefaultStorage;
 import cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -34,7 +36,21 @@ import javafx.util.Duration;
 class DefaultMusicbaseTest {
 
 //	@TempDir
-//	public File root;
+	//	public File root;
+
+	public class DefaultConfig implements BaseDefaultStorageConfig {
+
+		@Override
+		public TrackFileFormat getSaveFormat() {
+			return 	TrackFileFormat.MP3;
+		}
+
+		@Override
+		public String getAllTrackPlaylistName() {
+			return ALL_TRACKS_PLAYLIST_NAME;
+		}
+
+	}
 
 	private static final String ALL_TRACKS_PLAYLIST_NAME = "all the tracks";
 
@@ -177,11 +193,11 @@ class DefaultMusicbaseTest {
 	}
 
 	private BaseMusicbase prepareMusicbase() {
-		TrackFileFormat format = TrackFileFormat.MP3;
+
 
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
 
-		DefaultStorage storage = DefaultStorage.create(root, ALL_TRACKS_PLAYLIST_NAME, format, inmemory);
+		DefaultStorage storage = DefaultStorage.create(root, new DefaultConfig(),  inmemory);
 		LoggingMusicbaseStorage logging = new LoggingMusicbaseStorage(storage);
 
 		BaseMusicbase musicbase = new PersistentMusicbase(inmemory, logging);

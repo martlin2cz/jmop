@@ -23,16 +23,18 @@ public class DefaultStorage extends BundlesDirsStorage {
 	}
 
 	public static DefaultStorage create(File root,
-			String allTracksPlaylistName, TrackFileFormat format, BaseInMemoryMusicbase musicbase) {
+			BaseDefaultStorageConfig config, BaseInMemoryMusicbase musicbase) {
 		
 		BaseFileSystemAccessor fs = new ElectronicFileSystemAccessor();
 //		new SimpleExtendedPlaylistManipulator(fs);
 		BaseExtendedPlaylistManipulator manipulator = new XSPFFilesManipulator();
 		String playlistFileExtension = manipulator.fileExtension();
 		
+		TrackFileFormat format = config.getSaveFormat();
 		String trackFileExtension = format.fileExtension();
 		BaseFilesLocator locator = new SimpleLocator(root, playlistFileExtension, trackFileExtension);
 		
+		String allTracksPlaylistName = config.getAllTrackPlaylistName();
 		BaseMusicdataSaver saver = new SaverWithAllTrackPlaylist(allTracksPlaylistName, musicbase, manipulator, locator);
 		BaseMusicdataLoader loader = new LoaderWithAllTrackPlaylist(allTracksPlaylistName, fs, locator, manipulator);
 
