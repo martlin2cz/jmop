@@ -4,6 +4,7 @@ import java.util.Set;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.player.cli.misc.PrintUtil;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import picocli.CommandLine.Command;
 
@@ -17,10 +18,12 @@ public class ListBundlesCommand extends AbstractCommand {
 	@Override
 	protected void doRun() throws JMOPMusicbaseException {
 		Set<Bundle> bundles = fascade.bundles();
-		System.out.println("Bundles:");
+		
+		PrintUtil.print("Bundles:");
 		for (Bundle bundle : bundles) {
-			System.out.println(bundle.getName());
+			PrintUtil.printBundleName(bundle);
 		}
+		PrintUtil.emptyLine();
 	}
 
 }

@@ -32,15 +32,63 @@ public class MusicbaseListingEncapsulator {
 	}
 
 	public Set<Playlist> playlists(Bundle bundle) throws JMOPMusicbaseException {
-		return musicbase.playlists(bundle);
+		if (bundle != null) {
+			return musicbase.playlists(bundle);
+		} else {
+			return musicbase.bundles().stream() //
+					.flatMap(b -> {
+						//TODO FIXME :-(
+						try {
+							return musicbase.playlists(b).stream();
+						} catch (JMOPMusicbaseException e) {
+							throw new RuntimeException(e);
+						}
+					}) //
+					.collect(Collectors.toSet());
+		}
+		
 	}
 
 	public Set<Track> tracks(Bundle bundle) throws JMOPMusicbaseException {
-		return musicbase.tracks(bundle);
+		if (bundle != null) {
+			return musicbase.tracks(bundle);	
+		} else {
+			return musicbase.bundles().stream() //
+					.flatMap(b -> {
+						//TODO FIXME :-(
+						try {
+							return musicbase.tracks(b).stream();
+						} catch (JMOPMusicbaseException e) {
+							throw new RuntimeException(e);
+						}
+					}) //
+					.collect(Collectors.toSet());
+		}
+		
 	}
 
 	public File trackFile(Track track) throws JMOPMusicbaseException {
 		return musicbase.trackFile(track);
+	}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	public Bundle getBundle(String bundleName) throws JMOPMusicbaseException {
+		return bundles().stream() //
+				.filter(b -> b.getName().equals(bundleName)) //
+				.findAny().orElseGet(() -> null); //
+	}
+	
+	public Playlist getPlaylist(Bundle bundleOrNull, String playlistName) throws JMOPMusicbaseException {
+		return playlists(bundleOrNull).stream() //
+				.filter(p -> p.getName().equals(playlistName)) //
+				.findAny().orElseGet(() -> null); //
+	}
+	
+	public Track getTrack(Bundle bundleOrNull, String trackTitle) throws JMOPMusicbaseException {
+		return tracks(bundleOrNull).stream() //
+				.filter(t -> t.getTitle().equals(trackTitle)) //
+				.findAny().orElseGet(() -> null); //
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
