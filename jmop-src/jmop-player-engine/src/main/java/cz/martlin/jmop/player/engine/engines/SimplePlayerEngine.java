@@ -2,7 +2,6 @@ package cz.martlin.jmop.player.engine.engines;
 
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.player.engine.engines.withhandlers.AbstractEngineWithPlayerAndRuntime;
 import cz.martlin.jmop.player.players.BasePlayer;
 import javafx.util.Duration;
 
@@ -44,8 +43,8 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void stop() {
-		player.stop();
+	public void stop() throws JMOPMusicbaseException {
+		stopTrack();
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package cz.martlin.jmop.player.engine.dflt;
+package cz.martlin.jmop.player.engine.dflt.handlers;
 
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.TracksSource;

@@ -84,9 +84,10 @@ public abstract class AbstractPlayerEngineTest {
 
 	private void check(BasePlayerEngine engine, Playlist expectedPlaylist, Track expectedTrack,
 			PlayerStatus expectedStatus) {
-		assertEquals(engine.currentPlaylist(), expectedPlaylist);
-		assertEquals(engine.currentTrack(), expectedTrack);
-		assertEquals(engine.currentStatus(), expectedStatus);
+		
+		assertEquals(expectedPlaylist, engine.currentPlaylist());
+		assertEquals(expectedTrack, engine.currentTrack());
+		assertEquals(expectedStatus, engine.currentStatus());
 	}
 
 	private void waitAbit() {

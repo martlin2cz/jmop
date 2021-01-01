@@ -1,4 +1,4 @@
-package cz.martlin.jmop.player.engine.engines.withhandlers;
+package cz.martlin.jmop.player.engine.engines;
 
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -57,9 +57,17 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 
 	protected void stopAndPlayAnother(Track track) throws JMOPMusicbaseException {
 		if (player.currentStatus().isPlayingTrack()) {
-			player.stop();
+			stopTrack();
 		}
 		
+		playTrack(track);
+	}
+
+	protected void stopTrack() throws JMOPMusicbaseException {
+		player.stop();
+	}
+
+	protected void playTrack(Track track) throws JMOPMusicbaseException {
 		player.startPlaying(track);
 	}
 	

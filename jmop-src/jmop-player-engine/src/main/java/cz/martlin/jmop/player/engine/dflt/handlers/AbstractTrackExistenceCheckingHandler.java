@@ -1,4 +1,4 @@
-package cz.martlin.jmop.player.engine.dflt;
+package cz.martlin.jmop.player.engine.dflt.handlers;
 
 import java.io.File;
 
@@ -6,9 +6,9 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
-import cz.martlin.jmop.player.engine.engines.withhandlers.BeforeTrackPlayedHandler;
+import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackStartedHandler;
 
-public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTrackPlayedHandler {
+public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTrackStartedHandler {
 
 	private final TracksSource tracks;
 
@@ -19,8 +19,8 @@ public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTra
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public boolean beforeTrackPlayed(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
+		@Override
+	public boolean beforeTrackStarted(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
 		if (exists(track)) {
 			return beforeExistingTrackPlayed(engine, track);
 		} else {

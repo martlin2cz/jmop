@@ -1,13 +1,13 @@
-package cz.martlin.jmop.player.engine.dflt;
+package cz.martlin.jmop.player.engine.dflt.handlers;
 
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
-import cz.martlin.jmop.player.engine.engines.withhandlers.AfterTrackPlayedHandler;
+import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackEndedHandler;
 import javafx.util.Duration;
 
-public class UpdatingTrackMetadataHandler implements AfterTrackPlayedHandler {
+public class UpdatingTrackMetadataHandler implements BeforeTrackEndedHandler {
 
 	private final BaseMusicbase musicbase;
 	private final int markAsPlayedAfter;
@@ -18,6 +18,7 @@ public class UpdatingTrackMetadataHandler implements AfterTrackPlayedHandler {
 		this.markAsPlayedAfter = markAsPlayedAfter;
 	}
 
+	
 	@Override
 	public void beforeTrackEnded(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
 		Duration currentDuration = engine.currentDuration();
