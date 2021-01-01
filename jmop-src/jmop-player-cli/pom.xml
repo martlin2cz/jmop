@@ -23,7 +23,7 @@
 		<dependency>
 		    <groupId>info.picocli</groupId>
 		    <artifactId>picocli</artifactId>
-		    <version>3.9.6</version>
+		    <version>4.6.0</version>
 		</dependency>
 		
 	</dependencies>

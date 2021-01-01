@@ -1,6 +1,7 @@
 package cz.martlin.jmop.player.cli.commands;
 
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -12,9 +13,14 @@ public class PlayCommand extends AbstractCommand {
 	@Parameters(index = "1", arity = "0..2")
 	private String playlistName;
 
-	public PlayCommand() {
-	}
+
 	
+	public PlayCommand(JMOPPlayerFascade fascade) {
+		super(fascade);
+	}
+
+
+
 	@Override
 	protected void doRun() throws JMOPMusicbaseException {
 		if (bundleName == null) {

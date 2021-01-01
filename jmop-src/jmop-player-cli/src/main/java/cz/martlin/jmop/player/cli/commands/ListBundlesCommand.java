@@ -10,13 +10,13 @@ import picocli.CommandLine.Command;
 @Command(name = "bundles")
 public class ListBundlesCommand extends AbstractCommand {
 
-//	public ListBundlesCommand(JMOPPlayerFascade fascade) {
-//		super(fascade);
-//	}
+	public ListBundlesCommand(JMOPPlayerFascade fascade) {
+		super(fascade);
+	}
 
 	@Override
 	protected void doRun() throws JMOPMusicbaseException {
-		Set<Bundle> bundles = fascade().bundles();
+		Set<Bundle> bundles = fascade.bundles();
 		System.out.println("Bundles:");
 		for (Bundle bundle : bundles) {
 			System.out.println(bundle.getName());

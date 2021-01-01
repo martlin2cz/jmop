@@ -5,19 +5,20 @@ import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import picocli.CommandLine.ParentCommand;
 
 public abstract class AbstractCommand implements Runnable {
-	
-	
-	@ParentCommand
-	private InteractiveRootCommand parent;
 
-//	public AbstractCommand(JMOPPlayerFascade fascade) {
-//		super();
-//		this.fascade = fascade;
-//	}
-	
-	protected JMOPPlayerFascade fascade() {
-		return parent.fascade();
+	protected final JMOPPlayerFascade fascade;
+
+//	@ParentCommand
+//	private InteractiveRootCommand parent;
+
+	public AbstractCommand(JMOPPlayerFascade fascade) {
+		super();
+		this.fascade = fascade;
 	}
+
+//	protected JMOPPlayerFascade fascade() {
+//		return parent.fascade();
+//	}
 
 	@Override
 	public void run() {
