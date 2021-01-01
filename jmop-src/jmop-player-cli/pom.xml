@@ -18,6 +18,14 @@
 			<artifactId>jmop-player-fascade</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+		
+		<!-- The picocli library -->
+		<dependency>
+		    <groupId>info.picocli</groupId>
+		    <artifactId>picocli</artifactId>
+		    <version>3.9.6</version>
+		</dependency>
+		
 	</dependencies>
 	
 	
