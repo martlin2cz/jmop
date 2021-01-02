@@ -50,6 +50,17 @@ public class JMOPPlayerFascade {
 	public void reload() throws JMOPMusicbaseException {
 		musicbaseModyfiing.reload();
 	}
+	
+	public void terminate() throws JMOPMusicbaseException {
+		//TODO move to some engine encapsulator
+		if (engine.currentPlaylist() != null) {
+			if (engine.currentStatus().isPlayingTrack()) {
+				engine.stop();
+			}
+			
+			engine.stopPlayingPlaylist();
+		}
+	}
 
 	/////////////////////////////////////////////////////////////////
 	public Set<Bundle> bundles() throws JMOPMusicbaseException {
@@ -99,6 +110,7 @@ public class JMOPPlayerFascade {
 
 	/////////////////////////////////////////////////////////////////
 	public void startPlaying(Playlist playlist) throws JMOPMusicbaseException {
+		//TODO if already playing some else, stop
 		engine.startPlayingPlaylist(playlist);
 		engine.play();
 	}

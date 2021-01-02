@@ -33,6 +33,7 @@ class JMOPCLITest {
 	}
 
 	@Test
+	@Disabled
 	void testStatusCommand() throws JMOPMusicbaseException {
 		CommandLine cl = prepareCL();
 
@@ -48,6 +49,38 @@ class JMOPCLITest {
 		exec(cl, "status");
 		
 		fascade.stopPlaying();
+		exec(cl, "status");
+	}
+	
+	@Test
+	void testPlayingCommands() throws JMOPMusicbaseException {
+		CommandLine cl = prepareCL();
+
+		exec(cl, "play", "BarBundle");
+		exec(cl, "status");
+		
+		exec(cl, "pause");
+		exec(cl, "status");
+		
+		exec(cl, "resume");
+		exec(cl, "status");
+		
+		exec(cl, "pause");
+		exec(cl, "status");
+		
+		exec(cl, "play");
+		exec(cl, "status");
+		
+		exec(cl, "stop");
+		exec(cl, "status");
+		
+		exec(cl, "play");
+		exec(cl, "status");
+		
+		exec(cl, "seek", "0:10");
+		exec(cl, "status");
+		
+		exec(cl, "stop");
 		exec(cl, "status");
 	}
 

@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.cli.commands;
 
+import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import picocli.CommandLine.Command;
@@ -7,13 +8,8 @@ import picocli.CommandLine.Parameters;
 
 @Command(name = "play")
 public class PlayCommand extends AbstractCommand {
-	@Parameters(index = "0", arity = "0..2")
-	private String bundleName;
-
-	@Parameters(index = "1", arity = "0..2")
-	private String playlistName;
-
-
+	@Parameters(index = "0", arity = "0..1")
+	private Playlist playlist;
 	
 	public PlayCommand(JMOPPlayerFascade fascade) {
 		super(fascade);
@@ -23,17 +19,25 @@ public class PlayCommand extends AbstractCommand {
 
 	@Override
 	protected void doRun() throws JMOPMusicbaseException {
-		if (bundleName == null) {
-			System.out.println("playing");
+		if (playlist == null) {
+			doPlayInCurrentPlaylist();
+		} else {
+			doPlayPlaylist(playlist);
 		}
 
-		if (bundleName != null && playlistName == null) {
-			System.out.println("playing bundle " + bundleName);
-		}
+		
+	}
 
-		if (bundleName != null && playlistName != null) {
-			System.out.println("playing playlist " + playlistName + " in bundle " + bundleName);
+	private void doPlayInCurrentPlaylist() throws JMOPMusicbaseException {
+		if (fascade.currentStatus().isPaused()) {
+			fascade.resume();
+		} else {
+			fascade.play();
 		}
+	}
+
+	private void doPlayPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+		fascade.startPlaying(playlist);
 	}
 
 }

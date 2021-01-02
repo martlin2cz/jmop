@@ -9,7 +9,12 @@ import picocli.CommandLine.Command;
 				ListPlaylistsCommand.class, //
 				ListTracksCommand.class, //
 				StatusCommand.class, //
-				PlayCommand.class })
+				PlayCommand.class, //
+				PauseCommand.class, //
+				ResumeCommand.class, //
+				StopCommand.class, //
+				SeekCommand.class, //
+		})
 public class InteractiveRootCommand implements Runnable {
 
 	private final JMOPPlayerFascade fascade;

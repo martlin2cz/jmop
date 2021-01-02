@@ -38,10 +38,13 @@ public class StatusCommand extends AbstractCommand {
 			}
 			
 			PlayerStatus currentStatus = fascade.currentStatus();
-			Duration currentTime = fascade.currentDuration();
 			PrintUtil.print("The player is " + currentStatus);
-			PrintUtil.print("Current time is " + DurationUtilities.toHumanString(currentTime) // 
-				+ " out of " + DurationUtilities.toHumanString(currentTrack.getDuration()));
+			
+			if (currentTrack != null) {
+				Duration currentTime = fascade.currentDuration();
+				PrintUtil.print("Current time is " + DurationUtilities.toHumanString(currentTime) // 
+					+ " out of " + DurationUtilities.toHumanString(currentTrack.getDuration()));
+			}
 		}
 	}
 }
