@@ -19,7 +19,6 @@ class JMOPCLITest {
 	private JMOPPlayerFascade fascade;
 
 	@Test
-	@Disabled
 	void testListCommands() throws JMOPMusicbaseException {
 		CommandLine cl = prepareCL();
 
@@ -33,7 +32,6 @@ class JMOPCLITest {
 	}
 
 	@Test
-	@Disabled
 	void testStatusCommand() throws JMOPMusicbaseException {
 		CommandLine cl = prepareCL();
 
@@ -94,7 +92,8 @@ class JMOPCLITest {
 			assumeFalse(e != null);
 		}
 		
-		return JMOPCLI.createCL(fascade);
+		AbstractRepl repl = new JmopRepl(fascade);
+		return repl.createStandaloneCommandline();
 	}
 	
 	private void exec(CommandLine cl, String... command) {
