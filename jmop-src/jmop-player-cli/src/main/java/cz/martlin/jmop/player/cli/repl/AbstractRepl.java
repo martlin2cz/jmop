@@ -1,4 +1,4 @@
-package cz.martlin.jmop.player.cli.main;
+package cz.martlin.jmop.player.cli.repl;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

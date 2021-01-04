@@ -1,9 +1,10 @@
-package cz.martlin.jmop.player.cli.commands;
+package cz.martlin.jmop.player.cli.repl.commands.playing;
 
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.player.cli.misc.PrintUtil;
+import cz.martlin.jmop.player.cli.repl.commands.AbstractCommand;
+import cz.martlin.jmop.player.cli.repl.misc.PrintUtil;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;

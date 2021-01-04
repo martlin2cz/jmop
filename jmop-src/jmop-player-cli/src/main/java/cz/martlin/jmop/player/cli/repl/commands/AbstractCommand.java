@@ -1,4 +1,4 @@
-package cz.martlin.jmop.player.cli.commands;
+package cz.martlin.jmop.player.cli.repl.commands;
 
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;

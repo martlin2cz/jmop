@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.cli.main;
 
+import cz.martlin.jmop.player.cli.repl.JmopRepl;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import cz.martlin.jmop.player.fascade.dflt.DefaultPlayerFascadeBuilder;
 

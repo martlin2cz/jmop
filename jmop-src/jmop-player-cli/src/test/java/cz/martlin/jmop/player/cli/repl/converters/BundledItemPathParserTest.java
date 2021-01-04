@@ -1,11 +1,12 @@
-package cz.martlin.jmop.player.cli.converters;
+package cz.martlin.jmop.player.cli.repl.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import cz.martlin.jmop.player.cli.converters.BundledItemPathParser.BundledItemName;
+import cz.martlin.jmop.player.cli.repl.converters.BundledItemPathParser;
+import cz.martlin.jmop.player.cli.repl.converters.BundledItemPathParser.BundledItemName;
 
 class BundledItemPathParserTest {
 

@@ -1,9 +1,9 @@
-package cz.martlin.jmop.player.cli.converters;
+package cz.martlin.jmop.player.cli.repl.converters;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
-import cz.martlin.jmop.player.cli.converters.BundledItemPathParser.BundledItemName;
+import cz.martlin.jmop.player.cli.repl.converters.BundledItemPathParser.BundledItemName;
 import cz.martlin.jmop.player.fascade.JMOPPlayerAdapter;
 import picocli.CommandLine.ITypeConverter;
 

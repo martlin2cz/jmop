@@ -1,4 +1,4 @@
-package cz.martlin.jmop.player.cli.misc;
+package cz.martlin.jmop.player.cli.repl.misc;
 
 import java.util.Objects;
 

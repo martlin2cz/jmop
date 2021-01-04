@@ -1,10 +1,9 @@
-package cz.martlin.jmop.player.cli.main;
+package cz.martlin.jmop.player.cli.repl;
 
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -14,7 +13,7 @@ import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import cz.martlin.jmop.player.fascade.dflt.DefaultPlayerFascadeBuilder;
 import picocli.CommandLine;
 
-class JMOPCLITest {
+class JmopReplTest {
 
 	private JMOPPlayerFascade fascade;
 
@@ -115,7 +114,7 @@ class JMOPCLITest {
 	}
 	
 	private void exec(CommandLine cl, String... command) {
-		System.err.println("=== EXECUTING " + Arrays.toString(command) + " ===");
+		System.out.println("======= EXECUTING " + Arrays.toString(command) + " =======");
 
 		cl.execute(command);
 

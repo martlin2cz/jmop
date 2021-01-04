@@ -1,4 +1,4 @@
-package cz.martlin.jmop.player.cli.converters;
+package cz.martlin.jmop.player.cli.repl.converters;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.player.fascade.JMOPPlayerAdapter;

@@ -1,8 +1,8 @@
-package cz.martlin.jmop.player.cli.converters;
+package cz.martlin.jmop.player.cli.repl.converters;
 
 import java.util.StringTokenizer;
 
-import cz.martlin.jmop.player.cli.misc.PrintUtil;
+import cz.martlin.jmop.player.cli.repl.misc.PrintUtil;
 
 public class BundledItemPathParser {
 	private final String defaultItemName;
