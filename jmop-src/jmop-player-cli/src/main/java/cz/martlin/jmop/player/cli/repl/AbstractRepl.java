@@ -31,7 +31,7 @@ public abstract class AbstractRepl {
 		super();
 	}
 
-	protected CommandLine createStandaloneCommandline() {
+	public CommandLine createStandaloneCommandline() {
 		Object commands = createRootCommand();
 
 		IFactory customFactory = createCommandsFactory();

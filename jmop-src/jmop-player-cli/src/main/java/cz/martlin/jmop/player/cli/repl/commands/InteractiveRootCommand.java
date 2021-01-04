@@ -1,8 +1,12 @@
 package cz.martlin.jmop.player.cli.repl.commands;
 
+import cz.martlin.jmop.player.cli.repl.commands.musicbase.CreateCompositeCommand;
 import cz.martlin.jmop.player.cli.repl.commands.musicbase.ListBundlesCommand;
 import cz.martlin.jmop.player.cli.repl.commands.musicbase.ListPlaylistsCommand;
 import cz.martlin.jmop.player.cli.repl.commands.musicbase.ListTracksCommand;
+import cz.martlin.jmop.player.cli.repl.commands.musicbase.MoveCompositeCommand;
+import cz.martlin.jmop.player.cli.repl.commands.musicbase.RemoveCompositeCommand;
+import cz.martlin.jmop.player.cli.repl.commands.musicbase.RenameCompositeCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.NextCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.PauseCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.PlayCommand;
@@ -27,8 +31,12 @@ import picocli.CommandLine.Command;
 				SeekCommand.class, //
 				NextCommand.class, //
 				PreviousCommand.class, //
+				CreateCompositeCommand.class, //
+				RenameCompositeCommand.class, //
+				MoveCompositeCommand.class, //
+				RemoveCompositeCommand.class, //
 		})
-public class InteractiveRootCommand implements Runnable {
+public class InteractiveRootCommand extends CompositeCommand {
 
 	private final JMOPPlayerFascade fascade;
 
@@ -40,12 +48,4 @@ public class InteractiveRootCommand implements Runnable {
 	public JMOPPlayerFascade fascade() {
 		return fascade;
 	}
-
-	/////////////////////////////////////////////////////////////////
-
-	@Override
-	public void run() {
-		System.out.println("InteractiveRootCommand.run()");
-	}
-
 }

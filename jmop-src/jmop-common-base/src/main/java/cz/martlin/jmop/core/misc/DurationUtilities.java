@@ -73,7 +73,11 @@ public class DurationUtilities {
 	 * @return
 	 */
 	public static String toMilis(Duration duration) {
-		return Double.toString(duration.toMillis());
+		if (duration != null) {
+			return Double.toString(duration.toMillis());
+		} else {
+			return Double.toString(0);
+		}
 	}
 
 	/**
@@ -94,6 +98,10 @@ public class DurationUtilities {
 	 * @return
 	 */
 	public static String toHumanString(Duration duration) {
+		if (duration == null) {
+			return "unknown";
+		}
+		
 		long remaining = (long) duration.toMillis();
 		int hours = (int) TimeUnit.MILLISECONDS.toHours(remaining);
 

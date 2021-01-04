@@ -78,6 +78,14 @@ public class JMOPPlayerFascade {
 		return musicbaseListing.tracks(bundleOrNull);
 	}
 
+	/**
+	 * Moved to adapter
+	 * @param bundleOrNull
+	 * @param trackTitleOrNot
+	 * @return
+	 * @throws JMOPMusicbaseException
+	 */
+	@Deprecated
 	public Track getTrack(Bundle bundleOrNull, String trackTitleOrNot) throws JMOPMusicbaseException {
 		return musicbaseListing.getTrack(bundleOrNull, trackTitleOrNot);
 	}
@@ -157,97 +165,67 @@ public class JMOPPlayerFascade {
 	public void toPrevious() throws JMOPMusicbaseException {
 		engine.toPrevious();
 	}
-	
-	
-//	
-	
-//
-//
 
-//
-//
-//
 
-//
 
-//
-//	public File trackFile(Track track) throws JMOPMusicbaseException {
-//		return musicbase.trackFile(track);
-//	}
-//
-//	public void addBundle(Bundle bundle) throws JMOPMusicbaseException {
-//		musicbase.addBundle(bundle);
-//	}
-//
-//	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
-//		return musicbase.createNewBundle(name);
-//	}
-//
-//	public void addPlaylist(Playlist playlist) throws JMOPMusicbaseException {
-//		musicbase.addPlaylist(playlist);
-//	}
-//
-//	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
-//		musicbase.renameBundle(bundle, newName);
-//	}
+	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
+		return musicbaseModyfiing.createNewBundle(name);
+	}
+
+	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
+		musicbaseModyfiing.renameBundle(bundle, newName);
+	}
 //
 //	public void addTrack(Track track) throws JMOPMusicbaseException {
-//		musicbase.addTrack(track);
+//		musicbaseModyfiing.addTrack(track);
 //	}
 //
-//	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
-//		musicbase.removeBundle(bundle);
-//	}
-//
+	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
+		musicbaseModyfiing.removeBundle(bundle);
+	}
 
 //
 //	public void bundleUpdated(Bundle bundle) throws JMOPMusicbaseException {
-//		musicbase.bundleUpdated(bundle);
+//		musicbaseModyfiing.bundleUpdated(bundle);
 //	}
 //
-//	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
-//		return musicbase.createNewPlaylist(bundle, name);
-//	}
-//
-//	public Set<Playlist> playlists(Bundle bundle) throws JMOPMusicbaseException {
-//		return musicbase.playlists(bundle);
-//	}
-//
-//	public Set<Track> tracks(Bundle bundle) throws JMOPMusicbaseException {
-//		return musicbase.tracks(bundle);
-//	}
-//
-//	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
-//		musicbase.renamePlaylist(playlist, newName);
-//	}
-//
-//	public void movePlaylist(Playlist playlist, Bundle newBundle) throws JMOPMusicbaseException {
-//		musicbase.movePlaylist(playlist, newBundle);
-//	}
-//
-//	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
-//		musicbase.removePlaylist(playlist);
-//	}
+	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
+		return musicbaseModyfiing.createNewPlaylist(bundle, name);
+	}
+
+
+	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
+		musicbaseModyfiing.renamePlaylist(playlist, newName);
+	}
+
+	public void movePlaylist(Playlist playlist, Bundle newBundle) throws JMOPMusicbaseException {
+		//TODO what to do with track in it? move too, keep original or copy?
+		musicbaseModyfiing.movePlaylist(playlist, newBundle);
+	}
+
+	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
+		musicbaseModyfiing.removePlaylist(playlist);
+	}
 //
 //	public void playlistUpdated(Playlist playlist) throws JMOPMusicbaseException {
 //		musicbase.playlistUpdated(playlist);
 //	}
 //
-//	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
-//		return musicbase.createNewTrack(bundle, data);
-//	}
-//
-//	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {
-//		musicbase.renameTrack(track, newTitle);
-//	}
-//
-//	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
-//		musicbase.moveTrack(track, newBundle);
-//	}
-//
-//	public void removeTrack(Track track) throws JMOPMusicbaseException {
-//		musicbase.removeTrack(track);
-//	}
+	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
+		return musicbaseModyfiing.createNewTrack(bundle, data);
+	}
+
+	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {
+		musicbaseModyfiing.renameTrack(track, newTitle);
+	}
+
+	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
+		musicbaseModyfiing.moveTrack(track, newBundle);
+	}
+
+	public void removeTrack(Track track) throws JMOPMusicbaseException {
+		musicbaseModyfiing.removeTrack(track);
+	}
 //
 //	public void trackUpdated(Track track) throws JMOPMusicbaseException {
 //		musicbase.trackUpdated(track);

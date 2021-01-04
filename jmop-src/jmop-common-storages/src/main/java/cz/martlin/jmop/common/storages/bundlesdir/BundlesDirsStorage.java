@@ -196,7 +196,10 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	@Override
 	public void removeTrack(Track track) throws JMOPMusicbaseException {
 		File oldTrackFile = locator.trackFile(track);
-		fs.deleteFile(oldTrackFile);
+		
+		if (oldTrackFile.exists()) {
+			fs.deleteFile(oldTrackFile);
+		}
 	}
 
 	@Override
