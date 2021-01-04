@@ -25,7 +25,7 @@ public class ListTracksCommand extends AbstractCommand {
 		Set<Track> tracks = fascade.tracks(bundle);
 		
 		if (bundle != null) {
-		PrintUtil.print("Tracks in " + bundle.getName() + ":");
+		PrintUtil.print("Tracks in", bundle.getName(), ":");
 		} else {
 			PrintUtil.print("All the tracks:");
 		}

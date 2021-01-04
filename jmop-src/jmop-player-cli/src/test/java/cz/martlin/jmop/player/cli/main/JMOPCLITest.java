@@ -82,6 +82,24 @@ class JMOPCLITest {
 		exec(cl, "status");
 	}
 
+	
+	@Test
+	void testPlayingNextAndPrevious() throws JMOPMusicbaseException {
+		CommandLine cl = prepareCL();
+
+		exec(cl, "play", "BarBundle");
+		exec(cl, "status");
+		
+		exec(cl, "next");
+		exec(cl, "status");
+
+		exec(cl, "previous");
+		exec(cl, "status");
+
+		exec(cl, "stop");
+		exec(cl, "status");
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private CommandLine prepareCL() {

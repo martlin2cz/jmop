@@ -14,6 +14,8 @@ import picocli.CommandLine.Command;
 				ResumeCommand.class, //
 				StopCommand.class, //
 				SeekCommand.class, //
+				NextCommand.class, //
+				PreviousCommand.class, //
 		})
 public class InteractiveRootCommand implements Runnable {
 

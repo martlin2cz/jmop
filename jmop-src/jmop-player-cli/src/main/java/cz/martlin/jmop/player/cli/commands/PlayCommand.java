@@ -1,7 +1,9 @@
 package cz.martlin.jmop.player.cli.commands;
 
 import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.player.cli.misc.PrintUtil;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -33,11 +35,17 @@ public class PlayCommand extends AbstractCommand {
 			fascade.resume();
 		} else {
 			fascade.play();
+			
+			Track track = fascade.currentTrack();
+			PrintUtil.print("Playing", track);
 		}
 	}
 
 	private void doPlayPlaylist(Playlist playlist) throws JMOPMusicbaseException {
 		fascade.startPlaying(playlist);
+		
+		Track track = fascade.currentTrack();
+		PrintUtil.print("Playing", track);
 	}
 
 }

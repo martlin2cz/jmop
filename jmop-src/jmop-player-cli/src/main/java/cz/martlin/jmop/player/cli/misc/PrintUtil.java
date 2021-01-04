@@ -1,20 +1,54 @@
 package cz.martlin.jmop.player.cli.misc;
 
+import java.util.Objects;
+
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.core.misc.DurationUtilities;
+import javafx.util.Duration;
 
 public class PrintUtil {
 
 	public static final String PATH_SEPARATOR = "/";
 
-	public static void print(String string) {
-		System.out.println(string);
-	}
-
 	public static void emptyLine() {
 		System.out.println();
 	}
+
+	public static void print(Object... items) {
+		for (Object item : items) {
+			if (item instanceof Bundle) {
+				Bundle bundle = (Bundle) item;
+				System.out.print(bundle.getName());
+				
+			} else if (item instanceof Playlist) {
+				Playlist playlist = (Playlist) item;
+				System.out.print(playlist.getName());
+				
+			} else if (item instanceof Track) {
+				Track track = (Track) item;
+				System.out.print(track.getTitle());
+				
+			} else if (item instanceof Duration) {
+				Duration duration = (Duration) item;
+				System.out.print(DurationUtilities.toHumanString(duration));
+			
+			} else if (item instanceof String) {
+				String string = (String) item;
+				System.out.print(string);
+					
+			} else {
+				throw new UnsupportedOperationException(Objects.toString(item));
+			}
+			
+			System.out.print(" ");
+		}
+		
+		System.out.println();
+	}
+
+	///////////////////////////////////////////////////////////////////////////
 
 	public static void printBundleName(Bundle bundle) {
 		String name = bundle.getName();
@@ -42,5 +76,6 @@ public class PrintUtil {
 			System.out.println(title);
 		}
 	}
+///////////////////////////////////////////////////////////////////////////
 
 }

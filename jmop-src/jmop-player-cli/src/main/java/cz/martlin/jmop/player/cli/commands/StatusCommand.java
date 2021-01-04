@@ -28,11 +28,10 @@ public class StatusCommand extends AbstractCommand {
 			PrintUtil.print("Nothing beeing played");
 			return;
 		} else {
-			PrintUtil.print("Playing '" + currentPlaylist.getName() + "' playlist " //
-					+ "from the '" + currentBundle.getName() + "' bundle");
+			PrintUtil.print("Playing", currentPlaylist, "playlist from the", currentBundle, "bundle");
 			
 			if (currentTrack != null) {
-				PrintUtil.print("Current track: " + currentTrack.getTitle());	
+				PrintUtil.print("Current track:", currentTrack.getTitle());	
 			} else {
 				PrintUtil.print("No current track.");
 			}
@@ -42,8 +41,7 @@ public class StatusCommand extends AbstractCommand {
 			
 			if (currentTrack != null) {
 				Duration currentTime = fascade.currentDuration();
-				PrintUtil.print("Current time is " + DurationUtilities.toHumanString(currentTime) // 
-					+ " out of " + DurationUtilities.toHumanString(currentTrack.getDuration()));
+				PrintUtil.print("Current time is", currentTime, "out of", currentTrack.getDuration());
 			}
 		}
 	}

@@ -25,7 +25,7 @@ public class ListPlaylistsCommand extends AbstractCommand {
 		Set<Playlist> playlists = fascade.playlists(bundle);
 		
 		if (bundle != null) {
-		PrintUtil.print("Playlists in " + bundle.getName() + ":");
+		PrintUtil.print("Playlists in", bundle, ":");
 		} else {
 			PrintUtil.print("All playlists:");
 		}
