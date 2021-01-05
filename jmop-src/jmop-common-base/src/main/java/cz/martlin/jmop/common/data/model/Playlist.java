@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.data.model;
 
+import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
 import cz.martlin.jmop.core.misc.ObservableObject;
 
 /**
@@ -11,7 +12,7 @@ import cz.martlin.jmop.core.misc.ObservableObject;
  * @author martin
  *
  */
-public class Playlist extends ObservableObject<Playlist> implements Comparable<Playlist> {
+public class Playlist extends ObservableObject<Playlist> implements Comparable<Playlist>, WithPlayedMarker {
 	private Bundle bundle;
 
 	private String name;
@@ -224,6 +225,10 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		return "Bundle " + bundle.getName() + ", playlist " + name + ":\n\n" + tracks.toHumanString(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
+	@Override
+	public void played() {
+		metadata = metadata.played();
+	}
 	
 
 }

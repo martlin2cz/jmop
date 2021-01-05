@@ -43,7 +43,7 @@ public class PlayCommand extends AbstractCommand {
 	}
 
 	private void doPlayPlaylist(Playlist playlist) throws JMOPMusicbaseException {
-		fascade.startPlaying(playlist);
+		fascade.play(playlist);
 		
 		Track track = fascade.currentTrack();
 		PrintUtil.print("Playing", track);

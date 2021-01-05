@@ -7,6 +7,8 @@ import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.AfterTr
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.AfterTrackStartedHandler;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackEndedHandler;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackStartedHandler;
+import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.OnPlaylistEndedHandler;
+import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.OnPlaylistStartedHandler;
 import cz.martlin.jmop.player.engine.testing.AbstractPlayerEngineTest;
 import cz.martlin.jmop.player.players.BasePlayer;
 import cz.martlin.jmop.player.players.TestingPlayer;
@@ -20,7 +22,7 @@ class EnginesWithHandlersTest {
 		@Override
 		protected BasePlayerEngine createEngine() {
 			BasePlayer player = new TestingPlayer();
-			return new EngineWithHandlers(player, null, null, null, null);
+			return new EngineWithHandlers(player, null, null, null, null, null, null);
 		}
 	}
 	
@@ -31,6 +33,8 @@ class EnginesWithHandlersTest {
 		protected BasePlayerEngine createEngine() {
 			BasePlayer player = new TestingPlayer();
 			
+			OnPlaylistStartedHandler playlistStarted = (e, p) -> System.out.println("(- Playlist started");
+			OnPlaylistEndedHandler playlistEnded = (e, p) -> System.out.println("(-) Playlist started");
 			BeforeTrackStartedHandler beforeStarted = (e, t) -> { 
 				System.out.println("x.-.. Before started");
 				return true;
@@ -39,7 +43,7 @@ class EnginesWithHandlersTest {
 			BeforeTrackEndedHandler beforeEnded = (e, t) -> System.out.println("..-x. Before ended");
 			AfterTrackEndedHandler afterEnded = (e, t) -> System.out.println("..-.x After ended");
 			
-			return new EngineWithHandlers(player, beforeStarted, afterStarted, beforeEnded, afterEnded);
+			return new EngineWithHandlers(player, playlistStarted, playlistEnded, beforeStarted, afterStarted, beforeEnded, afterEnded);
 		}
 	}
 

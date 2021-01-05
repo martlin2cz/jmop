@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.engine.engines.withhandlers;
 
+import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.engines.AbstractEngineWithPlayerAndRuntime;
@@ -7,26 +8,34 @@ import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.AfterTr
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.AfterTrackStartedHandler;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackEndedHandler;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackStartedHandler;
+import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.OnPlaylistEndedHandler;
+import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.OnPlaylistStartedHandler;
 import cz.martlin.jmop.player.players.BasePlayer;
 import javafx.util.Duration;
 
 public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 
-	private final BeforeTrackStartedHandler beforeStarted;
-	private final AfterTrackStartedHandler afterStarted;
-	private final BeforeTrackEndedHandler beforeEnded;
-	private final AfterTrackEndedHandler afterEnded;
+	private final OnPlaylistStartedHandler playlistStarted;
+	private final OnPlaylistEndedHandler playlistEnded;
+	private final BeforeTrackStartedHandler beforeTrackStarted;
+	private final AfterTrackStartedHandler afterTrackStarted;
+	private final BeforeTrackEndedHandler beforeTrackEnded;
+	private final AfterTrackEndedHandler afterTrackEnded;
+	
 
 	public EngineWithHandlers(BasePlayer player, //
-			BeforeTrackStartedHandler beforeStarted, AfterTrackStartedHandler afterStarted,
-			BeforeTrackEndedHandler beforeEnded, AfterTrackEndedHandler afterEnded) {
+			OnPlaylistStartedHandler playlistStarted, OnPlaylistEndedHandler playlistEnded, //
+			BeforeTrackStartedHandler beforeTrackStarted, AfterTrackStartedHandler afterTrackStarted, //
+			BeforeTrackEndedHandler beforeTrackEnded, AfterTrackEndedHandler afterTrackEnded) {
 
 		super(player);
-
-		this.beforeStarted = beforeStarted;
-		this.afterStarted = afterStarted;
-		this.beforeEnded = beforeEnded;
-		this.afterEnded = afterEnded;
+		
+		this.playlistStarted = playlistStarted;
+		this.playlistEnded = playlistEnded;
+		this.beforeTrackStarted = beforeTrackStarted;
+		this.afterTrackStarted = afterTrackStarted;
+		this.beforeTrackEnded = beforeTrackEnded;
+		this.afterTrackEnded = afterTrackEnded;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -41,6 +50,27 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 		return player.currentTime();
 	}
 
+	@Override
+	public void startPlayingPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+		if (playlistStarted != null) {
+			playlistStarted.onPlaylistStarted(this, playlist);
+		}
+		
+		super.startPlayingPlaylist(playlist);
+		
+	}
+	
+	@Override
+	public void stopPlayingPlaylist() throws JMOPMusicbaseException {
+		Playlist playlist = currentPlaylist();
+		
+		super.stopPlayingPlaylist();
+		
+		if (playlistEnded != null) {
+			playlistEnded.onPlaylistEnded(this, playlist);
+		}
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -96,8 +126,8 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 
 	@Override
 	protected void playTrack(Track track) throws JMOPMusicbaseException {
-		if (beforeStarted != null) {
-			boolean canStart = beforeStarted.beforeTrackStarted(this, track);
+		if (beforeTrackStarted != null) {
+			boolean canStart = beforeTrackStarted.beforeTrackStarted(this, track);
 
 			if (!canStart) {
 				return;
@@ -106,23 +136,23 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 
 		super.playTrack(track);
 
-		if (afterStarted != null) {
-			afterStarted.afterTrackStarted(this, track);
+		if (afterTrackStarted != null) {
+			afterTrackStarted.afterTrackStarted(this, track);
 		}
 	}
 
 	@Override
 	protected void stopTrack() throws JMOPMusicbaseException {
 		Track track = runtime.current();
-		
-		if (beforeEnded != null) {
-			beforeEnded.beforeTrackEnded(this, track);
+
+		if (beforeTrackEnded != null) {
+			beforeTrackEnded.beforeTrackEnded(this, track);
 		}
 
 		player.stop();
 
-		if (afterEnded != null) {
-			afterEnded.afterTrackEnded(this, track);
+		if (afterTrackEnded != null) {
+			afterTrackEnded.afterTrackEnded(this, track);
 		}
 	}
 

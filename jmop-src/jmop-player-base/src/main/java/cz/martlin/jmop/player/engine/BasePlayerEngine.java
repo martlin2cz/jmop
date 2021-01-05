@@ -13,15 +13,17 @@ public interface BasePlayerEngine {
 	 * Mark as playing given playist.
 	 * 
 	 * @param playlist
+	 * @throws JMOPMusicbaseException 
 	 */
-	void startPlayingPlaylist(Playlist playlist);
+	void startPlayingPlaylist(Playlist playlist) throws JMOPMusicbaseException;
 
 	/**
 	 * Mark as not playing given playlist.
 	 * 
 	 * @param currentPlaylist
+	 * @throws JMOPMusicbaseException 
 	 */
-	void stopPlayingPlaylist();
+	void stopPlayingPlaylist() throws JMOPMusicbaseException;
 	
 
 	/**

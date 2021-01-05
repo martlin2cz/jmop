@@ -12,12 +12,13 @@ import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
+import cz.martlin.jmop.player.engine.engines.PlayerEngineWrapper;
 import cz.martlin.jmop.player.fascade.dflt.BaseDefaultFascadeConfig;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
 public class JMOPPlayerFascade {
-	private final BasePlayerEngine engine;
+	private final PlayerEngineWrapper engine;
 	private final MusicbaseListingEncapsulator musicbaseListing;
 	private final MusicbaseModyfiingEncapsulator musicbaseModyfiing;
 
@@ -26,7 +27,7 @@ public class JMOPPlayerFascade {
 
 	public JMOPPlayerFascade(BasePlayerEngine engine, BaseMusicbase musicbase, BaseDefaultFascadeConfig config) {
 		super();
-		this.engine = engine;
+		this.engine = new PlayerEngineWrapper(engine);
 		this.musicbaseListing = new MusicbaseListingEncapsulator(musicbase);
 		this.musicbaseModyfiing = new MusicbaseModyfiingEncapsulator(musicbase);
 
@@ -52,14 +53,7 @@ public class JMOPPlayerFascade {
 	}
 	
 	public void terminate() throws JMOPMusicbaseException {
-		//TODO move to some engine encapsulator
-		if (engine.currentPlaylist() != null) {
-			if (engine.currentStatus().isPlayingTrack()) {
-				engine.stop();
-			}
-			
-			engine.stopPlayingPlaylist();
-		}
+		engine.terminate();
 	}
 
 	/////////////////////////////////////////////////////////////////
@@ -93,11 +87,7 @@ public class JMOPPlayerFascade {
 	/////////////////////////////////////////////////////////////////
 
 	public Bundle currentBundle() {
-		if (engine.currentPlaylist() != null) {
-			return engine.currentPlaylist().getBundle(); // TODO move to some EngineEncapsulator
-		} else {
-			return null;
-		}
+		return engine.currentBundle();
 	}
 
 	public Playlist currentPlaylist() {
@@ -117,22 +107,9 @@ public class JMOPPlayerFascade {
 	}
 
 	/////////////////////////////////////////////////////////////////
-	public void startPlaying(Playlist playlist) throws JMOPMusicbaseException {
-		//TODO if already playing some else, stop
-		engine.startPlayingPlaylist(playlist);
-		engine.play();
+	public void play(Playlist playlist) throws JMOPMusicbaseException {
+		engine.play(playlist);
 	}
-
-	public void stopPlaying() throws JMOPMusicbaseException {
-		engine.stop();
-		engine.stopPlayingPlaylist();
-	}
-	
-	public void playlistChanged() {
-		//TODO if currently played track is no more in the playlist, toNext()
-		engine.playlistChanged();
-	}
-	
 	
 	public void play() throws JMOPMusicbaseException {
 		engine.play();
@@ -166,7 +143,7 @@ public class JMOPPlayerFascade {
 		engine.toPrevious();
 	}
 
-
+	/////////////////////////////////////////////////////////////////
 
 	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
 		return musicbaseModyfiing.createNewBundle(name);
@@ -180,15 +157,9 @@ public class JMOPPlayerFascade {
 		musicbaseModyfiing.removeBundle(bundle);
 	}
 
-//
-//	public void bundleUpdated(Bundle bundle) throws JMOPMusicbaseException {
-//		musicbaseModyfiing.bundleUpdated(bundle);
-//	}
-//
 	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
 		return musicbaseModyfiing.createNewPlaylist(bundle, name);
 	}
-
 
 	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
 		musicbaseModyfiing.renamePlaylist(playlist, newName);
@@ -202,11 +173,7 @@ public class JMOPPlayerFascade {
 	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
 		musicbaseModyfiing.removePlaylist(playlist);
 	}
-//
-//	public void playlistUpdated(Playlist playlist) throws JMOPMusicbaseException {
-//		musicbase.playlistUpdated(playlist);
-//	}
-//
+
 	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
 		return musicbaseModyfiing.createNewTrack(bundle, data);
 	}
@@ -223,9 +190,9 @@ public class JMOPPlayerFascade {
 	public void removeTrack(Track track) throws JMOPMusicbaseException {
 		musicbaseModyfiing.removeTrack(track);
 	}
-//
-//	public void trackUpdated(Track track) throws JMOPMusicbaseException {
-//		musicbase.trackUpdated(track);
-//	}
+	
+	public void updateTrack(Track track, TrackData newData) throws JMOPMusicbaseException {
+		musicbaseModyfiing.updateTrack(track, newData);
+	}
 
 }

@@ -30,14 +30,14 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist) {
+	public void startPlayingPlaylist(Playlist playlist) throws JMOPMusicbaseException {
 		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		delegee.startPlayingPlaylist(playlist);
 	}
 
 	@Override
-	public void stopPlayingPlaylist() {
+	public void stopPlayingPlaylist() throws JMOPMusicbaseException {
 		LOG.info("Stopping to play playlist " + currentPlaylist().getName() + " of bundle " //$NON-NLS-1$ //$NON-NLS-2$
 				+ currentPlaylist().getBundle().getName());
 

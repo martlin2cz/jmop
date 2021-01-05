@@ -24,12 +24,12 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 	}
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist) {
+	public void startPlayingPlaylist(Playlist playlist) throws JMOPMusicbaseException {
 		runtime = new PlaylistRuntime(playlist);
 	}
 
 	@Override
-	public void stopPlayingPlaylist() {
+	public void stopPlayingPlaylist() throws JMOPMusicbaseException {
 		runtime = null;
 	}
 

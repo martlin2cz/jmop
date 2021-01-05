@@ -90,7 +90,21 @@ public class MusicbaseModyfiingEncapsulator {
 		musicbase.removeTrack(track);
 	}
 
+	/**
+	 * @deprecated replaced by {@link #updateTrack(Track, TrackData)}
+	 * @param track
+	 * @throws JMOPMusicbaseException
+	 */
+	@Deprecated
 	public void trackUpdated(Track track) throws JMOPMusicbaseException {
+		musicbase.trackUpdated(track);
+	}
+
+	public void updateTrack(Track track, TrackData newData) throws JMOPMusicbaseException {
+		track.setIdentifier(newData.getIdentifier());
+		track.setDescription(newData.getDescription());
+		track.setDuration(newData.getDuration());
+		
 		musicbase.trackUpdated(track);
 	}
 	

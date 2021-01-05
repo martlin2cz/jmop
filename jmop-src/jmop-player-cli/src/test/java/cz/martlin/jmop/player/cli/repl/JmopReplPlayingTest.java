@@ -30,14 +30,17 @@ class JmopReplPlayingTest extends AbstractReplTest {
 
 		Bundle bundle = fascade.adapter().bundleOfName("BarBundle");
 		Playlist playlist = fascade.adapter().playlistOfName(bundle, "all tracks");
-		fascade.startPlaying(playlist);
+		fascade.play(playlist);
 
 		exec(cl, "status");
 
 		fascade.pause();
 		exec(cl, "status");
 
-		fascade.stopPlaying();
+		fascade.stop();
+		exec(cl, "status");
+		
+		fascade.terminate();
 		exec(cl, "status");
 	}
 
