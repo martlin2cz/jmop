@@ -3,6 +3,7 @@ package cz.martlin.jmop.player.cli.repl.converters;
 import java.util.StringTokenizer;
 
 import cz.martlin.jmop.player.cli.repl.misc.PrintUtil;
+import picocli.CommandLine;
 
 public class BundledItemPathParser {
 	private final String defaultItemName;
@@ -36,7 +37,7 @@ public class BundledItemPathParser {
 			}
 		}
 
-		throw new IllegalArgumentException(
+		throw new CommandLine.TypeConversionException(
 				"Valid specifier is either 'bundle' or 'bundle/item' (playlist or track), " //
 				+ "not: '" + bundledItemSpecOrNot + "'");
 	}

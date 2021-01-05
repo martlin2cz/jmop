@@ -175,11 +175,7 @@ public class JMOPPlayerFascade {
 	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
 		musicbaseModyfiing.renameBundle(bundle, newName);
 	}
-//
-//	public void addTrack(Track track) throws JMOPMusicbaseException {
-//		musicbaseModyfiing.addTrack(track);
-//	}
-//
+
 	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
 		musicbaseModyfiing.removeBundle(bundle);
 	}
@@ -220,6 +216,7 @@ public class JMOPPlayerFascade {
 	}
 
 	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
+		//TODO remove from all playlists it contains?
 		musicbaseModyfiing.moveTrack(track, newBundle);
 	}
 

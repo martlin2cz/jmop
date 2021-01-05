@@ -21,12 +21,12 @@ class JmopReplMusicbaseTest extends AbstractReplTest {
 		// basic testing
 		exec(cl, "create", "bundle", "LoremBundle");
 		exec(cl, "create", "playlist", "LoremBundle", "karelPlaylist");
-		exec(cl, "create", "track", "LoremBundle", "track42");
+		exec(cl, "create", "track", "LoremBundle", "track42", "duration", "1:23", "description", "da desc");
 
 		// further testing data
 		exec(cl, "create", "bundle", "IpsumBundle");
 		exec(cl, "create", "playlist", "LoremBundle", "frantaPlaylist");
-		exec(cl, "create", "track", "LoremBundle", "track99");
+		exec(cl, "create", "track", "LoremBundle", "track99", "duration", "9:09");
 	}
 
 	@Test

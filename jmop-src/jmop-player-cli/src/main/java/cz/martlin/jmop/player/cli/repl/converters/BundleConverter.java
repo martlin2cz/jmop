@@ -2,7 +2,7 @@ package cz.martlin.jmop.player.cli.repl.converters;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.player.fascade.JMOPPlayerAdapter;
-import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
+import picocli.CommandLine;
 import picocli.CommandLine.ITypeConverter;
 
 public class BundleConverter implements ITypeConverter<Bundle> {
@@ -15,7 +15,11 @@ public class BundleConverter implements ITypeConverter<Bundle> {
 
 	@Override
 	public Bundle convert(String bundleNameOrNot) throws Exception {
-		return adapter.bundleOfName(bundleNameOrNot);
+		Bundle bundle = adapter.bundleOfName(bundleNameOrNot);
+		if (bundle == null) {
+			throw new CommandLine.TypeConversionException("Bundle " + bundleNameOrNot + " does not exist");
+		}
+		return bundle;
 	}
 
 }

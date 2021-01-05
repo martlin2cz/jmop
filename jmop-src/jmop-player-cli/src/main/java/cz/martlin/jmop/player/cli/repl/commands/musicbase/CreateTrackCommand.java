@@ -27,7 +27,7 @@ public class CreateTrackCommand extends AbstractCommand {
 	@Option(names = "identifier", required = false)
 	private String identifier;
 
-	@Option(names = "duration", required = false)
+	@Option(names = "duration", required = true)
 	private Duration duration;
 
 	public CreateTrackCommand(JMOPPlayerFascade fascade) {
