@@ -34,6 +34,10 @@ public class PrintUtil {
 				Duration duration = (Duration) item;
 				System.out.print(DurationUtilities.toHumanString(duration));
 			
+			} else if (item instanceof Integer) {
+				Integer num = (Integer) item;
+				System.out.print(num);
+				
 			} else if (item instanceof String) {
 				String string = (String) item;
 				System.out.print(string);

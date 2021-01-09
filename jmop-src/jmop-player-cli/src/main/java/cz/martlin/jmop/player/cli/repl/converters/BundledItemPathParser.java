@@ -8,6 +8,10 @@ import picocli.CommandLine;
 public class BundledItemPathParser {
 	private final String defaultItemName;
 
+	/**
+	 * 
+	 * @param defaultItemName can be null
+	 */
 	public BundledItemPathParser(String defaultItemName) {
 		this.defaultItemName = defaultItemName;
 	}
@@ -33,7 +37,17 @@ public class BundledItemPathParser {
 					itemName = defaultItemName;
 				}
 
-				return new BundledItemName(bundleName, itemName);
+				if (bundleName != null && itemName != null) {
+					return new BundledItemName(bundleName, itemName);
+				}
+				if (bundleName != null && itemName == null) {
+					// little trick, if in format "something",
+					// it actually means "null/something"
+					// because the defaultItemName catches the 
+					// "something/defaultItemName" case.
+					
+					return new BundledItemName(null, bundleName);
+				}
 			}
 		}
 

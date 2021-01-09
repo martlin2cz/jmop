@@ -13,5 +13,4 @@ public class CreateCompositeCommand extends CompositeCommand {
 
 	public CreateCompositeCommand() {
 	}
-
 }

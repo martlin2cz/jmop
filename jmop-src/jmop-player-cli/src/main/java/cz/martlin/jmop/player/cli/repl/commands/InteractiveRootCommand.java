@@ -10,6 +10,7 @@ import cz.martlin.jmop.player.cli.repl.commands.musicbase.RenameCompositeCommand
 import cz.martlin.jmop.player.cli.repl.commands.playing.NextCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.PauseCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.PlayCommand;
+import cz.martlin.jmop.player.cli.repl.commands.playing.PlaylistCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.PreviousCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.ResumeCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.SeekCommand;
@@ -23,6 +24,7 @@ import picocli.CommandLine.Command;
 				ListBundlesCommand.class, //
 				ListPlaylistsCommand.class, //
 				ListTracksCommand.class, //
+				PlaylistCommand.class, //
 				StatusCommand.class, //
 				PlayCommand.class, //
 				PauseCommand.class, //

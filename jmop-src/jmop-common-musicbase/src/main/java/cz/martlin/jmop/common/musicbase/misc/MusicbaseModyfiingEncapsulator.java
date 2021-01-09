@@ -80,14 +80,17 @@ public class MusicbaseModyfiingEncapsulator {
 
 	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {
 		musicbase.renameTrack(track, newTitle);
+
 	}
 
 	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
 		musicbase.moveTrack(track, newBundle);
+		//TODO what to do with the playlist containing that track?
 	}
 
 	public void removeTrack(Track track) throws JMOPMusicbaseException {
 		musicbase.removeTrack(track);
+		//TODO update all the playlists containing that track
 	}
 
 	/**

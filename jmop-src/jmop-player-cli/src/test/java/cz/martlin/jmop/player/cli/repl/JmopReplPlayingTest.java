@@ -82,14 +82,19 @@ class JmopReplPlayingTest extends AbstractReplTest {
 
 		exec(cl, "play", "BarBundle");
 		exec(cl, "status");
+		exec(cl, "playlist");
 
 		exec(cl, "next");
 		exec(cl, "status");
+		exec(cl, "playlist");
 
 		exec(cl, "previous");
 		exec(cl, "status");
+		exec(cl, "playlist");
 
 		exec(cl, "stop");
 		exec(cl, "status");
+		exec(cl, "playlist");
 	}
+	
 }

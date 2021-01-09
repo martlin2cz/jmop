@@ -6,6 +6,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
 import cz.martlin.jmop.player.cli.repl.commands.InteractiveRootCommand;
 import cz.martlin.jmop.player.cli.repl.converters.BundleConverter;
+import cz.martlin.jmop.player.cli.repl.converters.CurrentBundleTrackConverter;
 import cz.martlin.jmop.player.cli.repl.converters.DurationConverter;
 import cz.martlin.jmop.player.cli.repl.converters.PlaylistConverter;
 import cz.martlin.jmop.player.cli.repl.converters.TrackConverter;
@@ -52,9 +53,11 @@ public class JmopRepl extends AbstractRepl {
 		BaseDefaultStorageConfig config = fascade.config();
 
 		cmd.registerConverter(Bundle.class, new BundleConverter(adapter));
-		cmd.registerConverter(Playlist.class, new PlaylistConverter(adapter, config));
-		cmd.registerConverter(Track.class, new TrackConverter(adapter));
+		cmd.registerConverter(Playlist.class, new PlaylistConverter(fascade, adapter, config));
+		cmd.registerConverter(Track.class, new TrackConverter(fascade, adapter));
 		cmd.registerConverter(Duration.class, new DurationConverter());
+		
+		
 	}
 
 }

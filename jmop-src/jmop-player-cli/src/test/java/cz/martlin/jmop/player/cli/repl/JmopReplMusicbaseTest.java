@@ -3,6 +3,9 @@ package cz.martlin.jmop.player.cli.repl;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -31,6 +34,28 @@ class JmopReplMusicbaseTest extends AbstractReplTest {
 
 	@Test
 	@Order(value = 2)
+	void testModifyPlaylist() throws JMOPMusicbaseException {
+		CommandLine cl = prepareCL();
+
+		exec(cl, "create", "playlist", "LoremBundle", "testing");
+		exec(cl, "playlist", "LoremBundle/testing");
+
+		exec(cl, "playlist", "add", "track99");
+		exec(cl, "playlist", "LoremBundle/testing");
+		
+		exec(cl, "playlist", "insert", "0", "track99");
+		exec(cl, "playlist", "LoremBundle/testing");
+		
+//		//FIXME track by index
+//		exec(cl, "playlist", "remove", "0");
+//		exec(cl, "playlist", "LoremBundle/testing");
+		
+		exec(cl, "playlist", "remove", "track99");
+		exec(cl, "playlist", "LoremBundle/testing");
+	}
+	
+	@Test
+	@Order(value = 3)
 	void testRenameMusicbase() throws JMOPMusicbaseException {
 		CommandLine cl = prepareCL();
 
@@ -41,7 +66,7 @@ class JmopReplMusicbaseTest extends AbstractReplTest {
 	}
 	
 	@Test
-	@Order(value = 3)
+	@Order(value =4)
 	void testMoveMusicbase() throws JMOPMusicbaseException {
 		CommandLine cl = prepareCL();
 
@@ -51,7 +76,7 @@ class JmopReplMusicbaseTest extends AbstractReplTest {
 	}
 
 	@Test
-	@Order(value = 4)
+	@Order(value = 5)
 	void testRemoveMusicbase() throws JMOPMusicbaseException {
 		CommandLine cl = prepareCL();
 
@@ -60,5 +85,7 @@ class JmopReplMusicbaseTest extends AbstractReplTest {
 		exec(cl, "remove", "track", "IpsumBundle/TRACK99");
 
 	}
+	
+	
 	
 }
