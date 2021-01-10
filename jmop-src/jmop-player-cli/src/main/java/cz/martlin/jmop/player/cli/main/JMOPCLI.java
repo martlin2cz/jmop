@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.player.cli.repl.JmopRepl;
-import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
-import cz.martlin.jmop.player.fascade.dflt.DefaultPlayerFascadeBuilder;
+import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 
 public class JMOPCLI {
 	private static final Logger LOG = LoggerFactory.getLogger(JMOPCLI.class);
@@ -13,13 +13,13 @@ public class JMOPCLI {
 	public static void main(String[] args) {
 		LOG.debug("Starting the CLI");
 		
-		JMOPPlayerFascade fascade = null;
+		JMOPPlayer jmop = null;
 		try {
 			LOG.debug("Preparing the JMOP");
-			fascade = DefaultPlayerFascadeBuilder.createTesting();
+			jmop = DefaultJMOPPlayerBuilder.createTesting();
 			
 			LOG.debug("Loading the JMOP");
-			fascade.load();
+			jmop.config().load();
 			
 			LOG.debug("JMOP ready");
 		} catch (Exception e) {
@@ -30,7 +30,7 @@ public class JMOPCLI {
 
 		try {
 			LOG.debug("Preparing the REPL");
-			JmopRepl repl = new JmopRepl(fascade);
+			JmopRepl repl = new JmopRepl(jmop);
 
 			LOG.debug("Starting the REPL");
 			repl.runREPL();
@@ -43,7 +43,7 @@ public class JMOPCLI {
 
 		try {
 			LOG.debug("Terminating the JMOP");
-			fascade.terminate();
+			jmop.config().terminate();
 			
 			LOG.debug("JMOP terminated");
 		} catch (Exception e) {

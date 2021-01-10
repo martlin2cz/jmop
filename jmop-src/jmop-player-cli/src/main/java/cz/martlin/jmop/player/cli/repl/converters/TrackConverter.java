@@ -3,20 +3,14 @@ package cz.martlin.jmop.player.cli.repl.converters;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.cli.repl.converters.BundledItemPathParser.BundledItemName;
-import cz.martlin.jmop.player.fascade.JMOPPlayerAdapter;
-import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
+import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
-import picocli.CommandLine.ITypeConverter;
 
-public class TrackConverter implements ITypeConverter<Track> {
-	private final JMOPPlayerAdapter adapter;
+public class TrackConverter extends AbstractJMOPConverter<Track> {
 	private final BundledItemPathParser parser;
-	private final JMOPPlayerFascade fascade;
 	
-	public TrackConverter(JMOPPlayerFascade fascade, JMOPPlayerAdapter adapter) {
-		super();
-		this.fascade = fascade;
-		this.adapter = adapter;
+	public TrackConverter(JMOPPlayer jmop) {
+		super(jmop);
 		this.parser = new BundledItemPathParser(null);
 	}
 
@@ -28,15 +22,15 @@ public class TrackConverter implements ITypeConverter<Track> {
 		String trackTitle;
 		if (bpn.bundleName != null && bpn.itemName != null) {
 			String bundleName = bpn.bundleName;
-			bundle = adapter.bundleOfName(bundleName);
+			bundle = jmop.musicbase().bundleOfName(bundleName);
 	
 			trackTitle = bpn.itemName;
 		} else {
-			bundle = fascade.currentBundle();
+			bundle = jmop.playing().currentBundle();
 			trackTitle = bpn.itemName;
 		}
 		
-		Track track = adapter.trackOfTitle(bundle, trackTitle);
+		Track track = jmop.musicbase().trackOfTitle(bundle, trackTitle);
 		if (track == null) {
 			throw new CommandLine.TypeConversionException("Track " + trackTitle + " does not exist");
 		}

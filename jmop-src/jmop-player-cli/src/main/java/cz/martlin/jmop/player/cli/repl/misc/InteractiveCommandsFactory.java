@@ -2,17 +2,17 @@ package cz.martlin.jmop.player.cli.repl.misc;
 
 import java.lang.reflect.Constructor;
 
-import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
+import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 
 public class InteractiveCommandsFactory implements IFactory {
 
-	private final JMOPPlayerFascade fascade;
+	private final JMOPPlayer jmop;
 
-	public InteractiveCommandsFactory(JMOPPlayerFascade fascade) {
+	public InteractiveCommandsFactory(JMOPPlayer jmop) {
 		super();
-		this.fascade = fascade;
+		this.jmop = jmop;
 	}
 
 	@Override
@@ -27,8 +27,8 @@ public class InteractiveCommandsFactory implements IFactory {
 	private <K> K doCreate(Class<K> clazz) throws UnsupportedOperationException {
 
 		try {
-			Constructor<K> ctor = clazz.getConstructor(JMOPPlayerFascade.class);
-			return ctor.newInstance(fascade);
+			Constructor<K> ctor = clazz.getConstructor(JMOPPlayer.class);
+			return ctor.newInstance(jmop);
 		} catch (Exception e) {
 			throw new UnsupportedOperationException("Could not create command:" + clazz, e);
 		}

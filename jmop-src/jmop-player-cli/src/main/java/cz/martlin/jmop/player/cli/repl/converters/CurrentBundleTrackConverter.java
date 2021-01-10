@@ -2,32 +2,25 @@ package cz.martlin.jmop.player.cli.repl.converters;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.player.cli.repl.converters.BundledItemPathParser.BundledItemName;
-import cz.martlin.jmop.player.fascade.JMOPPlayerAdapter;
-import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
+import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
-import picocli.CommandLine.ITypeConverter;
 /**
  * @deprecated cannot be used this way. The converter annotation requires 
  * non-parametric c-tor and the global one needs be more general ...
  * @author martin
  *
  */
-public class CurrentBundleTrackConverter implements ITypeConverter<Track> {
-	private final JMOPPlayerFascade fascade;
-	private final JMOPPlayerAdapter adapter;
+public class CurrentBundleTrackConverter extends AbstractJMOPConverter<Track> {
 	
-	public CurrentBundleTrackConverter(JMOPPlayerAdapter adapter, JMOPPlayerFascade fascade) {
-		super();
-		this.adapter = adapter;
-		this.fascade = fascade;
+	public CurrentBundleTrackConverter(JMOPPlayer jmop) {
+		super(jmop);
 	}
 
 	@Override
 	public Track convert(String trackTitle) throws Exception {
-		Bundle bundle = fascade.currentBundle();
+		Bundle bundle = jmop.playing().currentBundle();
 
-		Track track = adapter.trackOfTitle(bundle, trackTitle);
+		Track track = jmop.musicbase().trackOfTitle(bundle, trackTitle);
 		if (track == null) {
 			throw new CommandLine.TypeConversionException("Track " + trackTitle + " does not exist");
 		}

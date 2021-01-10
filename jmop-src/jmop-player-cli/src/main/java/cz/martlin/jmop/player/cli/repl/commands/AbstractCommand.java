@@ -4,6 +4,12 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import picocli.CommandLine.ParentCommand;
 
+/**
+ * 
+ * @author martin
+ *
+ */
+@Deprecated
 public abstract class AbstractCommand implements Runnable {
 
 	protected final JMOPPlayerFascade fascade;

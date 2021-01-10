@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
-import cz.martlin.jmop.player.fascade.dflt.DefaultPlayerFascadeBuilder;
+import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 import picocli.CommandLine;
 
 public class AbstractReplTest {
@@ -18,7 +18,7 @@ public class AbstractReplTest {
 	}
 
 	protected CommandLine prepareCL() {
-		fascade = DefaultPlayerFascadeBuilder.createTesting();
+		fascade = DefaultJMOPPlayerBuilder.createTesting();
 		try {
 			fascade.load();
 		} catch (JMOPMusicbaseException e) {

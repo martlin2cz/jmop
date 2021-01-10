@@ -1,21 +1,17 @@
 package cz.martlin.jmop.player.cli.repl.converters;
 
 import cz.martlin.jmop.common.data.model.Bundle;
-import cz.martlin.jmop.player.fascade.JMOPPlayerAdapter;
+import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
-import picocli.CommandLine.ITypeConverter;
 
-public class BundleConverter implements ITypeConverter<Bundle> {
-	private final JMOPPlayerAdapter adapter;
-
-	public BundleConverter(JMOPPlayerAdapter adapter) {
-		super();
-		this.adapter = adapter;
+public class BundleConverter extends AbstractJMOPConverter<Bundle> {
+	public BundleConverter(JMOPPlayer jmop) {
+		super(jmop);
 	}
 
 	@Override
 	public Bundle convert(String bundleNameOrNot) throws Exception {
-		Bundle bundle = adapter.bundleOfName(bundleNameOrNot);
+		Bundle bundle = jmop.musicbase().bundleOfName(bundleNameOrNot);
 		if (bundle == null) {
 			throw new CommandLine.TypeConversionException("Bundle " + bundleNameOrNot + " does not exist");
 		}

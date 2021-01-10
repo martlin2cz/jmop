@@ -16,6 +16,7 @@ import cz.martlin.jmop.player.cli.repl.commands.playing.ResumeCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.SeekCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.StatusCommand;
 import cz.martlin.jmop.player.cli.repl.commands.playing.StopCommand;
+import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.JMOPPlayerFascade;
 import picocli.CommandLine.Command;
 
@@ -40,14 +41,14 @@ import picocli.CommandLine.Command;
 		})
 public class InteractiveRootCommand extends CompositeCommand {
 
-	private final JMOPPlayerFascade fascade;
+	private final JMOPPlayer jmop;
 
-	public InteractiveRootCommand(JMOPPlayerFascade fascade) {
+	public InteractiveRootCommand(JMOPPlayer jmop) {
 		super();
-		this.fascade = fascade;
+		this.jmop = jmop;
 	}
 
-	public JMOPPlayerFascade fascade() {
-		return fascade;
+	public JMOPPlayer fascade() {
+		return jmop;
 	}
 }

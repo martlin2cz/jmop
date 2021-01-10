@@ -1,6 +1,5 @@
 package cz.martlin.jmop.player.fascade;
 
-import java.io.File;
 import java.util.Set;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -13,19 +12,26 @@ import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.PlayerEngineWrapper;
-import cz.martlin.jmop.player.fascade.dflt.BaseDefaultFascadeConfig;
+import cz.martlin.jmop.player.fascade.dflt.BaseDefaultJMOPConfig;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
+
+/**
+ * @deprecated replaced by {@link JMOPPlayer}.
+ * @author martin
+ *
+ */
+@Deprecated
 public class JMOPPlayerFascade {
 	private final PlayerEngineWrapper engine;
 	private final MusicbaseListingEncapsulator musicbaseListing;
 	private final MusicbaseModyfiingEncapsulator musicbaseModyfiing;
 
 	private final JMOPPlayerAdapter adapter;
-	private final BaseDefaultFascadeConfig config;
+	private final BaseDefaultJMOPConfig config;
 
-	public JMOPPlayerFascade(BasePlayerEngine engine, BaseMusicbase musicbase, BaseDefaultFascadeConfig config) {
+	public JMOPPlayerFascade(BasePlayerEngine engine, BaseMusicbase musicbase, BaseDefaultJMOPConfig config) {
 		super();
 		this.engine = new PlayerEngineWrapper(engine);
 		this.musicbaseListing = new MusicbaseListingEncapsulator(musicbase);
@@ -39,22 +45,11 @@ public class JMOPPlayerFascade {
 		return adapter;
 	}
 
-	public BaseDefaultFascadeConfig config() {
+	public BaseDefaultJMOPConfig config() {
 		return config;
 	}
 
-	/////////////////////////////////////////////////////////////////
-	public void load() throws JMOPMusicbaseException {
-		musicbaseModyfiing.load();
-	}
 
-	public void reload() throws JMOPMusicbaseException {
-		musicbaseModyfiing.reload();
-	}
-	
-	public void terminate() throws JMOPMusicbaseException {
-		engine.terminate();
-	}
 
 	/////////////////////////////////////////////////////////////////
 	public Set<Bundle> bundles() throws JMOPMusicbaseException {
@@ -72,17 +67,7 @@ public class JMOPPlayerFascade {
 		return musicbaseListing.tracks(bundleOrNull);
 	}
 
-	/**
-	 * Moved to adapter
-	 * @param bundleOrNull
-	 * @param trackTitleOrNot
-	 * @return
-	 * @throws JMOPMusicbaseException
-	 */
-	@Deprecated
-	public Track getTrack(Bundle bundleOrNull, String trackTitleOrNot) throws JMOPMusicbaseException {
-		return musicbaseListing.getTrack(bundleOrNull, trackTitleOrNot);
-	}
+
 
 	/////////////////////////////////////////////////////////////////
 

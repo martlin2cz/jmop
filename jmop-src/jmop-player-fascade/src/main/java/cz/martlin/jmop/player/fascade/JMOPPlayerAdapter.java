@@ -8,6 +8,12 @@ import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
+/**
+ * @deprecated replaced by {@link JMOPPlayer}.
+ * @author martin
+ *
+ */
+@Deprecated
 public class JMOPPlayerAdapter {
 	private final MusicbaseListingEncapsulator musicbaseListing;
 	private final MusicbaseModyfiingEncapsulator musicbaseModyfiing;
