@@ -160,7 +160,7 @@ public class JMOPPlayerFascade {
 	}
 
 	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
-		return musicbaseModyfiing.createNewTrack(bundle, data);
+		throw new UnsupportedOperationException("deprectaed");
 	}
 
 	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {

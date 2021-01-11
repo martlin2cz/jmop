@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.musicbase.persistent;
 
+import java.io.InputStream;
+
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -28,7 +30,7 @@ public interface BaseMusicbaseStorage extends TracksSource {
 	
 	void saveUpdatedPlaylist(Playlist playlist) throws JMOPMusicbaseException;
 
-	void createTrack(Track track) throws JMOPMusicbaseException;
+	void createTrack(Track track, InputStream trackFileContents) throws JMOPMusicbaseException;
 
 	void renameTrack(Track track, String oldTitle, String newTitle) throws JMOPMusicbaseException;
 

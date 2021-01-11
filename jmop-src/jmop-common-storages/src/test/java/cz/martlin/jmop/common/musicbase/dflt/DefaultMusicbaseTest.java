@@ -86,7 +86,7 @@ class DefaultMusicbaseTest {
 		assertEquals("lorem-playlist", loremPlaylist.getName());
 
 		// create tracks
-		Track helloTrack = musicbase.createNewTrack(fooBundle, td("hello"));
+		Track helloTrack = musicbase.createNewTrack(fooBundle, td("hello"), null);
 		assertEquals("hello", helloTrack.getTitle());
 
 		// update them

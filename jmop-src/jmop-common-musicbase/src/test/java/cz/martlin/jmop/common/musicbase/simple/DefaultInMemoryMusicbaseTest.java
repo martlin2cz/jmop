@@ -54,7 +54,7 @@ public class DefaultInMemoryMusicbaseTest {
 
 		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
 
-		testingTrack = musicbase.createNewTrack(testingBundle, td("tt", "testing_track"));
+		testingTrack = musicbase.createNewTrack(testingBundle, td("tt", "testing_track"), null);
 		testingPlaylist.addTrack(testingTrack);
 
 	}
@@ -97,7 +97,7 @@ public class DefaultInMemoryMusicbaseTest {
 
 	@Test
 	public void testTracks() throws JMOPMusicbaseException {
-		Track holaTrack = musicbase.createNewTrack(testingBundle, td("ho2", "hola"));
+		Track holaTrack = musicbase.createNewTrack(testingBundle, td("ho2", "hola"), null);
 		assertTrue(musicbase.tracks(testingBundle).contains(holaTrack));
 		
 		musicbase.renameTrack(holaTrack, "aloha");

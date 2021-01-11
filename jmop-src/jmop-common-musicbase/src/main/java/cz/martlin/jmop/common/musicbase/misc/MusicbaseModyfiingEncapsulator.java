@@ -1,5 +1,11 @@
 package cz.martlin.jmop.common.musicbase.misc;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -74,8 +80,16 @@ public class MusicbaseModyfiingEncapsulator {
 
 /////////////////////////////////////////////////////////////////////////////////////	
 	
-	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
-		return musicbase.createNewTrack(bundle, data);
+	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile) throws JMOPMusicbaseException {
+		if (contentsFile == null) {
+			return musicbase.createNewTrack(bundle, data, null);
+		}
+		
+		try (InputStream contentsStream = new BufferedInputStream(new FileInputStream(contentsFile))) {
+			return musicbase.createNewTrack(bundle, data, contentsStream);
+		} catch (IOException e) {
+			throw new JMOPMusicbaseException("Could not load track contents", e);
+		}
 	}
 
 	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {

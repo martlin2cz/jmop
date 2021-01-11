@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.utils;
 
 import java.io.File;
+import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,10 +96,10 @@ public class LoggingMusicbaseStorage implements BaseMusicbaseStorage {
 	}
 
 	@Override
-	public void createTrack(Track track) throws JMOPMusicbaseException {
+	public void createTrack(Track track, InputStream trackFileContents) throws JMOPMusicbaseException {
 		LOG.info("Creating track {}", track.getTitle());
 
-		delegee.createTrack(track);
+		delegee.createTrack(track, trackFileContents);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.utils;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -45,19 +47,19 @@ public class TestingDataCreator {
 		String id = "hello id";
 		String description = "the description of the hello";
 		Duration duration = DurationUtilities.createDuration(0, 2, 10);
-		return doCreateTrack(musicbase, bundle, "hello track", description, id, duration);
+		return doCreateTrack(musicbase, bundle, "hello track", description, id, duration, false);
 	}
 
-	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title) {
+	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title, boolean fileExisting) {
 		String id = "id of " + title;
 		String description = "description of " + title;
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
-		return doCreateTrack(musicbase, bundle, title, description, id, duration);
+		return doCreateTrack(musicbase, bundle, title, description, id, duration, fileExisting);
 	}
 
 	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
-			String id, Duration duration) {
-		return doCreateTrack(musicbase, bundle, title, description, id, duration);
+			String id, Duration duration, boolean fileExisting) {
+		return doCreateTrack(musicbase, bundle, title, description, id, duration, fileExisting);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -79,10 +81,11 @@ public class TestingDataCreator {
 	}
 
 	private static Track doCreateTrack(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
-			String id, Duration duration) {
+			String id, Duration duration, boolean fileExisting) {
 		try {
 			TrackData data = new TrackData(id, title, description, duration);
-			return musicbase.createNewTrack(bundle, data);
+			InputStream trackFileContents = fileExisting ? new ByteArrayInputStream(new byte[0]) : null;
+			return musicbase.createNewTrack(bundle, data, trackFileContents);
 		} catch (JMOPMusicbaseException e) {
 			throw new RuntimeException(e);
 		}

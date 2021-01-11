@@ -49,7 +49,7 @@ public class SimpleFileSystemedMusicbaseTest {
 
 		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
 
-		testingTrack = musicbase.createNewTrack(testingBundle, td("tt"));
+		testingTrack = musicbase.createNewTrack(testingBundle, td("tt"), null);
 		testingPlaylist.addTrack(testingTrack);
 
 	}
@@ -81,11 +81,11 @@ public class SimpleFileSystemedMusicbaseTest {
 	@Test
 	public void testTracks() throws JMOPMusicbaseException {
 		// tracks
-		Track holaTrack = musicbase.createNewTrack(testingBundle, td("hola"));
+		Track holaTrack = musicbase.createNewTrack(testingBundle, td("hola"), null);
 		assertEquals(testingBundle, holaTrack.getBundle());
 		assertEquals("hola", holaTrack.getTitle());
 
-		Track alohaTrack = musicbase.createNewTrack(testingBundle, td("aloha"));
+		Track alohaTrack = musicbase.createNewTrack(testingBundle, td("aloha"), null);
 		assertEquals(testingBundle, alohaTrack.getBundle());
 		assertEquals("aloha", alohaTrack.getTitle());
 

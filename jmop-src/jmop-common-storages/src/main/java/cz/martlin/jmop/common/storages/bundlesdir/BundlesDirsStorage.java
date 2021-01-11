@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.bundlesdir;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -164,10 +165,11 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 	}
 
 	@Override
-	public void createTrack(Track track) throws JMOPMusicbaseException {
+	public void createTrack(Track track, InputStream trackFileContents) throws JMOPMusicbaseException {
 		File trackFile = locator.trackFile(track);
 
 		saver.saveTrackData(trackFile, track, SaveReason.CREATED);
+		fs.writeFile(trackFile, trackFileContents);
 	}
 
 	@Override

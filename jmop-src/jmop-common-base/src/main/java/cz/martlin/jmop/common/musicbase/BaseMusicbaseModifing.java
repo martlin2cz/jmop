@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.musicbase;
 
+import java.io.InputStream;
+
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -32,7 +34,7 @@ public interface BaseMusicbaseModifing {
 	
 	///////////////////////////////////////////////////////////////////////////
 	
-	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException;
+	public Track createNewTrack(Bundle bundle, TrackData data, InputStream trackFileContents) throws JMOPMusicbaseException;
 
 	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException;
 

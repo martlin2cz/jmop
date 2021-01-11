@@ -2,6 +2,7 @@ package cz.martlin.jmop.common.storages.dflt;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -165,6 +166,16 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 		try {
 			Path path = file.toPath();
 			Files.write(path, lines);
+		} catch (IOException e) {
+			throw new JMOPMusicbaseException("Cannot write file", e);
+		}
+	}
+	
+	@Override
+	public void writeFile(File file, InputStream contents) throws JMOPMusicbaseException {
+		try {
+			Path path = file.toPath();
+			Files.copy(contents, path);
 		} catch (IOException e) {
 			throw new JMOPMusicbaseException("Cannot write file", e);
 		}

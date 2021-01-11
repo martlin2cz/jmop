@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.utils;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -57,6 +58,8 @@ public interface BaseFileSystemAccessor {
 	public List<String> loadLines(File file) throws JMOPMusicbaseException;
 
 	public void saveLines(File file, List<String> lines) throws JMOPMusicbaseException;
+
+	public void writeFile(File file, InputStream contents) throws JMOPMusicbaseException;
 
 	///////////////////////////////////////////////////////
 

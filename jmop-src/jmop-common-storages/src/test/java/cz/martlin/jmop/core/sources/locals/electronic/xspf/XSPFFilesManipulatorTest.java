@@ -41,8 +41,8 @@ public class XSPFFilesManipulatorTest {
 		
 		bundle = TestingDataCreator.bundle(musicbase);
 		playlist = TestingDataCreator.playlist(musicbase, bundle);
-		trackFirst = TestingDataCreator.track(musicbase, bundle, "first track");
-		trackSecond = TestingDataCreator.track(musicbase, bundle, "second track");
+		trackFirst = TestingDataCreator.track(musicbase, bundle, "first track", false);
+		trackSecond = TestingDataCreator.track(musicbase, bundle, "second track", false);
 
 		playlist.addTrack(trackFirst);
 		playlist.addTrack(trackSecond);

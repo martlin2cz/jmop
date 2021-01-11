@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.fascade;
 
+import java.io.File;
 import java.util.Set;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -80,8 +81,8 @@ public class JMOPMusicbase {
 		modyfiing.removePlaylist(playlist);
 	}
 
-	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
-		return modyfiing.createNewTrack(bundle, data);
+	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile) throws JMOPMusicbaseException {
+		return modyfiing.createNewTrack(bundle, data, contentsFile);
 	}
 
 	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {

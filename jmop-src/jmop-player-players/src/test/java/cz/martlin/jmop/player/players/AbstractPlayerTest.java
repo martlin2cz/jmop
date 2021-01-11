@@ -34,8 +34,8 @@ public abstract class AbstractPlayerTest {
 
 		BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
 		Bundle bundle = TestingDataCreator.bundle(musicbase);
-		fooTrack = TestingDataCreator.track(musicbase, bundle, "foo");
-		barTrack = TestingDataCreator.track(musicbase, bundle, "bar");
+		fooTrack = TestingDataCreator.track(musicbase, bundle, "foo", true);
+		barTrack = TestingDataCreator.track(musicbase, bundle, "bar", true);
 	}
 
 	protected abstract BasePlayer createPlayer();

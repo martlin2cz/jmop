@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.musicbase.dflt;
 
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -128,7 +129,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public Track createNewTrack(Bundle bundle, TrackData data) {
+	public Track createNewTrack(Bundle bundle, TrackData data, InputStream trackFileContents) {
 		Metadata metadata = Metadata.createNew();
 		return addTrack(bundle, data.getIdentifier(), data.getTitle(), data.getDescription(), data.getDuration(), metadata);
 	}

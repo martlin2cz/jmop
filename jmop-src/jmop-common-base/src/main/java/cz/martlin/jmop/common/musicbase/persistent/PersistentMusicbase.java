@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.musicbase.persistent;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Set;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -113,12 +114,13 @@ public class PersistentMusicbase implements BaseMusicbase {
 	@Override
 	public void addTrack(Track track) throws JMOPMusicbaseException {
 		inmemory.addTrack(track);
+		storage.createTrack(track, null);
 	}
 	
 	@Override
-	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
-		Track track = inmemory.createNewTrack(bundle, data);
-		storage.createTrack(track);
+	public Track createNewTrack(Bundle bundle, TrackData data, InputStream trackFileContents) throws JMOPMusicbaseException {
+		Track track = inmemory.createNewTrack(bundle, data, trackFileContents);
+		storage.createTrack(track, trackFileContents);
 		return track;
 	}
 

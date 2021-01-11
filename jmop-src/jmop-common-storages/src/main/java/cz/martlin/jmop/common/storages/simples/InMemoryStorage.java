@@ -2,6 +2,7 @@ package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -57,7 +58,7 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 	private void addTrack(BaseInMemoryMusicbase inmemoryTo, Bundle bundle, Track track) {
 		try {
 			TrackData td = trackDataOfTrack(track);
-			inmemoryTo.createNewTrack(bundle, td);
+			inmemoryTo.createNewTrack(bundle, td, null);
 		} catch (JMOPMusicbaseException e) {
 			throw new RuntimeException("Cannot load track " + track, e);
 		}
@@ -116,9 +117,9 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 	}
 
 	@Override
-	public void createTrack(Track track) throws JMOPMusicbaseException {
+	public void createTrack(Track track, InputStream trackFileContents) throws JMOPMusicbaseException {
 		TrackData td = trackDataOfTrack(track);
-		inmemory.createNewTrack(track.getBundle(), td);
+		inmemory.createNewTrack(track.getBundle(), td, trackFileContents);
 	}
 
 	@Override
