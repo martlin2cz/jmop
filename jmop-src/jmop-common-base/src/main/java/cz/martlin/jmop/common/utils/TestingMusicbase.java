@@ -184,7 +184,7 @@ public class TestingMusicbase implements AutoCloseable {
 		robick = TestingDataCreator.bundle(musicbase, "Robick");
 
 		// tracks
-		atZijiDuchove = TestingDataCreator.track(musicbase, robick, "At ziji duchova",
+		atZijiDuchove = TestingDataCreator.track(musicbase, robick, "At ziji duchove",
 				"Robick feat. MC SPYDA - Ať žijí duchové (DNB Remix)", "AZD",
 				DurationUtilities.createDuration(0, 6, 4), fileExisting);
 
@@ -195,7 +195,7 @@ public class TestingMusicbase implements AutoCloseable {
 				"Robick - Není nutno (feat.Tenor Fly & Top Cat)", "NN", DurationUtilities.createDuration(0, 4, 30), fileExisting);
 
 		ladyCarneval = TestingDataCreator.track(musicbase, robick, "Lady Carneval",
-				"Robick feat. MC SPYDA - Ať žijí duchové (DNB Remix)", "LC",
+				"Karel Gott Lady Carneval (DnB Remix by Robick)", "LC",
 				DurationUtilities.createDuration(0, 4, 11), fileExisting);
 	}
 
