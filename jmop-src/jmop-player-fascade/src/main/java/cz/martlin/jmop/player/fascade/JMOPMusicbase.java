@@ -8,21 +8,33 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class JMOPMusicbase {
+	private final BaseMusicbase musicbase;
 	private final MusicbaseListingEncapsulator listing;
 	private final MusicbaseModyfiingEncapsulator modyfiing;
-
+	
 	public JMOPMusicbase(BaseMusicbase musicbase) {
 		super();
-
+		this.musicbase = musicbase;
+		
 		this.listing = new MusicbaseListingEncapsulator(musicbase);
 		this.modyfiing = new MusicbaseModyfiingEncapsulator(musicbase);
 	}
 
+
+	/**
+	 * Use only in tests!
+	 * @return
+	 */
+	public BaseMusicbase getMusicbase() {
+		return musicbase;
+	}
+	
 /////////////////////////////////////////////////////////////////
 
 	public Bundle bundleOfName(String bundleNameOrNot) throws JMOPMusicbaseException {
@@ -101,4 +113,5 @@ public class JMOPMusicbase {
 	public void updateTrack(Track track, TrackData newData) throws JMOPMusicbaseException {
 		modyfiing.updateTrack(track, newData);
 	}
+
 }

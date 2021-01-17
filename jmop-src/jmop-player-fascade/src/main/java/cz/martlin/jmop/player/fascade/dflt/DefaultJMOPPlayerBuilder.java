@@ -9,6 +9,7 @@ import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
 import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
 import cz.martlin.jmop.common.storages.dflt.DefaultStorage;
+import cz.martlin.jmop.common.utils.TestingRootDir;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.dflt.BaseDefaultEngineConfig;
 import cz.martlin.jmop.player.engine.dflt.DefaultEngine;
@@ -23,7 +24,7 @@ import cz.martlin.jmop.player.players.TestingPlayer;
 public class DefaultJMOPPlayerBuilder {
 
 	public static JMOPPlayer createTesting() {
-		File root = new File(System.getProperty("java.io.tmpdir"), "jmop");
+		File root = TestingRootDir.getFile();
 		
 		BasePlayer player = new TestingPlayer();
 		BaseDefaultJMOPConfig config = new ConstantDefaultFascadeConfig();

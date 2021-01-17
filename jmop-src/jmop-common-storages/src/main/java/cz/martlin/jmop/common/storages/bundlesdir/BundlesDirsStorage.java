@@ -169,7 +169,9 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 		File trackFile = locator.trackFile(track);
 
 		saver.saveTrackData(trackFile, track, SaveReason.CREATED);
-		fs.writeFile(trackFile, trackFileContents);
+		if (trackFileContents != null) { 
+			fs.writeFile(trackFile, trackFileContents);
+		}
 	}
 
 	@Override

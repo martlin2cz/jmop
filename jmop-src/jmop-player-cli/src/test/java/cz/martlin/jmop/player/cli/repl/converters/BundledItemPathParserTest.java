@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import cz.martlin.jmop.player.cli.repl.converters.BundledItemPathParser;
 import cz.martlin.jmop.player.cli.repl.converters.BundledItemPathParser.BundledItemName;
+import picocli.CommandLine.TypeConversionException;
 
 class BundledItemPathParserTest {
 
@@ -20,9 +21,9 @@ class BundledItemPathParserTest {
 		check("foo", ALL_TRACKS, parser, "foo/");
 		check("foo", "bar", parser, "foo/bar");
 
-		assertThrows(IllegalArgumentException.class, () -> parser.parse(""));
-		assertThrows(IllegalArgumentException.class, () -> parser.parse("/bar"));
-		assertThrows(IllegalArgumentException.class, () -> parser.parse("foo/bar/baz"));
+		assertThrows(TypeConversionException.class, () -> parser.parse(""));
+		assertThrows(TypeConversionException.class, () -> parser.parse("/bar"));
+		assertThrows(TypeConversionException.class, () -> parser.parse("foo/bar/baz"));
 
 		check("lorem ipsum", "dolor sit amet", parser, "lorem ipsum/dolor sit amet");
 		// FIXME: check("disco", "the best of 98/99", converter, "disco/the best of

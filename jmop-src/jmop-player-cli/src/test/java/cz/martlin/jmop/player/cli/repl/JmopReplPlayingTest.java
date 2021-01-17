@@ -5,96 +5,91 @@ import org.junit.jupiter.api.Test;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import picocli.CommandLine;
 
 class JmopReplPlayingTest extends AbstractReplTest {
 
 	@Test
 	void testListCommands() throws JMOPMusicbaseException {
-		CommandLine cl = prepareCL();
 
-		exec(cl, "bundles");
+		exec("bundles");
 
-		exec(cl, "playlists");
-		exec(cl, "playlists", "BarBundle");
+		exec("playlists");
+		exec("playlists", "BarBundle");
 
-		exec(cl, "tracks");
-		exec(cl, "tracks", "BarBundle");
+		exec("tracks");
+		exec("tracks", "BarBundle");
 	}
 
 	@Test
 	void testStatusCommand() throws JMOPMusicbaseException {
-		CommandLine cl = prepareCL();
 
-		exec(cl, "status");
+		exec("status");
 
-		Bundle bundle = fascade.adapter().bundleOfName("BarBundle");
-		Playlist playlist = fascade.adapter().playlistOfName(bundle, "all tracks");
-		fascade.play(playlist);
+		Bundle bundle = jmop.musicbase().bundleOfName("BarBundle");
+		Playlist playlist = jmop.musicbase().playlistOfName(bundle, "all tracks");
+		jmop.playing().play(playlist);
 
-		exec(cl, "status");
+		exec("status");
 
-		fascade.pause();
-		exec(cl, "status");
+		jmop.playing().pause();
+		exec("status");
 
-		fascade.stop();
-		exec(cl, "status");
+		jmop.playing().stop();
+		exec("status");
 		
-		fascade.terminate();
-		exec(cl, "status");
+		jmop.config().terminate();
+		exec("status");
 	}
 
 	@Test
 	void testPlayingCommands() throws JMOPMusicbaseException {
-		CommandLine cl = prepareCL();
 
-		exec(cl, "play", "BarBundle");
-		exec(cl, "status");
+		exec("play", "BarBundle");
+		exec("status");
 
-		exec(cl, "pause");
-		exec(cl, "status");
+		exec("pause");
+		exec("status");
 
-		exec(cl, "resume");
-		exec(cl, "status");
+		exec("resume");
+		exec("status");
 
-		exec(cl, "pause");
-		exec(cl, "status");
+		exec("pause");
+		exec("status");
 
-		exec(cl, "play");
-		exec(cl, "status");
+		exec("play");
+		exec("status");
 
-		exec(cl, "stop");
-		exec(cl, "status");
+		exec("stop");
+		exec("status");
 
-		exec(cl, "play");
-		exec(cl, "status");
+		exec("play");
+		exec("status");
 
-		exec(cl, "seek", "0:10");
-		exec(cl, "status");
+		exec("seek", "0:10");
+		exec("status");
 
-		exec(cl, "stop");
-		exec(cl, "status");
+		exec("stop");
+		exec("status");
 	}
 
 	@Test
 	void testPlayingNextAndPrevious() throws JMOPMusicbaseException {
-		CommandLine cl = prepareCL();
 
-		exec(cl, "play", "BarBundle");
-		exec(cl, "status");
-		exec(cl, "playlist");
+		exec("play", "BarBundle");
+		exec("status");
+		exec("playlist");
 
-		exec(cl, "next");
-		exec(cl, "status");
-		exec(cl, "playlist");
+		exec("next");
+		exec("status");
+		exec("playlist");
 
-		exec(cl, "previous");
-		exec(cl, "status");
-		exec(cl, "playlist");
+		exec("previous");
+		exec("status");
+		exec("playlist");
 
-		exec(cl, "stop");
-		exec(cl, "status");
-		exec(cl, "playlist");
+		exec("stop");
+		exec("status");
+		exec("playlist");
 	}
 	
 }

@@ -2,6 +2,7 @@ package cz.martlin.jmop.common.musicbase.misc;
 
 import java.io.File;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -28,12 +29,12 @@ public class MusicbaseListingEncapsulator {
 /////////////////////////////////////////////////////////////////////////////////////////
 
 	public Set<Bundle> bundles() throws JMOPMusicbaseException {
-		return musicbase.bundles();
+		return new TreeSet<>(musicbase.bundles());
 	}
 
 	public Set<Playlist> playlists(Bundle bundle) throws JMOPMusicbaseException {
 		if (bundle != null) {
-			return musicbase.playlists(bundle);
+			return new TreeSet<>(musicbase.playlists(bundle));
 		} else {
 			return musicbase.bundles().stream() //
 					.flatMap(b -> {
@@ -44,14 +45,14 @@ public class MusicbaseListingEncapsulator {
 							throw new RuntimeException(e);
 						}
 					}) //
-					.collect(Collectors.toSet());
+					.collect(Collectors.toCollection(() -> new TreeSet<>()));
 		}
 		
 	}
 
 	public Set<Track> tracks(Bundle bundle) throws JMOPMusicbaseException {
 		if (bundle != null) {
-			return musicbase.tracks(bundle);	
+			return new TreeSet<>(musicbase.tracks(bundle));	
 		} else {
 			return musicbase.bundles().stream() //
 					.flatMap(b -> {
@@ -62,7 +63,7 @@ public class MusicbaseListingEncapsulator {
 							throw new RuntimeException(e);
 						}
 					}) //
-					.collect(Collectors.toSet());
+					.collect(Collectors.toCollection(() -> new TreeSet<>()));
 		}
 		
 	}
@@ -96,7 +97,7 @@ public class MusicbaseListingEncapsulator {
 	public Set<Bundle> findBundles(String infix) throws JMOPMusicbaseException {
 		return musicbase.bundles().stream() //
 				.filter(b -> matches(b, infix)) //
-				.collect(Collectors.toSet()); //
+				.collect(Collectors.toCollection(() -> new TreeSet<>()));
 	}
 
 	public Set<Track> findTracks(String infix) throws JMOPMusicbaseException {
@@ -105,7 +106,7 @@ public class MusicbaseListingEncapsulator {
 					.map(b -> tracksOfBundle(b)) //
 					.flatMap(ts -> ts.stream()) //
 					.filter(t -> matches(t, infix)) //
-					.collect(Collectors.toSet()); //
+					.collect(Collectors.toCollection(() -> new TreeSet<>()));
 		} catch (RuntimeException e) {
 			throw new JMOPMusicbaseException(e); // TODO FIXME catch all th exceptions at all?
 		}
