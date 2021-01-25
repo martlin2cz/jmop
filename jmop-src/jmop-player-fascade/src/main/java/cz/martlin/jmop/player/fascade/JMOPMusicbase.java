@@ -8,7 +8,6 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
@@ -84,9 +83,8 @@ public class JMOPMusicbase {
 		modyfiing.renamePlaylist(playlist, newName);
 	}
 
-	public void movePlaylist(Playlist playlist, Bundle newBundle) throws JMOPMusicbaseException {
-		// TODO what to do with track in it? move too, keep original or copy?
-		modyfiing.movePlaylist(playlist, newBundle);
+	public void movePlaylist(Playlist playlist, Bundle newBundle, boolean copyTracks) throws JMOPMusicbaseException {
+		modyfiing.movePlaylist(playlist, newBundle, copyTracks);
 	}
 
 	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
@@ -102,7 +100,6 @@ public class JMOPMusicbase {
 	}
 
 	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
-		// TODO remove from all playlists it contains?
 		modyfiing.moveTrack(track, newBundle);
 	}
 

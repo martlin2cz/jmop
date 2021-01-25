@@ -152,7 +152,7 @@ public class JMOPPlayerFascade {
 
 	public void movePlaylist(Playlist playlist, Bundle newBundle) throws JMOPMusicbaseException {
 		//TODO what to do with track in it? move too, keep original or copy?
-		musicbaseModyfiing.movePlaylist(playlist, newBundle);
+		musicbaseModyfiing.movePlaylist(playlist, newBundle, false);
 	}
 
 	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {

@@ -4,12 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -143,7 +141,8 @@ class JMOPMusicbaseTest {
 		Bundle oldBundle = playlist.getBundle();
 		Bundle newBundle = tmb.tm.daftPunk;
 
-		musicbase.movePlaylist(playlist, newBundle);
+		musicbase.movePlaylist(playlist, newBundle, false);
+		//TODO test with copyTracks := true
 
 		Playlist noPlaylist = musicbase.playlistOfName(oldBundle, playlist.getName());
 		assertNull(noPlaylist);

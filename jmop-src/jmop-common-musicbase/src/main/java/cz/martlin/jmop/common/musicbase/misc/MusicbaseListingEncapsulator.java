@@ -71,6 +71,19 @@ public class MusicbaseListingEncapsulator {
 	public File trackFile(Track track) throws JMOPMusicbaseException {
 		return musicbase.trackFile(track);
 	}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	public Set<Track> tracks(Playlist playlist) {
+		return new TreeSet<>(playlist.getTracks().getTracks());
+	}
+	
+
+	public Set<Playlist> playlistsContaining(Track track) throws JMOPMusicbaseException {
+		Bundle bundle = track.getBundle();
+		return playlists(bundle).stream() //
+				.filter((p) -> p.getTracks().getTracks().contains(track))
+				.collect(Collectors.toSet());
+	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -131,5 +144,6 @@ public class MusicbaseListingEncapsulator {
 	private boolean matches(Track track, String infix) {
 		return track.getTitle().contains(infix);
 	}
+
 
 }

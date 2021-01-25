@@ -38,11 +38,12 @@ public class MoveCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Playlist playlist = this.playlist.getPlaylist();
 			Bundle newBundle = this.newBundle.getBundle();
 			
-			jmop.musicbase().movePlaylist(playlist, newBundle);
+			boolean copyTracks = false; //TODO use flag?
+			jmop.musicbase().movePlaylist(playlist, newBundle, copyTracks );
 		}
 	}
 
@@ -60,7 +61,7 @@ public class MoveCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Track track = this.track.getTrack();
 			Bundle newBundle = this.newBundle.getBundle();
 			
