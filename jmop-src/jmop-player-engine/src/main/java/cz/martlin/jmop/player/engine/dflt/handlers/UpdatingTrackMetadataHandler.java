@@ -20,7 +20,7 @@ public class UpdatingTrackMetadataHandler implements BeforeTrackEndedHandler {
 
 	
 	@Override
-	public void beforeTrackEnded(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
+	public void beforeTrackEnded(BasePlayerEngine engine, Track track)  {
 		Duration currentDuration = engine.currentDuration();
 
 		// little trick: instead of waiting markAsPlayedAfter seconds and then

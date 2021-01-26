@@ -28,23 +28,19 @@ public class SimpleFileSystemedMusicbaseTest {
 	public void before() {
 		BaseMusicbaseModifing musicbase = new DefaultInMemoryMusicbase();
 
-		try {
-			prepareDefaultTestingContents(musicbase);
-		} catch (JMOPMusicbaseException e) {
-			Assumptions.assumeFalse(e == null, e.getMessage());
-		}
+		prepareDefaultTestingContents(musicbase);
 
 		this.musicbase = musicbase;
 	}
 
 	@AfterEach
-	public void after() throws JMOPMusicbaseException {
+	public void after()  {
 //		MusicbaseDebugPrinter.print(musicbase);
 
 		this.musicbase = null;
 	}
 
-	private void prepareDefaultTestingContents(BaseMusicbaseModifing musicbase) throws JMOPMusicbaseException {
+	private void prepareDefaultTestingContents(BaseMusicbaseModifing musicbase)  {
 		testingBundle = musicbase.createNewBundle("TestingBundle");
 
 		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
@@ -57,7 +53,7 @@ public class SimpleFileSystemedMusicbaseTest {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void testBundles() throws JMOPMusicbaseException {
+	public void testBundles()  {
 		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
 		assertEquals("FooBundle", fooBundle.getName());
 
@@ -66,7 +62,7 @@ public class SimpleFileSystemedMusicbaseTest {
 	}
 
 	@Test
-	public void testPlaylists() throws JMOPMusicbaseException {
+	public void testPlaylists()  {
 		// playlists
 		Playlist loremPlaylist = musicbase.createNewPlaylist(testingBundle, "lorem-playlist");
 		assertEquals(testingBundle, loremPlaylist.getBundle());
@@ -79,7 +75,7 @@ public class SimpleFileSystemedMusicbaseTest {
 	}
 
 	@Test
-	public void testTracks() throws JMOPMusicbaseException {
+	public void testTracks()  {
 		// tracks
 		Track holaTrack = musicbase.createNewTrack(testingBundle, td("hola"), null);
 		assertEquals(testingBundle, holaTrack.getBundle());

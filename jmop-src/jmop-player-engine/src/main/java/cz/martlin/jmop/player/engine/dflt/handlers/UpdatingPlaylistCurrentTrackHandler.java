@@ -17,7 +17,7 @@ public class UpdatingPlaylistCurrentTrackHandler implements AfterTrackStartedHan
 	}
 	
 	@Override
-	public void afterTrackStarted(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
+	public void afterTrackStarted(BasePlayerEngine engine, Track track)  {
 		Playlist playlist = engine.currentPlaylist();
 		
 		musicbase.playlistUpdated(playlist);

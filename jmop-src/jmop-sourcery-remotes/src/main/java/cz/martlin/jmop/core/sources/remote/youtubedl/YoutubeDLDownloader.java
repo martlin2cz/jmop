@@ -42,7 +42,7 @@ public class YoutubeDLDownloader implements BaseDownloader {
 
 	@Override
 	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
-			throws JMOPMusicbaseException {
+			 {
 		LOG.info("Preparing download of " + track + " via YoutubeDl downloader");
 
 		AbstractProcessEncapsulation process = prepareProcess(track, location);
@@ -57,7 +57,7 @@ public class YoutubeDLDownloader implements BaseDownloader {
 
 	///////////////////////////////////////////////////////////////////////////
 	private AbstractProcessEncapsulation prepareProcess(Track track, TrackFileLocation location)
-			throws JMOPMusicbaseException {
+			 {
 
 		File workingDirectory = AbstractProcessEncapsulation.currentDirectory();
 		File targetFile = createTargetFileFile(track, location);
@@ -68,7 +68,7 @@ public class YoutubeDLDownloader implements BaseDownloader {
 		return process;
 	}
 
-	private List<String> createArguments(Track track, TrackFileLocation location) throws JMOPMusicbaseException {
+	private List<String> createArguments(Track track, TrackFileLocation location)  {
 		String path = createTargetFilePath(track, location);
 		String url = createUrlOfTrack(track);
 		return createCommandLine(url, path);
@@ -81,18 +81,18 @@ public class YoutubeDLDownloader implements BaseDownloader {
 				"--output", path, url);
 	}
 
-	private String createUrlOfTrack(Track track) throws JMOPMusicbaseException {
+	private String createUrlOfTrack(Track track)  {
 		URL url = querier.urlOfTrack(track);
 		return url.toExternalForm();
 	}
 
-	private String createTargetFilePath(Track track, TrackFileLocation location) throws JMOPMusicbaseException {
+	private String createTargetFilePath(Track track, TrackFileLocation location)  {
 		File tmpFile = createTargetFileFile(track, location);
 
 		return tmpFile.getAbsolutePath();
 	}
 
-	private File createTargetFileFile(Track track, TrackFileLocation location) throws JMOPMusicbaseException {
+	private File createTargetFileFile(Track track, TrackFileLocation location)  {
 		return tracks.fileOfTrack(track, location, DOWNLOAD_FILE_FORMAT);
 	}
 

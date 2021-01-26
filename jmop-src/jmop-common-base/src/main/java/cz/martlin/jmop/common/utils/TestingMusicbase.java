@@ -46,7 +46,7 @@ public class TestingMusicbase implements AutoCloseable {
 	public Track neniNutno;
 	public Track ladyCarneval;
 
-	public TestingMusicbase(BaseMusicbaseModifing musicbase, boolean fileExisting) throws JMOPMusicbaseException {
+	public TestingMusicbase(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
 		super();
 		
 		this.musicbase = musicbase;
@@ -54,7 +54,7 @@ public class TestingMusicbase implements AutoCloseable {
 		prepare(musicbase, fileExisting);
 	}
 
-	private void prepare(BaseMusicbaseModifing musicbase, boolean fileExisting) throws JMOPMusicbaseException {
+	private void prepare(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
 		createDaftPunk(musicbase, fileExisting);
 
 		createLondonElektricity(musicbase, fileExisting);
@@ -65,7 +65,7 @@ public class TestingMusicbase implements AutoCloseable {
 
 	}
 
-	private void createDaftPunk(BaseMusicbaseModifing musicbase, boolean fileExisting) throws JMOPMusicbaseException {
+	private void createDaftPunk(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
 		// bundle
 		daftPunk = TestingDataCreator.bundle(musicbase, "Daft Punk");
 
@@ -93,7 +93,7 @@ public class TestingMusicbase implements AutoCloseable {
 		musicbase.playlistUpdated(randomAccessMemories);
 	}
 
-	private void createLondonElektricity(BaseMusicbaseModifing musicbase, boolean fileExisting) throws JMOPMusicbaseException {
+	private void createLondonElektricity(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
 		// bundle
 		londonElektricity = TestingDataCreator.bundle(musicbase, "London Elektricity");
 
@@ -138,7 +138,7 @@ public class TestingMusicbase implements AutoCloseable {
 		musicbase.playlistUpdated(bestTracks);
 	}
 
-	private void createCocolinoDeep(BaseMusicbaseModifing musicbase, boolean fileExisting) throws JMOPMusicbaseException {
+	private void createCocolinoDeep(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
 		// bundle
 		cocolinoDeep = TestingDataCreator.bundle(musicbase, "Cocolino deep");
 
@@ -206,7 +206,7 @@ public class TestingMusicbase implements AutoCloseable {
 		delete(musicbase);
 	}
 
-	private void delete(BaseMusicbaseModifing musicbase) throws JMOPMusicbaseException {
+	private void delete(BaseMusicbaseModifing musicbase)  {
 		deleteDaftPunk(musicbase);
 		deleteLondonElektricity(musicbase);
 		deleteCocolinoDeep(musicbase);
@@ -214,7 +214,7 @@ public class TestingMusicbase implements AutoCloseable {
 		
 	}
 
-	private void deleteDaftPunk(BaseMusicbaseModifing musicbase) throws JMOPMusicbaseException {
+	private void deleteDaftPunk(BaseMusicbaseModifing musicbase)  {
 		musicbase.removeTrack(oneMoreTime);
 		musicbase.removeTrack(aerodynamic);
 		musicbase.removeTrack(verdisQuo);
@@ -225,7 +225,7 @@ public class TestingMusicbase implements AutoCloseable {
 		
 		musicbase.removeBundle(daftPunk);
 	}
-	private void deleteLondonElektricity(BaseMusicbaseModifing musicbase) throws JMOPMusicbaseException {
+	private void deleteLondonElektricity(BaseMusicbaseModifing musicbase)  {
 		musicbase.removeTrack(justOneSecond);
 		musicbase.removeTrack(allTheHellIsBreakingLoose);
 		musicbase.removeTrack(pointOfNoReturn);
@@ -240,7 +240,7 @@ public class TestingMusicbase implements AutoCloseable {
 		musicbase.removeBundle(londonElektricity);
 	}
 
-	private void deleteCocolinoDeep(BaseMusicbaseModifing musicbase) throws JMOPMusicbaseException {
+	private void deleteCocolinoDeep(BaseMusicbaseModifing musicbase)  {
 		musicbase.removeTrack(seventeenPartI);
 		musicbase.removeTrack(seventeenPartII);
 		musicbase.removeTrack(seventeenPartIII);
@@ -255,7 +255,7 @@ public class TestingMusicbase implements AutoCloseable {
 	}
 
 
-	private void deleteRobick(BaseMusicbaseModifing musicbase) throws JMOPMusicbaseException {
+	private void deleteRobick(BaseMusicbaseModifing musicbase)  {
 		musicbase.removeTrack(atZijiDuchove);
 		musicbase.removeTrack(znamkaPunku);
 		musicbase.removeTrack(neniNutno);

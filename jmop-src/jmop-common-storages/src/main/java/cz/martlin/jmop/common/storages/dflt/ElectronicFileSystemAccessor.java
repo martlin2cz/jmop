@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 
 public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 
@@ -28,39 +28,39 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 	}
 
 	@Override
-	public void createDirectory(File directory) throws JMOPMusicbaseException {
+	public void createDirectory(File directory) throws JMOPPersistenceException {
 		try {
 			Path path = directory.toPath();
 			Files.createDirectory(path);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot create directory", e);
+			throw new JMOPPersistenceException("Cannot create directory", e);
 		}
 	}
 
 	@Override
-	public void deleteDirectory(File directory) throws JMOPMusicbaseException {
+	public void deleteDirectory(File directory) throws JMOPPersistenceException {
 		try {
 			Path path = directory.toPath();
 
 			deleteRecursivelly(path);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot delete directory", e);
+			throw new JMOPPersistenceException("Cannot delete directory", e);
 		}
 	}
 
 	@Override
-	public void renameDirectory(File oldDirectory, File newDirectory) throws JMOPMusicbaseException {
+	public void renameDirectory(File oldDirectory, File newDirectory) throws JMOPPersistenceException {
 		try {
 			Path oldPath = oldDirectory.toPath();
 			Path newPath = newDirectory.toPath();
 			Files.move(oldPath, newPath);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot rename directory", e);
+			throw new JMOPPersistenceException("Cannot rename directory", e);
 		}
 	}
 
 	@Override
-	public Set<File> listDirectoriesMatching(File directory, Predicate<File> matcher) throws JMOPMusicbaseException {
+	public Set<File> listDirectoriesMatching(File directory, Predicate<File> matcher) throws JMOPPersistenceException {
 		try {
 			Path path = directory.toPath();
 			return Files.list(path) //
@@ -69,63 +69,63 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 					.filter((f) -> matcher.test(f)) //
 					.collect(Collectors.toSet()); //
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot list directories", e);
+			throw new JMOPPersistenceException("Cannot list directories", e);
 		}
 	}
 	
 	@Override
-	public Stream<File> listDirectories(File directory) throws JMOPMusicbaseException {
+	public Stream<File> listDirectories(File directory) throws JMOPPersistenceException {
 		try {
 			Path path = directory.toPath();
 			return Files.list(path)//
 					.filter(p -> Files.isDirectory(p)) //
 					.map(p -> p.toFile()); //
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot list directories", e);
+			throw new JMOPPersistenceException("Cannot list directories", e);
 		}
 	}
 
 	/////////////////////////////////////////////////////////////////
 
 	@Override
-	public boolean existsFile(File file) {
+	public boolean existsFile(File file) throws JMOPPersistenceException {
 		Path path = file.toPath();
 		return Files.isRegularFile(path);
 	}
 
 	@Override
-	public void createEmptyFile(File file) throws JMOPMusicbaseException {
+	public void createEmptyFile(File file) throws JMOPPersistenceException {
 		try {
 			Path path = file.toPath();
 			Files.createFile(path);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot create file", e);
+			throw new JMOPPersistenceException("Cannot create file", e);
 		}
 	}
 	
 	@Override
-	public void deleteFile(File file) throws JMOPMusicbaseException {
+	public void deleteFile(File file) throws JMOPPersistenceException {
 		try {
 			Path path = file.toPath();
 			Files.delete(path);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot delete file", e);
+			throw new JMOPPersistenceException("Cannot delete file", e);
 		}
 	}
 
 	@Override
-	public void moveFile(File oldFile, File newFile) throws JMOPMusicbaseException {
+	public void moveFile(File oldFile, File newFile) throws JMOPPersistenceException {
 		try {
 			Path oldPath = oldFile.toPath();
 			Path newPath = newFile.toPath();
 			Files.move(oldPath, newPath);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot move file", e);
+			throw new JMOPPersistenceException("Cannot move file", e);
 		}
 	}
 
 	@Override
-	public Set<File> listFilesMatching(File directory, Predicate<File> matcher) throws JMOPMusicbaseException {
+	public Set<File> listFilesMatching(File directory, Predicate<File> matcher) throws JMOPPersistenceException {
 		try {
 			Path path = directory.toPath();
 			return Files.list(path) //
@@ -134,50 +134,50 @@ public class ElectronicFileSystemAccessor implements BaseFileSystemAccessor {
 					.filter((f) -> matcher.test(f)) //
 					.collect(Collectors.toSet()); //
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot list files", e);
+			throw new JMOPPersistenceException("Cannot list files", e);
 		}
 	}
 	
 	@Override
-	public Stream<File> listFiles(File directory) throws JMOPMusicbaseException {
+	public Stream<File> listFiles(File directory) throws JMOPPersistenceException {
 		try {
 			Path path = directory.toPath();
 			return Files.list(path) //
 					.filter(p -> Files.isRegularFile(p)) // 
 					.map(p -> p.toFile()); //
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot list files", e);
+			throw new JMOPPersistenceException("Cannot list files", e);
 		}
 	}
 
 	
 	@Override
-	public List<String> loadLines(File file) throws JMOPMusicbaseException {
+	public List<String> loadLines(File file) throws JMOPPersistenceException {
 		try {
 			Path path = file.toPath();
 			return Files.readAllLines(path);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot load file", e);
+			throw new JMOPPersistenceException("Cannot load file", e);
 		}
 	}
 	
 	@Override
-	public void saveLines(File file, List<String> lines) throws JMOPMusicbaseException {
+	public void saveLines(File file, List<String> lines) throws JMOPPersistenceException {
 		try {
 			Path path = file.toPath();
 			Files.write(path, lines);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot write file", e);
+			throw new JMOPPersistenceException("Cannot write file", e);
 		}
 	}
 	
 	@Override
-	public void writeFile(File file, InputStream contents) throws JMOPMusicbaseException {
+	public void writeFile(File file, InputStream contents) throws JMOPPersistenceException {
 		try {
 			Path path = file.toPath();
 			Files.copy(contents, path);
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot write file", e);
+			throw new JMOPPersistenceException("Cannot write file", e);
 		}
 	}
 	/////////////////////////////////////////////////////////////////

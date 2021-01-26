@@ -45,19 +45,19 @@ public class JMOPPlaying {
 	/////////////////////////////////////////////////////////////////
 	
 
-	public void play(Playlist playlist) throws JMOPMusicbaseException {
+	public void play(Playlist playlist)  {
 		engine.play(playlist);
 	}
 	
-	public void play() throws JMOPMusicbaseException {
+	public void play()  {
 		engine.play();
 	}
 
-	public void play(int index) throws JMOPMusicbaseException {
+	public void play(int index)  {
 		engine.play(index);
 	}
 
-	public void stop() throws JMOPMusicbaseException {
+	public void stop()  {
 		engine.stop();
 	}
 
@@ -73,11 +73,11 @@ public class JMOPPlaying {
 		engine.seek(to);
 	}
 
-	public void toNext() throws JMOPMusicbaseException {
+	public void toNext()  {
 		engine.toNext();
 	}
 
-	public void toPrevious() throws JMOPMusicbaseException {
+	public void toPrevious()  {
 		engine.toPrevious();
 	}
 

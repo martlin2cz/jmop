@@ -39,7 +39,7 @@ public class RenameCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Bundle bundle = this.bundle.getBundle();
 			jmop.musicbase().renameBundle(bundle, newName);
 		}
@@ -59,7 +59,7 @@ public class RenameCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Playlist playlist = this.playlist.getPlaylist();
 
 			jmop.musicbase().renamePlaylist(playlist, newName);
@@ -80,7 +80,7 @@ public class RenameCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Track track = this.track.getTrack();
 			
 			jmop.musicbase().renameTrack(track, newTitle);

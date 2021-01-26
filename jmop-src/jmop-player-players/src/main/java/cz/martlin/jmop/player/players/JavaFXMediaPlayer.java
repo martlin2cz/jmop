@@ -90,12 +90,7 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 	
 
 	private void onTrackFinished() {
-		try {
-			trackFinished();
-		} catch (JMOPMusicbaseException e) {
-			//TODO handle the error
-			throw new RuntimeException("Cannot handle player finish", e);
-		}
+		trackFinished();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

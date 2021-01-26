@@ -59,7 +59,7 @@ public class FFMPEGConverterTest {
 	}
 
 	private void prepareTesingTrackFile(BaseTracksLocalSource tracks, Track track, TrackFileLocation location)
-			throws JMOPMusicbaseException, IOException {
+			, IOException {
 
 		TrackFileFormat format = TrackFileFormat.MP3;
 		File file = tracks.fileOfTrack(track, location, format);

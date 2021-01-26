@@ -37,7 +37,7 @@ public class CreateCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			jmop.musicbase().createNewBundle(name);
 		}
 	}
@@ -56,7 +56,7 @@ public class CreateCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Bundle bundle = this.bundle.getBundle();
 
 			jmop.musicbase().createNewPlaylist(bundle, name);
@@ -89,7 +89,7 @@ public class CreateCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Bundle bundle = this.bundle.getBundle();
 			TrackData data = new TrackData(identifier, title, description, duration);
 

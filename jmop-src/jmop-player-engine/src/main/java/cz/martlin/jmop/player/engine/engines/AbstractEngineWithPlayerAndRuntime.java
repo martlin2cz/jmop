@@ -24,12 +24,12 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 	}
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void startPlayingPlaylist(Playlist playlist)  {
 		runtime = new PlaylistRuntime(playlist);
 	}
 
 	@Override
-	public void stopPlayingPlaylist() throws JMOPMusicbaseException {
+	public void stopPlayingPlaylist()  {
 		runtime = null;
 	}
 
@@ -55,7 +55,7 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 	
 	///////////////////////////////////////////////////////////////////////////
 
-	protected void stopAndPlayAnother(Track track) throws JMOPMusicbaseException {
+	protected void stopAndPlayAnother(Track track)  {
 		if (player.currentStatus().isPlayingTrack()) {
 			stopTrack();
 		}
@@ -63,15 +63,15 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 		playTrack(track);
 	}
 
-	protected void stopTrack() throws JMOPMusicbaseException {
+	protected void stopTrack()  {
 		player.stop();
 	}
 
-	protected void playTrack(Track track) throws JMOPMusicbaseException {
+	protected void playTrack(Track track)  {
 		player.startPlaying(track);
 	}
 	
-	protected void ifHasPlayNext() throws JMOPMusicbaseException {
+	protected void ifHasPlayNext()  {
 		if (runtime.hasNextToPlay()) {
 			toNext();
 		}

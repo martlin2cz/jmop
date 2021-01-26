@@ -22,7 +22,7 @@ public class ListTracksCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		Set<Track> tracks = fascade.tracks(bundle);
 		
 		if (bundle != null) {

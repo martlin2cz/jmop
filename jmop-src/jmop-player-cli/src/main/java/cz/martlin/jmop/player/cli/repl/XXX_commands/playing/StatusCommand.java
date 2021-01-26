@@ -20,7 +20,7 @@ public class StatusCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		Bundle currentBundle = fascade.currentBundle();
 		Playlist currentPlaylist = fascade.currentPlaylist();
 		Track currentTrack = fascade.currentTrack();

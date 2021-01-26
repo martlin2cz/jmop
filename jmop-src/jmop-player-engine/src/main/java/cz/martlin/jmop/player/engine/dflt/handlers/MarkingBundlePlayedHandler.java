@@ -15,7 +15,7 @@ public class MarkingBundlePlayedHandler implements OnBundleStartedHandler {
 	}
 
 	@Override
-	public void onBundleStarted(BasePlayerEngine engine, Bundle bundle) throws JMOPMusicbaseException {
+	public void onBundleStarted(BasePlayerEngine engine, Bundle bundle)  {
 		bundle.played();
 		musicbase.bundleUpdated(bundle);
 	}

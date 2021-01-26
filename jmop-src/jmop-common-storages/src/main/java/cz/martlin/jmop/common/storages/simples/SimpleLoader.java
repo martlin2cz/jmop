@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,46 +13,59 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataLoader;
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
+import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
+import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
 public class SimpleLoader implements BaseMusicdataLoader {
 
 	private final File root;
 	private final BaseFileSystemAccessor fs;
+	private final BaseErrorReporter reporter;
 
-	public SimpleLoader(File root, BaseFileSystemAccessor fs) {
+	public SimpleLoader(File root, BaseFileSystemAccessor fs, BaseErrorReporter reporter) {
 		super();
 		this.root = root;
 		this.fs = fs;
+		this.reporter = reporter;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public List<String> loadBundlesNames() throws JMOPMusicbaseException {
-		return fs.listDirectories(root) //
-				.map(d -> d.getName()) //
-				.collect(Collectors.toList());
+	public List<String> loadBundlesNames()  {
+		try {
+			return fs.listDirectories(root) //
+					.map(d -> d.getName()) //
+					.collect(Collectors.toList());
+		} catch (JMOPPersistenceException e) {
+			reporter.report("Could not load bundle names", e);
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
-	public Bundle loadBundle(File bundleDir, String bundleName) throws JMOPMusicbaseException {
+	public Bundle loadBundle(File bundleDir, String bundleName)  {
 		Metadata metadata = Metadata.createNew();
 		return new Bundle(bundleName, metadata);
 	}
 
 	@Override
-	public List<String> loadPlaylistsNames(File bundleDir, Bundle bundle, String bundleName) throws JMOPMusicbaseException {
-		return fs.listFiles(bundleDir) //
-				.filter(f -> isTracklistFile(f)) //
-				.map(f -> tracklistFileToPlaylistName(f)) //
-				.collect(Collectors.toList());
+	public List<String> loadPlaylistsNames(File bundleDir, Bundle bundle, String bundleName)  {
+		try {
+			return fs.listFiles(bundleDir) //
+					.filter(f -> isTracklistFile(f)) //
+					.map(f -> tracklistFileToPlaylistName(f)) //
+					.collect(Collectors.toList());
+		} catch (JMOPPersistenceException e) {
+			reporter.report("Could not load playlist names", e);
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
 	public Playlist loadPlaylist(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName)
-			throws JMOPMusicbaseException {
+			 {
 		Metadata metadata = Metadata.createNew();
 		Tracklist tracklist = loadTracklist(bundle, playlistFile, tracks);
 		int currentTrackIndex = 0;
@@ -59,11 +73,16 @@ public class SimpleLoader implements BaseMusicdataLoader {
 	}
 
 	@Override
-	public List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName) throws JMOPMusicbaseException {
-		return fs.listFiles(bundleDir) //
-				.filter(f -> isTrackFile(f)) //
-				.map(f -> trackFileToTrackId(f)) //
-				.collect(Collectors.toList());
+	public List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName)  {
+		try {
+			return fs.listFiles(bundleDir) //
+					.filter(f -> isTrackFile(f)) //
+					.map(f -> trackFileToTrackId(f)) //
+					.collect(Collectors.toList());
+		} catch (JMOPPersistenceException e) {
+			reporter.report("Could not load tracks titles", e);
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
@@ -95,12 +114,17 @@ public class SimpleLoader implements BaseMusicdataLoader {
 	}
 
 	private Tracklist loadTracklist(Bundle bundle, File playlistFile, Map<String, Track> tracks)
-			throws JMOPMusicbaseException {
-		return new Tracklist( //
-				fs.loadLines(playlistFile) //
-						.stream() //
-						.map(t -> tracks.get(t)) //
-						.collect(Collectors.toList()));
+			 {
+		try {
+			return new Tracklist( //
+					fs.loadLines(playlistFile) //
+							.stream() //
+							.map(t -> tracks.get(t)) //
+							.collect(Collectors.toList()));
+		} catch (JMOPPersistenceException e) {
+			reporter.report("Could not load tracklist", e);
+			return new Tracklist();
+		}
 	}
 
 }

@@ -4,7 +4,7 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public interface BaseMusicbase extends BaseMusicbaseLoading, BaseMusicbaseModifing, TracksSource {
 
-	public void load() throws JMOPMusicbaseException;
+	public void load() ;
 	
 	
 }

@@ -35,7 +35,7 @@ public class CreateTrackCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		TrackData data = new TrackData(identifier, title, description, duration);
 		fascade.createNewTrack(bundle, data);
 	}

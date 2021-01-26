@@ -29,7 +29,7 @@ public class PlaylistRemoveTrackCommand extends AbstractCommand {
 	}
 	
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		Playlist playlist = parent.getPlaylist();
 		
 		PlaylistModifier modifier = new PlaylistModifier(playlist); //TODO use fascade?

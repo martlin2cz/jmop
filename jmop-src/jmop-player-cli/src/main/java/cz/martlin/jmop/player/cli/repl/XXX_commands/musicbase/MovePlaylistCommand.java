@@ -22,7 +22,7 @@ public class MovePlaylistCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		fascade.movePlaylist(playlist, newBundle);
 	}
 

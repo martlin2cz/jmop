@@ -41,28 +41,28 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testBundleOfName() throws JMOPMusicbaseException {
+	void testBundleOfName()  {
 		Bundle daftPunk = musicbase.bundleOfName("Daft Punk");
 
 		assertEquals(tmb.tm.daftPunk, daftPunk);
 	}
 
 	@Test
-	void testPlaylistOfName() throws JMOPMusicbaseException {
+	void testPlaylistOfName()  {
 		Playlist seventeen = musicbase.playlistOfName(tmb.tm.cocolinoDeep, "Seventeen");
 
 		assertEquals(tmb.tm.seventeen, seventeen);
 	}
 
 	@Test
-	void testTrackOfTitle() throws JMOPMusicbaseException {
+	void testTrackOfTitle()  {
 		Track atZijiDuchove = musicbase.trackOfTitle(tmb.tm.robick, "At ziji duchove");
 
 		assertEquals(tmb.tm.atZijiDuchove, atZijiDuchove);
 	}
 
 	@Test
-	void testBundles() throws JMOPMusicbaseException {
+	void testBundles()  {
 		Set<Bundle> actual = musicbase.bundles();
 
 		Iterable<?> expected = Arrays.asList(tmb.tm.cocolinoDeep, tmb.tm.daftPunk, tmb.tm.londonElektricity,
@@ -71,7 +71,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testPlaylists() throws JMOPMusicbaseException {
+	void testPlaylists()  {
 		Bundle bundle = tmb.tm.londonElektricity;
 		Set<Playlist> actual = musicbase.playlists(bundle);
 		// TODO test if bundle == null
@@ -84,7 +84,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testTracks() throws JMOPMusicbaseException {
+	void testTracks()  {
 		Set<Track> actual = musicbase.tracks(tmb.tm.robick);
 		// TODO test if bundle == null
 
@@ -94,14 +94,14 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testCreateNewBundle() throws JMOPMusicbaseException {
+	void testCreateNewBundle()  {
 		Bundle bundle = musicbase.createNewBundle("deadmau5");
 
 		assertEquals("deadmau5", bundle.getName());
 	}
 
 	@Test
-	void testRenameBundle() throws JMOPMusicbaseException {
+	void testRenameBundle()  {
 		Bundle bundle = tmb.tm.londonElektricity;
 		musicbase.renameBundle(bundle, "Tony Collman");
 
@@ -109,7 +109,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testRemoveBundle() throws JMOPMusicbaseException {
+	void testRemoveBundle()  {
 		Bundle bundle = tmb.tm.robick;
 
 		musicbase.removeBundle(bundle);
@@ -119,7 +119,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testCreateNewPlaylist() throws JMOPMusicbaseException {
+	void testCreateNewPlaylist()  {
 		Bundle bundle = tmb.tm.londonElektricity;
 		Playlist playlist = musicbase.createNewPlaylist(bundle, "worst tracks");
 
@@ -127,7 +127,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testRenamePlaylist() throws JMOPMusicbaseException {
+	void testRenamePlaylist()  {
 		Playlist playlist = tmb.tm.bestTracks;
 
 		musicbase.renamePlaylist(playlist, "absolutelly the best tracks");
@@ -136,7 +136,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testMovePlaylist() throws JMOPMusicbaseException {
+	void testMovePlaylist()  {
 		Playlist playlist = tmb.tm.bestTracks;
 		Bundle oldBundle = playlist.getBundle();
 		Bundle newBundle = tmb.tm.daftPunk;
@@ -153,7 +153,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testRemovePlaylist() throws JMOPMusicbaseException {
+	void testRemovePlaylist()  {
 		Playlist playlist = tmb.tm.bestTracks;
 		Bundle bundle = playlist.getBundle();
 
@@ -164,7 +164,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testCreateNewTrack() throws JMOPMusicbaseException {
+	void testCreateNewTrack()  {
 		Bundle bundle = tmb.tm.daftPunk;
 		TrackData data = new TrackData("HBFS", "Harder, Better, Faster, Stronger", "Discovery, 2001",
 				DurationUtilities.createDuration(0, 3, 48));
@@ -187,7 +187,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testRenameTrack() throws JMOPMusicbaseException {
+	void testRenameTrack()  {
 		Track track = tmb.tm.atZijiDuchove;
 
 		musicbase.renameTrack(track, "Ať žijí duchové!");
@@ -196,7 +196,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testMoveTrack() throws JMOPMusicbaseException {
+	void testMoveTrack()  {
 		Track track = tmb.tm.oneMoreTime;
 		Bundle oldBundle = track.getBundle();
 		Bundle newBundle = tmb.tm.londonElektricity;
@@ -212,7 +212,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testRemoveTrack() throws JMOPMusicbaseException {
+	void testRemoveTrack()  {
 		Track track = tmb.tm.dancingWithTheElepthant;
 		Bundle bundle = track.getBundle();
 
@@ -223,7 +223,7 @@ class JMOPMusicbaseTest {
 	}
 
 	@Test
-	void testUpdateTrack() throws JMOPMusicbaseException {
+	void testUpdateTrack()  {
 		Track track = tmb.tm.ladyCarneval;
 //		Bundle bundle = track.getBundle();
 

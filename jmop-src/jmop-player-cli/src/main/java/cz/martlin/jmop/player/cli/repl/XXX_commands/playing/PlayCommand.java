@@ -21,7 +21,7 @@ public class PlayCommand extends AbstractCommand {
 
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		if (playlist == null) {
 			doPlayInCurrentPlaylist();
 		} else {
@@ -31,7 +31,7 @@ public class PlayCommand extends AbstractCommand {
 		
 	}
 
-	private void doPlayInCurrentPlaylist() throws JMOPMusicbaseException {
+	private void doPlayInCurrentPlaylist()  {
 		if (fascade.currentStatus().isPaused()) {
 			fascade.resume();
 		} else {
@@ -42,7 +42,7 @@ public class PlayCommand extends AbstractCommand {
 		}
 	}
 
-	private void doPlayPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	private void doPlayPlaylist(Playlist playlist)  {
 		fascade.play(playlist);
 		
 		Track track = fascade.currentTrack();

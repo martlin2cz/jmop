@@ -20,7 +20,7 @@ public class CreatePlaylistCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		fascade.createNewPlaylist(bundle, name);
 	}
 

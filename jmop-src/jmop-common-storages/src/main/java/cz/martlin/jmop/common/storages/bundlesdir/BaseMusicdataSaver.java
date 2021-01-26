@@ -13,10 +13,10 @@ public interface BaseMusicdataSaver {
 		//Note: no need for save if DELETED
 	}
 
-	void saveBundleData(File bundleDir, Bundle bundle, SaveReason reason) throws JMOPMusicbaseException;
+	void saveBundleData(File bundleDir, Bundle bundle, SaveReason reason) ;
 
-	void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason) throws JMOPMusicbaseException;;
+	void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason) ;;
 
-	void saveTrackData(File trackFile, Track track, SaveReason reason) throws JMOPMusicbaseException;
+	void saveTrackData(File trackFile, Track track, SaveReason reason) ;
 
 }

@@ -66,12 +66,7 @@ public class AbstractReplTest {
 //	}
 
 	private void finishJmop(JMOPPlayer jmop) {
-		try {
-			jmop.config().terminate();
-		} catch (JMOPMusicbaseException e) {
-			e.printStackTrace();
-			assumeFalse(e != null);
-		}
+		jmop.config().terminate();
 	}
 
 	private CommandLine prepareRepl() {

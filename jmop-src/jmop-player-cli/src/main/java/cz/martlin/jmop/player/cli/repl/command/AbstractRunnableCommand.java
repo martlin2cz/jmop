@@ -18,6 +18,6 @@ public abstract class AbstractRunnableCommand extends AbstractCommand implements
 		}
 	}
 
-	protected abstract void doRun() throws JMOPMusicbaseException;
+	protected abstract void doRun() ;
 
 }

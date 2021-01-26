@@ -39,7 +39,7 @@ public class TrackConverter extends AbstractJMOPConverter<Track> {
 		return track;
 	}
 
-	public Track convert(Bundle bundle, String trackTitle) throws JMOPMusicbaseException {
+	public Track convert(Bundle bundle, String trackTitle)  {
 			if (bundle == null && trackTitle == null) {
 				return jmop.playing().currentTrack();
 			}

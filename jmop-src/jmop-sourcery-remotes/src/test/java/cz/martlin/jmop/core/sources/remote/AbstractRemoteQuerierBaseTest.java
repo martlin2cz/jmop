@@ -28,7 +28,7 @@ public abstract class AbstractRemoteQuerierBaseTest {
 
 
 	@Test
-	public void testRunSearch() throws JMOPMusicbaseException {
+	public void testRunSearch()  {
 		Bundle bundle = createBundle();
 		String query = createQuery();
 
@@ -45,7 +45,7 @@ public abstract class AbstractRemoteQuerierBaseTest {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Test
-	public void testRunLoadNext() throws JMOPMusicbaseException {
+	public void testRunLoadNext()  {
 		Track track = createTrack();
 
 		System.out.println("Loading next of \n" + TestingPrinter.print(track));

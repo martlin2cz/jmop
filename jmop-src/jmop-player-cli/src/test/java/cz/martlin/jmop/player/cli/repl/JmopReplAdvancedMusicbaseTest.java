@@ -17,20 +17,20 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 
 	
 	@BeforeEach
-	public void before() throws JMOPMusicbaseException {
+	public void before()  {
 		Playlist playlist = tmb.tm.bestTracks;
 		jmop.playing().play(playlist);
 	}
 	
 	@AfterEach
-	public void after() throws JMOPMusicbaseException {
+	public void after()  {
 		jmop.playing().stop();
 	}
 
 
 	@Test
 //	@Order(value = 2)
-	void testCreate() throws JMOPMusicbaseException {
+	void testCreate()  {
 		// bundle
 		// no need to test create bundle
 		
@@ -42,7 +42,7 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	}
 
 	@Test
-	void testRename() throws JMOPMusicbaseException {
+	void testRename()  {
 		// bundle
 		exec("rename", "bundle", ".", "Tony Collman");
 				
@@ -54,7 +54,7 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	}
 	
 	@Test
-	void testMove() throws JMOPMusicbaseException {
+	void testMove()  {
 		String daftPunk = tmb.tm.daftPunk.getName();
 		String discovery = tmb.tm.discovery.getName();
 		String aerodynamics = tmb.tm.aerodynamic.getTitle();
@@ -70,7 +70,7 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	}
 	
 	@Test
-	void testRemove() throws JMOPMusicbaseException {
+	void testRemove()  {
 		// important: we have to remove the whole bundle last
 		
 		// track
@@ -86,7 +86,7 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	@Disabled
 	@Test
 //	@Order(value = 2)
-	void testModifyPlaylist() throws JMOPMusicbaseException {
+	void testModifyPlaylist()  {
 		exec("playlist", ".", "add", "track99");
 
 		exec("playlist", ".", "insert", "0", "track99");

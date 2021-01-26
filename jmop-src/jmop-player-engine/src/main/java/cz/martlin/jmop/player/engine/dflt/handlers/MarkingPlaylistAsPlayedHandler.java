@@ -16,7 +16,7 @@ public class MarkingPlaylistAsPlayedHandler implements OnPlaylistStartedHandler 
 	}
 
 	@Override
-	public void onPlaylistStarted(BasePlayerEngine engine, Playlist playlist) throws JMOPMusicbaseException {
+	public void onPlaylistStarted(BasePlayerEngine engine, Playlist playlist)  {
 		playlist.played();
 		musicbase.playlistUpdated(playlist);
 	}

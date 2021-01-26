@@ -23,7 +23,7 @@ public class MoveTrackCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		fascade.moveTrack(track, newBundle);
 	}
 

@@ -32,7 +32,7 @@ class JMOPPlayingTest {
 	}
 
 	@Test
-	void testIt() throws JMOPMusicbaseException {
+	void testIt()  {
 
 		check(null, null, null, PlayerStatus.NO_TRACK, d(0));
 

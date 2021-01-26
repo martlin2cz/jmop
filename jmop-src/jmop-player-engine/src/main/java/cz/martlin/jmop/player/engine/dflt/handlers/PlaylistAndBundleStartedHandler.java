@@ -10,7 +10,7 @@ public class PlaylistAndBundleStartedHandler implements OnPlaylistStartedHandler
 
 	@FunctionalInterface
 	public static interface OnBundleStartedHandler {
-		public void onBundleStarted(BasePlayerEngine engine, Bundle bundle) throws JMOPMusicbaseException;
+		public void onBundleStarted(BasePlayerEngine engine, Bundle bundle) ;
 	}
 
 	private final OnBundleStartedHandler bundleStarted;
@@ -26,7 +26,7 @@ public class PlaylistAndBundleStartedHandler implements OnPlaylistStartedHandler
 	}
 
 	@Override
-	public void onPlaylistStarted(BasePlayerEngine engine, Playlist playlist) throws JMOPMusicbaseException {
+	public void onPlaylistStarted(BasePlayerEngine engine, Playlist playlist)  {
 		Bundle bundle = playlist.getBundle();
 
 		// since we don't get information about why which bundle gets started (and

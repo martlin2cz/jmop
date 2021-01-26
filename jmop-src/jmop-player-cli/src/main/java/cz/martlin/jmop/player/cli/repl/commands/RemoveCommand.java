@@ -35,7 +35,7 @@ public class RemoveCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Bundle bundle = this.bundle.getBundle();
 			
 			jmop.musicbase().removeBundle(bundle);
@@ -53,7 +53,7 @@ public class RemoveCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Playlist playlist = this.playlist.getPlaylist();
 
 			jmop.musicbase().removePlaylist(playlist);
@@ -71,7 +71,7 @@ public class RemoveCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun() throws JMOPMusicbaseException {
+		protected void doRun()  {
 			Track track = this.track.getTrack();
 			
 			jmop.musicbase().removeTrack(track);

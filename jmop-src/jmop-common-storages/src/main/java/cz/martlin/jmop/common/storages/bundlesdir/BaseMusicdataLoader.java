@@ -11,16 +11,16 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public interface BaseMusicdataLoader {
 
-	List<String> loadBundlesNames() throws JMOPMusicbaseException;
+	List<String> loadBundlesNames() ;
 
-	Bundle loadBundle(File bundleDir, String bundleName) throws JMOPMusicbaseException;;
+	Bundle loadBundle(File bundleDir, String bundleName) ;;
 
-	List<String> loadPlaylistsNames(File bundleDir, Bundle bundle, String bundleName) throws JMOPMusicbaseException;;
+	List<String> loadPlaylistsNames(File bundleDir, Bundle bundle, String bundleName) ;;
 
-	Playlist loadPlaylist(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName) throws JMOPMusicbaseException;
+	Playlist loadPlaylist(File playlistFile, Bundle bundle, Map<String, Track> tracks, String playlistName) ;
 
-	List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName) throws JMOPMusicbaseException;;
+	List<String> loadTracksTitles(File bundleDir, Bundle bundle, String bundleName) ;;
 
-	Track loadTrack(File trackFile, Bundle bundle, String trackTitle) throws JMOPMusicbaseException;
+	Track loadTrack(File trackFile, Bundle bundle, String trackTitle) ;
 
 }

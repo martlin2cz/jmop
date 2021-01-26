@@ -17,7 +17,7 @@ public class ListBundlesCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		Set<Bundle> bundles = fascade.bundles();
 		
 		PrintUtil.print("Bundles:");

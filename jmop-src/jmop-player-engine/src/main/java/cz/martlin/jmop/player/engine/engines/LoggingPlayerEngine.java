@@ -30,14 +30,14 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void startPlayingPlaylist(Playlist playlist)  {
 		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		delegee.startPlayingPlaylist(playlist);
 	}
 
 	@Override
-	public void stopPlayingPlaylist() throws JMOPMusicbaseException {
+	public void stopPlayingPlaylist()  {
 		LOG.info("Stopping to play playlist " + currentPlaylist().getName() + " of bundle " //$NON-NLS-1$ //$NON-NLS-2$
 				+ currentPlaylist().getBundle().getName());
 
@@ -76,21 +76,21 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 
 
 	@Override
-	public void play() throws JMOPMusicbaseException {
+	public void play()  {
 		LOG.info("Playing current to play"); //$NON-NLS-1$
 
 		delegee.play();
 	}
 
 	@Override
-	public void play(int index) throws JMOPMusicbaseException {
+	public void play(int index)  {
 		LOG.info("Playing " + index + " th"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		delegee.play(index);
 	}
 
 	@Override
-	public void stop() throws JMOPMusicbaseException {
+	public void stop()  {
 		LOG.info("Stopping playing"); //$NON-NLS-1$
 		
 		delegee.stop();
@@ -118,14 +118,14 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	}
 
 	@Override
-	public void toNext() throws JMOPMusicbaseException {
+	public void toNext()  {
 		LOG.info("Playing next"); //$NON-NLS-1$
 
 		delegee.toNext();
 	}
 
 	@Override
-	public void toPrevious() throws JMOPMusicbaseException {
+	public void toPrevious()  {
 		LOG.info("Playing previous"); //$NON-NLS-1$
 
 		delegee.toPrevious();

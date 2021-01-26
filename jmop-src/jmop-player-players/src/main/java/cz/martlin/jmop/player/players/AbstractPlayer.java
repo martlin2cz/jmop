@@ -49,7 +49,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public synchronized void startPlaying(Track track) throws JMOPMusicbaseException {
+	public synchronized void startPlaying(Track track)  {
 		if (status.isPlayingTrack()) {
 			throw new IllegalStateException("Already playing track");
 		}
@@ -68,9 +68,9 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	 * 
 	 * @param track
 	 * @param file
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
-	protected abstract void doStartPlaying(Track track) throws JMOPMusicbaseException;
+	protected abstract void doStartPlaying(Track track) ;
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
@@ -148,7 +148,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	protected abstract void doSeek(Duration to);
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	protected void trackFinished() throws JMOPMusicbaseException {
+	protected void trackFinished()  {
 		if (status.isNotPlayingTrack()) {
 			throw new IllegalStateException("Not playing track");
 		}
@@ -157,11 +157,7 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 		status = PlayerStatus.NO_TRACK;
 		
 		if (listener != null) {
-			try {
-				listener.trackOver(track);
-			} catch (JMOPMusicbaseException e) {
-				throw new JMOPMusicbaseException("The listener of track finish failed", e);
-			}
+			listener.trackOver(track);
 		}
 		
 		fireValueChangedEvent();

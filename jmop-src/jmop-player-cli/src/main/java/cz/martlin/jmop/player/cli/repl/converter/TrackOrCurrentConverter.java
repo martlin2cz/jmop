@@ -21,7 +21,7 @@ public class TrackOrCurrentConverter  extends AbstractJMOPConverter<Track> {
 		}
 	}
 
-	private Track pickTrackByName(Bundle bundle, String value) throws JMOPMusicbaseException {
+	private Track pickTrackByName(Bundle bundle, String value)  {
 		System.err.println("Warning, assuming current bundle!");
 		return jmop.musicbase().trackOfTitle(bundle, value);
 	}
@@ -30,7 +30,7 @@ public class TrackOrCurrentConverter  extends AbstractJMOPConverter<Track> {
 		return jmop.playing().currentTrack();
 	}
 
-	public Track convert(Bundle bundle, String trackTitle) throws JMOPMusicbaseException {
+	public Track convert(Bundle bundle, String trackTitle)  {
 		if (trackTitle == null || trackTitle.equals(NOT_SPECIFIED)) {
 			return pickCurrentTrack();
 		} else {

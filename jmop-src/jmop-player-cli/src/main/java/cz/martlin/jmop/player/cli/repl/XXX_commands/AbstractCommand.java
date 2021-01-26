@@ -31,15 +31,12 @@ public abstract class AbstractCommand implements Runnable {
 	public void run() {
 		try {
 			doRun();
-		} catch (JMOPMusicbaseException e) {
-			System.err.println("JMOP error: " + e);
-			e.printStackTrace();
 		} catch (Exception e) {
 			System.err.println("Fatal error: " + e);
 			e.printStackTrace();
 		}
 	}
 
-	protected abstract void doRun() throws JMOPMusicbaseException;
+	protected abstract void doRun() ;
 
 }

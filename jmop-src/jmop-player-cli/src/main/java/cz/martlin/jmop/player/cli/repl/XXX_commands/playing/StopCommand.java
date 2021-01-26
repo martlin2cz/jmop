@@ -12,7 +12,7 @@ public class StopCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		fascade.stop();
 	}
 

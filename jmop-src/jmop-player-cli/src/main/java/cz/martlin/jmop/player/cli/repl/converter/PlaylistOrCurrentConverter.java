@@ -21,7 +21,7 @@ public class PlaylistOrCurrentConverter extends AbstractJMOPConverter<Playlist> 
 		}
 	}
 
-	private Playlist pickPlaylistByName(Bundle bundle, String value) throws JMOPMusicbaseException {
+	private Playlist pickPlaylistByName(Bundle bundle, String value)  {
 		System.err.println("Warning, assuming current bundle!");
 		return jmop.musicbase().playlistOfName(bundle, value);
 	}
@@ -30,7 +30,7 @@ public class PlaylistOrCurrentConverter extends AbstractJMOPConverter<Playlist> 
 		return jmop.playing().currentPlaylist();
 	}
 
-	public Playlist convert(Bundle bundle, String playlistName) throws JMOPMusicbaseException {
+	public Playlist convert(Bundle bundle, String playlistName)  {
 		if (playlistName == null || playlistName.equals(NOT_SPECIFIED)) {
 			return pickCurrentPlaylist();
 		} else {

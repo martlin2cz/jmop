@@ -65,30 +65,18 @@ public class TestingDataCreator {
 	///////////////////////////////////////////////////////////////////////////
 
 	private static Bundle doCreateEmptyBundle(BaseMusicbaseModifing musicbase, String name) {
-		try {
-			return musicbase.createNewBundle(name);
-		} catch (JMOPMusicbaseException e) {
-			throw new RuntimeException(e);
-		}
+		return musicbase.createNewBundle(name);
 	}
 
 	private static Playlist doCreateEmptyPlaylist(BaseMusicbaseModifing musicbase, Bundle bundle, String name) {
-		try {
-			return musicbase.createNewPlaylist(bundle, name);
-		} catch (JMOPMusicbaseException e) {
-			throw new RuntimeException(e);
-		}
+		return musicbase.createNewPlaylist(bundle, name);
 	}
 
 	private static Track doCreateTrack(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
 			String id, Duration duration, boolean fileExisting) {
-		try {
 			TrackData data = new TrackData(id, title, description, duration);
 			InputStream trackFileContents = fileExisting ? new ByteArrayInputStream(new byte[0]) : null;
 			return musicbase.createNewTrack(bundle, data, trackFileContents);
-		} catch (JMOPMusicbaseException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@Deprecated

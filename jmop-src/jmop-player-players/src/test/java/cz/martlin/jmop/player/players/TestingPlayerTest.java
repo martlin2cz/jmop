@@ -22,7 +22,7 @@ public class TestingPlayerTest extends AbstractPlayerTest {
 	@Disabled
 	@Test
 	@Override
-	public void testToFinish() throws JMOPMusicbaseException {
+	public void testToFinish()  {
 		// we haven't implemented this feature in the testing player.
 		super.testToFinish();
 	}

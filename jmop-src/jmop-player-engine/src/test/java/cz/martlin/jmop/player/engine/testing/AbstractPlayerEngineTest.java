@@ -24,7 +24,7 @@ public abstract class AbstractPlayerEngineTest {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Test
-	void testSome() throws JMOPMusicbaseException {
+	void testSome()  {
 		BasePlayerEngine engine = log(createEngine());
 
 		check(engine, null, null, PlayerStatus.NO_TRACK);

@@ -28,17 +28,17 @@ public class JMOPConfig {
 	}
 	
 	/////////////////////////////////////////////////////////////////
-	public void load() throws JMOPMusicbaseException {
+	public void load()  {
 		//TODO config.load()
 		modyfiing.load();
 	}
 
-	public void reload() throws JMOPMusicbaseException {
+	public void reload()  {
 		//TODO config.reload() ?
 		modyfiing.reload();
 	}
 	
-	public void terminate() throws JMOPMusicbaseException {
+	public void terminate()  {
 		engine.terminate();
 	}
 	

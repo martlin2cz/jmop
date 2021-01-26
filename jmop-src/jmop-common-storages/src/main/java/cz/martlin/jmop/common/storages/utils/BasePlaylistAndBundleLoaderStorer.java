@@ -15,11 +15,11 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 @Deprecated
 public interface BasePlaylistAndBundleLoaderStorer {
 
-	Bundle loadBundle(File file) throws JMOPMusicbaseException;
+	Bundle loadBundle(File file) ;
 
-	Playlist loadPlaylist(Bundle bundle, File file) throws JMOPMusicbaseException;
+	Playlist loadPlaylist(Bundle bundle, File file) ;
 
 	void savePlaylist(Playlist playlist, File file, boolean withBundleInfo, boolean withTrackInfo)
-			throws JMOPMusicbaseException;
+			;
 
 }

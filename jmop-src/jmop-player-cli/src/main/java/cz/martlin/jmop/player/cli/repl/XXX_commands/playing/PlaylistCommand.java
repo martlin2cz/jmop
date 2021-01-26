@@ -33,7 +33,7 @@ public class PlaylistCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		Playlist playlist = getPlaylist();
 		print(playlist);
 	}

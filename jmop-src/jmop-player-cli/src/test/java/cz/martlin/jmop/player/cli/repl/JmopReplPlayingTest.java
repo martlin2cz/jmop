@@ -9,7 +9,7 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 class JmopReplPlayingTest extends AbstractReplTest {
 
 	@Test
-	void testListCommands() throws JMOPMusicbaseException {
+	void testListCommands()  {
 
 		exec("bundles");
 
@@ -21,7 +21,7 @@ class JmopReplPlayingTest extends AbstractReplTest {
 	}
 
 	@Test
-	void testStatusCommand() throws JMOPMusicbaseException {
+	void testStatusCommand()  {
 
 		exec("status");
 
@@ -42,7 +42,7 @@ class JmopReplPlayingTest extends AbstractReplTest {
 	}
 
 	@Test
-	void testPlayingCommands() throws JMOPMusicbaseException {
+	void testPlayingCommands()  {
 
 		exec("play", "BarBundle");
 		exec("status");
@@ -73,7 +73,7 @@ class JmopReplPlayingTest extends AbstractReplTest {
 	}
 
 	@Test
-	void testPlayingNextAndPrevious() throws JMOPMusicbaseException {
+	void testPlayingNextAndPrevious()  {
 
 		exec("play", "BarBundle");
 		exec("status");

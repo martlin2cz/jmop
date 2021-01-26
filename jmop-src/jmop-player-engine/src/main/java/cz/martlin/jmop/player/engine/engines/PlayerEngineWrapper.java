@@ -16,7 +16,7 @@ public class PlayerEngineWrapper {
 		this.engine = engine;
 	}
 
-	public void play(Playlist playlist) throws JMOPMusicbaseException {
+	public void play(Playlist playlist)  {
 		if (engine.currentPlaylist() != null) {
 			engine.stopPlayingPlaylist();
 		}
@@ -30,7 +30,7 @@ public class PlayerEngineWrapper {
 		// TODO if currently played track is no more in the playlist, toNext()
 	}
 
-	public void terminate() throws JMOPMusicbaseException {
+	public void terminate()  {
 		if (engine.currentPlaylist() != null) {
 			if (engine.currentStatus().isPlayingTrack()) {
 				engine.stop();
@@ -65,17 +65,17 @@ public class PlayerEngineWrapper {
 		return engine.currentStatus();
 	}
 
-	public void play() throws JMOPMusicbaseException {
+	public void play()  {
 		requirePlaying();
 		engine.play();
 	}
 
-	public void play(int index) throws JMOPMusicbaseException {
+	public void play(int index)  {
 		requirePlaying();
 		engine.play(index);
 	}
 
-	public void stop() throws JMOPMusicbaseException {
+	public void stop()  {
 		requirePlaying();
 		engine.stop();
 	}
@@ -95,12 +95,12 @@ public class PlayerEngineWrapper {
 		engine.seek(to);
 	}
 
-	public void toNext() throws JMOPMusicbaseException {
+	public void toNext()  {
 		requirePlaying();
 		engine.toNext();
 	}
 
-	public void toPrevious() throws JMOPMusicbaseException {
+	public void toPrevious()  {
 		requirePlaying();
 		engine.toPrevious();
 	}

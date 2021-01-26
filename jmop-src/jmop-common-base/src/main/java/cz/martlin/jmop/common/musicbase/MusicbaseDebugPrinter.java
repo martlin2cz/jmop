@@ -9,14 +9,14 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class MusicbaseDebugPrinter {
 
-	public static void print(BaseMusicbaseLoading musicbase) throws JMOPMusicbaseException {
+	public static void print(BaseMusicbaseLoading musicbase)  {
 		for (Bundle bundle: musicbase.bundles()) {
 			print(musicbase, bundle);
 		}
 
 	}
 
-	private static void print(BaseMusicbaseLoading musicbase, Bundle bundle) throws JMOPMusicbaseException {
+	private static void print(BaseMusicbaseLoading musicbase, Bundle bundle)  {
 		String bundleName = bundle.getName();
 		System.out.println("Bundle '" + bundleName + "':");
 		print(bundle.getMetadata());

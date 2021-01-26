@@ -11,7 +11,7 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 
 	@Test
 //	@Order(value = 1)
-	void testCreateCommands() throws JMOPMusicbaseException {
+	void testCreateCommands()  {
 		// bundle
 		exec("create", "bundle", "deadmau5");
 		// playlist
@@ -23,7 +23,7 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 	@Disabled
 	@Test
 //	@Order(value = 2)
-	void testModifyPlaylist() throws JMOPMusicbaseException {
+	void testModifyPlaylist()  {
 		//TODO 
 		exec("create", "playlist", "LoremBundle", "testing");
 		exec("playlist", "LoremBundle/testing");
@@ -44,7 +44,7 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 
 	@Test
 //	@Order(value = 3)
-	void testRenameCommands() throws JMOPMusicbaseException {
+	void testRenameCommands()  {
 		// bundle
 		String londonElektricity = tmb.tm.londonElektricity.getName();
 		exec("rename", "bundle", londonElektricity, "Tony Collman");
@@ -62,7 +62,7 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 
 	@Test
 //	@Order(value = 4)
-	void testMoveCommands() throws JMOPMusicbaseException {
+	void testMoveCommands()  {
 		String electronicMusic = "Electronic music";
 		Bundle emb = jmop.musicbase().createNewBundle(electronicMusic);
 		
@@ -84,7 +84,7 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 
 	@Test
 //	@Order(value = 5)
-	void testRemoveMusicbase() throws JMOPMusicbaseException {
+	void testRemoveMusicbase()  {
 		// bundle
 		String londonElektricity = tmb.tm.londonElektricity.getName();
 		exec("remove", "bundle", londonElektricity);

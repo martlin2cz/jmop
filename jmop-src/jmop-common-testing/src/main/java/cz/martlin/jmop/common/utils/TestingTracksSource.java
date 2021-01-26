@@ -27,7 +27,7 @@ public class TestingTracksSource implements TracksSource {
 	}
 
 	@Override
-	public File trackFile(Track track) throws JMOPMusicbaseException {
+	public File trackFile(Track track)  {
 		try {
 			File file = prepareTrackFile(track);
 			creator.prepare(format, file);
@@ -35,7 +35,7 @@ public class TestingTracksSource implements TracksSource {
 			System.out.println("Prepared testing track file: " + file.getAbsolutePath() + " for the: " + track);
 			return file;
 		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot create testing file", e);
+			throw new RuntimeException("Cannot create testing file", e);
 		}
 	}
 

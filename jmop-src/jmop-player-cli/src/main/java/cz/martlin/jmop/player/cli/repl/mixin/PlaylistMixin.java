@@ -17,7 +17,7 @@ public class PlaylistMixin extends AbstractJMOPMixin {
 	public PlaylistMixin() {
 	}
 	
-	public Playlist getPlaylist() throws JMOPMusicbaseException {
+	public Playlist getPlaylist()  {
 		JMOPPlayer jmop = getJMOP();
 		PlaylistOrCurrentConverter converter = new PlaylistOrCurrentConverter(jmop);
 		

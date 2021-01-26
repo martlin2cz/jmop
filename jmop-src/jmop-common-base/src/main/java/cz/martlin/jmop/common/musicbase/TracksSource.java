@@ -7,5 +7,5 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public interface TracksSource {
 	
-	public File trackFile(Track track) throws JMOPMusicbaseException;
+	public File trackFile(Track track) ;
 }

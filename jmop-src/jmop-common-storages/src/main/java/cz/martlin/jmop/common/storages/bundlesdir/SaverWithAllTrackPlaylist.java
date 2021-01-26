@@ -9,6 +9,8 @@ import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.storages.playlists.BaseExtendedPlaylistManipulator;
 import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
 import cz.martlin.jmop.common.storages.utils.FilesLocatorExtension;
+import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
+import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
@@ -30,19 +32,28 @@ public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 ///////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void saveBundleData(File bundleDir, Bundle bundle, SaveReason reason) throws JMOPMusicbaseException {
+	public void saveBundleData(File bundleDir, Bundle bundle, SaveReason reason)  {
 		Playlist allTracksPlaylist = obtainAllTracksPlaylist(bundle);
 		File allTracksPlaylistFile = locator.playlistFile(allTracksPlaylist);
-		save(allTracksPlaylist, allTracksPlaylistFile);
+		
+		try {
+			save(allTracksPlaylist, allTracksPlaylistFile);
+		} catch (JMOPRuntimeException | JMOPPersistenceException e) {
+			throw new JMOPRuntimeException("Could not save bundle", e);
+		}
 	}
 
 	@Override
-	public void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason) throws JMOPMusicbaseException {
-		save(playlist, playlistFile);
+	public void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason)  {
+		try {
+			save(playlist, playlistFile);
+		} catch (JMOPRuntimeException | JMOPPersistenceException e) {
+			throw new JMOPRuntimeException("Could not save playlist", e);
+		}
 	}
 
 	@Override
-	public void saveTrackData(File trackFile, Track track, SaveReason reason) throws JMOPMusicbaseException {
+	public void saveTrackData(File trackFile, Track track, SaveReason reason)  {
 		Bundle bundle = track.getBundle();
 		Playlist allTracksPlaylist = obtainAllTracksPlaylist(bundle);
 
@@ -51,7 +62,11 @@ public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 		}
 		
 		File allTracksPlaylistFile = locator.playlistFile(allTracksPlaylist);
-		save(allTracksPlaylist, allTracksPlaylistFile);
+		try {
+			save(allTracksPlaylist, allTracksPlaylistFile);
+		} catch (JMOPRuntimeException | JMOPPersistenceException e) {
+			throw new JMOPRuntimeException("Could not save track", e);
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -60,20 +75,14 @@ public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 		return playlist.getName().equals(allTracksPlaylistName);
 	}
 
-	private Playlist obtainAllTracksPlaylist(Bundle bundle) throws JMOPMusicbaseException {
+	private Playlist obtainAllTracksPlaylist(Bundle bundle)  {
 		return musicbase.playlists(bundle).stream() //
 				.filter(p -> isAllTracksPlaylist(p)) //
-				.findAny().orElseGet(() -> { //
-					//TODO little tricky, but works perfectly
-					try {
-						return musicbase.createNewPlaylist(bundle, allTracksPlaylistName);
-					} catch (JMOPMusicbaseException e) {
-						throw new RuntimeException("Could not create all tracks playlist", e);
-					}
-				});
+				.findAny()//
+				.orElseGet(() ->  musicbase.createNewPlaylist(bundle, allTracksPlaylistName));
 	}
 
-	private void save(Playlist playlist, File playlistFile) throws JMOPMusicbaseException {
+	private void save(Playlist playlist, File playlistFile) throws JMOPPersistenceException  {
 		if (isAllTracksPlaylist(playlist)) {
 			manipulator.savePlaylistWithBundle(playlist, playlistFile);
 		} else {

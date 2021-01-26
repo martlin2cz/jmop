@@ -19,6 +19,7 @@ import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.storages.xpfs.XSPFFilesManipulator;
 import cz.martlin.jmop.common.utils.TestingDataCreator;
+import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class XSPFFilesManipulatorTest {
@@ -53,7 +54,7 @@ public class XSPFFilesManipulatorTest {
 	///////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void testPlaylist() throws JMOPMusicbaseException {
+	public void testPlaylist() throws JMOPPersistenceException  {
 
 		File playlistFile = new File(basedir, "playlist.xspf");
 		manipulator.saveOnlyPlaylist(playlist, playlistFile);
@@ -66,7 +67,7 @@ public class XSPFFilesManipulatorTest {
 	}
 
 	@Test
-	public void testBundle() throws JMOPMusicbaseException {
+	public void testBundle() throws JMOPPersistenceException  {
 		Bundle bundle = playlist.getBundle();
 
 		File bundleFile = new File(basedir, "bundle.xspf");

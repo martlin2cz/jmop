@@ -46,7 +46,7 @@ public class PlaylistConverter extends AbstractJMOPConverter<Playlist> {
 
 	}
 
-	public Playlist convert(Bundle bundle, String playlistName) throws JMOPMusicbaseException {
+	public Playlist convert(Bundle bundle, String playlistName)  {
 		if (bundle == null && playlistName == null) {
 			return jmop.playing().currentPlaylist();
 		}

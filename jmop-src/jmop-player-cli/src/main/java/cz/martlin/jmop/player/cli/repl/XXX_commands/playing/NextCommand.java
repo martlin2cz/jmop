@@ -15,7 +15,7 @@ public class NextCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		fascade.toNext();
 		
 		Track track = fascade.currentTrack();

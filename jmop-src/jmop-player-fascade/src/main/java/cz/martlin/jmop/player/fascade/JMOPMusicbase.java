@@ -36,78 +36,78 @@ public class JMOPMusicbase {
 	
 /////////////////////////////////////////////////////////////////
 
-	public Bundle bundleOfName(String bundleNameOrNot) throws JMOPMusicbaseException {
+	public Bundle bundleOfName(String bundleNameOrNot)  {
 		return listing.getBundle(bundleNameOrNot);
 	}
 
-	public Playlist playlistOfName(Bundle bundleOrNull, String playlistNameOrNot) throws JMOPMusicbaseException {
+	public Playlist playlistOfName(Bundle bundleOrNull, String playlistNameOrNot)  {
 		return listing.getPlaylist(bundleOrNull, playlistNameOrNot);
 	}
 
-	public Track trackOfTitle(Bundle bundleOrNull, String trackTitleOrNot) throws JMOPMusicbaseException {
+	public Track trackOfTitle(Bundle bundleOrNull, String trackTitleOrNot)  {
 		return listing.getTrack(bundleOrNull, trackTitleOrNot);
 	}
 
 /////////////////////////////////////////////////////////////////
-	public Set<Bundle> bundles() throws JMOPMusicbaseException {
+	public Set<Bundle> bundles()  {
 		return listing.bundles();
 	}
 
-	public Set<Playlist> playlists(Bundle bundleOrNull) throws JMOPMusicbaseException {
+	public Set<Playlist> playlists(Bundle bundleOrNull)  {
 		return listing.playlists(bundleOrNull);
 	}
 
-	public Set<Track> tracks(Bundle bundleOrNull) throws JMOPMusicbaseException {
+	public Set<Track> tracks(Bundle bundleOrNull)  {
 		return listing.tracks(bundleOrNull);
 	}
 
 /////////////////////////////////////////////////////////////////
 
-	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
+	public Bundle createNewBundle(String name)  {
 		return modyfiing.createNewBundle(name);
 	}
 
-	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
+	public void renameBundle(Bundle bundle, String newName)  {
 		modyfiing.renameBundle(bundle, newName);
 	}
 
-	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
+	public void removeBundle(Bundle bundle)  {
 		modyfiing.removeBundle(bundle);
 	}
 
-	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
+	public Playlist createNewPlaylist(Bundle bundle, String name)  {
 		return modyfiing.createNewPlaylist(bundle, name);
 	}
 
-	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
+	public void renamePlaylist(Playlist playlist, String newName)  {
 		modyfiing.renamePlaylist(playlist, newName);
 	}
 
-	public void movePlaylist(Playlist playlist, Bundle newBundle, boolean copyTracks) throws JMOPMusicbaseException {
+	public void movePlaylist(Playlist playlist, Bundle newBundle, boolean copyTracks)  {
 		modyfiing.movePlaylist(playlist, newBundle, copyTracks);
 	}
 
-	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void removePlaylist(Playlist playlist)  {
 		modyfiing.removePlaylist(playlist);
 	}
 
-	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile) throws JMOPMusicbaseException {
+	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile)  {
 		return modyfiing.createNewTrack(bundle, data, contentsFile);
 	}
 
-	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {
+	public void renameTrack(Track track, String newTitle)  {
 		modyfiing.renameTrack(track, newTitle);
 	}
 
-	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
+	public void moveTrack(Track track, Bundle newBundle)  {
 		modyfiing.moveTrack(track, newBundle);
 	}
 
-	public void removeTrack(Track track) throws JMOPMusicbaseException {
+	public void removeTrack(Track track)  {
 		modyfiing.removeTrack(track);
 	}
 
-	public void updateTrack(Track track, TrackData newData) throws JMOPMusicbaseException {
+	public void updateTrack(Track track, TrackData newData)  {
 		modyfiing.updateTrack(track, newData);
 	}
 

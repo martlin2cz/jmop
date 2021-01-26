@@ -52,7 +52,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void addBundle(Bundle bundle) throws JMOPMusicbaseException {
+	public void addBundle(Bundle bundle)  {
 		bundles.add(bundle);
 	}
 
@@ -85,7 +85,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void addPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void addPlaylist(Playlist playlist)  {
 		playlists.add(playlist);
 	}
 
@@ -119,12 +119,12 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void playlistUpdated(Playlist playlist) throws JMOPMusicbaseException {
+	public void playlistUpdated(Playlist playlist)  {
 		// nothing to do here
 	}
 
 	@Override
-	public void addTrack(Track track) throws JMOPMusicbaseException {
+	public void addTrack(Track track)  {
 		tracks.add(track);
 	}
 
@@ -158,7 +158,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void trackUpdated(Track track) throws JMOPMusicbaseException {
+	public void trackUpdated(Track track)  {
 		// nothing to do here
 	}
 

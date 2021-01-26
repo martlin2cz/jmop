@@ -13,17 +13,17 @@ public interface BasePlayerEngine {
 	 * Mark as playing given playist.
 	 * 
 	 * @param playlist
-	 * @throws JMOPMusicbaseException 
+	 * @ 
 	 */
-	void startPlayingPlaylist(Playlist playlist) throws JMOPMusicbaseException;
+	void startPlayingPlaylist(Playlist playlist) ;
 
 	/**
 	 * Mark as not playing given playlist.
 	 * 
 	 * @param currentPlaylist
-	 * @throws JMOPMusicbaseException 
+	 * @ 
 	 */
-	void stopPlayingPlaylist() throws JMOPMusicbaseException;
+	void stopPlayingPlaylist() ;
 	
 
 	/**
@@ -65,24 +65,24 @@ public interface BasePlayerEngine {
 	/**
 	 * Play next track in the queque.
 	 * 
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
-	void play() throws JMOPMusicbaseException;
+	void play() ;
 
 	/**
 	 * Play the index-th track in the (current) playlist.
 	 * 
 	 * @param index
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
-	void play(int index) throws JMOPMusicbaseException;
+	void play(int index) ;
 
 	/**
 	 * Stop playing.
 	 * 
-	 * @throws JMOPMusicbaseException 
+	 * @ 
 	 */
-	void stop() throws JMOPMusicbaseException;
+	void stop() ;
 
 	/**
 	 * Pause playing.
@@ -107,15 +107,15 @@ public interface BasePlayerEngine {
 	/**
 	 * Go to (start playing) next track.
 	 * 
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
-	void toNext() throws JMOPMusicbaseException;
+	void toNext() ;
 
 	/**
 	 * Go to (start playing) previous track.
 	 * 
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
-	void toPrevious() throws JMOPMusicbaseException;
+	void toPrevious() ;
 
 }

@@ -71,19 +71,11 @@ public class TestingMusicbaseExtension implements Extension, BeforeEachCallback 
 
 
 	private TestingMusicbase prepareTestingMusicbase() {
+		LOG.debug("Preparing the testing musicbase ...");
+		TestingMusicbase tmb = new TestingMusicbase(musicbase, fileExisting);
 		
-		try {
-			LOG.debug("Preparing the testing musicbase ...");
-			return new TestingMusicbase(musicbase, fileExisting);
-
-		} catch (JMOPMusicbaseException e) {
-			e.printStackTrace();
-			assumeTrue(e == null, "Could not create testing musicbase");
-			return null;
-			
-		} finally {
-			LOG.debug("Prepared the testing musicbase!");
-		}
+		LOG.debug("Prepared the testing musicbase!");
+		return tmb;
 	}
 	
 }

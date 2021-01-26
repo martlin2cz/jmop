@@ -31,19 +31,19 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void play() throws JMOPMusicbaseException {
+	public void play()  {
 		Track track = runtime.current();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void play(int index) throws JMOPMusicbaseException {
+	public void play(int index)  {
 		Track track = runtime.play(index);
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void stop() throws JMOPMusicbaseException {
+	public void stop()  {
 		stopTrack();
 	}
 
@@ -63,19 +63,19 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void toNext() throws JMOPMusicbaseException {
+	public void toNext()  {
 		Track track = runtime.toNext();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void toPrevious() throws JMOPMusicbaseException {
+	public void toPrevious()  {
 		Track track = runtime.toPrevious();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void trackOver(Track track) throws JMOPMusicbaseException {
+	public void trackOver(Track track)  {
 		ifHasPlayNext();
 	}
 

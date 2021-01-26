@@ -74,7 +74,7 @@ class DefaultMusicbaseTest {
 
 	@Order(value = 1)
 	@Test
-	void testSave() throws JMOPMusicbaseException {
+	void testSave()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 
 		// create bundle
@@ -102,7 +102,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 2)
 	@Test
-	void testLoad() throws JMOPMusicbaseException {
+	void testLoad()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();
@@ -126,7 +126,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 3)
 	@Test
-	void testReload() throws JMOPMusicbaseException {
+	void testReload()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		// load 
@@ -140,7 +140,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 4)
 	@Test
-	void testRenameBundle() throws JMOPMusicbaseException {
+	void testRenameBundle()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();
@@ -157,7 +157,7 @@ class DefaultMusicbaseTest {
 
 	@Order(value = 5)
 	@Test
-	void testMoveTrack() throws JMOPMusicbaseException {
+	void testMoveTrack()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();

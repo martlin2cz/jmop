@@ -17,7 +17,7 @@ public class TrackMixin extends AbstractJMOPMixin {
 	public TrackMixin() {
 	}
 	
-	public Track getTrack() throws JMOPMusicbaseException {
+	public Track getTrack()  {
 		JMOPPlayer jmop = getJMOP();
 		TrackOrCurrentConverter converter = new TrackOrCurrentConverter(jmop);
 		

@@ -22,7 +22,7 @@ public class ListPlaylistsCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		Set<Playlist> playlists = fascade.playlists(bundle);
 		
 		if (bundle != null) {

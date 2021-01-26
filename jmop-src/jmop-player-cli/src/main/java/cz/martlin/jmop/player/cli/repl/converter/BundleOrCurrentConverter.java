@@ -28,7 +28,7 @@ public class BundleOrCurrentConverter extends AbstractJMOPConverter<Bundle> {
 		return bundle;
 	}
 
-	private Bundle pickBundleByName(String name) throws JMOPMusicbaseException {
+	private Bundle pickBundleByName(String name)  {
 		Bundle bundle = jmop.musicbase().bundleOfName(name);
 		if (bundle == null) {
 			fail("The bundle '" + name + "' does not exist.");

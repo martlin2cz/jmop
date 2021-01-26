@@ -52,18 +52,18 @@ public class JMOPPlayerFascade {
 
 
 	/////////////////////////////////////////////////////////////////
-	public Set<Bundle> bundles() throws JMOPMusicbaseException {
+	public Set<Bundle> bundles()  {
 		return musicbaseListing.bundles();
 	}
 	/////////////////////////////////////////////////////////////////
 
-	public Set<Playlist> playlists(Bundle bundleOrNull) throws JMOPMusicbaseException {
+	public Set<Playlist> playlists(Bundle bundleOrNull)  {
 		return musicbaseListing.playlists(bundleOrNull);
 	}
 
 	/////////////////////////////////////////////////////////////////
 
-	public Set<Track> tracks(Bundle bundleOrNull) throws JMOPMusicbaseException {
+	public Set<Track> tracks(Bundle bundleOrNull)  {
 		return musicbaseListing.tracks(bundleOrNull);
 	}
 
@@ -92,19 +92,19 @@ public class JMOPPlayerFascade {
 	}
 
 	/////////////////////////////////////////////////////////////////
-	public void play(Playlist playlist) throws JMOPMusicbaseException {
+	public void play(Playlist playlist)  {
 		engine.play(playlist);
 	}
 	
-	public void play() throws JMOPMusicbaseException {
+	public void play()  {
 		engine.play();
 	}
 
-	public void play(int index) throws JMOPMusicbaseException {
+	public void play(int index)  {
 		engine.play(index);
 	}
 
-	public void stop() throws JMOPMusicbaseException {
+	public void stop()  {
 		engine.stop();
 	}
 
@@ -120,63 +120,63 @@ public class JMOPPlayerFascade {
 		engine.seek(to);
 	}
 
-	public void toNext() throws JMOPMusicbaseException {
+	public void toNext()  {
 		engine.toNext();
 	}
 
-	public void toPrevious() throws JMOPMusicbaseException {
+	public void toPrevious()  {
 		engine.toPrevious();
 	}
 
 	/////////////////////////////////////////////////////////////////
 
-	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
+	public Bundle createNewBundle(String name)  {
 		return musicbaseModyfiing.createNewBundle(name);
 	}
 
-	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
+	public void renameBundle(Bundle bundle, String newName)  {
 		musicbaseModyfiing.renameBundle(bundle, newName);
 	}
 
-	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
+	public void removeBundle(Bundle bundle)  {
 		musicbaseModyfiing.removeBundle(bundle);
 	}
 
-	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
+	public Playlist createNewPlaylist(Bundle bundle, String name)  {
 		return musicbaseModyfiing.createNewPlaylist(bundle, name);
 	}
 
-	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
+	public void renamePlaylist(Playlist playlist, String newName)  {
 		musicbaseModyfiing.renamePlaylist(playlist, newName);
 	}
 
-	public void movePlaylist(Playlist playlist, Bundle newBundle) throws JMOPMusicbaseException {
+	public void movePlaylist(Playlist playlist, Bundle newBundle)  {
 		//TODO what to do with track in it? move too, keep original or copy?
 		musicbaseModyfiing.movePlaylist(playlist, newBundle, false);
 	}
 
-	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void removePlaylist(Playlist playlist)  {
 		musicbaseModyfiing.removePlaylist(playlist);
 	}
 
-	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
+	public Track createNewTrack(Bundle bundle, TrackData data)  {
 		throw new UnsupportedOperationException("deprectaed");
 	}
 
-	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {
+	public void renameTrack(Track track, String newTitle)  {
 		musicbaseModyfiing.renameTrack(track, newTitle);
 	}
 
-	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
+	public void moveTrack(Track track, Bundle newBundle)  {
 		//TODO remove from all playlists it contains?
 		musicbaseModyfiing.moveTrack(track, newBundle);
 	}
 
-	public void removeTrack(Track track) throws JMOPMusicbaseException {
+	public void removeTrack(Track track)  {
 		musicbaseModyfiing.removeTrack(track);
 	}
 	
-	public void updateTrack(Track track, TrackData newData) throws JMOPMusicbaseException {
+	public void updateTrack(Track track, TrackData newData)  {
 		musicbaseModyfiing.updateTrack(track, newData);
 	}
 

@@ -18,7 +18,7 @@ public class RemoveTrackCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected void doRun() throws JMOPMusicbaseException {
+	protected void doRun()  {
 		fascade.removeTrack(track);
 	}
 

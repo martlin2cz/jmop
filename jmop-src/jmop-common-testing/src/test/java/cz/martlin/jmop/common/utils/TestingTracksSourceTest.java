@@ -17,24 +17,24 @@ import javafx.util.Duration;
 class TestingTracksSourceTest {
 
 	@Test
-	void testWav() throws JMOPMusicbaseException {
+	void testWav()  {
 		check(TrackFileFormat.WAV);
 	}
 	
 	@Test
-	void testMP3() throws JMOPMusicbaseException {
+	void testMP3()  {
 		check(TrackFileFormat.MP3);
 	}
 	
 	@Disabled
 	@Test
-	void testOPUS() throws JMOPMusicbaseException {
+	void testOPUS()  {
 		check(TrackFileFormat.OPUS);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
 
-	private void check(TrackFileFormat format) throws JMOPMusicbaseException {
+	private void check(TrackFileFormat format)  {
 		TestingTracksSource source = new TestingTracksSource(format);
 		
 		Track track = createTestingTrack();

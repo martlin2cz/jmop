@@ -51,7 +51,7 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void startPlayingPlaylist(Playlist playlist)  {
 		if (playlistStarted != null) {
 			playlistStarted.onPlaylistStarted(this, playlist);
 		}
@@ -61,7 +61,7 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 	
 	@Override
-	public void stopPlayingPlaylist() throws JMOPMusicbaseException {
+	public void stopPlayingPlaylist()  {
 		Playlist playlist = currentPlaylist();
 		
 		super.stopPlayingPlaylist();
@@ -74,19 +74,19 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void play() throws JMOPMusicbaseException {
+	public void play()  {
 		Track track = runtime.current();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void play(int index) throws JMOPMusicbaseException {
+	public void play(int index)  {
 		Track track = runtime.play(index);
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void stop() throws JMOPMusicbaseException {
+	public void stop()  {
 		stopTrack();
 	}
 
@@ -106,26 +106,26 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void toNext() throws JMOPMusicbaseException {
+	public void toNext()  {
 		Track track = runtime.toNext();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void toPrevious() throws JMOPMusicbaseException {
+	public void toPrevious()  {
 		Track track = runtime.toPrevious();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void trackOver(Track track) throws JMOPMusicbaseException {
+	public void trackOver(Track track)  {
 		ifHasPlayNext();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	protected void playTrack(Track track) throws JMOPMusicbaseException {
+	protected void playTrack(Track track)  {
 		if (beforeTrackStarted != null) {
 			boolean canStart = beforeTrackStarted.beforeTrackStarted(this, track);
 
@@ -142,7 +142,7 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	protected void stopTrack() throws JMOPMusicbaseException {
+	protected void stopTrack()  {
 		Track track = runtime.current();
 
 		if (beforeTrackEnded != null) {

@@ -12,7 +12,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 
 /**
  * The main entry point for the musicbase. This class encapsulates the modyfiing
@@ -33,69 +33,61 @@ public class MusicbaseModyfiingEncapsulator {
 
 /////////////////////////////////////////////////////////////////////////////////////
 	
-	public void load() throws JMOPMusicbaseException {
+	public void load()  {
 		musicbase.load();
 	}
 
-	public void reload() throws JMOPMusicbaseException {
+	public void reload()  {
 		musicbase.load();
 	}
 	
 /////////////////////////////////////////////////////////////////////////////////////
 
-	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
+	public Bundle createNewBundle(String name)  {
 		return musicbase.createNewBundle(name);
 	}
 
-	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
+	public void renameBundle(Bundle bundle, String newName)  {
 		musicbase.renameBundle(bundle, newName);
 	}
 
-	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
-		listing.tracks(bundle).forEach((t) -> {
-			try { removeTrack(t); } catch (JMOPMusicbaseException e) { throw new RuntimeException(e); }
-		});
-		listing.playlists(bundle).forEach((p) -> {
-			try { removePlaylist(p); } catch (JMOPMusicbaseException e) { throw new RuntimeException(e); }
-		});
+	public void removeBundle(Bundle bundle)  {
+		listing.tracks(bundle).forEach((t) -> removeTrack(t));
+		listing.playlists(bundle).forEach((p) -> removePlaylist(p));
 		
 		musicbase.removeBundle(bundle);
 	}
 
-	public void bundleUpdated(Bundle bundle) throws JMOPMusicbaseException {
+	public void bundleUpdated(Bundle bundle)  {
 		musicbase.bundleUpdated(bundle);
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
+	public Playlist createNewPlaylist(Bundle bundle, String name)  {
 		return musicbase.createNewPlaylist(bundle, name);
 	}
 
-	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
+	public void renamePlaylist(Playlist playlist, String newName)  {
 		musicbase.renamePlaylist(playlist, newName);
 	}
 
-	public void movePlaylist(Playlist playlist, Bundle newBundle, boolean copyTracks) throws JMOPMusicbaseException {
+	public void movePlaylist(Playlist playlist, Bundle newBundle, boolean copyTracks)  {
 		if (copyTracks) {
-			listing.tracks(playlist).forEach((t) -> {
-				try { copyTrack(t, newBundle); } catch (JMOPMusicbaseException e) { throw new RuntimeException(e); }
-			});
+			listing.tracks(playlist).forEach((t) -> copyTrack(t, newBundle));
 		} else {
-			listing.tracks(playlist).forEach((t) -> {
-				try { moveTrack(t, newBundle); } catch (JMOPMusicbaseException e) { throw new RuntimeException(e); }
-			});
+			listing.tracks(playlist).forEach((t) -> moveTrack(t, newBundle));
 		}
 		
 		musicbase.movePlaylist(playlist, newBundle);
 	}
 
 
-	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void removePlaylist(Playlist playlist)  {
 		musicbase.removePlaylist(playlist);
 	}
 
-	public void playlistUpdated(Playlist playlist) throws JMOPMusicbaseException {
+	public void playlistUpdated(Playlist playlist)  {
 		musicbase.playlistUpdated(playlist);
 	}
 
@@ -107,7 +99,7 @@ public class MusicbaseModyfiingEncapsulator {
 	
 /////////////////////////////////////////////////////////////////////////////////////	
 	
-	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile) throws JMOPMusicbaseException {
+	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile)  {
 		if (contentsFile == null) {
 			return musicbase.createNewTrack(bundle, data, null);
 			
@@ -115,13 +107,13 @@ public class MusicbaseModyfiingEncapsulator {
 			try (InputStream contentsStream = new BufferedInputStream(new FileInputStream(contentsFile))) {
 				return musicbase.createNewTrack(bundle, data, contentsStream);
 			} catch (IOException e) {
-				throw new JMOPMusicbaseException("Could not load track contents", e);
+				throw new JMOPRuntimeException("Could not load track's source file contents", e);
 			}
 		}
 	}
 
 
-	public void copyTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
+	public void copyTrack(Track track, Bundle newBundle)  {
 		//TODO utilise
 		TrackData data = new TrackData(track.getIdentifier(), track.getTitle(), track.getDescription(), track.getDuration());
 		
@@ -133,12 +125,12 @@ public class MusicbaseModyfiingEncapsulator {
 		createNewTrack(newBundle, data, trackFile);
 	}
 	
-	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {
+	public void renameTrack(Track track, String newTitle)  {
 		musicbase.renameTrack(track, newTitle);
 
 	}
 
-	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
+	public void moveTrack(Track track, Bundle newBundle)  {
 		listing.playlistsContaining(track).forEach((p) -> {
 			removeTrackFromPlaylist(track, p);
 		});
@@ -147,7 +139,7 @@ public class MusicbaseModyfiingEncapsulator {
 	}
 
 
-	public void removeTrack(Track track) throws JMOPMusicbaseException {
+	public void removeTrack(Track track)  {
 		listing.playlistsContaining(track).forEach((p) -> {
 			removeTrackFromPlaylist(track, p);
 		});
@@ -158,14 +150,14 @@ public class MusicbaseModyfiingEncapsulator {
 	/**
 	 * @deprecated replaced by {@link #updateTrack(Track, TrackData)}
 	 * @param track
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
 	@Deprecated
-	public void trackUpdated(Track track) throws JMOPMusicbaseException {
+	public void trackUpdated(Track track)  {
 		musicbase.trackUpdated(track);
 	}
 
-	public void updateTrack(Track track, TrackData newData) throws JMOPMusicbaseException {
+	public void updateTrack(Track track, TrackData newData)  {
 		track.setIdentifier(newData.getIdentifier());
 		track.setDescription(newData.getDescription());
 		track.setDuration(newData.getDuration());

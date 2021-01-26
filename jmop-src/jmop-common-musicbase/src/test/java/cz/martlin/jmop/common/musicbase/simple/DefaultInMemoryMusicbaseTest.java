@@ -18,7 +18,6 @@ import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 
 public class DefaultInMemoryMusicbaseTest {
@@ -33,23 +32,19 @@ public class DefaultInMemoryMusicbaseTest {
 	public void before() {
 		BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
 
-		try {
-			prepareDefaultTestingContents(musicbase);
-		} catch (JMOPMusicbaseException e) {
-			Assumptions.assumeFalse(e == null, e.getMessage());
-		}
+		prepareDefaultTestingContents(musicbase);
 
 		this.musicbase = musicbase;
 	}
 
 	@AfterEach
-	public void after() throws JMOPMusicbaseException {
+	public void after()  {
 		MusicbaseDebugPrinter.print(musicbase);
 
 		this.musicbase = null;
 	}
 
-	private void prepareDefaultTestingContents(BaseMusicbaseModifing musicbase) throws JMOPMusicbaseException {
+	private void prepareDefaultTestingContents(BaseMusicbaseModifing musicbase)  {
 		testingBundle = musicbase.createNewBundle("TestingBundle");
 
 		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
@@ -62,7 +57,7 @@ public class DefaultInMemoryMusicbaseTest {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void testBundles() throws JMOPMusicbaseException {
+	public void testBundles()  {
 		Assumptions.assumeTrue(musicbase != null, "the musicbase is null");
 		Bundle fooBundle = musicbase.createNewBundle("FooBundle");
 		assertTrue(musicbase.bundles().contains(fooBundle));
@@ -76,7 +71,7 @@ public class DefaultInMemoryMusicbaseTest {
 	}
 
 	@Test
-	public void testPlaylists() throws JMOPMusicbaseException {
+	public void testPlaylists()  {
 		Playlist loremPlaylist = musicbase.createNewPlaylist(testingBundle, "lorem-playlist");
 		assertTrue(musicbase.playlists(testingBundle).contains(loremPlaylist));
 		
@@ -96,7 +91,7 @@ public class DefaultInMemoryMusicbaseTest {
 	}
 
 	@Test
-	public void testTracks() throws JMOPMusicbaseException {
+	public void testTracks()  {
 		Track holaTrack = musicbase.createNewTrack(testingBundle, td("ho2", "hola"), null);
 		assertTrue(musicbase.tracks(testingBundle).contains(holaTrack));
 		

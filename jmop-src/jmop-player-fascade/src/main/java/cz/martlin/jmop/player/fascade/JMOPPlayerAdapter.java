@@ -26,15 +26,15 @@ public class JMOPPlayerAdapter {
 	
 	/////////////////////////////////////////////////////////////////////////////////////
 	
-	public Bundle bundleOfName(String bundleNameOrNot) throws JMOPMusicbaseException {
+	public Bundle bundleOfName(String bundleNameOrNot)  {
 		return musicbaseListing.getBundle(bundleNameOrNot);
 	}
 	
-	public Playlist playlistOfName(Bundle bundleOrNull, String playlistNameOrNot) throws JMOPMusicbaseException {
+	public Playlist playlistOfName(Bundle bundleOrNull, String playlistNameOrNot)  {
 		return musicbaseListing.getPlaylist(bundleOrNull, playlistNameOrNot);
 	}
 	
-	public Track trackOfTitle(Bundle bundleOrNull, String trackTitleOrNot) throws JMOPMusicbaseException {
+	public Track trackOfTitle(Bundle bundleOrNull, String trackTitleOrNot)  {
 		return musicbaseListing.getTrack(bundleOrNull, trackTitleOrNot);
 	}	
 }
