@@ -8,5 +8,4 @@ public interface BaseDefaultStorageConfig extends BaseConfiguration {
 	TrackFileFormat getSaveFormat();
 
 	String getAllTrackPlaylistName();
-
 }

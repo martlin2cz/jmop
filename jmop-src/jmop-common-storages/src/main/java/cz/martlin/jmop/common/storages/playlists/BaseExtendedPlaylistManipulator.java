@@ -8,7 +8,6 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.utils.FileExtensionSpecifier;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 /**
  * An component responsible for storing the playlists, but also the tracks and

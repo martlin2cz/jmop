@@ -9,7 +9,6 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExtendedPlaylistManipulator {
 
@@ -23,19 +22,19 @@ public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExte
 /////////////////////////////////////////////////////////////////
 
 	@Override
-	public void savePlaylistWithBundle(Playlist playlist, File file) throws JMOPPersistenceException  {
+	public void savePlaylistWithBundle(Playlist playlist, File file) throws JMOPPersistenceException {
 		save(playlist, file, true, true);
 	}
 
 	@Override
-	public void saveOnlyPlaylist(Playlist playlist, File file) throws JMOPPersistenceException  {
+	public void saveOnlyPlaylist(Playlist playlist, File file) throws JMOPPersistenceException {
 		save(playlist, file, false, false);
 	}
 
-	private void save(Playlist playlist, File file, boolean withBundleInfo, boolean withTrackInfo) throws JMOPPersistenceException
-			 {
+	private void save(Playlist playlist, File file, boolean withBundleInfo, boolean withTrackInfo)
+			throws JMOPPersistenceException {
 		try {
-			Document document = xfls.createEmptyDocument();
+			Document document = xfls.createEmptyDocument(); //FIXME try to load the existing file and just enhance/override, not recreate from scratch
 			pushPlaylistIntoDocument(playlist, withTrackInfo, document);
 
 			if (withBundleInfo) {
@@ -45,18 +44,20 @@ public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExte
 
 			xfls.saveDocument(document, file);
 		} catch (Exception e) {
-			throw new JMOPPersistenceException("Cannot save playlist", e);
+			throw new JMOPPersistenceException("Cannot save playlist/bundle/tracks", e);
 		}
 	}
 
-	protected abstract void pushPlaylistIntoDocument(Playlist playlist, boolean withTrackInfo, Document document);
+	protected abstract void pushPlaylistIntoDocument(Playlist playlist, boolean withTrackInfo, Document document)
+			throws JMOPPersistenceException;
 
-	protected abstract void pushBundleDataIntoDocument(Bundle bundle, Document document);
-	
+	protected abstract void pushBundleDataIntoDocument(Bundle bundle, Document document)
+			throws JMOPPersistenceException;
+
 /////////////////////////////////////////////////////////////////
 
 	@Override
-	public Bundle loadOnlyBundle(File file) throws JMOPPersistenceException  {
+	public Bundle loadOnlyBundle(File file) throws JMOPPersistenceException {
 		try {
 			Document document = xfls.loadDocument(file);
 			return extractBundleFromDocument(document);
@@ -65,12 +66,13 @@ public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExte
 		}
 	}
 
-	protected abstract Bundle extractBundleFromDocument(Document document);
-	
+	protected abstract Bundle extractBundleFromDocument(Document document) throws JMOPPersistenceException;
+
 /////////////////////////////////////////////////////////////////
 
 	@Override
-	public Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file) throws JMOPPersistenceException  {
+	public Playlist loadOnlyPlaylist(Bundle bundle, Map<String, Track> tracks, File file)
+			throws JMOPPersistenceException {
 		try {
 			Document document = xfls.loadDocument(file);
 			return extractPlaylistFromDocument(bundle, tracks, document);
@@ -79,8 +81,9 @@ public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExte
 		}
 	}
 
-	protected abstract Playlist extractPlaylistFromDocument(Bundle bundle, Map<String, Track> tracks, Document document);
-	
+	protected abstract Playlist extractPlaylistFromDocument(Bundle bundle, Map<String, Track> tracks, Document document)
+			throws JMOPPersistenceException;
+
 /////////////////////////////////////////////////////////////////
 
 }

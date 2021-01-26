@@ -12,7 +12,7 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 
 public class InMemoryStorage implements BaseMusicbaseStorage {
 
@@ -32,7 +32,7 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 				createBundle(inmemoryTo, b);
 			});
 		} catch (RuntimeException e) {
-			throw new RuntimeException("Cannot load", e);
+			throw new JMOPRuntimeException("Cannot load", e);
 		}
 	}
 
@@ -42,16 +42,18 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 
 			inmemory.playlists(originalBundle).forEach(p -> addPlaylist(inmemoryTo, newBundle, p));
 			inmemory.tracks(originalBundle).forEach(t -> addTrack(inmemoryTo, newBundle, t));
+			
 		} catch (RuntimeException e) {
-			throw new RuntimeException("Cannot load bundle " + originalBundle, e);
+			throw new JMOPRuntimeException("Cannot load bundle " + originalBundle, e);
 		}
 	}
 
 	private void addPlaylist(BaseInMemoryMusicbase inmemoryTo, Bundle bundle, Playlist playlist) {
 		try {
 			inmemoryTo.createNewPlaylist(bundle, playlist.getName());
+			
 		} catch (RuntimeException e) {
-			throw new RuntimeException("Cannot load playlist " + playlist, e);
+			throw new JMOPRuntimeException("Cannot load playlist " + playlist, e);
 		}
 	}
 
@@ -59,8 +61,9 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 		try {
 			TrackData td = trackDataOfTrack(track);
 			inmemoryTo.createNewTrack(bundle, td, null);
+			
 		} catch (RuntimeException e) {
-			throw new RuntimeException("Cannot load track " + track, e);
+			throw new JMOPRuntimeException("Cannot load track " + track, e);
 		}
 	}
 
@@ -147,8 +150,9 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 		try {
 			Path path = Files.createTempFile("track", track.getTitle());
 			return path.toFile();
+			
 		} catch (IOException e) {
-			throw new RuntimeException("Cannot obtain track file", e);
+			throw new JMOPRuntimeException("Cannot obtain track file", e);
 		}
 	}
 

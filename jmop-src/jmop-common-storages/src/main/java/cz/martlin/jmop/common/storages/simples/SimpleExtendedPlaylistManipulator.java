@@ -15,7 +15,6 @@ import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
 public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistManipulator {

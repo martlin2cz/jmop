@@ -11,6 +11,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataSaver.SaveReason;
+import cz.martlin.jmop.common.storages.load.BaseMusicdataLoader;
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
 import cz.martlin.jmop.common.storages.utils.FilesLocatorExtension;
@@ -36,64 +37,9 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	//TODO extract the load procedure to custom class
-	// and then handle exceptions properly
-	
 	@Override
 	public void load(BaseInMemoryMusicbase inmemory)  {
-		Map<String, Bundle> bundles = loadBundles(inmemory);
-
-		for (String bundleName : bundles.keySet()) {
-			Bundle bundle = bundles.get(bundleName);
-
-			Map<String, Track> tracks = loadTracks(inmemory, bundleName, bundle);
-
-			loadPlaylists(inmemory, bundleName, bundle, tracks);
-		}
-	}
-
-	private void loadPlaylists(BaseInMemoryMusicbase inmemory, String bundleName, Bundle bundle,
-			Map<String, Track> tracks)  {
-
-		File bundleDir = locator.bundleDir(bundleName);
-		for (String playlistName : loader.loadPlaylistsNames(bundleDir, bundle, bundleName)) {
-			File playlistFile = locator.playlistFile(bundleName, playlistName);
-
-			Playlist playlist = loader.loadPlaylist(playlistFile, bundle, tracks, playlistName);
-
-			inmemory.addPlaylist(playlist);
-		}
-	}
-
-	private Map<String, Track> loadTracks(BaseInMemoryMusicbase inmemory, String bundleName, Bundle bundle)
-			 {
-
-		Map<String, Track> tracks = new HashMap<>();
-
-		File bundleDir = locator.bundleDir(bundleName);
-		for (String trackTitle : loader.loadTracksTitles(bundleDir, bundle, bundleName)) {
-			File trackFile = locator.trackFile(bundleName, trackTitle);
-			Track track = loader.loadTrack(trackFile, bundle, trackTitle);
-
-			inmemory.addTrack(track);
-			tracks.put(trackTitle, track);
-		}
-
-		return tracks;
-	}
-
-	private Map<String, Bundle> loadBundles(BaseInMemoryMusicbase inmemory)  {
-		Map<String, Bundle> bundles = new HashMap<>();
-
-		for (String bundleName : loader.loadBundlesNames()) {
-			File bundleDir = locator.bundleDir(bundleName);
-			Bundle bundle = loader.loadBundle(bundleDir, bundleName);
-
-			inmemory.addBundle(bundle);
-			bundles.put(bundleName, bundle);
-		}
-
-		return bundles;
+		loader.load(inmemory);
 	}
 
 	///////////////////////////////////////////////////////////////////////////

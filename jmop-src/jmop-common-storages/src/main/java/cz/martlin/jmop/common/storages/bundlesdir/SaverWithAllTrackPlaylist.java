@@ -11,7 +11,6 @@ import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
 import cz.martlin.jmop.common.storages.utils.FilesLocatorExtension;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 

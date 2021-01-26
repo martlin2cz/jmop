@@ -29,6 +29,7 @@ import cz.martlin.jmop.common.storages.dflt.DefaultStorage;
 import cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
@@ -197,7 +198,7 @@ class DefaultMusicbaseTest {
 
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
 
-		DefaultStorage storage = DefaultStorage.create(root, new DefaultConfig(),  inmemory);
+		DefaultStorage storage = DefaultStorage.create(root, new DefaultConfig(), new SimpleErrorReporter(), inmemory);
 		LoggingMusicbaseStorage logging = new LoggingMusicbaseStorage(storage);
 
 		BaseMusicbase musicbase = new PersistentMusicbase(inmemory, logging);
