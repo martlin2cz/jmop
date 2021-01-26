@@ -2,11 +2,7 @@ package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
 
-import cz.martlin.jmop.common.data.model.Bundle;
-import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 
 /**
  * The simple implementation of the locator, which maps simply:
@@ -20,8 +16,6 @@ import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 public class SimpleLocator implements BaseFilesLocator {
 
 	private final File root;
-	// TODO use some sort of "ProvidesExtension" or "HasFileExtension" utility
-	// interface
 	private final String playlistFileExtension;
 	private final String trackFileExtension;
 
@@ -38,23 +32,6 @@ public class SimpleLocator implements BaseFilesLocator {
 	public File getRootDirectory() {
 		return root;
 	}
-
-	@Override
-	public File getDirectoryOfBundle(String bundleName, TrackFileLocation location) {
-		return null; // XXX
-	}
-
-	@Override
-	public File getFileOfPlaylist(String bundleDirectoryName, String playlistName) {
-		return null; // XXX
-	}
-
-	@Override
-	public File getFileOfTrack(Bundle bundle, Track track, TrackFileLocation location, TrackFileFormat format) {
-		return null; // XXX
-	}
-	
-	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public File bundleDir(String bundleName) {

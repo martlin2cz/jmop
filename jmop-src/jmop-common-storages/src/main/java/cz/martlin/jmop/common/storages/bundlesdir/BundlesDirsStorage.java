@@ -2,8 +2,6 @@ package cz.martlin.jmop.common.storages.bundlesdir;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -17,7 +15,6 @@ import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
 import cz.martlin.jmop.common.storages.utils.FilesLocatorExtension;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class BundlesDirsStorage implements BaseMusicbaseStorage {
 
