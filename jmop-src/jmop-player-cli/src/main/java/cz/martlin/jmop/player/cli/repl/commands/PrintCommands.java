@@ -1,13 +1,19 @@
 package cz.martlin.jmop.player.cli.repl.commands;
 
+import java.util.Set;
+
 import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
+import cz.martlin.jmop.player.cli.repl.misc.PrintUtil;
 import cz.martlin.jmop.player.cli.repl.mixin.BundleMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.PlaylistMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import cz.martlin.jmop.player.players.PlayerStatus;
+import javafx.util.Duration;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.ScopeType;
@@ -23,7 +29,36 @@ public class PrintCommands {
 
 		@Override
 		protected void doRun()  {
-			System.out.println("PrintCommand.StatusCommand.doRun()");
+			Bundle currentBundle = jmop.playing().currentBundle();
+			
+			if (currentBundle == null) {
+				PrintUtil.print("Nothing beeing played");
+				return;
+			} else {
+				printPlaying();
+			}
+		}
+
+		private void printPlaying() {
+			Bundle currentBundle = jmop.playing().currentBundle();
+			Playlist currentPlaylist = jmop.playing().currentPlaylist();
+			Track currentTrack = jmop.playing().currentTrack();
+			
+			PrintUtil.print("Playing", currentPlaylist, "playlist from the", currentBundle, "bundle");
+			
+			if (currentTrack != null) {
+				PrintUtil.print("Current track:", currentTrack.getTitle());	
+			} else {
+				PrintUtil.print("No current track.");
+			}
+			
+			PlayerStatus currentStatus = jmop.playing().currentStatus();
+			PrintUtil.print("The player is " + currentStatus);
+			
+			if (currentTrack != null) {
+				Duration currentTime = jmop.playing().currentDuration();
+				PrintUtil.print("Current time is", currentTime, "out of", currentTrack.getDuration());
+			}
 		}
 	}
 	
@@ -40,7 +75,20 @@ public class PrintCommands {
 		@Override
 		protected void doRun()  {
 			Bundle bundle = this.bundle.getBundle();
-			System.out.println(bundle); //TODO FIXME implementme
+			print(bundle);
+		}
+
+		private void print(Bundle bundle) {
+			PrintUtil.print("Bundle", bundle);
+			printMetadata(bundle.getMetadata());
+			
+			Set<Playlist> playlists = jmop.musicbase().playlists(bundle);
+			Set<Track> tracks = jmop.musicbase().tracks(bundle);
+			
+			PrintUtil.print(playlists.size(), "playlists,", //
+					tracks.size(), "tracks"); //
+			
+			PrintUtil.emptyLine();
 		}
 	}
 
@@ -61,7 +109,24 @@ public class PrintCommands {
 		@Override
 		protected void doRun()  {
 			Playlist playlist = this.playlist.getPlaylist();
-			System.out.println(playlist); //TODO FIXME implementme
+			print(playlist);
+		}
+		
+		private void print(Playlist playlist) {
+			PrintUtil.print("Playlist", playlist);
+			printMetadata(playlist.getMetadata());
+				
+			for (int i = 0; i < playlist.getTracks().count(); i++) {
+				Track track = playlist.getTracks().getTrack(i);
+				
+				if (i != playlist.getCurrentTrackIndex()) {
+					PrintUtil.print(i, "", track, "(", track.getDuration(), ")");
+				} else {
+					PrintUtil.print(">", "", track, "(", track.getDuration(), ")");
+				}
+			}
+			
+			PrintUtil.emptyLine();
 		}
 	}
 
@@ -78,7 +143,23 @@ public class PrintCommands {
 		@Override
 		protected void doRun()  {
 			Track track = this.track.getTrack();
-			System.out.println(track); //TODO FIXME implementme
+			print(track);
 		}
+		
+		private void print(Track track) {
+			PrintUtil.print("Track", track);
+			printMetadata(track.getMetadata());
+			PrintUtil.print("Duration:", track.getDuration());
+			PrintUtil.print("ID:", track.getIdentifier());
+			PrintUtil.print("Description:", track.getDescription());
+			PrintUtil.emptyLine();
+		}
+	}
+	
+
+	private static void printMetadata(Metadata metadata) {
+		PrintUtil.print("Created:", metadata.getCreated(), //
+				", played:", metadata.getNumberOfPlays(), "x", //
+				", last played:", metadata.getLastPlayed());
 	}
 }

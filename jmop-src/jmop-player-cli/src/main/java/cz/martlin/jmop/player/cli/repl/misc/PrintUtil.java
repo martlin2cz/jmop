@@ -1,5 +1,8 @@
 package cz.martlin.jmop.player.cli.repl.misc;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -37,6 +40,12 @@ public class PrintUtil {
 			} else if (item instanceof Integer) {
 				Integer num = (Integer) item;
 				System.out.print(num);
+			
+			} else if (item instanceof Calendar) {
+				Calendar cal = (Calendar) item;
+				Date date = cal.getTime();
+				String formatted = new SimpleDateFormat().format(date);
+				System.out.print(formatted);
 				
 			} else if (item instanceof String) {
 				String string = (String) item;
