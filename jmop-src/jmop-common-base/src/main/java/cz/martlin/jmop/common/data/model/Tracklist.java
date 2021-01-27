@@ -3,6 +3,8 @@ package cz.martlin.jmop.common.data.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
+
 /**
  * Tracklist is simply immutable list of tracks.
  * 
@@ -33,6 +35,12 @@ public class Tracklist {
 	}
 
 	public Track getTrack(int index) {
+		if (index < 0 || index >= count()) {
+			Exception cause = new IndexOutOfBoundsException(index);
+			throw new JMOPRuntimeException("Playlist does not have track " + index + ", " //
+					+ "it has only " + count() + " tracks.", cause);
+		}
+		
 		return tracks.get(index);
 	}
 	

@@ -1,14 +1,29 @@
 package cz.martlin.jmop.player.cli.repl;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import cz.martlin.jmop.common.data.model.Bundle;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 //@TestMethodOrder(OrderAnnotation.class)
 class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 
+
+	@Test
+	void testListCommands()  {
+		String daftPunk = tmb.tm.daftPunk.getName();
+		
+		// bundles
+		exec("list", "bundles");
+		
+		// playlists
+//		exec("list", "playlists"); //FIXME list all playlists of all bundles
+		exec("list", "playlists", daftPunk);
+
+		// tracks
+//		exec("list", "tracks");	//FIXME list all tracks of all tracks
+		exec("list", "tracks", daftPunk);
+	}
+	
 	@Test
 //	@Order(value = 1)
 	void testCreateCommands()  {
@@ -20,26 +35,21 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		exec("create", "track", "deadmau5", "Ghosts N stuff", "duration", "3:15", "description", "deadmau5 feat. Rob Swire - Ghosts N Stuff");
 	}
 
-	@Disabled
 	@Test
 //	@Order(value = 2)
 	void testModifyPlaylist()  {
-		//TODO 
-		exec("create", "playlist", "LoremBundle", "testing");
-		exec("playlist", "LoremBundle/testing");
-
-		exec("playlist", "add", "track99");
-		exec("playlist", "LoremBundle/testing");
-
-		exec("playlist", "insert", "0", "track99");
-		exec("playlist", "LoremBundle/testing");
+		String londonElektricity = tmb.tm.londonElektricity.getName();
+		String bestTracks = tmb.tm.bestTracks.getName();
+		String invisibleWorlds = tmb.tm.invisibleWorlds.getTitle();
+		
+		exec("playlist", londonElektricity, bestTracks, "add", londonElektricity, invisibleWorlds);
+		exec("playlist", londonElektricity, bestTracks, "insert", londonElektricity, invisibleWorlds, "0");
 
 //		//FIXME track by index
-//		exec("playlist", "remove", "0");
-//		exec("playlist", "LoremBundle/testing");
+//		exec("playlist", ".", ".", "remove", "0");
+//		exec("playlist", ".", ".", "LoremBundle/testing");
 
-		exec("playlist", "remove", "track99");
-		exec("playlist", "LoremBundle/testing");
+		exec("playlist", londonElektricity, bestTracks, "remove", londonElektricity, invisibleWorlds);
 	}
 
 	@Test

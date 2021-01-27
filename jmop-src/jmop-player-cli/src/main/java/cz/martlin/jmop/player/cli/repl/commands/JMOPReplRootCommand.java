@@ -6,10 +6,22 @@ import picocli.CommandLine.Command;
 
 @Command(name = "jmop-cli", //
 		subcommands = { //
+				ListCommand.class, //
 				CreateCommand.class, //
 				RenameCommand.class, //
 				MoveCommand.class, //
 				RemoveCommand.class, //
+				PrintCommands.StatusCommand.class, //
+				PrintCommands.BundleInfoCommand.class, //
+				PrintCommands.PlaylistInfoCommand.class, //
+				PrintCommands.TrackInfoCommand.class, //
+				PlayCommand.class, //
+				PlayingCommands.PauseCommand.class, //
+				PlayingCommands.ResumeCommand.class, //
+				PlayingCommands.StopCommand.class, //
+				PlayingCommands.SeekCommand.class, //
+				PlayingCommands.NextCommand.class, //
+				PlayingCommands.PreviousCommand.class, //
 		}) //
 public class JMOPReplRootCommand extends AbstractCommand {
 

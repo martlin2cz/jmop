@@ -1,16 +1,10 @@
 package cz.martlin.jmop.player.cli.repl;
 
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import cz.martlin.jmop.common.data.model.Playlist;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 //@TestMethodOrder(OrderAnnotation.class)
 class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
@@ -28,6 +22,18 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	}
 
 
+	@Test
+	void testListCommands()  {
+		// bundles
+		exec("list", "bundles");
+		
+		// playlists
+		exec("list", "playlists", ".");
+		
+		// tracks
+		exec("list", "tracks", ".");
+	}
+	
 	@Test
 //	@Order(value = 2)
 	void testCreate()  {
@@ -83,19 +89,22 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 		exec("remove", "bundle", ".");
 	}
 	
-	@Disabled
 	@Test
 //	@Order(value = 2)
 	void testModifyPlaylist()  {
-		exec("playlist", ".", "add", "track99");
+		String invisibleWorlds = tmb.tm.invisibleWorlds.getTitle();
+		
+		exec("playlist", ".", ".", "add", ".", invisibleWorlds);
 
-		exec("playlist", ".", "insert", "0", "track99");
+		exec("playlist", ".", ".", "insert", ".", invisibleWorlds, "0");
+		exec("playlist", ".", ".", "insert", ".", ".", "0");
 
 //		//FIXME track by index
-//		exec("playlist", ".", "remove", "0");
-//		exec("playlist", ".", "LoremBundle/testing");
+//		exec("playlist", ".", ".", "remove", "0");
+//		exec("playlist", ".", ".", "LoremBundle/testing");
 
-		exec("playlist", ".", "remove", "track99");
+		exec("playlist", ".", ".", "remove",".",  invisibleWorlds);
+		exec("playlist", ".", ".", "remove", ".", ".");
 	}
 
 	

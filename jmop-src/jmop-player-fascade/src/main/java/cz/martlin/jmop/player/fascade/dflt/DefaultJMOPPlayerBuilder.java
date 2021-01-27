@@ -56,7 +56,7 @@ public class DefaultJMOPPlayerBuilder {
 
 		JMOPConfig configModule = new JMOPConfig(config, musicbase, engine);
 		JMOPMusicbase musicbaseModule = new JMOPMusicbase(musicbase);
-		JMOPPlaying engineModule = new JMOPPlaying(musicbase, engine);
+		JMOPPlaying engineModule = new JMOPPlaying(config, musicbase, engine);
 
 		return new JMOPPlayer(configModule, musicbaseModule, engineModule);
 	}

@@ -62,6 +62,9 @@ public class MusicbaseListingEncapsulator {
 		return new TreeSet<>(playlist.getTracks().getTracks());
 	}
 	
+	public int indexOf(Playlist playlist, Track track) {
+		return playlist.getTracks().getTracks().indexOf(track);
+	}
 
 	public Set<Playlist> playlistsContaining(Track track)  {
 		Bundle bundle = track.getBundle();

@@ -2,7 +2,6 @@ package cz.martlin.jmop.player.engine.engines.withhandlers;
 
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.engines.AbstractEngineWithPlayerAndRuntime;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.AfterTrackEndedHandler;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.AfterTrackStartedHandler;
@@ -143,7 +142,10 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 
 	@Override
 	protected void stopTrack()  {
-		Track track = runtime.current();
+		//FIXME in case the current track was removed by the time,
+		// the runtime's current track fails. Thus, as a workaround, 
+		// we pick the track from the player.
+		Track track = player.actualTrack(); //runtime.current();  
 
 		if (beforeTrackEnded != null) {
 			beforeTrackEnded.beforeTrackEnded(this, track);

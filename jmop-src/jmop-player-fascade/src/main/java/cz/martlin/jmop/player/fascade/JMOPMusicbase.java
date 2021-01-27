@@ -3,6 +3,8 @@ package cz.martlin.jmop.player.fascade;
 import java.io.File;
 import java.util.Set;
 
+import cz.martlin.jmop.common.data.misc.AutoSavingPlaylistModifier;
+import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -10,7 +12,6 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class JMOPMusicbase {
 	private final BaseMusicbase musicbase;
@@ -73,6 +74,7 @@ public class JMOPMusicbase {
 
 	public void removeBundle(Bundle bundle)  {
 		modyfiing.removeBundle(bundle);
+		//TODO stop if current?
 	}
 
 	public Playlist createNewPlaylist(Bundle bundle, String name)  {
@@ -85,12 +87,18 @@ public class JMOPMusicbase {
 
 	public void movePlaylist(Playlist playlist, Bundle newBundle, boolean copyTracks)  {
 		modyfiing.movePlaylist(playlist, newBundle, copyTracks);
+		//TODO stop if current?
 	}
 
 	public void removePlaylist(Playlist playlist)  {
 		modyfiing.removePlaylist(playlist);
+		//TODO stop if current?
 	}
 
+	public PlaylistModifier modifyPlaylist(Playlist playlist) {
+		return new AutoSavingPlaylistModifier(playlist, modyfiing);
+	}
+	
 	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile)  {
 		return modyfiing.createNewTrack(bundle, data, contentsFile);
 	}
@@ -101,14 +109,19 @@ public class JMOPMusicbase {
 
 	public void moveTrack(Track track, Bundle newBundle)  {
 		modyfiing.moveTrack(track, newBundle);
+		//TODO to next if current?
 	}
 
 	public void removeTrack(Track track)  {
 		modyfiing.removeTrack(track);
+		//TODO to next if current?
 	}
 
 	public void updateTrack(Track track, TrackData newData)  {
 		modyfiing.updateTrack(track, newData);
 	}
+
+
+
 
 }

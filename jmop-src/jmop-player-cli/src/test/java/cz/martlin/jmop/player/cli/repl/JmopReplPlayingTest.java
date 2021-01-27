@@ -2,32 +2,15 @@ package cz.martlin.jmop.player.cli.repl;
 
 import org.junit.jupiter.api.Test;
 
-import cz.martlin.jmop.common.data.model.Bundle;
-import cz.martlin.jmop.common.data.model.Playlist;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-
 class JmopReplPlayingTest extends AbstractReplTest {
 
-	@Test
-	void testListCommands()  {
-
-		exec("bundles");
-
-		exec("playlists");
-		exec("playlists", "BarBundle");
-
-		exec("tracks");
-		exec("tracks", "BarBundle");
-	}
 
 	@Test
 	void testStatusCommand()  {
 
 		exec("status");
 
-		Bundle bundle = jmop.musicbase().bundleOfName("BarBundle");
-		Playlist playlist = jmop.musicbase().playlistOfName(bundle, "all tracks");
-		jmop.playing().play(playlist);
+		jmop.playing().play(tmb.tm.daftPunk);
 
 		exec("status");
 
@@ -43,8 +26,8 @@ class JmopReplPlayingTest extends AbstractReplTest {
 
 	@Test
 	void testPlayingCommands()  {
-
-		exec("play", "BarBundle");
+		String daftPunk = tmb.tm.daftPunk.getName();
+		exec("play", "bundle", daftPunk);
 		exec("status");
 
 		exec("pause");
@@ -75,21 +58,23 @@ class JmopReplPlayingTest extends AbstractReplTest {
 	@Test
 	void testPlayingNextAndPrevious()  {
 
-		exec("play", "BarBundle");
+		String daftPunk = tmb.tm.daftPunk.getName();
+		exec("play", "bundle", daftPunk);
+		
 		exec("status");
-		exec("playlist");
+		exec("playlist", ".", ".");
 
 		exec("next");
 		exec("status");
-		exec("playlist");
+		exec("playlist", ".", ".");
 
 		exec("previous");
 		exec("status");
-		exec("playlist");
+		exec("playlist", ".", ".");
 
 		exec("stop");
 		exec("status");
-		exec("playlist");
+		exec("playlist", ".", ".");
 	}
 	
 }
