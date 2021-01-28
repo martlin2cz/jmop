@@ -21,13 +21,13 @@ public class AutoSavingPlaylistModifier extends ExtendedPlaylistModifier {
 	}
 
 	@Override
-	public void insertBefore(Track track, int index) {
+	public void insertBefore(Track track, TrackIndex index) {
 		super.insertBefore(track, index);
 		reportChanged();
 	}
 
 	@Override
-	public void remove(int index) {
+	public void remove(TrackIndex index) {
 		super.remove(index);
 		reportChanged();
 	}
@@ -39,13 +39,13 @@ public class AutoSavingPlaylistModifier extends ExtendedPlaylistModifier {
 	}
 
 	@Override
-	public void move(int sourceIndex, int targetIndex) {
+	public void move(TrackIndex sourceIndex, TrackIndex targetIndex) {
 		super.move(sourceIndex, targetIndex);
 		reportChanged();
 	}
 
 	@Override
-	public void moveToEnd(int sourceIndex) {
+	public void moveToEnd(TrackIndex sourceIndex) {
 		super.moveToEnd(sourceIndex);
 		reportChanged();
 	}

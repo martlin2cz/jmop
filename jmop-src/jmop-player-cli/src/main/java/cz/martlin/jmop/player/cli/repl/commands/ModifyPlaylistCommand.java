@@ -1,6 +1,7 @@
 package cz.martlin.jmop.player.cli.repl.commands;
 
 import cz.martlin.jmop.common.data.misc.PlaylistModifier;
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
@@ -51,7 +52,7 @@ public class ModifyPlaylistCommand {
 		private PlaylistInfoCommand parent;
 		
 		@Parameters(arity = "1")
-		private int before;
+		private TrackIndex before;
 		
 		@Mixin
 		private TrackMixin track;

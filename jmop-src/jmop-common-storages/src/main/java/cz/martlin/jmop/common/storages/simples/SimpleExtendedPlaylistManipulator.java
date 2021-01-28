@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -57,7 +58,7 @@ public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistMa
 		String name = file.getName().replace("." + fileExtension(), "");
 
 		Metadata metadata = Metadata.createNew();
-		int currentTrackIndex = 0;
+		TrackIndex currentTrackIndex = TrackIndex.ofIndex(0);
 		Tracklist tracklist = loadTracklist(bundle, file);
 		return new Playlist(bundle, name, tracklist, currentTrackIndex, metadata);
 	}

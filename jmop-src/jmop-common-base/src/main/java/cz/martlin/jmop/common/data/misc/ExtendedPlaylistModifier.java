@@ -1,10 +1,8 @@
 package cz.martlin.jmop.common.data.misc;
 
-import java.util.List;
 import java.util.Random;
 
 import cz.martlin.jmop.common.data.model.Playlist;
-import cz.martlin.jmop.common.data.model.Track;
 
 public class ExtendedPlaylistModifier extends PlaylistModifier {
 
@@ -42,12 +40,15 @@ public class ExtendedPlaylistModifier extends PlaylistModifier {
 		int count = playlist.getTracks().count();
 		
 		for (int i = 0; i < amount; i++) {
-			int sourceIndex = random.nextInt(count);
-			int targetIndex = random.nextInt(count);
+			int sourceIndx = random.nextInt(count);
+			int targetIndx = random.nextInt(count);
 			
-			if (targetIndex < count) {
+			if (targetIndx < count) {
+				TrackIndex sourceIndex = TrackIndex.ofIndex(sourceIndx);
+				TrackIndex targetIndex = TrackIndex.ofIndex(targetIndx);
 				move(sourceIndex, targetIndex);	
 			} else {
+				TrackIndex sourceIndex = TrackIndex.ofIndex(sourceIndx);
 				moveToEnd(sourceIndex);
 			}
 			

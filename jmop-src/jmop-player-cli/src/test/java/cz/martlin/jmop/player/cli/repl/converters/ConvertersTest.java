@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.opentest4j.AssertionFailedError;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.utils.TestingMusicbaseExtension;
@@ -132,16 +133,16 @@ class ConvertersTest {
 	
 	@Test
 	void testTrackOfPlaylistConverter() {
-		TrackOfPlaylistConverter converter = new TrackOfPlaylistConverter(jmop);
+		TrackIndexConverter converter = new TrackIndexConverter(jmop);
 
-		check(converter, "0", 0);
-		check(converter, "1.", 1);
-		check(converter, "+1", 1);
-		check(converter, "+0", 0);
-		check(converter, "-0", 0);
+		check(converter, "1", TrackIndex.ofHuman(1));
+		check(converter, "2.", TrackIndex.ofHuman(2));
+		check(converter, "+1", TrackIndex.ofHuman(2));
+		check(converter, "+0", TrackIndex.ofHuman(1));
+		check(converter, "-0", TrackIndex.ofHuman(1));
 		//check(converter, "-1", TypeConversionException.class); // no such track -1th
-		check(converter, "Just One Second", 0);
-		check(converter, "Meteorites", 1);
+		check(converter, "Just One Second", TrackIndex.ofHuman(1));
+		check(converter, "Meteorites", TrackIndex.ofHuman(2));
 		check(converter, "Whatever", TypeConversionException.class);
 	}
 	

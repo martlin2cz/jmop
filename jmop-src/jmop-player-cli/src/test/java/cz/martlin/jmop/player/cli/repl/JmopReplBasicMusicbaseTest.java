@@ -43,7 +43,7 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		String invisibleWorlds = tmb.tm.invisibleWorlds.getTitle();
 		
 		exec("playlist", londonElektricity, bestTracks, "add", londonElektricity, invisibleWorlds);
-		exec("playlist", londonElektricity, bestTracks, "insert", londonElektricity, invisibleWorlds, "0");
+		exec("playlist", londonElektricity, bestTracks, "insert", londonElektricity, invisibleWorlds, "1");
 
 //		//FIXME track by index
 //		exec("playlist", ".", ".", "remove", "0");

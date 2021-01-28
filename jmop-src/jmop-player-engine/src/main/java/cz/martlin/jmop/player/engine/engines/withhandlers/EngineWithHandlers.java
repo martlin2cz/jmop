@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.engine.engines.withhandlers;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.engine.engines.AbstractEngineWithPlayerAndRuntime;
@@ -79,7 +80,7 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void play(int index)  {
+	public void play(TrackIndex index)  {
 		Track track = runtime.play(index);
 		stopAndPlayAnother(track);
 	}

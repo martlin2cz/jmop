@@ -101,7 +101,7 @@ public class JMOPPlayerFascade {
 	}
 
 	public void play(int index)  {
-		engine.play(index);
+		throw new UnsupportedOperationException();
 	}
 
 	public void stop()  {

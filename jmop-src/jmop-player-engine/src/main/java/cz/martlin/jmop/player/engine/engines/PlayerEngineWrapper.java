@@ -1,9 +1,9 @@
 package cz.martlin.jmop.player.engine.engines;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
@@ -70,7 +70,7 @@ public class PlayerEngineWrapper {
 		engine.play();
 	}
 
-	public void play(int index)  {
+	public void play(TrackIndex index)  {
 		requirePlaying();
 		engine.play(index);
 	}

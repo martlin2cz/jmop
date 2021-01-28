@@ -2,6 +2,8 @@ package cz.martlin.jmop.player.engine.engines.withhandlers;
 
 import org.junit.jupiter.api.Nested;
 
+import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
+import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.AfterTrackEndedHandler;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.AfterTrackStartedHandler;
@@ -20,6 +22,11 @@ class EnginesWithHandlersTest {
 	public static class EngineWithNoHandlersTest extends AbstractPlayerEngineTest {
 
 		@Override
+		protected BaseInMemoryMusicbase createMusicbase() {
+			return new DefaultInMemoryMusicbase();
+		}
+		
+		@Override
 		protected BasePlayerEngine createEngine() {
 			BasePlayer player = new TestingPlayer();
 			return new EngineWithHandlers(player, null, null, null, null, null, null);
@@ -29,6 +36,11 @@ class EnginesWithHandlersTest {
 	@Nested
 	public static class EngineWithPrintingHandlersTest extends AbstractPlayerEngineTest {
 
+		@Override
+		protected BaseInMemoryMusicbase createMusicbase() {
+			return new DefaultInMemoryMusicbase();
+		}
+		
 		@Override
 		protected BasePlayerEngine createEngine() {
 			BasePlayer player = new TestingPlayer();

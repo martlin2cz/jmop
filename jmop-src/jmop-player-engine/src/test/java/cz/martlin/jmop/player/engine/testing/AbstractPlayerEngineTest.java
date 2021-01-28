@@ -5,21 +5,34 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.utils.TestingMusicbase;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.LoggingPlayerEngine;
 import cz.martlin.jmop.player.players.PlayerStatus;
 
 public abstract class AbstractPlayerEngineTest {
 
-	protected TestingMusicbase musicbase;
+	protected TestingMusicbase tmb;
+	
+	public AbstractPlayerEngineTest() {
+	}
+	
+	@BeforeEach
+	public void before() {
+		BaseInMemoryMusicbase mb = createMusicbase();
+		tmb = new TestingMusicbase(mb, true);
+	}
 	
 	protected abstract BasePlayerEngine createEngine();
+
+	protected abstract BaseInMemoryMusicbase createMusicbase();
+
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,40 +43,40 @@ public abstract class AbstractPlayerEngineTest {
 		check(engine, null, null, PlayerStatus.NO_TRACK);
 		waitAbit();
 
-		engine.startPlayingPlaylist(musicbase.discovery);
-		check(engine, musicbase.discovery, null, PlayerStatus.NO_TRACK);
+		engine.startPlayingPlaylist(tmb.discovery);
+		check(engine, tmb.discovery, null, PlayerStatus.NO_TRACK);
 		waitAbit();
 
 		engine.play();
-		check(engine, musicbase.discovery, musicbase.oneMoreTime, PlayerStatus.PLAYING);
+		check(engine, tmb.discovery, tmb.oneMoreTime, PlayerStatus.PLAYING);
 		waitAbit();
 
 		engine.pause();
-		check(engine, musicbase.discovery, musicbase.oneMoreTime, PlayerStatus.PAUSED);
+		check(engine, tmb.discovery, tmb.oneMoreTime, PlayerStatus.PAUSED);
 		waitAbit();
 
 		engine.toNext();
-		check(engine, musicbase.discovery, musicbase.aerodynamic, PlayerStatus.PLAYING);
+		check(engine, tmb.discovery, tmb.aerodynamic, PlayerStatus.PLAYING);
 		waitAbit();
 
 		engine.stop();
-		check(engine, musicbase.discovery, null, PlayerStatus.STOPPED);
+		check(engine, tmb.discovery, null, PlayerStatus.STOPPED);
 		waitAbit();
 
 		engine.play();
-		check(engine, musicbase.discovery, musicbase.aerodynamic, PlayerStatus.PLAYING);
+		check(engine, tmb.discovery, tmb.aerodynamic, PlayerStatus.PLAYING);
 		waitAbit();
 
 		engine.toNext();
-		check(engine, musicbase.discovery, musicbase.verdisQuo, PlayerStatus.PLAYING);
+		check(engine, tmb.discovery, tmb.verdisQuo, PlayerStatus.PLAYING);
 		waitAbit();
 
 		engine.toPrevious();
-		check(engine, musicbase.discovery, musicbase.verdisQuo, PlayerStatus.PLAYING);
+		check(engine, tmb.discovery, tmb.aerodynamic, PlayerStatus.PLAYING);
 		waitAbit();
 
 		engine.stop();
-		check(engine, musicbase.discovery, null, PlayerStatus.STOPPED);
+		check(engine, tmb.discovery, null, PlayerStatus.STOPPED);
 		waitAbit();
 		
 		engine.stopPlayingPlaylist();

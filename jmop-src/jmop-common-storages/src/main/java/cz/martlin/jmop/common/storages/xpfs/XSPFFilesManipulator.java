@@ -8,6 +8,7 @@ import java.util.Map;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -79,11 +80,11 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 
 	private Playlist extractPlaylistDataFromDocument(Bundle bundle, Map<String, Track> tracks, Element root) {
 		String name = extractName(root);
-		int currentTrack = extractPlaylistCurrentTrack(root);
+		TrackIndex currentTrackIndex  = extractPlaylistCurrentTrack(root);
 		Metadata metadata = extractMetadata(root, "playlist");
 		Tracklist tracklist = extractTracks(bundle, tracks, root);
 
-		return new Playlist(bundle, name, tracklist, currentTrack, metadata);
+		return new Playlist(bundle, name, tracklist, currentTrackIndex, metadata);
 	}
 
 	@Override
@@ -97,7 +98,7 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 		String name = playlist.getName();
 		pushName(document, root, name);
 
-		int currentTrack = playlist.getCurrentTrackIndex();
+		TrackIndex currentTrack = playlist.getCurrentTrackIndex();
 		pushPlaylistCurrentTrack(document, root, currentTrack);
 
 		Metadata metadata = playlist.getMetadata();
@@ -174,8 +175,8 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 		XSPFDocumentUtility.setExtensionValue(document, element, extensionElement, "lastPlayed", lastPlayedStr);
 	}
 
-	private void pushPlaylistCurrentTrack(Document document, Element root, int currentTrack) {
-		String currTrackStr = Integer.toString(currentTrack);
+	private void pushPlaylistCurrentTrack(Document document, Element root, TrackIndex currentTrack) {
+		String currTrackStr = Integer.toString(currentTrack.getHuman());
 		XSPFDocumentUtility.setExtensionValue(document, root, "playlist", "currentTrack", currTrackStr);
 	}
 
@@ -228,12 +229,14 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 		return XSPFDocumentUtility.getExtensionValue(root, "bundle", "name");
 	}
 
-	private int extractPlaylistCurrentTrack(Element root) {
+	private TrackIndex extractPlaylistCurrentTrack(Element root) {
 		String currTrackStr = XSPFDocumentUtility.getExtensionValue(root, "playlist", "currentTrack");
-		if (currTrackStr != null && !currTrackStr.isEmpty()) {
-			return Integer.parseInt(currTrackStr);
-		} else {
-			return 0;
+		try {
+			int indx = Integer.parseInt(currTrackStr);
+			return TrackIndex.ofHuman(indx);
+		} catch (NumberFormatException | NullPointerException | StringIndexOutOfBoundsException e) {
+			//TODO warn
+			return TrackIndex.ofIndex(0);
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
@@ -47,7 +48,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * 
 	 * @return
 	 */
-	public int currentTrackIndex() {
+	public TrackIndex currentTrackIndex() {
 		return playlist.getCurrentTrackIndex();
 	}
 
@@ -57,7 +58,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public int playedCount() {
-		return playlist.getCurrentTrackIndex();
+		return playlist.getCurrentTrackIndex().getIndex();
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public int remainingCount() {
-		return playlist.getTracks().count() - playlist.getCurrentTrackIndex() - 1;
+		return playlist.getTracks().count() - playlist.getCurrentTrackIndex().getIndex() - 1;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +77,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @param index
 	 * @return
 	 */
-	public Track get(int index) {
+	public Track get(TrackIndex index) {
 		return playlist.getTracks().getTrack(index);
 	}
 
@@ -86,7 +87,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track lastWasPlayed() {
-		return playlist.getTracks().getTrack(playlist.getCurrentTrackIndex() - 1);
+		return playlist.getTracks().getTrack(playlist.getCurrentTrackIndex().decrement());
 	}
 
 	/**
@@ -104,7 +105,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track nextToBePlayed() {
-		return playlist.getTracks().getTrack(playlist.getCurrentTrackIndex() + 1);
+		return playlist.getTracks().getTrack(playlist.getCurrentTrackIndex().increment());
 	}
 
 	/**
@@ -113,7 +114,9 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public List<Track> played() {
-		return playlist.getTracks().subList(0, playlist.getCurrentTrackIndex());
+		return playlist.getTracks().subList( //
+				TrackIndex.ofIndex(0), //
+				playlist.getCurrentTrackIndex());
 	}
 
 	/**
@@ -122,7 +125,9 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public List<Track> toBePlayed() {
-		return playlist.getTracks().subList(playlist.getCurrentTrackIndex() + 1, count());
+		return playlist.getTracks().subList( //
+				playlist.getCurrentTrackIndex().increment(), //
+				TrackIndex.ofIndex(count()));
 	}
 
 	/**
@@ -160,7 +165,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track toNext() {
-		playlist.setCurrentTrackIndex(playlist.getCurrentTrackIndex() + 1);
+		playlist.setCurrentTrackIndex(playlist.getCurrentTrackIndex().increment());
 		fireValueChangedEvent();
 
 		return current();
@@ -172,7 +177,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track toPrevious() {
-		playlist.setCurrentTrackIndex(playlist.getCurrentTrackIndex() - 1);
+		playlist.setCurrentTrackIndex(playlist.getCurrentTrackIndex().decrement());
 		fireValueChangedEvent();
 
 		return current();
@@ -184,7 +189,7 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * 
 	 * @param index
 	 */
-	public Track play(int index) {
+	public Track play(TrackIndex index) {
 		playlist.setCurrentTrackIndex(index);
 		fireValueChangedEvent();
 		

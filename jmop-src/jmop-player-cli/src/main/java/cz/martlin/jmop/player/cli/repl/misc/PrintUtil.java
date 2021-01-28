@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -33,6 +34,10 @@ public class PrintUtil {
 				Track track = (Track) item;
 				System.out.print(track.getTitle());
 				
+			} else if (item instanceof TrackIndex) {
+				TrackIndex index = (TrackIndex) item;
+				System.out.print(index.getHuman() + ".");
+						
 			} else if (item instanceof Duration) {
 				Duration duration = (Duration) item;
 				System.out.print(DurationUtilities.toHumanString(duration));

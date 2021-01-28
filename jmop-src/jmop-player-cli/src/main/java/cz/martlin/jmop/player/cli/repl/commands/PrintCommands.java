@@ -1,7 +1,9 @@
 package cz.martlin.jmop.player.cli.repl.commands;
 
+import java.util.Map;
 import java.util.Set;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -116,11 +118,12 @@ public class PrintCommands {
 			PrintUtil.print("Playlist", playlist);
 			printMetadata(playlist.getMetadata());
 				
-			for (int i = 0; i < playlist.getTracks().count(); i++) {
-				Track track = playlist.getTracks().getTrack(i);
+			Map<TrackIndex, Track> tracks = playlist.getTracks().asIndexedMap();
+			for (TrackIndex index: tracks.keySet()) {
+				Track track = tracks.get(index);
 				
-				if (i != playlist.getCurrentTrackIndex()) {
-					PrintUtil.print(i, "", track, "(", track.getDuration(), ")");
+				if (index.notEqual(playlist.getCurrentTrackIndex())) {
+					PrintUtil.print(index, "", track, "(", track.getDuration(), ")");
 				} else {
 					PrintUtil.print(">", "", track, "(", track.getDuration(), ")");
 				}

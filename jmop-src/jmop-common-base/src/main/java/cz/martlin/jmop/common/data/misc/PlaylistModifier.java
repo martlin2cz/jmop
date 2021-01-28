@@ -1,7 +1,10 @@
 package cz.martlin.jmop.common.data.misc;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -15,18 +18,29 @@ public class PlaylistModifier {
 		this.playlist = playlist;
 	}
 
+///////////////////////////////////////////////////////////////////////////
+
+	public List<TrackIndex> find(Track track) {
+		return IntStream.range(0, playlist.getTracks().count()) //
+				.mapToObj(i -> TrackIndex.ofIndex(i)) //
+				.filter(ti -> 
+				playlist.getTracks().getTrack(ti).equals(track)
+				) //
+				.collect(Collectors.toList());
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 	public void append(Track track) {
 		addTrack(track);
 	}
 
-	public void insertBefore(Track track, int index) {
+	public void insertBefore(Track track, TrackIndex index) {
 		checkIndex(index);
 		insertTrack(track, index);
 	}
 
-	public void remove(int index) {
-		boolean removingCurrent = playlist.getCurrentTrackIndex() == index;
+	public void remove(TrackIndex index) {
+		boolean removingCurrent = playlist.getCurrentTrackIndex().equal(index);
 
 		removeTrack(index);
 
@@ -43,12 +57,12 @@ public class PlaylistModifier {
 		});
 	}
 
-	public void move(int sourceIndex, int targetIndex) {
-		boolean movingCurrent = playlist.getCurrentTrackIndex() == sourceIndex;
+	public void move(TrackIndex sourceIndex, TrackIndex targetIndex) {
+		boolean movingCurrent = playlist.getCurrentTrackIndex().equal(sourceIndex);
 
 		Track track = removeTrack(sourceIndex);
-		if (sourceIndex < targetIndex) {
-			targetIndex--;
+		if (sourceIndex.smallerThan(targetIndex)) {
+			targetIndex = targetIndex.decrement();
 		}
 		insertTrack(track, targetIndex);
 
@@ -57,8 +71,8 @@ public class PlaylistModifier {
 		}
 	}
 
-	public void moveToEnd(int sourceIndex) {
-		boolean movingCurrent = playlist.getCurrentTrackIndex() == sourceIndex;
+	public void moveToEnd(TrackIndex sourceIndex) {
+		boolean movingCurrent = playlist.getCurrentTrackIndex().equal(sourceIndex);
 
 		Track track = removeTrack(sourceIndex);
 		addTrack(track);
@@ -69,10 +83,12 @@ public class PlaylistModifier {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	
-	private Track insertTrack(Track track, int index) {
-		playlist.getTracks().getTracks().add(index, track);
-		if (index <= playlist.getCurrentTrackIndex()) {
+
+	private Track insertTrack(Track track, TrackIndex index) {
+		int indx = index.getIndex();
+		playlist.getTracks().getTracks().add(indx, track);
+
+		if (index.smallerOrEqual(playlist.getCurrentTrackIndex())) {
 			incrementCurrentTrack();
 		}
 
@@ -85,44 +101,52 @@ public class PlaylistModifier {
 		return track;
 	}
 
-	private Track removeTrack(int index) {
-		if (index <= playlist.getCurrentTrackIndex()) {
+	private Track removeTrack(TrackIndex index) {
+		if (index.smallerOrEqual(playlist.getCurrentTrackIndex())) {
 			decrementCurrentTrack();
 		}
 
-		return playlist.getTracks().getTracks().remove(index);
+		int indx = index.getIndex();
+		return playlist.getTracks().getTracks().remove(indx);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 
 	private void incrementCurrentTrack() {
-		int currentTrackIndex = playlist.getCurrentTrackIndex();
-		playlist.setCurrentTrackIndex(currentTrackIndex + 1);
+		TrackIndex currentTrackIndex = playlist.getCurrentTrackIndex();
+		playlist.setCurrentTrackIndex(currentTrackIndex.increment());
 	}
 
 	private void decrementCurrentTrack() {
-		int currentTrackIndex = playlist.getCurrentTrackIndex();
-		playlist.setCurrentTrackIndex(currentTrackIndex - 1);
+		TrackIndex currentTrackIndex = playlist.getCurrentTrackIndex();
+
+		if (currentTrackIndex.biggerThan(TrackIndex.ofIndex(0))) {
+			playlist.setCurrentTrackIndex(currentTrackIndex.decrement());
+		}
 	}
 
-	private void setCurrentTrack(int index) {
+	private void setCurrentTrack(TrackIndex index) {
 		playlist.setCurrentTrackIndex(index);
 	}
 
 	private void setCurrentTrackToEnd() {
 		int end = playlist.getTracks().count();
-		playlist.setCurrentTrackIndex(end - 1);
+		int endIndx = end - 1;
+
+		TrackIndex index = TrackIndex.ofIndex(endIndx);
+		playlist.setCurrentTrackIndex(index);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 
-	private void checkIndex(int index) {
-		if (index < 0) {
+	private void checkIndex(TrackIndex index) {
+		int indx = index.getIndex();
+		if (indx < 0) {
 			throw new IndexOutOfBoundsException("Track index " + index + " is illegal");
 		}
 
 		int count = playlist.getTracks().count();
-		if (index >= count) {
+		if (indx >= count) {
 			throw new IndexOutOfBoundsException("Track index " + index + " is illegal, " //
 					+ "playlist has only " + count + " tracks");
 		}
@@ -135,4 +159,5 @@ public class PlaylistModifier {
 			action.accept(iTrack, iter);
 		}
 	}
+
 }

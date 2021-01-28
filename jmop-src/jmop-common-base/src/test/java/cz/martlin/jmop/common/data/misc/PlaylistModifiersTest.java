@@ -43,6 +43,17 @@ class PlaylistModifiersTest {
 	}
 
 	@Test
+	void testFind() {
+		Playlist playlist = playlist();
+		PlaylistModifier modifier = new PlaylistModifier(playlist);
+		modifier.append(barTrack);
+		
+		List<TrackIndex> indexesOfBar = modifier.find(barTrack);
+		Iterable<?> expectedIndexes = List.of(TrackIndex.ofIndex(1), TrackIndex.ofIndex(5));
+		assertIterableEquals(expectedIndexes, indexesOfBar);
+	}
+	
+	@Test
 	void testAppend() {
 		Playlist playlist = playlist();
 		PlaylistModifier modifier = new PlaylistModifier(playlist);
@@ -64,12 +75,12 @@ class PlaylistModifiersTest {
 		PlaylistModifier modifier = new PlaylistModifier(playlist);
 
 		// insert AFTER current
-		modifier.insertBefore(quuxTrack, 4);
+		modifier.insertBefore(quuxTrack, ti(4));
 		checkTracks(playlist, fooTrack, barTrack, bazTrack, auxTrack, quuxTrack, quxTrack);
 		checkCurrent(playlist, 2, bazTrack);
 
 		// insert BEFORE current
-		modifier.insertBefore(quuuxTrack, 2);
+		modifier.insertBefore(quuuxTrack, ti(2));
 		checkTracks(playlist, fooTrack, barTrack, quuuxTrack, bazTrack, auxTrack, quuxTrack, quxTrack);
 		checkCurrent(playlist, 3, bazTrack);
 	}
@@ -80,17 +91,17 @@ class PlaylistModifiersTest {
 		PlaylistModifier modifier = new PlaylistModifier(playlist);
 
 		// remove from AFTER current
-		modifier.remove(3);
+		modifier.remove(ti(3));
 		checkTracks(playlist, fooTrack, barTrack, bazTrack, quxTrack);
 		checkCurrent(playlist, 2, bazTrack);
 
 		// remove from BEFORE current
-		modifier.remove(1);
+		modifier.remove(ti(1));
 		checkTracks(playlist, fooTrack, bazTrack, quxTrack);
 		checkCurrent(playlist, 1, bazTrack);
 
 		// remove from CURRENT
-		modifier.remove(1);
+		modifier.remove(ti(1));
 		checkTracks(playlist, fooTrack, quxTrack);
 		checkCurrent(playlist, 1, quxTrack);
 	}
@@ -101,22 +112,22 @@ class PlaylistModifiersTest {
 		PlaylistModifier modifier = new PlaylistModifier(playlist);
 
 		// move from AFTER to BEFORE
-		modifier.move(3, 1);
+		modifier.move(ti(3), ti(1));
 		checkTracks(playlist, fooTrack, auxTrack, barTrack, bazTrack, quxTrack);
 		checkCurrent(playlist, 3, bazTrack);
 
 		// move from BEFORE to AFTER
-		modifier.move(0, 4);
+		modifier.move(ti(0), ti(4));
 		checkTracks(playlist, auxTrack, barTrack, bazTrack, fooTrack, quxTrack);
 		checkCurrent(playlist, 2, bazTrack);
 
 		// move CURRENT to AFTER
-		modifier.move(2, 4);
+		modifier.move(ti(2), ti(4));
 		checkTracks(playlist, auxTrack, barTrack, fooTrack, bazTrack, quxTrack);
 		checkCurrent(playlist, 3, bazTrack);
 
 		// move CURRENT to BEFORE
-		modifier.move(3, 0);
+		modifier.move(ti(3), ti(0));
 		checkTracks(playlist, bazTrack, auxTrack, barTrack, fooTrack, quxTrack);
 		checkCurrent(playlist, 0, bazTrack);
 	}
@@ -127,17 +138,17 @@ class PlaylistModifiersTest {
 		PlaylistModifier modifier = new PlaylistModifier(playlist);
 
 		// move from BEFORE to END
-		modifier.moveToEnd(1);
+		modifier.moveToEnd(ti(1));
 		checkTracks(playlist, fooTrack, bazTrack, auxTrack, quxTrack, barTrack);
 		checkCurrent(playlist, 1, bazTrack);
 
 		// move from AFTER to END
-		modifier.moveToEnd(3);
+		modifier.moveToEnd(ti(3));
 		checkTracks(playlist, fooTrack, bazTrack, auxTrack, barTrack, quxTrack);
 		checkCurrent(playlist, 1, bazTrack);
 
 		// move CURRENT to END
-		modifier.moveToEnd(1);
+		modifier.moveToEnd(ti(1));
 		checkTracks(playlist, fooTrack, auxTrack, barTrack, quxTrack, bazTrack);
 		checkCurrent(playlist, 4, bazTrack);
 	}
@@ -167,8 +178,8 @@ class PlaylistModifiersTest {
 	}
 
 	private void checkCurrent(Playlist playlist, int expectedCurrentIndex, Track expectedCurrentTrack) {
-		int actualCurrentIndex = playlist.getCurrentTrackIndex();
-		if (playlist.getCurrentTrackIndex() >= playlist.getTracks().count()) {
+		int actualCurrentIndex = playlist.getCurrentTrackIndex().getIndex();
+		if (actualCurrentIndex >= playlist.getTracks().count()) {
 			fail("No such current index: " + expectedCurrentIndex);
 		}
 		
@@ -189,7 +200,7 @@ class PlaylistModifiersTest {
 		playlist.getTracks().getTracks().add(auxTrack);
 		playlist.getTracks().getTracks().add(quxTrack);
 
-		playlist.setCurrentTrackIndex(2);
+		playlist.setCurrentTrackIndex(ti(2));
 
 		checkTracks(playlist, fooTrack, barTrack, bazTrack, auxTrack, quxTrack);
 		checkCurrent(playlist, 2, bazTrack);
@@ -206,6 +217,12 @@ class PlaylistModifiersTest {
 		Track fooTrack = new Track(bundle, title, title, title, DurationUtilities.createDuration(0, 3, 15),
 				Metadata.createNew());
 		return fooTrack;
+	}
+
+	
+
+	private TrackIndex ti(int i) {
+		return TrackIndex.ofIndex(i);
 	}
 
 }

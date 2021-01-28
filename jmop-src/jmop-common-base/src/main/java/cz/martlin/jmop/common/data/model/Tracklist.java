@@ -2,7 +2,12 @@ package cz.martlin.jmop.common.data.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 
 /**
@@ -34,20 +39,32 @@ public class Tracklist {
 		return tracks.size();
 	}
 
-	public Track getTrack(int index) {
-		if (index < 0 || index >= count()) {
-			Exception cause = new IndexOutOfBoundsException(index);
+	public Track getTrack(TrackIndex index) {
+		int indx = index.getIndex();
+		if (indx < 0 || indx >= count()) {
+			Exception cause = new IndexOutOfBoundsException(indx);
 			throw new JMOPRuntimeException("Playlist does not have track " + index + ", " //
 					+ "it has only " + count() + " tracks.", cause);
 		}
-		
-		return tracks.get(index);
+
+		return tracks.get(indx);
 	}
-	
-	public List<Track> subList(int start, int end) {
-		return tracks.subList(start, end);
+
+	public List<Track> subList(TrackIndex start, TrackIndex end) {
+		int startIndx = start.getIndex();
+		int endIndx = end.getIndex();
+
+		return tracks.subList(startIndx, endIndx);
 	}
-	
+
+	public Map<TrackIndex, Track> asIndexedMap() {
+		return IntStream.of(count()) //
+				.mapToObj(i -> TrackIndex.ofIndex(i)) //
+				.collect(Collectors.toMap(ti -> ti, //
+						ti -> getTrack(ti), //
+						null, //
+						() -> new TreeMap<>()));
+	}
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

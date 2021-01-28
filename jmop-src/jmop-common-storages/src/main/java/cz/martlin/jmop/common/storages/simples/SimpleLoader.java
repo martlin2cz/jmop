@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -73,7 +74,8 @@ public class SimpleLoader extends AbstractMusicdataLoader {
 		Metadata metadata = Metadata.createNew();
 		File playlistFile = locator.playlistFile(bundle, playlistName);
 		Tracklist tracklist = loadTracklist(bundle, playlistFile, tracks);
-		int currentTrackIndex = 0;
+		TrackIndex currentTrackIndex = TrackIndex.ofIndex(0);
+		
 		return new Playlist(bundle, playlistName, tracklist, currentTrackIndex, metadata);
 	}
 

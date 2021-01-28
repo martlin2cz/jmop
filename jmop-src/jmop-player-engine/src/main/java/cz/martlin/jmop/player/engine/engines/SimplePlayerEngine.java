@@ -1,7 +1,7 @@
 package cz.martlin.jmop.player.engine.engines;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.players.BasePlayer;
 import javafx.util.Duration;
 
@@ -37,7 +37,7 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void play(int index)  {
+	public void play(TrackIndex index)  {
 		Track track = runtime.play(index);
 		stopAndPlayAnother(track);
 	}

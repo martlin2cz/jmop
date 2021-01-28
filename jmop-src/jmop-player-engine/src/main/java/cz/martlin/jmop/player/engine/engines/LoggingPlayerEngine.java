@@ -3,10 +3,10 @@ package cz.martlin.jmop.player.engine.engines;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
@@ -83,8 +83,8 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	}
 
 	@Override
-	public void play(int index)  {
-		LOG.info("Playing " + index + " th"); //$NON-NLS-1$ //$NON-NLS-2$
+	public void play(TrackIndex index)  {
+		LOG.info("Playing " + index.getIndex() + " th"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		delegee.play(index);
 	}

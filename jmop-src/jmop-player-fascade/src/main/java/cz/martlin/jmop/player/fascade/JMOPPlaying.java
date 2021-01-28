@@ -60,9 +60,7 @@ public class JMOPPlaying {
 	}
 	
 	public void play(Track track) {
-		Playlist playlist = engine.currentPlaylist();
-		int index = listing.indexOf(playlist, track);
-		engine.play(index);
+		throw new UnsupportedOperationException();
 	}
 
 	
@@ -71,7 +69,7 @@ public class JMOPPlaying {
 	}
 
 	public void play(int index)  {
-		engine.play(index);
+		throw new UnsupportedOperationException();
 	}
 
 	public void stop()  {
