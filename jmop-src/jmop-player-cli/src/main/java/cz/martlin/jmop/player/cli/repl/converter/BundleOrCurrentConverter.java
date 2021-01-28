@@ -13,7 +13,7 @@ public class BundleOrCurrentConverter extends AbstractJMOPConverter<Bundle> {
 
 	@Override
 	public Bundle convert(String value) throws Exception {
-		if (value == null || value.equals(NOT_SPECIFIED)) {
+		if (value == null || value.equals(USE_CURRENT)) {
 			return pickCurrentBundle();
 		} else {
 			return pickBundleByName(value);

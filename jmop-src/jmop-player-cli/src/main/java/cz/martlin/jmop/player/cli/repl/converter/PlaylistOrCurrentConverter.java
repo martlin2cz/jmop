@@ -14,7 +14,7 @@ public class PlaylistOrCurrentConverter extends AbstractJMOPConverter<Playlist> 
 
 	@Override
 	public Playlist convert(String value) throws Exception {
-		if (value == null || value.equals(NOT_SPECIFIED)) {
+		if (value == null || value.equals(USE_CURRENT)) {
 			return pickCurrentPlaylist();
 		} else {
 			return pickPlaylistByName(jmop.playing().currentBundle(), value);
@@ -31,7 +31,7 @@ public class PlaylistOrCurrentConverter extends AbstractJMOPConverter<Playlist> 
 	}
 
 	public Playlist convert(Bundle bundle, String playlistName)  {
-		if (playlistName == null || playlistName.equals(NOT_SPECIFIED)) {
+		if (playlistName == null || playlistName.equals(USE_CURRENT)) {
 			return pickCurrentPlaylist();
 		} else {
 			return pickPlaylistByName(bundle, playlistName);

@@ -14,7 +14,7 @@ public class TrackOrCurrentConverter  extends AbstractJMOPConverter<Track> {
 
 	@Override
 	public Track convert(String value) throws Exception {
-		if (value == null || value.equals(NOT_SPECIFIED)) {
+		if (value == null || value.equals(USE_CURRENT)) {
 			return pickCurrentTrack();
 		} else {
 			return pickTrackByName(jmop.playing().currentBundle(), value);
@@ -31,7 +31,7 @@ public class TrackOrCurrentConverter  extends AbstractJMOPConverter<Track> {
 	}
 
 	public Track convert(Bundle bundle, String trackTitle)  {
-		if (trackTitle == null || trackTitle.equals(NOT_SPECIFIED)) {
+		if (trackTitle == null || trackTitle.equals(USE_CURRENT)) {
 			return pickCurrentTrack();
 		} else {
 			return pickTrackByName(bundle, trackTitle);

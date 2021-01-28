@@ -8,7 +8,7 @@ import picocli.CommandLine.ParameterException;
 
 public abstract class AbstractJMOPConverter<T> extends AbstractJMOPPicocliComponent implements ITypeConverter<T> {
 
-	protected static final String NOT_SPECIFIED = ".";
+	protected static final String USE_CURRENT = ".";
 
 	public AbstractJMOPConverter(JMOPPlayer jmop) {
 		super(jmop);

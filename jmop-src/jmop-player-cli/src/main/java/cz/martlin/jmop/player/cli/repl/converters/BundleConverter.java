@@ -4,19 +4,21 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 
-@Deprecated
 public class BundleConverter extends AbstractJMOPConverter<Bundle> {
-	
 
 	public BundleConverter(JMOPPlayer jmop) {
 		super(jmop);
 	}
 
 	@Override
-	public Bundle convert(String bundleNameOrDot) throws Exception {
-		Bundle bundle = jmop.musicbase().bundleOfName(bundleNameOrDot);
+	public Bundle convert(String value) throws Exception {
+		return bundle(value);
+	}
+
+	public Bundle bundle(String bundleName) {
+		Bundle bundle = jmop.musicbase().bundleOfName(bundleName);
 		if (bundle == null) {
-			throw new CommandLine.TypeConversionException("Bundle " + bundleNameOrDot + " does not exist");
+			throw new CommandLine.TypeConversionException("Bundle " + bundleName + " does not exist");
 		}
 		return bundle;
 	}
