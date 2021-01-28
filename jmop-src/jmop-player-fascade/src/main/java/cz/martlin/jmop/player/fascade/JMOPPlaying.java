@@ -112,9 +112,17 @@ public class JMOPPlaying {
 
 
 
+
 	
 
 
 	/////////////////////////////////////////////////////////////////
 
+
+	@Override
+	public String toString() {
+		return "JMOPPlaying [currentBundle()=" + currentBundle() + ", currentPlaylist()=" + currentPlaylist()
+				+ ", currentTrack()=" + currentTrack() + ", currentDuration()=" + currentDuration()
+				+ ", currentStatus()=" + currentStatus() + "]";
+	}
 }

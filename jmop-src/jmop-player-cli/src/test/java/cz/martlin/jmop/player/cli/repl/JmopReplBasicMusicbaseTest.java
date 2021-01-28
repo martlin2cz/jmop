@@ -16,11 +16,11 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		exec("list", "bundles");
 		
 		// playlists
-//		exec("list", "playlists"); //FIXME list all playlists of all bundles
+		exec("list", "playlists");
 		exec("list", "playlists", daftPunk);
 
 		// tracks
-//		exec("list", "tracks");	//FIXME list all tracks of all tracks
+		exec("list", "tracks");
 		exec("list", "tracks", daftPunk);
 	}
 	
@@ -42,14 +42,11 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		String bestTracks = tmb.tm.bestTracks.getName();
 		String invisibleWorlds = tmb.tm.invisibleWorlds.getTitle();
 		
-		exec("playlist", londonElektricity, bestTracks, "add", londonElektricity, invisibleWorlds);
-		exec("playlist", londonElektricity, bestTracks, "insert", londonElektricity, invisibleWorlds, "1");
+		exec("playlist", couple(londonElektricity, bestTracks), "add", invisibleWorlds);
+		exec("playlist", couple(londonElektricity, bestTracks), "insert", invisibleWorlds, "1.");
 
-//		//FIXME track by index
-//		exec("playlist", ".", ".", "remove", "0");
-//		exec("playlist", ".", ".", "LoremBundle/testing");
-
-		exec("playlist", londonElektricity, bestTracks, "remove", londonElektricity, invisibleWorlds);
+		exec("playlist", couple(londonElektricity, bestTracks), "remove", "1.");
+		exec("playlist", couple(londonElektricity, bestTracks), "remove", invisibleWorlds);
 	}
 
 	@Test
@@ -62,12 +59,12 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		// playlist
 		String cocolinoDeep = tmb.tm.cocolinoDeep.getName();
 		String seventeen = tmb.tm.seventeen.getName();
-		exec("rename", "playlist", cocolinoDeep, seventeen, "Seventeen I.-IV.");
+		exec("rename", "playlist", couple(cocolinoDeep, seventeen), "Seventeen I.-IV.");
 		
 		// track
 		String robick = tmb.tm.robick.getName();
 		String atZijiDuchove = tmb.tm.atZijiDuchove.getTitle();
-		exec("rename", "track", robick, atZijiDuchove, "Zavolejte straze REMIX");
+		exec("rename", "track", couple(robick, atZijiDuchove), "Zavolejte straze REMIX");
 	}
 
 	@Test
@@ -80,12 +77,12 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		// playlist
 		String cocolinoDeep = tmb.tm.cocolinoDeep.getName();
 		String seventeen = tmb.tm.seventeen.getName();
-		exec("move", "playlist", cocolinoDeep, seventeen, electronicMusic);
+		exec("move", "playlist", couple(cocolinoDeep, seventeen), electronicMusic);
 		
 		// track
 		String robick = tmb.tm.robick.getName();
 		String atZijiDuchove = tmb.tm.atZijiDuchove.getTitle();
-		exec("move", "track", robick, atZijiDuchove, electronicMusic);
+		exec("move", "track", couple(robick, atZijiDuchove), electronicMusic);
 		} finally {
 			jmop.musicbase().removeBundle(emb);
 		}
@@ -102,12 +99,12 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		// playlist
 		String cocolinoDeep = tmb.tm.cocolinoDeep.getName();
 		String seventeen = tmb.tm.seventeen.getName();
-		exec("remove", "playlist", cocolinoDeep, seventeen);
+		exec("remove", "playlist", couple(cocolinoDeep, seventeen));
 		
 		// track
 		String robick = tmb.tm.robick.getName();
 		String atZijiDuchove = tmb.tm.atZijiDuchove.getTitle();
-		exec("remove", "track", robick, atZijiDuchove);
+		exec("remove", "track", couple(robick, atZijiDuchove));
 	}
 
 }

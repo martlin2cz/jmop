@@ -6,7 +6,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
-import cz.martlin.jmop.player.cli.repl.mixin.BundleMixin;
+import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.PlaylistMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
@@ -28,7 +28,7 @@ public class RemoveCommand extends AbstractCommand {
 	public static class RemoveBundleCommand extends AbstractRunnableCommand {
 
 		@Mixin()
-		private BundleMixin bundle;
+		private BundleOrCurrentMixin bundle;
 		
 		public RemoveBundleCommand(JMOPPlayer jmop) {
 			super(jmop);

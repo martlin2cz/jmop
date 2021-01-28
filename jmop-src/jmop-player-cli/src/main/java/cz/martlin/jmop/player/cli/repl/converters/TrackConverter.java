@@ -55,4 +55,18 @@ public class TrackConverter extends AbstractJMOPConverter<Track> {
 		}
 		return track;
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	
+	public static Track convertTrack(JMOPPlayer jmop, Bundle bundle, String trackTitle) {
+		TrackConverter converter = new TrackConverter(jmop);
+		Track track = converter.track(bundle, trackTitle);
+		
+		if (!track.getBundle().equals(bundle)) {
+			throw new CommandLine.TypeConversionException(//
+					"Track " + trackTitle + " does not belong to the " + bundle.getName() + " bundle.");
+		}
+		
+		return track;
+	}
 }

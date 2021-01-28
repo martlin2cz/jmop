@@ -1,18 +1,18 @@
 package cz.martlin.jmop.player.cli.repl.mixin;
 
-import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.player.cli.repl.converters.AbstractJMOPConverter;
 import picocli.CommandLine.Parameters;
 
-public class TrackMixin extends AbstractJMOPMixin {
-	
+public class BundleOrCurrentMixin {
+
 	@Parameters(arity = "0..1", defaultValue = AbstractJMOPConverter.USE_CURRENT)
-	private Track track;
-	
-	public TrackMixin() {
+	private Bundle bundle;
+
+	public BundleOrCurrentMixin() {
 	}
-	
-	public Track getTrack()  {
-		return track;
+
+	public Bundle getBundle() {
+		return bundle;
 	}
 }

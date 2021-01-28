@@ -7,7 +7,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
-import cz.martlin.jmop.player.cli.repl.mixin.BundleMixin;
+import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import javafx.util.Duration;
 import picocli.CommandLine.Command;
@@ -46,7 +46,7 @@ public class CreateCommand extends AbstractCommand {
 	public static class CreatePlaylistCommand extends AbstractRunnableCommand {
 
 		@Mixin
-		private BundleMixin bundle;
+		private BundleOrCurrentMixin bundle;
 
 		@Parameters(arity = "1")
 		private String name;
@@ -67,7 +67,7 @@ public class CreateCommand extends AbstractCommand {
 	public static class CreateTrackCommand extends AbstractRunnableCommand {
 
 		@Mixin
-		private BundleMixin bundle;
+		private BundleOrCurrentMixin bundle;
 
 		@Parameters(arity = "1")
 		private String title;

@@ -1,16 +1,14 @@
 package cz.martlin.jmop.player.cli.repl.mixin;
 
 import cz.martlin.jmop.common.data.model.Bundle;
-import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command()
-public class BundleMixin {
+public class BundleOrNoneMixin {
 
-	@Parameters(arity = "1")
+	@Parameters(arity = "0..1")
 	private Bundle bundle;
 
-	public BundleMixin() {
+	public BundleOrNoneMixin() {
 	}
 
 	public Bundle getBundle() {

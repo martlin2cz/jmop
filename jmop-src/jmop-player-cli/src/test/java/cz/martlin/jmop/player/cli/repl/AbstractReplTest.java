@@ -14,6 +14,7 @@ import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.utils.TestingMusicbase;
 import cz.martlin.jmop.common.utils.TestingMusicbaseExtension;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.player.cli.repl.converters.CoupleOrNotParser;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 import picocli.CommandLine;
@@ -101,6 +102,10 @@ public class AbstractReplTest {
 		int code = this.cl.execute(command);
 
 		assertEquals(0, code, "The command execution resulted in non-zero exit code");
+	}
+
+	protected String couple(String first, String second) {
+		return first + "/" + second;
 	}
 
 }

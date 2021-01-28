@@ -62,19 +62,19 @@ class JmopReplPlayingTest extends AbstractReplTest {
 		exec("play", "bundle", daftPunk);
 		
 		exec("status");
-		exec("playlist", ".", ".");
+		exec("playlist", ".");
 
 		exec("next");
 		exec("status");
-		exec("playlist", ".", ".");
+		exec("playlist");
 
 		exec("previous");
 		exec("status");
-		exec("playlist", ".", ".");
+		exec("playlist");
 
 		exec("stop");
 		exec("status");
-		exec("playlist", ".", ".");
+		exec("playlist");
 	}
 	
 }

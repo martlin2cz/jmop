@@ -2,12 +2,13 @@ package cz.martlin.jmop.player.cli.repl.commands;
 
 import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackIndex;
+import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.commands.PrintCommands.PlaylistInfoCommand;
-import cz.martlin.jmop.player.cli.repl.converters.CustomPlaylistTrackIndexConverter;
-import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
+import cz.martlin.jmop.player.cli.repl.converters.CustomPlaylistTrackIndexOrCurrentConverter;
+import cz.martlin.jmop.player.cli.repl.mixin.TrackOfBundleMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
@@ -27,7 +28,7 @@ public class ModifyPlaylistCommand {
 		
 		
 		@Mixin
-		private TrackMixin track;
+		private TrackOfBundleMixin track;
 
 		public AddTrackCommand(JMOPPlayer jmop) {
 			super(jmop);
@@ -36,7 +37,8 @@ public class ModifyPlaylistCommand {
 		@Override
 		protected void doRun()  {
 			Playlist playlist = this.parent.playlist.getPlaylist();
-			Track track = this.track.getTrack();
+			Bundle bundle = playlist.getBundle();
+			Track track = this.track.getTrack(jmop, bundle);
 			
 			PlaylistModifier mod = jmop.musicbase().modifyPlaylist(playlist);
 			mod.append(track);
@@ -56,7 +58,7 @@ public class ModifyPlaylistCommand {
 		private String beforeStr;
 		
 		@Mixin
-		private TrackMixin track;
+		private TrackOfBundleMixin track;
 
 		public InsertTrackCommand(JMOPPlayer jmop) {
 			super(jmop);
@@ -65,9 +67,10 @@ public class ModifyPlaylistCommand {
 		@Override
 		protected void doRun() {
 			Playlist playlist = this.parent.playlist.getPlaylist();
-			Track track = this.track.getTrack();
+			Bundle bundle = playlist.getBundle();
+			Track track = this.track.getTrack(jmop, bundle);
 			
-			TrackIndex before = CustomPlaylistTrackIndexConverter.convert(jmop, playlist, beforeStr);
+			TrackIndex before = CustomPlaylistTrackIndexOrCurrentConverter.convert(jmop, playlist, beforeStr);
 			
 			PlaylistModifier mod = jmop.musicbase().modifyPlaylist(playlist);
 			mod.insertBefore(track, before);
@@ -85,8 +88,8 @@ public class ModifyPlaylistCommand {
 		@ParentCommand
 		private PlaylistInfoCommand parent;
 		
-		@Mixin
-		private TrackMixin track;
+		@Parameters(arity = "1")
+		private String indexStr;
 
 		public RemoveTrackCommand(JMOPPlayer jmop) {
 			super(jmop);
@@ -95,10 +98,10 @@ public class ModifyPlaylistCommand {
 		@Override
 		protected void doRun()  {
 			Playlist playlist = this.parent.playlist.getPlaylist();
-			Track track = this.track.getTrack();
+			TrackIndex index = CustomPlaylistTrackIndexOrCurrentConverter.convert(jmop, playlist, indexStr);
 			
 			PlaylistModifier mod = jmop.musicbase().modifyPlaylist(playlist);
-			mod.removeAll(track);
+			mod.remove(index);
 		}
 	}
 }

@@ -5,7 +5,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
-import cz.martlin.jmop.player.cli.repl.mixin.BundleMixin;
+import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.PlaylistMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
@@ -40,7 +40,7 @@ public class PlayCommand extends AbstractRunnableCommand {
 	public static class PlayBundleCommand extends AbstractRunnableCommand {
 
 		@Mixin
-		private BundleMixin bundle;
+		private BundleOrCurrentMixin bundle;
 
 		public PlayBundleCommand(JMOPPlayer jmop) {
 			super(jmop);
