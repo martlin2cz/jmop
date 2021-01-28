@@ -12,6 +12,7 @@ import picocli.CommandLine.Command;
 				MoveCommand.class, //
 				RemoveCommand.class, //
 				PrintCommands.StatusCommand.class, //
+				PrintCommands.BarCommand.class, //
 				PrintCommands.BundleInfoCommand.class, //
 				PrintCommands.PlaylistInfoCommand.class, //
 				PrintCommands.TrackInfoCommand.class, //

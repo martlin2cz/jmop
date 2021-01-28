@@ -2,26 +2,37 @@ package cz.martlin.jmop.player.cli.repl;
 
 import org.junit.jupiter.api.Test;
 
+import cz.martlin.jmop.core.misc.DurationUtilities;
+
 class JmopReplPlayingTest extends AbstractReplTest {
 
 
 	@Test
-	void testStatusCommand()  {
+	void testStatusAndBarCommand()  {
 
 		exec("status");
+		exec("bar");
 
 		jmop.playing().play(tmb.tm.daftPunk);
 
 		exec("status");
+		exec("bar");
 
 		jmop.playing().pause();
 		exec("status");
+		exec("bar");
 
+		jmop.playing().seek(DurationUtilities.createDuration(0, 0, 30));
+		exec("status");
+		exec("bar");
+		
 		jmop.playing().stop();
 		exec("status");
+		exec("bar");
 		
 		jmop.config().terminate();
 		exec("status");
+		exec("bar");
 	}
 
 	@Test

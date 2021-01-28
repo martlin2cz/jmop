@@ -49,7 +49,7 @@ public class PrintCommands {
 			PrintUtil.print("Playing", currentPlaylist, "playlist from the", currentBundle, "bundle");
 			
 			if (currentTrack != null) {
-				PrintUtil.print("Current track:", currentTrack.getTitle());	
+				PrintUtil.print("Current track:", currentTrack);	
 			} else {
 				PrintUtil.print("No current track.");
 			}
@@ -60,6 +60,76 @@ public class PrintCommands {
 			if (currentTrack != null) {
 				Duration currentTime = jmop.playing().currentDuration();
 				PrintUtil.print("Current time is", currentTime, "out of", currentTrack.getDuration());
+			}
+		}
+	}
+	
+	@Command(name = "bar")
+	public static class BarCommand extends AbstractRunnableCommand {
+		
+		private static final int BAR_STEPS = 80;
+
+		public BarCommand(JMOPPlayer jmop) {
+			super(jmop);
+		}
+
+		@Override
+		protected void doRun()  {
+			Bundle currentBundle = jmop.playing().currentBundle();
+			
+			if (currentBundle == null) {
+				PrintUtil.print("Nothing beeing played");
+				return;
+			} else {
+				printBar();
+			}
+		}
+
+		private void printBar() {
+			Track currentTrack = jmop.playing().currentTrack();
+			
+			if (currentTrack != null) {
+				Duration currentTime = jmop.playing().currentDuration();
+				Duration trackDuration = currentTrack.getDuration();
+				PlayerStatus currentStatus = jmop.playing().currentStatus();
+
+				PrintUtil.print(currentTrack);	
+				printBar(currentStatus, currentTime, trackDuration);
+				PrintUtil.print(currentTime, "/", trackDuration);
+			} else {
+				PrintUtil.print("---");
+			}
+		}
+
+		private void printBar(PlayerStatus status, Duration currentTime, Duration trackDuration) {
+			String button = chooseStatusButton(status);
+			
+			double currentMilis = currentTime.toMillis();
+			double trackMilis = trackDuration.toMillis();
+			
+			double ratio = currentMilis/trackMilis;
+			int stepsPlayed = (int) (BAR_STEPS * ratio);
+			int stepsRemaining = BAR_STEPS - stepsPlayed;
+			
+			String playedPart = "▓".repeat(stepsPlayed);
+			String remainingPart = "░".repeat(stepsRemaining);
+			
+			String line = "( " + button + " ) " + playedPart + remainingPart + "";
+			PrintUtil.print(line);
+		}
+
+		private String chooseStatusButton(PlayerStatus status) {
+			switch (status) {
+			case NO_TRACK:
+				return "  ";
+			case PAUSED:
+				return "⏸";
+			case PLAYING:
+				return "▶";
+			case STOPPED:
+				return "⏹";
+			default:
+				throw new IllegalArgumentException();
 			}
 		}
 	}
