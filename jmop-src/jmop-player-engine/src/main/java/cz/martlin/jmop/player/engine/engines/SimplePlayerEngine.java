@@ -73,7 +73,7 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 		Track track = runtime.toPrevious();
 		stopAndPlayAnother(track);
 	}
-
+	
 	@Override
 	public void trackOver(Track track)  {
 		ifHasPlayNext();

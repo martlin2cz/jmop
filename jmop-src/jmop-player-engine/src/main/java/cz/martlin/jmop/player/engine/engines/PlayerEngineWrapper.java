@@ -41,6 +41,7 @@ public class PlayerEngineWrapper {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
+
 	public Bundle currentBundle() {
 		if (engine.currentPlaylist() != null) {
 			return engine.currentPlaylist().getBundle();
@@ -64,7 +65,21 @@ public class PlayerEngineWrapper {
 	public PlayerStatus currentStatus() {
 		return engine.currentStatus();
 	}
+	
 
+	public boolean hasPrevious() {
+		requirePlaying();
+		return engine.hasPrevious();
+	}
+	
+	public boolean hasNext() {
+		requirePlaying();
+		return engine.hasNext();
+	}
+
+///////////////////////////////////////////////////////////////////////////
+
+	
 	public void play()  {
 		requirePlaying();
 		engine.play();
@@ -112,4 +127,5 @@ public class PlayerEngineWrapper {
 			throw new IllegalStateException("Not playing");
 		}
 	}
+
 }

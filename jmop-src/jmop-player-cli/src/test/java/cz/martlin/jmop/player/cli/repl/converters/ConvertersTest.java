@@ -133,7 +133,7 @@ class ConvertersTest {
 	
 	@Test
 	void testTrackOfPlaylistConverter() {
-		TrackIndexConverter converter = new TrackIndexConverter(jmop);
+		AbstractTrackIndexConverter converter = new CurrentPlaylistTrackIndexConverter(jmop);
 
 		check(converter, "1", TrackIndex.ofHuman(1));
 		check(converter, "2.", TrackIndex.ofHuman(2));

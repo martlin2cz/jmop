@@ -6,6 +6,7 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.commands.PrintCommands.PlaylistInfoCommand;
+import cz.martlin.jmop.player.cli.repl.converters.CustomPlaylistTrackIndexConverter;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine.Command;
@@ -52,7 +53,7 @@ public class ModifyPlaylistCommand {
 		private PlaylistInfoCommand parent;
 		
 		@Parameters(arity = "1")
-		private TrackIndex before;
+		private String beforeStr;
 		
 		@Mixin
 		private TrackMixin track;
@@ -62,13 +63,16 @@ public class ModifyPlaylistCommand {
 		}
 
 		@Override
-		protected void doRun()  {
+		protected void doRun() {
 			Playlist playlist = this.parent.playlist.getPlaylist();
 			Track track = this.track.getTrack();
+			
+			TrackIndex before = CustomPlaylistTrackIndexConverter.convert(jmop, playlist, beforeStr);
 			
 			PlaylistModifier mod = jmop.musicbase().modifyPlaylist(playlist);
 			mod.insertBefore(track, before);
 		}
+
 	}
 
 

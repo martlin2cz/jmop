@@ -131,5 +131,15 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 		delegee.toPrevious();
 	}
 
+	@Override
+	public boolean hasNext() {
+		return delegee.hasNext();
+	}
+	
+	@Override
+	public boolean hasPrevious() {
+		return delegee.hasPrevious();
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 }

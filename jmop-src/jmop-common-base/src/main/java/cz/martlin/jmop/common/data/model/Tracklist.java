@@ -58,11 +58,11 @@ public class Tracklist {
 	}
 
 	public Map<TrackIndex, Track> asIndexedMap() {
-		return IntStream.of(count()) //
+		return IntStream.range(0, count()) //
 				.mapToObj(i -> TrackIndex.ofIndex(i)) //
 				.collect(Collectors.toMap(ti -> ti, //
 						ti -> getTrack(ti), //
-						null, //
+						(t1, t2) -> t1, //
 						() -> new TreeMap<>()));
 	}
 	//////////////////////////////////////////////////////////////////////////////////////

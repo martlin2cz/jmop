@@ -165,6 +165,10 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track toNext() {
+		if (!hasNextToPlay()) {
+			throw new IllegalStateException("No next track");
+		}
+		
 		playlist.setCurrentTrackIndex(playlist.getCurrentTrackIndex().increment());
 		fireValueChangedEvent();
 
@@ -177,6 +181,10 @@ public class PlaylistRuntime extends ObservableObject<PlaylistRuntime> {
 	 * @return
 	 */
 	public Track toPrevious() {
+		if (!hasPlayed()) {
+			throw new IllegalStateException("No previous track");
+		}
+		
 		playlist.setCurrentTrackIndex(playlist.getCurrentTrackIndex().decrement());
 		fireValueChangedEvent();
 

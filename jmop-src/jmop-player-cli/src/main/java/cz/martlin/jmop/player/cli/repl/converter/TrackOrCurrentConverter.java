@@ -6,6 +6,7 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.cli.repl.converters.AbstractJMOPConverter;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 
+@Deprecated
 public class TrackOrCurrentConverter  extends AbstractJMOPConverter<Track> {
 	
 	public TrackOrCurrentConverter(JMOPPlayer jmop) {

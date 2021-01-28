@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.cli.repl.commands;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -20,7 +21,7 @@ import picocli.CommandLine.Parameters;
 public class PlayCommand extends AbstractRunnableCommand {
 
 	@Parameters(arity = "0..1")
-	private Integer index;
+	private TrackIndex index;
 
 	public PlayCommand(JMOPPlayer jmop) {
 		super(jmop);

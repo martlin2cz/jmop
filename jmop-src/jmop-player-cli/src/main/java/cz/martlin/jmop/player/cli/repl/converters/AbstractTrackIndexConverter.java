@@ -12,98 +12,110 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 
-public class TrackIndexConverter extends AbstractJMOPConverter<TrackIndex> {
+public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<TrackIndex> {
 
 	private static final Pattern ABSOLUTE_TRACK_PATTERN = Pattern.compile("^([0-9]+)(\\.?)$");
 	private static final Pattern RELATIVE_TRACK_PATTERN = Pattern.compile("^(\\+|\\-)([0-9]+)(\\.?)$");
 
-	public TrackIndexConverter(JMOPPlayer jmop) {
+	public AbstractTrackIndexConverter(JMOPPlayer jmop) {
 		super(jmop);
 	}
 
 	@Override
 	public TrackIndex convert(String value) throws Exception {
-		TrackIndex index;
-		index = tryAbsoluteIndex(value);
-		if (index != null) {
-			return index;
-		}
-
-		index = tryRelativeIndex(value);
-		if (index != null) {
-			return index;
-		}
-
-		index = tryTrackTitle(value);
-		if (index != null) {
-			return index;
-		}
-
-		throw new CommandLine.TypeConversionException("No such track " + value);
+		return trackIndex(value);
 	}
 
-	private TrackIndex tryAbsoluteIndex(String value) {
-		Matcher absoluteTrackMatcher = ABSOLUTE_TRACK_PATTERN.matcher(value);
+	public TrackIndex trackIndex(String trackIndexSpecifierOrTitle) {
+		TrackIndex index;
+		index = tryAbsoluteIndex(trackIndexSpecifierOrTitle);
+		if (index != null) {
+			return index;
+		}
+	
+		index = tryRelativeIndex(trackIndexSpecifierOrTitle);
+		if (index != null) {
+			return index;
+		}
+	
+		index = tryTrackTitle(trackIndexSpecifierOrTitle);
+		if (index != null) {
+			return index;
+		}
+	
+		throw new CommandLine.TypeConversionException("No such track " + trackIndexSpecifierOrTitle);
+	}
+
+	private TrackIndex tryAbsoluteIndex(String trackIndexSpecifier) {
+		Matcher absoluteTrackMatcher = ABSOLUTE_TRACK_PATTERN.matcher(trackIndexSpecifier);
 		if (absoluteTrackMatcher.matches()) {
 			String group = absoluteTrackMatcher.group(1);
 			int indx = Integer.parseInt(group);
-
+	
 			TrackIndex index = TrackIndex.ofHuman(indx);
 			validateIndex(index);
 			return index;
 		}
-
+	
 		return null;
 	}
 
-	private TrackIndex tryRelativeIndex(String value) {
-		Matcher relativeTrackMatcher = RELATIVE_TRACK_PATTERN.matcher(value);
+	private TrackIndex tryRelativeIndex(String trackIndexSpecifier) {
+		Matcher relativeTrackMatcher = RELATIVE_TRACK_PATTERN.matcher(trackIndexSpecifier);
 		if (relativeTrackMatcher.matches()) {
 			String group = relativeTrackMatcher.group(2);
 			int indexOffset = Integer.parseInt(group);
+			
+			Playlist playlist = playlist();
+			if (playlist == null) {
+				throw new CommandLine.TypeConversionException("No current track");
+			}
 
-			TrackIndex currentTrackIndex = playlist().getCurrentTrackIndex();
+			TrackIndex currentTrackIndex = playlist.getCurrentTrackIndex();
 			TrackIndex index = currentTrackIndex.offset(indexOffset);
+			
 			validateIndex(index);
 			return index;
 		}
-
+	
 		return null;
 	}
 
-	private TrackIndex tryTrackTitle(String value) {
-		String trackTitle = value;
-		Bundle bundle = jmop.playing().currentBundle();
+	private TrackIndex tryTrackTitle(String trackTitle) {
+		Bundle bundle = bundle();
 		Track track = jmop.musicbase().trackOfTitle(bundle, trackTitle);
 		if (track == null) {
-			throw new CommandLine.TypeConversionException("Such track does not exist " + value);
+			throw new CommandLine.TypeConversionException("Such track does not exist " + trackTitle);
 		}
-
-		PlaylistModifier modifier = jmop.musicbase().modifyPlaylist(playlist());
+		
+		Playlist playlist = playlist();
+		PlaylistModifier modifier = jmop.musicbase().modifyPlaylist(playlist);
 		List<TrackIndex> indexes = modifier.find(track);
+		
 		if (indexes.isEmpty()) {
-			throw new CommandLine.TypeConversionException("Playlist does not contain track " + value);
+			throw new CommandLine.TypeConversionException("Playlist does not contain track " + trackTitle);
 		}
 		if (indexes.size() > 1) {
 			System.err.println("Warning, this track happens to be more than once in the playlist");
 		}
-
+	
 		TrackIndex index = indexes.get(0);
 		return index;
 	}
 
-	//TODO generalize to general playlist
-	private Playlist playlist() {
-		return jmop.playing().currentPlaylist();
-	}
-
 	private void validateIndex(TrackIndex index) {
-		int count = playlist().getTracks().count();
-
+		Playlist playlist = playlist();
+		int count = playlist.getTracks().count();
+	
 		if (index.biggerOrEqualThan(count)) {
-			throw new CommandLine.TypeConversionException("The playlist contains only " + count + " tracks, "
+			throw new CommandLine.TypeConversionException( //
+					"The playlist contains only " + count + " tracks, "
 					+ "thus index " + index.getHuman() + " is invalid");
 		}
 	}
+	
+	protected abstract Bundle bundle();
+
+	protected abstract Playlist playlist();
 
 }

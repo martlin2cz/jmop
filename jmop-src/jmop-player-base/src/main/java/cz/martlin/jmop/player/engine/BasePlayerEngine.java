@@ -111,4 +111,17 @@ public interface BasePlayerEngine {
 	 */
 	void toPrevious() ;
 
+	/**
+	 * Returns true if has next track to play. 
+	 * @return
+	 */
+	boolean hasNext();
+
+	
+	/**
+	 * Returns true if has next track to play. 
+	 * @return
+	 */
+	boolean hasPrevious();
+
 }

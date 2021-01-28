@@ -2,7 +2,6 @@ package cz.martlin.jmop.player.engine.engines;
 
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.runtime.PlaylistRuntime;
 import cz.martlin.jmop.player.players.BasePlayer;
@@ -51,6 +50,17 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 	@Override
 	public PlayerStatus currentStatus() {
 		return player.currentStatus();
+	}
+	
+
+	@Override
+	public boolean hasNext() {
+		return runtime.hasNextToPlay();
+	}
+	
+	@Override
+	public boolean hasPrevious() {
+		return runtime.hasPlayed();
 	}
 	
 	///////////////////////////////////////////////////////////////////////////

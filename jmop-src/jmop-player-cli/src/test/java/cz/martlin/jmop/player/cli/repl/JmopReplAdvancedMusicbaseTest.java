@@ -96,8 +96,8 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 		
 		exec("playlist", ".", ".", "add", ".", invisibleWorlds);
 
-		exec("playlist", ".", ".", "insert", ".", invisibleWorlds, "0");
-		exec("playlist", ".", ".", "insert", ".", ".", "0");
+		exec("playlist", ".", ".", "insert", ".", invisibleWorlds, "1");
+		exec("playlist", ".", ".", "insert", ".", ".", "1");
 
 //		//FIXME track by index
 //		exec("playlist", ".", ".", "remove", "0");

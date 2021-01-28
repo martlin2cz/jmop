@@ -1,7 +1,7 @@
 package cz.martlin.jmop.player.cli.repl.converter;
 
+
 import cz.martlin.jmop.common.data.model.Bundle;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.cli.repl.converters.AbstractJMOPConverter;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 

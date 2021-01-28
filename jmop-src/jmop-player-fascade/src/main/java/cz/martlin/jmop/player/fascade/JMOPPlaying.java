@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.fascade;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -47,6 +48,15 @@ public class JMOPPlaying {
 		return engine.currentStatus();
 	}
 
+	public boolean hasPrevious() {
+		return engine.hasPrevious();
+	}
+	
+	public boolean hasNext() {
+		return engine.hasNext();
+	}
+	
+	
 	/////////////////////////////////////////////////////////////////
 
 	public void play(Bundle bundle) {
@@ -60,9 +70,13 @@ public class JMOPPlaying {
 	}
 	
 	public void play(Track track) {
-		throw new UnsupportedOperationException();
+		//TODO play just the track
+		throw new UnsupportedOperationException("use play(index) instead");
 	}
-
+	
+	public void play(TrackIndex index) {
+		engine.play(index);
+	}
 	
 	public void play()  {
 		engine.play();
@@ -95,6 +109,7 @@ public class JMOPPlaying {
 	public void toPrevious()  {
 		engine.toPrevious();
 	}
+
 
 
 	

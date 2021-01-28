@@ -72,7 +72,11 @@ public class PlayingCommands {
 
 		@Override
 		protected void doRun()  {
-			jmop.playing().toNext();
+			if (jmop.playing().hasNext()) {
+				jmop.playing().toNext();	
+			} else {
+				System.out.println("No next track");
+			}
 		}
 	}
 	
@@ -85,7 +89,12 @@ public class PlayingCommands {
 
 		@Override
 		protected void doRun()  {
-			jmop.playing().toPrevious();
+			if (jmop.playing().hasPrevious()) {
+				jmop.playing().toPrevious();	
+			} else {
+				System.out.println("No previous track");
+			}
+			
 		}
 	}
 

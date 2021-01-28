@@ -23,9 +23,7 @@ public class PlaylistModifier {
 	public List<TrackIndex> find(Track track) {
 		return IntStream.range(0, playlist.getTracks().count()) //
 				.mapToObj(i -> TrackIndex.ofIndex(i)) //
-				.filter(ti -> 
-				playlist.getTracks().getTrack(ti).equals(track)
-				) //
+				.filter(ti -> playlist.getTracks().getTrack(ti).equals(track)) //
 				.collect(Collectors.toList());
 	}
 
