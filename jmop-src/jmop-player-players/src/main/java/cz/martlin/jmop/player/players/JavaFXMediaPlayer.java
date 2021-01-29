@@ -20,10 +20,9 @@ import javafx.util.Duration;
  */
 public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 	private MediaPlayer mediaPlayer;
-	private Duration currentTime;
 
 	private Runnable endListener;
-	private ChangeListener<? super Duration> timeListener;
+//	private ChangeListener<? super Duration> timeListener;
 
 	static {
 		initializeFX();
@@ -34,8 +33,8 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 	}
 
 	@Override
-	public Duration currentTime() {
-		return currentTime;
+	public Duration doCurrentTime() {
+		return mediaPlayer.getCurrentTime();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -51,8 +50,8 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 		endListener = () -> onTrackFinished();
 		mediaPlayer.setOnEndOfMedia(endListener);
 
-		timeListener = (observable, oldValue, newValue) -> timeChanged(newValue);
-		mediaPlayer.currentTimeProperty().addListener(timeListener);
+//		timeListener = (observable, oldValue, newValue) -> timeChanged(newValue);
+//		mediaPlayer.currentTimeProperty().addListener(timeListener);
 
 		mediaPlayer.play();
 	}
@@ -61,11 +60,10 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 	@Override
 	protected void doStopPlaying() {
 		mediaPlayer.setOnEndOfMedia(null);
-		mediaPlayer.currentTimeProperty().removeListener(timeListener);
+//		mediaPlayer.currentTimeProperty().removeListener(timeListener);
 
 		mediaPlayer.stop();
 		mediaPlayer = null;
-		currentTime = null;
 	}
 
 	@Override
@@ -100,15 +98,15 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 	private static void initializeFX() {
 		new JFXPanel();
 	}
-
-	/**
-	 * Handles current time change.
-	 * 
-	 * @param to
-	 */
-	private void timeChanged(Duration to) {
-		this.currentTime = to;
-		fireValueChangedEvent();
-	}
+//
+//	/**
+//	 * Handles current time change.
+//	 * 
+//	 * @param to
+//	 */
+//	private void timeChanged(Duration to) {
+//		this.currentTime = to;
+//		fireValueChangedEvent();
+//	}
 
 }

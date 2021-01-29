@@ -1,8 +1,10 @@
 package cz.martlin.jmop.player.fascade.dflt;
 
 import java.io.File;
+import java.util.function.Function;
 
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
@@ -21,6 +23,7 @@ import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.JMOPPlaying;
 import cz.martlin.jmop.player.fascade.dflt.config.ConstantDefaultFascadeConfig;
 import cz.martlin.jmop.player.players.BasePlayer;
+import cz.martlin.jmop.player.players.JavaFXMediaPlayer;
 import cz.martlin.jmop.player.players.TestingPlayer;
 
 public class DefaultJMOPPlayerBuilder {
@@ -28,15 +31,15 @@ public class DefaultJMOPPlayerBuilder {
 	public static JMOPPlayer createTesting() {
 		File root = TestingRootDir.getFile();
 		
-		BasePlayer player = new TestingPlayer();
+		Function<TracksSource, BasePlayer> playerProducer = (ts) -> new TestingPlayer();
 		BaseDefaultJMOPConfig config = new ConstantDefaultFascadeConfig();
 
 		BaseErrorReporter reporter = new SimpleErrorReporter();
 		
-		return create(root, player, config, reporter);
+		return create(root, playerProducer, config, reporter);
 	}
 
-	public static JMOPPlayer create(File root, BasePlayer player, BaseDefaultJMOPConfig config, BaseErrorReporter reporter) {
+	public static JMOPPlayer create(File root, Function<TracksSource, BasePlayer> playerProducer,  BaseDefaultJMOPConfig config, BaseErrorReporter reporter) {
 		
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
 
@@ -45,6 +48,7 @@ public class DefaultJMOPPlayerBuilder {
 
 		BaseMusicbase musicbase = new PersistentMusicbase(inmemory, storage);
 
+		BasePlayer player = playerProducer.apply(musicbase);
 		BaseDefaultEngineConfig engineConfig = config;
 		BasePlayerEngine engine = DefaultEngine.create(player, musicbase, engineConfig);
 

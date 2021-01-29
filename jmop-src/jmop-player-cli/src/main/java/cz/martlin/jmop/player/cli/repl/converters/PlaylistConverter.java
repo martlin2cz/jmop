@@ -58,4 +58,9 @@ public class PlaylistConverter extends AbstractJMOPConverter<Playlist> {
 		return playlist;
 	}
 
+	public static Playlist convertPlaylist(JMOPPlayer jmop, Bundle bundle, String name) {
+		PlaylistConverter converter = new PlaylistConverter(jmop);
+		return converter.playlist(bundle, name);
+	}
+
 }

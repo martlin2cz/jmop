@@ -23,4 +23,9 @@ public class BundleConverter extends AbstractJMOPConverter<Bundle> {
 		return bundle;
 	}
 
+	public static Bundle convertBundle(JMOPPlayer jmop, String name) {
+		BundleConverter converter = new BundleConverter(jmop);
+		return converter.bundle(name);
+	}
+
 }

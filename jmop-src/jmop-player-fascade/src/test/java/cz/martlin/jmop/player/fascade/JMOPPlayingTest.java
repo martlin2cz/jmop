@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -60,7 +61,7 @@ class JMOPPlayingTest {
 		playing.play();
 		check(tmb.tm.daftPunk, tmb.tm.discovery, tmb.tm.aerodynamic, PlayerStatus.PLAYING, d(0));
 
-		playing.play(2);
+		playing.play(TrackIndex.ofIndex(2));
 		check(tmb.tm.daftPunk, tmb.tm.discovery, tmb.tm.verdisQuo, PlayerStatus.PLAYING, d(0));
 
 		playing.play(tmb.tm.syncopatedCity);

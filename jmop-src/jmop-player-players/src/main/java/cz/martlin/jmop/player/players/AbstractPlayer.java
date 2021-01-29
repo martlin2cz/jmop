@@ -45,7 +45,24 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 	public Track actualTrack() {
 		return track;
 	}
+	
+	@Override
+	public Duration currentTime() {
+		if (status.isNotPlayingTrack()) {
+			throw new IllegalStateException("Not playing track");
+		}
+			
+		return doCurrentTime();
+	}
 
+	/**
+	 * Returns the current time of the currently played track.
+	 * Never gets called if no track beeing played.
+	 * 
+	 * @return
+	 */
+	protected abstract Duration doCurrentTime();
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

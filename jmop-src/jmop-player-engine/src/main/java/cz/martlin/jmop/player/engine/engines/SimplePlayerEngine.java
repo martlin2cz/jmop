@@ -25,7 +25,11 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 
 	@Override
 	public Duration currentDuration() {
-		return player.currentTime();
+		if (player.currentStatus().isPlayingTrack()) {
+			return player.currentTime();
+		} else {
+			return null;
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

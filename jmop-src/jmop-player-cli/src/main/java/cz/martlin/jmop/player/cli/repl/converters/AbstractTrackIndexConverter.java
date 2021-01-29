@@ -47,9 +47,9 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 	}
 
 	private TrackIndex tryAbsoluteIndex(String trackIndexSpecifier) {
-		Matcher absoluteTrackMatcher = ABSOLUTE_TRACK_PATTERN.matcher(trackIndexSpecifier);
-		if (absoluteTrackMatcher.matches()) {
-			String group = absoluteTrackMatcher.group(1);
+		Matcher matcher = ABSOLUTE_TRACK_PATTERN.matcher(trackIndexSpecifier);
+		if (matcher.matches()) {
+			String group = matcher.group(1);
 			int indx = Integer.parseInt(group);
 	
 			TrackIndex index = TrackIndex.ofHuman(indx);
@@ -61,9 +61,9 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 	}
 
 	private TrackIndex tryRelativeIndex(String trackIndexSpecifier) {
-		Matcher relativeTrackMatcher = RELATIVE_TRACK_PATTERN.matcher(trackIndexSpecifier);
-		if (relativeTrackMatcher.matches()) {
-			String group = relativeTrackMatcher.group(2);
+		Matcher matcher = RELATIVE_TRACK_PATTERN.matcher(trackIndexSpecifier);
+		if (matcher.matches()) {
+			String group = matcher.group(1) + matcher.group(2);
 			int indexOffset = Integer.parseInt(group);
 			
 			Playlist playlist = playlist();

@@ -55,7 +55,10 @@ public class PrintUtil {
 			} else if (item instanceof String) {
 				String string = (String) item;
 				System.out.print(string);
-					
+			
+			} else if (item == null) {
+				System.out.print("---");
+				
 			} else {
 				throw new UnsupportedOperationException(Objects.toString(item));
 			}

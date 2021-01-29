@@ -88,4 +88,32 @@ class JmopReplPlayingTest extends AbstractReplTest {
 		exec("playlist");
 	}
 	
+	@Test
+	void testTheCommandP()  {
+		String daftPunk = tmb.tm.daftPunk.getName();
+		String bestTracks = tmb.tm.bestTracks.getName();
+		String meteorities = tmb.tm.meteorities.getTitle();
+		
+		exec("p", daftPunk);
+		exec("status");
+	
+		exec("p", bestTracks);
+		exec("status");
+		
+		exec("p", meteorities);
+		exec("status");
+		
+		exec("p", "-1");
+		exec("status");
+		
+		exec("stop");
+		exec("p");
+		exec("status");
+		
+		exec("p");
+		exec("status");
+		
+		exec("p");
+		exec("status");
+	}
 }

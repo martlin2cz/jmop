@@ -13,7 +13,7 @@ public class TestingPlayer extends AbstractPlayer {
 	}
 
 	@Override
-	public Duration currentTime() {
+	public Duration doCurrentTime() {
 		return DurationUtilities.createDuration(0, 0, seconds);
 	}
 

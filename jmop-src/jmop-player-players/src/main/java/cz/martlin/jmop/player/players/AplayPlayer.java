@@ -42,7 +42,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 	///////////////////////////////////////////////////////////////////////////s
 	
 	@Override
-	public Duration currentTime() {
+	public Duration doCurrentTime() {
 		LOG.warn("Current time not supported, returning zero"); //$NON-NLS-1$
 		return new Duration(0);
 	}

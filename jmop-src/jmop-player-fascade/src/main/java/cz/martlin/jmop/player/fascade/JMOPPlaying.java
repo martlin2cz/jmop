@@ -82,9 +82,6 @@ public class JMOPPlaying {
 		engine.play();
 	}
 
-	public void play(int index)  {
-		throw new UnsupportedOperationException();
-	}
 
 	public void stop()  {
 		engine.stop();

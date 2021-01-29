@@ -23,6 +23,7 @@ import picocli.CommandLine.Command;
 				PlayingCommands.SeekCommand.class, //
 				PlayingCommands.NextCommand.class, //
 				PlayingCommands.PreviousCommand.class, //
+				TheCommandP.class, //
 		}) //
 public class JMOPReplRootCommand extends AbstractCommand {
 

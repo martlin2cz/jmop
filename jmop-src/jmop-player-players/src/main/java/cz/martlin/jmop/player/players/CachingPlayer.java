@@ -25,7 +25,7 @@ public class CachingPlayer extends AbstractPlayer {
 	///////////////////////////////////////////////////////////////////////////
 	
 	@Override
-	public Duration currentTime() {
+	public Duration doCurrentTime() {
 		if (cacher.isCaching(actualTrack())) {
 			return Duration.ZERO;
 		} else {
