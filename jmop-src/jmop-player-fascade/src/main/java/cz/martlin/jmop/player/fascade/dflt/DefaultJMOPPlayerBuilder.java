@@ -21,9 +21,9 @@ import cz.martlin.jmop.player.fascade.JMOPConfig;
 import cz.martlin.jmop.player.fascade.JMOPMusicbase;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.JMOPPlaying;
+import cz.martlin.jmop.player.fascade.JMOPStatus;
 import cz.martlin.jmop.player.fascade.dflt.config.ConstantDefaultFascadeConfig;
 import cz.martlin.jmop.player.players.BasePlayer;
-import cz.martlin.jmop.player.players.JavaFXMediaPlayer;
 import cz.martlin.jmop.player.players.TestingPlayer;
 
 public class DefaultJMOPPlayerBuilder {
@@ -61,8 +61,9 @@ public class DefaultJMOPPlayerBuilder {
 		JMOPConfig configModule = new JMOPConfig(config, musicbase, engine);
 		JMOPMusicbase musicbaseModule = new JMOPMusicbase(musicbase);
 		JMOPPlaying engineModule = new JMOPPlaying(config, musicbase, engine);
+		JMOPStatus statusModule = new JMOPStatus(engine);
 
-		return new JMOPPlayer(configModule, musicbaseModule, engineModule);
+		return new JMOPPlayer(configModule, musicbaseModule, engineModule, statusModule);
 	}
 
 }

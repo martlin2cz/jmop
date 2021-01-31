@@ -31,20 +31,17 @@ public class PrintCommands {
 
 		@Override
 		protected void doRun()  {
-			Bundle currentBundle = jmop.playing().currentBundle();
-			
-			if (currentBundle == null) {
-				PrintUtil.print("Nothing beeing played");
-				return;
-			} else {
-				printPlaying();
+			if (!jmop.status().isPlayingSomePlaylist()) {
+				reject("Nothing beeing played");
 			}
+			
+			printPlaying();
 		}
 
 		private void printPlaying() {
-			Bundle currentBundle = jmop.playing().currentBundle();
-			Playlist currentPlaylist = jmop.playing().currentPlaylist();
-			Track currentTrack = jmop.playing().currentTrack();
+			Bundle currentBundle = jmop.status().currentBundle();
+			Playlist currentPlaylist = jmop.status().currentPlaylist();
+			Track currentTrack = jmop.status().currentTrack();
 			
 			PrintUtil.print("Playing", currentPlaylist, "playlist from the", currentBundle, "bundle");
 			
@@ -54,11 +51,11 @@ public class PrintCommands {
 				PrintUtil.print("No current track.");
 			}
 			
-			PlayerStatus currentStatus = jmop.playing().currentStatus();
+			PlayerStatus currentStatus = jmop.status().currentStatus();
 			PrintUtil.print("The player is " + currentStatus);
 			
 			if (currentTrack != null) {
-				Duration currentTime = jmop.playing().currentDuration();
+				Duration currentTime = jmop.status().currentDuration();
 				PrintUtil.print("Current time is", currentTime, "out of", currentTrack.getDuration());
 			}
 		}
@@ -75,23 +72,20 @@ public class PrintCommands {
 
 		@Override
 		protected void doRun()  {
-			Bundle currentBundle = jmop.playing().currentBundle();
-			
-			if (currentBundle == null) {
-				PrintUtil.print("Nothing beeing played");
-				return;
-			} else {
-				printBar();
+			if (!jmop.status().isPlayingSomePlaylist()) {
+				reject("Nothing beeing played");
 			}
+			
+			printBar();
 		}
 
 		private void printBar() {
-			Track currentTrack = jmop.playing().currentTrack();
+			Track currentTrack = jmop.status().currentTrack();
 			
 			if (currentTrack != null) {
-				Duration currentTime = jmop.playing().currentDuration();
+				Duration currentTime = jmop.status().currentDuration();
 				Duration trackDuration = currentTrack.getDuration();
-				PlayerStatus currentStatus = jmop.playing().currentStatus();
+				PlayerStatus currentStatus = jmop.status().currentStatus();
 
 				PrintUtil.print(currentTrack);	
 				printBar(currentStatus, currentTime, trackDuration);

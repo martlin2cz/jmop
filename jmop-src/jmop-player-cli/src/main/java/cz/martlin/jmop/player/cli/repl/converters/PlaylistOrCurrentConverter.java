@@ -20,7 +20,7 @@ public class PlaylistOrCurrentConverter extends PlaylistConverter {
 	}
 
 	public Playlist currentPlaylist() {
-		Playlist playlist = jmop.playing().currentPlaylist();
+		Playlist playlist = jmop.status().currentPlaylist();
 		
 		if (playlist == null) {
 			throw new CommandLine.TypeConversionException("There is no current playlist");

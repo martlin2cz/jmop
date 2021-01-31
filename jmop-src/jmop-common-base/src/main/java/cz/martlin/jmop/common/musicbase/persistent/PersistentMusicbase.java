@@ -26,6 +26,11 @@ public class PersistentMusicbase implements BaseMusicbase {
 	public void load()  {
 		storage.load(inmemory);
 	}
+	
+	@Override
+	public void terminate() {
+		storage.terminate(inmemory);
+	}
 
 	@Override
 	public Set<Bundle> bundles()  {

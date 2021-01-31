@@ -41,6 +41,11 @@ public class MusicbaseModyfiingEncapsulator {
 		musicbase.load();
 	}
 	
+	public void terminate() {
+		musicbase.terminate();
+	}
+	
+	
 /////////////////////////////////////////////////////////////////////////////////////
 
 	public Bundle createNewBundle(String name)  {
@@ -164,7 +169,8 @@ public class MusicbaseModyfiingEncapsulator {
 		
 		musicbase.trackUpdated(track);
 	}
-	
+
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 }

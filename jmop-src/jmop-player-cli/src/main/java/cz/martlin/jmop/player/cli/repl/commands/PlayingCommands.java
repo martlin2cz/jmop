@@ -17,6 +17,10 @@ public class PlayingCommands {
 
 		@Override
 		protected void doRun()  {
+			if (!jmop.status().isPlaying()) {
+				reject("Not playing");
+			}
+			
 			jmop.playing().pause();
 		}
 	}
@@ -30,6 +34,10 @@ public class PlayingCommands {
 
 		@Override
 		protected void doRun()  {
+			if (!jmop.status().isPaused()) {
+				reject("Not paused");
+			}
+			
 			jmop.playing().resume();
 		}
 	}
@@ -43,6 +51,10 @@ public class PlayingCommands {
 
 		@Override
 		protected void doRun()  {
+			if (!jmop.status().isPlayingSomeTrack()) {
+				reject("Not playing");
+			}
+			
 			jmop.playing().stop();
 		}
 	}
@@ -59,6 +71,10 @@ public class PlayingCommands {
 
 		@Override
 		protected void doRun()  {
+			if (!jmop.status().isPlayingSomeTrack()) {
+				reject("Not playing");
+			}
+			
 			jmop.playing().seek(duration);
 		}
 	}
@@ -72,11 +88,11 @@ public class PlayingCommands {
 
 		@Override
 		protected void doRun()  {
-			if (jmop.playing().hasNext()) {
-				jmop.playing().toNext();	
-			} else {
-				System.out.println("No next track");
+			if (!jmop.status().hasNext()) {
+				reject("No next track");
 			}
+			
+			jmop.playing().toNext();	
 		}
 	}
 	
@@ -89,14 +105,14 @@ public class PlayingCommands {
 
 		@Override
 		protected void doRun()  {
-			if (jmop.playing().hasPrevious()) {
-				jmop.playing().toPrevious();	
-			} else {
-				System.out.println("No previous track");
+			if (!jmop.status().hasPrevious()) {
+				reject("No previous track");
 			}
-			
+
+			jmop.playing().toPrevious();	
 		}
 	}
+
 
 
 }

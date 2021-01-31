@@ -39,6 +39,11 @@ public class BundlesDirsStorage implements BaseMusicbaseStorage {
 		loader.load(inmemory);
 	}
 
+	@Override
+	public void terminate(BaseInMemoryMusicbase inmemory) {
+		// okay, we don't need anything
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 
 	@Override

@@ -13,12 +13,12 @@ public class CurrentPlaylistTrackIndexConverter extends AbstractTrackIndexConver
 	
 	@Override
 	protected Bundle bundle() {
-		return jmop.playing().currentBundle();
+		return jmop.status().currentBundle();
 	}
 	
 	@Override
 	protected Playlist playlist() {
-		return jmop.playing().currentPlaylist();
+		return jmop.status().currentPlaylist();
 	}
 
 	public static TrackIndex convertIndex(JMOPPlayer jmop, String specifier) {

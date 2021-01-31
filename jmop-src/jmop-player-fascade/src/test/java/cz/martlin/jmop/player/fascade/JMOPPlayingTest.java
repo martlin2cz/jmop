@@ -35,7 +35,7 @@ class JMOPPlayingTest {
 	@Test
 	void testIt()  {
 
-		check(null, null, null, PlayerStatus.NO_TRACK, d(0));
+		check(null, null, null, PlayerStatus.NO_TRACK, null);
 
 		playing.play(tmb.tm.discovery);
 		check(tmb.tm.daftPunk, tmb.tm.discovery, tmb.tm.oneMoreTime, PlayerStatus.PLAYING, d(0));
@@ -56,7 +56,7 @@ class JMOPPlayingTest {
 		check(tmb.tm.daftPunk, tmb.tm.discovery, tmb.tm.aerodynamic, PlayerStatus.PLAYING, d(0));
 
 		playing.stop();
-		check(tmb.tm.daftPunk, tmb.tm.discovery, null, PlayerStatus.STOPPED, d(0));
+		check(tmb.tm.daftPunk, tmb.tm.discovery, null, PlayerStatus.STOPPED, null);
 
 		playing.play();
 		check(tmb.tm.daftPunk, tmb.tm.discovery, tmb.tm.aerodynamic, PlayerStatus.PLAYING, d(0));
@@ -68,7 +68,7 @@ class JMOPPlayingTest {
 		check(tmb.tm.londonElektricity, tmb.tm.syncopatedCity, tmb.tm.justOneSecond, PlayerStatus.PLAYING, d(0));
 
 		playing.stop();
-		check(tmb.tm.londonElektricity, tmb.tm.syncopatedCity, null, PlayerStatus.STOPPED, d(0));
+		check(tmb.tm.londonElektricity, tmb.tm.syncopatedCity, null, PlayerStatus.STOPPED, null);
 	}
 	
 	//TODO test non-existing track files
@@ -76,11 +76,13 @@ class JMOPPlayingTest {
 	private void check(Bundle expectedBundle, Playlist expectedPlaylist, Track expectedTrack,
 			PlayerStatus expectedStatus, Duration expectedDuration) {
 
-		assertEquals(expectedBundle, playing.currentBundle());
-		assertEquals(expectedPlaylist, playing.currentPlaylist());
-		assertEquals(expectedTrack, playing.currentTrack());
-		assertEquals(expectedStatus, playing.currentStatus());
-		assertEquals(expectedDuration, playing.currentDuration());
+		JMOPStatus status = new JMOPStatus(playing.getEngine());
+		
+		assertEquals(expectedBundle, status.currentBundle());
+		assertEquals(expectedPlaylist, status.currentPlaylist());
+		assertEquals(expectedTrack, status.currentTrack());
+		assertEquals(expectedStatus, status.currentStatus());
+		assertEquals(expectedDuration, status.currentDuration());
 	}
 
 	private Duration d(int sec) {

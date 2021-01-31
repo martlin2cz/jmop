@@ -24,7 +24,7 @@ public class BundleOrCurrentConverter extends BundleConverter {
 	}
 
 	public Bundle currentBundle() {
-		Bundle bundle = jmop.playing().currentBundle();
+		Bundle bundle = jmop.status().currentBundle();
 		if (bundle == null) {
 			throw new CommandLine.TypeConversionException("There is no current bundle played.");
 		}

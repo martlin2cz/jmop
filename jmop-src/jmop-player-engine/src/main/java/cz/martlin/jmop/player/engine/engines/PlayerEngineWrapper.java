@@ -15,6 +15,17 @@ public class PlayerEngineWrapper {
 		super();
 		this.engine = engine;
 	}
+	
+	/**
+	 * Only for testing purposes.
+	 * @return
+	 */
+	public BasePlayerEngine getEngine() {
+		return engine;
+	}
+
+
+	///////////////////////////////////////////////////////////////////////////
 
 	public void play(Playlist playlist)  {
 		if (engine.currentPlaylist() != null) {
@@ -128,4 +139,5 @@ public class PlayerEngineWrapper {
 		}
 	}
 
+	
 }

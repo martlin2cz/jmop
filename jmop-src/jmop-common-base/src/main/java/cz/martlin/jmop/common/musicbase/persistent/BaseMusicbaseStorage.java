@@ -10,7 +10,9 @@ import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public interface BaseMusicbaseStorage extends TracksSource {
 
-	void load(BaseInMemoryMusicbase inmemory) ;
+	void load(BaseInMemoryMusicbase inmemory);
+	
+	void terminate(BaseInMemoryMusicbase inmemory);
 
 	void createBundle(Bundle bundle) ;
 

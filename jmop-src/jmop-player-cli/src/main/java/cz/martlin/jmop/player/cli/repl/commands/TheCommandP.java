@@ -35,20 +35,21 @@ public class TheCommandP extends AbstractRunnableCommand {
 	}
 
 	private void doWithNoArgument() {
-		if (jmop.playing().currentPlaylist() == null) {
-			throw new CommandLine.TypeConversionException("Specify what to play");
+		if (!jmop.status().isPlayingSomePlaylist()) {
+			reject("Specify what to play");
 		}
 		
-		PlayerStatus status = jmop.playing().currentStatus();
-		if (status.isNotPlayingTrack()) {
+		if (!jmop.status().isPlayingSomeTrack()) {
 			jmop.playing().play();
 			return;
 		}
-		if (status.isPlaying()) {
+		
+		if (jmop.status().isPlaying()) {
 			jmop.playing().pause();
 			return;
 		}
-		if (status.isPaused()) {
+		
+		if (jmop.status().isPaused()) {
 			jmop.playing().resume();
 			return;
 		}

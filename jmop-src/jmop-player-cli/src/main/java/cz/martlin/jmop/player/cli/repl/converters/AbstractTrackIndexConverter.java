@@ -85,7 +85,7 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 		Bundle bundle = bundle();
 		Track track = jmop.musicbase().trackOfTitle(bundle, trackTitle);
 		if (track == null) {
-			throw new CommandLine.TypeConversionException("Such track does not exist " + trackTitle);
+			throw new CommandLine.TypeConversionException("Track " + trackTitle + " does not exist");
 		}
 		
 		Playlist playlist = playlist();

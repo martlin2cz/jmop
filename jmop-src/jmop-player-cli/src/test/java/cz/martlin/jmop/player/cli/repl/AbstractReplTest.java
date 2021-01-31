@@ -1,6 +1,7 @@
 package cz.martlin.jmop.player.cli.repl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
@@ -10,11 +11,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.utils.TestingMusicbase;
 import cz.martlin.jmop.common.utils.TestingMusicbaseExtension;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.cli.repl.converters.CoupleOrNotParser;
+import cz.martlin.jmop.player.cli.repl.exit.JMOPExceptionManager;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 import picocli.CommandLine;
@@ -40,7 +45,7 @@ public class AbstractReplTest {
 
 	@BeforeEach
 	public void prepare() {
-		System.setProperty("picocli.trace", "INFO");
+//		System.setProperty("picocli.trace", "INFO");
 
 		this.cl = prepareRepl();
 	}
@@ -49,7 +54,7 @@ public class AbstractReplTest {
 	public void finish() {
 		finishJmop(this.jmop);
 
-		System.setProperty("picocli.trace", "");
+//		System.setProperty("picocli.trace", "");
 	}
 
 /////////////////////////////////////////////////////////////////////
@@ -101,11 +106,25 @@ public class AbstractReplTest {
 
 		int code = this.cl.execute(command);
 
-		assertEquals(0, code, "The command execution resulted in non-zero exit code");
+		if (code == JMOPExceptionManager.OK //
+				|| code == JMOPExceptionManager.INVALID_USAGE_REJECTED) {
+			// okay
+		} else {
+			fail("The command " + Arrays.toString(command) + " " //
+					+ "ended with " + JMOPExceptionManager.errorCodeToString(code) + " code.");
+		}
 	}
 
 	protected String couple(String first, String second) {
 		return first + "/" + second;
+	}
+	
+	protected String couple(Bundle bundle, Track track) {
+		return couple(bundle.getName(), track.getTitle());
+	}
+	
+	protected String couple(Bundle bundle, Playlist playlist) {
+		return couple(bundle.getName(), playlist.getName());
 	}
 
 }

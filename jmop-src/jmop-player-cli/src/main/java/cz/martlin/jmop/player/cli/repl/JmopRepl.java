@@ -10,6 +10,7 @@ import cz.martlin.jmop.player.cli.repl.converters.CurrentPlaylistTrackIndexOrCur
 import cz.martlin.jmop.player.cli.repl.converters.DurationConverter;
 import cz.martlin.jmop.player.cli.repl.converters.PlaylistOrCurrentConverter;
 import cz.martlin.jmop.player.cli.repl.converters.TrackOrCurrentConverter;
+import cz.martlin.jmop.player.cli.repl.exit.JMOPExceptionManager;
 import cz.martlin.jmop.player.cli.repl.misc.JMOPComponentsFactory;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import javafx.util.Duration;
@@ -54,6 +55,11 @@ public class JmopRepl extends AbstractRepl {
 		
 		cmd.registerConverter(TrackIndex.class, new CurrentPlaylistTrackIndexOrCurrentConverter(jmop));
 		cmd.registerConverter(Duration.class, new DurationConverter());
+		
+		JMOPExceptionManager manager = new JMOPExceptionManager();
+		cmd.setExecutionExceptionHandler(manager);
+		cmd.setExitCodeExceptionMapper(manager);
+		cmd.setParameterExceptionHandler(manager);
 	}
 
 }

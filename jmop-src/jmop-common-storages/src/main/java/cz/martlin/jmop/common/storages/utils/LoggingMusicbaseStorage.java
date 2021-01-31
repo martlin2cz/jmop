@@ -32,6 +32,13 @@ public class LoggingMusicbaseStorage implements BaseMusicbaseStorage {
 	}
 
 	@Override
+	public void terminate(BaseInMemoryMusicbase inmemory) {
+		LOG.info("Terminating the persistent storage");
+
+		delegee.terminate(inmemory);
+	}
+	
+	@Override
 	public void createBundle(Bundle bundle)  {
 		LOG.info("Creating bundle {}", bundle.getName());
 

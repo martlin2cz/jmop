@@ -36,6 +36,11 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 		}
 	}
 
+	@Override
+	public void terminate(BaseInMemoryMusicbase inmemory) {
+		// okay
+	}
+	
 	private void createBundle(BaseInMemoryMusicbase inmemoryTo, Bundle originalBundle) {
 		try {
 			Bundle newBundle = inmemoryTo.createNewBundle(originalBundle.getName());

@@ -1,7 +1,9 @@
 package cz.martlin.jmop.player.fascade;
 
+import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
@@ -27,35 +29,13 @@ public class JMOPPlaying {
 		this.engine = new PlayerEngineWrapper(engine);
 	}
 	
-
-	public Bundle currentBundle() {
-		return engine.currentBundle();
+	/**
+	 * Only for testing purposes.
+	 * @return
+	 */
+	protected BasePlayerEngine getEngine() {
+		return engine.getEngine();
 	}
-
-	public Playlist currentPlaylist() {
-		return engine.currentPlaylist();
-	}
-
-	public Track currentTrack() {
-		return engine.currentTrack();
-	}
-
-	public Duration currentDuration() {
-		return engine.currentDuration();
-	}
-
-	public PlayerStatus currentStatus() {
-		return engine.currentStatus();
-	}
-
-	public boolean hasPrevious() {
-		return engine.hasPrevious();
-	}
-	
-	public boolean hasNext() {
-		return engine.hasNext();
-	}
-	
 	
 	/////////////////////////////////////////////////////////////////
 
@@ -70,8 +50,13 @@ public class JMOPPlaying {
 	}
 	
 	public void play(Track track) {
-		//TODO play just the track
-		throw new UnsupportedOperationException("use play(index) instead");
+		Bundle bundle = track.getBundle();
+		Metadata metadata = Metadata.createNew();
+		Playlist playlist = new Playlist(bundle , track.getTitle(), metadata );
+		PlaylistModifier modifier = new PlaylistModifier(playlist);
+		modifier.append(track);
+		
+		engine.play(playlist);
 	}
 	
 	public void play(TrackIndex index) {
@@ -110,16 +95,5 @@ public class JMOPPlaying {
 
 
 
-	
 
-
-	/////////////////////////////////////////////////////////////////
-
-
-	@Override
-	public String toString() {
-		return "JMOPPlaying [currentBundle()=" + currentBundle() + ", currentPlaylist()=" + currentPlaylist()
-				+ ", currentTrack()=" + currentTrack() + ", currentDuration()=" + currentDuration()
-				+ ", currentStatus()=" + currentStatus() + "]";
-	}
 }

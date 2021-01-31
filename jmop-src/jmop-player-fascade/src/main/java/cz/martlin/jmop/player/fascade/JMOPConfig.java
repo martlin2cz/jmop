@@ -40,6 +40,7 @@ public class JMOPConfig {
 	
 	public void terminate()  {
 		engine.terminate();
+		modyfiing.terminate();
 	}
 	
 	

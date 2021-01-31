@@ -20,7 +20,7 @@ public class TrackOrCurrentConverter extends TrackConverter {
 	}
 
 	public Track currentTrack() {
-		Track track = jmop.playing().currentTrack();
+		Track track = jmop.status().currentTrack();
 		
 		if (track == null) {
 			throw new CommandLine.TypeConversionException("There is no current track");
