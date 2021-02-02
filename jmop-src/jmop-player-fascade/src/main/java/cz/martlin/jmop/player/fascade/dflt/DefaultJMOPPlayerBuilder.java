@@ -6,11 +6,13 @@ import java.util.function.Function;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
+import cz.martlin.jmop.common.musicbase.dflt.VerifiingInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
 import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
 import cz.martlin.jmop.common.storages.dflt.DefaultStorage;
+import cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage;
 import cz.martlin.jmop.common.utils.TestingRootDir;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
@@ -42,12 +44,14 @@ public class DefaultJMOPPlayerBuilder {
 	public static JMOPPlayer create(File root, Function<TracksSource, BasePlayer> playerProducer,  BaseDefaultJMOPConfig config, BaseErrorReporter reporter) {
 		
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
-
+		BaseInMemoryMusicbase verifiing = new VerifiingInMemoryMusicbase(inmemory);
+		
 		BaseDefaultStorageConfig storageConfig = config;
-		BaseMusicbaseStorage storage = DefaultStorage.create(root, storageConfig, reporter, inmemory);
-
-		BaseMusicbase musicbase = new PersistentMusicbase(inmemory, storage);
-
+		BaseMusicbaseStorage storage = DefaultStorage.create(root, storageConfig, reporter, verifiing);
+		BaseMusicbaseStorage logging = new LoggingMusicbaseStorage(storage);
+		
+		BaseMusicbase musicbase = new PersistentMusicbase(verifiing, logging);
+		
 		BasePlayer player = playerProducer.apply(musicbase);
 		BaseDefaultEngineConfig engineConfig = config;
 		BasePlayerEngine engine = DefaultEngine.create(player, musicbase, engineConfig);

@@ -49,6 +49,10 @@ public class JMOPMusicbase {
 		return listing.getTrack(bundleOrNull, trackTitleOrNot);
 	}
 
+	public File file(Track track) {
+		return listing.trackFile(track);
+	}
+	
 /////////////////////////////////////////////////////////////////
 	public Set<Bundle> bundles()  {
 		return listing.bundles();
@@ -76,6 +80,11 @@ public class JMOPMusicbase {
 		modyfiing.removeBundle(bundle);
 		//TODO stop if current?
 	}
+	
+
+	public boolean isEmpty(Bundle bundle) {
+		return tracks(bundle).isEmpty();
+	}
 
 	public Playlist createNewPlaylist(Bundle bundle, String name)  {
 		return modyfiing.createNewPlaylist(bundle, name);
@@ -99,6 +108,11 @@ public class JMOPMusicbase {
 		return new AutoSavingPlaylistModifier(playlist, modyfiing);
 	}
 	
+
+	public boolean isEmpty(Playlist playlist) {
+		return playlist.getTracks().count() == 0;
+	}
+	
 	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile)  {
 		return modyfiing.createNewTrack(bundle, data, contentsFile);
 	}
@@ -120,6 +134,15 @@ public class JMOPMusicbase {
 	public void updateTrack(Track track, TrackData newData)  {
 		modyfiing.updateTrack(track, newData);
 	}
+
+
+
+
+
+
+
+
+
 
 
 

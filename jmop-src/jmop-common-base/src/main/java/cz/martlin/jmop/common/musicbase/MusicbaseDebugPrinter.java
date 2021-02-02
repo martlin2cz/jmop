@@ -21,11 +21,11 @@ public class MusicbaseDebugPrinter {
 		print(bundle.getMetadata());
 
 		for (Playlist playlist: musicbase.playlists(bundle)) {
-			print(musicbase, playlist);
+			print(playlist);
 		}
 	}
 
-	private static void print(BaseMusicbaseLoading musicbase, Playlist playlist) {
+	public static void print(Playlist playlist) {
 		String playlistName = playlist.getName();
 		System.out.println("	Playlist '" + playlistName + "':");
 		print(playlist.getMetadata());
@@ -36,8 +36,8 @@ public class MusicbaseDebugPrinter {
 		}
 	}
 
-	private static void print(Track track) {
-		System.out.println("		Track(" + track.getIdentifier() + "): '" + track.getTitle());
+	public static void print(Track track) {
+		System.out.println("		Track(" + track.getIdentifier() + "): '" + track.getTitle() + "'");
 		print(track.getMetadata());
 	}
 

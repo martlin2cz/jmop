@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.engine.dflt.handlers;
 
+import cz.martlin.jmop.common.data.misc.TemporarySimpleTrackedPlaylist;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
@@ -17,8 +18,10 @@ public class MarkingPlaylistAsPlayedHandler implements OnPlaylistStartedHandler 
 
 	@Override
 	public void onPlaylistStarted(BasePlayerEngine engine, Playlist playlist)  {
-		playlist.played();
-		musicbase.playlistUpdated(playlist);
+		if (!(playlist instanceof TemporarySimpleTrackedPlaylist)) {
+			playlist.played();
+			musicbase.playlistUpdated(playlist);
+		}
 	}
 
 }

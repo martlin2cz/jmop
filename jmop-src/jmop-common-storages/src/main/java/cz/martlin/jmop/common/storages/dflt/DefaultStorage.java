@@ -28,7 +28,7 @@ public class DefaultStorage extends BundlesDirsStorage {
 		
 		BaseFileSystemAccessor fs = new ElectronicFileSystemAccessor();
 //		new SimpleExtendedPlaylistManipulator(fs);
-		BaseExtendedPlaylistManipulator manipulator = new XSPFFilesManipulator();
+		BaseExtendedPlaylistManipulator manipulator = new XSPFFilesManipulator(reporter);
 		String playlistFileExtension = manipulator.fileExtension();
 		
 		TrackFileFormat format = config.getSaveFormat();

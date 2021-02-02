@@ -1,6 +1,7 @@
 package cz.martlin.jmop.player.fascade;
 
 import cz.martlin.jmop.common.data.misc.PlaylistModifier;
+import cz.martlin.jmop.common.data.misc.TemporarySimpleTrackedPlaylist;
 import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
@@ -50,12 +51,7 @@ public class JMOPPlaying {
 	}
 	
 	public void play(Track track) {
-		Bundle bundle = track.getBundle();
-		Metadata metadata = Metadata.createNew();
-		Playlist playlist = new Playlist(bundle , track.getTitle(), metadata );
-		PlaylistModifier modifier = new PlaylistModifier(playlist);
-		modifier.append(track);
-		
+		Playlist playlist = new TemporarySimpleTrackedPlaylist(track);
 		engine.play(playlist);
 	}
 	

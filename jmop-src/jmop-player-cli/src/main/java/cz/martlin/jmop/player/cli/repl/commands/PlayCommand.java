@@ -9,11 +9,13 @@ import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.PlaylistMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "play", subcommands = { //
+		CommandLine.HelpCommand.class, //
 		PlayCommand.PlayBundleCommand.class, //
 		PlayCommand.PlayPlaylistCommand.class, //
 		PlayCommand.PlayTrackCommand.class, //
@@ -49,6 +51,9 @@ public class PlayCommand extends AbstractRunnableCommand {
 		@Override
 		protected void doRun() {
 			Bundle bundle = this.bundle.getBundle();
+			if (jmop.musicbase().isEmpty(bundle)) {
+				reject("This bundle has nothing to play");
+			}
 			jmop.playing().play(bundle);
 		}
 	}
@@ -66,6 +71,9 @@ public class PlayCommand extends AbstractRunnableCommand {
 		@Override
 		protected void doRun() {
 			Playlist playlist = this.playlist.getPlaylist();
+			if (jmop.musicbase().isEmpty(playlist)) {
+				reject("This playlist has nothing to play");
+			}
 			jmop.playing().play(playlist);
 		}
 	}
@@ -83,6 +91,9 @@ public class PlayCommand extends AbstractRunnableCommand {
 		@Override
 		protected void doRun() {
 			Track track = this.track.getTrack();
+//			if (!jmop.musicbase().file(track).exists()) {
+//				reject("This track file does not exist");
+//			}
 			jmop.playing().play(track);
 		}
 	}

@@ -10,12 +10,14 @@ import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import javafx.util.Duration;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "create", subcommands = { //
+		CommandLine.HelpCommand.class, //
 		CreateCommand.CreateBundleCommand.class, //
 		CreateCommand.CreatePlaylistCommand.class, //
 		CreateCommand.CreateTrackCommand.class, //

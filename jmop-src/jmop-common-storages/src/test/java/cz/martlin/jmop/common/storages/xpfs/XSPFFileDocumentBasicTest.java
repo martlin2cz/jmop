@@ -20,7 +20,7 @@ import cz.martlin.jmop.common.storages.playlists.XMLFileLoaderStorer;
 import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentNamespaces;
 import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentUtility;
 
-public class XSPFFileDocumentTest {
+public class XSPFFileDocumentBasicTest {
 
 	@Test
 	public void testGetCreateOrFail() {

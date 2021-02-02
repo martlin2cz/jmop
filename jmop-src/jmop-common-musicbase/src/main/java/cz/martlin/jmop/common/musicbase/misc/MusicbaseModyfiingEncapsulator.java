@@ -132,15 +132,22 @@ public class MusicbaseModyfiingEncapsulator {
 	
 	public void renameTrack(Track track, String newTitle)  {
 		musicbase.renameTrack(track, newTitle);
-
+		
+		listing.playlistsContaining(track).forEach((p) -> playlistUpdated(p));
+		Bundle bundle = track.getBundle();
+		musicbase.bundleUpdated(bundle);
 	}
 
 	public void moveTrack(Track track, Bundle newBundle)  {
 		listing.playlistsContaining(track).forEach((p) -> {
 			removeTrackFromPlaylist(track, p);
 		});
-		
+
+		Bundle oldBundle = track.getBundle();
 		musicbase.moveTrack(track, newBundle);
+
+		musicbase.bundleUpdated(oldBundle );
+		musicbase.bundleUpdated(newBundle);
 	}
 
 

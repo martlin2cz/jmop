@@ -10,11 +10,13 @@ import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.PlaylistMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "rename", subcommands = { //
+		CommandLine.HelpCommand.class, //
 		RenameCommand.RenameBundleCommand.class, //
 		RenameCommand.RenamePlaylistCommand.class, //
 		RenameCommand.RenameTrackCommand.class, //

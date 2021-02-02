@@ -2,10 +2,12 @@ package cz.martlin.jmop.player.cli.repl.commands;
 
 import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 @Command(name = "jmop-cli", //
 		subcommands = { //
+				CommandLine.HelpCommand.class, //
 				ListCommand.class, //
 				CreateCommand.class, //
 				RenameCommand.class, //

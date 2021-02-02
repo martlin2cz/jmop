@@ -10,10 +10,12 @@ import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.misc.PrintUtil;
 import cz.martlin.jmop.player.cli.repl.mixin.BundleOrNoneMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 
 @Command(name = "list", subcommands = { //
+		CommandLine.HelpCommand.class, //
 		ListCommand.ListBundlesCommand.class, //
 		ListCommand.ListPlaylistsCommand.class, //
 		ListCommand.ListTracksCommand.class, //

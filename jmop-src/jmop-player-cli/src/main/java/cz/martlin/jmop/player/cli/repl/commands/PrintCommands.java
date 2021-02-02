@@ -14,6 +14,7 @@ import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.PlaylistMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import cz.martlin.jmop.player.fascade.JMOPStatus;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 import picocli.CommandLine.Command;
@@ -85,18 +86,19 @@ public class PrintCommands {
 			if (currentTrack != null) {
 				Duration currentTime = jmop.status().currentDuration();
 				Duration trackDuration = currentTrack.getDuration();
-				PlayerStatus currentStatus = jmop.status().currentStatus();
 
 				PrintUtil.print(currentTrack);	
-				printBar(currentStatus, currentTime, trackDuration);
+				printBar(currentTrack);
 				PrintUtil.print(currentTime, "/", trackDuration);
 			} else {
 				PrintUtil.print("---");
 			}
 		}
 
-		private void printBar(PlayerStatus status, Duration currentTime, Duration trackDuration) {
-			String button = chooseStatusButton(status);
+		private void printBar(Track currentTrack) {
+			Duration currentTime = jmop.status().currentDuration();
+			Duration trackDuration = currentTrack.getDuration();
+			String button = chooseStatusButton(jmop.status());
 			
 			double currentMilis = currentTime.toMillis();
 			double trackMilis = trackDuration.toMillis();
@@ -112,19 +114,18 @@ public class PrintCommands {
 			PrintUtil.print(line);
 		}
 
-		private String chooseStatusButton(PlayerStatus status) {
-			switch (status) {
-			case NO_TRACK:
-				return "  ";
-			case PAUSED:
-				return "⏸";
-			case PLAYING:
+		private String chooseStatusButton(JMOPStatus status) {
+			if (status.isPlaying()) {
 				return "▶";
-			case STOPPED:
-				return "⏹";
-			default:
-				throw new IllegalArgumentException();
 			}
+			if (status.isPaused()) {
+				return "⏸";
+			}
+			if (status.isStopped()) {
+				return "⏹";
+			}
+			
+			return "  ";
 		}
 	}
 	
@@ -159,9 +160,9 @@ public class PrintCommands {
 	}
 
 	@Command(name = "playlist", scope = ScopeType.INHERIT, subcommands = {
-			ModifyPlaylistCommand.AddTrackCommand.class, //
-			ModifyPlaylistCommand.InsertTrackCommand.class, //
-			ModifyPlaylistCommand.RemoveTrackCommand.class, //
+			ModifyPlaylistCommands.AddTrackCommand.class, //
+			ModifyPlaylistCommands.InsertTrackCommand.class, //
+			ModifyPlaylistCommands.RemoveTrackCommand.class, //
 	})
 	public static class PlaylistInfoCommand extends AbstractRunnableCommand {
 		
@@ -218,7 +219,9 @@ public class PrintCommands {
 			printMetadata(track.getMetadata());
 			PrintUtil.print("Duration:", track.getDuration());
 			PrintUtil.print("ID:", track.getIdentifier());
-			PrintUtil.print("Description:", track.getDescription());
+			PrintUtil.print("File:", jmop.musicbase().file(track));
+			PrintUtil.print("Description:");
+			PrintUtil.print(track.getDescription());
 			PrintUtil.emptyLine();
 		}
 	}

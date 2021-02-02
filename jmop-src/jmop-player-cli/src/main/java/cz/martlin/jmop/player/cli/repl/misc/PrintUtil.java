@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.cli.repl.misc;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,6 +52,14 @@ public class PrintUtil {
 				Date date = cal.getTime();
 				String formatted = new SimpleDateFormat().format(date);
 				System.out.print(formatted);
+				
+			} else if (item instanceof File) {
+				File file = (File) item;
+				if (file.exists()) {
+					System.out.print(file.getPath());
+				} else {
+					System.out.print("none");
+				}
 				
 			} else if (item instanceof String) {
 				String string = (String) item;

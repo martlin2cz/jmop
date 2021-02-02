@@ -17,7 +17,8 @@ public abstract class AbstractRunnableCommand extends AbstractCommand implements
 			throw e;
 			
 		} catch (Exception e) {
-			throw new RuntimeException("Command " + this.toString() + " failed ", e);
+			//throw new RuntimeException("Command " + this.toString() + " failed ", e);
+			throw e;
 		}
 	}
 
@@ -26,7 +27,7 @@ public abstract class AbstractRunnableCommand extends AbstractCommand implements
 	
 
 	public void reject(String reason) {
-		System.err.println(reason);
+		//System.err.println(reason);
 		
 		throw new OperationRejectedException(reason);
 	}

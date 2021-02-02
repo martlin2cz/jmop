@@ -62,15 +62,32 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	}
 	
 	@Test
-	void testMove()  {
+	void testMovePlaylistCurrentToSpecified()  {
+		// Notice: if we move playlist, it moves its tracks as well
+		// thus, each move has to be executed separatelly,
+		// to let the musicbase to roll it back
 		String daftPunk = tmb.tm.daftPunk.getName();
-		String discovery = tmb.tm.discovery.getName();
-		String aerodynamics = tmb.tm.aerodynamic.getTitle();
 		
 		// playlist
 		exec("move", "playlist", ".", daftPunk);
+	}
+	
+	@Test
+	void testMovePlaylistSpecifiedToCurrent()  {
+		// Notice: if we move playlist, it moves its tracks as well
+		// thus, each move has to be executed separatelly,
+		// to let the musicbase to roll it back		
+		String daftPunk = tmb.tm.daftPunk.getName();
+		String discovery = tmb.tm.discovery.getName();
+		
+		// playlist
 		exec("move", "playlist", couple(daftPunk, discovery), ".");
-
+	}
+	
+	@Test
+	void testMoveTracks()  {
+		String daftPunk = tmb.tm.daftPunk.getName();
+		String aerodynamics = tmb.tm.aerodynamic.getTitle();
 		
 		// track
 		exec("move", "track", ".", daftPunk);

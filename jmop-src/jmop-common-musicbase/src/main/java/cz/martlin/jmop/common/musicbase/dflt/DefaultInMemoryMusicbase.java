@@ -68,6 +68,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 		return bundle;
 	}
 
+
 	@Override
 	public void renameBundle(Bundle bundle, String newName) {
 		bundle.setName(newName);
@@ -162,6 +163,8 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	
 	@Override
 	public String toString() {
 		return "DefaultInMemoryMusicbase [bundles=" + bundles + ", playlists=" + playlists + ", tracks=" + tracks + "]";

@@ -21,12 +21,13 @@ import cz.martlin.jmop.common.storages.xpfs.XSPFFilesManipulator;
 import cz.martlin.jmop.common.utils.TestingDataCreator;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 
 public class XSPFFilesManipulatorTest {
 
 	@TempDir
 	public File basedir;
-	private final XSPFFilesManipulator manipulator = new XSPFFilesManipulator();
+	private final XSPFFilesManipulator manipulator = new XSPFFilesManipulator(new SimpleErrorReporter());
 	
 ///////////////////////////////////////////////////////////////////////////
 

@@ -50,6 +50,7 @@ public class JMOPExceptionManager
 			//TODO customize the error messages for picocli exceptions
 			System.err.println(ex.getMessage());
 		} else {
+			System.err.println("An error occured during the execution of the command: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}

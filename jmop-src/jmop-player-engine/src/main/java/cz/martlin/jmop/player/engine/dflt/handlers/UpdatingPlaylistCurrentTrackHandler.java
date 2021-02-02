@@ -1,5 +1,6 @@
 package cz.martlin.jmop.player.engine.dflt.handlers;
 
+import cz.martlin.jmop.common.data.misc.TemporarySimpleTrackedPlaylist;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
@@ -19,8 +20,10 @@ public class UpdatingPlaylistCurrentTrackHandler implements AfterTrackStartedHan
 	@Override
 	public void afterTrackStarted(BasePlayerEngine engine, Track track)  {
 		Playlist playlist = engine.currentPlaylist();
-		
-		musicbase.playlistUpdated(playlist);
+
+		if (!(playlist instanceof TemporarySimpleTrackedPlaylist)) {
+			musicbase.playlistUpdated(playlist);
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

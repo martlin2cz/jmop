@@ -10,10 +10,12 @@ import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.PlaylistMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 
 @Command(name = "move", subcommands = { //
+		CommandLine.HelpCommand.class, //
 		MoveCommand.MovePlaylistCommand.class, //
 		MoveCommand.MoveTrackCommand.class, //
 }) //
