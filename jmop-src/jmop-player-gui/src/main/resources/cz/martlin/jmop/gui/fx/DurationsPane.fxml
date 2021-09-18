@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import cz.martlin.jmop.gui.comp.GuiChangableSlider?>
+<?import cz.martlin.jmop.gui.comp.TrackPane?>
+<?import cz.martlin.jmop.gui.comp.TwoStateButton?>
+
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.control.Label?>
+
+<HBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60"
+	spacing="10">
+
+	<Label fx:id="lblDone" text="(played)" />
+	<Label fx:id="lblSlash" text="/" />
+	<Label fx:id="lblRemaining" text="(remaining)" />
+
+</HBox>
