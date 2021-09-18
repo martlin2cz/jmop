@@ -25,4 +25,9 @@ public class ConstantConfiguration implements BaseConfiguration {
 		return 60;
 	}
 
+	
+	@Override
+	public int getSearchCount() {
+		return 10;
+	}
 }
