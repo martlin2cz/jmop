@@ -5,8 +5,8 @@
 
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
-	<packaging>jar</packaging>
-	<version>1.1</version>
+	<packaging>pom</packaging>
+	<version>${revision}</version>
 
 	<name>jmop</name>
 	<url>https://github.com/martlin2cz/jmop</url>
@@ -21,6 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
+		 <revision>1.2</revision>
 	</properties>
 
 
@@ -159,4 +160,15 @@
 
 		</plugins>
 	</build>
+	<modules>
+		<module>jmop-base</module>
+		<module>jmop-remotes</module>
+		<module>jmop-locals</module>
+		<module>jmop-play</module>
+		<module>jmop-core</module>
+		<module>jmop-gui</module>
+		<module>jmop-app</module>
+		<module>jmop-player</module>
+		<module>jmop-playlister</module>
+	</modules>
 </project>
