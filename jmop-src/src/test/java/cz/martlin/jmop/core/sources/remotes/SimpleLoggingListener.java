@@ -2,9 +2,9 @@ package cz.martlin.jmop.core.sources.remotes;
 
 import java.io.PrintStream;
 
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 
-public class SimpleLoggingListener implements ProgressListener {
+public class SimpleLoggingListener implements XXX_ProgressListener {
 
 	private final PrintStream to;
 

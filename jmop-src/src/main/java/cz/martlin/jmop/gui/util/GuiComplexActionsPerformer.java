@@ -295,7 +295,7 @@ public class GuiComplexActionsPerformer {
 			scene.setCursor(Cursor.DEFAULT);
 		});
 
-		task.run();
+		task.run(listener, listener);
 		// Platform.runLater(() -> {
 		// runAndHandleError(run);
 		// });
@@ -334,7 +334,7 @@ public class GuiComplexActionsPerformer {
 			Platform.runLater(() -> { //
 				runAndHandleError(() -> {
 
-					Dialog<T> dialog = dialogConstructor.run();
+					Dialog<T> dialog = dialogConstructor.run(listener, listener);
 
 					Optional<T> optional = dialog.showAndWait();
 					if (optional.isPresent()) {
@@ -355,7 +355,7 @@ public class GuiComplexActionsPerformer {
 
 	private <T> T runAndHandleError(RunnableWithException<T> run) {
 		try {
-			return run.run();
+			return run.run(listener, listener);
 		} catch (Exception e) {
 			reporter.internal(e);
 			return null;
@@ -387,11 +387,13 @@ public class GuiComplexActionsPerformer {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@FunctionalInterface
+	@Deprecated
 	public static interface RunnableWithException<T> {
 		public T run() throws Exception;
 	}
 
 	@FunctionalInterface
+	@Deprecated
 	public static interface ConsumerWithException<T> {
 		public void consume(T object) throws Exception;
 	}

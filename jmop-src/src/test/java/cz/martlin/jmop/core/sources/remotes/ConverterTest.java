@@ -7,7 +7,7 @@ import cz.martlin.jmop.core.config.ConstantConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.ProgressListener;
+import cz.martlin.jmop.core.misc.XXX_ProgressListener;
 import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
@@ -18,7 +18,7 @@ import cz.martlin.jmop.core.sources.local.location.TrackFileLocation;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
-import cz.martlin.jmop.core.sources.remote.BaseSourceConverter;
+import cz.martlin.jmop.core.sources.remote.XXX_BaseSourceConverter;
 import javafx.util.Duration;
 
 public class ConverterTest {
@@ -44,9 +44,9 @@ public class ConverterTest {
 		TrackFileFormat inputFormat = TrackFileFormat.OPUS;
 		TrackFileFormat outputFormat = TrackFileFormat.MP3;
 
-		ProgressListener listener = new SimpleLoggingListener(System.out);
+		XXX_ProgressListener listener = new SimpleLoggingListener(System.out);
 
-		BaseSourceConverter converter = new FFMPEGConverter(local);
+		XXX_BaseSourceConverter converter = new FFMPEGConverter(local);
 		// BaseSourceConverter converter = new NoopConverter();
 		//converter.specifyListener(listener);
 

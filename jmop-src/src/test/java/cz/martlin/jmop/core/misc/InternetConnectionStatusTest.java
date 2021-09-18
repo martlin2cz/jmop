@@ -104,5 +104,9 @@ public class InternetConnectionStatusTest {
 			return offlineRetryTimeout;
 		}
 
+		@Override
+		public int getSearchCount() {
+			throw new UnsupportedOperationException();
+		}
 	}
 }
