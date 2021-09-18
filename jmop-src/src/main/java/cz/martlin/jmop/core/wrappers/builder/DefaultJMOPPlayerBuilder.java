@@ -12,38 +12,37 @@ import cz.martlin.jmop.core.sources.local.AbstractFileSystemAccessor;
 import cz.martlin.jmop.core.sources.local.AbstractPlaylistLoader;
 import cz.martlin.jmop.core.sources.local.BaseFilesNamer;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
-import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import cz.martlin.jmop.core.sources.local.location.DefaultLocator;
 import cz.martlin.jmop.core.sources.locals.DefaultFileSystemAccessor;
 import cz.martlin.jmop.core.sources.locals.DefaultFilesNamer;
 import cz.martlin.jmop.core.sources.locals.DefaultLocalSource;
 import cz.martlin.jmop.core.sources.locals.DefaultPlaylistLoader;
-import cz.martlin.jmop.core.sources.remote.AbstractRemoteSource;
-import cz.martlin.jmop.core.sources.remotes.FFMPEGConverter;
-import cz.martlin.jmop.core.sources.remotes.YoutubeDlDownloader;
-import cz.martlin.jmop.core.sources.remotes.YoutubeSource;
+import cz.martlin.jmop.core.sources.remote.XXX_AbstractRemoteSource;
+import cz.martlin.jmop.core.sources.remotes.XXX_FFMPEGConverter;
+import cz.martlin.jmop.core.sources.remotes.XXX_YoutubeDlDownloader;
 
 public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 
 	@Override
-	public FFMPEGConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
-		return new FFMPEGConverter(local);
+	public XXX_FFMPEGConverter createConverter(CommandlineData data, BaseConfiguration config, BaseLocalSource local) {
+		return new XXX_FFMPEGConverter(local);
 	}
 
 	@Override
-	public YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
-			InternetConnectionStatus connection, AbstractRemoteSource remote, BaseLocalSource local) {
-		return new YoutubeDlDownloader(connection, local, remote);
+	public XXX_YoutubeDlDownloader createDownloader(CommandlineData data, BaseConfiguration config,
+			InternetConnectionStatus connection, XXX_AbstractRemoteSource remote, BaseLocalSource local) {
+		return new XXX_YoutubeDlDownloader(connection, local, remote);
 	}
 
 	@Override
 	public JavaFXMediaPlayer createPlayer(CommandlineData data, BaseConfiguration config, BaseLocalSource local,
-			AbstractTrackFileLocator locator) {
+			BaseTrackFileLocator locator) {
 		return new JavaFXMediaPlayer(local, locator);
 	}
 
 	@Override
-	public AbstractTrackFileLocator createLocator(CommandlineData data, BaseConfiguration config) {
+	public BaseTrackFileLocator createLocator(CommandlineData data, BaseConfiguration config) {
 		return new DefaultLocator(config);
 	}
 
@@ -58,10 +57,10 @@ public class DefaultJMOPPlayerBuilder extends SimpleJMOPPlayerBuilder {
 	}
 
 	@Override
-	public AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
+	public XXX_AbstractRemoteSource createRemoteSource(CommandlineData data, BaseConfiguration config,
 			InternetConnectionStatus connection) {
 		// TODO replace with Factory for SourceKind
-		return new YoutubeSource(connection);
+		return null; //FIXME
 	}
 
 	@Override

@@ -9,13 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.AbstractProgramEncapusulation;
 import cz.martlin.jmop.core.misc.ErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import cz.martlin.jmop.core.sources.local.BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.location.AbstractTrackFileLocator;
+import cz.martlin.jmop.core.sources.local.location.BaseTrackFileLocator;
 import javafx.util.Duration;
 
 /**
@@ -35,7 +35,7 @@ public class AplayPlayer extends AbstractPlayer {
 	private AplayProcess process;
 	private Track currentTrack;
 
-	public AplayPlayer(ErrorReporter reporter, BaseLocalSource local, AbstractTrackFileLocator locator) {
+	public AplayPlayer(ErrorReporter reporter, BaseLocalSource local, BaseTrackFileLocator locator) {
 		super(local, locator, APLAY_PLAY_FORMAT);
 
 		this.reporter = reporter;
@@ -48,7 +48,7 @@ public class AplayPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doStartPlaying(Track track, File file) {
-		AplayProcess process = new AplayProcess();
+		AplayProcess process = new AplayProcess(file);
 
 		runProcessInBackround(process, track, file);
 
@@ -57,7 +57,7 @@ public class AplayPlayer extends AbstractPlayer {
 
 	@Override
 	protected void doStopPlaying() {
-		this.process.stop();
+		this.process.terminate();
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class AplayPlayer extends AbstractPlayer {
 	private void runProcessInBackround(AplayProcess process, Track track, File file) {
 		Runnable run = () -> {
 			try {
-				process.run(file, null);
+				process.run(null);
 			} catch (ExternalProgramException e) {
 				reporter.report(e);
 			} catch (Exception e) {
@@ -113,37 +113,44 @@ public class AplayPlayer extends AbstractPlayer {
 	 * @author martin
 	 *
 	 */
-	public static class AplayProcess extends AbstractProgramEncapusulation<File, Void> {
+	public static class AplayProcess extends AbstractProcessEncapsulation {
 
-		public AplayProcess() {
-			super();
+		private static final String COMMAND_NAME = "aplay";//$NON-NLS-1$
+		private static final int STATUS_CODE_SUCESS = 0;
+
+		public AplayProcess(File file) {
+			super(COMMAND_NAME, createCommandLine(file), getWorkingDirectory());
 		}
 
-		@Override
-		protected List<String> createCommandLine(File input) throws Exception {
-			return Arrays.asList("aplay", input.getAbsolutePath()); //$NON-NLS-1$
+		private static List<String> createCommandLine(File input) {
+			String path = input.getAbsolutePath();
+			return Arrays.asList(path);
 		}
 
-		@Override
-		protected File getWorkingDirectory(File input) throws Exception {
+		private static File getWorkingDirectory() {
 			return new File("."); // whatever //$NON-NLS-1$
 		}
 
 		@Override
-		protected InputStream getOutputStream(Process process) throws Exception {
+		protected int getExpectedResultCode() {
+			return STATUS_CODE_SUCESS;
+		}
+
+		@Override
+		protected InputStream getStreamWithOutput(Process process) {
 			return process.getInputStream();
 		}
 
 		@Override
-		protected Double processLineOfOutput(String line) throws Exception {
-			return null; // no output
+		protected Double processLineOfOutput(String line) {
+			return null;
 		}
 
 		@Override
-		protected Void handleResult(int result, File input) throws Exception {
-			return null; // no result
-		}
+		protected void deleteSubResult() {
+			// we don't have anything like that
 
+		}
 	}
 
 }
