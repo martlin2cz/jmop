@@ -6,7 +6,7 @@ import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Playlist;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseOperations;
 import cz.martlin.jmop.core.playlister.PlayerEngine;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -89,9 +89,9 @@ public class JMOPPlayer {
 	 * @param kind
 	 * @param bundleName
 	 * @param querySeed
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void startNewBundle(SourceKind kind, String bundleName, String querySeed) throws JMOPSourceException {
+	public void startNewBundle(SourceKind kind, String bundleName, String querySeed) throws JMOPMusicbaseException {
 
 		PlayerEngine engine = playing.getEngine();
 		Playlist playlist = sources.createNewBundleAndPrepare(kind, bundleName, querySeed, engine);
@@ -102,9 +102,9 @@ public class JMOPPlayer {
 	 * Starts new playlist.
 	 * 
 	 * @param query
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void startNewPlaylist(String query) throws JMOPSourceException {
+	public void startNewPlaylist(String query) throws JMOPMusicbaseException {
 		Bundle bundle = getCurrentBundle();
 		PlayerEngine engine = playing.getEngine();
 
@@ -117,9 +117,9 @@ public class JMOPPlayer {
 	 * 
 	 * @param bundleName
 	 * @param playlistName
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void startPlaylist(String bundleName, String playlistName) throws JMOPSourceException {
+	public void startPlaylist(String bundleName, String playlistName) throws JMOPMusicbaseException {
 		PlayerEngine engine = playing.getEngine();
 
 		Playlist playlist = sources.loadPlaylist(bundleName, playlistName, engine);
@@ -130,9 +130,9 @@ public class JMOPPlayer {
 	 * Saves paylist with new name.
 	 * 
 	 * @param newPlaylistName
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void savePlaylistAs(String newPlaylistName) throws JMOPSourceException {
+	public void savePlaylistAs(String newPlaylistName) throws JMOPMusicbaseException {
 		Playlist playlist = getCurrentPlaylist();
 		sources.savePlaylist(playlist, newPlaylistName);
 	}
@@ -157,9 +157,9 @@ public class JMOPPlayer {
 	 * Adds track (to the current playlist) by specified search query.
 	 * 
 	 * @param query
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void loadAndAddTrack(String query) throws JMOPSourceException {
+	public void loadAndAddTrack(String query) throws JMOPMusicbaseException {
 		Bundle bundle = getCurrentBundle();
 		PlayerEngine engine = playing.getEngine();
 
@@ -170,9 +170,9 @@ public class JMOPPlayer {
 	 * Plays track at given index (of the current playlist).
 	 * 
 	 * @param index
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void playTrack(int index) throws JMOPSourceException {
+	public void playTrack(int index) throws JMOPMusicbaseException {
 		playing.playTrack(index);
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -180,9 +180,9 @@ public class JMOPPlayer {
 	/**
 	 * Starts playing.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void startPlaying() throws JMOPSourceException {
+	public void startPlaying() throws JMOPMusicbaseException {
 		playing.startPlaying();
 	}
 
@@ -210,18 +210,18 @@ public class JMOPPlayer {
 	/**
 	 * Jumps to next track.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void toNext() throws JMOPSourceException {
+	public void toNext() throws JMOPMusicbaseException {
 		playing.toNext();
 	}
 
 	/**
 	 * Goes back to the previous track.
 	 * 
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void toPrevious() throws JMOPSourceException {
+	public void toPrevious() throws JMOPMusicbaseException {
 		playing.toPrevious();
 	}
 
@@ -239,9 +239,9 @@ public class JMOPPlayer {
 	 * Lists all bundle names.
 	 * 
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public List<String> listBundles() throws JMOPSourceException {
+	public List<String> listBundles() throws JMOPMusicbaseException {
 		return sources.listAllBundles();
 	}
 
@@ -250,9 +250,9 @@ public class JMOPPlayer {
 	 * 
 	 * @param bundleName
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public List<String> listPlaylists(String bundleName) throws JMOPSourceException {
+	public List<String> listPlaylists(String bundleName) throws JMOPMusicbaseException {
 		return sources.listPlaylists(bundleName);
 	}
 

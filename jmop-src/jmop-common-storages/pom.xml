@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>${revision}</version>
+		<version>3.0.1</version>
 	</parent>
 	
 	<artifactId>jmop-common-storages</artifactId>
@@ -16,7 +16,12 @@
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-base</artifactId>
-			<version>${revision}</version>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-musicbase</artifactId>
+			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
 </project>

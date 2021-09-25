@@ -8,10 +8,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -71,7 +71,7 @@ public class AplayPlayer extends AbstractPlayer {
 		LOG.warn("Resume not supported, will play from begin"); //$NON-NLS-1$
 		try {
 			startPlaying(currentTrack);
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			reporter.report(e);
 		} catch (Exception e) {
 			reporter.internal(e);

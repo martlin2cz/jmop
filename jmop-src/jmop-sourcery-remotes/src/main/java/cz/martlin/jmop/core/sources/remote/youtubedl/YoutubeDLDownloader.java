@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import cz.martlin.jmop.core.source.extprogram.ExternalProcessLongOperation;
@@ -42,7 +42,7 @@ public class YoutubeDLDownloader implements BaseDownloader {
 
 	@Override
 	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 		LOG.info("Preparing download of " + track + " via YoutubeDl downloader");
 
 		AbstractProcessEncapsulation process = prepareProcess(track, location);
@@ -57,7 +57,7 @@ public class YoutubeDLDownloader implements BaseDownloader {
 
 	///////////////////////////////////////////////////////////////////////////
 	private AbstractProcessEncapsulation prepareProcess(Track track, TrackFileLocation location)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 
 		File workingDirectory = AbstractProcessEncapsulation.currentDirectory();
 		File targetFile = createTargetFileFile(track, location);
@@ -68,7 +68,7 @@ public class YoutubeDLDownloader implements BaseDownloader {
 		return process;
 	}
 
-	private List<String> createArguments(Track track, TrackFileLocation location) throws JMOPSourceException {
+	private List<String> createArguments(Track track, TrackFileLocation location) throws JMOPMusicbaseException {
 		String path = createTargetFilePath(track, location);
 		String url = createUrlOfTrack(track);
 		return createCommandLine(url, path);
@@ -81,18 +81,18 @@ public class YoutubeDLDownloader implements BaseDownloader {
 				"--output", path, url);
 	}
 
-	private String createUrlOfTrack(Track track) throws JMOPSourceException {
+	private String createUrlOfTrack(Track track) throws JMOPMusicbaseException {
 		URL url = querier.urlOfTrack(track);
 		return url.toExternalForm();
 	}
 
-	private String createTargetFilePath(Track track, TrackFileLocation location) throws JMOPSourceException {
+	private String createTargetFilePath(Track track, TrackFileLocation location) throws JMOPMusicbaseException {
 		File tmpFile = createTargetFileFile(track, location);
 
 		return tmpFile.getAbsolutePath();
 	}
 
-	private File createTargetFileFile(Track track, TrackFileLocation location) throws JMOPSourceException {
+	private File createTargetFileFile(Track track, TrackFileLocation location) throws JMOPMusicbaseException {
 		return tracks.fileOfTrack(track, location, DOWNLOAD_FILE_FORMAT);
 	}
 

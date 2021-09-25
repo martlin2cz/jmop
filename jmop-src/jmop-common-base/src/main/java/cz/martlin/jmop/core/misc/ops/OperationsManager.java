@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.misc.ops;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 
@@ -33,14 +33,14 @@ public class OperationsManager {
 	}
 
 	public <T> void start(T input, BaseOperationsChain<T> chain, ConsumerWithException<T> onChainComplete)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 		LOG.info("Starting operations chain: " + chain);
 
 		startNextStepOfChain(chain, 0, input, onChainComplete);
 	}
 
 	private <T> void startNextStepOfChain(BaseOperationsChain<T> chain, int index, T input,
-			ConsumerWithException<T> onChainComplete) throws JMOPSourceException {
+			ConsumerWithException<T> onChainComplete) throws JMOPMusicbaseException {
 		BaseOperation<T, T> operation = chain.createOperation(index, input);
 
 		// TODO chaeck interrupted
@@ -51,11 +51,11 @@ public class OperationsManager {
 		}
 	}
 
-	private <T> void handleChainResult(T input, ConsumerWithException<T> onChainComplete) throws JMOPSourceException {
+	private <T> void handleChainResult(T input, ConsumerWithException<T> onChainComplete) throws JMOPMusicbaseException {
 		try {
 			onChainComplete.consume(input);
 		} catch (Exception e) {
-			throw new JMOPSourceException("Failure during the result handle", e);
+			throw new JMOPMusicbaseException("Failure during the result handle", e);
 			// TODO separate internal and app error?
 		}
 	}
