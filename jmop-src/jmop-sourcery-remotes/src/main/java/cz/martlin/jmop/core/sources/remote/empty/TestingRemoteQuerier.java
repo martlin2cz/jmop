@@ -53,7 +53,7 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public List<Track> runSearch(Bundle bundle, String query) throws JMOPMusicbaseException {
+	public List<Track> runSearch(Bundle bundle, String query)  {
 		List<Track> result = new ArrayList<Track>(config.getSearchCount());
 
 		for (int i = 0; i < config.getSearchCount(); i++) {
@@ -66,7 +66,7 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	}
 
 	@Override
-	public Track runLoadNext(Track track) throws JMOPMusicbaseException {
+	public Track runLoadNext(Track track)  {
 		Bundle bundle = track.getBundle();
 
 		Track nextData = pick();

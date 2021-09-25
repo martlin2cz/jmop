@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.musicbase.dflt;
 
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,6 @@ import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
 public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
@@ -51,7 +51,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void addBundle(Bundle bundle) throws JMOPMusicbaseException {
+	public void addBundle(Bundle bundle)  {
 		bundles.add(bundle);
 	}
 
@@ -67,6 +67,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 		bundles.add(bundle);
 		return bundle;
 	}
+
 
 	@Override
 	public void renameBundle(Bundle bundle, String newName) {
@@ -84,7 +85,7 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void addPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void addPlaylist(Playlist playlist)  {
 		playlists.add(playlist);
 	}
 
@@ -118,17 +119,17 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void playlistUpdated(Playlist playlist) throws JMOPMusicbaseException {
+	public void playlistUpdated(Playlist playlist)  {
 		// nothing to do here
 	}
 
 	@Override
-	public void addTrack(Track track) throws JMOPMusicbaseException {
+	public void addTrack(Track track)  {
 		tracks.add(track);
 	}
 
 	@Override
-	public Track createNewTrack(Bundle bundle, TrackData data) {
+	public Track createNewTrack(Bundle bundle, TrackData data, InputStream trackFileContents) {
 		Metadata metadata = Metadata.createNew();
 		return addTrack(bundle, data.getIdentifier(), data.getTitle(), data.getDescription(), data.getDuration(), metadata);
 	}
@@ -157,11 +158,13 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	@Override
-	public void trackUpdated(Track track) throws JMOPMusicbaseException {
+	public void trackUpdated(Track track)  {
 		// nothing to do here
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+
+	
 	@Override
 	public String toString() {
 		return "DefaultInMemoryMusicbase [bundles=" + bundles + ", playlists=" + playlists + ", tracks=" + tracks + "]";

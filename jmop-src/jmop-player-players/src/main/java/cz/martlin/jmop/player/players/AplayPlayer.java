@@ -42,7 +42,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 	///////////////////////////////////////////////////////////////////////////s
 	
 	@Override
-	public Duration currentTime() {
+	public Duration doCurrentTime() {
 		LOG.warn("Current time not supported, returning zero"); //$NON-NLS-1$
 		return new Duration(0);
 	}
@@ -119,7 +119,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 			try {
 				process.run(null);
 			} catch (ExternalProgramException e) {
-				reporter.report(e);
+				reporter.report("Could not run the aplay", e);
 			} catch (Exception e) {
 				reporter.internal(e);
 			}
@@ -127,11 +127,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 			// the process terminated, but we don't know whether by
 			// finishing the track or by termination
 			if (currentStatus().isPlaying()) {
-				try {
-					trackFinished();
-				} catch (JMOPMusicbaseException e) {
-					reporter.report(e);
-				}
+				trackFinished();
 			}
 		};
 

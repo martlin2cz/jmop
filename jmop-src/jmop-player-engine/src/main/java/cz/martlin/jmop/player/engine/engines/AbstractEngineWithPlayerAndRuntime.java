@@ -2,7 +2,6 @@ package cz.martlin.jmop.player.engine.engines;
 
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.runtime.PlaylistRuntime;
 import cz.martlin.jmop.player.players.BasePlayer;
@@ -24,12 +23,12 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 	}
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist) {
+	public void startPlayingPlaylist(Playlist playlist)  {
 		runtime = new PlaylistRuntime(playlist);
 	}
 
 	@Override
-	public void stopPlayingPlaylist() {
+	public void stopPlayingPlaylist()  {
 		runtime = null;
 	}
 
@@ -53,9 +52,20 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 		return player.currentStatus();
 	}
 	
+
+	@Override
+	public boolean hasNext() {
+		return runtime.hasNextToPlay();
+	}
+	
+	@Override
+	public boolean hasPrevious() {
+		return runtime.hasPlayed();
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 
-	protected void stopAndPlayAnother(Track track) throws JMOPMusicbaseException {
+	protected void stopAndPlayAnother(Track track)  {
 		if (player.currentStatus().isPlayingTrack()) {
 			stopTrack();
 		}
@@ -63,15 +73,15 @@ public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEn
 		playTrack(track);
 	}
 
-	protected void stopTrack() throws JMOPMusicbaseException {
+	protected void stopTrack()  {
 		player.stop();
 	}
 
-	protected void playTrack(Track track) throws JMOPMusicbaseException {
+	protected void playTrack(Track track)  {
 		player.startPlaying(track);
 	}
 	
-	protected void ifHasPlayNext() throws JMOPMusicbaseException {
+	protected void ifHasPlayNext()  {
 		if (runtime.hasNextToPlay()) {
 			toNext();
 		}

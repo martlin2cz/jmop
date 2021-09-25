@@ -186,9 +186,9 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	 * 
 	 * @param response
 	 * @return
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
-	private List<String> convertSearchListResponse(SearchListResponse response) throws JMOPMusicbaseException {
+	private List<String> convertSearchListResponse(SearchListResponse response)  {
 		List<SearchResult> results = response.getItems();
 
 		return results.stream() //

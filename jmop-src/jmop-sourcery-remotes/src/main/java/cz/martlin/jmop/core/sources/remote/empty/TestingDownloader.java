@@ -38,7 +38,7 @@ public class TestingDownloader implements BaseDownloader {
 
 	@Override
 	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
-			throws JMOPMusicbaseException {
+			 {
 
 		File file = tracks.fileOfTrack(track, location, downloadFormat);
 		return new TestingDownloaderOperation(track, file);
@@ -48,10 +48,10 @@ public class TestingDownloader implements BaseDownloader {
 	 * Copies testing file to given file.
 	 * 
 	 * @param targetFile
-	 * @throws JMOPMusicbaseException
+	 * @
 	 * @throws IOException
 	 */
-	public void copyTestingFileTo(File targetFile) throws JMOPMusicbaseException, IOException {
+	public void copyTestingFileTo(File targetFile) , IOException {
 		InputStream ins = TestingTrackFileAccessor.read(downloadFormat);
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

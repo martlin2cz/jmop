@@ -2,13 +2,13 @@ package cz.martlin.jmop.common.musicbase.misc;
 
 import java.io.File;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 /**
  * The main entry point for the musicbase. This class encapsulates the
@@ -27,48 +27,90 @@ public class MusicbaseListingEncapsulator {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	public Set<Bundle> bundles() throws JMOPMusicbaseException {
-		return musicbase.bundles();
+	public Set<Bundle> bundles()  {
+		return new TreeSet<>(musicbase.bundles());
 	}
 
-	public Set<Playlist> playlists(Bundle bundle) throws JMOPMusicbaseException {
-		return musicbase.playlists(bundle);
+	public Set<Playlist> playlists(Bundle bundle)  {
+		if (bundle != null) {
+			return new TreeSet<>(musicbase.playlists(bundle));
+		} else {
+			return musicbase.bundles().stream() //
+					.flatMap(b -> musicbase.playlists(b).stream()) //
+					.collect(Collectors.toCollection(() -> new TreeSet<>()));
+		}
+		
 	}
 
-	public Set<Track> tracks(Bundle bundle) throws JMOPMusicbaseException {
-		return musicbase.tracks(bundle);
+	public Set<Track> tracks(Bundle bundle)  {
+		if (bundle != null) {
+			return new TreeSet<>(musicbase.tracks(bundle));	
+		} else {
+			return musicbase.bundles().stream() //
+					.flatMap(b -> musicbase.tracks(b).stream()) //
+					.collect(Collectors.toCollection(() -> new TreeSet<>()));
+		}
+		
 	}
 
-	public File trackFile(Track track) throws JMOPMusicbaseException {
+	public File trackFile(Track track)  {
 		return musicbase.trackFile(track);
+	}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	public Set<Track> tracks(Playlist playlist) {
+		return new TreeSet<>(playlist.getTracks().getTracks());
+	}
+	
+	public int indexOf(Playlist playlist, Track track) {
+		return playlist.getTracks().getTracks().indexOf(track);
+	}
+
+	public Set<Playlist> playlistsContaining(Track track)  {
+		Bundle bundle = track.getBundle();
+		return playlists(bundle).stream() //
+				.filter((p) -> p.getTracks().getTracks().contains(track))
+				.collect(Collectors.toSet());
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-	public Set<Bundle> findBundles(String infix) throws JMOPMusicbaseException {
-		return musicbase.bundles().stream() //
-				.filter(b -> matches(b, infix)) //
-				.collect(Collectors.toSet()); //
+	public Bundle getBundle(String bundleName)  {
+		return bundles().stream() //
+				.filter(b -> b.getName().equals(bundleName)) //
+				.findAny().orElseGet(() -> null); //
+	}
+	
+	public Playlist getPlaylist(Bundle bundleOrNull, String playlistName)  {
+		return playlists(bundleOrNull).stream() //
+				.filter(p -> p.getName().equals(playlistName)) //
+				.findAny().orElseGet(() -> null); //
+	}
+	
+	public Track getTrack(Bundle bundleOrNull, String trackTitle)  {
+		return tracks(bundleOrNull).stream() //
+				.filter(t -> t.getTitle().equals(trackTitle)) //
+				.findAny().orElseGet(() -> null); //
 	}
 
-	public Set<Track> findTracks(String infix) throws JMOPMusicbaseException {
-		try {
-			return musicbase.bundles().stream() //
-					.map(b -> tracksOfBundle(b)) //
-					.flatMap(ts -> ts.stream()) //
-					.filter(t -> matches(t, infix)) //
-					.collect(Collectors.toSet()); //
-		} catch (RuntimeException e) {
-			throw new JMOPMusicbaseException(e); // TODO FIXME catch all th exceptions at all?
-		}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+	public Set<Bundle> findBundles(String infix)  {
+		return musicbase.bundles().stream() //
+				.filter(b -> matches(b, infix)) //
+				.collect(Collectors.toCollection(() -> new TreeSet<>()));
+	}
+
+	public Set<Track> findTracks(String infix)  {
+		return musicbase.bundles().stream() //
+				.map(b -> tracksOfBundle(b)) //
+				.flatMap(ts -> ts.stream()) //
+				.filter(t -> matches(t, infix)) //
+				.collect(Collectors.toCollection(() -> new TreeSet<>()));
 	}
 
 	private Set<Track> tracksOfBundle(Bundle bundle) {
-		try {
-			return musicbase.tracks(bundle);
-		} catch (JMOPMusicbaseException e) {
-			throw new RuntimeException(e);
-		}
+		return musicbase.tracks(bundle);
 	}
 
 	// TODO all the rest
@@ -82,5 +124,6 @@ public class MusicbaseListingEncapsulator {
 	private boolean matches(Track track, String infix) {
 		return track.getTitle().contains(infix);
 	}
+
 
 }

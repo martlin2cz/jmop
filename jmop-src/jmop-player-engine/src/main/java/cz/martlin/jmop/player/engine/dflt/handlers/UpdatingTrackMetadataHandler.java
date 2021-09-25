@@ -20,7 +20,7 @@ public class UpdatingTrackMetadataHandler implements BeforeTrackEndedHandler {
 
 	
 	@Override
-	public void beforeTrackEnded(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
+	public void beforeTrackEnded(BasePlayerEngine engine, Track track)  {
 		Duration currentDuration = engine.currentDuration();
 
 		// little trick: instead of waiting markAsPlayedAfter seconds and then
@@ -30,16 +30,12 @@ public class UpdatingTrackMetadataHandler implements BeforeTrackEndedHandler {
 		// by simply checking the current time of the player.
 		// Gimme the Nobel prize!
 		if (isMoreThan(currentDuration, markAsPlayedAfter)) {
-			markAsPlayed(track);
+			track.played();
+			musicbase.trackUpdated(track);
 		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
-	private void markAsPlayed(Track track) throws JMOPMusicbaseException {
-		track.setMetadata(track.getMetadata().played());
-		musicbase.trackUpdated(track);
-	}
 
 	private boolean isMoreThan(Duration duration, int seconds) {
 		return duration.toSeconds() > seconds;

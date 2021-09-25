@@ -49,9 +49,9 @@ public interface BasePlayer extends ObservableValue<BasePlayer> {
 	 * start playing the given one.
 	 * 
 	 * @param track
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
-	public void startPlaying(Track track) throws JMOPMusicbaseException;
+	public void startPlaying(Track track) ;
 
 	/**
 	 * Stops the player. If already stopped might do nothing.

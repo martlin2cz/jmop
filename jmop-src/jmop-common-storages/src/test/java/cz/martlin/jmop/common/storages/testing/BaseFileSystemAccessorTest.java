@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
+import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public abstract class BaseFileSystemAccessorTest {
@@ -35,7 +36,7 @@ public abstract class BaseFileSystemAccessorTest {
 	///////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void testFilesSimply() throws JMOPMusicbaseException {
+	public void testFilesSimply() throws JMOPPersistenceException  {
 		File foo = new File(root, "foo.txt");
 		File bar = new File(root, "bar.txt");
 
@@ -56,7 +57,7 @@ public abstract class BaseFileSystemAccessorTest {
 	}
 
 	@Test
-	public void testDirectoriesSimply() throws JMOPMusicbaseException {
+	public void testDirectoriesSimply() throws JMOPPersistenceException  {
 		File lorem = new File(root, "lorem");
 		File ipsum = new File(root, "ipsum");
 
@@ -77,7 +78,7 @@ public abstract class BaseFileSystemAccessorTest {
 	}
 
 	@Test
-	public void testListing() throws JMOPMusicbaseException {
+	public void testListing() throws JMOPPersistenceException  {
 		File lorem = new File(root, "lorem");
 		File ipsum = new File(root, "ipsum");
 
@@ -117,9 +118,8 @@ public abstract class BaseFileSystemAccessorTest {
 	}
 
 	private void create(File lorem, File ipsum, File foo, File bar, File baz, File qux, File dir42, File dir99,
-			File dirNumber) {
+			File dirNumber) throws JMOPPersistenceException {
 
-		try {
 			accessor.createDirectory(lorem);
 			accessor.createDirectory(ipsum);
 
@@ -131,17 +131,11 @@ public abstract class BaseFileSystemAccessorTest {
 			accessor.createDirectory(dir42);
 			accessor.createDirectory(dir99);
 			accessor.createDirectory(dirNumber);
-
-		} catch (JMOPMusicbaseException e) {
-//			Assume.assumeNoException(e);
-			fail(e);
-		}
 	}
 
 	private void delete(File lorem, File ipsum, File foo, File bar, File baz, File qux, File dir42, File dir99,
-			File dirNumber) throws JMOPMusicbaseException {
+			File dirNumber) throws JMOPPersistenceException  {
 
-		try {
 			accessor.deleteDirectory(dirNumber);
 			accessor.deleteDirectory(dir99);
 			accessor.deleteDirectory(dir42);
@@ -153,11 +147,6 @@ public abstract class BaseFileSystemAccessorTest {
 
 			accessor.deleteDirectory(ipsum);
 			accessor.deleteDirectory(lorem);
-
-		} catch (JMOPMusicbaseException e) {
-//			Assume.assumeNoException(e);
-			fail(e);
-		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////

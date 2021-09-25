@@ -12,7 +12,7 @@ public class StoppingOnNonexistingHandler extends AbstractTrackExistenceChecking
 	}
 
 	@Override
-	protected void beforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
+	protected void beforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track)  {
 		engine.stop();
 	}
 

@@ -25,7 +25,7 @@ public abstract class AbstractTrackFilePlaingPlayer extends AbstractPlayer imple
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	@Override
-	protected void doStartPlaying(Track track) throws JMOPMusicbaseException {
+	protected void doStartPlaying(Track track)  {
 		File file = local.trackFile(track);
 		doStartPlaingFile(track, file);
 	}
