@@ -4,35 +4,37 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.storages.playlists.AbstractXMLEdtendedPlaylistManipulator;
+import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.util.Duration;
 
 public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator {
 	private static final String XSPF_VERSION = "1"; //$NON-NLS-1$
 	public static final String FILE_EXTENSION = "xspf"; //$NON-NLS-1$
 	protected static final String APPLICATION_URL = "https://github.com/martlin2cz/jmop"; //$NON-NLS-1$
+	private final BaseErrorReporter reporter;
 
-	public XSPFFilesManipulator() {
+	public XSPFFilesManipulator(BaseErrorReporter reporter) {
 		super();
+
+		this.reporter = reporter;
 	}
-	
+
 	@Override
 	public String fileExtension() {
 		return FILE_EXTENSION;
 	}
-
 
 	///////////////////////////////////////////////////////////////////////////
 	@Override
@@ -57,7 +59,7 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 
 	@Override
 	protected void pushBundleDataIntoDocument(Bundle bundle, Document document) {
-		//Note: call pushPlaylistData(...) first
+		// Note: call pushPlaylistData(...) first
 		Element root = document.getDocumentElement();
 
 		pushBundleDataIntoDocument(document, root, bundle);
@@ -81,11 +83,11 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 
 	private Playlist extractPlaylistDataFromDocument(Bundle bundle, Map<String, Track> tracks, Element root) {
 		String name = extractName(root);
-		int currentTrack = extractPlaylistCurrentTrack(root);
+		TrackIndex currentTrackIndex = extractPlaylistCurrentTrack(root);
 		Metadata metadata = extractMetadata(root, "playlist");
 		Tracklist tracklist = extractTracks(bundle, tracks, root);
 
-		return new Playlist(bundle, name, tracklist, currentTrack, metadata);
+		return new Playlist(bundle, name, tracklist, currentTrackIndex, metadata);
 	}
 
 	@Override
@@ -95,11 +97,12 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 		pushPlaylistDataIntoDocument(document, root, playlist, withTrackInfo);
 	}
 
-	private void pushPlaylistDataIntoDocument(Document document, Element root, Playlist playlist, boolean withTrackInfo) {
+	private void pushPlaylistDataIntoDocument(Document document, Element root, Playlist playlist,
+			boolean withTrackInfo) {
 		String name = playlist.getName();
 		pushName(document, root, name);
 
-		int currentTrack = playlist.getCurrentTrackIndex();
+		TrackIndex currentTrack = playlist.getCurrentTrackIndex();
 		pushPlaylistCurrentTrack(document, root, currentTrack);
 
 		Metadata metadata = playlist.getMetadata();
@@ -176,14 +179,14 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 		XSPFDocumentUtility.setExtensionValue(document, element, extensionElement, "lastPlayed", lastPlayedStr);
 	}
 
-	private void pushPlaylistCurrentTrack(Document document, Element root, int currentTrack) {
-		String currTrackStr = Integer.toString(currentTrack);
+	private void pushPlaylistCurrentTrack(Document document, Element root, TrackIndex currentTrack) {
+		String currTrackStr = Integer.toString(currentTrack.getHuman());
 		XSPFDocumentUtility.setExtensionValue(document, root, "playlist", "currentTrack", currTrackStr);
 	}
 
 	private void pushTracks(Document document, Element root, Tracklist tracks, boolean withTrackInfo) {
 		Element tracklist = XSPFDocumentUtility.getChildOrCreate(document, root, XSPFDocumentNamespaces.XSPF,
-				"tracklist");
+				"trackList");
 
 		tracks.getTracks().forEach( //
 				(t) -> pushTrack(document, tracklist, t, withTrackInfo));
@@ -216,50 +219,49 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 			Metadata metadata = track.getMetadata();
 			pushMetadata(document, trackElem, "track", metadata);
 		}
-		
+
 		return trackElem;
 	}
 
 ///////////////////////////////////////////////////////////////////////////
 
 	private String extractName(Element root) {
-		return XSPFDocumentUtility.getElementText(root, XSPFDocumentNamespaces.XSPF, "title");
+		return get(root, XSPFDocumentNamespaces.XSPF, "title");
 	}
 
 	private String extractBundleName(Element root) {
-		return XSPFDocumentUtility.getExtensionValue(root, "bundle", "name");
+		return get(root, "bundle", "name");
 	}
 
-	private int extractPlaylistCurrentTrack(Element root) {
-		String currTrackStr = XSPFDocumentUtility.getExtensionValue(root, "playlist", "currentTrack");
-		if (currTrackStr != null && !currTrackStr.isEmpty()) {
-			return Integer.parseInt(currTrackStr);
-		} else {
-			return 0;
-		}
+	private TrackIndex extractPlaylistCurrentTrack(Element root) {
+		return get(root, "playlist", "currentTrack", //
+				(v) -> TrackIndex.ofHuman(Integer.parseInt(v)), //
+				TrackIndex.ofIndex(0));
 	}
 
 	private Metadata extractMetadata(Element root, String extensionElementName) {
-		String lastPlayedStr = XSPFDocumentUtility.getExtensionValue(root, extensionElementName, "lastPlayed");
-		Calendar lastPlayed = XSPFDocumentUtility.parseDatetime(lastPlayedStr);
+		Calendar lastPlayed = get(root, extensionElementName, "lastPlayed",
+				(v) -> XSPFDocumentUtility.parseDatetime(v), null);
 
-		String numberOfPlaysStr = XSPFDocumentUtility.getExtensionValue(root, extensionElementName, "numberOfPlays");
-		int numberOfPlays = Integer.parseInt(numberOfPlaysStr);
+		int numberOfPlays = get(root, extensionElementName, "numberOfPlays",
+				(v) -> Integer.parseInt(v), 0);
 
-		String createdStr = XSPFDocumentUtility.getExtensionValue(root, extensionElementName, "created");
-		Calendar created = XSPFDocumentUtility.parseDatetime(createdStr);
+		Calendar created = get(root, extensionElementName, "created",
+				(v) -> XSPFDocumentUtility.parseDatetime(v), Calendar.getInstance());
 
 		return Metadata.createExisting(created, lastPlayed, numberOfPlays);
 	}
 
 	private Tracklist extractTracks(Bundle bundle, Map<String, Track> tracks, Element root) {
-		Element trackList = XSPFDocumentUtility.getChildOrFail(root, XSPFDocumentNamespaces.XSPF, "tracklist"); //$NON-NLS-1$
+		Element trackList = XSPFDocumentUtility.getChildOrFail(root, XSPFDocumentNamespaces.XSPF, "trackList"); //$NON-NLS-1$
 
 		List<Track> result = new ArrayList<>(trackList.getChildNodes().getLength());
 
 		XSPFDocumentUtility.iterateOverChildrenOrFail(trackList, XSPFDocumentNamespaces.XSPF, "track", (te) -> {
 			Track track = pickOrExtractTrack(bundle, tracks, te);
-			result.add(track);
+			if (track != null) {
+				result.add(track);
+			}
 		});
 
 		return new Tracklist(result);
@@ -274,28 +276,87 @@ public class XSPFFilesManipulator extends AbstractXMLEdtendedPlaylistManipulator
 	}
 
 	private Track pickTrack(Bundle bundle, Map<String, Track> tracks, Element trackElem) {
-		String title = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "title");
-		
-		if (!tracks.containsKey(title)) {
-			throw new IllegalStateException("The track " + title + " not found in the playlist"); 
+		String title = get(trackElem, XSPFDocumentNamespaces.XSPF, "title");
+		if (title == null) {
+			return null;
 		}
 		
+		if (!tracks.containsKey(title)) {
+			Exception e = new IllegalStateException("The track " + title + " not found in the playlist");
+			reporter.report("Track '" + title + "' does not exist", e);
+			return null;
+		}
+
 		Track track = tracks.get(title);
 		return track;
 	}
 
 	protected Track extractTrack(Bundle bundle, Element trackElem) {
-		String title = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "title");
-		String identifier = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "identifier");
-		String description = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "annotation");
+		String title = get(trackElem, XSPFDocumentNamespaces.XSPF, "title");
+		String identifier = get(trackElem, XSPFDocumentNamespaces.XSPF, "identifier");
+		String description = get(trackElem, XSPFDocumentNamespaces.XSPF, "annotation");
 
-		String durationStr = XSPFDocumentUtility.getElementText(trackElem, XSPFDocumentNamespaces.XSPF, "duration");
-		Duration duration = DurationUtilities.parseMilisDuration(durationStr);
+		Duration duration = get(trackElem, XSPFDocumentNamespaces.XSPF, "duration",
+				(v) -> DurationUtilities.parseMilisDuration(v), null);
 
 		Metadata metadata = extractMetadata(trackElem, "track"); //$NON-NLS-1$
 
 		return new Track(bundle, identifier, title, description, duration, metadata);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	private String get(Element owner, XSPFDocumentNamespaces elemNS, String elemName) {
+		return get(owner, elemNS, elemName, AttrValToValueMapper.IDENTITY, null);
+	}
 	
+	private <E> E get(Element owner, XSPFDocumentNamespaces elemNS, String elemName,
+			AttrValToValueMapper<E> valueParser, E fallBackValue) {
+
+		String value;
+		try {
+			value = XSPFDocumentUtility.getElementText(owner, elemNS, elemName);
+		} catch (Exception e) {
+			reporter.report("The file is missing the " + elemName + " element", e);
+			return fallBackValue;
+		}
+
+		try {
+			return valueParser.obtain(value);
+		} catch (Exception e) {
+			reporter.report("The '" + value + " is invalid for the " + elemName + " element", e);
+			return fallBackValue;
+		}
+	}
+
+	private String get(Element element, String jmopExtensionElementName, String attrName) {
+		return get(element, jmopExtensionElementName, attrName, AttrValToValueMapper.IDENTITY, null);
+	}
+	
+	private <E> E get(Element element, String jmopExtensionElementName, String attrName,
+			AttrValToValueMapper<E> valueParser, E fallBackValue) {
+
+		String value;
+		try {
+			value = XSPFDocumentUtility.getExtensionValue(element, jmopExtensionElementName, attrName);
+		} catch (Exception e) {
+			reporter.report("The file is missing the " + attrName + " attribute " //
+					+ "of the " + jmopExtensionElementName + " extension element", e);
+			return fallBackValue;
+		}
+
+		try {
+			return valueParser.obtain(value);
+		} catch (Exception e) {
+			reporter.report("The '" + value + " is invalid for the " + attrName + " attribute", e);
+			return fallBackValue;
+		}
+	}
+
+	@FunctionalInterface
+	public static interface AttrValToValueMapper<T> {
+		T obtain(String value) throws Exception;
+		
+		public static AttrValToValueMapper<String> IDENTITY = (s) -> s;
+	}
+
 }

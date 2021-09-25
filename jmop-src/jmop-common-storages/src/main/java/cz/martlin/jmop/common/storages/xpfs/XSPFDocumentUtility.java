@@ -82,7 +82,7 @@ public class XSPFDocumentUtility {
 	}
 
 ///////////////////////////////////////////////////////////////////////////
-
+	
 	public static String getExtensionValue(Element element, String jmopExtensionElementName, String attrName) {
 		Element jmopExtension = getJMOPExtensionElementOrFail(element, jmopExtensionElementName);
 

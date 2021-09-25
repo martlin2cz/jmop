@@ -21,12 +21,15 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
+import cz.martlin.jmop.common.musicbase.dflt.DefaultMusicbaseTest.DefaultConfig;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
+import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
 import cz.martlin.jmop.common.storages.dflt.DefaultStorage;
 import cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
@@ -34,7 +37,21 @@ import javafx.util.Duration;
 class DefaultMusicbaseTest {
 
 //	@TempDir
-//	public File root;
+	//	public File root;
+
+	public class DefaultConfig implements BaseDefaultStorageConfig {
+
+		@Override
+		public TrackFileFormat getSaveFormat() {
+			return 	TrackFileFormat.MP3;
+		}
+
+		@Override
+		public String getAllTrackPlaylistName() {
+			return ALL_TRACKS_PLAYLIST_NAME;
+		}
+
+	}
 
 	private static final String ALL_TRACKS_PLAYLIST_NAME = "all the tracks";
 
@@ -58,7 +75,7 @@ class DefaultMusicbaseTest {
 
 	@Order(value = 1)
 	@Test
-	void testSave() throws JMOPMusicbaseException {
+	void testSave()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 
 		// create bundle
@@ -70,7 +87,7 @@ class DefaultMusicbaseTest {
 		assertEquals("lorem-playlist", loremPlaylist.getName());
 
 		// create tracks
-		Track helloTrack = musicbase.createNewTrack(fooBundle, td("hello"));
+		Track helloTrack = musicbase.createNewTrack(fooBundle, td("hello"), null);
 		assertEquals("hello", helloTrack.getTitle());
 
 		// update them
@@ -86,7 +103,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 2)
 	@Test
-	void testLoad() throws JMOPMusicbaseException {
+	void testLoad()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();
@@ -110,7 +127,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 3)
 	@Test
-	void testReload() throws JMOPMusicbaseException {
+	void testReload()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		// load 
@@ -124,7 +141,7 @@ class DefaultMusicbaseTest {
 	
 	@Order(value = 4)
 	@Test
-	void testRenameBundle() throws JMOPMusicbaseException {
+	void testRenameBundle()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();
@@ -141,7 +158,7 @@ class DefaultMusicbaseTest {
 
 	@Order(value = 5)
 	@Test
-	void testMoveTrack() throws JMOPMusicbaseException {
+	void testMoveTrack()  {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
 		musicbase.load();
@@ -177,11 +194,11 @@ class DefaultMusicbaseTest {
 	}
 
 	private BaseMusicbase prepareMusicbase() {
-		TrackFileFormat format = TrackFileFormat.MP3;
+
 
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
 
-		DefaultStorage storage = DefaultStorage.create(root, ALL_TRACKS_PLAYLIST_NAME, format, inmemory);
+		DefaultStorage storage = DefaultStorage.create(root, new DefaultConfig(), new SimpleErrorReporter(), inmemory);
 		LoggingMusicbaseStorage logging = new LoggingMusicbaseStorage(storage);
 
 		BaseMusicbase musicbase = new PersistentMusicbase(inmemory, logging);

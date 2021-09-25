@@ -36,7 +36,7 @@ public class FFMPEGConverter implements BaseConverter {
 	@Override
 	public BaseLongOperation<Track, Track> convert(Track track, TrackFileLocation fromLocation,
 			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason)
-			throws JMOPMusicbaseException {
+			 {
 
 		LOG.info("Preparing conversion of " + track + " via ffmpeg converter");
 
@@ -53,7 +53,7 @@ public class FFMPEGConverter implements BaseConverter {
 	///////////////////////////////////////////////////////////////////////////
 	private AbstractProcessEncapsulation prepareProcess(Track track, TrackFileLocation fromLocation,
 			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat)
-			throws JMOPMusicbaseException {
+			 {
 
 		File workingDirectory = AbstractProcessEncapsulation.currentDirectory();
 		File targetFile = createTargetFileFile(track, toLocation, toFormat);
@@ -68,7 +68,7 @@ public class FFMPEGConverter implements BaseConverter {
 	}
 
 	private List<String> createArguments(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat) throws JMOPMusicbaseException {
+			TrackFileLocation toLocation, TrackFileFormat toFormat)  {
 		String fromPath = createFilePath(track, fromLocation, fromFormat);
 		String toPath = createFilePath(track, toLocation, toFormat);
 		return createCommandLine(fromPath, toPath);
@@ -80,14 +80,14 @@ public class FFMPEGConverter implements BaseConverter {
 	}
 
 	private String createFilePath(Track track, TrackFileLocation location, TrackFileFormat format)
-			throws JMOPMusicbaseException {
+			 {
 		File tmpFile = createTargetFileFile(track, location, format);
 
 		return tmpFile.getAbsolutePath();
 	}
 
 	private File createTargetFileFile(Track track, TrackFileLocation location, TrackFileFormat format)
-			throws JMOPMusicbaseException {
+			 {
 		return tracks.fileOfTrack(track, location, format);
 	}
 

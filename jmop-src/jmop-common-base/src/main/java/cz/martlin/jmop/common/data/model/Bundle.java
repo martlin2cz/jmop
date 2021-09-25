@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
 import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.sources.SourceKind;
 import javafx.util.Duration;
@@ -18,7 +19,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundle> {
+public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundle>, WithPlayedMarker {
 	@Deprecated
 	private final SourceKind kind;
 	
@@ -129,6 +130,12 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	public void setMetadata(Metadata metadata) {
 		this.metadata = metadata;
 	}
+	
+	@Override
+	public void played() {
+		metadata = metadata.played();
+	}
+	
 	
 	///////////////////////////////////////////////////////////////////////////
 

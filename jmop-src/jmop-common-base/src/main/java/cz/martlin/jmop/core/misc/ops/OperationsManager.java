@@ -33,14 +33,14 @@ public class OperationsManager {
 	}
 
 	public <T> void start(T input, BaseOperationsChain<T> chain, ConsumerWithException<T> onChainComplete)
-			throws JMOPMusicbaseException {
+			 {
 		LOG.info("Starting operations chain: " + chain);
 
 		startNextStepOfChain(chain, 0, input, onChainComplete);
 	}
 
 	private <T> void startNextStepOfChain(BaseOperationsChain<T> chain, int index, T input,
-			ConsumerWithException<T> onChainComplete) throws JMOPMusicbaseException {
+			ConsumerWithException<T> onChainComplete)  {
 		BaseOperation<T, T> operation = chain.createOperation(index, input);
 
 		// TODO chaeck interrupted
@@ -51,11 +51,11 @@ public class OperationsManager {
 		}
 	}
 
-	private <T> void handleChainResult(T input, ConsumerWithException<T> onChainComplete) throws JMOPMusicbaseException {
+	private <T> void handleChainResult(T input, ConsumerWithException<T> onChainComplete)  {
 		try {
 			onChainComplete.consume(input);
 		} catch (Exception e) {
-			throw new JMOPMusicbaseException("Failure during the result handle", e);
+			throw new RuntimeException("Failure during the result handle", e);
 			// TODO separate internal and app error?
 		}
 	}

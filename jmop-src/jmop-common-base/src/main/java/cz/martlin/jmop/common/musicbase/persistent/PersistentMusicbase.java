@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.musicbase.persistent;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Set;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -22,134 +23,140 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public void load() throws JMOPMusicbaseException {
+	public void load()  {
 		storage.load(inmemory);
+	}
+	
+	@Override
+	public void terminate() {
+		storage.terminate(inmemory);
 	}
 
 	@Override
-	public Set<Bundle> bundles() throws JMOPMusicbaseException {
+	public Set<Bundle> bundles()  {
 		return inmemory.bundles();
 	}
 
 	@Override
-	public Set<Playlist> playlists(Bundle bundle) throws JMOPMusicbaseException {
+	public Set<Playlist> playlists(Bundle bundle)  {
 		return inmemory.playlists(bundle);
 	}
 
 	@Override
-	public Set<Track> tracks(Bundle bundle) throws JMOPMusicbaseException {
+	public Set<Track> tracks(Bundle bundle)  {
 		return inmemory.tracks(bundle);
 	}
 
 	@Override
-	public void addBundle(Bundle bundle) throws JMOPMusicbaseException {
+	public void addBundle(Bundle bundle)  {
 		inmemory.addBundle(bundle);
 	}
 	
 	@Override
-	public Bundle createNewBundle(String name) throws JMOPMusicbaseException {
+	public Bundle createNewBundle(String name)  {
 		Bundle bundle = inmemory.createNewBundle(name);
 		storage.createBundle(bundle);
 		return bundle;
 	}
 
 	@Override
-	public void renameBundle(Bundle bundle, String newName) throws JMOPMusicbaseException {
+	public void renameBundle(Bundle bundle, String newName)  {
 		String oldName = bundle.getName();
 		inmemory.renameBundle(bundle, newName);
 		storage.renameBundle(bundle, oldName, newName);
 	}
 
 	@Override
-	public void removeBundle(Bundle bundle) throws JMOPMusicbaseException {
+	public void removeBundle(Bundle bundle)  {
 		inmemory.removeBundle(bundle);
 		storage.removeBundle(bundle);
 	}
 
 	@Override
-	public void bundleUpdated(Bundle bundle) throws JMOPMusicbaseException {
+	public void bundleUpdated(Bundle bundle)  {
 		inmemory.bundleUpdated(bundle);
 		storage.saveUpdatedBundle(bundle);
 	}
 
 	@Override
-	public void addPlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void addPlaylist(Playlist playlist)  {
 		inmemory.addPlaylist(playlist);
 	}
 	
 	@Override
-	public Playlist createNewPlaylist(Bundle bundle, String name) throws JMOPMusicbaseException {
+	public Playlist createNewPlaylist(Bundle bundle, String name)  {
 		Playlist playlist = inmemory.createNewPlaylist(bundle, name);
 		storage.createPlaylist(playlist);
 		return playlist;
 	}
 
 	@Override
-	public void renamePlaylist(Playlist playlist, String newName) throws JMOPMusicbaseException {
+	public void renamePlaylist(Playlist playlist, String newName)  {
 		String oldName = playlist.getName();
 		inmemory.renamePlaylist(playlist, newName);
 		storage.renamePlaylist(playlist, oldName, newName);
 	}
 
 	@Override
-	public void movePlaylist(Playlist playlist, Bundle newBundle) throws JMOPMusicbaseException {
+	public void movePlaylist(Playlist playlist, Bundle newBundle)  {
 		Bundle oldBundle = playlist.getBundle();
 		inmemory.movePlaylist(playlist, newBundle);
 		storage.movePlaylist(playlist, oldBundle, newBundle);
 	}
 
 	@Override
-	public void removePlaylist(Playlist playlist) throws JMOPMusicbaseException {
+	public void removePlaylist(Playlist playlist)  {
 		inmemory.removePlaylist(playlist);
 		storage.removePlaylist(playlist);
 	}
 
 	@Override
-	public void playlistUpdated(Playlist playlist) throws JMOPMusicbaseException {
+	public void playlistUpdated(Playlist playlist)  {
 		inmemory.playlistUpdated(playlist);
 		storage.saveUpdatedPlaylist(playlist);
 	}
 
 	@Override
-	public void addTrack(Track track) throws JMOPMusicbaseException {
+	public void addTrack(Track track)  {
 		inmemory.addTrack(track);
+		storage.createTrack(track, null);
 	}
 	
 	@Override
-	public Track createNewTrack(Bundle bundle, TrackData data) throws JMOPMusicbaseException {
-		Track track = inmemory.createNewTrack(bundle, data);
-		storage.createTrack(track);
+	public Track createNewTrack(Bundle bundle, TrackData data, InputStream trackFileContents)  {
+		Track track = inmemory.createNewTrack(bundle, data, trackFileContents);
+		storage.createTrack(track, trackFileContents);
 		return track;
 	}
 
 	@Override
-	public void renameTrack(Track track, String newTitle) throws JMOPMusicbaseException {
+	public void renameTrack(Track track, String newTitle)  {
 		String oldTitle = track.getTitle();
 		inmemory.renameTrack(track, newTitle);
 		storage.renameTrack(track, oldTitle, newTitle);
 	}
 
 	@Override
-	public void moveTrack(Track track, Bundle newBundle) throws JMOPMusicbaseException {
+	public void moveTrack(Track track, Bundle newBundle)  {
 		Bundle oldBundle = track.getBundle();
 		inmemory.moveTrack(track, newBundle);
 		storage.moveTrack(track, oldBundle, newBundle);
 	}
 
 	@Override
-	public void removeTrack(Track track) throws JMOPMusicbaseException {
+	public void removeTrack(Track track)  {
 		inmemory.removeTrack(track);
 		storage.removeTrack(track);
 	}
 
 	@Override
-	public void trackUpdated(Track track) throws JMOPMusicbaseException {
+	public void trackUpdated(Track track)  {
 		inmemory.trackUpdated(track);
 		storage.saveUpdatedTrack(track);
 	}
 	
 	@Override
-	public File trackFile(Track track) throws JMOPMusicbaseException {
+	public File trackFile(Track track)  {
 		return storage.trackFile(track);
 	}
 

@@ -34,8 +34,8 @@ public abstract class AbstractPlayerTest {
 
 		BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
 		Bundle bundle = TestingDataCreator.bundle(musicbase);
-		fooTrack = TestingDataCreator.track(musicbase, bundle, "foo");
-		barTrack = TestingDataCreator.track(musicbase, bundle, "bar");
+		fooTrack = TestingDataCreator.track(musicbase, bundle, "foo", true);
+		barTrack = TestingDataCreator.track(musicbase, bundle, "bar", true);
 	}
 
 	protected abstract BasePlayer createPlayer();
@@ -43,7 +43,7 @@ public abstract class AbstractPlayerTest {
 	////////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void testValids() throws JMOPMusicbaseException {
+	public void testValids()  {
 		player.startPlaying(fooTrack);
 		check(fooTrack, PlayerStatus.PLAYING);
 		waitAsecond();
@@ -70,7 +70,7 @@ public abstract class AbstractPlayerTest {
 
 
 	@Test
-	public void testInvalids() throws JMOPMusicbaseException {
+	public void testInvalids()  {
 		assertThrows(IllegalStateException.class, () -> player.pause());
 		assertThrows(IllegalStateException.class, () -> player.resume());
 		assertThrows(IllegalStateException.class, () -> player.stop());
@@ -99,7 +99,7 @@ public abstract class AbstractPlayerTest {
 	}
 
 	@Test
-	public void testToFinish() throws JMOPMusicbaseException {
+	public void testToFinish()  {
 		player.startPlaying(fooTrack);
 		check(fooTrack, PlayerStatus.PLAYING);
 		
@@ -125,7 +125,7 @@ public abstract class AbstractPlayerTest {
 		}
 	}
 	
-	private void check(Track expectedCurrentTrack, PlayerStatus expectedStatus) throws JMOPMusicbaseException {
+	private void check(Track expectedCurrentTrack, PlayerStatus expectedStatus)  {
 		assertEquals(expectedCurrentTrack, player.actualTrack());
 		assertEquals(expectedStatus, player.currentStatus());
 	}

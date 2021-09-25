@@ -5,28 +5,27 @@ import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class MusicbaseDebugPrinter {
 
-	public static void print(BaseMusicbaseLoading musicbase) throws JMOPMusicbaseException {
+	public static void print(BaseMusicbaseLoading musicbase)  {
 		for (Bundle bundle: musicbase.bundles()) {
 			print(musicbase, bundle);
 		}
 
 	}
 
-	private static void print(BaseMusicbaseLoading musicbase, Bundle bundle) throws JMOPMusicbaseException {
+	private static void print(BaseMusicbaseLoading musicbase, Bundle bundle)  {
 		String bundleName = bundle.getName();
 		System.out.println("Bundle '" + bundleName + "':");
 		print(bundle.getMetadata());
 
 		for (Playlist playlist: musicbase.playlists(bundle)) {
-			print(musicbase, playlist);
+			print(playlist);
 		}
 	}
 
-	private static void print(BaseMusicbaseLoading musicbase, Playlist playlist) {
+	public static void print(Playlist playlist) {
 		String playlistName = playlist.getName();
 		System.out.println("	Playlist '" + playlistName + "':");
 		print(playlist.getMetadata());
@@ -37,8 +36,8 @@ public class MusicbaseDebugPrinter {
 		}
 	}
 
-	private static void print(Track track) {
-		System.out.println("		Track(" + track.getIdentifier() + "): '" + track.getTitle());
+	public static void print(Track track) {
+		System.out.println("		Track(" + track.getIdentifier() + "): '" + track.getTitle() + "'");
 		print(track.getMetadata());
 	}
 

@@ -19,13 +19,15 @@ import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.storages.xpfs.XSPFFilesManipulator;
 import cz.martlin.jmop.common.utils.TestingDataCreator;
+import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 
 public class XSPFFilesManipulatorTest {
 
 	@TempDir
 	public File basedir;
-	private final XSPFFilesManipulator manipulator = new XSPFFilesManipulator();
+	private final XSPFFilesManipulator manipulator = new XSPFFilesManipulator(new SimpleErrorReporter());
 	
 ///////////////////////////////////////////////////////////////////////////
 
@@ -41,8 +43,8 @@ public class XSPFFilesManipulatorTest {
 		
 		bundle = TestingDataCreator.bundle(musicbase);
 		playlist = TestingDataCreator.playlist(musicbase, bundle);
-		trackFirst = TestingDataCreator.track(musicbase, bundle, "first track");
-		trackSecond = TestingDataCreator.track(musicbase, bundle, "second track");
+		trackFirst = TestingDataCreator.track(musicbase, bundle, "first track", false);
+		trackSecond = TestingDataCreator.track(musicbase, bundle, "second track", false);
 
 		playlist.addTrack(trackFirst);
 		playlist.addTrack(trackSecond);
@@ -53,7 +55,7 @@ public class XSPFFilesManipulatorTest {
 	///////////////////////////////////////////////////////////////////////////
 
 	@Test
-	public void testPlaylist() throws JMOPMusicbaseException {
+	public void testPlaylist() throws JMOPPersistenceException  {
 
 		File playlistFile = new File(basedir, "playlist.xspf");
 		manipulator.saveOnlyPlaylist(playlist, playlistFile);
@@ -66,7 +68,7 @@ public class XSPFFilesManipulatorTest {
 	}
 
 	@Test
-	public void testBundle() throws JMOPMusicbaseException {
+	public void testBundle() throws JMOPPersistenceException  {
 		Bundle bundle = playlist.getBundle();
 
 		File bundleFile = new File(basedir, "bundle.xspf");

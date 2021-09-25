@@ -20,7 +20,7 @@ public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTra
 	/////////////////////////////////////////////////////////////////////////////////////
 
 		@Override
-	public boolean beforeTrackStarted(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException {
+	public boolean beforeTrackStarted(BasePlayerEngine engine, Track track)  {
 		if (exists(track)) {
 			return beforeExistingTrackPlayed(engine, track);
 		} else {
@@ -33,17 +33,13 @@ public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTra
 		return true;
 	}
 
-	protected abstract void beforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track) throws JMOPMusicbaseException;
+	protected abstract void beforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track) ;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private boolean exists(Track track) throws JMOPMusicbaseException {
-		try {
-			File file = tracks.trackFile(track);
-			return file.exists();
-		} catch (JMOPMusicbaseException e) {
-			throw new JMOPMusicbaseException("Cannot check existence of track file", e);
-		}
+	private boolean exists(Track track)  {
+		File file = tracks.trackFile(track);
+		return file.exists();
 	}
 
 }

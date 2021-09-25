@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.data.model;
 
+import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import javafx.util.Duration;
 
@@ -11,7 +12,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class Track implements Comparable<Track> {
+public class Track implements Comparable<Track>, WithPlayedMarker {
 	private Bundle bundle;
 	private String identifier; //TODO replace by uri
 	private String title;
@@ -136,5 +137,11 @@ public class Track implements Comparable<Track> {
 	public String toHumanString() {
 		return title + " (" + DurationUtilities.toHumanString(duration) + ")";
 	}
+	
+	@Override
+	public void played() {
+		metadata = metadata.played();
+	}
+	
 
 }

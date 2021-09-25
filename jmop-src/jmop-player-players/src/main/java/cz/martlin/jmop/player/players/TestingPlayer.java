@@ -6,52 +6,60 @@ import javafx.util.Duration;
 
 public class TestingPlayer extends AbstractPlayer {
 
+	private int seconds = 0;
+	
 	public TestingPlayer() {
 		super();
 	}
 
 	@Override
-	public Duration currentTime() {
-		return new Duration(0);
+	public Duration doCurrentTime() {
+		return DurationUtilities.createDuration(0, 0, seconds);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public void doStartPlaying(Track track) {
-		System.out.println("Playing " + track); //$NON-NLS-1$
+		System.out.println("# Playing " + track); //$NON-NLS-1$
+		seconds = 0;
 	}
 
 	@Override
 	public void doStopPlaying() {
-		System.out.println("Player stopped"); //$NON-NLS-1$
+		System.out.println("# Player stopped"); //$NON-NLS-1$
+		seconds = 0;
 	}
 
 	@Override
 	public void doPausePlaying() {
-		System.out.println("Player paused"); //$NON-NLS-1$
+		System.out.println("# Player paused"); //$NON-NLS-1$
+		seconds++;
 	}
 
 	@Override
 	public void doResumePlaying() {
-		System.out.println("Player resumed, plaing again " + actualTrack()); //$NON-NLS-1$
+		System.out.println("# Player resumed, plaing again " + actualTrack()); //$NON-NLS-1$
+		seconds++;
 	}
 
 	@Override
 	public void doSeek(Duration to) {
-		System.out.println("Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
+		System.out.println("# Seeking to " + DurationUtilities.toHumanString(to)); //$NON-NLS-1$
+		seconds = (int) to.toSeconds();
 	}
 
 	@Override
 	protected void doTrackFinished() {
-		System.out.println("Okay, the track finished."); //$NON-NLS-1$
+		System.out.println("# Okay, the track finished."); //$NON-NLS-1$
+		seconds++;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
 	public String toString() {
-		return "TestingPlayer [playing=" + actualTrack() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+		return "TestingPlayer [actualTrack()=" + actualTrack() + ", currentTime()=" + currentTime() + "]";
 	}
 
 }

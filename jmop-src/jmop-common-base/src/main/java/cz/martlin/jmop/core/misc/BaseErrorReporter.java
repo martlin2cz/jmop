@@ -9,9 +9,10 @@ public interface BaseErrorReporter {
 	 * 
 	 * In fact logs and shows error dialog (if possible).
 	 * 
+	 * @param reason
 	 * @param e
 	 */
-	void report(Exception e);
+	void report(String reason, Exception e);
 
 	/**
 	 * Reports internal error (typically error caught by general "catch
@@ -21,6 +22,7 @@ public interface BaseErrorReporter {
 	 * 
 	 * @param e
 	 */
+	@Deprecated
 	void internal(Exception e);
 
 }
