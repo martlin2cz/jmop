@@ -1,6 +1,7 @@
 package cz.martlin.jmop.player.cli.main;
 
 import java.io.File;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,13 @@ public class JMOPCLI {
 	public static void main(String[] args) {
 		LOG.debug("Starting the CLI");
 		
+		File root = obtainRoot(args);
+		
 		JMOPPlayer jmop = null;
 		try {
 			LOG.debug("Preparing the JMOP");
-			jmop = DefaultJMOPPlayerBuilder.createTesting();
-			//jmop = DefaultJMOPPlayerBuilder.create(new File("/tmp/jmop"), (ts) -> new JavaFXMediaPlayer(ts), new ConstantDefaultFascadeConfig(), new SimpleErrorReporter());
+			//jmop = DefaultJMOPPlayerBuilder.createTesting();
+			jmop = DefaultJMOPPlayerBuilder.create(root, (ts) -> new JavaFXMediaPlayer(ts), new ConstantDefaultFascadeConfig(), new SimpleErrorReporter());
 					
 			
 			LOG.debug("Loading the JMOP");
@@ -58,6 +61,32 @@ public class JMOPCLI {
 			System.err.println("Could terminate the JMOP: " + e.getMessage());
 			System.exit(3);
 		}
+	}
+
+	private static File obtainRoot(String[] args) {
+		if (args.length > 0) {
+			String arg = args[0];
+			//TODO do the -h/--help properly!
+			if (arg == "-h" || arg == "--help") {
+				System.out.println("JMOP player");
+				System.out.println("Usage: JMOP [ROOT DIR]");
+				System.out.println("   if no ROOT DIR provided, cwd is used");
+				System.exit(0);
+			}
+			
+			File file = new File(arg);
+			if (file.isDirectory()) {
+				LOG.info("Will use the provided " + file + " as a root directory");
+				return file;
+			} else {
+				LOG.warn("The " + file + " is not an existing directory");
+				// let it fall back
+			}
+		}	
+	
+		File file = new File(System.getProperty("user.dir"));
+		LOG.info("Using the cwd (" + file + ") as a root directory");
+		return file;
 	}
 
 }

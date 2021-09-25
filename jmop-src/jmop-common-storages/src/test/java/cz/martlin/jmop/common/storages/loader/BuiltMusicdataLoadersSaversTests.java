@@ -46,8 +46,7 @@ public class BuiltMusicdataLoadersSaversTests {
 			BaseErrorReporter reporter = new SimpleErrorReporter();
 			BaseMusicdataFileManipulator manipulator = new MusicdataManipulatorBuilder().createXSPFmanipulator(false, reporter);
 			Locators locators = new LocatorsBuilder().build(root, DirsLayout.BUNDLES_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, config, "XSPF");
-			
-			BaseMusicdataLoader loader = new LoaderBuilder().create(DirsLayout.BUNDLES_DIR, root, false, locators, manipulator, fs);
+			BaseMusicdataLoader loader = new LoaderBuilder().createBundlesDir(locators, manipulator, fs, root, false, reporter);
 			BaseMusicdataSaver saver = new SaverBuilder().create(manipulator, locators, inmemory);
 			
 			return new SimpleImmutableEntry<>(saver, loader);
@@ -62,11 +61,12 @@ public class BuiltMusicdataLoadersSaversTests {
 		protected Entry<BaseMusicdataSaver, BaseMusicdataLoader> createLoaderAndSaver(File root, BaseInMemoryMusicbase inmemory) {
 			BaseFileSystemAccessor fs = new DefaultFileSystemAccessor();
 			BaseStorageConfiguration config = new GenericTestingConstantConfig();
-
+			BaseErrorReporter reporter = new SimpleErrorReporter();
+			
 			Locators locators = new LocatorsBuilder().build(root, DirsLayout.ALL_IN_ONE_DIR, BundleDataFile.SIMPLE, config, "TXT");
 			BaseMusicdataFileManipulator manipulator = new MusicdataManipulatorBuilder().createSimpleManipulator(fs);
 			
-			BaseMusicdataLoader loader = new LoaderBuilder().create(DirsLayout.ALL_IN_ONE_DIR, root, false, locators, manipulator, fs);
+			BaseMusicdataLoader loader = new LoaderBuilder().create(DirsLayout.ALL_IN_ONE_DIR, root, false, locators, manipulator, fs, reporter );
 			BaseMusicdataSaver saver = new SaverBuilder().create(manipulator, locators, inmemory);
 			
 			return new SimpleImmutableEntry<>(saver, loader);

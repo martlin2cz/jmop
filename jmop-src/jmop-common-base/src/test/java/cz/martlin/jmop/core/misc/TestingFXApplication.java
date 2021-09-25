@@ -9,11 +9,13 @@ import cz.martlin.jmop.core.misc.ops.OperationsManager;
 import cz.martlin.jmop.core.misc.ops.TestingCountingLongOperation;
 import cz.martlin.jmop.core.misc.ops.TestingCountingOperationsChain;
 import cz.martlin.jmop.core.misc.ops.TestingOperations;
+/*
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+*/
 
 /**
  * Do not start directly, use {@link ReTestingFxAppMain} instead.
@@ -21,12 +23,12 @@ import javafx.stage.Stage;
  * @author martin
  *
  */
-public class TestingFXApplication extends Application {
+public class TestingFXApplication /*extends Application*/ {
 
 	public static void main(String[] args) {
-		Application.launch(args);
+		/*Application.launch(args);*/
 	}
-
+/*
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Testing app");
@@ -123,4 +125,5 @@ public class TestingFXApplication extends Application {
 
 		root.getChildren().add(butt);
 	}
+	*/
 }

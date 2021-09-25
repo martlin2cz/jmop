@@ -29,6 +29,8 @@ public class LoggingMusicbaseStorage implements BaseMusicbaseStorage {
 		LOG.info("Loading the persistent storage");
 
 		delegee.load(inmemory);
+
+		LOG.info("Loaded " + inmemory.bundles().size() + " bundles in total");
 	}
 
 	@Override

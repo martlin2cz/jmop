@@ -10,12 +10,15 @@ import cz.martlin.jmop.common.musicbase.dflt.VerifiingInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
+import cz.martlin.jmop.common.storages.builders.LocatorsBuilder.BundleDataFile;
+import cz.martlin.jmop.common.storages.builders.MusicdataManipulatorBuilder.PlaylistFileFormat;
+import cz.martlin.jmop.common.storages.builders.StorageBuilder;
+import cz.martlin.jmop.common.storages.builders.StorageBuilder.DirsLayout;
 import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
-import cz.martlin.jmop.common.storages.dflt.X_DefaultStorage;
-import cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage;
 import cz.martlin.jmop.common.testing.resources.TestingRootDir;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.dflt.BaseDefaultEngineConfig;
 import cz.martlin.jmop.player.engine.dflt.DefaultEngine;
@@ -28,6 +31,9 @@ import cz.martlin.jmop.player.fascade.dflt.config.ConstantDefaultFascadeConfig;
 import cz.martlin.jmop.player.players.BasePlayer;
 import cz.martlin.jmop.player.players.TestingPlayer;
 
+/**
+ *
+ */
 public class DefaultJMOPPlayerBuilder {
 
 	public static JMOPPlayer createTesting() {
@@ -48,10 +54,17 @@ public class DefaultJMOPPlayerBuilder {
 		BaseInMemoryMusicbase verifiing = new VerifiingInMemoryMusicbase(inmemory);
 		
 		BaseDefaultStorageConfig storageConfig = config;
-		BaseMusicbaseStorage storage = X_DefaultStorage.create(root, storageConfig, reporter, verifiing);
-		BaseMusicbaseStorage logging = new LoggingMusicbaseStorage(storage);
-		
-		BaseMusicbase musicbase = new PersistentMusicbase(verifiing, logging);
+
+		TrackFileFormat format = TrackFileFormat.MP3; //FIXME
+
+//		BaseMusicbaseStorage storage = X_DefaultStorage.create(root, storageConfig, reporter, verifiing);
+
+		BaseMusicbaseStorage storage = new StorageBuilder().create(DirsLayout.BUNDLES_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, false, PlaylistFileFormat.XSPF, reporter, root, storageConfig, format, inmemory);
+
+//		StorageBuilder builder = new StorageBuilder();
+//		BaseMusicbaseStorage storage = builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.SIMPLE, false, PlaylistFileFormat.TXT, reporter, root, config, TrackFileFormat.MP3, inmemory);
+	
+		BaseMusicbase musicbase = new PersistentMusicbase(verifiing, storage);
 		
 		BasePlayer player = playerProducer.apply(musicbase);
 		BaseDefaultEngineConfig engineConfig = config;
