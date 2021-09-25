@@ -6,6 +6,7 @@ import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.OnPlaylistStartedHandler;
+import javafx.util.Duration;
 
 public class MarkingPlaylistAsPlayedHandler implements OnPlaylistStartedHandler {
 
@@ -19,7 +20,7 @@ public class MarkingPlaylistAsPlayedHandler implements OnPlaylistStartedHandler 
 	@Override
 	public void onPlaylistStarted(BasePlayerEngine engine, Playlist playlist)  {
 		if (!(playlist instanceof TemporarySimpleTrackedPlaylist)) {
-			playlist.played();
+			playlist.played(Duration.ZERO);
 			musicbase.playlistUpdated(playlist);
 		}
 	}

@@ -7,7 +7,7 @@
 		<artifactId>jmop</artifactId>
 		<version>3.0.1</version>
 	</parent>
-	
+
 	<artifactId>jmop-common-storages</artifactId>
 	<name>JMOP common storages</name>
 	<description>Implements the storage of the musicbase.</description>
@@ -20,8 +20,19 @@
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-testing</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-musicbase</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>xspf-playlist</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
 	</dependencies>
 </project>
