@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>${revision}</version>
+		<version>3.0.1</version>
 	</parent>
 	
 	<artifactId>jmop-player-players</artifactId>
@@ -15,13 +15,23 @@
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
-			<artifactId>jmop-player-base</artifactId>
-			<version>${revision}</version>
+			<artifactId>jmop-common-base</artifactId>
+			<version>3.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-player-base</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-testing</artifactId>
+			<version>3.0.1</version>
+		</dependency>		
+		<dependency>
+			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-storages</artifactId>
-			<version>${revision}</version>
+			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
 	

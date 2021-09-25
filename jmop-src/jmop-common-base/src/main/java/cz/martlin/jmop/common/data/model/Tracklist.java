@@ -32,6 +32,14 @@ public class Tracklist {
 		return tracks.size();
 	}
 
+	public Track getTrack(int index) {
+		return tracks.get(index);
+	}
+	
+	public List<Track> subList(int start, int end) {
+		return tracks.subList(start, end);
+	}
+	
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
