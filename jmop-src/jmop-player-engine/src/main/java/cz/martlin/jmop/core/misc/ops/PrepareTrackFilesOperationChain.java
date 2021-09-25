@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.misc.flu.FormatsLocationsUtility;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -30,7 +30,7 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 	}
 
 	@Override
-	protected BaseOperation<Track, Track> createFirstOperation(Track track) throws JMOPSourceException {
+	protected BaseOperation<Track, Track> createFirstOperation(Track track) throws JMOPMusicbaseException {
 		logDebugInfo("first", track);
 
 		if (!isDownloaded(track)) {
@@ -41,7 +41,7 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 	}
 
 	@Override
-	protected BaseOperation<Track, Track> createSecondOperation(Track track) throws JMOPSourceException {
+	protected BaseOperation<Track, Track> createSecondOperation(Track track) throws JMOPMusicbaseException {
 		logDebugInfo("second", track);
 
 		if (isSaved(track)) {
@@ -56,7 +56,7 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 	}
 
 	@Override
-	protected BaseOperation<Track, Track> createThirdOperation(Track track) throws JMOPSourceException {
+	protected BaseOperation<Track, Track> createThirdOperation(Track track) throws JMOPMusicbaseException {
 		logDebugInfo("third", track);
 
 		if (isToPlay(track)) {
@@ -72,7 +72,7 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	private BaseOperation<Track, Track> runDownload(Track track) throws JMOPSourceException {
+	private BaseOperation<Track, Track> runDownload(Track track) throws JMOPMusicbaseException {
 		LOG.info("Preparing download of track: " + track);
 
 		BaseDownloader downloader = remote.downloader();
@@ -82,7 +82,7 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 		return operation;
 	}
 
-	private BaseOperation<Track, Track> runConvertDownloadedToSave(Track track) throws JMOPSourceException {
+	private BaseOperation<Track, Track> runConvertDownloadedToSave(Track track) throws JMOPMusicbaseException {
 		LOG.info("Preparing conversion of downloaded to save track: " + track);
 
 		BaseConverter converter = remote.converter();
@@ -98,7 +98,7 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 		return operation;
 	}
 
-	private BaseOperation<Track, Track> runConvertDownloadedToPlay(Track track) throws JMOPSourceException {
+	private BaseOperation<Track, Track> runConvertDownloadedToPlay(Track track) throws JMOPMusicbaseException {
 		LOG.info("Preparing conversion of downloaded to play track: " + track);
 
 		BaseConverter converter = remote.converter();
@@ -114,7 +114,7 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 		return operation;
 	}
 
-	private BaseOperation<Track, Track> runConvertSavedToPlay(Track track) throws JMOPSourceException {
+	private BaseOperation<Track, Track> runConvertSavedToPlay(Track track) throws JMOPMusicbaseException {
 		LOG.info("Preparing conversion of saved to play track: " + track);
 
 		BaseConverter converter = remote.converter();
@@ -132,21 +132,21 @@ public class PrepareTrackFilesOperationChain extends AbstractTriPhasedOperations
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private boolean isDownloaded(Track track) throws JMOPSourceException {
+	private boolean isDownloaded(Track track) throws JMOPMusicbaseException {
 		return local.exists(track, flu.downloadLocation(), flu.downloadFormat());
 	}
 
-	private boolean isSaved(Track track) throws JMOPSourceException {
+	private boolean isSaved(Track track) throws JMOPMusicbaseException {
 		return local.exists(track, flu.saveLocation(), flu.saveFormat());
 	}
 
-	private boolean isToPlay(Track track) throws JMOPSourceException {
+	private boolean isToPlay(Track track) throws JMOPMusicbaseException {
 		return local.exists(track, flu.playLocation(), flu.playFormat());
 	}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void logDebugInfo(String operation, Track track) throws JMOPSourceException {
+	private void logDebugInfo(String operation, Track track) throws JMOPMusicbaseException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Preparing " + operation //
 					+ " for track: " + track //

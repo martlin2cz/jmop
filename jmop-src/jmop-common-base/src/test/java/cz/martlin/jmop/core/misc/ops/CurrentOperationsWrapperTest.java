@@ -1,14 +1,15 @@
 package cz.martlin.jmop.core.misc.ops;
 
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import javafx.collections.ListChangeListener;
 
 public class CurrentOperationsWrapperTest {
 
 	@Test
-	@Ignore
+	@Disabled
 	public void testPrimitive() throws Throwable {
 		FxTester.runTheTests(() -> {
 			OperationsManager man = new OperationsManager();

@@ -1,8 +1,8 @@
 package cz.martlin.jmop.core.misc.ops;
 
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public interface BaseOperationsChain<T> {
 
-	public abstract BaseOperation<T, T> createOperation(int index, T input) throws JMOPSourceException;
+	public abstract BaseOperation<T, T> createOperation(int index, T input) throws JMOPMusicbaseException;
 }

@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.data.Tracklist;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.core.misc.ObservableObject;
 
 /**

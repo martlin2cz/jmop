@@ -1,6 +1,6 @@
 package cz.martlin.jmop.core.misc.ops;
 
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
 public class TestingCountingOperationsChain implements BaseOperationsChain<Integer> {
 
@@ -14,7 +14,7 @@ public class TestingCountingOperationsChain implements BaseOperationsChain<Integ
 	}
 
 	@Override
-	public BaseOperation<Integer, Integer> createOperation(int index, Integer input) throws JMOPSourceException {
+	public BaseOperation<Integer, Integer> createOperation(int index, Integer input) throws JMOPMusicbaseException {
 		System.out.println("Obtaining operation " + index + " with input " + input);
 		
 		if (index == 0) {

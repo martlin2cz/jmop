@@ -1,9 +1,9 @@
 package cz.martlin.jmop.core.playlister;
 
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ObservableObject;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import cz.martlin.jmop.core.strategy.base.BasePlaylisterStrategy;
@@ -157,9 +157,9 @@ public class Playlister extends ObservableObject<Playlister> {
 	 * Mark playing "next" (in fact current) track.
 	 * 
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public Track playNext() throws JMOPSourceException {
+	public Track playNext() throws JMOPMusicbaseException {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		Track track = strategy.getCurrent();
 		return track;
@@ -170,9 +170,9 @@ public class Playlister extends ObservableObject<Playlister> {
 	 * 
 	 * @param index
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public Track play(int index) throws JMOPSourceException {
+	public Track play(int index) throws JMOPMusicbaseException {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		Track track = strategy.playChoosen(index);
 		return track;
@@ -182,9 +182,9 @@ public class Playlister extends ObservableObject<Playlister> {
 	 * Mark playing next track after the current one.
 	 * 
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public Track toNext() throws JMOPSourceException {
+	public Track toNext() throws JMOPMusicbaseException {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		Track track = strategy.toNext();
 		return track;
@@ -194,9 +194,9 @@ public class Playlister extends ObservableObject<Playlister> {
 	 * Mark playing previous track (before the current one).
 	 * 
 	 * @return
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public Track toPrevious() throws JMOPSourceException {
+	public Track toPrevious() throws JMOPMusicbaseException {
 		BasePlaylisterStrategy strategy = currentStrategy();
 		Track track = strategy.toPrevious();
 		return track;
