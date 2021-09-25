@@ -1,11 +1,11 @@
 package cz.martlin.jmop.core.playlister;
 
-import cz.martlin.jmop.core.data.Playlist;
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.data.Tracklist;
+import cz.martlin.jmop.common.data.model.Playlist;
+import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.core.misc.BaseWrapper;
 import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.runtime.PlaylistRuntime;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;

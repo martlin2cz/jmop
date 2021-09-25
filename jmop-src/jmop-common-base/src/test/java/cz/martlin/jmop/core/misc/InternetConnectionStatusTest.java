@@ -1,13 +1,13 @@
 package cz.martlin.jmop.core.misc;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeNoException;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import cz.martlin.jmop.core.config.BaseConfiguration;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
@@ -16,7 +16,7 @@ public class InternetConnectionStatusTest {
 	public InternetConnectionStatusTest() {
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		System.err.println();
 	}
@@ -75,7 +75,7 @@ public class InternetConnectionStatusTest {
 			TimeUnit.SECONDS.sleep(wait);
 		} catch (InterruptedException e) {
 			System.err.println(e);
-			assumeNoException(e);
+			assumeTrue(e == null);
 		}
 	}
 

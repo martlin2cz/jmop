@@ -1,7 +1,7 @@
 package cz.martlin.jmop.core.player;
 
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.beans.value.ObservableValue;
 import javafx.util.Duration;
@@ -50,9 +50,9 @@ public interface BasePlayer extends ObservableValue<BasePlayer> {
 	 * start playing the given one.
 	 * 
 	 * @param track
-	 * @throws JMOPSourceException
+	 * @throws JMOPMusicbaseException
 	 */
-	public void startPlaying(Track track) throws JMOPSourceException;
+	public void startPlaying(Track track) throws JMOPMusicbaseException;
 
 	/**
 	 * Stops the player. If already stopped might do nothing.

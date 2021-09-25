@@ -2,9 +2,9 @@ package cz.martlin.jmop.core.player;
 
 import java.util.function.Consumer;
 
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.BaseWrapper;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;

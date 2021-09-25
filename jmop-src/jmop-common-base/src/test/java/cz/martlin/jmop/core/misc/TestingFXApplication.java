@@ -91,7 +91,7 @@ public class TestingFXApplication extends Application {
 
 		try {
 			manager.start(0, chain, (r) -> System.out.println("The operations chain completed with " + r));
-		} catch (JMOPSourceException e) {
+		} catch (JMOPMusicbaseException e) {
 			e.printStackTrace();
 		}
 	}

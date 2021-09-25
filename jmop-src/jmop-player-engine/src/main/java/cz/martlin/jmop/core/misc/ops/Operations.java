@@ -4,7 +4,7 @@ import java.util.List;
 
 import cz.martlin.jmop.core.data.Bundle;
 import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPSourceException;
+import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.local.XXX_BaseLocalSource;
 import cz.martlin.jmop.core.sources.local.misc.flu.FormatsLocationsUtility;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
@@ -28,14 +28,14 @@ public class Operations implements BaseOperations {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public void runSearch(Bundle bundle, String query, ConsumerWithException<List<Track>> resultHandler)
-			throws JMOPSourceException {
+			throws JMOPMusicbaseException {
 		BaseRemoteSourceQuerier querier = remote.querier();
 		BaseOperation<String, List<Track>> operation = querier.search(bundle, query);
 		manager.start(operation, resultHandler);
 	}
 
 	@Override
-	public void runLoadNext(Track track, ConsumerWithException<Track> resultHandler) throws JMOPSourceException {
+	public void runLoadNext(Track track, ConsumerWithException<Track> resultHandler) throws JMOPMusicbaseException {
 		BaseRemoteSourceQuerier querier = remote.querier();
 		BaseOperation<Track, Track> operation = querier.loadNext(track);
 		manager.start(operation, resultHandler);
@@ -44,7 +44,7 @@ public class Operations implements BaseOperations {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void prepareFiles(Track track, ConsumerWithException<Track> resultHandler) throws JMOPSourceException {
+	public void prepareFiles(Track track, ConsumerWithException<Track> resultHandler) throws JMOPMusicbaseException {
 		BaseOperationsChain<Track> chain = new PrepareTrackFilesOperationChain(flu, remote, local);
 		manager.start(track, chain, resultHandler);
 	}
