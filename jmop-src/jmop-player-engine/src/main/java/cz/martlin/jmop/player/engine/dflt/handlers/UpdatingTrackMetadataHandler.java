@@ -1,8 +1,9 @@
 package cz.martlin.jmop.player.engine.dflt.handlers;
 
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackEndedHandler;
 import javafx.util.Duration;
@@ -30,9 +31,21 @@ public class UpdatingTrackMetadataHandler implements BeforeTrackEndedHandler {
 		// by simply checking the current time of the player.
 		// Gimme the Nobel prize!
 		if (isMoreThan(currentDuration, markAsPlayedAfter)) {
-			track.played();
-			musicbase.trackUpdated(track);
+			reportPlayed(engine, track, currentDuration);
 		}
+	}
+
+	private void reportPlayed(BasePlayerEngine engine, Track track, Duration currentDuration) {
+		track.played(currentDuration);
+		musicbase.trackUpdated(track);
+		
+		Playlist playlist = engine.currentPlaylist();
+		playlist.played(currentDuration);
+		musicbase.playlistUpdated(playlist);
+		
+		Bundle bundle = playlist.getBundle();
+		bundle.played(currentDuration);
+		musicbase.bundleUpdated(bundle);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

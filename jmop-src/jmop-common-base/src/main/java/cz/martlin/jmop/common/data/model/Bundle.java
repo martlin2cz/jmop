@@ -132,7 +132,7 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	}
 	
 	@Override
-	public void played() {
+	public void played(Duration time) {
 		metadata = metadata.played();
 	}
 	

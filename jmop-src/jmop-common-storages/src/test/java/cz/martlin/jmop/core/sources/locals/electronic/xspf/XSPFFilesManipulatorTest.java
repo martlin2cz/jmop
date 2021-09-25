@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.sources.locals.electronic.xspf;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -17,39 +18,44 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
-import cz.martlin.jmop.common.storages.xpfs.XSPFFilesManipulator;
-import cz.martlin.jmop.common.utils.TestingDataCreator;
+import cz.martlin.jmop.common.storages.xpfs.XSPFPlaylistFilesManipulator;
+import cz.martlin.jmop.common.utils.TestingMusicbase;
+import cz.martlin.jmop.common.utils.TestingTracksSource;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import javafx.util.Duration;
 
 public class XSPFFilesManipulatorTest {
 
-	@TempDir
-	public File basedir;
-	private final XSPFFilesManipulator manipulator = new XSPFFilesManipulator(new SimpleErrorReporter());
+	private final TestingMusicbase tmb;
+	private final TestingTracksSource tracks;
+
+	
+	//@TempDir
+	//public File basedir;
+	private final File basedir = new File("/tmp/jmop");
+	private final XSPFPlaylistFilesManipulator manipulator;
+	
+
+	
+	public XSPFFilesManipulatorTest() {
+		BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
+		this.tmb = new TestingMusicbase(musicbase, false);
+		this.tracks = new TestingTracksSource(TrackFileFormat.MP3);
+
+		this.manipulator = new XSPFPlaylistFilesManipulator( //
+				new SimpleErrorReporter()); //
+	}
 	
 ///////////////////////////////////////////////////////////////////////////
 
-	private Bundle bundle;
-	private Playlist playlist;
-	private Track trackFirst;
-	private Track trackSecond;
-	private BaseInMemoryMusicbase musicbase;
 
 	@BeforeEach
 	public void before() {
-		musicbase = new DefaultInMemoryMusicbase();
-		
-		bundle = TestingDataCreator.bundle(musicbase);
-		playlist = TestingDataCreator.playlist(musicbase, bundle);
-		trackFirst = TestingDataCreator.track(musicbase, bundle, "first track", false);
-		trackSecond = TestingDataCreator.track(musicbase, bundle, "second track", false);
-
-		playlist.addTrack(trackFirst);
-		playlist.addTrack(trackSecond);
-		
-		trackFirst.setMetadata(trackFirst.getMetadata().played().played());
+		tmb.oneMoreTime.played(DurationUtilities.createDuration(0, 0, 30));
+		tmb.verdisQuo.played(DurationUtilities.createDuration(0, 0, 40));
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
@@ -58,26 +64,32 @@ public class XSPFFilesManipulatorTest {
 	public void testPlaylist() throws JMOPPersistenceException  {
 
 		File playlistFile = new File(basedir, "playlist.xspf");
-		manipulator.saveOnlyPlaylist(playlist, playlistFile);
+		System.out.println("Working with: " + playlistFile);
+		
+		manipulator.saveOnlyPlaylist(tmb.discovery, playlistFile, tracks);
 		assertTrue(playlistFile.exists());
 
-		Map<String, Track> tracks = Map.of(trackFirst.getTitle(), trackFirst, trackSecond.getTitle(), trackSecond);
-		Playlist loaded = manipulator.loadOnlyPlaylist(bundle, tracks, playlistFile);
-		assertEquals(playlist.toString(), loaded.toString());
-		assertEquals(playlist, loaded);
+		Map<String, Track> tracks = Map.of( //
+				tmb.aerodynamic.getTitle(), tmb.aerodynamic, // 
+				tmb.verdisQuo.getTitle(), tmb.verdisQuo,  //
+				tmb.oneMoreTime.getTitle(), tmb.oneMoreTime); //
+		
+		Playlist loaded = manipulator.loadOnlyPlaylist(tmb.daftPunk, tracks, playlistFile);
+		assertEquals(tmb.discovery.toString(), loaded.toString());
+		assertEquals(tmb.discovery, loaded);
 	}
 
 	@Test
 	public void testBundle() throws JMOPPersistenceException  {
-		Bundle bundle = playlist.getBundle();
-
 		File bundleFile = new File(basedir, "bundle.xspf");
-		manipulator.savePlaylistWithBundle(playlist, bundleFile);
+		System.out.println("Working with: " + bundleFile);
+		
+		manipulator.savePlaylistWithBundle(tmb.discovery, bundleFile, tracks);
 		assertTrue(bundleFile.exists());
 
 		Bundle loaded = manipulator.loadOnlyBundle(bundleFile);
-		assertEquals(bundle.toString(), loaded.toString());
-		assertEquals(bundle, loaded);
+		assertEquals(tmb.daftPunk.toString(), loaded.toString());
+		assertEquals(tmb.daftPunk, loaded);
 	}
 
 	///////////////////////////////////////////////////////////////////////////

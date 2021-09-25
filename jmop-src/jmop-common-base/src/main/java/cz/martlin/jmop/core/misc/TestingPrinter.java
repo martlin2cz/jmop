@@ -55,9 +55,9 @@ public class TestingPrinter {
 	}
 
 	private static String printMeta(Metadata metadata) {
-		return "crea:" + date2str(metadata.getCreated()) //
+		return "crea:" + date2str(metadata.getCreatedCal()) //
 				+ ", plays:" + Integer.toString(metadata.getNumberOfPlays()) //
-				+ ", last:" + date2str(metadata.getLastPlayed()); //
+				+ ", last:" + date2str(metadata.getLastPlayedCal()); //
 	}
 
 	////////////////////////////////////////////////////////////////////////////

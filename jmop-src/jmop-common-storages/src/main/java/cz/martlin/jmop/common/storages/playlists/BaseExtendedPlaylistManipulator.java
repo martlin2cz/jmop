@@ -6,6 +6,7 @@ import java.util.Map;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.common.utils.FileExtensionSpecifier;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 
@@ -26,20 +27,22 @@ public interface BaseExtendedPlaylistManipulator extends FileExtensionSpecifier 
 	 * 
 	 * @param playlist
 	 * @param file
+	 * @param tracks
 	 * @throws JMOPPersistenceException 
 	 * @
 	 */
-	void savePlaylistWithBundle(Playlist playlist, File file) throws JMOPPersistenceException ;
+	void savePlaylistWithBundle(Playlist playlist, File file, TracksSource tracks) throws JMOPPersistenceException ;
 
 	/**
 	 * Saves the given playlist (but not the bundle) into the given file.
 	 * 
 	 * @param playlist
 	 * @param file
+	 * @param tracks
 	 * @throws JMOPPersistenceException 
 	 * @
 	 */
-	void saveOnlyPlaylist(Playlist playlist, File file) throws JMOPPersistenceException ;
+	void saveOnlyPlaylist(Playlist playlist, File file, TracksSource tracks) throws JMOPPersistenceException ;
 
 	/**
 	 * Loads the bundle from the given file.

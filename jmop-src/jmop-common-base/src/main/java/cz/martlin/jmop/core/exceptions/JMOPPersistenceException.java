@@ -14,4 +14,8 @@ public class JMOPPersistenceException extends Exception {
 		super(message, cause);
 	}
 
+	public JMOPPersistenceException(String message) {
+		super(message);
+	}
+
 }

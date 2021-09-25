@@ -5,6 +5,7 @@ import java.io.File;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.storages.playlists.BaseExtendedPlaylistManipulator;
 import cz.martlin.jmop.common.storages.utils.BaseFilesLocator;
@@ -82,10 +83,12 @@ public class SaverWithAllTrackPlaylist implements BaseMusicdataSaver {
 	}
 
 	private void save(Playlist playlist, File playlistFile) throws JMOPPersistenceException  {
+		TracksSource tracks = locator;
+		
 		if (isAllTracksPlaylist(playlist)) {
-			manipulator.savePlaylistWithBundle(playlist, playlistFile);
+			manipulator.savePlaylistWithBundle(playlist, playlistFile, tracks);
 		} else {
-			manipulator.saveOnlyPlaylist(playlist, playlistFile);
+			manipulator.saveOnlyPlaylist(playlist, playlistFile, tracks);
 		}
 	}
 

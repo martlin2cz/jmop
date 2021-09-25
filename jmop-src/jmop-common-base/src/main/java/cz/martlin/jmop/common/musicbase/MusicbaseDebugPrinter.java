@@ -42,6 +42,6 @@ public class MusicbaseDebugPrinter {
 	}
 
 	private static void print(Metadata metadata) {
-		System.out.println("			(" + metadata.getCreated().getTime() + ")"); // TODO
+		System.out.println("			(" + metadata.getCreated() + ")"); // TODO
 	}
 }

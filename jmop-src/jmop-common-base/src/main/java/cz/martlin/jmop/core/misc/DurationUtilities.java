@@ -74,9 +74,9 @@ public class DurationUtilities {
 	 */
 	public static String toMilis(Duration duration) {
 		if (duration != null) {
-			return Double.toString(duration.toMillis());
+			return Integer.toString((int) duration.toMillis());
 		} else {
-			return Double.toString(0);
+			return Integer.toString(0);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class DurationUtilities {
 	 * @return
 	 */
 	public static Duration parseMilisDuration(String string) {
-		double millis = Double.parseDouble(string);
+		int millis = Integer.parseInt(string);
 		return new Duration(millis);
 	}
 

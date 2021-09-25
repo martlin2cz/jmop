@@ -4,6 +4,7 @@ import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
 import cz.martlin.jmop.core.misc.ObservableObject;
+import javafx.util.Duration;
 
 /**
  * The data structure for playlist. Each playlist is associated with some
@@ -173,7 +174,7 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	}
 
 	/**
-	 * Use {@link #played()}
+	 * Use {@link #played(Duration)}
 	 * @param metadata
 	 */
 	@Deprecated
@@ -229,8 +230,8 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	}
 
 	@Override
-	public void played() {
-		metadata = metadata.played();
+	public void played(Duration time) {
+		metadata = metadata.played(time);
 	}
 	
 

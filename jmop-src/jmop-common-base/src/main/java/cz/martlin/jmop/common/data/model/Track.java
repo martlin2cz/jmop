@@ -139,8 +139,8 @@ public class Track implements Comparable<Track>, WithPlayedMarker {
 	}
 	
 	@Override
-	public void played() {
-		metadata = metadata.played();
+	public void played(Duration time) {
+		metadata = metadata.played(time);
 	}
 	
 
