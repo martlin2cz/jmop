@@ -29,7 +29,7 @@ class ConvertersTest {
 	public ConvertersTest() {
 		jmop = DefaultJMOPPlayerBuilder.createTesting();
 		BaseMusicbaseModifing musicbase = jmop.musicbase().getMusicbase();
-		tme = TestingMusicdataExtension.create(musicbase, true);
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true);
 	}
 
 	@BeforeEach
