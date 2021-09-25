@@ -12,7 +12,7 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	
 	@BeforeEach
 	public void before()  {
-		Playlist playlist = tmb.tm.bestTracks;
+		Playlist playlist = tme.tmd.bestTracks;
 		jmop.playing().play(playlist);
 	}
 	
@@ -66,7 +66,7 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 		// Notice: if we move playlist, it moves its tracks as well
 		// thus, each move has to be executed separatelly,
 		// to let the musicbase to roll it back
-		String daftPunk = tmb.tm.daftPunk.getName();
+		String daftPunk = tme.tmd.daftPunk.getName();
 		
 		// playlist
 		exec("move", "playlist", ".", daftPunk);
@@ -77,8 +77,8 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 		// Notice: if we move playlist, it moves its tracks as well
 		// thus, each move has to be executed separatelly,
 		// to let the musicbase to roll it back		
-		String daftPunk = tmb.tm.daftPunk.getName();
-		String discovery = tmb.tm.discovery.getName();
+		String daftPunk = tme.tmd.daftPunk.getName();
+		String discovery = tme.tmd.discovery.getName();
 		
 		// playlist
 		exec("move", "playlist", couple(daftPunk, discovery), ".");
@@ -86,8 +86,8 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	
 	@Test
 	void testMoveTracks()  {
-		String daftPunk = tmb.tm.daftPunk.getName();
-		String aerodynamics = tmb.tm.aerodynamic.getTitle();
+		String daftPunk = tme.tmd.daftPunk.getName();
+		String aerodynamics = tme.tmd.aerodynamic.getTitle();
 		
 		// track
 		exec("move", "track", ".", daftPunk);
@@ -129,7 +129,7 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 	@Test
 //	@Order(value = 2)
 	void testModifyPlaylist()  {
-		String invisibleWorlds = tmb.tm.invisibleWorlds.getTitle();
+		String invisibleWorlds = tme.tmd.invisibleWorlds.getTitle();
 		
 //		DO NOT: exec("playlist", ".", "add");
 		exec("playlist", ".", "add", invisibleWorlds);

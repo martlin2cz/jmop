@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+    	
+    <title>Discovery</title>
+    	
+    <trackList>
+        <track>
+            <trackNum>2</trackNum>
+            <title>Aerodynamic</title>
+            <annotation>Aerodynamic</annotation>
+            <duration>207000</duration>
+            <location>file:/tmp/track-Aerodynamic.mp3</location>
+            <extension xmlns:jmop="https://github.com/martlin2cz/jmop" application="https://github.com/martlin2cz/jmop">
+                <jmop:track>
+                    <jmop:created>27.02.2021 17.28.17</jmop:created>
+                    <jmop:numberOfPlays>0</jmop:numberOfPlays>
+                    <jmop:lastPlayed/>
+                    <jmop:totalTimePlayed>0:00</jmop:totalTimePlayed>
+                </jmop:track>
+            </extension>
+        </track>
+        <track>
+            <trackNum>3</trackNum>
+            <title>Veridis Quo</title>
+            <annotation>Veridis Quo</annotation>
+            <duration>344000</duration>
+            <location>file:/tmp/track-Veridis-Quo.mp3</location>
+            <extension xmlns:jmop="https://github.com/martlin2cz/jmop" application="https://github.com/martlin2cz/jmop">
+                <jmop:track>
+                    <jmop:created>27.02.2021 17.28.17</jmop:created>
+                    <jmop:numberOfPlays>1</jmop:numberOfPlays>
+                    <jmop:lastPlayed>27.02.2021 17.28.17</jmop:lastPlayed>
+                    <jmop:totalTimePlayed>0:15</jmop:totalTimePlayed>
+                </jmop:track>
+            </extension>
+        </track>
+        <track>
+            <trackNum>1</trackNum>
+            <title>One More Time</title>
+            <annotation>One More Time</annotation>
+            <duration>320000</duration>
+            <location>file:/tmp/track-One-More-Time.mp3</location>
+            <extension xmlns:jmop="https://github.com/martlin2cz/jmop" application="https://github.com/martlin2cz/jmop">
+                <jmop:track>
+                    <jmop:created>27.02.2021 17.28.17</jmop:created>
+                    <jmop:numberOfPlays>3</jmop:numberOfPlays>
+                    <jmop:lastPlayed>27.02.2021 17.28.17</jmop:lastPlayed>
+                    <jmop:totalTimePlayed>12:10</jmop:totalTimePlayed>
+                </jmop:track>
+            </extension>
+        </track>
+    </trackList>
+    
+    <extension xmlns:jmop="https://github.com/martlin2cz/jmop" application="https://github.com/martlin2cz/jmop">
+        <jmop:playlist>
+            <jmop:currentTrack>1</jmop:currentTrack>
+            <jmop:created>27.02.2021 16.20.19</jmop:created>
+            <jmop:numberOfPlays>1</jmop:numberOfPlays>
+            <jmop:lastPlayed>27.02.2021 17.28.17</jmop:lastPlayed>
+            <jmop:totalTimePlayed>16:10</jmop:totalTimePlayed>
+        </jmop:playlist>
+        
+        <jmop:bundle>
+        	<jmop:name>Daft Punk</jmop:name>
+            <jmop:created>14.02.2021 11.21.18</jmop:created>
+            <jmop:numberOfPlays>1</jmop:numberOfPlays>
+            <jmop:lastPlayed>27.02.2021 17.28.17</jmop:lastPlayed>
+            <jmop:totalTimePlayed>16:10</jmop:totalTimePlayed>
+        </jmop:bundle>
+    </extension>
+</playlist>

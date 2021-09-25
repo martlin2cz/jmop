@@ -29,7 +29,7 @@ public class PlaylistConverter extends AbstractJMOPConverter<Playlist> {
 		CoupleOrNot couple = parser.parse(playlistSpecifier);
 
 		BaseDefaultJMOPConfig config = (BaseDefaultJMOPConfig) jmop.config().getConfiguration();
-		String allTrackPlaylistName = config.getAllTrackPlaylistName();
+		String allTrackPlaylistName = config.getAllTracksPlaylistName();
 
 		if (couple.hasBoth()) {
 			String bundleName = couple.first(USE_CURRENT);

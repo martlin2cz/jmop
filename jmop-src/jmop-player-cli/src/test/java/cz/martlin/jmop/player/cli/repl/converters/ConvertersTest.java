@@ -13,7 +13,7 @@ import org.opentest4j.AssertionFailedError;
 import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
-import cz.martlin.jmop.common.utils.TestingMusicbaseExtension;
+import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 import picocli.CommandLine.TypeConversionException;
@@ -24,17 +24,17 @@ class ConvertersTest {
 	private JMOPPlayer jmop;
 	
 	@RegisterExtension
-	TestingMusicbaseExtension tme;
+	public TestingMusicdataExtension tme;
 
 	public ConvertersTest() {
 		jmop = DefaultJMOPPlayerBuilder.createTesting();
 		BaseMusicbaseModifing musicbase = jmop.musicbase().getMusicbase();
-		tme = new TestingMusicbaseExtension(musicbase, true);
+		tme = TestingMusicdataExtension.create(musicbase, true);
 	}
 
 	@BeforeEach
 	public void beforeAll() {
-		Playlist bestTracks = tme.tm.bestTracks;
+		Playlist bestTracks = tme.tmd.bestTracks;
 		jmop.playing().play(bestTracks);
 	}
 	
@@ -49,7 +49,7 @@ class ConvertersTest {
 	void testBundleConverter() {
 		BundleConverter converter = new BundleConverter(jmop);
 
-		check(converter, "Daft Punk", tme.tm.daftPunk);
+		check(converter, "Daft Punk", tme.tmd.daftPunk);
 		check(converter, "The Unknowns", TypeConversionException.class);
 		check(converter, "", TypeConversionException.class);
 	}
@@ -58,9 +58,9 @@ class ConvertersTest {
 	void testBundleOrCurrentConverter() {
 		BundleOrCurrentConverter converter = new BundleOrCurrentConverter(jmop);
 
-		check(converter, ".", tme.tm.londonElektricity);
+		check(converter, ".", tme.tmd.londonElektricity);
 		
-		check(converter, "Daft Punk", tme.tm.daftPunk);
+		check(converter, "Daft Punk", tme.tmd.daftPunk);
 		check(converter, "The Unknowns", TypeConversionException.class);
 	}
 	
@@ -68,9 +68,9 @@ class ConvertersTest {
 	void testPlaylistConverter() {
 		PlaylistConverter converter = new PlaylistConverter(jmop);
 
-		check(converter, "Daft Punk/Discovery", tme.tm.discovery);
-		check(converter, "Cocolino deep/Seventeen", tme.tm.seventeen);
-		check(converter, "Yikes!", tme.tm.yikes);
+		check(converter, "Daft Punk/Discovery", tme.tmd.discovery);
+		check(converter, "Cocolino deep/Seventeen", tme.tmd.seventeen);
+		check(converter, "Yikes!", tme.tmd.yikes);
 		check(converter, "The Untitled", TypeConversionException.class);
 		
 		try {
@@ -87,13 +87,13 @@ class ConvertersTest {
 	void testPlaylistOrCurrentConverter() {
 		PlaylistOrCurrentConverter converter = new PlaylistOrCurrentConverter(jmop);
 
-		check(converter, ".", tme.tm.bestTracks);
-		check(converter, "./Yikes!", tme.tm.yikes);
+		check(converter, ".", tme.tmd.bestTracks);
+		check(converter, "./Yikes!", tme.tmd.yikes);
 		check(converter, "Whatever/.", TypeConversionException.class);
 		
-		check(converter, "Daft Punk/Discovery", tme.tm.discovery);
-		check(converter, "Cocolino deep/Seventeen", tme.tm.seventeen);
-		check(converter, "Yikes!", tme.tm.yikes);
+		check(converter, "Daft Punk/Discovery", tme.tmd.discovery);
+		check(converter, "Cocolino deep/Seventeen", tme.tmd.seventeen);
+		check(converter, "Yikes!", tme.tmd.yikes);
 		check(converter, "The Untitled", TypeConversionException.class);
 	}
 	
@@ -101,9 +101,9 @@ class ConvertersTest {
 	void testTrackConverter() {
 		TrackConverter converter = new TrackConverter(jmop);
 
-		check(converter, "Daft Punk/Aerodynamic", tme.tm.aerodynamic);
-		check(converter, "Cocolino deep/Dancing with Elephant", tme.tm.dancingWithTheElepthant);
-		check(converter, "Meteorites", tme.tm.meteorities);
+		check(converter, "Daft Punk/Aerodynamic", tme.tmd.aerodynamic);
+		check(converter, "Cocolino deep/Dancing with Elephant", tme.tmd.dancingWithTheElepthant);
+		check(converter, "Meteorites", tme.tmd.meteorities);
 		check(converter, "The Untitled", TypeConversionException.class);
 		
 		try {
@@ -120,13 +120,13 @@ class ConvertersTest {
 	void testTrackOrCurrentConverter() {
 		TrackOrCurrentConverter converter = new TrackOrCurrentConverter(jmop);
 
-		check(converter, ".", tme.tm.justOneSecond);
-		check(converter, "./Invisible Worlds", tme.tm.invisibleWorlds);
+		check(converter, ".", tme.tmd.justOneSecond);
+		check(converter, "./Invisible Worlds", tme.tmd.invisibleWorlds);
 		check(converter, "Whatever/.", TypeConversionException.class);
 		
-		check(converter, "Daft Punk/Aerodynamic", tme.tm.aerodynamic);
-		check(converter, "Cocolino deep/Dancing with Elephant", tme.tm.dancingWithTheElepthant);
-		check(converter, "Meteorites", tme.tm.meteorities);
+		check(converter, "Daft Punk/Aerodynamic", tme.tmd.aerodynamic);
+		check(converter, "Cocolino deep/Dancing with Elephant", tme.tmd.dancingWithTheElepthant);
+		check(converter, "Meteorites", tme.tmd.meteorities);
 		check(converter, "The Untitled", TypeConversionException.class);
 	}
 

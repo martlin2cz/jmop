@@ -11,28 +11,25 @@ import org.junit.jupiter.api.Test;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
-import cz.martlin.jmop.common.utils.TestingMusicbase;
+import cz.martlin.jmop.common.testing.testdata.AbstractTestingMusicdata;
+import cz.martlin.jmop.common.testing.testdata.SimpleTestingMusicdata;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.LoggingPlayerEngine;
 import cz.martlin.jmop.player.players.PlayerStatus;
 
 public abstract class AbstractPlayerEngineTest {
 
-	protected TestingMusicbase tmb;
+	protected AbstractTestingMusicdata tmb;
 	
 	public AbstractPlayerEngineTest() {
 	}
 	
 	@BeforeEach
 	public void before() {
-		BaseInMemoryMusicbase mb = createMusicbase();
-		tmb = new TestingMusicbase(mb, true);
+		tmb = new SimpleTestingMusicdata();
 	}
 	
 	protected abstract BasePlayerEngine createEngine();
-
-	protected abstract BaseInMemoryMusicbase createMusicbase();
-
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

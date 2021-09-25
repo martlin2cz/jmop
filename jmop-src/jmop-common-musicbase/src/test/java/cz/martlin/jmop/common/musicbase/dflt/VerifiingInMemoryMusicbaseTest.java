@@ -2,13 +2,13 @@ package cz.martlin.jmop.common.musicbase.dflt;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.api.function.Executable;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -17,70 +17,28 @@ import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
-import cz.martlin.jmop.common.utils.TestingMusicbase;
+import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 
-class VerifiingInMemoryMusicbaseTest {
-
+public class VerifiingInMemoryMusicbaseTest {
 	
 	private BaseInMemoryMusicbase musicbase;
-	private TestingMusicbase tm;
+	
+	@RegisterExtension
+	public TestingMusicdataExtension tme;
+	
+	public VerifiingInMemoryMusicbaseTest() {
+		BaseInMemoryMusicbase delegee = new DefaultInMemoryMusicbase();
+		musicbase = new VerifiingInMemoryMusicbase(delegee); //delegee; 
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true);
+	}
 	
 //	private Bundle unknowns;
 //	private Playlist worstTracks;
 //	private Playlist untitledAlbum;
 //	private Track differentDrum;
 //	private Track badBuy;
-
-	@BeforeEach
-	public void before() {
-		prepareTestingMusicbase();
-//		prepareNonExistingMusicbase();
-	}
-
-	@AfterEach
-	public void after() {
-		terminateTestingMusicbase();
-//		terminateNonexistingMusicbase();
-	}
-
-	private void prepareTestingMusicbase() {
-		BaseInMemoryMusicbase delegee = new DefaultInMemoryMusicbase();
-		musicbase = new VerifiingInMemoryMusicbase(delegee); //delegee; 
-		tm = new TestingMusicbase(musicbase, false);
-	}
-
-//	private void prepareNonExistingMusicbase() {
-//		unknowns = new Bundle("Unknowns", Metadata.createNew());
-//
-//		worstTracks = new Playlist(tm.londonElektricity, "Worst tracks", Metadata.createNew());
-//		untitledAlbum = new Playlist(unknowns, "Untitled album", Metadata.createNew());
-//
-//		differentDrum = new Track(tm.londonElektricity, "DD", "Different drum", //
-//				"Billion Dollar Gravy, 2003", DurationUtilities.createDuration(0, 7, 24), Metadata.createNew());
-//
-//		badBuy = new Track(unknowns, "BG", "Bad Guy", //
-//				"I'm a baad guyy", DurationUtilities.createDuration(0, 4, 22), Metadata.createNew());
-//	}
-
-	private void terminateTestingMusicbase() {
-		try {
-			tm.close();
-		} catch (Exception e) {
-			assumeFalse(true, e.toString());
-		}
-	}
-
-//	private void terminateNonexistingMusicbase() {
-//		unknowns = null;
-//
-//		worstTracks = null;
-//		untitledAlbum = null;
-//
-//		differentDrum = null;
-//		badBuy = null;
-//	}
 
 	///////////////////////////////////////////////////////////////////////////
 
@@ -95,10 +53,10 @@ class VerifiingInMemoryMusicbaseTest {
 		
 		assertOK(() -> musicbase.bundles());
 
-		assertOK(() -> musicbase.playlists(tm.daftPunk));
+		assertOK(() -> musicbase.playlists(tme.tmd.daftPunk));
 		asrtFail(() -> musicbase.playlists(unknowns));
 
-		assertOK(() -> musicbase.tracks(tm.daftPunk));
+		assertOK(() -> musicbase.tracks(tme.tmd.daftPunk));
 		asrtFail(() -> musicbase.tracks(unknowns));
 	}
 
@@ -116,8 +74,8 @@ class VerifiingInMemoryMusicbaseTest {
 
 	@Test
 	void testPlaylistsSimply() {
-		Playlist worstTracks = assertOK(() -> musicbase.createNewPlaylist(tm.londonElektricity, "Worst tracks"));
-		asrtFail(() -> musicbase.createNewPlaylist(tm.londonElektricity, "Worst tracks"));
+		Playlist worstTracks = musicbase.createNewPlaylist(tme.tmd.londonElektricity, "Worst tracks");
+		asrtFail(() -> musicbase.createNewPlaylist(tme.tmd.londonElektricity, "Worst tracks"));
 
 		assertOK(() -> musicbase.renamePlaylist(worstTracks, "okay tracks"));
 		asrtFail(() -> musicbase.renamePlaylist(worstTracks, "okay tracks"));
@@ -131,8 +89,8 @@ class VerifiingInMemoryMusicbaseTest {
 		TrackData data = new TrackData("DD", "Different Drum", "Billion Dollar Gravy",
 				DurationUtilities.createDuration(0, 7, 42));
 
-		Track differentDrum = assertOK(() -> musicbase.createNewTrack(tm.londonElektricity, data, null));
-		asrtFail(() -> musicbase.createNewTrack(tm.londonElektricity, data, null));
+		Track differentDrum = musicbase.createNewTrack(tme.tmd.londonElektricity, data, null);
+		asrtFail(() -> musicbase.createNewTrack(tme.tmd.londonElektricity, data, null));
 
 		assertOK(() -> musicbase.renameTrack(differentDrum, "DiffDrum"));
 		asrtFail(() -> musicbase.renameTrack(differentDrum, "DiffDrum"));

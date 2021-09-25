@@ -22,11 +22,6 @@ class EnginesWithHandlersTest {
 	public static class EngineWithNoHandlersTest extends AbstractPlayerEngineTest {
 
 		@Override
-		protected BaseInMemoryMusicbase createMusicbase() {
-			return new DefaultInMemoryMusicbase();
-		}
-		
-		@Override
 		protected BasePlayerEngine createEngine() {
 			BasePlayer player = new TestingPlayer();
 			return new EngineWithHandlers(player, null, null, null, null, null, null);
@@ -36,11 +31,6 @@ class EnginesWithHandlersTest {
 	@Nested
 	public static class EngineWithPrintingHandlersTest extends AbstractPlayerEngineTest {
 
-		@Override
-		protected BaseInMemoryMusicbase createMusicbase() {
-			return new DefaultInMemoryMusicbase();
-		}
-		
 		@Override
 		protected BasePlayerEngine createEngine() {
 			BasePlayer player = new TestingPlayer();

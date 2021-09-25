@@ -14,6 +14,10 @@ public class JMOPRuntimeException extends RuntimeException {
 		super(message, cause);
 	}
 
+	public JMOPRuntimeException(Throwable cause) {
+		super(cause);
+	}
+	
 	public JMOPRuntimeException(String message) {
 		super(message);
 	}

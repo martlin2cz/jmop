@@ -5,41 +5,41 @@ import java.io.InputStream;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksSource;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.common.musicbase.TracksLocator;
+import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 
-public interface BaseMusicbaseStorage extends TracksSource {
+public interface BaseMusicbaseStorage extends TracksLocator {
 
-	void load(BaseInMemoryMusicbase inmemory);
-	
-	void terminate(BaseInMemoryMusicbase inmemory);
+	void load(BaseInMemoryMusicbase inmemory) throws JMOPRuntimeException;
 
-	void createBundle(Bundle bundle) ;
+	void terminate(BaseInMemoryMusicbase inmemory) throws JMOPRuntimeException;
 
-	void renameBundle(Bundle bundle, String oldName, String newName) ;
+	void createBundle(Bundle bundle) throws JMOPRuntimeException;
 
-	void removeBundle(Bundle bundle) ;
+	void renameBundle(Bundle bundle, String oldName, String newName) throws JMOPRuntimeException;
 
-	void saveUpdatedBundle(Bundle bundle) ;
+	void removeBundle(Bundle bundle) throws JMOPRuntimeException;
 
-	void createPlaylist(Playlist playlist) ;
+	void saveUpdatedBundle(Bundle bundle) throws JMOPRuntimeException;
 
-	void renamePlaylist(Playlist playlist, String oldName, String newName) ;
+	void createPlaylist(Playlist playlist) throws JMOPRuntimeException;
 
-	void movePlaylist(Playlist playlist, Bundle oldBundle, Bundle newBundle) ;
+	void renamePlaylist(Playlist playlist, String oldName, String newName) throws JMOPRuntimeException;
 
-	void removePlaylist(Playlist playlist) ;
-	
-	void saveUpdatedPlaylist(Playlist playlist) ;
+	void movePlaylist(Playlist playlist, Bundle oldBundle, Bundle newBundle) throws JMOPRuntimeException;
 
-	void createTrack(Track track, InputStream trackFileContents) ;
+	void removePlaylist(Playlist playlist) throws JMOPRuntimeException;
 
-	void renameTrack(Track track, String oldTitle, String newTitle) ;
+	void saveUpdatedPlaylist(Playlist playlist) throws JMOPRuntimeException;
 
-	void moveTrack(Track track, Bundle oldBundle, Bundle newBundle) ;
+	void createTrack(Track track, InputStream trackFileContents) throws JMOPRuntimeException;
 
-	void removeTrack(Track track) ;
+	void renameTrack(Track track, String oldTitle, String newTitle) throws JMOPRuntimeException;
 
-	void saveUpdatedTrack(Track track) ;
+	void moveTrack(Track track, Bundle oldBundle, Bundle newBundle) throws JMOPRuntimeException;
+
+	void removeTrack(Track track) throws JMOPRuntimeException;
+
+	void saveUpdatedTrack(Track track) throws JMOPRuntimeException;
 
 }
