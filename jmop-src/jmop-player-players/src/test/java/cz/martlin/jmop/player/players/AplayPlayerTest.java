@@ -1,0 +1,28 @@
+package cz.martlin.jmop.player.players;
+
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
+
+import cz.martlin.jmop.common.musicbase.TracksSource;
+import cz.martlin.jmop.common.utils.TestingTracksSource;
+import cz.martlin.jmop.core.misc.BaseErrorReporter;
+import cz.martlin.jmop.core.misc.SimpleErrorReporter;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import cz.martlin.jmop.player.players.AplayPlayer;
+import cz.martlin.jmop.player.players.BasePlayer;
+
+@DisabledOnOs(value = OS.WINDOWS)
+public class AplayPlayerTest extends AbstractPlayerTest {
+
+	public AplayPlayerTest() {
+		super();
+	}
+	
+	@Override
+	protected BasePlayer createPlayer() {
+		TracksSource local = new TestingTracksSource(TrackFileFormat.WAV);
+		BaseErrorReporter reporter = new SimpleErrorReporter();
+		return new AplayPlayer(reporter, local);
+	}
+
+}
