@@ -1,8 +1,6 @@
 package cz.martlin.jmop.player.cli.repl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.Arrays;
@@ -15,20 +13,18 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.common.utils.TestingMusicbase;
-import cz.martlin.jmop.common.utils.TestingMusicbaseExtension;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.player.cli.repl.converters.CoupleOrNotParser;
+import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
+import cz.martlin.jmop.common.testing.testdata.AbstractTestingMusicdata;
 import cz.martlin.jmop.player.cli.repl.exit.JMOPExceptionManager;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 import picocli.CommandLine;
 
 public class AbstractReplTest {
-	protected JMOPPlayer jmop;;
+	protected JMOPPlayer jmop;
 
 	@RegisterExtension
-	protected TestingMusicbaseExtension tmb;
+	protected TestingMusicdataExtension tme;
 
 	protected CommandLine cl;
 
@@ -38,7 +34,7 @@ public class AbstractReplTest {
 		jmop = DefaultJMOPPlayerBuilder.createTesting();
 
 		BaseMusicbase musicbase = jmop.musicbase().getMusicbase();
-		tmb = new TestingMusicbaseExtension(musicbase, true);
+		tme = TestingMusicdataExtension.create(musicbase, true);
 	}
 
 /////////////////////////////////////////////////////////////////////
@@ -90,7 +86,7 @@ public class AbstractReplTest {
 //		}
 //	}
 
-	private void finishTestingMusicbase(TestingMusicbase tmb) {
+	private void finishTestingMusicbase(AbstractTestingMusicdata tmb) {
 		try {
 			tmb.close();
 		} catch (Exception e) {

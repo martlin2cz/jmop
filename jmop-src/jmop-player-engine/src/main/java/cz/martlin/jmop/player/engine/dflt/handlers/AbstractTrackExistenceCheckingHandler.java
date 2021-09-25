@@ -3,16 +3,16 @@ package cz.martlin.jmop.player.engine.dflt.handlers;
 import java.io.File;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksSource;
+import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackStartedHandler;
 
 public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTrackStartedHandler {
 
-	private final TracksSource tracks;
+	private final TracksLocator tracks;
 
-	public AbstractTrackExistenceCheckingHandler(TracksSource tracks) {
+	public AbstractTrackExistenceCheckingHandler(TracksLocator tracks) {
 		super();
 		this.tracks = tracks;
 	}

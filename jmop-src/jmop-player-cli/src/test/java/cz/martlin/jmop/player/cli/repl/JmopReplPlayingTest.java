@@ -13,7 +13,7 @@ class JmopReplPlayingTest extends AbstractReplTest {
 		exec("status");
 		exec("bar");
 
-		jmop.playing().play(tmb.tm.daftPunk);
+		jmop.playing().play(tme.tmd.daftPunk);
 
 		exec("status");
 		exec("bar");
@@ -37,7 +37,7 @@ class JmopReplPlayingTest extends AbstractReplTest {
 
 	@Test
 	void testPlayingCommands()  {
-		String daftPunk = tmb.tm.daftPunk.getName();
+		String daftPunk = tme.tmd.daftPunk.getName();
 		exec("play", "bundle", daftPunk);
 		exec("status");
 
@@ -69,7 +69,7 @@ class JmopReplPlayingTest extends AbstractReplTest {
 	@Test
 	void testPlayingNextAndPrevious()  {
 
-		String daftPunk = tmb.tm.daftPunk.getName();
+		String daftPunk = tme.tmd.daftPunk.getName();
 		exec("play", "bundle", daftPunk);
 		
 		exec("status");
@@ -90,9 +90,9 @@ class JmopReplPlayingTest extends AbstractReplTest {
 	
 	@Test
 	void testTheCommandP()  {
-		String daftPunk = tmb.tm.daftPunk.getName();
-		String bestTracks = tmb.tm.bestTracks.getName();
-		String meteorities = tmb.tm.meteorities.getTitle();
+		String daftPunk = tme.tmd.daftPunk.getName();
+		String bestTracks = tme.tmd.bestTracks.getName();
+		String meteorities = tme.tmd.meteorities.getTitle();
 		
 		exec("p", daftPunk);
 		exec("status");

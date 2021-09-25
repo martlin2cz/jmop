@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksSource;
+import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
@@ -33,7 +33,7 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 	private File currentTrackFile;
 	private Track currentTrack;
 
-	public AplayPlayer(BaseErrorReporter reporter, TracksSource local) {
+	public AplayPlayer(BaseErrorReporter reporter, TracksLocator local) {
 		super(local);
 
 		this.reporter = reporter;

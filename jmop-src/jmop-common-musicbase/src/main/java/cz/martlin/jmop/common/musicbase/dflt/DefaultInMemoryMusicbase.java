@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.musicbase.dflt;
 
 import java.io.InputStream;
+import java.util.TreeSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -163,10 +164,47 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bundles == null) ? 0 : bundles.hashCode());
+		result = prime * result + ((playlists == null) ? 0 : playlists.hashCode());
+		result = prime * result + ((tracks == null) ? 0 : tracks.hashCode());
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DefaultInMemoryMusicbase other = (DefaultInMemoryMusicbase) obj;
+		if (bundles == null) {
+			if (other.bundles != null)
+				return false;
+		} else if (!new TreeSet<>(bundles).equals(new TreeSet<>(other.bundles)))
+			return false;
+		if (playlists == null) {
+			if (other.playlists != null)
+				return false;
+		} else if (!new TreeSet<>(playlists).equals(new TreeSet<>(other.playlists)))
+			return false;
+		if (tracks == null) {
+			if (other.tracks != null)
+				return false;
+		} else if (!new TreeSet<>(tracks).equals(new TreeSet<>(other.tracks)))
+			return false;
+		return true;
+	}
 	
 	@Override
 	public String toString() {
 		return "DefaultInMemoryMusicbase [bundles=" + bundles + ", playlists=" + playlists + ", tracks=" + tracks + "]";
 	}
+	
 }

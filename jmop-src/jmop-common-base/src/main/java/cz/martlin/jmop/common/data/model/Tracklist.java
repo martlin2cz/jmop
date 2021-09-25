@@ -3,9 +3,7 @@ package cz.martlin.jmop.common.data.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
@@ -58,12 +56,7 @@ public class Tracklist {
 	}
 
 	public Map<TrackIndex, Track> asIndexedMap() {
-		return IntStream.range(0, count()) //
-				.mapToObj(i -> TrackIndex.ofIndex(i)) //
-				.collect(Collectors.toMap(ti -> ti, //
-						ti -> getTrack(ti), //
-						(t1, t2) -> t1, //
-						() -> new TreeMap<>()));
+		return TrackIndex.map(tracks);
 	}
 	//////////////////////////////////////////////////////////////////////////////////////
 
@@ -94,7 +87,7 @@ public class Tracklist {
 
 	@Override
 	public String toString() {
-		return "Tracklist" + tracks + ""; //$NON-NLS-1$ //$NON-NLS-2$
+		return "Tracklist" + tracks.stream().map(Track::getTitle).collect(Collectors.toList()) + ""; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////

@@ -22,7 +22,6 @@ public interface BaseErrorReporter {
 	 * 
 	 * @param e
 	 */
-	@Deprecated
 	void internal(Exception e);
 
 }

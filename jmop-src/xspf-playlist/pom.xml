@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>xspf-playlist</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.3</version>
 	<name>XSPF playlists manipulation library</name>
 
 	<description>An Java library implementing the XSPF (XML Shareable Playlist Format) playlist files manipulation.</description>

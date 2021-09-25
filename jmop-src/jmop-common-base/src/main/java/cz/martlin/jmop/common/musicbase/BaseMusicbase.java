@@ -1,9 +1,8 @@
 package cz.martlin.jmop.common.musicbase;
 
-public interface BaseMusicbase extends BaseMusicbaseLoading, BaseMusicbaseModifing, TracksSource {
+import cz.martlin.jmop.common.utils.Lifecycle;
 
-	public void load();
+public interface BaseMusicbase //
+		extends BaseMusicbaseLoading, BaseMusicbaseModifing, TracksLocator, Lifecycle {
 
-	public void terminate();
-	
 }

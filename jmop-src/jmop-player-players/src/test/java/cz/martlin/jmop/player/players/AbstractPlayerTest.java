@@ -13,10 +13,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
-import cz.martlin.jmop.common.utils.TestingDataCreator;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.player.players.BasePlayer;
-import cz.martlin.jmop.player.players.PlayerStatus;
+import cz.martlin.jmop.common.testing.testdata.TestingDataCreator;
 
 public abstract class AbstractPlayerTest {
 

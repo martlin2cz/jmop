@@ -1,5 +1,11 @@
 package cz.martlin.jmop.common.data.misc;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 /**
  * An index of the track in the playlist. Since java uses zero-based indexing
  * but user's native indexing is one-based, this class combines both. You can
@@ -37,13 +43,10 @@ public class TrackIndex implements Comparable<TrackIndex> {
 		return this.index == another.index;
 	}
 
-
 	public boolean notEqual(TrackIndex another) {
 		return this.index != another.index;
 	}
 
-
-	
 	public boolean smallerThan(TrackIndex big) {
 		return this.index < big.index;
 	}
@@ -133,6 +136,35 @@ public class TrackIndex implements Comparable<TrackIndex> {
 	public static TrackIndex ofHuman(int human) {
 		int index = humanToIndex(human);
 		return new TrackIndex(index);
+	}
+
+	/////////////////////////////////////////////////////////////////
+
+	public static <E> List<E> list(Map<TrackIndex, E> map) {
+		List<E> list = new ArrayList<>(map.size());
+
+		for (int i = 0; i < map.size(); i++) {
+			TrackIndex index = TrackIndex.ofIndex(i);
+			E item = map.get(index);
+			
+			Objects.requireNonNull(item, "There is no item with index " + index);
+			list.add(item);
+		}
+
+		return list;
+	}
+
+	public static <E> Map<TrackIndex, E> map(List<E> list) {
+		Map<TrackIndex, E> map = new HashMap<>(list.size());
+
+		for (int i = 0; i < list.size(); i++) {
+			E item = list.get(i);
+
+			TrackIndex index = TrackIndex.ofIndex(i);
+			map.put(index, item);
+		}
+
+		return map;
 	}
 
 	/////////////////////////////////////////////////////////////////

@@ -22,9 +22,9 @@ public class JmopReplBruteForceTest extends AbstractReplTest {
 				{ "seek", "0:10" }, //
 				{ "seek", "0:30" }, //
 				// play something commands
-				{ "play", "bundle", tmb.tm.daftPunk.getName() }, //
-				{ "play", "playlist", couple(tmb.tm.daftPunk, tmb.tm.discovery) }, //
-				{ "play", "track", couple(tmb.tm.daftPunk, tmb.tm.getLucky) }, //
+				{ "play", "bundle", tme.tmd.daftPunk.getName() }, //
+				{ "play", "playlist", couple(tme.tmd.daftPunk, tme.tmd.discovery) }, //
+				{ "play", "track", couple(tme.tmd.daftPunk, tme.tmd.getLucky) }, //
 				{ "play", "1." }, //
 				// { "play", "+1" }, //
 				// displaying commands
@@ -44,7 +44,7 @@ public class JmopReplBruteForceTest extends AbstractReplTest {
 
 	@BeforeEach
 	public void before() {
-		Playlist playlist = tmb.tm.seventeen;
+		Playlist playlist = tme.tmd.seventeen;
 		jmop.playing().play(playlist);
 
 		this.commands = prepareCommands();

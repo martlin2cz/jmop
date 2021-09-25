@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+	<title>Discovery</title>
+	<extension xmlns:jmop="https://github.com/martlin2cz/jmop"
+		application="https://github.com/martlin2cz/jmop">
+		<jmop:playlist jmop:created="27.02.2021 14.26.51"
+			jmop:lastPlayed="27.02.2021 18.14.52" jmop:currentTrack="1"
+			jmop:numberOfPlays="2" jmop:totalTimePlayed="26:42" />
+
+		<jmop:bundle jmop:name="Daft Punk"
+			jmop:created="26.02.2021 11.21.11"
+			jmop:lastPlayed="27.02.2021 18.14.52" jmop:numberOfPlays="2"
+			jmop:totalTimePlayed="26:42" />
+	</extension>
+	<trackList>
+		<track>
+			<trackNum>2</trackNum>
+			<title>Aerodynamic</title>
+			<annotation>Aerodynamic</annotation>
+			<duration>207000</duration>
+			<location>file:/tmp/track-Aerodynamic.mp3</location>
+			<extension xmlns:jmop="https://github.com/martlin2cz/jmop"
+				application="https://github.com/martlin2cz/jmop">
+				<jmop:track jmop:created="27.02.2021 14.26.52"
+					jmop:lastPlayed="27.02.2021 18.14.52" jmop:numberOfPlays="8"
+					jmop:totalTimePlayed="25:03" />
+			</extension>
+		</track>
+		<track>
+			<trackNum>3</trackNum>
+			<title>Veridis Quo</title>
+			<annotation>Veridis Quo</annotation>
+			<duration>344000</duration>
+			<location>file:/tmp/track-Veridis%20Quo.mp3</location>
+			<extension xmlns:jmop="https://github.com/martlin2cz/jmop"
+				application="https://github.com/martlin2cz/jmop">
+				<jmop:track jmop:created="27.02.2021 14.27.53"
+					jmop:lastPlayed="27.02.2021 15.24.13" jmop:numberOfPlays="1"
+					jmop:totalTimePlayed="1:26" />
+			</extension>
+		</track>
+		<track>
+			<trackNum>1</trackNum>
+			<title>One More Time</title>
+			<annotation>One More Time</annotation>
+			<duration>320000</duration>
+			<location>file:/tmp/track-One%20More%20Time.mp3</location>
+			<extension xmlns:jmop="https://github.com/martlin2cz/jmop"
+				application="https://github.com/martlin2cz/jmop">
+				<jmop:track jmop:created="27.02.2021 14.26.51"
+					jmop:lastPlayed="never" jmop:numberOfPlays="0"
+					jmop:totalTimePlayed="0:00" />
+			</extension>
+		</track>
+	</trackList>
+</playlist>

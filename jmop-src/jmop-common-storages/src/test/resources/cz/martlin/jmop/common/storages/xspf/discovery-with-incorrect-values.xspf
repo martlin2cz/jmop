@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+	<title>Discovery</title>
+	<extension xmlns:jmop="https://github.com/martlin2cz/jmop"
+		application="https://github.com/martlin2cz/jmop">
+		<jmop:bundle jmop:name="Daft Punk"
+			jmop:created="a long time ago" jmop:lastPlayed="this year"
+			jmop:numberOfPlays="a few" jmop:totalTimePlayed="a lot" />
+
+		<jmop:playlist jmop:created="today"
+			jmop:lastPlayed="yesterday" jmop:currentTrack="first"
+			jmop:numberOfPlays="a lot" />
+	</extension>
+	<trackList>
+		<track>
+			<trackNum>2</trackNum>
+			<title>Aerodynamic</title>
+			<annotation>Aerodynamic</annotation>
+			<duration>3:27</duration>
+			<location>file:/tmp/track-Aerodynamic.mp3</location>
+			<extension xmlns:jmop="https://github.com/martlin2cz/jmop"
+				application="https://github.com/martlin2cz/jmop">
+				<jmop:track jmop:created="yes"
+					jmop:lastPlayed="29.02.2021" jmop:numberOfPlays="never"
+					jmop:totalTimePlayed="never" />
+			</extension>
+		</track>
+		<track>
+			<trackNum>3</trackNum>
+			<title>Veridis Quo</title>
+			<annotation>Veridis Quo</annotation>
+			<duration>344000 ms</duration>
+			<location>file:/tmp/track-Veridis%20Quo.mp3</location>
+			<extension xmlns:jmop="https://github.com/martlin2cz/jmop"
+				application="https://github.com/martlin2cz/jmop">
+				<jmop:track jmop:created="yep" jmop:lastPlayed="nope"
+					jmop:numberOfPlays="nope" jmop:totalTimePlayed="nope" />
+			</extension>
+		</track>
+		<track>
+			<trackNum>1</trackNum>
+			<title>One More Time</title>
+			<annotation>One More Time</annotation>
+			<duration>320000</duration>
+			<location>file:/tmp/track-One%20More%20Time.mp3</location>
+			<extension xmlns:jmop="https://github.com/martlin2cz/jmop"
+				application="https://github.com/martlin2cz/jmop">
+				<jmop:track jmop:created="27.02.2021 14.26.51"
+					jmop:lastPlayed="never" jmop:numberOfPlays="0"
+					jmop:totalTimePlayed="0:00" />
+			</extension>
+		</track>
+	</trackList>
+</playlist>

@@ -1,0 +1,1888 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="cz.martlin.jmop.common.storages.dflt.AllTracksPlaylistStorage" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/dflt/AllTracksPlaylistStorage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-685" y="-54"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.LoggingTracksByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/LoggingTracksByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4228" y="1914"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="cz.martlin.jmop.common.storages.playlists.SimpleValueToAndFromStringConverters" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/playlists/SimpleValueToAndFromStringConverters.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3882" y="6357"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="4" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.BaseTracksByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/BaseTracksByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4498" y="1665"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="5" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.playlists.LoggingPlaylistsByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/LoggingPlaylistsByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2905" y="1924"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="cz.martlin.jmop.common.storages.dflt.DefaultStorage" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/dflt/DefaultStorage.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-698" y="164"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="7" language="java" name="cz.martlin.jmop.common.storages.fileobjects.BaseFileObjectIO" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/fileobjects/BaseFileObjectIO.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4813" y="4094"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="8" language="java" name="cz.martlin.jmop.common.storages.loader.bundles.LoggingBundlesByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/LoggingBundlesByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1271" y="1824"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="9" language="java" name="cz.martlin.jmop.common.storages.loader.BaseMusicdataLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/BaseMusicdataLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1749" y="457"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="10" language="java" name="cz.martlin.jmop.common.storages.xspf.JMOPtoXSFPAdapter" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/xspf/JMOPtoXSFPAdapter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5756" y="5206"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="cz.martlin.jmop.common.storages.xspf.XSPFPlaylistIO" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/xspf/XSPFPlaylistIO.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4524" y="4389"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="cz.martlin.jmop.common.storages.loader.CommonMusicdataLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/CommonMusicdataLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2644" y="736"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="cz.martlin.jmop.common.storages.loader.playlists.ByIdentifierPlaylistsLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/ByIdentifierPlaylistsLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2850" y="1357"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="14" language="java" name="cz.martlin.jmop.common.storages.musicdatafile.BaseMusicdataFileManipulator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/musicdatafile/BaseMusicdataFileManipulator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4315" y="3380"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="15" language="java" name="cz.martlin.jmop.common.storages.playlists.BasePlaylistMetaInfoManager" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/playlists/BasePlaylistMetaInfoManager.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4929" y="5423"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="16" language="java" name="cz.martlin.jmop.common.storages.musicdatasaver.MusicdataSaverWithFiles" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/musicdatasaver/MusicdataSaverWithFiles.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="6793" y="796"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" 
+    name="cz.martlin.jmop.common.storages.musicdatasaver.BundleInATPFileSaverWithMusicdataFileMan" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/musicdatasaver/BundleInATPFileSaverWithMusicdataFileMan.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="6424" y="324"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="cz.martlin.jmop.common.storages.fileobjects.NoopFileObjectIO" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/fileobjects/NoopFileObjectIO.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4761" y="4362"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="cz.martlin.jmop.common.storages.filesystemer.BundlesDirsFilesystemer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/filesystemer/BundlesDirsFilesystemer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-373" y="873"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.FailsaveTracksByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/FailsaveTracksByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4566" y="1916"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="21" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.playlists.BasePlaylistsByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/BasePlaylistsByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3294" y="1659"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="22" language="java" name="cz.martlin.jmop.common.storages.fs.BaseFileSystemAccessor" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/fs/BaseFileSystemAccessor.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="112" y="3514"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="23" language="java" name="cz.martlin.jmop.common.storages.filesystemer.BaseMusicbaseFilesystemer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/filesystemer/BaseMusicbaseFilesystemer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-158" y="543"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="24" language="java" name="cz.martlin.jmop.common.storages.loader.playlists.BasePlaylistsLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/BasePlaylistsLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2855" y="1177"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="25" language="java" name="cz.martlin.jmop.common.storages.simples.SimpleBundlesDirListerLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/simples/SimpleBundlesDirListerLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1200" y="955"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="cz.martlin.jmop.common.storages.fileobjects.FileObjectIOCache" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/fileobjects/FileObjectIOCache.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5015" y="4389"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="cz.martlin.jmop.common.storages.xspf.XSPFPlaylistFilesMusicdataManipulator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/xspf/XSPFPlaylistFilesMusicdataManipulator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5889" y="3864"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="cz.martlin.jmop.common.storages.playlists.FailsavePlaylistMetaInfoManager" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/playlists/FailsavePlaylistMetaInfoManager.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5279" y="5782"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="cz.martlin.jmop.common.storages.loader.bundles.ByIdentifierBundlesLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/ByIdentifierBundlesLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1270" y="1383"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="cz.martlin.jmop.common.storages.xspf.XSPFPlaylistTracksManager" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/xspf/XSPFPlaylistTracksManager.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5273" y="4747"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="cz.martlin.jmop.common.storages.filesystemer.OneDiredFilesystemer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/filesystemer/OneDiredFilesystemer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="0" y="873"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="cz.martlin.jmop.common.storages.xspf.FailsaveJMOPToXSPFAdapter" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/xspf/FailsaveJMOPToXSPFAdapter.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5824" y="5694"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="33" language="java" name="cz.martlin.jmop.common.storages.loader.bundles.BaseBundlesLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/BaseBundlesLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1261" y="1219"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="34" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.BaseTracksLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/BaseTracksLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5300" y="1160"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="35" language="java" name="cz.martlin.jmop.common.storages.musicdatafile.CommonMusicdataFileManipulator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/musicdatafile/CommonMusicdataFileManipulator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5066" y="3702"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="36" language="java" name="cz.martlin.jmop.common.storages.playlists.BaseValueToAndFromStringConverters" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/playlists/BaseValueToAndFromStringConverters.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4030" y="6055"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="37" language="java" name="cz.martlin.jmop.common.storages.playlists.ValueToAndFromStringMetaInfoManager" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/playlists/ValueToAndFromStringMetaInfoManager.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4614" y="5769"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="cz.martlin.jmop.common.storages.xspf.XSPFPlaylistManipulator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/xspf/XSPFPlaylistManipulator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5476" y="4319"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="39" language="java" name="cz.martlin.jmop.common.storages.loader.bundles.BaseBundlesByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/BaseBundlesByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1555" y="1673"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="40" language="java" name="cz.martlin.jmop.common.storages.xspf.XSPFExtensionElemsAttrsMetaInfoManager" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/xspf/XSPFExtensionElemsAttrsMetaInfoManager.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4590" y="6347"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" 
+    name="cz.martlin.jmop.common.storages.playlists.FormatingValueToAndFromStringConverters" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/playlists/FormatingValueToAndFromStringConverters.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4191" y="6384"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="42" language="java" name="cz.martlin.jmop.common.storages.musicdatasaver.BaseMusicdataSaver" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/musicdatasaver/BaseMusicdataSaver.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="6752" y="538"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="43" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.playlists.FailsavePlaylistsByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/FailsavePlaylistsByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3256" y="1934"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/utils/LoggingMusicbaseStorage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="417" y="-102"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.ByIdentifierTracksLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/ByIdentifierTracksLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4984" y="1405"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="cz.martlin.jmop.common.storages.simples.SimpleMusicdataFileManipulator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/simples/SimpleMusicdataFileManipulator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3348" y="3741"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" 
+    name="cz.martlin.jmop.common.storages.musicdatasaver.BundleInCustomFileSaverWithMusicdataFileMan" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/musicdatasaver/BundleInCustomFileSaverWithMusicdataFileMan.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="7134" y="318"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="48" language="java" name="cz.martlin.jmop.common.storages.locators.BaseBundlesDirLocator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/BaseBundlesDirLocator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2124" y="3297"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <enumeration id="49" language="java" 
+    name="cz.martlin.jmop.common.storages.musicdatasaver.BaseMusicdataSaver.SaveReason" project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/musicdatasaver/BaseMusicdataSaver.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2239" y="-110"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="50" language="java" name="cz.martlin.jmop.common.storages.loader.bundles.FailsaveBundlesByIdentifierLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/FailsaveBundlesByIdentifierLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1591" y="1830"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="51" language="java" name="cz.martlin.jmop.common.storages.fileobjects.BaseFileObjectManipulator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/fileobjects/BaseFileObjectManipulator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5457" y="4104"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="52" language="java" name="cz.martlin.jmop.common.storages.filesystemer.FileSystemedStorage" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/filesystemer/FileSystemedStorage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1135" y="-79"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="53" language="java" name="cz.martlin.jmop.common.storages.fs.DefaultFileSystemAccessor" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/fs/DefaultFileSystemAccessor.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="108" y="3917"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="54" language="java" name="cz.martlin.jmop.common.storages.simples.InMemoryStorage" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/simples/InMemoryStorage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-8" y="-92"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="55" language="java" name="cz.martlin.jmop.common.storages.simples.SimpleBundlesDirSaver" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/simples/SimpleBundlesDirSaver.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="6561" y="1052"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="56" language="java" name="cz.martlin.jmop.common.storages.xspf.XSPFExtensionElemsChildsMetaInfoManager" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/xspf/XSPFExtensionElemsChildsMetaInfoManager.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5065" y="6347"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="57" language="java" name="cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage" 
+    project="jmop-common-base" 
+    file="/jmop-common-base/src/main/java/cz/martlin/jmop/common/musicbase/persistent/BaseMusicbaseStorage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="151" y="-581"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="58" language="java" name="cz.martlin.jmop.common.storages.locators.BaseBundleDataLocator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/BaseBundleDataLocator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1421" y="3294"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="59" language="java" name="cz.martlin.jmop.common.storages.locators.BasePlaylistLocator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/BasePlaylistLocator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1633" y="3321"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="60" language="java" name="cz.martlin.jmop.common.storages.loader.bundles.BaseBundlesIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/BaseBundlesIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="772" y="1663"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="61" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.bundles.impls.ByIdentifierBundleMusicdataFileLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/impls/ByIdentifierBundleMusicdataFileLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2032" y="1817"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="62" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.bundles.impls.BundlesDirBundleIdentifierLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/impls/BundlesDirBundleIdentifierLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="915" y="1784"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="63" language="java" name="cz.martlin.jmop.common.storages.loader.bundles.LoggingBundlesIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/LoggingBundlesIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="534" y="1782"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="64" language="java" name="cz.martlin.jmop.common.storages.loader.bundles.FailsaveBundlesIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/bundles/FailsaveBundlesIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="699" y="1786"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="65" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.playlists.impls.BundlesDirPlaylistsIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/impls/BundlesDirPlaylistsIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2617" y="1865"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="66" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.playlists.BasePlaylistsIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/BasePlaylistsIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2492" y="1653"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="67" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.playlists.impls.ByIdentifierPlaylistMusicdataFileLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/impls/ByIdentifierPlaylistMusicdataFileLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3842" y="1907"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="68" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.playlists.LoggingPlaylistsIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/LoggingPlaylistsIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2240" y="1910"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="69" language="java" 
+    name="cz.martlin.jmop.common.storages.loader.playlists.FailsavePlaylistsIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/playlists/FailsavePlaylistsIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2421" y="1912"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="70" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.impls.BundleMusicfileTracksLoader" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/impls/BundleMusicfileTracksLoader.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5564" y="1391"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="71" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.LoggingTracksIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/LoggingTracksIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5298" y="1914"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="72" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.FailsaveTracksIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/FailsaveTracksIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5497" y="1912"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="73" language="java" name="cz.martlin.jmop.common.storages.loader.tracks.BaseTracksIdentifiersLister" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/loader/tracks/BaseTracksIdentifiersLister.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5385" y="1787"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="74" language="java" name="cz.martlin.jmop.common.storages.locators.BaseTrackFileLocator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/BaseTrackFileLocator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1844" y="3311"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="75" language="java" name="cz.martlin.jmop.common.storages.locators.impls.DefaultPlaylistFileNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/impls/DefaultPlaylistFileNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1479" y="4005"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="76" language="java" 
+    name="cz.martlin.jmop.common.storages.locators.impls.AllTracksPlaylistBundleDataFileNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/impls/AllTracksPlaylistBundleDataFileNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1209" y="4005"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="77" language="java" name="cz.martlin.jmop.common.storages.locators.BasePlaylistFileNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/BasePlaylistFileNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1476" y="3826"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="78" language="java" name="cz.martlin.jmop.common.storages.locators.impls.SimpleBundleDataFileNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/impls/SimpleBundleDataFileNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="939" y="3996"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="79" language="java" name="cz.martlin.jmop.common.storages.locators.impls.BundlesDirDataFilesLocator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/impls/BundlesDirDataFilesLocator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1717" y="3605"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="80" language="java" name="cz.martlin.jmop.common.storages.locators.impls.AllInOneDirDataFilesLocator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/impls/AllInOneDirDataFilesLocator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1495" y="3606"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="81" language="java" name="cz.martlin.jmop.common.storages.locators.impls.DefaultTracksFileNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/impls/DefaultTracksFileNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2014" y="4009"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="82" language="java" name="cz.martlin.jmop.common.storages.locators.BaseBundleDataFileNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/BaseBundleDataFileNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1044" y="3826"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="83" language="java" name="cz.martlin.jmop.common.storages.locators.BaseBundlesDirNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/BaseBundlesDirNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1739" y="3831"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="84" language="java" name="cz.martlin.jmop.common.storages.locators.BaseTrackFilesNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/BaseTrackFilesNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2007" y="3830"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="85" language="java" name="cz.martlin.jmop.common.storages.locators.impls.DefaultBundlesDirNamer" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/impls/DefaultBundlesDirNamer.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1745" y="3999"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="86" language="java" name="cz.martlin.jmop.common.storages.locators.impls.AbstractCommonLocator" 
+    project="jmop-common-storages" 
+    file="/jmop-common-storages/src/main/java/cz/martlin/jmop/common/storages/locators/impls/AbstractCommonLocator.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1619" y="3498"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <generalization id="87">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <association id="88">    
+    <end type="SOURCE" refId="64" navigable="false">      
+      <attribute id="89" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="90" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="60" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="91">    
+    <end type="SOURCE" refId="61" navigable="false">      
+      <attribute id="92" name="manipulator">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="93" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="94">    
+    <end type="SOURCE" refId="76" navigable="false">      
+      <attribute id="95" name="namer">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </attribute>      
+      <multiplicity id="96" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="77" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="97">    
+    <end type="SOURCE" refId="52" navigable="false">      
+      <attribute id="98" name="saver">        
+        <position height="0" width="0" x="1344" y="20"/>      
+      </attribute>      
+      <multiplicity id="99" minimum="0" maximum="1">        
+        <position height="0" width="0" x="1344" y="20"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="100">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="23"/>  
+  </realization>  
+  <association id="101">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="102" name="loader">        
+        <position height="0" width="0" x="510" y="62"/>      
+      </attribute>      
+      <multiplicity id="103" minimum="0" maximum="1">        
+        <position height="0" width="0" x="510" y="62"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="104">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="105" name="delegee">        
+        <position height="0" width="0" x="960" y="8"/>      
+      </attribute>      
+      <multiplicity id="106" minimum="0" maximum="1">        
+        <position height="0" width="0" x="960" y="8"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="107">    
+    <end type="SOURCE" refId="86"/>    
+    <end type="TARGET" refId="74"/>  
+  </generalization>  
+  <association id="108">    
+    <end type="SOURCE" refId="79" navigable="false">      
+      <attribute id="109" name="bundleNamer">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </attribute>      
+      <multiplicity id="110" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="82" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="111">    
+    <end type="SOURCE" refId="68"/>    
+    <end type="TARGET" refId="66"/>  
+  </realization>  
+  <association id="112">    
+    <end type="SOURCE" refId="79" navigable="false">      
+      <attribute id="113" name="trackNamer">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </attribute>      
+      <multiplicity id="114" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="84" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="115">    
+    <end type="SOURCE" refId="80"/>    
+    <end type="TARGET" refId="86"/>  
+  </realization>  
+  <realization id="116">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="117">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="24"/>  
+  </realization>  
+  <association id="118">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="119" name="playlistsLocator">        
+        <position height="0" width="0" x="847" y="1285"/>      
+      </attribute>      
+      <multiplicity id="120" minimum="0" maximum="1">        
+        <position height="0" width="0" x="847" y="1285"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="59" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="121">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="37"/>  
+  </generalization>  
+  <association id="122">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="123" name="tracksLoader">        
+        <position height="0" width="0" x="1840" y="-22"/>      
+      </attribute>      
+      <multiplicity id="124" minimum="0" maximum="1">        
+        <position height="0" width="0" x="1840" y="-22"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="125">    
+    <end type="SOURCE" refId="56"/>    
+    <end type="TARGET" refId="37"/>  
+  </generalization>  
+  <realization id="126">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="23"/>  
+  </realization>  
+  <association id="127">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="128" name="playlistsLoader">        
+        <position height="0" width="0" x="568" y="12"/>      
+      </attribute>      
+      <multiplicity id="129" minimum="0" maximum="1">        
+        <position height="0" width="0" x="568" y="12"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="130">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="57"/>  
+  </realization>  
+  <association id="131">    
+    <end type="SOURCE" refId="79" navigable="false">      
+      <attribute id="132" name="bundlesDirNamer">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </attribute>      
+      <multiplicity id="133" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="83" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="134">    
+    <end type="SOURCE" refId="85"/>    
+    <end type="TARGET" refId="83"/>  
+  </realization>  
+  <realization id="135">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="9"/>  
+  </realization>  
+  <realization id="136">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <realization id="137">    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="51"/>  
+  </realization>  
+  <association id="138">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="139" name="fs">        
+        <position height="0" width="0" x="-1410" y="66"/>      
+      </attribute>      
+      <multiplicity id="140" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-1410" y="66"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="141">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="142" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="143" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="57" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="144">    
+    <end type="SOURCE" refId="52" navigable="false">      
+      <attribute id="145" name="loader">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="146" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="147">    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="148" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="149" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="57" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="150">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="36"/>  
+  </realization>  
+  <association id="151">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="152" name="loader">        
+        <position height="0" width="0" x="952" y="0"/>      
+      </attribute>      
+      <multiplicity id="153" minimum="0" maximum="1">        
+        <position height="0" width="0" x="952" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="154">    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="155" name="tracker">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="156" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="157">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="42"/>  
+  </realization>  
+  <association id="158">    
+    <end type="SOURCE" refId="72" navigable="false">      
+      <attribute id="159" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="160" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="73" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="161">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <realization id="162">    
+    <end type="SOURCE" refId="79"/>    
+    <end type="TARGET" refId="86"/>  
+  </realization>  
+  <association id="163">    
+    <end type="SOURCE" refId="79" navigable="false">      
+      <attribute id="164" name="playlistNamer">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </attribute>      
+      <multiplicity id="165" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="77" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="166">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="167" name="delegee">        
+        <position height="0" width="0" x="952" y="0"/>      
+      </attribute>      
+      <multiplicity id="168" minimum="0" maximum="1">        
+        <position height="0" width="0" x="952" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="169">    
+    <end type="SOURCE" refId="70" navigable="false">      
+      <attribute id="170" name="manipulator">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="171" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="172">    
+    <end type="SOURCE" refId="62"/>    
+    <end type="TARGET" refId="60"/>  
+  </realization>  
+  <association id="173">    
+    <end type="SOURCE" refId="70" navigable="false">      
+      <attribute id="174" name="locator">        
+        <position height="0" width="0" x="2" y="-42"/>      
+      </attribute>      
+      <multiplicity id="175" minimum="0" maximum="1">        
+        <position height="0" width="0" x="2" y="-42"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="58" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="176">    
+    <end type="SOURCE" refId="65" navigable="false">      
+      <attribute id="177" name="fs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="178" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="179">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="180">    
+    <end type="SOURCE" refId="79"/>    
+    <end type="TARGET" refId="48"/>  
+  </realization>  
+  <realization id="181">    
+    <end type="SOURCE" refId="65"/>    
+    <end type="TARGET" refId="66"/>  
+  </realization>  
+  <realization id="182">    
+    <end type="SOURCE" refId="75"/>    
+    <end type="TARGET" refId="77"/>  
+  </realization>  
+  <association id="183">    
+    <end type="SOURCE" refId="80" navigable="false">      
+      <attribute id="184" name="bundleNamer">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </attribute>      
+      <multiplicity id="185" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="82" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="186">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <realization id="187">    
+    <end type="SOURCE" refId="72"/>    
+    <end type="TARGET" refId="73"/>  
+  </realization>  
+  <realization id="188">    
+    <end type="SOURCE" refId="76"/>    
+    <end type="TARGET" refId="82"/>  
+  </realization>  
+  <realization id="189">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <association id="190">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="191" name="bundlesDirLocator">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="192" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="48" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="193">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="194" name="tracksLocator">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="195" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="74" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="196">    
+    <end type="SOURCE" refId="69" navigable="false">      
+      <attribute id="197" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="198" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="66" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="199">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="200" name="converters">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="201" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="202">    
+    <end type="SOURCE" refId="55"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="203">    
+    <end type="SOURCE" refId="63" navigable="false">      
+      <attribute id="204" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="205" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="60" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="206">    
+    <end type="SOURCE" refId="45" navigable="false">      
+      <attribute id="207" name="loader">        
+        <position height="0" width="0" x="960" y="8"/>      
+      </attribute>      
+      <multiplicity id="208" minimum="0" maximum="1">        
+        <position height="0" width="0" x="960" y="8"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="209">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <association id="210">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="211" name="bundlesLoader">        
+        <position height="0" width="0" x="214" y="12"/>      
+      </attribute>      
+      <multiplicity id="212" minimum="0" maximum="1">        
+        <position height="0" width="0" x="214" y="12"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="213">    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="22"/>  
+  </realization>  
+  <association id="214">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="215" name="playlistsLocator">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="216" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="59" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="217">    
+    <end type="SOURCE" refId="86"/>    
+    <end type="TARGET" refId="59"/>  
+  </generalization>  
+  <association id="218">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="219" name="io">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="220" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="221">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="39"/>  
+  </realization>  
+  <realization id="222">    
+    <end type="SOURCE" refId="81"/>    
+    <end type="TARGET" refId="84"/>  
+  </realization>  
+  <realization id="223">    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="39"/>  
+  </realization>  
+  <association id="224">    
+    <end type="SOURCE" refId="45" navigable="false">      
+      <attribute id="225" name="lister">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="226" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="73" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="227">    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="228" name="delegee">        
+        <position height="0" width="0" x="510" y="62"/>      
+      </attribute>      
+      <multiplicity id="229" minimum="0" maximum="1">        
+        <position height="0" width="0" x="510" y="62"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="230">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="231" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="232" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="233">    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="234" name="delegee">        
+        <position height="0" width="0" x="952" y="0"/>      
+      </attribute>      
+      <multiplicity id="235" minimum="0" maximum="1">        
+        <position height="0" width="0" x="952" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="236">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="33"/>  
+  </realization>  
+  <association id="237">    
+    <end type="SOURCE" refId="61" navigable="false">      
+      <attribute id="238" name="locator">        
+        <position height="0" width="0" x="2" y="-42"/>      
+      </attribute>      
+      <multiplicity id="239" minimum="0" maximum="1">        
+        <position height="0" width="0" x="2" y="-42"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="58" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="240">    
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="49"/>  
+  </dependency>  
+  <realization id="241">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="36"/>  
+  </realization>  
+  <realization id="242">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <realization id="243">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <generalization id="244">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <realization id="245">    
+    <end type="SOURCE" refId="69"/>    
+    <end type="TARGET" refId="66"/>  
+  </realization>  
+  <realization id="246">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="34"/>  
+  </realization>  
+  <realization id="247">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="57"/>  
+  </realization>  
+  <association id="248">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="249" name="delegee">        
+        <position height="0" width="0" x="960" y="8"/>      
+      </attribute>      
+      <multiplicity id="250" minimum="0" maximum="1">        
+        <position height="0" width="0" x="960" y="8"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="251">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="252" name="adapter">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="253" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="254">    
+    <end type="SOURCE" refId="62" navigable="false">      
+      <attribute id="255" name="fs">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="256" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="257">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="258" name="manipulator">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="259" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="260">    
+    <end type="SOURCE" refId="54"/>    
+    <end type="TARGET" refId="57"/>  
+  </realization>  
+  <association id="261">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="262" name="delegee">        
+        <position height="0" width="0" x="510" y="62"/>      
+      </attribute>      
+      <multiplicity id="263" minimum="0" maximum="1">        
+        <position height="0" width="0" x="510" y="62"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="264">    
+    <end type="SOURCE" refId="64"/>    
+    <end type="TARGET" refId="60"/>  
+  </realization>  
+  <association id="265">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="266" name="mim">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="267" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="268">    
+    <end type="SOURCE" refId="80" navigable="false">      
+      <attribute id="269" name="trackNamer">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </attribute>      
+      <multiplicity id="270" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="84" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="271">    
+    <end type="SOURCE" refId="61"/>    
+    <end type="TARGET" refId="39"/>  
+  </realization>  
+  <generalization id="272">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="273">    
+    <end type="SOURCE" refId="71" navigable="false">      
+      <attribute id="274" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="275" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="73" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="276">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="277" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="278" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="279">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="280" name="extender">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="281" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="282">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="283" name="lister">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="284" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="60" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="285">    
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="57"/>  
+  </realization>  
+  <realization id="286">    
+    <end type="SOURCE" refId="63"/>    
+    <end type="TARGET" refId="60"/>  
+  </realization>  
+  <realization id="287">    
+    <end type="SOURCE" refId="78"/>    
+    <end type="TARGET" refId="82"/>  
+  </realization>  
+  <association id="288">    
+    <end type="SOURCE" refId="67" navigable="false">      
+      <attribute id="289" name="manipulator">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="290" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="291">    
+    <end type="SOURCE" refId="71"/>    
+    <end type="TARGET" refId="73"/>  
+  </realization>  
+  <association id="292">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="293" name="lister">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="294" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="66" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="295">    
+    <end type="SOURCE" refId="70"/>    
+    <end type="TARGET" refId="34"/>  
+  </realization>  
+  <realization id="296">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <association id="297">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="298" name="bundlesLocator">        
+        <position height="0" width="0" x="373" y="1264"/>      
+      </attribute>      
+      <multiplicity id="299" minimum="0" maximum="1">        
+        <position height="0" width="0" x="373" y="1264"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="58" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="300">    
+    <bendpoint x="2176" y="4120"/>    
+    <bendpoint x="708" y="4112"/>    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="301" name="fs">        
+        <position height="0" width="0" x="-1410" y="66"/>      
+      </attribute>      
+      <multiplicity id="302" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-1410" y="66"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="303">    
+    <end type="SOURCE" refId="80" navigable="false">      
+      <attribute id="304" name="playlistNamer">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </attribute>      
+      <multiplicity id="305" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-12" y="88"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="77" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="306">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <realization id="307">    
+    <end type="SOURCE" refId="67"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <realization id="308">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="15"/>  
+  </realization>  
+  <association id="309">    
+    <end type="SOURCE" refId="52" navigable="false">      
+      <attribute id="310" name="filesystemer">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="311" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="312">    
+    <end type="SOURCE" refId="68" navigable="false">      
+      <attribute id="313" name="delegee">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="314" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="66" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="315">    
+    <end type="SOURCE" refId="86"/>    
+    <end type="TARGET" refId="58"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="false" package="false" protected="false" private="false" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

@@ -117,7 +117,7 @@ public class ModifyPlaylistCommands {
 	public static void rejectAllTracksPlaylist(AbstractRunnableCommand command, Playlist playlist) {
 		JMOPPlayer jmop = command.getJMOP();
 		BaseDefaultStorageConfig configuration = (BaseDefaultStorageConfig) jmop.config().getConfiguration();
-		String allTracksPlaylistName = configuration.getAllTrackPlaylistName();
+		String allTracksPlaylistName = configuration.getAllTracksPlaylistName();
 		
 		if (playlist.getName().equals(allTracksPlaylistName)) {
 			command.reject("Do not modify the all tracks playlist this way. Modify the whole bundle instead.");
