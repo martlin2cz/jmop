@@ -128,6 +128,16 @@ Finally save the xspf file.
 	file.save(f);
 ````
 
+### Exceptions
+Usually, there is checked exception `XSPFException` thrown, when something bad happens. In some rare cases (loop processing), an unchecked exception has to be thrown. For this purpose, there exists the uneched `XSPFRuntimeException`. Thus, it's recommended to allways try-catch following way:
+````
+	try {
+		// ... work with XSPF elements ...
+	} catch (XSPFException | XSPFRuntimeException e) {
+		System.err.println(e);
+	}
+````
+
 ### Examples
 There are some sample programs in the `examples` package. Like the `TracksFinder`:
 ````

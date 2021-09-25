@@ -6,12 +6,12 @@ import cz.martlin.jmop.player.fascade.dflt.BaseDefaultJMOPConfig;
 public class ConstantDefaultFascadeConfig implements BaseDefaultJMOPConfig {
 
 	@Override
-	public TrackFileFormat getSaveFormat() {
+	public TrackFileFormat trackFileFormat() {
 		return TrackFileFormat.MP3;
 	}
 
 	@Override
-	public String getAllTrackPlaylistName() {
+	public String getAllTracksPlaylistName() {
 		return "all tracks";
 	}
 

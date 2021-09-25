@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+
+	<title>Discovery</title>
+
+	<trackList>
+
+		<track>
+			<trackNum>1</trackNum>
+			<title>Aerodynamic</title>
+			<location>file:/tmp/track-Aerodynamic.mp3</location>
+		</track>
+
+		<track>
+			<trackNum>2</trackNum>
+			<title>Veridis Quo</title>
+			<location>file:/tmp/track-Veridis_Quo.mp3</location>
+		</track>
+
+		<track>
+			<trackNum>3</trackNum>
+			<title>One More Time</title>
+			<location>file:/tmp/track-One_More_Time.mp3</location>
+		</track>
+
+	</trackList>
+</playlist>

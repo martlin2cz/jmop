@@ -91,7 +91,7 @@ public class Track implements Comparable<Track>, WithPlayedMarker {
 		int result = 1;
 		result = prime * result + ((bundle == null) ? 0 : bundle.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((identifier == null) ? 0 : identifier.hashCode());
+//		result = prime * result + ((identifier == null) ? 0 : identifier.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -115,11 +115,13 @@ public class Track implements Comparable<Track>, WithPlayedMarker {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
+		/*
 		if (identifier == null) {
 			if (other.identifier != null)
 				return false;
 		} else if (!identifier.equals(other.identifier))
 			return false;
+		 */
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -130,7 +132,7 @@ public class Track implements Comparable<Track>, WithPlayedMarker {
 
 	@Override
 	public String toString() {
-		return "Track [bundle=" + bundle.getName() + ", identifier=" + identifier + ", title=" + title //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "Track [bundle=" + bundle.getName() + /*", identifier=" + identifier + */ ", title=" + title //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ", description=" + "..." + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 

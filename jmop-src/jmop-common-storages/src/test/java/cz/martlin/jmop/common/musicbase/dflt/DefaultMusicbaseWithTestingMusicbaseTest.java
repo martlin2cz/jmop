@@ -5,32 +5,42 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.File;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
 import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
-import cz.martlin.jmop.common.storages.dflt.DefaultStorage;
+import cz.martlin.jmop.common.storages.dflt.X_DefaultStorage;
 import cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage;
-import cz.martlin.jmop.common.utils.TestingMusicbase;
+import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
+import cz.martlin.jmop.common.testing.extensions.TestingRootDirExtension;
+import cz.martlin.jmop.common.testing.testdata.AbstractTestingMusicdata;
+import cz.martlin.jmop.common.testing.testdata.TestingDataCreator;
+import cz.martlin.jmop.common.testing.testdata.TestingMusicdataWithMusicbase;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
+@Deprecated
 public class DefaultMusicbaseWithTestingMusicbaseTest {
 
-	public static File root = new File(System.getProperty("java.io.tmpdir"), "jmop");
+	@RegisterExtension
+	public TestingRootDirExtension root = new TestingRootDirExtension(this);
 	
 	public class DefaultConfig implements BaseDefaultStorageConfig {
 
 		@Override
-		public TrackFileFormat getSaveFormat() {
-			return 	TrackFileFormat.MP3;
+		public String getAllTracksPlaylistName() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 		@Override
-		public String getAllTrackPlaylistName() {
-			return "all tracks";
+		public TrackFileFormat trackFileFormat() {
+			// TODO Auto-generated method stub
+			return null;
 		}
+
 
 	}
 	
@@ -38,7 +48,7 @@ public class DefaultMusicbaseWithTestingMusicbaseTest {
 	void test() throws Exception {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
-		try (TestingMusicbase tmb = new TestingMusicbase(musicbase, true)) {
+		try (AbstractTestingMusicdata tmb = new TestingMusicdataWithMusicbase(musicbase, true)) {
 			assertNotNull(tmb.daftPunk);
 			assertNotNull(tmb.londonElektricity);
 			assertNotNull(tmb.cocolinoDeep);
@@ -53,13 +63,13 @@ public class DefaultMusicbaseWithTestingMusicbaseTest {
 
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
 
-		DefaultStorage storage = DefaultStorage.create(root, new DefaultConfig(), new SimpleErrorReporter(), inmemory);
+		X_DefaultStorage storage = X_DefaultStorage.create(root.getRoot(), new DefaultConfig(), new SimpleErrorReporter(), inmemory);
 		LoggingMusicbaseStorage logging = new LoggingMusicbaseStorage(storage);
 
 		BaseMusicbase musicbase = new PersistentMusicbase(inmemory, logging);
 
 		System.out.println("Musicbase ready: " + musicbase);
-		System.out.println("Working with " + root.getAbsolutePath());
+		System.out.println("Working with " + root.getRoot().getAbsolutePath());
 
 		return musicbase;
 	}

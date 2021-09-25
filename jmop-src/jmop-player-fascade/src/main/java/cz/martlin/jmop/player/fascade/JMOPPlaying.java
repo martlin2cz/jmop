@@ -41,7 +41,7 @@ public class JMOPPlaying {
 	/////////////////////////////////////////////////////////////////
 
 	public void play(Bundle bundle) {
-		String allTracksPlaylistName = ((BaseDefaultStorageConfig) config).getAllTrackPlaylistName();
+		String allTracksPlaylistName = ((BaseDefaultStorageConfig) config).getAllTracksPlaylistName();
 		Playlist allTracksPlaylist = listing.getPlaylist(bundle, allTracksPlaylistName);
 		engine.play(allTracksPlaylist);
 	}
