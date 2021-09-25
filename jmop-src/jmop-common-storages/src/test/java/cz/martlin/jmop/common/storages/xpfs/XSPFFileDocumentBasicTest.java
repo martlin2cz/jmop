@@ -16,14 +16,14 @@ import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import cz.martlin.jmop.common.storages.playlists.XMLFileLoaderStorer;
-import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentNamespaces;
-import cz.martlin.jmop.common.storages.xpfs.XSPFDocumentUtility;
+import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
+import cz.martlin.xspf.util.XMLFileLoaderStorer;
 
+@Deprecated
 public class XSPFFileDocumentBasicTest {
 
 	@Test
-	public void testGetCreateOrFail() {
+	public void testGetCreateOrFail() throws JMOPPersistenceException {
 		Document document = createDocument();
 		Element root = createRoot(document);
 
@@ -35,12 +35,12 @@ public class XSPFFileDocumentBasicTest {
 	}
 
 	private void testGet(Document document, Element root) {
-		Element lorem = XSPFDocumentUtility.getChildOr(root, //
+		Element lorem = _old_XSPFDocumentUtility.getChildOr(root, //
 				XSPFDocumentNamespaces.XSPF, "lorem", //
 				() -> null);
 		assertNotNull(lorem);
 
-		Element ipsum = XSPFDocumentUtility.getChildOr(root, //
+		Element ipsum = _old_XSPFDocumentUtility.getChildOr(root, //
 				XSPFDocumentNamespaces.JMOP, "ipsum", //
 				XSPFDocumentNamespaces.JMOP, "ipsum-val", "42", //
 				() -> null);
@@ -50,49 +50,50 @@ public class XSPFFileDocumentBasicTest {
 	}
 
 	private void testGetOrCreate(Document document, Element root) {
-		XSPFDocumentUtility.getChildOrCreate(document, root, //
+		_old_XSPFDocumentUtility.getChildOrCreate(document, root, //
 				XSPFDocumentNamespaces.XSPF, "lorem");
 
-		XSPFDocumentUtility.getChildOrCreate(document, root, //
+		_old_XSPFDocumentUtility.getChildOrCreate(document, root, //
 				XSPFDocumentNamespaces.JMOP, "ipsum", //
 				XSPFDocumentNamespaces.JMOP, "ipsum-val", "42");
 
-		XSPFDocumentUtility.getChildOrCreate(document, root, //
+		_old_XSPFDocumentUtility.getChildOrCreate(document, root, //
 				XSPFDocumentNamespaces.JMOP, "ipsum", //
 				XSPFDocumentNamespaces.JMOP, "ipsum-val", "99");
 	}
 
 ///////////////////////////////////////////////////////////////////////////
 	@Test
-	public void testExtensionSetAndGet() {
+	public void testExtensionSetAndGet() throws JMOPPersistenceException {
 		Document document = createDocument();
 		Element root = createRoot(document);
 
 		print(document);
 
-		XSPFDocumentUtility.setExtensionValue(document, root, "karel", "width", "42");
-		XSPFDocumentUtility.setExtensionValue(document, root, "karel", "height", "99");
+		_old_XSPFDocumentUtility.setExtensionValue(document, root, "karel", "width", "42");
+		_old_XSPFDocumentUtility.setExtensionValue(document, root, "karel", "height", "99");
 
-		XSPFDocumentUtility.setExtensionValue(document, root, "jirka", "name", "jura");
+		_old_XSPFDocumentUtility.setExtensionValue(document, root, "jirka", "name", "jura");
 
 		print(document);
 
-		String karelWidth = XSPFDocumentUtility.getExtensionValue(root, "karel", "width");
+		String karelWidth = _old_XSPFDocumentUtility.getExtensionValue(root, "karel", "width");
 		assertEquals("42", karelWidth);
 
-		String karelHeight = XSPFDocumentUtility.getExtensionValue(root, "karel", "height");
+		String karelHeight = _old_XSPFDocumentUtility.getExtensionValue(root, "karel", "height");
 		assertEquals("99", karelHeight);
 
-		String jirkaName = XSPFDocumentUtility.getExtensionValue(root, "jirka", "name");
+		String jirkaName = _old_XSPFDocumentUtility.getExtensionValue(root, "jirka", "name");
 		assertEquals("jura", jirkaName);
 
 	}
 ///////////////////////////////////////////////////////////////////////////
 
-	private Document createDocument() {
-		XMLFileLoaderStorer xml = new XMLFileLoaderStorer();
-		Document document = xml.createEmptyDocument();
-		return document;
+	private Document createDocument() throws JMOPPersistenceException {
+		throw new UnsupportedOperationException();
+//		XMLFileLoaderStorer xml = new XMLFileLoaderStorer();
+//		Document document = xml.createEmptyDocument();
+//		return document;
 	}
 
 	private Element createRoot(Document document) {

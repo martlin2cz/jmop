@@ -5,6 +5,7 @@ import java.io.File;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 
 /**
  * An extension of the {@link BaseFilesLocator}, which adds some extra methods
@@ -13,7 +14,7 @@ import cz.martlin.jmop.common.data.model.Track;
  * @author martin
  *
  */
-public class FilesLocatorExtension {
+public class FilesLocatorExtension implements TracksSource {
 	private final BaseFilesLocator locator;
 
 	public FilesLocatorExtension(BaseFilesLocator locator) {
@@ -107,6 +108,7 @@ public class FilesLocatorExtension {
 	 * @param track
 	 * @return
 	 */
+	@Override
 	public File trackFile(Track track) {
 		Bundle bundle = track.getBundle();
 		String bundleName = bundle.getName();

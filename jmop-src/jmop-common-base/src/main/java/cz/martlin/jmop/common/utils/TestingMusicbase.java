@@ -9,18 +9,47 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 public class TestingMusicbase implements AutoCloseable {
 
 	private final BaseMusicbaseModifing musicbase;
+
 	
+	/**
+	 * Contains playlist {@link #discovery}, {@link #randomAccessMemories}. Contains
+	 * tracks {@link #oneMoreTime}, {@link #aerodynamic}, {@link #verdisQuo} and
+	 * {@link #getLucky}.
+	 */
 	public Bundle daftPunk;
+	/**
+	 * Contains tracks {@link #oneMoreTime}, {@link #aerodynamic} and {@link #verdisQuo}.
+	 */
 	public Playlist discovery;
+	/**
+	 * Contains only {@link #getLucky} track.
+	 */
 	public Playlist randomAccessMemories;
 	public Track oneMoreTime;
 	public Track aerodynamic;
 	public Track verdisQuo;
 	public Track getLucky;
 
+	/**
+	 * Contains tracks {@link #justOneSecond}, {@link #allTheHellIsBreakingLoose},
+	 * {@link #pointOfNoReturn}, {@link #meteorities}, {@link #invisibleWorlds},
+	 * {@link #elektricityWillKeepMeWarm}. Contains playlists
+	 * {@link #syncopatedCity}, {@link #yikes} and {@link #bestTracks}.
+	 */
 	public Bundle londonElektricity;
+	/**
+	 * Contains tracks {@link #justOneSecond}, {@link #allTheHellIsBreakingLoose}
+	 * and {@link #pointOfNoReturn}.
+	 */
 	public Playlist syncopatedCity;
+	/**
+	 * Contains tracks {@link #meteorities}, {@link #invisibleWorlds} and
+	 * {@link #elektricityWillKeepMeWarm}.
+	 */
 	public Playlist yikes;
+	/**
+	 * Contains tracks {@link #justOneSecond} and {@link #meteorities}.
+	 */
 	public Playlist bestTracks;
 	public Track justOneSecond;
 	public Track allTheHellIsBreakingLoose;
@@ -29,7 +58,17 @@ public class TestingMusicbase implements AutoCloseable {
 	public Track invisibleWorlds;
 	public Track elektricityWillKeepMeWarm;
 
+	/**
+	 * Contains playlist {@link #seventeen} and tracks {@link #seventeenPartI},
+	 * {@link #seventeenPartII}, {@link #seventeenPartIII}, {@link #seventeenPartIV}
+	 * and {@link #dontForgetToFly}, {@link #getLost} and
+	 * {@link #dancingWithTheElepthant}.
+	 */
 	public Bundle cocolinoDeep;
+	/**
+	 * Contains tracks {@link #seventeenPartI}, {@link #seventeenPartII},
+	 * {@link #seventeenPartIII}, {@link #seventeenPartIV}.
+	 */
 	public Playlist seventeen;
 	public Track seventeenPartI;
 	public Track seventeenPartII;
@@ -39,21 +78,25 @@ public class TestingMusicbase implements AutoCloseable {
 	public Track getLost;
 	public Track dancingWithTheElepthant;
 
+	/**
+	 * Contains no playlist, but tracks: {@link #atZijiDuchove},
+	 * {@link #znamkaPunku}, {@link #neniNutno} and {@link #ladyCarneval}.
+	 */
 	public Bundle robick;
 	public Track atZijiDuchove;
 	public Track znamkaPunku;
 	public Track neniNutno;
 	public Track ladyCarneval;
 
-	public TestingMusicbase(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
+	public TestingMusicbase(BaseMusicbaseModifing musicbase, boolean fileExisting) {
 		super();
-		
+
 		this.musicbase = musicbase;
 
 		prepare(musicbase, fileExisting);
 	}
 
-	private void prepare(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
+	private void prepare(BaseMusicbaseModifing musicbase, boolean fileExisting) {
 		createDaftPunk(musicbase, fileExisting);
 
 		createLondonElektricity(musicbase, fileExisting);
@@ -64,7 +107,7 @@ public class TestingMusicbase implements AutoCloseable {
 
 	}
 
-	private void createDaftPunk(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
+	private void createDaftPunk(BaseMusicbaseModifing musicbase, boolean fileExisting) {
 		// bundle
 		daftPunk = TestingDataCreator.bundle(musicbase, "Daft Punk");
 
@@ -74,7 +117,8 @@ public class TestingMusicbase implements AutoCloseable {
 
 		// tracks
 		oneMoreTime = TestingDataCreator.track(musicbase, daftPunk, "One More Time",
-				"One More Time (featuring Romanthony)", "OMT", DurationUtilities.createDuration(0, 5, 20), fileExisting);
+				"One More Time (featuring Romanthony)", "OMT", DurationUtilities.createDuration(0, 5, 20),
+				fileExisting);
 		aerodynamic = TestingDataCreator.track(musicbase, daftPunk, "Aerodynamic", "Aerodynamic", "AD",
 				DurationUtilities.createDuration(0, 3, 27), fileExisting);
 		verdisQuo = TestingDataCreator.track(musicbase, daftPunk, "Veridis Quo", "Veridis Quo", "VQ",
@@ -92,7 +136,7 @@ public class TestingMusicbase implements AutoCloseable {
 		musicbase.playlistUpdated(randomAccessMemories);
 	}
 
-	private void createLondonElektricity(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
+	private void createLondonElektricity(BaseMusicbaseModifing musicbase, boolean fileExisting) {
 		// bundle
 		londonElektricity = TestingDataCreator.bundle(musicbase, "London Elektricity");
 
@@ -115,7 +159,8 @@ public class TestingMusicbase implements AutoCloseable {
 				"2. Meteorites (feat. Elsa Esmeralda)", "M", DurationUtilities.createDuration(0, 6, 2), fileExisting);
 
 		invisibleWorlds = TestingDataCreator.track(musicbase, londonElektricity, "Invisible Worlds",
-				"Invisible Worlds (feat. Elsa Esmeralda)", "IW", DurationUtilities.createDuration(0, 6, 45), fileExisting);
+				"Invisible Worlds (feat. Elsa Esmeralda)", "IW", DurationUtilities.createDuration(0, 6, 45),
+				fileExisting);
 
 		elektricityWillKeepMeWarm = TestingDataCreator.track(musicbase, londonElektricity,
 				"Elektricity Will Keep Me Warm", "1. Elektricity Will Keep Me Warm (feat. Elsa Esmeralda)", "EWKMW",
@@ -137,7 +182,7 @@ public class TestingMusicbase implements AutoCloseable {
 		musicbase.playlistUpdated(bestTracks);
 	}
 
-	private void createCocolinoDeep(BaseMusicbaseModifing musicbase, boolean fileExisting)  {
+	private void createCocolinoDeep(BaseMusicbaseModifing musicbase, boolean fileExisting) {
 		// bundle
 		cocolinoDeep = TestingDataCreator.bundle(musicbase, "Cocolino deep");
 
@@ -146,29 +191,31 @@ public class TestingMusicbase implements AutoCloseable {
 
 		// tracks
 		seventeenPartI = TestingDataCreator.track(musicbase, cocolinoDeep, "Seventeen Part1",
-				"\"Wherever you go becomes a part of you somehow.\"", "S1",
-				DurationUtilities.createDuration(1, 42, 42), fileExisting);
+				"\"Wherever you go becomes a part of you somehow.\"", "S1", DurationUtilities.createDuration(1, 42, 42),
+				fileExisting);
 
 		seventeenPartII = TestingDataCreator.track(musicbase, cocolinoDeep, "Seventeen Part2",
-				"\"Wherever you go becomes a part of you somehow.\"", "S2",
-				DurationUtilities.createDuration(1, 30, 50), fileExisting);
+				"\"Wherever you go becomes a part of you somehow.\"", "S2", DurationUtilities.createDuration(1, 30, 50),
+				fileExisting);
 
 		seventeenPartIII = TestingDataCreator.track(musicbase, cocolinoDeep, "Seventeen Part3",
-				"\"Wherever you go becomes a part of you somehow.\"", "S3",
-				DurationUtilities.createDuration(1, 31, 31), fileExisting);
+				"\"Wherever you go becomes a part of you somehow.\"", "S3", DurationUtilities.createDuration(1, 31, 31),
+				fileExisting);
 
 		seventeenPartIV = TestingDataCreator.track(musicbase, cocolinoDeep, "Seventeen Part4",
-				"\"Wherever you go becomes a part of you somehow.\"", "S4",
-				DurationUtilities.createDuration(1, 26, 53), fileExisting);
+				"\"Wherever you go becomes a part of you somehow.\"", "S4", DurationUtilities.createDuration(1, 26, 53),
+				fileExisting);
 
 		dontForgetToFly = TestingDataCreator.track(musicbase, cocolinoDeep, "Don't forget to fly",
-				"Coccolino Deep - Don't forget to fly", "DFtF", DurationUtilities.createDuration(0, 47, 32), fileExisting);
+				"Coccolino Deep - Don't forget to fly", "DFtF", DurationUtilities.createDuration(0, 47, 32),
+				fileExisting);
 
 		getLost = TestingDataCreator.track(musicbase, cocolinoDeep, "Get Lost", "Coccolino Deep - Get Lost", "GL",
 				DurationUtilities.createDuration(0, 50, 39), fileExisting);
 
 		dancingWithTheElepthant = TestingDataCreator.track(musicbase, cocolinoDeep, "Dancing with Elephant",
-				"\"Music is the strongest form of magic.\"", "DwE", DurationUtilities.createDuration(0, 59, 45), fileExisting);
+				"\"Music is the strongest form of magic.\"", "DwE", DurationUtilities.createDuration(0, 59, 45),
+				fileExisting);
 
 		// init the playlists
 		seventeen.addTrack(seventeenPartI);
@@ -184,62 +231,65 @@ public class TestingMusicbase implements AutoCloseable {
 
 		// tracks
 		atZijiDuchove = TestingDataCreator.track(musicbase, robick, "At ziji duchove",
-				"Robick feat. MC SPYDA - Ať žijí duchové (DNB Remix)", "AZD",
-				DurationUtilities.createDuration(0, 6, 4), fileExisting);
+				"Robick feat. MC SPYDA - Ať žijí duchové (DNB Remix)", "AZD", DurationUtilities.createDuration(0, 6, 4),
+				fileExisting);
 
 		znamkaPunku = TestingDataCreator.track(musicbase, robick, "Znamka punku",
-				"Visaci Zamek: Znamka punku (Robick Remix)", "ZP", DurationUtilities.createDuration(0, 4, 6), fileExisting);
+				"Visaci Zamek: Znamka punku (Robick Remix)", "ZP", DurationUtilities.createDuration(0, 4, 6),
+				fileExisting);
 
 		neniNutno = TestingDataCreator.track(musicbase, robick, "Neni nutno",
-				"Robick - Není nutno (feat.Tenor Fly & Top Cat)", "NN", DurationUtilities.createDuration(0, 4, 30), fileExisting);
+				"Robick - Není nutno (feat.Tenor Fly & Top Cat)", "NN", DurationUtilities.createDuration(0, 4, 30),
+				fileExisting);
 
 		ladyCarneval = TestingDataCreator.track(musicbase, robick, "Lady Carneval",
-				"Karel Gott Lady Carneval (DnB Remix by Robick)", "LC",
-				DurationUtilities.createDuration(0, 4, 11), fileExisting);
+				"Karel Gott Lady Carneval (DnB Remix by Robick)", "LC", DurationUtilities.createDuration(0, 4, 11),
+				fileExisting);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	
+
 	@Override
 	public void close() throws Exception {
 		delete(musicbase);
 	}
 
-	private void delete(BaseMusicbaseModifing musicbase)  {
+	private void delete(BaseMusicbaseModifing musicbase) {
 		deleteDaftPunk(musicbase);
 		deleteLondonElektricity(musicbase);
 		deleteCocolinoDeep(musicbase);
 		deleteRobick(musicbase);
-		
+
 	}
 
-	private void deleteDaftPunk(BaseMusicbaseModifing musicbase)  {
+	private void deleteDaftPunk(BaseMusicbaseModifing musicbase) {
 		musicbase.removeTrack(oneMoreTime);
 		musicbase.removeTrack(aerodynamic);
 		musicbase.removeTrack(verdisQuo);
 		musicbase.removeTrack(getLucky);
-		
+
 		musicbase.removePlaylist(discovery);
 		musicbase.removePlaylist(randomAccessMemories);
-		
+
 		musicbase.removeBundle(daftPunk);
 	}
-	private void deleteLondonElektricity(BaseMusicbaseModifing musicbase)  {
+
+	private void deleteLondonElektricity(BaseMusicbaseModifing musicbase) {
 		musicbase.removeTrack(justOneSecond);
 		musicbase.removeTrack(allTheHellIsBreakingLoose);
 		musicbase.removeTrack(pointOfNoReturn);
 		musicbase.removeTrack(meteorities);
 		musicbase.removeTrack(invisibleWorlds);
 		musicbase.removeTrack(elektricityWillKeepMeWarm);
-		
+
 		musicbase.removePlaylist(syncopatedCity);
 		musicbase.removePlaylist(yikes);
 		musicbase.removePlaylist(bestTracks);
-		
+
 		musicbase.removeBundle(londonElektricity);
 	}
 
-	private void deleteCocolinoDeep(BaseMusicbaseModifing musicbase)  {
+	private void deleteCocolinoDeep(BaseMusicbaseModifing musicbase) {
 		musicbase.removeTrack(seventeenPartI);
 		musicbase.removeTrack(seventeenPartII);
 		musicbase.removeTrack(seventeenPartIII);
@@ -247,19 +297,18 @@ public class TestingMusicbase implements AutoCloseable {
 		musicbase.removeTrack(dontForgetToFly);
 		musicbase.removeTrack(getLost);
 		musicbase.removeTrack(dancingWithTheElepthant);
-		
+
 		musicbase.removePlaylist(seventeen);
-		
+
 		musicbase.removeBundle(cocolinoDeep);
 	}
 
-
-	private void deleteRobick(BaseMusicbaseModifing musicbase)  {
+	private void deleteRobick(BaseMusicbaseModifing musicbase) {
 		musicbase.removeTrack(atZijiDuchove);
 		musicbase.removeTrack(znamkaPunku);
 		musicbase.removeTrack(neniNutno);
 		musicbase.removeTrack(ladyCarneval);
-		
+
 		musicbase.removeBundle(robick);
 	}
 

@@ -1,9 +1,9 @@
 package cz.martlin.jmop.common.storages.xpfs;
 
-
+@Deprecated
 public enum XSPFDocumentNamespaces {
 	XSPF(null, "http://xspf.org/ns/0/"),
-	JMOP("jmop", XSPFFilesManipulator.APPLICATION_URL + "/schemas/xspf-extension.xsd");
+	JMOP("jmop", _old_XSPFFilesManipulator.APPLICATION_URL + "/schemas/xspf-extension.xsd");
 
 	private final String prefix;
 	private final String url;

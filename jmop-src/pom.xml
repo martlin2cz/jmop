@@ -238,5 +238,6 @@
 <!-- 		<module>jmop-sourcery-appp</module> -->
 
 
+		<module>xspf-playlist</module>
 	</modules>
 </project>

@@ -3,16 +3,8 @@ package cz.martlin.jmop.common.storages.xpfs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +12,12 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 
+@Deprecated
 public class XSPFFileDocumentVariousExistingsTest {
 
 	private final Bundle bundle = new Bundle("Daft punk", Metadata.createNew());
@@ -96,53 +88,34 @@ public class XSPFFileDocumentVariousExistingsTest {
 		System.out.println("Loading testing playlist " + name + ":");
 		
 		BaseErrorReporter reporter = new SimpleErrorReporter();
-		XSPFFilesManipulator xspf = new XSPFFilesManipulator(reporter);
-		
-		File file = testingPlaylistFile(name);
-		System.out.println("Loading from file: " + file.getAbsolutePath());
-		
-		Map<String, Track> tracksMap = tracks.stream()//
-				.collect(Collectors.toMap(t -> t.getTitle(), t -> t));
-		
-		Playlist playlist = xspf.loadOnlyPlaylist(bundle, tracksMap, file);
-		MusicbaseDebugPrinter.print(playlist);
-		
-		return playlist;
+		_old_XSPFFilesManipulator xspf = new _old_XSPFFilesManipulator(reporter);
+		throw new UnsupportedOperationException();
+//		File file = TestingXSPFFiles.fileToReadAssumed(name);
+//		System.out.println("Loading from file: " + file.getAbsolutePath());
+//		
+//		Map<String, Track> tracksMap = tracks.stream()//
+//				.collect(Collectors.toMap(t -> t.getTitle(), t -> t));
+//		
+//		Playlist playlist = xspf.loadOnlyPlaylist(bundle, tracksMap, file);
+//		MusicbaseDebugPrinter.print(playlist);
+//		
+//		return playlist;
 	}
 	
 	private void save(String fileName, Playlist playlist) throws JMOPPersistenceException {
 		System.out.println("Saving testing playlist " + playlist.getName() + ":");
 		
 		BaseErrorReporter reporter = new SimpleErrorReporter();
-		XSPFFilesManipulator xspf = new XSPFFilesManipulator(reporter);
+		_old_XSPFFilesManipulator xspf = new _old_XSPFFilesManipulator(reporter);
+		throw new UnsupportedOperationException();
+//		File file = TestingXSPFFiles.fileToWriteAssumed(fileName);
+//		System.out.println("Saving to file: " + file.getAbsolutePath());
 		
-		File file;
-		try {
-			file = File.createTempFile("playlist-", "-" + fileName);
-		} catch (IOException e) {
-			assumeTrue(false, e.toString());
-			return;
-		}
-		System.out.println("Saving to file: " + file.getAbsolutePath());
-		
-		xspf.saveOnlyPlaylist(playlist, file);
+//		xspf.saveOnlyPlaylist(playlist, file);
 	}
 
-	private File testingPlaylistFile(String name) {
-		String path = "cz/martlin/jmop/common/storages/xpfs/" + name;
-		URL url = getClass().getClassLoader().getResource(path);
-		assumeTrue(url != null, "The resource " + name + " does not exist");
-		
-		File file;
-		try {
-			file = Paths.get(url.toURI()).toFile();
-		} catch (URISyntaxException e) {
-			assumeTrue(false, e.toString());
-			return null;
-		}
-		
-		assumeTrue(file.exists(), "The file " + name  + " does not exist");
-		return file;
-	}
+
+
+	
 
 }

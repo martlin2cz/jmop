@@ -11,6 +11,7 @@ import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.common.storages.playlists.BaseExtendedPlaylistManipulator;
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
@@ -33,16 +34,16 @@ public class SimpleExtendedPlaylistManipulator implements BaseExtendedPlaylistMa
 	}
 
 	@Override
-	public void savePlaylistWithBundle(Playlist playlist, File file)  {
-		Tracklist tracks = playlist.getTracks();
-		saveTracklist(tracks, file);
+	public void savePlaylistWithBundle(Playlist playlist, File file, TracksSource tracks)  {
+		Tracklist tracklist = playlist.getTracks();
+		saveTracklist(tracklist, file);
 		// we are ignoring the bundle info, #sorryjako
 	}
 
 	@Override
-	public void saveOnlyPlaylist(Playlist playlist, File file)  {
-		Tracklist tracks = playlist.getTracks();
-		saveTracklist(tracks, file);
+	public void saveOnlyPlaylist(Playlist playlist, File file, TracksSource tracks)  {
+		Tracklist tracklist = playlist.getTracks();
+		saveTracklist(tracklist, file);
 	}
 
 	@Override

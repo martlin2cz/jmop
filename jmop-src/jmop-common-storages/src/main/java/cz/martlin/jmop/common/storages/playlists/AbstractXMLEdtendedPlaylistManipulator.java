@@ -8,8 +8,16 @@ import org.w3c.dom.Document;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TracksSource;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
+import cz.martlin.xspf.util.XMLFileLoaderStorer;
 
+/**
+ * @deprecated Separate the PlaylistManipulator and the XML to two separate classes
+ * @author martin
+ *
+ */
+@Deprecated
 public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExtendedPlaylistManipulator {
 
 	private final XMLFileLoaderStorer xfls;
@@ -22,12 +30,12 @@ public abstract class AbstractXMLEdtendedPlaylistManipulator implements BaseExte
 /////////////////////////////////////////////////////////////////
 
 	@Override
-	public void savePlaylistWithBundle(Playlist playlist, File file) throws JMOPPersistenceException {
+	public void savePlaylistWithBundle(Playlist playlist, File file, TracksSource tracks) throws JMOPPersistenceException {
 		save(playlist, file, true, true);
 	}
 
 	@Override
-	public void saveOnlyPlaylist(Playlist playlist, File file) throws JMOPPersistenceException {
+	public void saveOnlyPlaylist(Playlist playlist, File file, TracksSource tracks) throws JMOPPersistenceException {
 		save(playlist, file, false, false);
 	}
 

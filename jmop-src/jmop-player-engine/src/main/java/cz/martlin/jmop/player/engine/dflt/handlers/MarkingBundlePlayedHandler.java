@@ -5,6 +5,7 @@ import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.dflt.handlers.PlaylistAndBundleStartedHandler.OnBundleStartedHandler;
+import javafx.util.Duration;
 
 public class MarkingBundlePlayedHandler implements OnBundleStartedHandler {
 	private final BaseMusicbase musicbase;
@@ -16,7 +17,7 @@ public class MarkingBundlePlayedHandler implements OnBundleStartedHandler {
 
 	@Override
 	public void onBundleStarted(BasePlayerEngine engine, Bundle bundle)  {
-		bundle.played();
+		bundle.played(Duration.ZERO);
 		musicbase.bundleUpdated(bundle);
 	}
 }
