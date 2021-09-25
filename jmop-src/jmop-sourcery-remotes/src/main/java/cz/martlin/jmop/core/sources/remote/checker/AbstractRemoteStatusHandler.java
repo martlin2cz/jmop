@@ -47,7 +47,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	}
 
 	@Override
-	public boolean checkQuerier(BaseUIInterractor interactor) throws JMOPMusicbaseException {
+	public boolean checkQuerier(BaseUIInterractor interactor)  {
 		Bundle bundle = prepareTestingBundle();
 		String query = prepareTestingQuery();
 
@@ -57,7 +57,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	}
 
 	@Override
-	public boolean checkDownloader(BaseUIInterractor interactor) throws JMOPMusicbaseException {
+	public boolean checkDownloader(BaseUIInterractor interactor)  {
 		TrackFileLocation location = TrackFileLocation.TEMP;
 		Track track = prepareTestingTrack();
 
@@ -67,7 +67,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	}
 
 	@Override
-	public boolean checkConverter(BaseUIInterractor interactor) throws JMOPMusicbaseException {
+	public boolean checkConverter(BaseUIInterractor interactor)  {
 		Track track = prepareTestingTrack();
 
 		TrackFileFormat fromFormat = TrackFileFormat.MP3;
@@ -109,7 +109,7 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	protected abstract String prepareTestingTrackID();
 
 	private void prepareTestingFile(Track track, TrackFileFormat fromFormat, TrackFileLocation fromLocation,
-			BaseUIInterractor interactor) throws JMOPMusicbaseException {
+			BaseUIInterractor interactor)  {
 
 		String extension = fromFormat.getExtension();
 		File sourceFile = interactor.promptFile("", extension);

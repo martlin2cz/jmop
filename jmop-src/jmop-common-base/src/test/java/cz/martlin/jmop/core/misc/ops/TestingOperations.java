@@ -47,7 +47,7 @@ public class TestingOperations {
 		TimeUnit.SECONDS.sleep(2);
 	}
 	
-	public static void runChain(OperationsManager man) throws JMOPMusicbaseException, InterruptedException {
+	public static void runChain(OperationsManager man) throws InterruptedException {
 		
 		BaseOperationsChain<Integer> chain = new TestingCountingOperationsChain("X", 5);
 		man.start(5, chain, (r) -> System.out.println("The chain result is : " + r));

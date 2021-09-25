@@ -20,8 +20,8 @@ public interface BaseSourceImpl {
 	 * @param bundle
 	 * @param identifier
 	 * @return
-	 * @throws JMOPMusicbaseException
+	 * @
 	 */
-	public Track getTrack(Bundle bundle, String identifier) throws JMOPMusicbaseException;
+	public Track getTrack(Bundle bundle, String identifier) ;
 
 }

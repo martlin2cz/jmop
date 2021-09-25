@@ -26,7 +26,7 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public SimpleShortOperation<String, List<Track>> search(Bundle bundle, String query) throws JMOPMusicbaseException {
+	public SimpleShortOperation<String, List<Track>> search(Bundle bundle, String query)  {
 		LOG.info("Preparing search of " + query);
 
 		return new SimpleShortOperation<>("Querying", query, //
@@ -35,7 +35,7 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 	}
 
 	@Override
-	public SimpleShortOperation<Track, Track> loadNext(Track track) throws JMOPMusicbaseException {
+	public SimpleShortOperation<Track, Track> loadNext(Track track)  {
 		LOG.info("Preparing load next of " + track);
 
 		return new SimpleShortOperation<>("Loading next", track, //
@@ -45,9 +45,9 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public abstract List<Track> runSearch(Bundle bundle, String query) throws JMOPMusicbaseException;
+	public abstract List<Track> runSearch(Bundle bundle, String query) ;
 
-	public abstract Track runLoadNext(Track track) throws JMOPMusicbaseException;
+	public abstract Track runLoadNext(Track track) ;
 
 /////////////////////////////////////////////////////////////////////////////////////
 

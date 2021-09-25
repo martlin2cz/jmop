@@ -9,7 +9,8 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.storages.bundlesdir.BaseMusicdataSaver;
 import cz.martlin.jmop.common.storages.utils.BaseFileSystemAccessor;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
+import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 
 public class SimpleSaver implements BaseMusicdataSaver {
 
@@ -26,7 +27,7 @@ public class SimpleSaver implements BaseMusicdataSaver {
 	}
 
 	@Override
-	public void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason) throws JMOPMusicbaseException {
+	public void savePlaylistData(File playlistFile, Playlist playlist, SaveReason reason)  {
 		Tracklist tracklist = playlist.getTracks();
 		saveTracklist(tracklist, playlistFile);
 	}
@@ -38,11 +39,15 @@ public class SimpleSaver implements BaseMusicdataSaver {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private void saveTracklist(Tracklist tracklist, File playlistFile) throws JMOPMusicbaseException {
-		fs.saveLines(playlistFile, //
-				tracklist.getTracks().stream() //
-						.map(t -> (t.getIdentifier() + "mp3")) //
-						.collect(Collectors.toList()) //
-		); //
+	private void saveTracklist(Tracklist tracklist, File playlistFile)  {
+		try {
+			fs.saveLines(playlistFile, //
+					tracklist.getTracks().stream() //
+							.map(t -> (t.getIdentifier() + "mp3")) //
+							.collect(Collectors.toList()) //
+			);
+		} catch (JMOPPersistenceException e) {
+			throw new JMOPRuntimeException("Could not save the tracklist", e);
+		}
 	}
 }

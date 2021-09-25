@@ -25,7 +25,7 @@ public class CachingPlayer extends AbstractPlayer {
 	///////////////////////////////////////////////////////////////////////////
 	
 	@Override
-	public Duration currentTime() {
+	public Duration doCurrentTime() {
 		if (cacher.isCaching(actualTrack())) {
 			return Duration.ZERO;
 		} else {
@@ -34,7 +34,7 @@ public class CachingPlayer extends AbstractPlayer {
 	}
 
 	@Override
-	protected void doStartPlaying(Track track) throws JMOPMusicbaseException {
+	protected void doStartPlaying(Track track)  {
 		if (cacher.isCached(track)) {
 			player.startPlaying(track);
 		} else {
@@ -86,15 +86,11 @@ public class CachingPlayer extends AbstractPlayer {
 	///////////////////////////////////////////////////////////////////////////
 	
 	private void onCached(Track track) {
-		try {
-			PlayerStatus status = currentStatus();
-			triggerTheDesiredOperation(status, track);
-		} catch (JMOPMusicbaseException e) {
-			reporter.report(e);
-		}
+		PlayerStatus status = currentStatus();
+		triggerTheDesiredOperation(status, track);
 	}
 
-	private void triggerTheDesiredOperation(PlayerStatus status, Track track) throws JMOPMusicbaseException {
+	private void triggerTheDesiredOperation(PlayerStatus status, Track track)  {
 		
 		switch (status) {
 		case NO_TRACK:

@@ -20,7 +20,12 @@
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
-			<artifactId>jmop-player-players</artifactId>
+			<artifactId>jmop-common-musicbase</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-storages</artifactId>
 			<version>3.0.1</version>
 		</dependency>
 		<dependency>

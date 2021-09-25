@@ -28,7 +28,7 @@ public class NoopConverter implements BaseConverter {
 	@Override
 	public BaseLongOperation<Track, Track> convert(Track track, TrackFileLocation fromLocation,
 			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason)
-			throws JMOPMusicbaseException {
+			 {
 
 		return new NotConvertingLongOperation(track, fromLocation, fromFormat, toLocation, toFormat, reason);
 	}

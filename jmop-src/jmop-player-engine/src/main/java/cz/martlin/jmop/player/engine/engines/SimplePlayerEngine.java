@@ -1,7 +1,7 @@
 package cz.martlin.jmop.player.engine.engines;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.players.BasePlayer;
 import javafx.util.Duration;
 
@@ -25,25 +25,29 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 
 	@Override
 	public Duration currentDuration() {
-		return player.currentTime();
+		if (player.currentStatus().isPlayingTrack()) {
+			return player.currentTime();
+		} else {
+			return null;
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void play() throws JMOPMusicbaseException {
+	public void play()  {
 		Track track = runtime.current();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void play(int index) throws JMOPMusicbaseException {
+	public void play(TrackIndex index)  {
 		Track track = runtime.play(index);
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void stop() throws JMOPMusicbaseException {
+	public void stop()  {
 		stopTrack();
 	}
 
@@ -63,19 +67,19 @@ public class SimplePlayerEngine extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void toNext() throws JMOPMusicbaseException {
+	public void toNext()  {
 		Track track = runtime.toNext();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void toPrevious() throws JMOPMusicbaseException {
+	public void toPrevious()  {
 		Track track = runtime.toPrevious();
 		stopAndPlayAnother(track);
 	}
-
+	
 	@Override
-	public void trackOver(Track track) throws JMOPMusicbaseException {
+	public void trackOver(Track track)  {
 		ifHasPlayNext();
 	}
 

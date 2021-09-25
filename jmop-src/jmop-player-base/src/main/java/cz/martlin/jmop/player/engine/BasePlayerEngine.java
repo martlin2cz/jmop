@@ -1,8 +1,8 @@
 package cz.martlin.jmop.player.engine;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
@@ -14,14 +14,14 @@ public interface BasePlayerEngine {
 	 * 
 	 * @param playlist
 	 */
-	void startPlayingPlaylist(Playlist playlist);
+	void startPlayingPlaylist(Playlist playlist) ;
 
 	/**
 	 * Mark as not playing given playlist.
 	 * 
 	 * @param currentPlaylist
 	 */
-	void stopPlayingPlaylist();
+	void stopPlayingPlaylist() ;
 	
 
 	/**
@@ -63,24 +63,21 @@ public interface BasePlayerEngine {
 	/**
 	 * Play next track in the queque.
 	 * 
-	 * @throws JMOPMusicbaseException
 	 */
-	void play() throws JMOPMusicbaseException;
+	void play();
 
 	/**
 	 * Play the index-th track in the (current) playlist.
 	 * 
 	 * @param index
-	 * @throws JMOPMusicbaseException
 	 */
-	void play(int index) throws JMOPMusicbaseException;
+	void play(TrackIndex index) ;
 
 	/**
 	 * Stop playing.
 	 * 
-	 * @throws JMOPMusicbaseException 
 	 */
-	void stop() throws JMOPMusicbaseException;
+	void stop() ;
 
 	/**
 	 * Pause playing.
@@ -105,15 +102,26 @@ public interface BasePlayerEngine {
 	/**
 	 * Go to (start playing) next track.
 	 * 
-	 * @throws JMOPMusicbaseException
 	 */
-	void toNext() throws JMOPMusicbaseException;
+	void toNext() ;
 
 	/**
 	 * Go to (start playing) previous track.
 	 * 
-	 * @throws JMOPMusicbaseException
 	 */
-	void toPrevious() throws JMOPMusicbaseException;
+	void toPrevious() ;
+
+	/**
+	 * Returns true if has next track to play. 
+	 * @return
+	 */
+	boolean hasNext();
+
+	
+	/**
+	 * Returns true if has next track to play. 
+	 * @return
+	 */
+	boolean hasPrevious();
 
 }

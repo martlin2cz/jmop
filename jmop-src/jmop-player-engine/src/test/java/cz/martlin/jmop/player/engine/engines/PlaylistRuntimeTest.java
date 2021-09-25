@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -212,7 +212,7 @@ public class PlaylistRuntimeTest {
 		System.out.println("C: " + runtime); //$NON-NLS-1$
 
 		assertEquals(expectedCount, runtime.count(), "Track count missmatch"); //$NON-NLS-1$
-		assertEquals(expectedCurrentIndex, runtime.currentTrackIndex(), "Current index missmatch"); //$NON-NLS-1$
+		assertEquals(expectedCurrentIndex, runtime.currentTrackIndex().getIndex(), "Current index missmatch"); //$NON-NLS-1$
 		assertEquals(expectedPlayedCount, runtime.playedCount(),"Played count missmatch"); //$NON-NLS-1$
 		assertEquals(expectedRemainingCount, runtime.remainingCount(), "Remaining count missmatch"); //$NON-NLS-1$
 	}
@@ -231,7 +231,7 @@ public class PlaylistRuntimeTest {
 
 	private PlaylistRuntime runtime(List<Track> tracks) {
 		Tracklist tracklist = new Tracklist(tracks);
-		Playlist playlist = new Playlist(bundle, "testing playlist", tracklist, 0, Metadata.createNew());
+		Playlist playlist = new Playlist(bundle, "testing playlist", tracklist, TrackIndex.ofIndex(0), Metadata.createNew());
 		PlaylistRuntime runtime = new PlaylistRuntime(playlist);
 		return runtime;
 	}

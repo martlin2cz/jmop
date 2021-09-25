@@ -9,6 +9,6 @@ import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 public interface BaseDownloader {
 	public TrackFileFormat downloadFormat();
 	
-	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location) throws JMOPMusicbaseException;
+	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location) ;
 
 }

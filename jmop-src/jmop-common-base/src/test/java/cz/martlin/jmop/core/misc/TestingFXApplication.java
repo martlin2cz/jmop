@@ -89,11 +89,7 @@ public class TestingFXApplication extends Application {
 		OperationsManager manager = new OperationsManager();
 		BaseOperationsChain<Integer> chain = new TestingCountingOperationsChain("xyzw", 5);
 
-		try {
-			manager.start(0, chain, (r) -> System.out.println("The operations chain completed with " + r));
-		} catch (JMOPMusicbaseException e) {
-			e.printStackTrace();
-		}
+		manager.start(0, chain, (r) -> System.out.println("The operations chain completed with " + r));
 	}
 ///////////////////////////////////////////////////////////////////////////
 

@@ -3,10 +3,10 @@ package cz.martlin.jmop.player.engine.engines;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
@@ -30,14 +30,14 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist) {
+	public void startPlayingPlaylist(Playlist playlist)  {
 		LOG.info("Starting to play playlist " + playlist.getName() + " of bundle " + playlist.getBundle().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		delegee.startPlayingPlaylist(playlist);
 	}
 
 	@Override
-	public void stopPlayingPlaylist() {
+	public void stopPlayingPlaylist()  {
 		LOG.info("Stopping to play playlist " + currentPlaylist().getName() + " of bundle " //$NON-NLS-1$ //$NON-NLS-2$
 				+ currentPlaylist().getBundle().getName());
 
@@ -76,21 +76,21 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 
 
 	@Override
-	public void play() throws JMOPMusicbaseException {
+	public void play()  {
 		LOG.info("Playing current to play"); //$NON-NLS-1$
 
 		delegee.play();
 	}
 
 	@Override
-	public void play(int index) throws JMOPMusicbaseException {
-		LOG.info("Playing " + index + " th"); //$NON-NLS-1$ //$NON-NLS-2$
+	public void play(TrackIndex index)  {
+		LOG.info("Playing " + index.getIndex() + " th"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		delegee.play(index);
 	}
 
 	@Override
-	public void stop() throws JMOPMusicbaseException {
+	public void stop()  {
 		LOG.info("Stopping playing"); //$NON-NLS-1$
 		
 		delegee.stop();
@@ -118,18 +118,28 @@ public class LoggingPlayerEngine implements BasePlayerEngine {
 	}
 
 	@Override
-	public void toNext() throws JMOPMusicbaseException {
+	public void toNext()  {
 		LOG.info("Playing next"); //$NON-NLS-1$
 
 		delegee.toNext();
 	}
 
 	@Override
-	public void toPrevious() throws JMOPMusicbaseException {
+	public void toPrevious()  {
 		LOG.info("Playing previous"); //$NON-NLS-1$
 
 		delegee.toPrevious();
 	}
 
+	@Override
+	public boolean hasNext() {
+		return delegee.hasNext();
+	}
+	
+	@Override
+	public boolean hasPrevious() {
+		return delegee.hasPrevious();
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////
 }

@@ -8,6 +8,6 @@ import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 
 public interface BaseConverter {
 	public BaseLongOperation<Track, Track> convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason) throws JMOPMusicbaseException;
+			TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason) ;
 
 }

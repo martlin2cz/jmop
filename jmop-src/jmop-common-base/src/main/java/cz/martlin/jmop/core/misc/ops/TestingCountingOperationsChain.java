@@ -14,7 +14,7 @@ public class TestingCountingOperationsChain implements BaseOperationsChain<Integ
 	}
 
 	@Override
-	public BaseOperation<Integer, Integer> createOperation(int index, Integer input) throws JMOPMusicbaseException {
+	public BaseOperation<Integer, Integer> createOperation(int index, Integer input)  {
 		System.out.println("Obtaining operation " + index + " with input " + input);
 		
 		if (index == 0) {

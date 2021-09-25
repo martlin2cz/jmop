@@ -71,8 +71,12 @@ public class TestingPrinter {
 	}
 
 	private static String date2str(Calendar cal) {
+		if (cal == null) {
+			return "---";
+		}
+		
 		SimpleDateFormat format = new SimpleDateFormat("dd.mm.yy HH:MM");
-
+		
 		Date date = cal.getTime();
 		return format.format(date);
 	}
