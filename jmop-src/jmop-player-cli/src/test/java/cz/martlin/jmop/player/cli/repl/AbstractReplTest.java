@@ -34,7 +34,7 @@ public class AbstractReplTest {
 		jmop = DefaultJMOPPlayerBuilder.createTesting();
 
 		BaseMusicbase musicbase = jmop.musicbase().getMusicbase();
-		tme = TestingMusicdataExtension.create(musicbase, true);
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true);
 	}
 
 /////////////////////////////////////////////////////////////////////

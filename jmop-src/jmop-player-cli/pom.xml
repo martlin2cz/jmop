@@ -42,7 +42,47 @@
 		
 		
 	</dependencies>
-	
-	
+
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>3.0.0</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>java</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<mainClass>cz.martlin.jmop.player.cli.main.JMOPCLI</mainClass>
+					</configuration>
+				</plugin>
+				
+				<!-- https://www.mkyong.com/maven/how-to-create-a-jar-file-with-maven/ -->
+				<!-- Run: mvn clean package -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>3.1.1</version>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<includeScope>runtime</includeScope>
+								<outputDirectory>${project.build.directory}/libs/</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+          
 	
 </project>
