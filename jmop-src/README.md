@@ -2,7 +2,7 @@
 
  ![logo](graphics/logo.svg) 
 
-JMOP is very simple (console-based) Java based music player. And that's mostly everything you should know about.
+JMOP is very simple (console-based) Java based music player. You can see it as an acronym of "Java music _only_ player". And that's mostly everything you should know about.
 
 # But...?
 
