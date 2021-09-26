@@ -2,31 +2,30 @@
 
  ![logo](graphics/logo.svg) 
 
-JMOP is Java-based music player working both online and offline.
+JMOP is very simple (console-based) Java based music player. And that's mostly everything you should know about.
 
-# What?
+# But...?
 
-JMOP holds its own collection of music. This music is beeing played from some source (well, currently only Youtube is supported). Each (music) video is at first play downloaded and converted into MP3. At the later play it is played from the disk. This saves your bandwidth (or even allows you to listen your favourite music when you don't have access to internet) and also creates simple audioteque at your local computer.
-  
+Apart from the usual music players, JMOP can play **only and only** what's located in its _musicbase_. It's like a very simple library of your music. (It's just directory in specific format.)
+
+The main idea of JMOP is to play music you have locally on your computer, not beeing annoyed by some extra GUI window. The music shall just flow, and you may not have to even bee thinking about any music player been running.
+
+*Note:* Running in background (as a service/daemon) and mapping the controls to media keys is planned. Also, some automated _musicdata_ import procedure is in the queue. 
+
+And why just command-line app? Well, It's a hobby project and mantaining good and user-friendly GUI is extremelly time-consuming. If you want to see _bad_ UX, try the version 1.
+
 # Screenshots
-![Playing with (down)loading of track](screens/screens/play-and-load.png) 
-![(Down)loading more than one track](screens/and-1-more.png) 
+![Working with JMOP](screens/jmop-cli.png) 
  
 # Download
-See GitHub [](https://github.com/martlin2cz/jmop/releases "Releases") site to get the latest version or take look into `releases` folder in the project root. 
-
-# Help
-The JMOP user help files (in english and czech) can be found inside of the `/jmop/src/main/resources/cz/martlin/jmop/gui/help` directory. See them online: [](https://github.com/martlin2cz/jmop/blob/master/jmop/src/main/resources/cz/martlin/jmop/gui/help/help_cs.html "czech"), [](https://github.com/martlin2cz/jmop/blob/master/jmop/src/main/resources/cz/martlin/jmop/gui/help/help_en.html "english"). 
-
-The same help is accesible from the app by menu item _Help_ or by pressing _F1_.
+See GitHub [](https://github.com/martlin2cz/jmop/releases "Releases") site to get the latest version. **Important note:** The project is still under development, expected less-then-more stable releases. Rather checkout the latest version and build from sources.
 
 # Build from sources
-To build JMOP from sources, use maven. For instance `mvn clean install`. Then run as usual.
+To build JMOP from sources, use _Apache maven_. Naviage to `jmop-player-cli` module and build. For instance `mvn clean package`. Then run as usual, `mvn exec:java` for instance.
 
-You can modify JMOP behaviour quite a lot by changing line `BaseJMOPBuilder builder = new DefaultJMOPPlayerBuilder();` in `JMOPGUIApp` class. JMOP builder generates the core object, take a look to its default implementation. You can modify and provide updated to the builder any part of the application core.
+To prepare executable binaries, navigate to `jmop-player-cli` module and run the `./release/do-the-release.sh`. It will output the ZIP containing all the nescessary files, so with the Windows BAT and unix Bash scripts to run the JMOP.
 
-# TODO
- - [ ] add more sources (Soundcloud for instance)
- - [ ] add dynamic search and autocomplete
- - [ ] allow to import playlists
- - [ ] fix various bugs
+# Requirements
+- any Windows/Unix (and possibly Mac too, but didn't tried)
+- Java > 11
+
