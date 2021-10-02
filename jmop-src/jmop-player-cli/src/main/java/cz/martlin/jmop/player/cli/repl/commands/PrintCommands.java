@@ -228,8 +228,8 @@ public class PrintCommands {
 	
 
 	private static void printMetadata(Metadata metadata) {
-		PrintUtil.print("Created:", metadata.getCreatedCal(), //
+		PrintUtil.print("Created:", metadata.getCreated(), //
 				", played:", metadata.getNumberOfPlays(), "x", //
-				", last played:", metadata.getLastPlayedCal());
+				", last played:", metadata.getLastPlayed());
 	}
 }
