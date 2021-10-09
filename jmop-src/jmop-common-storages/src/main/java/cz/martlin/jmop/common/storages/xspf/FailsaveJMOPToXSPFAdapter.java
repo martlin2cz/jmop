@@ -231,10 +231,14 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 		Node tracklistNode = trackNode.getParentNode();
 		NodeList tracklistChildren = tracklistNode.getChildNodes();
 		
+		int elemIndex = 0;
 		for (int i = 0; i < tracklistChildren.getLength(); i++) {
 			Node ithTrackNode = tracklistChildren.item(i);
 			if (trackNode.equals(ithTrackNode)) {
-				return TrackIndex.ofIndex(i);
+				return TrackIndex.ofIndex(elemIndex);
+			}
+			if (ithTrackNode.getNodeType() == Node.ELEMENT_NODE) {
+				elemIndex++;
 			}
 		}
 		
