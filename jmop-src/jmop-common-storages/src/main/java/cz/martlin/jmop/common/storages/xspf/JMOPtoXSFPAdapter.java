@@ -47,9 +47,11 @@ public class JMOPtoXSFPAdapter {
 	public String getBundleName(XSPFPlaylist xplaylist) throws JMOPPersistenceException {
 		try {
 			String bundleName = mim.getStrMetaValue(xplaylist, MetaKind.BUNDLE, "name");
-			Objects.requireNonNull(bundleName, "The bundle name is not specified");
+			if (bundleName == null || bundleName.isEmpty()) {
+				throw new IllegalArgumentException("The bundle name is not specified or is empty");
+			}
 			return bundleName;
-		} catch (NullPointerException e) {
+		} catch (NullPointerException | IllegalArgumentException e) {
 			throw new JMOPPersistenceException("Could not get bundle name", e);
 		}
 	}
