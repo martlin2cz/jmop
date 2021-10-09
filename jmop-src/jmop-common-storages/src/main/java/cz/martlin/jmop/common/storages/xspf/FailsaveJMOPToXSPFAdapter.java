@@ -1,5 +1,8 @@
 package cz.martlin.jmop.common.storages.xspf;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
@@ -14,6 +17,7 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.xspf.playlist.base.XSPFCommon;
 import cz.martlin.xspf.playlist.elements.XSPFPlaylist;
 import cz.martlin.xspf.playlist.elements.XSPFTrack;
+import cz.martlin.xspf.util.XSPFException;
 import javafx.util.Duration;
 
 public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
@@ -94,11 +98,8 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 		try {
 			return super.getTrackIndex(xtrack);
 		} catch (Exception e) {
-			// the track index is crucial for us to work,
-			// we cannot simply recover from that
-
-			// reporter.report("Cannot get track index", e);
-			throw new JMOPPersistenceException("Cannot get track index", e);
+			reporter.report("Cannot get trackIndex of the track " + xtrackTitleToReport(xtrack), e);
+			return computeAlternativeTrackIndex(xtrack);
 		}
 	}
 
@@ -120,7 +121,7 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 		try {
 			return super.getTrackAnnotation(xtrack);
 		} catch (Exception e) {
-			reporter.report("Cannot get track annotation", e);
+			reporter.report("Cannot get track annotation of the track " + xtrackTitleToReport(xtrack), e);
 			return "";
 		}
 	}
@@ -130,7 +131,7 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 		try {
 			return super.getTrackDuration(xtrack);
 		} catch (Exception e) {
-			reporter.report("Cannot get track duration", e);
+			reporter.report("Cannot get track duration of the track " + xtrackTitleToReport(xtrack), e);
 			return DurationUtilities.createDuration(0, 0, 0);
 		}
 	}
@@ -140,7 +141,7 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 		try {
 			super.setTrackIndex(index, xtrack);
 		} catch (Exception e) {
-			reporter.report("Cannot set track index", e);
+			reporter.report("Cannot set track index of the track " + xtrackTitleToReport(xtrack), e);
 		}
 	}
 
@@ -158,7 +159,7 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 		try {
 			super.setTrackAnnotation(track, xtrack);
 		} catch (Exception e) {
-			reporter.report("Cannot set annotation", e);
+			reporter.report("Cannot set annotation of the track " + xtrackTitleToReport(xtrack), e);
 		}
 	}
 
@@ -167,7 +168,7 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 		try {
 			super.setTrackDuration(track, xtrack);
 		} catch (Exception e) {
-			reporter.report("Cannot set duration", e);
+			reporter.report("Cannot set duration of the track " + xtrackTitleToReport(xtrack), e);
 		}
 	}
 
@@ -176,7 +177,7 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 		try {
 			super.setTrackLocation(track, tracks, xtrack);
 		} catch (Exception e) {
-			reporter.report("Cannot set track location", e);
+			reporter.report("Cannot set track location of the track " + xtrackTitleToReport(xtrack), e);
 		}
 	}
 
@@ -198,5 +199,47 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 			return Metadata.createNew();
 		}
 	}
+
+	///////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * Returns title of the given xtrack, or "???" if cannot be obtained.
+	 * Use in error reporting only.
+	 *  
+	 * @param xtrack
+	 * @return
+	 */
+	private String xtrackTitleToReport(XSPFTrack xtrack) {
+		try {
+			return xtrack.getTitle();
+		} catch (XSPFException e) {
+			reporter.report("Cannot get track title", e);
+			return "???";
+		}
+	}
+
+	/**
+	 * Tries to compute the track index of the given xtrack based
+	 * on the order number (index) of the provided track node in the
+	 * owning trackList element.
+	 * 
+	 * @param xtrack
+	 * @return
+	 */
+	private TrackIndex computeAlternativeTrackIndex(XSPFTrack xtrack) {
+		Node trackNode = xtrack.getNode();
+		Node tracklistNode = trackNode.getParentNode();
+		NodeList tracklistChildren = tracklistNode.getChildNodes();
+		
+		for (int i = 0; i < tracklistChildren.getLength(); i++) {
+			Node ithTrackNode = tracklistChildren.item(i);
+			if (trackNode.equals(ithTrackNode)) {
+				return TrackIndex.ofIndex(i);
+			}
+		}
+		
+		throw new IllegalArgumentException("The track node index (in the child nodes list) cannot be obtained");
+	}
+
 
 }

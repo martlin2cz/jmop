@@ -35,7 +35,12 @@ public abstract class ValueToAndFromStringMetaInfoManager<PT> implements BasePla
 
 	@Override
 	public int getCountMetaValue(PT xcontext, MetaKind kind, String name) throws JMOPPersistenceException {
-		return getMetaValue(xcontext, kind, name, converters::textToNumber);
+		Integer value = getMetaValue(xcontext, kind, name, converters::textToNumber);
+		if (value == null) {
+			throw new JMOPPersistenceException("No count meta value of " + name);
+		} else {
+			return value.intValue();
+		}
 	}
 
 	@Override

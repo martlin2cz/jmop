@@ -59,7 +59,7 @@ public class DefaultJMOPPlayerBuilder {
 
 //		BaseMusicbaseStorage storage = X_DefaultStorage.create(root, storageConfig, reporter, verifiing);
 
-		BaseMusicbaseStorage storage = new StorageBuilder().create(DirsLayout.BUNDLES_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, false, PlaylistFileFormat.XSPF, reporter, root, storageConfig, format, inmemory);
+		BaseMusicbaseStorage storage = new StorageBuilder().create(DirsLayout.BUNDLES_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, true, PlaylistFileFormat.XSPF, reporter, root, storageConfig, format, inmemory);
 
 //		StorageBuilder builder = new StorageBuilder();
 //		BaseMusicbaseStorage storage = builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.SIMPLE, false, PlaylistFileFormat.TXT, reporter, root, config, TrackFileFormat.MP3, inmemory);

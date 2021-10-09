@@ -38,9 +38,8 @@ public class XSPFPlaylistFilesMusicdataManipulator extends CommonMusicdataFileMa
 		BaseValueToAndFromStringConverters converters = new FormatingValueToAndFromStringConverters();
 
 		BasePlaylistMetaInfoManager<XSPFCommon> mim = createMetaInfoManager(converters);
-		BasePlaylistMetaInfoManager<XSPFCommon> failsaveMim = new FailsavePlaylistMetaInfoManager<>(mim, reporter);
 
-		JMOPtoXSFPAdapter adapter = new JMOPtoXSFPAdapter(failsaveMim);
+		JMOPtoXSFPAdapter adapter = new JMOPtoXSFPAdapter(mim);
 
 		XSPFPlaylistTracksManager tracker = new XSPFPlaylistTracksManager(adapter);
 		BaseFileObjectManipulator<XSPFFile> extender = new XSPFPlaylistManipulator(adapter, tracker);
