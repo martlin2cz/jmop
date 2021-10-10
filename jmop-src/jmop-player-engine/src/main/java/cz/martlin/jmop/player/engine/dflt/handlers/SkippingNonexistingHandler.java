@@ -12,7 +12,7 @@ public class SkippingNonexistingHandler extends AbstractTrackExistenceCheckingHa
 	}
 
 	@Override
-	protected void beforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track)  {
+	protected void doBeforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track)  {
 		if (engine.hasNext()) {
 			engine.toNext();
 		}

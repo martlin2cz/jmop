@@ -11,7 +11,7 @@ public class IgnoringNonexistingHandler extends AbstractTrackExistenceCheckingHa
 	}
 
 	@Override
-	protected void beforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track) {
+	protected void doBeforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track) {
 		// ignore, like I said
 	}
 }
