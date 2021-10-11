@@ -1,6 +1,8 @@
 package cz.martlin.jmop.core.misc;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -55,9 +57,9 @@ public class TestingPrinter {
 	}
 
 	private static String printMeta(Metadata metadata) {
-		return "crea:" + date2str(metadata.getCreatedCal()) //
+		return "crea:" + date2str(metadata.getCreated()) //
 				+ ", plays:" + Integer.toString(metadata.getNumberOfPlays()) //
-				+ ", last:" + date2str(metadata.getLastPlayedCal()); //
+				+ ", last:" + date2str(metadata.getLastPlayed()); //
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -70,14 +72,13 @@ public class TestingPrinter {
 		}
 	}
 
-	private static String date2str(Calendar cal) {
-		if (cal == null) {
+	private static String date2str(LocalDateTime dateTime) {
+		if (dateTime == null) {
 			return "---";
 		}
 		
-		SimpleDateFormat format = new SimpleDateFormat("dd.mm.yy HH:MM");
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy H.mm.ss");
 		
-		Date date = cal.getTime();
-		return format.format(date);
+		return dateTime.format(format);
 	}
 }

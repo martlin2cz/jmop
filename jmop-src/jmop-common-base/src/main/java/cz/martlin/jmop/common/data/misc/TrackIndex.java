@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 /**
  * An index of the track in the playlist. Since java uses zero-based indexing
@@ -155,7 +156,7 @@ public class TrackIndex implements Comparable<TrackIndex> {
 	}
 
 	public static <E> Map<TrackIndex, E> map(List<E> list) {
-		Map<TrackIndex, E> map = new HashMap<>(list.size());
+		Map<TrackIndex, E> map = new TreeMap<>();
 
 		for (int i = 0; i < list.size(); i++) {
 			E item = list.get(i);
