@@ -179,8 +179,14 @@ public class XSPFPlaylistTracksManager {
 			
 			for (XSPFTrack xtrack : xtracks.iterate()) {
 				Track track = getTrack(extender, xtrack, bundle, tracks);
+				if (track == null) {
+					continue;
+				}
 				TrackIndex index = adapter.getTrackIndex(xtrack);
-				// TODO if track or track index == null skip
+				if (index == null) {
+					continue;
+				}
+				
 				map.put(index, track);
 			}
 

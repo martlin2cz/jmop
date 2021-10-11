@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.playlists;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,9 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 	@Override
 	public LocalDateTime getDateMetaValue(PT xcontext, MetaKind kind, String name) {
 		try {
-			return delegee.getDateMetaValue(xcontext, kind, name);
+			LocalDateTime value = delegee.getDateMetaValue(xcontext, kind, name);
+			Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
+			return value;
 		} catch (Exception e) {
 			report(e, xcontext, kind, name, "get", "date");
 			return LocalDateTime.now();
@@ -44,9 +47,11 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 	@Override
 	public int getCountMetaValue(PT xcontext, MetaKind kind, String name) {
 		try {
-			return delegee.getCountMetaValue(xcontext, kind, name);
+			int value = delegee.getCountMetaValue(xcontext, kind, name);
+			Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
+			return value;
 		} catch (Exception e) {
-			report(e, xcontext, kind, name, "get", "date");
+			report(e, xcontext, kind, name, "get", "count");
 			return 0;
 		}
 	}
@@ -54,9 +59,11 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 	@Override
 	public Duration getDurationMetaValue(PT xcontext, MetaKind kind, String name) {
 		try {
-			return delegee.getDurationMetaValue(xcontext, kind, name);
+			Duration value = delegee.getDurationMetaValue(xcontext, kind, name);
+			Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
+			return value;
 		} catch (Exception e) {
-			report(e, xcontext, kind, name, "get", "date");
+			report(e, xcontext, kind, name, "get", "duration");
 			return DurationUtilities.createDuration(0, 0, 0);
 		}
 	}
@@ -64,9 +71,11 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 	@Override
 	public TrackIndex getIndexMeta(PT xcontext, MetaKind kind, String name) {
 		try {
-			return delegee.getIndexMeta(xcontext, kind, name);
+			TrackIndex value = delegee.getIndexMeta(xcontext, kind, name);
+			Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
+			return value;
 		} catch (Exception e) {
-			report(e, xcontext, kind, name, "get", "date");
+			report(e, xcontext, kind, name, "get", "index");
 			return TrackIndex.ofHuman(1);
 		}
 	}
@@ -74,9 +83,11 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 	@Override
 	public String getStrMetaValue(PT xcontext, MetaKind kind, String name) {
 		try {
-			return delegee.getStrMetaValue(xcontext, kind, name);
+			String value = delegee.getStrMetaValue(xcontext, kind, name);
+			Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
+			return value;
 		} catch (Exception e) {
-			report(e, xcontext, kind, name, "get", "date");
+			report(e, xcontext, kind, name, "get", "str");
 			return "";
 		}
 	}
@@ -95,7 +106,7 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 		try {
 			delegee.setCountMetaInfo(xcontext, kind, name, count);
 		} catch (Exception e) {
-			report(e, xcontext, kind, name, "set", "date");
+			report(e, xcontext, kind, name, "set", "count");
 		}
 	}
 
@@ -104,7 +115,7 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 		try {
 			delegee.setDurationMetaInfo(xcontext, kind, name, duration);
 		} catch (Exception e) {
-			report(e, xcontext, kind, name, "set", "date");
+			report(e, xcontext, kind, name, "set", "duration");
 		}
 	}
 
@@ -113,7 +124,7 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 		try {
 			delegee.setIndexMetaInfo(xcontext, kind, name, index);
 		} catch (Exception e) {
-			report(e, xcontext, kind, name, "set", "date");
+			report(e, xcontext, kind, name, "set", "index");
 		}
 	}
 
@@ -122,7 +133,7 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 		try {
 			delegee.setStrMetaInfo(xcontext, kind, name, value);
 		} catch (Exception e) {
-			report(e, xcontext, kind, name, "set", "date");
+			report(e, xcontext, kind, name, "set", "str");
 		}
 	}
 
@@ -133,9 +144,9 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 				getOrSetSpecifier, metaName, kind, type, xcontext, ex);
 		// LOG.error("Because of the exception", e);
 
-		String message = "Could not " + getOrSetSpecifier + " value of " + metaName;
+		String kindStr = kind.name().toLowerCase();
+		String message = "Could not " + getOrSetSpecifier + " value of " + metaName + " of " + kindStr;
 		reporter.report(message, ex);
-
 	}
 
 }
