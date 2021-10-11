@@ -33,16 +33,6 @@ public class Metadata {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	@Deprecated
-	public Calendar getLastPlayedCal() {
-		if (lastPlayed == null) {
-			return null;
-		}
-		long ms = lastPlayed.toEpochSecond(ZoneOffset.UTC);
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(ms);
-		return cal;
-	}
 
 	public LocalDateTime getLastPlayed() {
 		return lastPlayed;
@@ -50,17 +40,6 @@ public class Metadata {
 
 	public int getNumberOfPlays() {
 		return numberOfPlays;
-	}
-
-	@Deprecated
-	public Calendar getCreatedCal() {
-		if (lastPlayed == null) {
-			return null;
-		}
-		long ms = created.toEpochSecond(ZoneOffset.UTC);
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(ms);
-		return cal;
 	}
 
 	public LocalDateTime getCreated() {

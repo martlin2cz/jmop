@@ -2,6 +2,8 @@ package cz.martlin.jmop.player.cli.repl.misc;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -16,6 +18,9 @@ import javafx.util.Duration;
 public class PrintUtil {
 
 	public static final String PATH_SEPARATOR = "/";
+	
+	private static final DateTimeFormatter DATE_FORMAT = //
+			DateTimeFormatter.ofPattern("d.M.yy H:mm:ss");
 
 	public static void emptyLine() {
 		System.out.println();
@@ -47,10 +52,9 @@ public class PrintUtil {
 				Integer num = (Integer) item;
 				System.out.print(num);
 			
-			} else if (item instanceof Calendar) {
-				Calendar cal = (Calendar) item;
-				Date date = cal.getTime();
-				String formatted = new SimpleDateFormat().format(date);
+			} else if (item instanceof LocalDateTime) {
+				LocalDateTime date = (LocalDateTime) item;
+				String formatted = date.format(DATE_FORMAT);
 				System.out.print(formatted);
 				
 			} else if (item instanceof File) {
