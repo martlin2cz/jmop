@@ -9,6 +9,8 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.BaseMusicbaseLoading;
+import cz.martlin.jmop.common.musicbase.TracksLocator;
 
 /**
  * The main entry point for the musicbase. This class encapsulates the
@@ -18,43 +20,62 @@ import cz.martlin.jmop.common.musicbase.BaseMusicbase;
  *
  */
 public class MusicbaseListingEncapsulator {
-	private final BaseMusicbase musicbase;
+	private final BaseMusicbaseLoading musicbase;
+	private final TracksLocator tracks;
+
+	public MusicbaseListingEncapsulator(BaseMusicbaseLoading musicbase, TracksLocator tracks) {
+		super();
+		this.musicbase = musicbase;
+		this.tracks = tracks;
+	}
+	
 
 	public MusicbaseListingEncapsulator(BaseMusicbase musicbase) {
 		super();
 		this.musicbase = musicbase;
+		this.tracks = musicbase;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
+
 
 	public Set<Bundle> bundles()  {
 		return new TreeSet<>(musicbase.bundles());
 	}
 
-	public Set<Playlist> playlists(Bundle bundle)  {
-		if (bundle != null) {
-			return new TreeSet<>(musicbase.playlists(bundle));
+	public Set<Playlist> playlists() {
+		return musicbase.bundles().stream() //
+				.flatMap(b -> musicbase.playlists(b).stream()) //
+				.collect(Collectors.toCollection(() -> new TreeSet<>()));
+	}
+	
+	public Set<Playlist> playlists(Bundle bundleOrAll)  {
+		if (bundleOrAll != null) {
+			return new TreeSet<>(musicbase.playlists(bundleOrAll));
 		} else {
-			return musicbase.bundles().stream() //
-					.flatMap(b -> musicbase.playlists(b).stream()) //
-					.collect(Collectors.toCollection(() -> new TreeSet<>()));
+			return playlists();
 		}
 		
 	}
 
-	public Set<Track> tracks(Bundle bundle)  {
-		if (bundle != null) {
-			return new TreeSet<>(musicbase.tracks(bundle));	
+	
+	public Set<Track> tracks() {
+		return musicbase.bundles().stream() //
+				.flatMap(b -> musicbase.tracks(b).stream()) //
+				.collect(Collectors.toCollection(() -> new TreeSet<>()));
+	}
+
+	public Set<Track> tracks(Bundle bundleOrAll)  {
+		if (bundleOrAll != null) {
+			return new TreeSet<>(musicbase.tracks(bundleOrAll));	
 		} else {
-			return musicbase.bundles().stream() //
-					.flatMap(b -> musicbase.tracks(b).stream()) //
-					.collect(Collectors.toCollection(() -> new TreeSet<>()));
+			return tracks();
 		}
 		
 	}
 
 	public File trackFile(Track track)  {
-		return musicbase.trackFile(track);
+		return tracks.trackFile(track);
 	}
 /////////////////////////////////////////////////////////////////////////////////////////
 

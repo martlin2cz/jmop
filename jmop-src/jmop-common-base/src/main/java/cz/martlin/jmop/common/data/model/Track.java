@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.data.model;
 
+import cz.martlin.jmop.common.data.misc.HasMetadata;
 import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import javafx.util.Duration;
@@ -12,7 +13,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class Track implements Comparable<Track>, WithPlayedMarker {
+public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 	private Bundle bundle;
 	private String identifier; //TODO replace by uri
 	private String title;
@@ -71,6 +72,7 @@ public class Track implements Comparable<Track>, WithPlayedMarker {
 		this.duration = duration;
 	}
 
+	@Override
 	public Metadata getMetadata() {
 		return metadata;
 	}
@@ -82,7 +84,13 @@ public class Track implements Comparable<Track>, WithPlayedMarker {
 
 	@Override
 	public int compareTo(Track another) {
-		return this.title.compareToIgnoreCase(another.title);
+		int titleCmp = this.title.compareToIgnoreCase(another.title);
+		if (titleCmp != 0) {
+			return titleCmp;
+		}
+		
+		int bundleCmp = this.bundle.compareTo(another.bundle);
+		return bundleCmp;
 	}
 	
 	@Override

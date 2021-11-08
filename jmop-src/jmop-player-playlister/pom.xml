@@ -5,7 +5,6 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.0.1</version>
 	</parent>
 
 	<artifactId>jmop-player-playlister</artifactId>
@@ -16,7 +15,7 @@
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-player-base</artifactId>
-			<version>3.0.1</version>
+			
 		</dependency>
 	</dependencies>
 </project>

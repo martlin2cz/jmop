@@ -12,6 +12,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
+import cz.martlin.jmop.common.musicbase.stats.MusicbaseStats;
 
 public class JMOPMusicbase {
 	private final BaseMusicbase musicbase;
@@ -65,6 +66,11 @@ public class JMOPMusicbase {
 	public Set<Track> tracks(Bundle bundleOrNull)  {
 		return listing.tracks(bundleOrNull);
 	}
+
+	public MusicbaseStats getStats() {
+		return new MusicbaseStats(musicbase); 
+	}
+
 
 /////////////////////////////////////////////////////////////////
 
@@ -134,9 +140,6 @@ public class JMOPMusicbase {
 	public void updateTrack(Track track, TrackData newData)  {
 		modyfiing.updateTrack(track, newData);
 	}
-
-
-
 
 
 

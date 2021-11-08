@@ -18,6 +18,7 @@ import picocli.CommandLine.Command;
 				PrintCommands.BundleInfoCommand.class, //
 				PrintCommands.PlaylistInfoCommand.class, //
 				PrintCommands.TrackInfoCommand.class, //
+				PrintCommands.StatsCommand.class, //
 				PlayCommand.class, //
 				PlayingCommands.PauseCommand.class, //
 				PlayingCommands.ResumeCommand.class, //

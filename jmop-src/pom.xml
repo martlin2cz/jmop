@@ -6,7 +6,7 @@
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
 	<packaging>pom</packaging>
-	<version>3.0.1</version>
+	<version>${revision}</version>
 
 	<name>jmop</name>
 	<url>https://github.com/martlin2cz/jmop</url>
@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<revision>3.0.1</revision>
+		<revision>3.1.1</revision>
 	</properties>
 
 	<dependencies>

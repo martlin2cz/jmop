@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.data.model;
 
+import cz.martlin.jmop.common.data.misc.HasMetadata;
 import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
@@ -15,7 +16,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class Playlist extends ObservableObject<Playlist> implements Comparable<Playlist>, WithPlayedMarker {
+public class Playlist extends ObservableObject<Playlist> implements Comparable<Playlist>, HasMetadata, WithPlayedMarker {
 	private Bundle bundle;
 
 	private String name;
@@ -169,8 +170,9 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		fireValueChangedEvent();
 	}
 	
+	@Override
 	public Metadata getMetadata() {
-		return metadata; 
+		return metadata;
 	}
 
 	/**
@@ -216,7 +218,13 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 
 	@Override
 	public int compareTo(Playlist other) {
-		return this.name.compareToIgnoreCase(other.name);
+		int nameCmp = this.name.compareToIgnoreCase(other.name);
+		if (nameCmp != 0) {
+			return nameCmp;
+		}
+		
+		int bundleCmp = this.bundle.compareTo(other.bundle);
+		return bundleCmp;
 	}
 
 	@Override
@@ -232,6 +240,13 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	@Override
 	public void played(Duration time) {
 		metadata = metadata.played(time);
+	}
+
+	public Duration getTotalDuration() {
+		return tracks.getTracks().stream() //
+				.reduce(Duration.ZERO, // 
+						(Duration d, Track t) -> d.add(t.getDuration()), //
+						(Duration x, Duration y) -> x.add(y)); //
 	}
 	
 

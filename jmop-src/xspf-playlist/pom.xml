@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.0.1</version>
+		<version>${revision}</version>
 	</parent>
 
 	<artifactId>xspf-playlist</artifactId>

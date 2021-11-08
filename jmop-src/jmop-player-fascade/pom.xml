@@ -5,33 +5,34 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.0.1</version>
+		<version>${revision}</version>
 	</parent>
 	
 	<artifactId>jmop-player-fascade</artifactId>
 	<name>The JMOP player fascade</name>
 	<description>The encapsulation of all the JMOP-player internals for the usage of the (G)UI</description>
 	
+	
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-player-base</artifactId>
-			<version>3.0.1</version>
+			<version>${revision}</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-musicbase</artifactId>
-			<version>3.0.1</version>
+			<version>${revision}</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-storages</artifactId>
-			<version>3.0.1</version>
+			<version>${revision}</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-player-engine</artifactId>
-			<version>3.0.1</version>
+			<version>${revision}</version>
 		</dependency>
 	</dependencies>
 </project>
