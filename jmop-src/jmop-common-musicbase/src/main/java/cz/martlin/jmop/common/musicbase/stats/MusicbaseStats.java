@@ -30,7 +30,7 @@ public class MusicbaseStats {
 	 *
 	 */
 	public enum ListStatsSpecifier {
-		FIRST_CREATED, LAST_PLAYED, MOST_PLAYED
+		FIRST_CREATED, LAST_PLAYED, MOST_PLAYED, MOST_TIME_PLAYED
 	}
 
 	private final MusicbaseListingEncapsulator listing;
@@ -178,9 +178,10 @@ public class MusicbaseStats {
 	 * @return
 	 */
 	public Duration totalPlayedTime(Bundle bundleOrAll) {
-		Set<Track> tracks = listing.tracks(bundleOrAll);
-		Function<Track, Duration> mapper = (t) -> t.getDuration().multiply(t.getMetadata().getNumberOfPlays());
-		return sumDurations(tracks, mapper);
+		Set<Bundle> bundles = bundleOrAll != null ? Set.of(bundleOrAll) : listing.bundles();
+		
+		Function<Bundle, Duration> mapper = (b) -> b.getMetadata().getTotalTime();
+		return sumDurations(bundles, mapper);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -257,9 +258,16 @@ public class MusicbaseStats {
 		case MOST_PLAYED:
 			return ((x, y) -> -Integer.compare(x.getMetadata().getNumberOfPlays(), //
 					y.getMetadata().getNumberOfPlays()));
+		case MOST_TIME_PLAYED:
+			return (x, y) -> -compare(x.getMetadata().getTotalTime(), //
+					y.getMetadata().getTotalTime()); //TODO FIXME HERE
 		default:
 			throw new IllegalArgumentException();
 		}
+	}
+
+	private static <E extends Comparable<E>> int compare(E first, E second) {
+		return first.compareTo(second);
 	}
 
 	/**

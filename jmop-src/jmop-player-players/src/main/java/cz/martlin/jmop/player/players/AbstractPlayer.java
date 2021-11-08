@@ -1,10 +1,10 @@
 package cz.martlin.jmop.player.players;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ObservableObject;
-import cz.martlin.jmop.player.players.BasePlayer;
-import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
 /**
@@ -16,6 +16,8 @@ import javafx.util.Duration;
  */
 public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implements BasePlayer {
 
+	private final Logger LOG = LoggerFactory.getLogger(getClass()); //TODO log all the other methods
+	
 	private TrackFinishedListener listener;
 	private PlayerStatus status;
 	private Track track;
@@ -52,7 +54,11 @@ public abstract class AbstractPlayer extends ObservableObject<BasePlayer> implem
 			throw new IllegalStateException("Not playing track");
 		}
 			
-		return doCurrentTime();
+		Duration currentTime = doCurrentTime();
+		if (currentTime.greaterThan(track.getDuration())) {
+			LOG.warn("Current time is greater than track lenght");
+		}
+		return currentTime;
 	}
 
 	/**

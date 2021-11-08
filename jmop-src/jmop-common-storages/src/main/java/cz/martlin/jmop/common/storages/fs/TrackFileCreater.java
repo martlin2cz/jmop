@@ -54,8 +54,10 @@ public class TrackFileCreater {
 			return;
 		case JUST_SET:
 			// nothing to be done
+			return;
 		case NO_FILE:
 			// nothing to be done
+			return;
 		default:
 			throw new IllegalArgumentException();
 

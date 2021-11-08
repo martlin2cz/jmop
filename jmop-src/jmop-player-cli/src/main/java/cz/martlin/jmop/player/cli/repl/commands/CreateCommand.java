@@ -84,7 +84,7 @@ public class CreateCommand extends AbstractCommand {
 		@Option(names = "duration", required = true)
 		private Duration duration;
 
-		@ArgGroup(exclusive = true, multiplicity = "0..1") //TODO or multiplicity=1 (i.e. required?)
+		@ArgGroup(exclusive = true, multiplicity = "1") //TODO or multiplicity=0..1 (i.e. optional?)
 		private FileSpecifier file;
 		
 		public CreateTrackCommand(JMOPPlayer jmop) {

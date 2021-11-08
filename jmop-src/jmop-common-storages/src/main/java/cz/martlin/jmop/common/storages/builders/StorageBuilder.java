@@ -3,7 +3,6 @@ package cz.martlin.jmop.common.storages.builders;
 import java.io.File;
 import java.util.Objects;
 
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.common.storages.builders.LocatorsBuilder.BundleDataFile;
@@ -14,6 +13,7 @@ import cz.martlin.jmop.common.storages.configs.BaseStorageConfiguration;
 import cz.martlin.jmop.common.storages.dflt.AllTracksPlaylistStorage;
 import cz.martlin.jmop.common.storages.filesystemer.BaseMusicbaseFilesystemer;
 import cz.martlin.jmop.common.storages.filesystemer.BundlesDirsFilesystemer;
+import cz.martlin.jmop.common.storages.filesystemer.FailsaveFilesystemer;
 import cz.martlin.jmop.common.storages.filesystemer.FileSystemedStorage;
 import cz.martlin.jmop.common.storages.filesystemer.OneDiredFilesystemer;
 import cz.martlin.jmop.common.storages.fs.BaseFileSystemAccessor;
@@ -53,7 +53,7 @@ public class StorageBuilder implements Builder<BaseMusicbaseStorage> {
 		Locators locators = locatorsBuilder.build(root, dirsLayout, bundleDataFile, config, playlistFileExtension);
 		BaseMusicdataSaver saver = saverBuilder.create(manipulator, locators, inmemory);
 		TrackFileCreater tracksCreater = createTrackFileCreater(fs, locators, failsave, reporter);
-		BaseMusicbaseFilesystemer filesystemer = createFilesystemer(dirsLayout, locators, fs, tracksCreater);
+		BaseMusicbaseFilesystemer filesystemer = createFilesystemer(dirsLayout, locators, fs, tracksCreater, failsave, reporter);
 		
 		BaseMusicdataLoader loader = loaderBuilder.create(dirsLayout, root, failsave, locators, manipulator, fs, reporter);
 		
@@ -81,19 +81,27 @@ public class StorageBuilder implements Builder<BaseMusicbaseStorage> {
 	}
 
 	private BaseMusicbaseFilesystemer createFilesystemer(DirsLayout dirsLayout, Locators locators,
-			BaseFileSystemAccessor fs, TrackFileCreater tracksCreater) {
+			BaseFileSystemAccessor fs, TrackFileCreater tracksCreater, boolean failsave, BaseErrorReporter reporter) {
 		
+		BaseMusicbaseFilesystemer fsr;
 		switch (dirsLayout) {
 		case ALL_IN_ONE_DIR:
-			return new OneDiredFilesystemer(tracksCreater);
+			fsr = new OneDiredFilesystemer(tracksCreater);
+			break;
 
 		case BUNDLES_DIR:
-			return new BundlesDirsFilesystemer(fs, locators.bundlesDirLocatorOrNull, locators.playlistsLocator,
+			fsr =  new BundlesDirsFilesystemer(fs, locators.bundlesDirLocatorOrNull, locators.playlistsLocator,
 					locators.tracksFilesLocator, tracksCreater);
+			break;
 
 		default:
 			throw new IllegalArgumentException();
-
+		}
+		
+		if (failsave) {
+			return new FailsaveFilesystemer(fsr, reporter);
+		} else {
+			return fsr;
 		}
 	}
 

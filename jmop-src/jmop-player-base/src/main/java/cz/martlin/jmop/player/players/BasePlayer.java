@@ -1,7 +1,6 @@
 package cz.martlin.jmop.player.players;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import javafx.beans.value.ObservableValue;
 import javafx.util.Duration;
 

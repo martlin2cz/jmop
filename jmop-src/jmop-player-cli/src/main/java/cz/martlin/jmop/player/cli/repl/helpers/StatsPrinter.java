@@ -82,7 +82,7 @@ public class StatsPrinter {
 		PrintUtil.print("Total tracks time:", stats.totalDuration(bundleOrNot));
 
 		PrintUtil.print("Total played tracks:", stats.totalPlayedTracks(bundleOrNot));
-		PrintUtil.print("Total played time (approx.):", stats.totalPlayedTime(bundleOrNot));
+		PrintUtil.print("Total played time:", stats.totalPlayedTime(bundleOrNot));
 		PrintUtil.emptyLine();
 		
 		Queue<Bundle> mostPlayedBundles = stats.bundles(ListStatsSpecifier.MOST_PLAYED, count);

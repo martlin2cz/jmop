@@ -12,7 +12,7 @@
 	<name>JMOP musicbase</name>
 	<description>Implements the (in-memory) database of the music</description>
 	<version>${revision}</version>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>

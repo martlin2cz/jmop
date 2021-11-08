@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.BaseMusicbaseLoading;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.stats.MusicbaseStats.ListStatsSpecifier;
@@ -58,6 +59,18 @@ class MusicbaseStatsTest {
 	}
 
 	@Test
+	void testMostPlayedBundleTime() {
+		Queue<Bundle> mostPlayedBundles = stats.bundles(ListStatsSpecifier.MOST_TIME_PLAYED, null);
+		printBundles(mostPlayedBundles, (b) -> b.getMetadata().getTotalTime());
+
+		Bundle firstBundle = mostPlayedBundles.poll();
+		Bundle secondBundle = mostPlayedBundles.poll();
+
+		assertTrue(firstBundle.getMetadata().getTotalTime().greaterThan(secondBundle.getMetadata().getTotalTime()));
+		assertEquals(tme.tmd.daftPunk, firstBundle);
+	}
+	
+	@Test
 	void testLastPlayedBundle() {
 		Queue<Bundle> lastPlayedBundles = stats.bundles(ListStatsSpecifier.LAST_PLAYED, 2);
 		printBundles(lastPlayedBundles, (b) -> b.getMetadata().getLastPlayed());
@@ -89,6 +102,27 @@ class MusicbaseStatsTest {
 		assertEquals(2, secondTrack.getMetadata().getNumberOfPlays());
 		assertEquals(1, thirdTrack.getMetadata().getNumberOfPlays());
 	}
+	
+	@Test
+	void testMostPlayedTrackTime() {
+		Queue<Track> mostPlayedTracks = stats.tracks(null, ListStatsSpecifier.MOST_TIME_PLAYED, 10);
+		printTracks(mostPlayedTracks, (t) -> t.getMetadata().getTotalTime());
+
+		Track firstTrack = mostPlayedTracks.poll();
+		Track secondTrack = mostPlayedTracks.poll();
+		Track thirdTrack = mostPlayedTracks.poll();
+
+		assertTrue(firstTrack.getMetadata().getTotalTime().greaterThan(secondTrack.getMetadata().getTotalTime()));
+		assertTrue(secondTrack.getMetadata().getTotalTime().greaterThan(thirdTrack.getMetadata().getTotalTime()));
+
+		assertEquals(tme.tmd.aerodynamic, firstTrack);
+		assertEquals(tme.tmd.verdisQuo, secondTrack);
+		assertEquals(tme.tmd.getLucky, thirdTrack);
+
+		assertEquals(DurationUtilities.createDuration(0, 6, 54), firstTrack.getMetadata().getTotalTime());
+		assertEquals(DurationUtilities.createDuration(0, 5, 44), secondTrack.getMetadata().getTotalTime());
+		assertEquals(DurationUtilities.createDuration(0, 0, 21), thirdTrack.getMetadata().getTotalTime());
+	}
 
 	@Test
 	void testLastPlayedPlaylist() {
@@ -105,10 +139,10 @@ class MusicbaseStatsTest {
 	@Test
 	void testBiggestBundlesByTracks() {
 		Queue<Bundle> bundles = stats.biggestBundlesByTracks(100);
-		printBundles(bundles, (b) -> "TODO");
+		printBundles(bundles, (b) -> ((BaseMusicbaseLoading) tme.getMusicbase()).tracks(b).size());
 
 		Bundle firstBundle = bundles.poll();
-		assertEquals(tme.tmd.daftPunk, firstBundle);
+		assertEquals(tme.tmd.cocolinoDeep, firstBundle);
 	}
 
 	@Test
@@ -117,7 +151,7 @@ class MusicbaseStatsTest {
 		printPlaylists(playlists, (p) -> p.getTracks().getTracks().size());
 
 		Playlist firstPlaylist = playlists.poll();
-		assertEquals(tme.tmd.bestTracks, firstPlaylist);
+		assertEquals(tme.tmd.seventeen, firstPlaylist);
 	}
 
 	@Test
@@ -155,7 +189,7 @@ class MusicbaseStatsTest {
 	void testTotalPlayedTime() {
 		Duration totalDuration = stats.totalPlayedTime(null);
 		System.out.println(DurationUtilities.toHumanString(totalDuration));
-		assertEquals(DurationUtilities.createDuration(0, 34, 46), totalDuration);
+		assertEquals(DurationUtilities.createDuration(0, 14, 8), totalDuration);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

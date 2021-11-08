@@ -54,10 +54,14 @@ public class BarPrinter {
 	private void printBar(Duration currentTime, Duration trackDuration, PlayerStatus status) {
 		String button = chooseStatusButton(jmop.status());
 
-		double currentMilis = currentTime.toMillis();
+		double currentMilis = currentTime != null ? currentTime.toMillis() : 0;
 		double trackMilis = trackDuration.toMillis();
 
 		double ratio = currentMilis / trackMilis;
+		if (ratio >= 1.0) { // if track badly configured
+			ratio = 1.0;
+		}
+		
 		int stepsPlayed = (int) (BAR_STEPS * ratio);
 		int stepsRemaining = BAR_STEPS - stepsPlayed;
 

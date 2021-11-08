@@ -92,7 +92,8 @@ public class ElementsPrinter {
 	private static void printMetadata(Metadata metadata) {
 		PrintUtil.print("Created:", metadata.getCreated(), //
 				", played:", metadata.getNumberOfPlays(), "x", //
-				", last played:", metadata.getLastPlayed());
+				", last played:", metadata.getLastPlayed(), //
+				", total time played:", metadata.getTotalTime());
 	}
 
 }
