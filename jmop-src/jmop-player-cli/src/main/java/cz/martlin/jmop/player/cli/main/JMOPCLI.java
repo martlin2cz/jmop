@@ -60,6 +60,8 @@ public class JMOPCLI {
 			System.err.println("Could terminate the JMOP: " + e.getMessage());
 			System.exit(3);
 		}
+		
+		JavaFXMediaPlayer.shutdownPlatform();
 	}
 
 	private static File obtainRoot(String[] args) {

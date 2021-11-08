@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URI;
 
 import cz.martlin.jmop.common.data.model.Track;
+import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -95,6 +96,14 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 	private static void initializeFX() {
 		new JFXPanel();
 	}
+	
+
+	/**
+	 * Force-terminates the FX framework
+	 */
+	public static void shutdownPlatform() {
+		Platform.exit();
+	}
 //
 //	/**
 //	 * Handles current time change.
@@ -105,5 +114,6 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 //		this.currentTime = to;
 //		fireValueChangedEvent();
 //	}
+
 
 }
