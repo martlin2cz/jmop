@@ -11,7 +11,7 @@
 	<artifactId>jmop-player-fascade</artifactId>
 	<name>The JMOP player fascade</name>
 	<description>The encapsulation of all the JMOP-player internals for the usage of the (G)UI</description>
-	
+	<version>${revision}</version>
 	
 	<dependencies>
 		<dependency>

@@ -138,65 +138,6 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 		metadata = metadata.played();
 	}
 	
-	
-	///////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Creates track within this bundle.
-	 * 
-	 * @param identifier
-	 * @param title
-	 * @param description
-	 * @param duration
-	 * @return
-	 * @deprecated do not
-	 */
-	@Deprecated
-	public Track createTrack(String identifier, String title, String description, Duration duration,
-			Metadata metadata) {
-		Track track = new Track(this, identifier, title, description, duration, metadata);
-		this.tracks.put(identifier, track);
-
-		fireValueChangedEvent();
-
-		return track;
-	}
-
-	/**
-	 * 
-	 * @param name
-	 * @param currentTrack
-	 * @param locked
-	 * @param metadata
-	 * @param tracks
-	 * @return
-	 * @deprecated do not
-	 */
-	@Deprecated
-	public Playlist createPlaylist(String name, int currentTrack, boolean locked, Metadata metadata, Tracklist tracks) {
-		Playlist playlist = new Playlist(this, name, currentTrack, locked, metadata, tracks);
-
-		this.playlists.put(name, playlist);
-		// TODO fire event?
-
-		return playlist;
-	}
-
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 * @deprecated do not
-	 */
-	@Deprecated
-	public Playlist createNewPlaylist(String name) {
-		Playlist playlist = new Playlist(this, name);
-
-		this.playlists.put(name, playlist);
-		// TODO fire event?
-
-		return playlist;
-	}
 
 	///////////////////////////////////////////////////////////////////////////
 

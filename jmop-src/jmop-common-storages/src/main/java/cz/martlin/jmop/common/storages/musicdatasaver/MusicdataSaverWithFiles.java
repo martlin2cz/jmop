@@ -26,7 +26,6 @@ public class MusicdataSaverWithFiles implements BaseMusicdataSaver {
 
 	private final BaseBundleDataLocator bundlesLocator;
 	private final BasePlaylistLocator playlistsLocator;
-	private final TracksLocator tracksLocator;
 	private final BaseMusicdataFileManipulator manipulator;
 	private final BaseInMemoryMusicbase inmemory;
 
@@ -34,17 +33,15 @@ public class MusicdataSaverWithFiles implements BaseMusicdataSaver {
 		super();
 		this.bundlesLocator = locator;
 		this.playlistsLocator = locator;
-		this.tracksLocator = locator;
 		this.manipulator = manipulator;
 		this.inmemory = inmemory;
 	}
 
 	public MusicdataSaverWithFiles(BaseBundleDataLocator bundlesLocator, BasePlaylistLocator playlistsLocator,
-			TracksLocator tracksLocator, BaseMusicdataFileManipulator manipulator, BaseInMemoryMusicbase inmemory) {
+			BaseMusicdataFileManipulator manipulator, BaseInMemoryMusicbase inmemory) {
 		super();
 		this.bundlesLocator = bundlesLocator;
 		this.playlistsLocator = playlistsLocator;
-		this.tracksLocator = tracksLocator;
 		this.manipulator = manipulator;
 		this.inmemory = inmemory;
 	}
@@ -61,7 +58,7 @@ public class MusicdataSaverWithFiles implements BaseMusicdataSaver {
 		
 		Set<Track> tracks = inmemory.tracks(bundle);
 		try {
-			manipulator.saveBundleData(bundle, tracks, file, tracksLocator);
+			manipulator.saveBundleData(bundle, tracks, file);
 		} catch (JMOPPersistenceException e) {
 			throw new JMOPRuntimeException("Could not save bundle " + bundle.getName(), e);
 		}
@@ -71,7 +68,7 @@ public class MusicdataSaverWithFiles implements BaseMusicdataSaver {
 	public void savePlaylistData(Playlist playlist, SaveReason reason) {
 		File file = playlistsLocator.playlistFile(playlist);
 		try {
-			manipulator.savePlaylistData(playlist, file, tracksLocator);
+			manipulator.savePlaylistData(playlist, file);
 		} catch (JMOPPersistenceException e) {
 			throw new JMOPRuntimeException("Could not save playlist " + playlist.getName(), e);
 		}

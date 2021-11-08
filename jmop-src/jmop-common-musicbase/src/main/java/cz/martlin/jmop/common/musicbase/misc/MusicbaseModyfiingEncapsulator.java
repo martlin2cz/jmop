@@ -12,6 +12,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 
 /**
@@ -104,17 +105,8 @@ public class MusicbaseModyfiingEncapsulator {
 	
 /////////////////////////////////////////////////////////////////////////////////////	
 	
-	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile)  {
-		if (contentsFile == null) {
-			return musicbase.createNewTrack(bundle, data, null);
-			
-		} else {
-			try (InputStream contentsStream = new BufferedInputStream(new FileInputStream(contentsFile))) {
-				return musicbase.createNewTrack(bundle, data, contentsStream);
-			} catch (IOException e) {
-				throw new JMOPRuntimeException("Could not load track's source file contents", e);
-			}
-		}
+	public Track createNewTrack(Bundle bundle, TrackData data, TrackFileCreationWay trackFileHow, File trackSourceFile)  {
+		return musicbase.createNewTrack(bundle, data, trackFileHow, trackSourceFile);
 	}
 
 
@@ -122,12 +114,12 @@ public class MusicbaseModyfiingEncapsulator {
 		//TODO utilise
 		TrackData data = new TrackData(track.getIdentifier(), track.getTitle(), track.getDescription(), track.getDuration());
 		
-		File trackFile = listing.trackFile(track);
+		File trackFile = track.getFile();
 		if (!trackFile.exists()) {
 			trackFile = null;
 		}
 		
-		createNewTrack(newBundle, data, trackFile);
+		createNewTrack(newBundle, data, TrackFileCreationWay.COPY_FILE, trackFile);
 	}
 	
 	public void renameTrack(Track track, String newTitle)  {

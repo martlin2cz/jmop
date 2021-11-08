@@ -1,12 +1,11 @@
 package cz.martlin.jmop.common.storages.filesystemer;
 
 import java.io.File;
-import java.io.InputStream;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.common.storages.loader.BaseMusicdataLoader;
@@ -29,15 +28,13 @@ public class FileSystemedStorage implements BaseMusicbaseStorage {
 	private final BaseMusicbaseFilesystemer filesystemer;
 	private final BaseMusicdataSaver saver;
 	private final BaseMusicdataLoader loader;
-	private final TracksLocator tracksLocator;
 
 	public FileSystemedStorage(BaseMusicbaseFilesystemer filesystemer, BaseBundlesDirLocator xxx_locator,
-			BaseMusicdataSaver saver, BaseMusicdataLoader loader, TracksLocator tracksLocator) {
+			BaseMusicdataSaver saver, BaseMusicdataLoader loader) {
 		super();
 		this.filesystemer = filesystemer;
 		this.saver = saver;
 		this.loader = loader;
-		this.tracksLocator = tracksLocator;
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -152,11 +149,11 @@ public class FileSystemedStorage implements BaseMusicbaseStorage {
 	}
 
 	@Override
-	public void createTrack(Track track, InputStream trackFileContents) {
+	public void createTrack(Track track, TrackFileCreationWay trackCreationWay, File trackSourceFile)
+			throws JMOPRuntimeException {
 		try {
-			filesystemer.createTrack(track, trackFileContents);
+			filesystemer.createTrack(track, trackCreationWay, trackSourceFile);
 			saver.saveTrackData(track, SaveReason.CREATED);
-
 		} catch (JMOPPersistenceException | JMOPRuntimeException e) {
 			throw new JMOPRuntimeException("Could not create track", e);
 		}
@@ -202,12 +199,6 @@ public class FileSystemedStorage implements BaseMusicbaseStorage {
 		} catch (JMOPRuntimeException e) {
 			throw new JMOPRuntimeException("Could not save the track", e);
 		}
-	}
-
-	@Override
-	public File trackFile(Track track) {
-		File trackFile = tracksLocator.trackFile(track);
-		return trackFile;
 	}
 
 }

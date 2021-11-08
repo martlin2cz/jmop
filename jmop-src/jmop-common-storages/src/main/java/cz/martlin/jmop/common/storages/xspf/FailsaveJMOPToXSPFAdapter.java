@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.storages.xspf;
 
+import java.io.File;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -135,6 +137,16 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 			return DurationUtilities.createDuration(0, 0, 0);
 		}
 	}
+	
+	@Override
+	public File getTrackFile(XSPFTrack xtrack) {
+		try {
+			return super.getTrackFile(xtrack);
+		} catch (Exception e) {
+			reporter.report("Cannot get track file of the track " + xtrackTitleToReport(xtrack), e);
+			return null;
+		}
+	}
 
 	@Override
 	public void setTrackIndex(TrackIndex index, XSPFTrack xtrack) {
@@ -173,11 +185,11 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 	}
 
 	@Override
-	public void setTrackLocation(Track track, TracksLocator tracks, XSPFTrack xtrack) {
+	public void setTrackFile(Track track, XSPFTrack xtrack) {
 		try {
-			super.setTrackLocation(track, tracks, xtrack);
+			super.setTrackFile(track, xtrack);
 		} catch (Exception e) {
-			reporter.report("Cannot set track location of the track " + xtrackTitleToReport(xtrack), e);
+			reporter.report("Cannot set track file of the track " + xtrackTitleToReport(xtrack), e);
 		}
 	}
 

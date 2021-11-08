@@ -1,14 +1,16 @@
 package cz.martlin.jmop.common.musicbase.persistent;
 
+import java.io.File;
 import java.io.InputStream;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 
-public interface BaseMusicbaseStorage extends TracksLocator {
+public interface BaseMusicbaseStorage {
 
 	void load(BaseInMemoryMusicbase inmemory) throws JMOPRuntimeException;
 
@@ -32,8 +34,8 @@ public interface BaseMusicbaseStorage extends TracksLocator {
 
 	void saveUpdatedPlaylist(Playlist playlist) throws JMOPRuntimeException;
 
-	void createTrack(Track track, InputStream trackFileContents) throws JMOPRuntimeException;
-
+	void createTrack(Track track, TrackFileCreationWay trackCreationWay, File trackSourceFile) throws JMOPRuntimeException;
+	
 	void renameTrack(Track track, String oldTitle, String newTitle) throws JMOPRuntimeException;
 
 	void moveTrack(Track track, Bundle oldBundle, Bundle newBundle) throws JMOPRuntimeException;

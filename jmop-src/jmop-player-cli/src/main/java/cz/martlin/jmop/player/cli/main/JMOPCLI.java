@@ -1,7 +1,6 @@
 package cz.martlin.jmop.player.cli.main;
 
 import java.io.File;
-import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ public class JMOPCLI {
 		try {
 			LOG.debug("Preparing the JMOP");
 			//jmop = DefaultJMOPPlayerBuilder.createTesting();
-			jmop = DefaultJMOPPlayerBuilder.create(root, (ts) -> new JavaFXMediaPlayer(ts), new ConstantDefaultFascadeConfig(), new SimpleErrorReporter());
+			jmop = DefaultJMOPPlayerBuilder.create(root, new JavaFXMediaPlayer(), new ConstantDefaultFascadeConfig(), new SimpleErrorReporter());
 					
 			
 			LOG.debug("Loading the JMOP");

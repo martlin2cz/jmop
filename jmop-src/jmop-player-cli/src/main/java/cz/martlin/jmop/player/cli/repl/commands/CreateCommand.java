@@ -4,13 +4,14 @@ import java.io.File;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import javafx.util.Duration;
 import picocli.CommandLine;
+import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Option;
@@ -83,8 +84,8 @@ public class CreateCommand extends AbstractCommand {
 		@Option(names = "duration", required = true)
 		private Duration duration;
 
-		@Option(names = "file", required = false)
-		private File sourceFile;
+		@ArgGroup(exclusive = true, multiplicity = "0..1") //TODO or multiplicity=1 (i.e. required?)
+		private FileSpecifier file;
 		
 		public CreateTrackCommand(JMOPPlayer jmop) {
 			super(jmop);
@@ -94,9 +95,68 @@ public class CreateCommand extends AbstractCommand {
 		protected void doRun()  {
 			Bundle bundle = this.bundle.getBundle();
 			TrackData data = new TrackData(identifier, title, description, duration);
-
-			jmop.musicbase().createNewTrack(bundle, data, sourceFile);
+			TrackFileCreationWay trackFileHow = file.getHow();
+			File trackFile = file.getFile();
+			
+			jmop.musicbase().createNewTrack(bundle, data, trackFileHow, trackFile);
 		}
+		
+		public static class FileSpecifier {
+
+			@Option(names="copy-file")
+			private File copyFile;
+			
+			@Option(names="move-file")
+			private File moveFile;
+			
+			@Option(names="link-file")
+			private File linkFile;
+			
+			@Option(names="set-file")
+			private File setFile;
+			
+			@Option(names="no-file")
+			private boolean noFile;
+			
+			public TrackFileCreationWay getHow() {
+				if (copyFile != null) {
+					return TrackFileCreationWay.COPY_FILE;
+				}
+				if (moveFile != null) {
+					return TrackFileCreationWay.MOVE_FILE;
+				}
+				if (linkFile != null) {
+					return TrackFileCreationWay.LINK_FILE;
+				}
+				if (setFile != null) {
+					return TrackFileCreationWay.JUST_SET;
+				}
+				if (noFile) {
+					return TrackFileCreationWay.NO_FILE;
+				}
+				return TrackFileCreationWay.NO_FILE;
+			}
+
+			public File getFile() {
+				if (copyFile != null) {
+					return copyFile;
+				}
+				if (moveFile != null) {
+					return moveFile;
+				}
+				if (linkFile != null) {
+					return linkFile;
+				}
+				if (setFile != null) {
+					return setFile;
+				}
+				if (noFile) {
+					return null;
+				}
+				return null;
+			}
+		}
+
 	}
 
 }

@@ -4,7 +4,20 @@ import java.io.File;
 
 import cz.martlin.jmop.common.data.model.Track;
 
+/**
+ * @deprecated Use the file directly from the track.
+ * @author martin
+ *
+ */
+@Deprecated
 public interface TracksLocator {
-	
-	public File trackFile(Track track);
+
+	/**
+	 * @deprecated Replaced by the {@link Track#getFile()}.
+	 * @author martin
+	 *
+	 */
+	public default File trackFile(Track track) {
+		return track.getFile();
+	}
 }

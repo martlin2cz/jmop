@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.storages.xspf;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -10,7 +11,6 @@ import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.storages.fileobjects.BaseFileObjectManipulator;
 import cz.martlin.jmop.common.storages.playlists.BasePlaylistMetaInfoManager.MetaKind;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
@@ -41,7 +41,7 @@ public class XSPFPlaylistManipulator implements BaseFileObjectManipulator<XSPFFi
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void setBundleDataAndTracks(Bundle bundle, Set<Track> tracks, TracksLocator tracksSource, XSPFFile xfile)
+	public void setBundleDataAndTracks(Bundle bundle, Set<Track> tracks,XSPFFile xfile)
 			throws JMOPPersistenceException {
 		XSPFPlaylist xplaylist = playlist(xfile);
 
@@ -49,11 +49,11 @@ public class XSPFPlaylistManipulator implements BaseFileObjectManipulator<XSPFFi
 
 		adapter.setMetadata(bundle.getMetadata(), MetaKind.BUNDLE, xplaylist);
 		
-		tracker.setTracks(this, tracks, tracksSource, xfile);
+		tracker.setTracks(this, tracks, xfile);
 	}
 
 	@Override
-	public void setPlaylistData(Playlist playlist, TracksLocator tracksSource, XSPFFile xfile)
+	public void setPlaylistData(Playlist playlist, XSPFFile xfile)
 			throws JMOPPersistenceException {
 		XSPFPlaylist xplaylist = playlist(xfile);
 
@@ -62,11 +62,11 @@ public class XSPFPlaylistManipulator implements BaseFileObjectManipulator<XSPFFi
 
 		adapter.setMetadata(playlist.getMetadata(), MetaKind.PLAYLIST, xplaylist);
 
-		tracker.setTracks(this, playlist.getTracks(), tracksSource, xfile);
+		tracker.setTracks(this, playlist.getTracks(), xfile);
 	}
 	
 
-	protected void setTrack(TrackIndex index, Track track, XSPFTrack xtrack, TracksLocator tracks)
+	protected void setTrack(TrackIndex index, Track track, XSPFTrack xtrack)
 			throws JMOPPersistenceException {
 		adapter.setTrackIndex(index, xtrack);
 		adapter.setTrackTitle(track, xtrack);
@@ -75,7 +75,7 @@ public class XSPFPlaylistManipulator implements BaseFileObjectManipulator<XSPFFi
 
 		adapter.setTrackDuration(track, xtrack);
 
-		adapter.setTrackLocation(track, tracks, xtrack);
+		adapter.setTrackFile(track, xtrack);
 		adapter.setMetadata(track.getMetadata(), MetaKind.TRACK, xtrack);
 	}
 
@@ -123,8 +123,9 @@ public class XSPFPlaylistManipulator implements BaseFileObjectManipulator<XSPFFi
 		String description = adapter.getTrackAnnotation(xtrack);
 		Duration duration = adapter.getTrackDuration(xtrack);
 		Metadata metadata = adapter.getMetadata(xtrack, MetaKind.TRACK);
-
-		return new Track(bundle, identifier, title, description, duration, metadata);
+		File file = adapter.getTrackFile(xtrack);
+		
+		return new Track(bundle, identifier, title, description, duration, file, metadata);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

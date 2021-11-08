@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
+import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 
 public class LoggingMusicbaseStorage implements BaseMusicbaseStorage {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -104,10 +106,11 @@ public class LoggingMusicbaseStorage implements BaseMusicbaseStorage {
 	}
 
 	@Override
-	public void createTrack(Track track, InputStream trackFileContents)  {
-		LOG.info("Creating track {}", track.getTitle());
+	public void createTrack(Track track, TrackFileCreationWay trackCreationWay, File trackSourceFile)
+			throws JMOPRuntimeException {
+		LOG.info("Creating track {}, with {} of {}", track.getTitle(), trackCreationWay, trackSourceFile);
 
-		delegee.createTrack(track, trackFileContents);
+		delegee.createTrack(track, trackCreationWay, trackSourceFile);
 	}
 
 	@Override
@@ -138,11 +141,5 @@ public class LoggingMusicbaseStorage implements BaseMusicbaseStorage {
 		delegee.saveUpdatedTrack(track);
 	}
 
-	@Override
-	public File trackFile(Track track)  {
-		LOG.info("Picking track {} file", track.getTitle());
-
-		return delegee.trackFile(track);
-	}
 	
 }

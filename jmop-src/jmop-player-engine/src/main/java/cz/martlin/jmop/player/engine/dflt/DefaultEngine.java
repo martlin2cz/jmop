@@ -1,7 +1,6 @@
 package cz.martlin.jmop.player.engine.dflt;
 
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.utils.Lifecycle;
 import cz.martlin.jmop.player.engine.dflt.BaseDefaultEngineConfig.NonExistingFileStrategy;
 import cz.martlin.jmop.player.engine.dflt.handlers.IgnoringNonexistingHandler;
@@ -57,14 +56,13 @@ public class DefaultEngine extends EngineWithHandlers {
 	private static BeforeTrackStartedHandler obtainBeforeTrackStartedHandler(BaseMusicbase musicbase,
 			BaseDefaultEngineConfig config) {
 
-		TracksLocator tracks = musicbase;
 		NonExistingFileStrategy strategy = config.getNonexistingFileStrategy();
 
 		switch (strategy) {
 		case SKIP:
-			return new SkippingNonexistingHandler(tracks);
+			return new SkippingNonexistingHandler();
 		case STOP:
-			return new IgnoringNonexistingHandler(tracks);
+			return new IgnoringNonexistingHandler();
 		default:
 			throw new IllegalArgumentException("Invalid strategy " + strategy);
 		}

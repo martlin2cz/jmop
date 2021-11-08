@@ -12,6 +12,7 @@
 	<artifactId>jmop-common-testing</artifactId>
 	<name>The jmop-common testing module</name>
 	<description>The testing implementation and data of the jmop-common module</description>
+	<version>${revision}</version>
 
 	<dependencies>
 		<dependency>

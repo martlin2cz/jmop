@@ -4,9 +4,6 @@ import java.io.File;
 import java.net.URI;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,8 +25,8 @@ public class JavaFXMediaPlayer extends AbstractTrackFilePlaingPlayer {
 		initializeFX();
 	}
 
-	public JavaFXMediaPlayer(TracksLocator local) {
-		super(local);
+	public JavaFXMediaPlayer() {
+		super();
 	}
 
 	@Override

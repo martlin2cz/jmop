@@ -10,7 +10,6 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.storages.playlists.BasePlaylistMetaInfoManager;
 import cz.martlin.jmop.common.storages.playlists.BasePlaylistMetaInfoManager.MetaKind;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
@@ -130,6 +129,15 @@ public class JMOPtoXSFPAdapter {
 		}
 	}
 
+	public File getTrackFile(XSPFTrack xtrack) throws JMOPPersistenceException {
+		try {
+			URI location = xtrack.getLocation();
+			return new File(location);
+		} catch (XSPFException | XSPFRuntimeException e) {
+			throw new JMOPPersistenceException("Cannot obtain track file", e);
+		}
+	}
+
 
 	public void setTrackIndex(TrackIndex index, XSPFTrack xtrack) throws JMOPPersistenceException {
 		try {
@@ -168,14 +176,14 @@ public class JMOPtoXSFPAdapter {
 		}
 	}
 
-	public void setTrackLocation(Track track, TracksLocator tracks, XSPFTrack xtrack) throws JMOPPersistenceException {
+	public void setTrackFile(Track track, XSPFTrack xtrack) throws JMOPPersistenceException {
 
-		File file = tracks.trackFile(track);
+		File file = track.getFile();
 		URI uri = JMOPtoXSFPAdapter.fileToUri(file);
 		try {
 			xtrack.setLocation(uri);
 		} catch (XSPFException | XSPFRuntimeException e) {
-			throw new JMOPPersistenceException("The track location cannot be set", e);
+			throw new JMOPPersistenceException("The track file cannot be set", e);
 		}
 	}
 
@@ -206,9 +214,25 @@ public class JMOPtoXSFPAdapter {
 
 	public static URI fileToUri(File file) throws JMOPPersistenceException {
 		try {
+			if (file == null) {
+				return null;
+			}
+			
 			return file.toURI();
 		} catch (Exception e) {
 			throw new JMOPPersistenceException("Could not construct the track file uri", e);
+		}
+	}
+	
+	public static File uriToFile(URI uri) throws JMOPPersistenceException {
+		try {
+			if (uri == null) {
+				return null;
+			}
+			
+			return new File(uri);
+		} catch (Exception e) {
+			throw new JMOPPersistenceException("Could not construct the track file", e);
 		}
 	}
 
@@ -233,6 +257,5 @@ public class JMOPtoXSFPAdapter {
 			throw new JMOPPersistenceException("The value is empty");
 		}
 	}
-
 
 }

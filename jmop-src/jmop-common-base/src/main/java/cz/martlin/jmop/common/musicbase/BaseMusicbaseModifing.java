@@ -1,6 +1,6 @@
 package cz.martlin.jmop.common.musicbase;
 
-import java.io.InputStream;
+import java.io.File;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -33,7 +33,7 @@ public interface BaseMusicbaseModifing {
 	
 	///////////////////////////////////////////////////////////////////////////
 	
-	public Track createNewTrack(Bundle bundle, TrackData data, InputStream trackFileContents) ;
+	public Track createNewTrack(Bundle bundle, TrackData data, TrackFileCreationWay trackFileHow, File trackSourceFile) ;
 
 	public void renameTrack(Track track, String newTitle) ;
 

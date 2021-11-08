@@ -19,6 +19,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.common.testing.resources.TestingTrackFilesCreator;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -179,7 +180,7 @@ class JMOPMusicbaseTest {
 			return;
 		}
 		
-		Track track = musicbase.createNewTrack(bundle, data, contents);
+		Track track = musicbase.createNewTrack(bundle, data, TrackFileCreationWay.COPY_FILE, contents);
 
 		assertEquals("Harder, Better, Faster, Stronger", track.getTitle());
 		//TODO check all the other properties

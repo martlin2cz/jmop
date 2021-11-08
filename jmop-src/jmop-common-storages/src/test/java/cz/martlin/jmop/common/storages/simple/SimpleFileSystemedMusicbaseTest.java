@@ -2,6 +2,8 @@ package cz.martlin.jmop.common.storages.simple;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.File;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,9 +14,12 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
+import cz.martlin.jmop.common.testing.resources.TestingResources;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class SimpleFileSystemedMusicbaseTest {
 
@@ -44,8 +49,11 @@ public class SimpleFileSystemedMusicbaseTest {
 		testingBundle = musicbase.createNewBundle("TestingBundle");
 
 		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
+		
+		File trackFile = null;
+		TrackFileCreationWay trackCreationWay = TrackFileCreationWay.NO_FILE;
 
-		testingTrack = musicbase.createNewTrack(testingBundle, td("tt"), null);
+		testingTrack = musicbase.createNewTrack(testingBundle, td("tt"), trackCreationWay, trackFile);
 		testingPlaylist.addTrack(testingTrack);
 
 	}
@@ -77,11 +85,11 @@ public class SimpleFileSystemedMusicbaseTest {
 	@Test
 	public void testTracks()  {
 		// tracks
-		Track holaTrack = musicbase.createNewTrack(testingBundle, td("hola"), null);
+		Track holaTrack = musicbase.createNewTrack(testingBundle, td("hola"), TrackFileCreationWay.NO_FILE, null);
 		assertEquals(testingBundle, holaTrack.getBundle());
 		assertEquals("hola", holaTrack.getTitle());
 
-		Track alohaTrack = musicbase.createNewTrack(testingBundle, td("aloha"), null);
+		Track alohaTrack = musicbase.createNewTrack(testingBundle, td("aloha"), TrackFileCreationWay.NO_FILE, null);
 		assertEquals(testingBundle, alohaTrack.getBundle());
 		assertEquals("aloha", alohaTrack.getTitle());
 

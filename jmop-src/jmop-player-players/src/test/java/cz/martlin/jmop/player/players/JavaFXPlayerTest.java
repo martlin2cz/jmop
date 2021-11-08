@@ -2,12 +2,6 @@ package cz.martlin.jmop.player.players;
 
 import org.junit.jupiter.api.Nested;
 
-import cz.martlin.jmop.common.musicbase.TracksLocator;
-import cz.martlin.jmop.common.testing.resources.TestingTracksSource;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.player.players.BasePlayer;
-import cz.martlin.jmop.player.players.JavaFXMediaPlayer;
-
 public class JavaFXPlayerTest  {
 
 	public JavaFXPlayerTest() {
@@ -23,8 +17,7 @@ public class JavaFXPlayerTest  {
 
 		@Override
 		protected BasePlayer createPlayer() {
-			TracksLocator local = new TestingTracksSource(TrackFileFormat.MP3);
-			return new JavaFXMediaPlayer(local);
+			return new JavaFXMediaPlayer();
 		}
 
 	}
@@ -38,8 +31,7 @@ public class JavaFXPlayerTest  {
 
 		@Override
 		protected BasePlayer createPlayer() {
-			TracksLocator local = new TestingTracksSource(TrackFileFormat.WAV);
-			return new JavaFXMediaPlayer(local);
+			return new JavaFXMediaPlayer();
 		}
 
 	}

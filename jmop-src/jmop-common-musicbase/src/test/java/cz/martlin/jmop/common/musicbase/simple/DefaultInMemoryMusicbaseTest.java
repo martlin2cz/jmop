@@ -15,6 +15,7 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -49,7 +50,7 @@ public class DefaultInMemoryMusicbaseTest {
 
 		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
 
-		testingTrack = musicbase.createNewTrack(testingBundle, td("tt", "testing_track"), null);
+		testingTrack = musicbase.createNewTrack(testingBundle, td("tt", "testing_track"), TrackFileCreationWay.NO_FILE, null);
 		testingPlaylist.addTrack(testingTrack);
 
 	}
@@ -92,7 +93,7 @@ public class DefaultInMemoryMusicbaseTest {
 
 	@Test
 	public void testTracks()  {
-		Track holaTrack = musicbase.createNewTrack(testingBundle, td("ho2", "hola"), null);
+		Track holaTrack = musicbase.createNewTrack(testingBundle, td("ho2", "hola"), TrackFileCreationWay.NO_FILE, null);
 		assertTrue(musicbase.tracks(testingBundle).contains(holaTrack));
 		
 		musicbase.renameTrack(holaTrack, "aloha");

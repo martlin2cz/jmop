@@ -14,7 +14,6 @@ import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 import cz.martlin.xspf.playlist.collections.XSPFTracks;
 import cz.martlin.xspf.playlist.elements.XSPFFile;
@@ -52,17 +51,17 @@ public class XSPFPlaylistTracksManager {
 /////////////////////////////////////////////////////////////////////////////////////
 
 
-	public void setTracks(XSPFPlaylistManipulator extender, Set<Track> tracksSet, TracksLocator tracks, XSPFFile xfile)
+	public void setTracks(XSPFPlaylistManipulator extender, Set<Track> tracksSet, XSPFFile xfile)
 			throws JMOPPersistenceException {
 		
 		Tracklist trackslist = new Tracklist(new ArrayList<>(tracksSet));
 		//FIXME this will attach (quite random) trackNums
 		// make them to not to be set instead
-		setTracks(extender, trackslist, tracks, xfile);
+		setTracks(extender, trackslist, xfile);
 	}
 
 	
-	public void setTracks(XSPFPlaylistManipulator extender, Tracklist tracklist, TracksLocator tracks, XSPFFile xfile)
+	public void setTracks(XSPFPlaylistManipulator extender, Tracklist tracklist, XSPFFile xfile)
 			throws JMOPPersistenceException {
 		try {
 			XSPFTracks currentXtracks = //
@@ -72,7 +71,7 @@ public class XSPFPlaylistTracksManager {
 
 			XSPFTracks newXtracks = xfile.newTracks();
 
-			setTracks(extender, tracklist, tracks, currentXtracks, newXtracks);
+			setTracks(extender, tracklist, currentXtracks, newXtracks);
 
 			xfile.playlist().setTracks(newXtracks);
 		} catch (XSPFException | XSPFRuntimeException e) {
@@ -80,7 +79,7 @@ public class XSPFPlaylistTracksManager {
 		}
 	}
 
-	private void setTracks(XSPFPlaylistManipulator extender, Tracklist tracklist, TracksLocator tracks,
+	private void setTracks(XSPFPlaylistManipulator extender, Tracklist tracklist, 
 			XSPFTracks currentXtracks, XSPFTracks newXtracks) throws XSPFException, JMOPPersistenceException {
 
 		Map<TrackIndex, Track> indexToTrackMap = tracklist.asIndexedMap();
@@ -92,7 +91,7 @@ public class XSPFPlaylistTracksManager {
 			currentXtracks.remove(xtrack);
 			newXtracks.add(xtrack);
 
-			extender.setTrack(index, track, xtrack, tracks);
+			extender.setTrack(index, track, xtrack);
 		}
 	}
 

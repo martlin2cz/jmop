@@ -184,11 +184,11 @@ class XSPFPlaylistFilesMusicdataManipulatorBruteForceTest {
 		Set<Track> tracksSet = Set.of(tme.tmd.oneMoreTime, tme.tmd.verdisQuo, tme.tmd.aerodynamic, tme.tmd.getLucky);
 		
 		if (mayBundleSaveFail) {
-			assertFails(() -> manipulator.saveBundleData(tme.tmd.daftPunk, tracksSet, file, trackSource), manipulator,
+			assertFails(() -> manipulator.saveBundleData(tme.tmd.daftPunk, tracksSet, file), manipulator,
 					playlistFileName);
 		} else {
 			try {
-				manipulator.saveBundleData(tme.tmd.daftPunk, tracksSet, file, trackSource);
+				manipulator.saveBundleData(tme.tmd.daftPunk, tracksSet, file);
 			} catch (JMOPPersistenceException e) {
 				String manName = manipulatorName(manipulator);
 				fail("Save bundle to " + file + " by " + manName + " failed", e);
@@ -202,11 +202,11 @@ class XSPFPlaylistFilesMusicdataManipulatorBruteForceTest {
 		File file = pickFile(playlistFileName);
 
 		if (mayPlaylistSaveFail) {
-			assertFails(() -> manipulator.savePlaylistData(tme.tmd.discovery, file, trackSource), manipulator,
+			assertFails(() -> manipulator.savePlaylistData(tme.tmd.discovery, file), manipulator,
 					playlistFileName);
 		} else {
 			try {
-				manipulator.savePlaylistData(tme.tmd.discovery, file, trackSource);
+				manipulator.savePlaylistData(tme.tmd.discovery, file);
 			} catch (JMOPPersistenceException e) {
 				String manName = manipulatorName(manipulator);
 				fail("Save playlist to " + file + " by " + manName + " failed", e);

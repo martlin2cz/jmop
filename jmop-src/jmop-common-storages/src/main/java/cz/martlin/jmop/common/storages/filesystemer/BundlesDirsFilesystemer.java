@@ -1,13 +1,14 @@
 package cz.martlin.jmop.common.storages.filesystemer;
 
 import java.io.File;
-import java.io.InputStream;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.storages.BundlesDirStorageComponent;
 import cz.martlin.jmop.common.storages.fs.BaseFileSystemAccessor;
+import cz.martlin.jmop.common.storages.fs.TrackFileCreater;
 import cz.martlin.jmop.common.storages.locators.BaseBundlesDirLocator;
 import cz.martlin.jmop.common.storages.locators.BasePlaylistLocator;
 import cz.martlin.jmop.common.storages.locators.BaseTrackFileLocator;
@@ -28,23 +29,26 @@ public class BundlesDirsFilesystemer implements BaseMusicbaseFilesystemer, Bundl
 	private final BaseBundlesDirLocator bundlesDirLocator;
 	private final BasePlaylistLocator playlistsLocator;
 	private final BaseTrackFileLocator tracksLocator;
+	private final TrackFileCreater trackCreater;
 
 	public BundlesDirsFilesystemer(BaseFileSystemAccessor fs, BaseBundlesDirLocator bundlesDirLocator,
-			AbstractCommonLocator locator) {
+			AbstractCommonLocator locator, TrackFileCreater trackCreater) {
 		super();
 		this.fs = fs;
 		this.bundlesDirLocator = bundlesDirLocator;
 		this.playlistsLocator = locator;
 		this.tracksLocator = locator;
+		this.trackCreater = trackCreater;
 	}
 
 	public BundlesDirsFilesystemer(BaseFileSystemAccessor fs, BaseBundlesDirLocator bundlesDirLocator,
-			BasePlaylistLocator playlistsLocator, BaseTrackFileLocator tracksLocator) {
+			BasePlaylistLocator playlistsLocator, BaseTrackFileLocator tracksLocator, TrackFileCreater trackCreater) {
 		super();
 		this.fs = fs;
 		this.bundlesDirLocator = bundlesDirLocator;
 		this.playlistsLocator = playlistsLocator;
 		this.tracksLocator = tracksLocator;
+		this.trackCreater = trackCreater;
 	}
 
 	@Override
@@ -90,17 +94,16 @@ public class BundlesDirsFilesystemer implements BaseMusicbaseFilesystemer, Bundl
 	}
 
 	@Override
-	public void createTrack(Track track, InputStream trackFileContents) throws JMOPPersistenceException {
-		File trackFile = tracksLocator.trackFile(track);
-		if (trackFileContents != null) {
-			fs.writeFile(trackFile, trackFileContents);
-		}
+	public void createTrack(Track track, TrackFileCreationWay trackCreationWay, File trackSourceFile)
+			throws JMOPPersistenceException {
+
+		trackCreater.performTrackFileCreate(track, trackCreationWay, trackSourceFile);
 	}
 
 	@Override
 	public void renameTrack(Track track, String oldTitle, String newTitle) throws JMOPPersistenceException {
 		Bundle bundle = track.getBundle();
-		File oldTrackFile = tracksLocator.trackFile(bundle, oldTitle);
+		File oldTrackFile = track.getFile();
 		File newTrackFile = tracksLocator.trackFile(bundle, newTitle);
 
 		if (oldTrackFile.exists()) {
@@ -110,7 +113,7 @@ public class BundlesDirsFilesystemer implements BaseMusicbaseFilesystemer, Bundl
 
 	@Override
 	public void moveTrack(Track track, Bundle oldBundle, Bundle newBundle) throws JMOPPersistenceException {
-		File oldTrackFile = tracksLocator.trackFile(oldBundle, track);
+		File oldTrackFile = track.getFile();
 		File newTrackFile = tracksLocator.trackFile(newBundle, track);
 
 		if (oldTrackFile.exists()) {
@@ -120,7 +123,7 @@ public class BundlesDirsFilesystemer implements BaseMusicbaseFilesystemer, Bundl
 
 	@Override
 	public void removeTrack(Track track) throws JMOPPersistenceException {
-		File oldTrackFile = tracksLocator.trackFile(track);
+		File oldTrackFile = track.getFile();
 
 		if (oldTrackFile.exists()) {
 			fs.deleteFile(oldTrackFile);

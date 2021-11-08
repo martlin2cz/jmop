@@ -1,7 +1,6 @@
 package cz.martlin.jmop.common.musicbase.persistent;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.Set;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -9,6 +8,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 
 public class PersistentMusicbase implements BaseMusicbase {
 
@@ -123,13 +123,13 @@ public class PersistentMusicbase implements BaseMusicbase {
 	@Override
 	public void addTrack(Track track) {
 		inmemory.addTrack(track);
-		storage.createTrack(track, null);
+		storage.createTrack(track, null, null);
 	}
 
 	@Override
-	public Track createNewTrack(Bundle bundle, TrackData data, InputStream trackFileContents) {
-		Track track = inmemory.createNewTrack(bundle, data, trackFileContents);
-		storage.createTrack(track, trackFileContents);
+	public Track createNewTrack(Bundle bundle, TrackData data, TrackFileCreationWay trackCreationWay, File trackSourceFile) {
+		Track track = inmemory.createNewTrack(bundle, data, trackCreationWay, trackSourceFile);
+		storage.createTrack(track, trackCreationWay, trackSourceFile);
 		return track;
 	}
 
@@ -157,11 +157,6 @@ public class PersistentMusicbase implements BaseMusicbase {
 	public void trackUpdated(Track track) {
 		inmemory.trackUpdated(track);
 		storage.saveUpdatedTrack(track);
-	}
-
-	@Override
-	public File trackFile(Track track) {
-		return storage.trackFile(track);
 	}
 
 	/////////////////////////////////////////////////////////////////

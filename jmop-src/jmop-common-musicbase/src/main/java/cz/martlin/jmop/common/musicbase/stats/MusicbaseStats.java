@@ -38,7 +38,7 @@ public class MusicbaseStats {
 	public MusicbaseStats(BaseMusicbaseLoading musicbase) {
 		super();
 
-		this.listing = new MusicbaseListingEncapsulator(musicbase, null);
+		this.listing = new MusicbaseListingEncapsulator(musicbase);
 	}
 
 	///////////////////////////////////////////////////////////////////////////

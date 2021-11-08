@@ -31,7 +31,7 @@ public class DefaultFileSystemAccessor implements BaseFileSystemAccessor {
 		Path path = directory.toPath();
 		return Files.isDirectory(path);
 	}
-
+	
 	@Override
 	public void createDirectory(File directory) throws JMOPPersistenceException {
 		try {
@@ -114,6 +114,30 @@ public class DefaultFileSystemAccessor implements BaseFileSystemAccessor {
 			throw new JMOPPersistenceException("Cannot move file", e);
 		}
 	}
+	
+	@Override
+	public void copyFile(File oldFile, File newFile) throws JMOPPersistenceException {
+		try {
+			Path oldPath = oldFile.toPath();
+			Path newPath = newFile.toPath();
+			Files.copy(oldPath, newPath);
+		} catch (IOException e) {
+			throw new JMOPPersistenceException("Cannot copy file", e);
+		}
+	}
+	
+	@Override
+	public void linkFile(File linkFile, File targetFile) throws JMOPPersistenceException {
+		try {
+			Path linkPath = linkFile.toPath();
+			Path targetPath = targetFile.toPath();
+			Files.createSymbolicLink(linkPath, targetPath);
+		} catch (IOException e) {
+			throw new JMOPPersistenceException("Cannot move file", e);
+		}
+	
+	}
+	
 
 	@Override
 	public Stream<File> listFiles(File directory) throws JMOPPersistenceException {

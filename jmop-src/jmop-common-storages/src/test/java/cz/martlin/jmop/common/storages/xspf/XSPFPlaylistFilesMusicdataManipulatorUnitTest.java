@@ -66,7 +66,7 @@ public class XSPFPlaylistFilesMusicdataManipulatorUnitTest {
 		File playlistFile = new File(rootDir , "playlist.xspf");
 		System.out.println("Working with: " + playlistFile);
 		
-		manipulator.savePlaylistData(tmb.discovery, playlistFile, tracksSource);
+		manipulator.savePlaylistData(tmb.discovery, playlistFile);
 		assertTrue(playlistFile.exists());
 
 		Map<String, Track> tracks = Map.of( //
@@ -86,7 +86,7 @@ public class XSPFPlaylistFilesMusicdataManipulatorUnitTest {
 		System.out.println("Working with: " + bundleFile);
 		
 		Set<Track> tracksSet = Set.of(tmb.oneMoreTime, tmb.verdisQuo, tmb.aerodynamic, tmb.getLucky);
-		manipulator.saveBundleData(tmb.daftPunk, tracksSet, bundleFile, tracksSource);
+		manipulator.saveBundleData(tmb.daftPunk, tracksSet, bundleFile);
 		assertTrue(bundleFile.exists());
 
 		Bundle loadedBundle = manipulator.loadBundleData(bundleFile);

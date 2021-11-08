@@ -1,7 +1,6 @@
 package cz.martlin.jmop.common.storages.dflt;
 
 import java.io.File;
-import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
@@ -39,11 +39,6 @@ public class AllTracksPlaylistStorage implements BaseMusicbaseStorage {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public File trackFile(Track track) {
-		return delegee.trackFile(track);
-	}
 
 	@Override
 	public void load(BaseInMemoryMusicbase inmemory) {
@@ -107,8 +102,10 @@ public class AllTracksPlaylistStorage implements BaseMusicbaseStorage {
 	}
 
 	@Override
-	public void createTrack(Track track, InputStream trackFileContents) throws JMOPRuntimeException {
-		delegee.createTrack(track, trackFileContents);
+	public void createTrack(Track track, TrackFileCreationWay trackCreationWay, File trackSourceFile)
+			throws JMOPRuntimeException {
+		
+		delegee.createTrack(track, trackCreationWay, trackSourceFile);
 		addTrackToAllTracksPlaylist(track);
 	}
 

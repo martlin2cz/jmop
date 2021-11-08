@@ -16,6 +16,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
@@ -89,8 +90,8 @@ public class VerifiingInMemoryMusicbaseTest {
 		TrackData data = new TrackData("DD", "Different Drum", "Billion Dollar Gravy",
 				DurationUtilities.createDuration(0, 7, 42));
 
-		Track differentDrum = musicbase.createNewTrack(tme.tmd.londonElektricity, data, null);
-		asrtFail(() -> musicbase.createNewTrack(tme.tmd.londonElektricity, data, null));
+		Track differentDrum = musicbase.createNewTrack(tme.tmd.londonElektricity, data, TrackFileCreationWay.NO_FILE, null);
+		asrtFail(() -> musicbase.createNewTrack(tme.tmd.londonElektricity, data, TrackFileCreationWay.NO_FILE, null));
 
 		assertOK(() -> musicbase.renameTrack(differentDrum, "DiffDrum"));
 		asrtFail(() -> musicbase.renameTrack(differentDrum, "DiffDrum"));

@@ -7,7 +7,6 @@ import java.util.Set;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.storages.fileobjects.BaseFileObjectIO;
 import cz.martlin.jmop.common.storages.fileobjects.BaseFileObjectManipulator;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
@@ -50,23 +49,23 @@ public class CommonMusicdataFileManipulator<PT> implements BaseMusicdataFileMani
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void saveBundleData(Bundle bundle, Set<Track> bundleTracks, File file, TracksLocator tracksSource)
+	public void saveBundleData(Bundle bundle, Set<Track> bundleTracks, File file)
 			throws JMOPPersistenceException {
 	
 		PT xfile = io.tryLoadOrCreate(file);
 	
-		extender.setBundleDataAndTracks(bundle, bundleTracks, tracksSource, xfile);
+		extender.setBundleDataAndTracks(bundle, bundleTracks, xfile);
 
 		io.save(xfile, file);
 	}
 
 	@Override
-	public void savePlaylistData(Playlist playlist, File file, TracksLocator tracksSource)
+	public void savePlaylistData(Playlist playlist, File file)
 			throws JMOPPersistenceException {
 
 		PT xfile = io.tryLoadOrCreate(file);
 
-		extender.setPlaylistData(playlist, tracksSource, xfile);
+		extender.setPlaylistData(playlist, xfile);
 
 		io.save(xfile, file);
 	}

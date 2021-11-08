@@ -47,13 +47,13 @@ public class SimpleMusicdataFileManipulator implements BaseMusicdataFileManipula
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void saveBundleData(Bundle bundle, Set<Track> tracks, File file, TracksLocator tracksSource)
+	public void saveBundleData(Bundle bundle, Set<Track> tracks, File file)
 			throws JMOPPersistenceException {
 		saveTracks(tracks, file);
 	}
 
 	@Override
-	public void savePlaylistData(Playlist playlist, File file, TracksLocator tracksSource)
+	public void savePlaylistData(Playlist playlist, File file)
 			throws JMOPPersistenceException {
 		Tracklist tracklist = playlist.getTracks();
 		saveTracks(tracklist.getTracks(), file);
@@ -105,7 +105,7 @@ public class SimpleMusicdataFileManipulator implements BaseMusicdataFileManipula
 		try {
 			return fs.loadLines(file) //
 					.stream() //
-					.map(l -> new Track(bundle, l, l, l, duration, metadata)) //
+					.map(l -> new Track(bundle, l, l, l, duration, new File(l), metadata)) //
 					.collect(Collectors.toList());
 		} catch (JMOPPersistenceException e) {
 			throw new JMOPRuntimeException("Could not load tracklist", e);

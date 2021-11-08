@@ -11,6 +11,7 @@
 	<artifactId>jmop-player-players</artifactId>
 	<name>JMOP players module.</name>
 	<description>The module implementing the actuall player(s).</description>
+	<version>${revision}</version>
 
 	<dependencies>
 		<dependency>

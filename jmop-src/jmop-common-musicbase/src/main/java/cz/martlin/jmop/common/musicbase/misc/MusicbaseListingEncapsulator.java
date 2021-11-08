@@ -21,19 +21,16 @@ import cz.martlin.jmop.common.musicbase.TracksLocator;
  */
 public class MusicbaseListingEncapsulator {
 	private final BaseMusicbaseLoading musicbase;
-	private final TracksLocator tracks;
 
-	public MusicbaseListingEncapsulator(BaseMusicbaseLoading musicbase, TracksLocator tracks) {
+	public MusicbaseListingEncapsulator(BaseMusicbaseLoading musicbase) {
 		super();
 		this.musicbase = musicbase;
-		this.tracks = tracks;
 	}
 	
 
 	public MusicbaseListingEncapsulator(BaseMusicbase musicbase) {
 		super();
 		this.musicbase = musicbase;
-		this.tracks = musicbase;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -74,10 +71,7 @@ public class MusicbaseListingEncapsulator {
 		
 	}
 
-	public File trackFile(Track track)  {
-		return tracks.trackFile(track);
-	}
-/////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////
 
 	public Set<Track> tracks(Playlist playlist) {
 		return new TreeSet<>(playlist.getTracks().getTracks());

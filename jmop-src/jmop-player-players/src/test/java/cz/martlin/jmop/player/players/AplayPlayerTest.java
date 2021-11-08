@@ -20,9 +20,8 @@ public class AplayPlayerTest extends AbstractPlayerTest {
 	
 	@Override
 	protected BasePlayer createPlayer() {
-		TracksLocator local = new TestingTracksSource(TrackFileFormat.WAV);
 		BaseErrorReporter reporter = new SimpleErrorReporter();
-		return new AplayPlayer(reporter, local);
+		return new AplayPlayer(reporter);
 	}
 
 }

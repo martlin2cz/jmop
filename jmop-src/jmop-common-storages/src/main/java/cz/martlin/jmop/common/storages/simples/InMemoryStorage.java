@@ -10,6 +10,7 @@ import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
@@ -71,7 +72,7 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 	private void addTrack(BaseInMemoryMusicbase inmemoryTo, Bundle bundle, Track track) {
 		try {
 			TrackData td = trackDataOfTrack(track);
-			inmemoryTo.createNewTrack(bundle, td, null);
+			inmemoryTo.createNewTrack(bundle, td, TrackFileCreationWay.JUST_SET, track.getFile());
 
 		} catch (RuntimeException e) {
 			throw new JMOPRuntimeException("Cannot load track " + track, e);
@@ -131,11 +132,13 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 	}
 
 	@Override
-	public void createTrack(Track track, InputStream trackFileContents) {
+	public void createTrack(Track track, TrackFileCreationWay trackCreationWay, File trackSourceFile)
+			throws JMOPRuntimeException {
+		
 		TrackData td = trackDataOfTrack(track);
-		inmemory.createNewTrack(track.getBundle(), td, trackFileContents);
+		inmemory.createNewTrack(track.getBundle(), td, trackCreationWay, trackSourceFile);
 	}
-
+		
 	@Override
 	public void renameTrack(Track track, String oldTitle, String newTitle) {
 		inmemory.renameTrack(track, newTitle);
@@ -156,16 +159,6 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 		// okay
 	}
 
-	@Override
-	public File trackFile(Track track) {
-		try {
-			Path path = Files.createTempFile("track", track.getTitle());
-			return path.toFile();
-
-		} catch (IOException e) {
-			throw new JMOPRuntimeException("Cannot obtain track file", e);
-		}
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

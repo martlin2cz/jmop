@@ -78,7 +78,7 @@ public class ElementsPrinter {
 		printMetadata(track.getMetadata());
 		PrintUtil.print("Duration:", track.getDuration());
 		PrintUtil.print("ID:", track.getIdentifier());
-		PrintUtil.print("File:", jmop.musicbase().file(track));
+		PrintUtil.print("File:", track.getFile());
 		PrintUtil.print("Description:");
 		PrintUtil.print(track.getDescription());
 		PrintUtil.emptyLine();

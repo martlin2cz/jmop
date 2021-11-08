@@ -15,7 +15,7 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
  * @author martin
  *
  */
-public class TestingTracksSource implements TracksLocator {
+public class TestingTracksSource {
 
 	private final TrackFileFormat format;
 	private final TestingTrackFilesCreator creator;
@@ -26,7 +26,6 @@ public class TestingTracksSource implements TracksLocator {
 		this.creator = new TestingTrackFilesCreator();
 	}
 
-	@Override
 	public File trackFile(Track track)  {
 		try {
 			File file = prepareTrackFile(track);

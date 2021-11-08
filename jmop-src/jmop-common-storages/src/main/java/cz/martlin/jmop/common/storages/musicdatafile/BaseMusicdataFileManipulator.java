@@ -7,7 +7,6 @@ import java.util.Set;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.utils.FileExtensionSpecifier;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 
@@ -27,10 +26,9 @@ public interface BaseMusicdataFileManipulator extends FileExtensionSpecifier {
 	 * @param bundle
 	 * @param tracks
 	 * @param file
-	 * @param tracksSource
 	 * @throws JMOPPersistenceException
 	 */
-	public void saveBundleData(Bundle bundle, Set<Track> tracks, File file, TracksLocator tracksSource)
+	public void saveBundleData(Bundle bundle, Set<Track> tracks, File file)
 			throws JMOPPersistenceException;
 
 	/**
@@ -38,10 +36,9 @@ public interface BaseMusicdataFileManipulator extends FileExtensionSpecifier {
 	 * 
 	 * @param playlist
 	 * @param file
-	 * @param tracksSource
 	 * @throws JMOPPersistenceException
 	 */
-	public void savePlaylistData(Playlist playlist, File file, TracksLocator tracksSource)
+	public void savePlaylistData(Playlist playlist, File file)
 			throws JMOPPersistenceException;
 
 	/**

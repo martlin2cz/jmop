@@ -116,7 +116,9 @@ public class SimpleBundlesDirListerLoader implements //
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
 		String id = title;
 		String description = title;
-		return new Track(bundle, id, title, description, duration, metadata);
+		File file = new File(title);
+		
+		return new Track(bundle, id, title, description, duration, file, metadata);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

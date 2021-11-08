@@ -6,7 +6,6 @@ import java.util.Set;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 
 /**
@@ -27,22 +26,20 @@ public interface BaseFileObjectManipulator<FT> {
 	 * 
 	 * @param bundle
 	 * @param tracks
-	 * @param tracksSource
 	 * @param fileObject
 	 * @throws JMOPPersistenceException
 	 */
-	public void setBundleDataAndTracks(Bundle bundle, Set<Track> tracks, TracksLocator tracksSource, FT fileObject)
+	public void setBundleDataAndTracks(Bundle bundle, Set<Track> tracks, FT fileObject)
 			throws JMOPPersistenceException;
 
 	/**
 	 * Populates the playlist data into the given file object.
 	 * 
 	 * @param playlist
-	 * @param tracks
 	 * @param fileObject
 	 * @throws JMOPPersistenceException
 	 */
-	public void setPlaylistData(Playlist playlist, TracksLocator tracks, FT fileObject) throws JMOPPersistenceException;
+	public void setPlaylistData(Playlist playlist, FT fileObject) throws JMOPPersistenceException;
 
 	/**
 	 * Loads the bundle data from the given file object.

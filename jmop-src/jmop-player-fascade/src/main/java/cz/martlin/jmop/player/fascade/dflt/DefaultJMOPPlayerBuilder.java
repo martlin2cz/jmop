@@ -1,10 +1,8 @@
 package cz.martlin.jmop.player.fascade.dflt;
 
 import java.io.File;
-import java.util.function.Function;
 
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.dflt.VerifiingInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
@@ -40,15 +38,15 @@ public class DefaultJMOPPlayerBuilder {
 		TestingRootDir rootDir = new TestingRootDir(DefaultJMOPPlayerBuilder.class);
 		File root = rootDir.getFile();
 		
-		Function<TracksLocator, BasePlayer> playerProducer = (ts) -> new TestingPlayer();
+		BasePlayer player = new TestingPlayer();
 		BaseDefaultJMOPConfig config = new ConstantDefaultFascadeConfig();
 
 		BaseErrorReporter reporter = new SimpleErrorReporter();
 		
-		return create(root, playerProducer, config, reporter);
+		return create(root, player, config, reporter);
 	}
 
-	public static JMOPPlayer create(File root, Function<TracksLocator, BasePlayer> playerProducer,  BaseDefaultJMOPConfig config, BaseErrorReporter reporter) {
+	public static JMOPPlayer create(File root, BasePlayer player,  BaseDefaultJMOPConfig config, BaseErrorReporter reporter) {
 		
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
 		BaseInMemoryMusicbase verifiing = new VerifiingInMemoryMusicbase(inmemory);
@@ -66,7 +64,6 @@ public class DefaultJMOPPlayerBuilder {
 	
 		BaseMusicbase musicbase = new PersistentMusicbase(verifiing, storage);
 		
-		BasePlayer player = playerProducer.apply(musicbase);
 		BaseDefaultEngineConfig engineConfig = config;
 		BasePlayerEngine engine = DefaultEngine.create(player, musicbase, engineConfig);
 

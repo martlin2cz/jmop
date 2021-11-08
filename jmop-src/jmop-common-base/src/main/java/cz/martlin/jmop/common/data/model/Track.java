@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.data.model;
 
+import java.io.File;
+
 import cz.martlin.jmop.common.data.misc.HasMetadata;
 import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
 import cz.martlin.jmop.core.misc.DurationUtilities;
@@ -19,9 +21,12 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 	private String title;
 	private String description;
 	private Duration duration;
+	
+	private File file;
+	
 	private Metadata metadata;
 
-	public Track(Bundle bundle, String identifier, String title, String description, Duration duration,
+	public Track(Bundle bundle, String identifier, String title, String description, Duration duration, File file,
 			Metadata metadata) {
 		super();
 		this.bundle = bundle;
@@ -29,6 +34,7 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 		this.title = title;
 		this.description = description;
 		this.duration = duration;
+		this.file = file;
 		this.metadata = metadata;
 	}
 
@@ -71,15 +77,20 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 	public void setDuration(Duration duration) {
 		this.duration = duration;
 	}
+	
+	public File getFile() {
+		return file;
+	}
 
+	public void setFile(File file) {
+		this.file = file;
+	}
+	
 	@Override
 	public Metadata getMetadata() {
 		return metadata;
 	}
 
-	public void setMetadata(Metadata metadata) {
-		this.metadata = metadata;
-	}
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override

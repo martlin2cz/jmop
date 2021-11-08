@@ -34,14 +34,14 @@ public class SaverBuilder implements Builder<BaseMusicdataSaver> {
 
 		BaseMusicdataFileManipulator manipulator = musicdataBuilder.create(playlistFileFormat, failsave, reporter, fs);
 		BaseMusicdataSaver saver = new MusicdataSaverWithFiles(locators.bundleDataLocator, locators.playlistsLocator,
-				locators.tracksFilesLocator, manipulator, inmemory);
+				manipulator, inmemory);
 		return saver;
 	}
 	
 	public BaseMusicdataSaver create(BaseMusicdataFileManipulator manipulator, Locators locators, BaseInMemoryMusicbase inmemory) {
 
 		BaseMusicdataSaver saver = new MusicdataSaverWithFiles(locators.bundleDataLocator, locators.playlistsLocator,
-				locators.tracksFilesLocator, manipulator, inmemory);
+				manipulator, inmemory);
 		return saver;
 	}
 

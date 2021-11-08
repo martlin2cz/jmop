@@ -56,7 +56,7 @@ class XSPFPlaylistExtendersTest {
 	void testPlaylist() throws JMOPPersistenceException, XSPFException {
 		XSPFFile xfile = XSPFPlaylistIO.createNew();
 
-		extender.setPlaylistData(tmb.discovery, tracks, xfile);
+		extender.setPlaylistData(tmb.discovery, xfile);
 		Printer.print(0, "Playlist set", xfile);
 
 		Map<String, Track> tracks = Map.of( //
@@ -74,7 +74,7 @@ class XSPFPlaylistExtendersTest {
 		XSPFFile xfile = XSPFPlaylistIO.createNew();
 
 		Set<Track> bundleTracks = Set.of(tmb.aerodynamic, tmb.verdisQuo, tmb.oneMoreTime, tmb.getLucky);
-		extender.setBundleDataAndTracks(tmb.daftPunk, bundleTracks, tracks, xfile);
+		extender.setBundleDataAndTracks(tmb.daftPunk, bundleTracks, xfile);
 		// Printer.print(0, "Bundle set", xfile);// print would fail as no tracks have
 		// been set
 

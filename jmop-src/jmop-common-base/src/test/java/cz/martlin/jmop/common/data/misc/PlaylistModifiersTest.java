@@ -215,7 +215,7 @@ class PlaylistModifiersTest {
 
 	private Track track(Bundle bundle, String title) {
 		Track fooTrack = new Track(bundle, title, title, title, DurationUtilities.createDuration(0, 3, 15),
-				Metadata.createNew());
+				null, Metadata.createNew());
 		return fooTrack;
 	}
 

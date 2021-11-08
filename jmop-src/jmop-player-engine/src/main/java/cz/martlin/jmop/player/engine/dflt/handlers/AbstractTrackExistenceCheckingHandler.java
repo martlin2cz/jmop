@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.BeforeTrackStartedHandler;
 
@@ -15,11 +13,9 @@ public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTra
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
-	private final TracksLocator tracks;
 
-	public AbstractTrackExistenceCheckingHandler(TracksLocator tracks) {
+	public AbstractTrackExistenceCheckingHandler() {
 		super();
-		this.tracks = tracks;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -39,8 +35,8 @@ public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTra
 	}
 
 	protected void beforeNonexistingTrackPlayed(BasePlayerEngine engine, Track track) {
-		File file = tracks.trackFile(track);
-		LOG.warn("The track " + track.getTitle() + " file (" + file + ") does not exist");
+		File file = track.getFile();
+		LOG.warn("The track " + track.getTitle() + " file (" + file + ") does not exist or is not specified");
 		//TODO or use some erorr reporter instead?
 		
 		doBeforeNonexistingTrackPlayed(engine, track);
@@ -51,7 +47,11 @@ public abstract class AbstractTrackExistenceCheckingHandler implements BeforeTra
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private boolean exists(Track track)  {
-		File file = tracks.trackFile(track);
+		File file = track.getFile();
+		if (file == null) {
+			return false;
+		}
+		
 		return file.exists();
 	}
 

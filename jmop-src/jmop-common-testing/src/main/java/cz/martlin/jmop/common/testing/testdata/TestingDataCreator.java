@@ -1,6 +1,8 @@
 package cz.martlin.jmop.common.testing.testdata;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -12,6 +14,8 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
+import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.SourceKind;
@@ -87,36 +91,21 @@ public class TestingDataCreator {
 	private static Track doCreateTrack(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
 			String id, Duration duration, boolean fileExisting) {
 			TrackData data = new TrackData(id, title, description, duration);
-			InputStream trackFileContents = fileExisting ? new ByteArrayInputStream(new byte[0]) : null;
+			File trackFile;
+			try {
+				trackFile = fileExisting ? File.createTempFile(title, ".music") : null;
+			} catch (IOException e) {
+				throw new JMOPRuntimeException(e);
+			}
 			
 			if (musicbase != null) {
-				return musicbase.createNewTrack(bundle, data, trackFileContents);
+				return musicbase.createNewTrack(bundle, data, TrackFileCreationWay.COPY_FILE, trackFile);
 			} else {
-				return new Track(bundle, id, title, description, duration, Metadata.createNew());
+				return new Track(bundle, id, title, description, duration, trackFile, Metadata.createNew());
 			}
 	}
 
-	@Deprecated
-	public static Playlist createTestingPlaylist(Bundle bundle) {
-		return createTestingPlaylist(bundle, "queue");
-	}
 
-	@Deprecated
-	public static Playlist createTestingPlaylist(Bundle bundle, String name) {
-		Track foo = bundle.createTrack(FOO_TRACK_ID, "foo", "Lorem Ipsum", //
-				DurationUtilities.createDuration(0, 3, 15), //
-				metadata(3, 3, 3, 29, 9)); //
-
-		Track bar = bundle.createTrack(BAR_TRACK_ID, "bar", "Karel Franta Pepa", //
-				DurationUtilities.createDuration(0, 4, 59), //
-				metadata(2, 11, 21, 11, 23)); //
-
-		Playlist playlist = bundle.createPlaylist(name, 1, true, //
-				metadata(3, 3, 3, 3, 3), //
-				new Tracklist(Arrays.asList(foo, bar)));
-
-		return playlist;
-	}
 
 	@Deprecated
 	public static Bundle createEmptyTestingBundle() {

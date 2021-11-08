@@ -11,6 +11,7 @@
 	<artifactId>jmop-player-base</artifactId>
 	<name>JMOP player base module.</name>
 	<description>The base module for the JMOP player.</description>
+	<version>${revision}</version>
 
 	<dependencies>
 		<dependency>

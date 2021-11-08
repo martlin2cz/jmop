@@ -10,6 +10,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 import cz.martlin.jmop.common.musicbase.stats.MusicbaseStats;
@@ -50,10 +51,6 @@ public class JMOPMusicbase {
 		return listing.getTrack(bundleOrNull, trackTitleOrNot);
 	}
 
-	public File file(Track track) {
-		return listing.trackFile(track);
-	}
-	
 /////////////////////////////////////////////////////////////////
 	public Set<Bundle> bundles()  {
 		return listing.bundles();
@@ -119,8 +116,8 @@ public class JMOPMusicbase {
 		return playlist.getTracks().count() == 0;
 	}
 	
-	public Track createNewTrack(Bundle bundle, TrackData data, File contentsFile)  {
-		return modyfiing.createNewTrack(bundle, data, contentsFile);
+	public Track createNewTrack(Bundle bundle, TrackData data, TrackFileCreationWay trackFileHow, File trackFile)  {
+		return modyfiing.createNewTrack(bundle, data, trackFileHow, trackFile);
 	}
 
 	public void renameTrack(Track track, String newTitle)  {

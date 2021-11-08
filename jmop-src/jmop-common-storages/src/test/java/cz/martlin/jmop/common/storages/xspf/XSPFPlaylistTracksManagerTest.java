@@ -23,15 +23,12 @@ import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.storages.playlists.BasePlaylistMetaInfoManager;
 import cz.martlin.jmop.common.storages.playlists.BaseValueToAndFromStringConverters;
 import cz.martlin.jmop.common.storages.playlists.SimpleValueToAndFromStringConverters;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.common.testing.resources.TestingResources;
-import cz.martlin.jmop.common.testing.resources.TestingTracksSource;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.xspf.playlist.base.XSPFCommon;
 import cz.martlin.xspf.playlist.elements.XSPFFile;
 import cz.martlin.xspf.playlist.elements.XSPFMeta;
@@ -52,7 +49,6 @@ class XSPFPlaylistTracksManagerTest {
 	private final XSPFPlaylistTracksManager man;
 	private final BasePlaylistMetaInfoManager<XSPFCommon> mim;
 	private final XSPFPlaylistManipulator extender;
-	private final TracksLocator tracks;
 
 
 	public XSPFPlaylistTracksManagerTest() {
@@ -64,8 +60,6 @@ class XSPFPlaylistTracksManagerTest {
 		man = new XSPFPlaylistTracksManager(adapter);
 		XSPFPlaylistTracksManager tracker = new XSPFPlaylistTracksManager(adapter);
 		extender = new XSPFPlaylistManipulator(adapter, tracker );
-
-		tracks = new TestingTracksSource(TrackFileFormat.MP3);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -189,7 +183,7 @@ class XSPFPlaylistTracksManagerTest {
 		XSPFFile xfile = load();
 
 		Tracklist tracklist = playlist.getTracks();
-		man.setTracks(extender, tracklist, tracks, xfile);
+		man.setTracks(extender, tracklist, xfile);
 
 		Printer.print(0, "Prepared xfile", xfile);
 		return xfile.getPlaylist();

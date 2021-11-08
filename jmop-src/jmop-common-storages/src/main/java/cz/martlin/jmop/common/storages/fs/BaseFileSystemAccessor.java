@@ -107,6 +107,25 @@ public interface BaseFileSystemAccessor {
 	 */
 	public void moveFile(File oldFile, File newFile) throws JMOPPersistenceException;
 
+
+	/**
+	 * Copies the given old file to new one.
+	 * 
+	 * @param oldFile
+	 * @param newFile
+	 * @throws JMOPPersistenceException
+	 */
+	public void copyFile(File oldFile, File newFile) throws JMOPPersistenceException;
+
+	/**
+	 * Creates link pointing to the given target file.
+	 * 
+	 * @param linkFile
+	 * @param targetFile
+	 * @throws JMOPPersistenceException
+	 */
+	public void linkFile(File linkFile, File targetFile) throws JMOPPersistenceException;
+	
 	/**
 	 * Loads lines of the given file.
 	 * 

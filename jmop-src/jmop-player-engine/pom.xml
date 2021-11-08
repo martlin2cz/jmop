@@ -11,6 +11,7 @@
 	<artifactId>jmop-player-engine</artifactId>
 	<name>JMOP player core engine.</name>
 	<description>The layer between the JMOP player GUI and the backend.</description>
+	<version>${revision}</version>
 
 	<dependencies>
 		<dependency>

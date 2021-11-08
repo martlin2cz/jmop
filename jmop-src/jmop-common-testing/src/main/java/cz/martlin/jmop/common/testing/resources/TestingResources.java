@@ -19,6 +19,15 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
  */
 public class TestingResources {
 
+	public static File prepareSampleTrack(Object target, TrackFileFormat format) {
+		String name = "sample." + format.fileExtension();
+		try {
+			return prepareResource(target, name);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public static InputStream loadSampleTrack(Object target, TrackFileFormat format) {
 		String path="cz/martlin/jmop/common/testing/resources/sample." + format.fileExtension();
 		return getResource(target, path);

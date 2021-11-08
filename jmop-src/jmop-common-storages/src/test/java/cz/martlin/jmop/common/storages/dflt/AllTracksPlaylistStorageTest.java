@@ -12,6 +12,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
@@ -96,7 +97,7 @@ class AllTracksPlaylistStorageTest {
 		// create track
 		TrackData data = new TrackData("id", "Harder faster stronger", "...", //
 				DurationUtilities.createDuration(0, 4, 11));
-		Track track = musicbase.createNewTrack(tme.tmd.daftPunk, data, null);
+		Track track = musicbase.createNewTrack(tme.tmd.daftPunk, data, TrackFileCreationWay.NO_FILE, null);
 
 		assertTrue(daftPunkATP.getTracks().getTracks().contains(track));
 

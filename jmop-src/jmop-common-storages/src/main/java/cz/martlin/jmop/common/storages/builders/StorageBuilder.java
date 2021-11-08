@@ -18,6 +18,8 @@ import cz.martlin.jmop.common.storages.filesystemer.FileSystemedStorage;
 import cz.martlin.jmop.common.storages.filesystemer.OneDiredFilesystemer;
 import cz.martlin.jmop.common.storages.fs.BaseFileSystemAccessor;
 import cz.martlin.jmop.common.storages.fs.DefaultFileSystemAccessor;
+import cz.martlin.jmop.common.storages.fs.FailsaveTrackFileCreater;
+import cz.martlin.jmop.common.storages.fs.TrackFileCreater;
 import cz.martlin.jmop.common.storages.loader.BaseMusicdataLoader;
 import cz.martlin.jmop.common.storages.musicdatafile.BaseMusicdataFileManipulator;
 import cz.martlin.jmop.common.storages.musicdatasaver.BaseMusicdataSaver;
@@ -50,13 +52,12 @@ public class StorageBuilder implements Builder<BaseMusicbaseStorage> {
 		
 		Locators locators = locatorsBuilder.build(root, dirsLayout, bundleDataFile, config, playlistFileExtension);
 		BaseMusicdataSaver saver = saverBuilder.create(manipulator, locators, inmemory);
-
-		BaseMusicbaseFilesystemer filesystemer = createFilesystemer(dirsLayout, locators, fs);
+		TrackFileCreater tracksCreater = createTrackFileCreater(fs, locators, failsave, reporter);
+		BaseMusicbaseFilesystemer filesystemer = createFilesystemer(dirsLayout, locators, fs, tracksCreater);
 		
 		BaseMusicdataLoader loader = loaderBuilder.create(dirsLayout, root, failsave, locators, manipulator, fs, reporter);
-		TracksLocator tracksLocator = locators.tracksFilesLocator;
 		
-		FileSystemedStorage fss = new FileSystemedStorage(filesystemer, null, saver, loader, tracksLocator);
+		FileSystemedStorage fss = new FileSystemedStorage(filesystemer, null, saver, loader);
 		
 		BaseMusicbaseStorage atpWrappedOrNot;
 		if (bundleDataFile == BundleDataFile.ALL_TRACKS_PLAYLIST) {
@@ -69,15 +70,26 @@ public class StorageBuilder implements Builder<BaseMusicbaseStorage> {
 		return new LoggingMusicbaseStorage(atpWrappedOrNot);		
 	}
 
+	private TrackFileCreater createTrackFileCreater(BaseFileSystemAccessor fs, Locators locators, boolean failsave,
+			BaseErrorReporter reporter) {
+		
+		if (failsave) {
+			return new FailsaveTrackFileCreater(locators.tracksFilesLocator, fs, reporter);
+		} else {
+			return new TrackFileCreater(locators.tracksFilesLocator, fs);
+		}
+	}
+
 	private BaseMusicbaseFilesystemer createFilesystemer(DirsLayout dirsLayout, Locators locators,
-			BaseFileSystemAccessor fs) {
+			BaseFileSystemAccessor fs, TrackFileCreater tracksCreater) {
+		
 		switch (dirsLayout) {
 		case ALL_IN_ONE_DIR:
-			return new OneDiredFilesystemer();
+			return new OneDiredFilesystemer(tracksCreater);
 
 		case BUNDLES_DIR:
 			return new BundlesDirsFilesystemer(fs, locators.bundlesDirLocatorOrNull, locators.playlistsLocator,
-					locators.tracksFilesLocator);
+					locators.tracksFilesLocator, tracksCreater);
 
 		default:
 			throw new IllegalArgumentException();

@@ -4,7 +4,6 @@ import java.io.File;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 
 /**
  * An general track locator interface. Provides path to the track file. Also
@@ -13,7 +12,7 @@ import cz.martlin.jmop.common.musicbase.TracksLocator;
  * @author martin
  *
  */
-public interface BaseTrackFileLocator extends TracksLocator {
+public interface BaseTrackFileLocator {
 
 	public File trackFile(String bundleName, String trackTitle);
 
@@ -28,8 +27,8 @@ public interface BaseTrackFileLocator extends TracksLocator {
 	}
 
 	public default File trackFile(Track track) {
-		Bundle bundle = track.getBundle();
-		String title = track.getTitle();
-		return trackFile(bundle, title);
+		String bundleName = track.getBundle().getName();
+		String trackTitle = track.getTitle();
+		return trackFile(bundleName, trackTitle);
 	}
 }

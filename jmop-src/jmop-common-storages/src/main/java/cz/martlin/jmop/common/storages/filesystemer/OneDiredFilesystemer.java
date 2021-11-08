@@ -1,11 +1,13 @@
 package cz.martlin.jmop.common.storages.filesystemer;
 
-import java.io.InputStream;
+import java.io.File;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.storages.AllInOneDirStorageComponent;
+import cz.martlin.jmop.common.storages.fs.TrackFileCreater;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 
 /**
@@ -16,8 +18,11 @@ import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
  */
 public class OneDiredFilesystemer implements BaseMusicbaseFilesystemer, AllInOneDirStorageComponent {
 
-	public OneDiredFilesystemer() {
+	private final TrackFileCreater trackCreater;
+
+	public OneDiredFilesystemer(TrackFileCreater trackCreater) {
 		super();
+		this.trackCreater = trackCreater;
 	}
 
 	@Override
@@ -51,8 +56,10 @@ public class OneDiredFilesystemer implements BaseMusicbaseFilesystemer, AllInOne
 	}
 
 	@Override
-	public void createTrack(Track track, InputStream trackFileContents) throws JMOPPersistenceException {
-		// okay, nothing to do
+	public void createTrack(Track track, TrackFileCreationWay trackCreationWay, File trackSourceFile)
+			throws JMOPPersistenceException {
+		
+		trackCreater.performTrackFileCreate(track, trackCreationWay, trackSourceFile);
 	}
 
 	@Override
