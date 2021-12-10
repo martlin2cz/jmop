@@ -10,13 +10,11 @@ import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 
-import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Metadata;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.misc.TrackData;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
+import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import cz.martlin.jmop.core.sources.remote.SimpleRemoteQuerier;
 import javafx.util.Duration;
 
@@ -31,19 +29,19 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 		YouTube.Search.List, SearchListResponse, //
 		YouTube.Search.List, SearchListResponse> {
 
-	private final BaseConfiguration config;
+	private final BaseRemotesConfiguration config;
 
-	public YoutubeQuerier(BaseConfiguration config, InternetConnectionStatus connection) {
-		super(connection);
+	public YoutubeQuerier(BaseRemotesConfiguration config) {
+		super();
 
 		this.config = config;
 	}
 
-	@Override
-	protected String createUrlOfSearchResult(String query) {
-		String encoded = encodeURLdata(query);
-		return "https://www.youtube.com/results?search_query=" + encoded; //$NON-NLS-1$
-	}
+//	@Override
+//	protected String createUrlOfSearchResult(String query) {
+//		String encoded = encodeURLdata(query);
+//		return "https://www.youtube.com/results?search_query=" + encoded; //$NON-NLS-1$
+//	}
 
 	@Override
 	protected String createUrlOfTrack(Track track) {
@@ -53,7 +51,7 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 
 	@Override
 	protected YouTube.Videos.List createLoadRequest(List<String> ids) throws Exception {
-		YouTube youtube = YoutubeUtilities.getYouTubeService();
+		YouTube youtube = obtainYoutubeService();
 
 		YouTube.Videos.List listVideosRequest = youtube.videos().list("contentDetails,snippet"); //$NON-NLS-1$
 
@@ -65,7 +63,7 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 
 	@Override
 	protected YouTube.Search.List createSearchRequest(String query) throws IOException {
-		YouTube youtube = YoutubeUtilities.getYouTubeService();
+		YouTube youtube = obtainYoutubeService();
 
 		YouTube.Search.List searchListByKeywordRequest = youtube.search().list("snippet"); //$NON-NLS-1$
 		searchListByKeywordRequest.setType("video"); //$NON-NLS-1$
@@ -76,12 +74,12 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 
 	@Override
 	protected YouTube.Search.List createLoadNextRequest(String id) throws IOException {
-		YouTube youtube = YoutubeUtilities.getYouTubeService();
+		YouTube youtube = obtainYoutubeService();
 
 		YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list("snippet"); //$NON-NLS-1$
 		searchListRelatedVideosRequest.setType("video"); //$NON-NLS-1$
 		searchListRelatedVideosRequest.setRelatedToVideoId(id);
-		searchListRelatedVideosRequest.setMaxResults(2l);
+		searchListRelatedVideosRequest.setMaxResults(3l);
 		return searchListRelatedVideosRequest;
 	}
 
@@ -108,8 +106,8 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	protected List<Track> convertLoadResponse(Bundle bundle, VideoListResponse response) throws Exception {
-		return convertVideoListResponse(bundle, response);
+	protected List<TrackData> convertLoadResponse(VideoListResponse response) throws Exception {
+		return convertVideoListResponse(response);
 	}
 
 	@Override
@@ -123,9 +121,9 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	}
 
 	@Override
-	protected Track chooseNext(List<Track> tracks, String id) throws Exception {
-		Track first = tracks.get(0);
-		Track second = tracks.get(1);
+	protected TrackData chooseNext(List<TrackData> tracks, String id) throws Exception {
+		TrackData first = tracks.get(0);
+		TrackData second = tracks.get(1);
 
 		if (first.getIdentifier().equals(id)) {
 			return second;
@@ -136,6 +134,16 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+
+	private YouTube obtainYoutubeService() throws JMOPSourceryException {
+		try {
+			return YoutubeUtilities.getYouTubeService();
+		} catch (Exception e) {
+			throw new JMOPSourceryException("Cannot obtain the YouTube service", e);
+		}
+	}
+
+	
 	/**
 	 * Converts videolist into track(s).
 	 * 
@@ -143,11 +151,11 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	 * @param response
 	 * @return
 	 */
-	private List<Track> convertVideoListResponse(Bundle bundle, VideoListResponse response) {
+	private List<TrackData> convertVideoListResponse(VideoListResponse response) {
 		List<Video> results = response.getItems();
 
 		return results.stream() //
-				.map((v) -> videoToTrack(bundle, v)) //
+				.map((v) -> videoToTrack(v)) //
 				.collect(Collectors.toList());
 	}
 
@@ -158,16 +166,14 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	 * @param result
 	 * @return
 	 */
-	private Track videoToTrack(Bundle bundle, Video result) {
+	private TrackData videoToTrack(Video result) {
 		String identifier = result.getId();
 		String title = result.getSnippet().getTitle();
 		String description = result.getSnippet().getDescription();
 		String durationStr = result.getContentDetails().getDuration();
 		Duration duration = DurationUtilities.parseYoutubeDuration(durationStr);
-		Metadata metadata = Metadata.createNew();
-		// TODO get thumbnail
 
-		return bundle.createTrack(identifier, title, description, duration, metadata);
+		return new TrackData(identifier, title, description, duration);
 	}
 
 	/**

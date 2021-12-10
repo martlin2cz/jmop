@@ -3,14 +3,13 @@ package cz.martlin.jmop.core.sources.remote.empty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
+import cz.martlin.jmop.core.sources.remote.TrackFileLocation;
 
 /**
  * Converter doing simply no conversion, or even nothing.

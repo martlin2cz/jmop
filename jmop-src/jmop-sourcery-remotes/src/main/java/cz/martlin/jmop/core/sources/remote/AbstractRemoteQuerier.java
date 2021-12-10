@@ -10,8 +10,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.misc.TrackData;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.SimpleShortOperation;
 
@@ -23,31 +24,7 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 		super();
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public SimpleShortOperation<String, List<Track>> search(Bundle bundle, String query)  {
-		LOG.info("Preparing search of " + query);
-
-		return new SimpleShortOperation<>("Querying", query, //
-				(q) -> q, //
-				(q) -> runSearch(bundle, q)); //
-	}
-
-	@Override
-	public SimpleShortOperation<Track, Track> loadNext(Track track)  {
-		LOG.info("Preparing load next of " + track);
-
-		return new SimpleShortOperation<>("Loading next", track, //
-				(t) -> trackToString(t), //
-				(t) -> runLoadNext(t)); //
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	public abstract List<Track> runSearch(Bundle bundle, String query) ;
-
-	public abstract Track runLoadNext(Track track) ;
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,13 +36,6 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 	protected abstract String createUrlOfTrack(Track track);
 
-	@Override
-	public URL urlOfSearchResult(String query) {
-		String url = createUrlOfSearchResult(query);
-		return stringToURL(url);
-	}
-
-	protected abstract String createUrlOfSearchResult(String query);
 
 /////////////////////////////////////////////////////////////////////////////////////
 

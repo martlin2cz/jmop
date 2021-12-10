@@ -4,23 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Metadata;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Metadata;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.remote.AbstractRemoteQuerier;
 import javafx.util.Duration;
 
 public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	private Bundle NOPE_BUNDLE = new Bundle(null, null, (Metadata) null);
 
-	private final BaseConfiguration config;
+	private final BaseRemotesConfiguration config;
 	private final List<Track> tracksData;
 	private final Random rand;
 
-	public TestingRemoteQuerier(BaseConfiguration config, int seed) {
+	public TestingRemoteQuerier(BaseRemotesConfiguration config, int seed) {
 		this.config = config;
 		this.tracksData = new ArrayList<>();
 		this.rand = new Random(seed);

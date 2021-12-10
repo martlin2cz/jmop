@@ -106,29 +106,6 @@
     		</exclusions>
 		</dependency>
 
-		<!-- youtube API libraries -->
-		<!-- https://developers.google.com/youtube/v3/quickstart/java -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.google.api-client</groupId> -->
-<!-- 			<artifactId>google-api-client</artifactId> -->
-<!-- 			<version>1.23.0</version> -->
-<!-- 			<scope>compile</scope> -->
-<!-- 		</dependency> -->
-
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.google.oauth-client</groupId> -->
-<!-- 			<artifactId>google-oauth-client-jetty</artifactId> -->
-<!-- 			<version>1.23.0</version> -->
-<!-- 			<scope>compile</scope> -->
-<!-- 		</dependency> -->
-
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.google.apis</groupId> -->
-<!-- 			<artifactId>google-api-services-youtube</artifactId> -->
-<!-- 			<version>v3-rev198-1.23.0</version> -->
-<!-- 			<scope>compile</scope> -->
-<!-- 		</dependency> -->
-
 		<!-- SVG graphics support for JavaFX -->
 		<!-- https://github.com/codecentric/javafxsvg -->
 		<!-- XXX -->
@@ -240,8 +217,8 @@
 <!-- 		<module>jmop-player-gui</module> -->
 <!-- 		<module>jmop-player-app</module> -->
 		
-<!-- 		<module>jmop-sourcery-base</module> -->
-<!-- 		<module>jmop-sourcery-remotes</module> -->
+		<module>jmop-sourcery-base</module>
+		<module>jmop-sourcery-remotes</module>
 <!-- 		<module>jmop-sourcery-appp</module> -->
 
 

@@ -11,12 +11,36 @@
 	<artifactId>jmop-sourcery-remotes</artifactId>
 	<name>The JMOP sourcery remotes.</name>
 	<description>Module implementing all the sourcery remotes.</description>
+	<version>${revision}</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-sourcery-base</artifactId>
 			<version>${revision}</version>
+		</dependency>
+		
+<!-- 	youtube API libraries -->
+<!-- 	https://developers.google.com/youtube/v3/quickstart/java -->
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.31.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.oauth-client</groupId>
+			<artifactId>google-oauth-client-jetty</artifactId>
+			<version>1.31.1</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-youtube</artifactId>
+			<version>v3-rev222-1.25.0</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>

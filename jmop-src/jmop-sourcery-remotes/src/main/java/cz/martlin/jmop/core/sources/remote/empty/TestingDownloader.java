@@ -3,19 +3,16 @@ package cz.martlin.jmop.core.sources.remote.empty;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.ops.AbstractLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
-import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.TrackFileLocation;
-import cz.martlin.jmop.core.sources.locals.testing.TestingTrackFileAccessor;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
+import cz.martlin.jmop.core.sources.remote.BaseTracksLocalSource;
+import cz.martlin.jmop.core.sources.remote.TrackFileLocation;
 
 public class TestingDownloader implements BaseDownloader {
 
@@ -51,7 +48,7 @@ public class TestingDownloader implements BaseDownloader {
 	 * @
 	 * @throws IOException
 	 */
-	public void copyTestingFileTo(File targetFile) , IOException {
+	public void copyTestingFileTo(File targetFile) throws IOException {
 		InputStream ins = TestingTrackFileAccessor.read(downloadFormat);
 
 		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

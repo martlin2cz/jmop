@@ -2,13 +2,14 @@ package cz.martlin.jmop.core.sources.remote.checker;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
 import java.util.List;
 
-import com.google.common.io.Files;
-
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Metadata;
-import cz.martlin.jmop.core.data.Track;
+import cz.martlin.jmop.common.data.misc.TrackData;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Metadata;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
@@ -17,63 +18,81 @@ import cz.martlin.jmop.core.misc.ops.BaseOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.misc.ops.BaseShortOperation;
 import cz.martlin.jmop.core.sources.SourceKind;
-import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteStatusHandler;
+import cz.martlin.jmop.core.sources.remote.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
+import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
+import cz.martlin.jmop.core.sources.remote.TrackFileLocation;
 import javafx.util.Duration;
 
 public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHandler {
 
-	private final SourceKind kind;
+	private static final String QUERIER_SAMPLE_QUERY = "sample";
+	private static final String DOWNLOADER_SAMPLE_IDENTIFIER = null;
 	private final BaseRemoteSourceQuerier querier;
 	private final BaseDownloader downloader;
 	private final BaseConverter converter;
-	private final BaseTracksLocalSource tracks;
 
-	public AbstractRemoteStatusHandler(SourceKind kind, BaseRemoteSourceQuerier querier, BaseDownloader downloader,
-			BaseConverter converter, BaseTracksLocalSource tracks) {
+	public AbstractRemoteStatusHandler(BaseRemoteSourceQuerier querier, BaseDownloader downloader,
+			BaseConverter converter) {
 
 		super();
-		this.kind = kind;
 		this.querier = querier;
 		this.downloader = downloader;
 		this.converter = converter;
-		this.tracks = tracks;
 	}
 
 	@Override
 	public boolean checkQuerier(BaseUIInterractor interactor)  {
-		Bundle bundle = prepareTestingBundle();
-		String query = prepareTestingQuery();
-
-		BaseShortOperation<String, List<Track>> operation = querier.search(bundle, query);
-
-		return runOperation(interactor, operation);
+		try {
+			List<TrackData> result = querier.search(prepareTestingQuery());
+			if (result.isEmpty()) {
+				throw new JMOPSourceryException("The query executed, but returned empty results");
+			}
+			return true;
+		} catch (JMOPSourceryException e) {
+			interactor.displayError(e.getMessage());
+			return false;
+		}
 	}
 
 	@Override
 	public boolean checkDownloader(BaseUIInterractor interactor)  {
-		TrackFileLocation location = TrackFileLocation.TEMP;
-		Track track = prepareTestingTrack();
-
-		BaseLongOperation<Track, Track> operation = downloader.download(track, location);
-
-		return runOperation(interactor, operation);
+		try {
+			File target = File.createTempFile("downloader-testing", ".track");
+			Track track = prepareTestingTrack();
+			
+			URL urlURL = querier.urlOfTrack(track);
+			String urlString = urlURL.toExternalForm(); 
+			downloader.download(urlString, target);
+			
+			if (target.exists()) {
+				throw new JMOPSourceryException("The download succeded, but the file was not created");
+			}
+			return true;
+		} catch (JMOPSourceryException e) {
+			interactor.displayError(e.getMessage());
+			return false;
+		} catch (IOException e) {
+			interactor.displayError(e.getMessage());
+			return false;
+		}
 	}
 
 	@Override
 	public boolean checkConverter(BaseUIInterractor interactor)  {
+		//TODO FIXME
+		
 		Track track = prepareTestingTrack();
 
 		TrackFileFormat fromFormat = TrackFileFormat.MP3;
 		TrackFileLocation fromLocation = TrackFileLocation.TEMP;
 
-		prepareTestingFile(track, fromFormat, fromLocation, interactor);
+//		prepareTestingFile(track, fromFormat, fromLocation, interactor);
 
 		TrackFileLocation toLocation = TrackFileLocation.TEMP;
 		TrackFileFormat toFormat = TrackFileFormat.WAV;
@@ -88,14 +107,8 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 
 	protected abstract String prepareTestingQuery();
 
-	private Bundle prepareTestingBundle() {
-		String name = "test";
-		Metadata metadata = Metadata.createNew();
-		return new Bundle(kind, name, metadata );
-	}
-
-	private Track prepareTestingTrack() {
-		Bundle bundle = prepareTestingBundle();
+	protected Track prepareTestingTrack() {
+		Bundle bundle = null;
 
 		String identifier = prepareTestingTrackID();
 		String title = "testing track";
@@ -103,26 +116,15 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 		String description = "This is just an testing track";
 		Metadata metadata = Metadata.createNew();
 		
-		return bundle.createTrack(identifier, title, description, duration, metadata);
+		File file = null;
+		
+		return new Track(bundle, identifier, title, description, duration, file, metadata);
 	}
 
 	protected abstract String prepareTestingTrackID();
-
-	private void prepareTestingFile(Track track, TrackFileFormat fromFormat, TrackFileLocation fromLocation,
-			BaseUIInterractor interactor)  {
-
-		String extension = fromFormat.getExtension();
-		File sourceFile = interactor.promptFile("", extension);
-
-		File targetFile = tracks.fileOfTrack(track, fromLocation, fromFormat);
-		try {
-			Files.copy(sourceFile, targetFile);
-		} catch (IOException e) {
-			throw new JMOPMusicbaseException("Cannot prepare sample file", e);
-		}
-	}
 	///////////////////////////////////////////////////////////////////////////
 
+	@Deprecated
 	private static <InT, OutT> boolean runOperation(BaseUIInterractor interactor, BaseOperation<InT, OutT> operation) {
 
 		if (operation instanceof BaseLongOperation) {

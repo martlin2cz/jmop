@@ -1,60 +1,59 @@
 package cz.martlin.jmop.core.sources.remote.youtube;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import cz.martlin.jmop.core.config.BaseConfiguration;
-import cz.martlin.jmop.core.config.ConstantConfiguration;
-import cz.martlin.jmop.core.data.Bundle;
-import cz.martlin.jmop.core.data.Metadata;
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.InternetConnectionStatus;
-import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
-import cz.martlin.jmop.core.misc.ops.BaseShortOperation;
-import cz.martlin.jmop.core.operation.PrintingListener;
-import cz.martlin.jmop.core.sources.SourceKind;
+import cz.martlin.jmop.common.data.misc.TrackData;
+import cz.martlin.jmop.common.data.model.Bundle;
+import cz.martlin.jmop.common.data.model.Metadata;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
+import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
 
 public class YoutubeQuerierTest {
 
+	public static void main(String[] args) throws IOException {
+		new YoutubeQuerierTest().test();
+	}
+	
+	public class DefaultRemotesConfiguration implements BaseRemotesConfiguration {
+
+		@Override
+		public int getSearchCount() {
+			return 5;
+		}
+
+	}
+
 	@Test
-	public void test() throws Exception {
-		BaseConfiguration config = new ConstantConfiguration();
-		InternetConnectionStatus connection = new InternetConnectionStatus(config);
+	public void test() throws IOException {
+		BaseRemotesConfiguration config = new DefaultRemotesConfiguration();
 
-		BaseRemoteSourceQuerier querier = new YoutubeQuerier(config, connection);
+		BaseRemoteSourceQuerier querier = new YoutubeQuerier(config);
 
-		Bundle bundle = new Bundle(SourceKind.YOUTUBE, "bundle", Metadata.createNew());
 		String query = "sample testing sound";
+		List<TrackData> searched = querier.search(query);
 
-		assertEquals("https://www.youtube.com/results?search_query=sample+testing+sound", //
-				querier.urlOfSearchResult(query).toExternalForm());
-
-		BaseProgressListener listener = new PrintingListener(System.out);
-
-		BaseShortOperation<String, List<Track>> searchOperation = querier.search(bundle, query);
-		List<Track> tracks = searchOperation.run(listener);
-
-		assertFalse(tracks.isEmpty());
-		Track firstTrack = tracks.get(0);
-		Track secondTrack = tracks.get(1);
+		assertFalse(searched.isEmpty());
+		TrackData firstTrack = searched.get(0);
+		TrackData secondTrack = searched.get(1);
 
 		System.out.println("First track: " + firstTrack);
 		System.out.println("Second track: " + secondTrack);
 
-		assertEquals("https://www.youtube.com/watch?v=" + firstTrack.getIdentifier(), //
-				querier.urlOfTrack(firstTrack).toExternalForm());
+		Bundle bundle = null; //not needed now
+		Track track = new Track(bundle, firstTrack.getIdentifier(), firstTrack.getTitle(), firstTrack.getDescription(),
+				firstTrack.getDuration(), null, Metadata.createNew());
+		
+		TrackData next = querier.loadNext(track);
+		assertNotNull(next);
 
-		BaseShortOperation<Track, Track> nextOperation = querier.loadNext(firstTrack);
-		Track nextTrack = nextOperation.run(listener);
-		assertNotNull(nextTrack);
-
-		System.out.println("Next track: " + nextTrack);
+		System.out.println("Next track: " + next);
 	}
 
 }

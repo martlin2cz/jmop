@@ -9,16 +9,15 @@ import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import cz.martlin.jmop.core.source.extprogram.ExternalProcessLongOperation;
-import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
+import cz.martlin.jmop.core.sources.remote.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.remote.ConversionReason;
+import cz.martlin.jmop.core.sources.remote.TrackFileLocation;
 import javafx.util.Duration;
 
 public class FFMPEGConverter implements BaseConverter {

@@ -1,99 +1,53 @@
 package cz.martlin.jmop.core.sources.remote.youtubedl;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.core.data.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
+import cz.martlin.jmop.core.misc.ExternalProgramException;
+import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
-import cz.martlin.jmop.core.source.extprogram.ExternalProcessLongOperation;
-import cz.martlin.jmop.core.sources.local.BaseTracksLocalSource;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.local.TrackFileLocation;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
+import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 
 public class YoutubeDLDownloader implements BaseDownloader {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	
+	private static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.MP3;
 
-	private static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.OPUS;
+	private final BaseProgressListener listener;
 
-	private final BaseRemoteSourceQuerier querier;
-	private final BaseTracksLocalSource tracks;
-
-	public YoutubeDLDownloader(BaseRemoteSourceQuerier querier, BaseTracksLocalSource tracks) {
+	public YoutubeDLDownloader(BaseProgressListener listener) {
 		super();
-		this.querier = querier;
-		this.tracks = tracks;
+		this.listener = listener;
 	}
 
 	@Override
-	public TrackFileFormat downloadFormat() {
-		return DOWNLOAD_FILE_FORMAT;
+	public void download(String url, File target) throws JMOPSourceryException {
+		LOG.info("Downloading from {} to {} by the youtube-dl", url, target);
+		
+		List<String> arguments = createCommandLine(url, target);
+		File workingDirectory = new File(".");
+
+		AbstractProcessEncapsulation process = new YoutubeDLProcessEncapsulation(arguments, workingDirectory, target);
+
+		try {
+			process.run(listener);
+		} catch (ExternalProgramException e) {
+			throw new JMOPSourceryException("Download process failed", e);
+		}
 	}
 
-	@Override
-	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
-			 {
-		LOG.info("Preparing download of " + track + " via YoutubeDl downloader");
-
-		AbstractProcessEncapsulation process = prepareProcess(track, location);
-
-		String name = "Downloading";
-		Track input = track;
-
-		Supplier<Track> resultCreator = () -> track;
-		Function<Track, String> dataToString = (t) -> t.toString();
-		return new ExternalProcessLongOperation<Track, Track>(name, input, process, dataToString, resultCreator);
-	}
-
-	///////////////////////////////////////////////////////////////////////////
-	private AbstractProcessEncapsulation prepareProcess(Track track, TrackFileLocation location)
-			 {
-
-		File workingDirectory = AbstractProcessEncapsulation.currentDirectory();
-		File targetFile = createTargetFileFile(track, location);
-		List<String> arguments = createArguments(track, location);
-
-		AbstractProcessEncapsulation process = new YoutubeDLProcessEncapsulation(arguments, workingDirectory,
-				targetFile);
-		return process;
-	}
-
-	private List<String> createArguments(Track track, TrackFileLocation location)  {
-		String path = createTargetFilePath(track, location);
-		String url = createUrlOfTrack(track);
-		return createCommandLine(url, path);
-	}
-
-	private List<String> createCommandLine(String url, String path) {
+	private List<String> createCommandLine(String url, File target) {
+		String path = target.getAbsolutePath();
 		return Arrays.asList( //
 				"--newline", //
 				"--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(), //
 				"--output", path, url);
-	}
-
-	private String createUrlOfTrack(Track track)  {
-		URL url = querier.urlOfTrack(track);
-		return url.toExternalForm();
-	}
-
-	private String createTargetFilePath(Track track, TrackFileLocation location)  {
-		File tmpFile = createTargetFileFile(track, location);
-
-		return tmpFile.getAbsolutePath();
-	}
-
-	private File createTargetFileFile(Track track, TrackFileLocation location)  {
-		return tracks.fileOfTrack(track, location, DOWNLOAD_FILE_FORMAT);
 	}
 
 }

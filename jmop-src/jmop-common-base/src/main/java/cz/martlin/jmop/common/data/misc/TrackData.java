@@ -40,4 +40,12 @@ public class TrackData {
 		return duration;
 	}
 
+	@Override
+	public String toString() {
+		return "TrackData [identifier=" + identifier + ", title=" + title + ", description=" + "..."
+				+ ", duration=" + duration + "]";
+	}
+	
+	
+
 }
