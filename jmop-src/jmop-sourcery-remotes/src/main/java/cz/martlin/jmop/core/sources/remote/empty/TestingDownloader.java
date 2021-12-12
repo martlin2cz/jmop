@@ -2,43 +2,30 @@ package cz.martlin.jmop.core.sources.remote.empty;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.StandardCopyOption;
 
-import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.ops.AbstractLongOperation;
-import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
-import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
+import com.google.common.io.Files;
+
+import cz.martlin.jmop.common.testing.resources.TestingResources;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
-import cz.martlin.jmop.core.sources.remote.BaseTracksLocalSource;
-import cz.martlin.jmop.core.sources.remote.TrackFileLocation;
+import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 
 public class TestingDownloader implements BaseDownloader {
 
+	private final TrackFileFormat downloadFileFormat;
 
-
-
-	private final TrackFileFormat downloadFormat;
-	private final BaseTracksLocalSource tracks;
-
-	public TestingDownloader(BaseTracksLocalSource tracks, TrackFileFormat downloadFormat) {
+	public TestingDownloader(TrackFileFormat downloadFileFormat) {
 		super();
-		this.tracks = tracks;
-		this.downloadFormat = downloadFormat;
+		this.downloadFileFormat = downloadFileFormat;
 	}
 
 	@Override
-	public TrackFileFormat downloadFormat() {
-		return downloadFormat;
-	}
-
-	@Override
-	public BaseLongOperation<Track, Track> download(Track track, TrackFileLocation location)
-			 {
-
-		File file = tracks.fileOfTrack(track, location, downloadFormat);
-		return new TestingDownloaderOperation(track, file);
+	public void download(String url, File target) throws JMOPSourceryException {
+		try {
+			copyTestingFileTo(target);
+		} catch (IOException e) {
+			throw new JMOPSourceryException("Could not prepare the file", e);
+		}
 	}
 
 	/**
@@ -49,34 +36,11 @@ public class TestingDownloader implements BaseDownloader {
 	 * @throws IOException
 	 */
 	public void copyTestingFileTo(File targetFile) throws IOException {
-		InputStream ins = TestingTrackFileAccessor.read(downloadFormat);
-
-		Files.copy(ins, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		File file = TestingResources.prepareSampleTrack(this, downloadFileFormat);
+				
+		Files.copy(file, targetFile);	
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-
-	public class TestingDownloaderOperation extends AbstractLongOperation<Track, Track> {
-		private final File file;
-
-		public TestingDownloaderOperation(Track track, File file) {
-			super("Testing downloading", track, (t) -> t.toHumanString());
-
-			this.file = file;
-		}
-
-		@Override
-		public Track run(BaseProgressListener listener) throws Exception {
-			copyTestingFileTo(file);
-
-			return getInput();
-		}
-
-		@Override
-		public void terminate() {
-			// termination not supported
-		}
-
-	}
 
 }

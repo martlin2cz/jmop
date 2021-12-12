@@ -5,20 +5,27 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>${revision}</version>
+		<version>3.1.9</version>
 	</parent>
 
 	<artifactId>jmop-sourcery-remotes</artifactId>
 	<name>The JMOP sourcery remotes.</name>
 	<description>Module implementing all the sourcery remotes.</description>
-	<version>${revision}</version>
+	<version>3.1.9</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-sourcery-base</artifactId>
-			<version>${revision}</version>
+			<version>3.1.9</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-testing</artifactId>
+			<version>3.1.9</version>
+		</dependency>
+		
 		
 <!-- 	youtube API libraries -->
 <!-- 	https://developers.google.com/youtube/v3/quickstart/java -->

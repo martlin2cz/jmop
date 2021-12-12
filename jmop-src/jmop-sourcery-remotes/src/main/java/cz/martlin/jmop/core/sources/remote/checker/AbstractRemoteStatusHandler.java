@@ -3,30 +3,24 @@ package cz.martlin.jmop.core.sources.remote.checker;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.List;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.testing.resources.TestingTrackFilesCreator;
 import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
-import cz.martlin.jmop.core.misc.ops.BaseShortOperation;
-import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteStatusHandler;
-import cz.martlin.jmop.core.sources.remote.BaseTracksLocalSource;
-import cz.martlin.jmop.core.sources.remote.ConversionReason;
 import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
-import cz.martlin.jmop.core.sources.remote.TrackFileLocation;
 import javafx.util.Duration;
 
 public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHandler {
@@ -85,22 +79,28 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 
 	@Override
 	public boolean checkConverter(BaseUIInterractor interactor)  {
-		//TODO FIXME
+		try {
+			Track track = prepareTestingTrack();
+			
+			TrackFileFormat fromFormat = TrackFileFormat.MP3;
+			File fromFile = File.createTempFile("jmop-converter-test-source-", "." + fromFormat.fileExtension());
+			
+			TestingTrackFilesCreator creator = new TestingTrackFilesCreator();
+			creator.prepare(fromFormat, fromFile);
+	
+	//		prepareTestingFile(track, fromFormat, fromLocation, interactor);
+	
+			TrackFileFormat toFormat = TrackFileFormat.WAV;
+			File toFile = File.createTempFile("jmop-converter-test-target-", "." + toFormat.fileExtension());
 		
-		Track track = prepareTestingTrack();
-
-		TrackFileFormat fromFormat = TrackFileFormat.MP3;
-		TrackFileLocation fromLocation = TrackFileLocation.TEMP;
-
-//		prepareTestingFile(track, fromFormat, fromLocation, interactor);
-
-		TrackFileLocation toLocation = TrackFileLocation.TEMP;
-		TrackFileFormat toFormat = TrackFileFormat.WAV;
-		ConversionReason reason = ConversionReason.PREPARE_TO_PLAY;
-
-		BaseLongOperation<Track, Track> operation = converter.convert(track, fromLocation, fromFormat, toLocation,
-				toFormat, reason);
-		return runOperation(interactor, operation);
+		
+			converter.convert(track, fromFile, toFile);
+		} catch (Exception e) {
+			interactor.displayError(e.getMessage());
+			return false;
+		}
+		
+		return true;
 	}
 
 	///////////////////////////////////////////////////////////////////////////

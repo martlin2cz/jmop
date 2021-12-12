@@ -3,21 +3,16 @@ package cz.martlin.jmop.core.sources.remote.ffmpeg;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
+import cz.martlin.jmop.core.misc.ExternalProgramException;
+import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
-import cz.martlin.jmop.core.source.extprogram.ExternalProcessLongOperation;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
-import cz.martlin.jmop.core.sources.remote.BaseTracksLocalSource;
-import cz.martlin.jmop.core.sources.remote.ConversionReason;
-import cz.martlin.jmop.core.sources.remote.TrackFileLocation;
+import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
 public class FFMPEGConverter implements BaseConverter {
@@ -25,51 +20,42 @@ public class FFMPEGConverter implements BaseConverter {
 
 	private static final String FFMPEG_COMMAND_NAME = "ffmpeg";
 
-	private final BaseTracksLocalSource tracks;
+	private final BaseProgressListener listener;
 
-	public FFMPEGConverter(BaseTracksLocalSource tracks) {
+	public FFMPEGConverter(BaseProgressListener listener) {
 		super();
-		this.tracks = tracks;
+		this.listener = listener;
 	}
 
 	@Override
-	public BaseLongOperation<Track, Track> convert(Track track, TrackFileLocation fromLocation,
-			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason)
-			 {
+	public void convert(Track track, File from, File to) throws JMOPSourceryException {
+		AbstractProcessEncapsulation process = prepareProcess(track, from, to);
 
-		LOG.info("Preparing conversion of " + track + " via ffmpeg converter");
-
-		AbstractProcessEncapsulation process = prepareProcess(track, fromLocation, fromFormat, toLocation, toFormat);
-
-		String name = reason.getHumanName();
-		Track input = track;
-
-		Supplier<Track> resultCreator = () -> track;
-		Function<Track, String> dataToString = (t) -> t.toString();
-		return new ExternalProcessLongOperation<Track, Track>(name, input, process, dataToString, resultCreator);
+		try {
+			process.run(listener);
+		} catch (ExternalProgramException e) {
+			throw new JMOPSourceryException("Download process failed", e);
+		}
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	private AbstractProcessEncapsulation prepareProcess(Track track, TrackFileLocation fromLocation,
-			TrackFileFormat fromFormat, TrackFileLocation toLocation, TrackFileFormat toFormat)
-			 {
-
+	private AbstractProcessEncapsulation prepareProcess(Track track, File from, File to) {
 		File workingDirectory = AbstractProcessEncapsulation.currentDirectory();
-		File targetFile = createTargetFileFile(track, toLocation, toFormat);
-		List<String> arguments = createArguments(track, fromLocation, fromFormat, toLocation, toFormat);
+		List<String> arguments = createArguments(track, from, to);
 		Duration duration = track.getDuration();
 
 		String command = FFMPEG_COMMAND_NAME;
 
-		AbstractProcessEncapsulation process = new FFMPEGProcessEncapsulation(command, arguments, workingDirectory,
-				targetFile, duration);
+		AbstractProcessEncapsulation process = new FFMPEGProcessEncapsulation(command, arguments, workingDirectory, to,
+				duration);
 		return process;
 	}
 
-	private List<String> createArguments(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat)  {
-		String fromPath = createFilePath(track, fromLocation, fromFormat);
-		String toPath = createFilePath(track, toLocation, toFormat);
+	private List<String> createArguments(Track track, File fromFile, File toFile) {
+
+		String fromPath = fromFile.getAbsolutePath();
+		String toPath = toFile.getAbsolutePath();
+		
 		return createCommandLine(fromPath, toPath);
 	}
 
@@ -77,17 +63,4 @@ public class FFMPEGConverter implements BaseConverter {
 		return Arrays.asList( //
 				"-stats", "-y", "-i", fromPath, toPath);
 	}
-
-	private String createFilePath(Track track, TrackFileLocation location, TrackFileFormat format)
-			 {
-		File tmpFile = createTargetFileFile(track, location, format);
-
-		return tmpFile.getAbsolutePath();
-	}
-
-	private File createTargetFileFile(Track track, TrackFileLocation location, TrackFileFormat format)
-			 {
-		return tracks.fileOfTrack(track, location, format);
-	}
-
 }

@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cz.martlin.jmop.common.data.model.Bundle;
-import cz.martlin.jmop.common.data.model.Metadata;
+import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.remote.AbstractRemoteQuerier;
+import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
+import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
 public class TestingRemoteQuerier extends AbstractRemoteQuerier {
-	private Bundle NOPE_BUNDLE = new Bundle(null, null, (Metadata) null);
-
 	private final BaseRemotesConfiguration config;
-	private final List<Track> tracksData;
+	private final List<TrackData> tracksData;
 	private final Random rand;
 
 	public TestingRemoteQuerier(BaseRemotesConfiguration config, int seed) {
@@ -27,59 +26,45 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	public TestingRemoteQuerier add(String identifier, String title, String description, int minutes, int seconds) {
 		Duration duration = DurationUtilities.createDuration(0, minutes, seconds);
 
-		Metadata metadata = Metadata.createNew();
-		Track track = NOPE_BUNDLE.createTrack(identifier, title, description, duration, metadata);
-		tracksData.add(track);
+		TrackData trackData = new TrackData(identifier, title, description, duration);
+		tracksData.add(trackData);
 
 		return this;
 	}
 
-	private Track pick() {
+	private TrackData pick() {
 		int index = rand.nextInt(tracksData.size());
 		return tracksData.get(index);
-	}
-
-	private Track renderTrack(Bundle bundle, Track data) {
-		return bundle.createTrack( //
-				data.getIdentifier(), //
-				data.getTitle(), //
-				data.getTitle(), //
-				data.getDuration(), //
-				data.getMetadata());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public List<Track> runSearch(Bundle bundle, String query)  {
-		List<Track> result = new ArrayList<Track>(config.getSearchCount());
+	public List<TrackData> search(String query) throws JMOPSourceryException {
+		List<TrackData> result = new ArrayList<>(config.getSearchCount());
 
 		for (int i = 0; i < config.getSearchCount(); i++) {
-			Track trackData = pick();
-			Track track = renderTrack(bundle, trackData);
-			result.add(track);
+			TrackData trackData = pick();
+			result.add(trackData);
 		}
 
 		return result;
 	}
 
 	@Override
-	public Track runLoadNext(Track track)  {
-		Bundle bundle = track.getBundle();
-
-		Track nextData = pick();
-		Track next = renderTrack(bundle, nextData);
-
-		return next;
+	public TrackData loadNext(Track track) throws JMOPSourceryException {
+		TrackData nextData = pick();
+		
+		return nextData;
 	}
 
-	@Override
-	protected String createUrlOfSearchResult(String query) {
-		return "http://localhost/?query=" + query;
-	}
+//	@Override
+//	protected String createUrlOfSearchResult(String query) {
+//		return "http://localhost/?query=" + query;
+//	}
 
 	@Override
-	protected String createUrlOfTrack(Track track) {
+	public String createUrlOfTrack(Track track) {
 		return "http://localhost/?track=" + track.getIdentifier();
 	}
 

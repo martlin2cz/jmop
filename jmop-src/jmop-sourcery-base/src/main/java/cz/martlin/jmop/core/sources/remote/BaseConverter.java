@@ -1,12 +1,11 @@
 package cz.martlin.jmop.core.sources.remote;
 
+import java.io.File;
+
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public interface BaseConverter {
 
-	BaseLongOperation<Track, Track> convert(Track track, TrackFileLocation fromLocation, TrackFileFormat fromFormat,
-			TrackFileLocation toLocation, TrackFileFormat toFormat, ConversionReason reason);
+	void convert(Track track, File from, File to) throws JMOPSourceryException;
 
 }
