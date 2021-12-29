@@ -3,6 +3,7 @@ package cz.martlin.jmop.core.source.extprogram;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.ops.AbstractLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 
@@ -33,6 +34,10 @@ public class ExternalProcessLongOperation<InT, OutT> extends AbstractLongOperati
 
 	@Override
 	public void terminate() {
-		process.terminate();
+		try {
+			process.terminate();
+		} catch (ExternalProgramException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

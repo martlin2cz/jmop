@@ -14,6 +14,7 @@ import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 import picocli.CommandLine.TypeConversionException;
@@ -29,7 +30,7 @@ class ConvertersTest {
 	public ConvertersTest() {
 		jmop = DefaultJMOPPlayerBuilder.createTesting();
 		BaseMusicbaseModifing musicbase = jmop.musicbase().getMusicbase();
-		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true);
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, TrackFileFormat.MP3);
 	}
 
 	@BeforeEach

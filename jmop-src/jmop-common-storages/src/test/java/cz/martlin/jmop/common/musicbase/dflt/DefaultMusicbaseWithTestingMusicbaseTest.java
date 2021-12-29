@@ -50,7 +50,7 @@ public class DefaultMusicbaseWithTestingMusicbaseTest {
 	void test() throws Exception {
 		BaseMusicbase musicbase = prepareMusicbase();
 		
-		try (AbstractTestingMusicdata tmb = new TestingMusicdataWithMusicbase(musicbase, true)) {
+		try (AbstractTestingMusicdata tmb = new TestingMusicdataWithMusicbase(musicbase, TrackFileFormat.MP3)) {
 			assertNotNull(tmb.daftPunk);
 			assertNotNull(tmb.londonElektricity);
 			assertNotNull(tmb.cocolinoDeep);

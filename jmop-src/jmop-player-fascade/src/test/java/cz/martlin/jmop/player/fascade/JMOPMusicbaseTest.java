@@ -37,7 +37,7 @@ class JMOPMusicbaseTest {
 		this.musicbase = DefaultJMOPPlayerBuilder.createTesting().musicbase();
 
 		BaseMusicbaseModifing musicbase = this.musicbase.getMusicbase();
-		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true); 
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, TrackFileFormat.MP3); 
 	}
 
 	@Test

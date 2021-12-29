@@ -20,6 +20,7 @@ import cz.martlin.jmop.common.testing.testdata.SimpleTestingMusicdata;
 import cz.martlin.jmop.common.testing.testdata.TestingMusicdataWithMusicbase;
 import cz.martlin.jmop.common.testing.testdata.TestingMusicdataWithStorage;
 import cz.martlin.jmop.common.testing.testdata.TestingMusicdataWithStorageAndMusicbase;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 /**
  * An junit extension encapsulating the {@link AbstractTestingMusicdata}.
@@ -33,7 +34,7 @@ public class TestingMusicdataExtension implements Extension, BeforeEachCallback,
 	
 	private final Supplier<BaseMusicbaseModifing> musicbaseSupplier;
 	private final Function<BaseMusicbaseModifing, BaseMusicbaseStorage> storageSupplier;
-	private final boolean filesExisting;
+	private final TrackFileFormat trackFileOrNot;
 	
 	public AbstractTestingMusicdata tmd;
 
@@ -41,11 +42,11 @@ public class TestingMusicdataExtension implements Extension, BeforeEachCallback,
 	private BaseMusicbaseStorage storage;
 
 	private TestingMusicdataExtension(Supplier<BaseMusicbaseModifing> musicbaseSupplier,
-			Function<BaseMusicbaseModifing, BaseMusicbaseStorage> storageSupplier, boolean filesExisting) {
+			Function<BaseMusicbaseModifing, BaseMusicbaseStorage> storageSupplier, TrackFileFormat trackFileOrNot) {
 		super();
 		this.musicbaseSupplier = musicbaseSupplier;
 		this.storageSupplier = storageSupplier;
-		this.filesExisting = filesExisting;
+		this.trackFileOrNot = trackFileOrNot;
 	}
 
 	public BaseMusicbaseModifing getMusicbase() {
@@ -88,24 +89,24 @@ public class TestingMusicdataExtension implements Extension, BeforeEachCallback,
 	
 	private AbstractTestingMusicdata buildTestingMusicbase() {
 		if (musicbaseSupplier == null && storageSupplier == null) {
-			return new SimpleTestingMusicdata();
+			return new SimpleTestingMusicdata(trackFileOrNot);
 		}
 		
 		if (musicbaseSupplier != null && storageSupplier == null) {
 			musicbase = musicbaseSupplier.get();
-			return new TestingMusicdataWithMusicbase(musicbase, filesExisting);
+			return new TestingMusicdataWithMusicbase(musicbase, trackFileOrNot);
 		}
 		
 		if (musicbaseSupplier == null && storageSupplier != null) {
 			LOG.warn("This is deprecated, use the extension with storage and musicbase too");
 			storage = storageSupplier.apply(null);
-			return new TestingMusicdataWithStorage(storage, filesExisting);
+			return new TestingMusicdataWithStorage(storage, trackFileOrNot);
 		}
 		
 		if (musicbaseSupplier != null && storageSupplier != null) {
 			musicbase = musicbaseSupplier.get();
 			storage = storageSupplier.apply(musicbase);
-			return new TestingMusicdataWithStorageAndMusicbase(musicbase, storage, filesExisting);
+			return new TestingMusicdataWithStorageAndMusicbase(musicbase, storage, trackFileOrNot);
 		}
 		
 		return null; // never happen
@@ -117,30 +118,28 @@ public class TestingMusicdataExtension implements Extension, BeforeEachCallback,
 	
 	/**
 	 * Creates the rule for the testing musicbase created just as a fields.
-	 * @param filesExisting
 	 * @return
 	 */
-	public static TestingMusicdataExtension simple(boolean filesExisting) {
-		return new TestingMusicdataExtension(null, null, filesExisting);
+	public static TestingMusicdataExtension simple(TrackFileFormat trackFileOrNot) {
+		return new TestingMusicdataExtension(null, null, trackFileOrNot);
 	}
 	
 	/**
 	 * Creates the rule for the testing musicbase created in/by the given musicbase.
 	 * @param musicbase
-	 * @param filesExisting
 	 * @return
 	 */
-	public static TestingMusicdataExtension withMusicbase(Supplier<BaseMusicbaseModifing> musicbase, boolean filesExisting) {
-		return new TestingMusicdataExtension(musicbase, null, filesExisting);
+	public static TestingMusicdataExtension withMusicbase(Supplier<BaseMusicbaseModifing> musicbase, TrackFileFormat trackFileOrNot) {
+		return new TestingMusicdataExtension(musicbase, null, trackFileOrNot);
 	}
 	
 	/**
 	 * @deprecated use {@link #withStorageAndMusicbase(Supplier, Function, boolean)} whenever possible
 	 */
 	@Deprecated
-	public static TestingMusicdataExtension withStorage(Supplier<BaseMusicbaseStorage> storage, boolean filesExisting) {
+	public static TestingMusicdataExtension withStorage(Supplier<BaseMusicbaseStorage> storage, TrackFileFormat trackFileOrNot) {
 		Function<BaseMusicbaseModifing, BaseMusicbaseStorage> storageFunction = (mb) -> storage.get();
-		return new TestingMusicdataExtension(null, storageFunction, filesExisting);
+		return new TestingMusicdataExtension(null, storageFunction, trackFileOrNot);
 	}
 	
 	/**
@@ -150,10 +149,10 @@ public class TestingMusicdataExtension implements Extension, BeforeEachCallback,
 	 * @param filesExisting
 	 * @return
 	 */
-	public static TestingMusicdataExtension withStorageAndMusicbase(Supplier<BaseInMemoryMusicbase> musicbase, Function<BaseInMemoryMusicbase, BaseMusicbaseStorage> storage, boolean filesExisting) {
+	public static TestingMusicdataExtension withStorageAndMusicbase(Supplier<BaseInMemoryMusicbase> musicbase, Function<BaseInMemoryMusicbase, BaseMusicbaseStorage> storage, TrackFileFormat trackFileOrNot) {
 		Supplier<BaseMusicbaseModifing> musicbaseSupplier = () -> musicbase.get();
 		Function<BaseMusicbaseModifing, BaseMusicbaseStorage> storageFunction = (mb) -> storage.apply((BaseInMemoryMusicbase) mb);
-		return new TestingMusicdataExtension(musicbaseSupplier, storageFunction, filesExisting);
+		return new TestingMusicdataExtension(musicbaseSupplier, storageFunction, trackFileOrNot);
 	}
 ///////////////////////////////////////////////////////////////////////////
 

@@ -13,6 +13,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.testing.testdata.AbstractTestingMusicdata;
 import cz.martlin.jmop.common.testing.testdata.SimpleTestingMusicdata;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.LoggingPlayerEngine;
 import cz.martlin.jmop.player.players.PlayerStatus;
@@ -26,7 +27,7 @@ public abstract class AbstractPlayerEngineTest {
 	
 	@BeforeEach
 	public void before() {
-		tmb = new SimpleTestingMusicdata();
+		tmb = new SimpleTestingMusicdata(TrackFileFormat.WAV);
 	}
 	
 	protected abstract BasePlayerEngine createEngine();

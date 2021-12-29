@@ -22,17 +22,19 @@ import cz.martlin.jmop.common.storages.fs.DefaultFileSystemAccessor;
 import cz.martlin.jmop.common.storages.musicdatasaver.BaseMusicdataSaver;
 import cz.martlin.jmop.common.storages.musicdatasaver.BaseMusicdataSaver.SaveReason;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
+import cz.martlin.jmop.common.testing.extensions.TestingRootDirExtension;
 import cz.martlin.jmop.common.testing.resources.TestingRootDir;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public abstract class AbstractMusicdataLoaderSaverTest {
 	private final BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
 
 	@RegisterExtension
-	public TestingRootDir root = new TestingRootDir(this);
+	public TestingRootDirExtension root = new TestingRootDirExtension(this);
 
 	@RegisterExtension
-	public TestingMusicdataExtension tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true);
+	public TestingMusicdataExtension tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, TrackFileFormat.MP3);
 
 	private BaseMusicdataSaver saver;
 	private BaseMusicdataLoader loader;

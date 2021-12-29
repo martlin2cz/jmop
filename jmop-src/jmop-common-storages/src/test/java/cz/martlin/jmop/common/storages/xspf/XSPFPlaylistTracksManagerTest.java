@@ -29,6 +29,7 @@ import cz.martlin.jmop.common.storages.playlists.SimpleValueToAndFromStringConve
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.common.testing.resources.TestingResources;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.xspf.playlist.base.XSPFCommon;
 import cz.martlin.xspf.playlist.elements.XSPFFile;
 import cz.martlin.xspf.playlist.elements.XSPFMeta;
@@ -52,7 +53,7 @@ class XSPFPlaylistTracksManagerTest {
 
 
 	public XSPFPlaylistTracksManagerTest() {
-		this.tme = TestingMusicdataExtension.simple(true);
+		this.tme = TestingMusicdataExtension.simple(TrackFileFormat.MP3);
 		
 		BaseValueToAndFromStringConverters converters = new SimpleValueToAndFromStringConverters();
 		mim = new XSPFExtensionElemsAttrsMetaInfoManager(converters);

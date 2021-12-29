@@ -15,6 +15,14 @@ public class TestingTrackFilesCreator {
 	public TestingTrackFilesCreator() {
 	}
 	
+	public File prepare(TrackFileFormat format) throws IOException {
+		String extension = format.fileExtension();
+		File file = File.createTempFile("sample-track-", "." + extension );
+		prepare(format, file);
+		return file;
+	}
+	
+	
 	public void prepare(TrackFileFormat format, File file) throws IOException {
 		byte[] data = readSampleTrack(format);
 		Path path = file.toPath();

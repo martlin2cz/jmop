@@ -1,7 +1,6 @@
 package cz.martlin.jmop.common.testing.testdata;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.Objects;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -27,8 +26,8 @@ public class TestingMusicdataWithStorageAndMusicbase extends AbstractTestingMusi
 	private final BaseMusicbaseStorage storage;
 	
 
-	public TestingMusicdataWithStorageAndMusicbase(BaseMusicbaseModifing musicbase, BaseMusicbaseStorage storage, boolean fileExisting) {
-		super(fileExisting);
+	public TestingMusicdataWithStorageAndMusicbase(BaseMusicbaseModifing musicbase, BaseMusicbaseStorage storage, TrackFileFormat trackFileOrNot) {
+		super(trackFileOrNot);
 
 		Objects.requireNonNull(musicbase, "The musicbase is not provided");
 		Objects.requireNonNull(storage, "The storage is not provided");
@@ -91,10 +90,10 @@ public class TestingMusicdataWithStorageAndMusicbase extends AbstractTestingMusi
 
 	@Override
 	protected Track createTheTrack(Bundle bundle, String title, String description, String id, Duration duration,
-			boolean fileExisting) {
+			TrackFileFormat trackFileOrNot) {
 
-		File trackFile = fileExisting ? TestingResources.prepareSampleTrack(this, TrackFileFormat.MP3) : null;
-		TrackFileCreationWay trackCreationWay = fileExisting ? TrackFileCreationWay.COPY_FILE : TrackFileCreationWay.NO_FILE;
+		File trackFile = trackFileOrNot != null ? TestingResources.prepareSampleTrack(this, trackFileOrNot) : null;
+		TrackFileCreationWay trackCreationWay = trackFileOrNot != null ? TrackFileCreationWay.COPY_FILE : TrackFileCreationWay.NO_FILE;
 		
 		TrackData data = new TrackData(id, title, description, duration);
 		Track track = musicbase.createNewTrack(bundle, data, trackCreationWay, trackFile);

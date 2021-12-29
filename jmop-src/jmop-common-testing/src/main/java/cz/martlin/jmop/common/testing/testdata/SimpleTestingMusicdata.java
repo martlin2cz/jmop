@@ -3,6 +3,7 @@ package cz.martlin.jmop.common.testing.testdata;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
 /**
@@ -20,6 +21,12 @@ public class SimpleTestingMusicdata extends AbstractTestingMusicdata {
 		prepare();
 	}
 	
+	public SimpleTestingMusicdata(TrackFileFormat trackFileOrNot) {
+		super(trackFileOrNot);
+		
+		prepare();
+	}
+	
 	@Override
 	protected Bundle createTheBundle(String name) {
 		return TestingDataCreator.bundle(null, name);
@@ -32,9 +39,9 @@ public class SimpleTestingMusicdata extends AbstractTestingMusicdata {
 
 	@Override
 	protected Track createTheTrack(Bundle bundle, String title, String description, String id, Duration duration,
-			boolean fileExisting) {
+			TrackFileFormat trackFileOrNot) {
 
-		return TestingDataCreator.track(null, bundle, title, description, id, duration, false);
+		return TestingDataCreator.track(null, bundle, title, description, id, duration, trackFileOrNot);
 	}
 
 	@Override

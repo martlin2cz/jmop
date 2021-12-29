@@ -12,6 +12,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
@@ -28,7 +29,7 @@ class JMOPPlayingTest {
 		this.playing = jmop.playing();
 
 		BaseMusicbaseModifing musicbase = jmop.musicbase().getMusicbase();
-		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true);
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, TrackFileFormat.MP3);
 	}
 
 	@Test

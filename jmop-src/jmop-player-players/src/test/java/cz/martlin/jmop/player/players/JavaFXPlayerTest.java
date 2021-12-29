@@ -1,7 +1,12 @@
 package cz.martlin.jmop.player.players;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+
+@Tag(value = "IDE_ONLY")
 public class JavaFXPlayerTest  {
 
 	public JavaFXPlayerTest() {
@@ -16,6 +21,11 @@ public class JavaFXPlayerTest  {
 		}
 
 		@Override
+		protected TrackFileFormat getFormat() {
+			return TrackFileFormat.MP3;
+		}
+		
+		@Override
 		protected BasePlayer createPlayer() {
 			return new JavaFXMediaPlayer();
 		}
@@ -27,6 +37,10 @@ public class JavaFXPlayerTest  {
 
 		public JavaFXPlayerWAVTest() {
 			super();
+		}
+		@Override
+		protected TrackFileFormat getFormat() {
+			return TrackFileFormat.WAV;
 		}
 
 		@Override

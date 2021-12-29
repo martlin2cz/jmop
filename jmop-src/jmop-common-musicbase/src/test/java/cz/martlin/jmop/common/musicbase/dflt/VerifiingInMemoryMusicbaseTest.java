@@ -21,6 +21,7 @@ import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class VerifiingInMemoryMusicbaseTest {
 	
@@ -32,7 +33,7 @@ public class VerifiingInMemoryMusicbaseTest {
 	public VerifiingInMemoryMusicbaseTest() {
 		BaseInMemoryMusicbase delegee = new DefaultInMemoryMusicbase();
 		musicbase = new VerifiingInMemoryMusicbase(delegee); //delegee; 
-		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true);
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, TrackFileFormat.MP3);
 	}
 	
 //	private Bundle unknowns;

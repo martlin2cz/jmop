@@ -15,8 +15,10 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class FFMPEGConverterTest {
 
+	private static final TrackFileFormat FROM_FORMAT = TrackFileFormat.MP3;
+	
 	@RegisterExtension
-	public TestingMusicdataExtension tme = TestingMusicdataExtension.simple(true);
+	public TestingMusicdataExtension tme = TestingMusicdataExtension.simple(FROM_FORMAT);
 	
 	@Test
 	public void test() throws Exception {

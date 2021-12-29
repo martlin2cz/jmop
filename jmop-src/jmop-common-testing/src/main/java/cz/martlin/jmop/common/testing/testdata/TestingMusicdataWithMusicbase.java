@@ -1,8 +1,6 @@
 package cz.martlin.jmop.common.testing.testdata;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.util.Objects;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -12,7 +10,6 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.testing.resources.TestingResources;
-import cz.martlin.jmop.common.testing.resources.TestingTrackFilesCreator;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
@@ -27,8 +24,8 @@ public class TestingMusicdataWithMusicbase extends AbstractTestingMusicdata {
 	
 	private final BaseMusicbaseModifing musicbase;
 
-	public TestingMusicdataWithMusicbase(BaseMusicbaseModifing musicbase, boolean fileExisting) {
-		super(fileExisting);
+	public TestingMusicdataWithMusicbase(BaseMusicbaseModifing musicbase, TrackFileFormat trackFileOrNot) {
+		super(trackFileOrNot);
 		Objects.requireNonNull(musicbase, "The musicbase is not provided");
 		
 		this.musicbase = musicbase;
@@ -95,10 +92,10 @@ public class TestingMusicdataWithMusicbase extends AbstractTestingMusicdata {
 
 	@Override
 	protected Track createTheTrack(Bundle bundle, String title, String description, String id, Duration duration,
-			boolean fileExisting) {
+			TrackFileFormat trackFileOrNot) {
 
-		File trackFile = fileExisting ? TestingResources.prepareSampleTrack(this, TrackFileFormat.MP3) : null;
-		TrackFileCreationWay trackCreationWay = fileExisting ? TrackFileCreationWay.COPY_FILE : TrackFileCreationWay.NO_FILE; 
+		File trackFile = trackFileOrNot != null ? TestingResources.prepareSampleTrack(this, trackFileOrNot) : null;
+		TrackFileCreationWay trackCreationWay = trackFileOrNot != null ? TrackFileCreationWay.COPY_FILE : TrackFileCreationWay.NO_FILE; 
 		TrackData data = new TrackData(id, title, description, duration);
 		return musicbase.createNewTrack(bundle, data, trackCreationWay, trackFile);
 	}

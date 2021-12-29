@@ -19,6 +19,11 @@ public class AplayPlayerTest extends AbstractPlayerTest {
 	}
 	
 	@Override
+	protected TrackFileFormat getFormat() {
+		return TrackFileFormat.WAV;
+	}
+	
+	@Override
 	protected BasePlayer createPlayer() {
 		BaseErrorReporter reporter = new SimpleErrorReporter();
 		return new AplayPlayer(reporter);

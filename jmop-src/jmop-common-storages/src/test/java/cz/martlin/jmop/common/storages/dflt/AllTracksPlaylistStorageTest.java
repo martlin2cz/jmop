@@ -20,6 +20,7 @@ import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
 import cz.martlin.jmop.common.storages.simples.InMemoryStorage;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 /**
  * An test for the {@link AllTracksPlaylistStorage}.
@@ -43,7 +44,7 @@ class AllTracksPlaylistStorageTest {
 		BaseMusicbaseStorage atps = new AllTracksPlaylistStorage(storage, inmemory, ATP_PLAYLIST_NAME);
 		musicbase = new PersistentMusicbase(inmemory, atps);
 
-		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, true);
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, TrackFileFormat.MP3);
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////

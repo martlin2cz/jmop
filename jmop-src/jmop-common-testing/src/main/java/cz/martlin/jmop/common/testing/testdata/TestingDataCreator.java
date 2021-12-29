@@ -15,10 +15,12 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
+import cz.martlin.jmop.common.testing.resources.TestingTrackFilesCreator;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.SourceKind;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
 /**
@@ -31,6 +33,8 @@ public class TestingDataCreator {
 	public static final String FOO_TRACK_ID = "1234";
 	@Deprecated
 	public static final String BAR_TRACK_ID = "9999";
+	
+	private static final TestingTrackFilesCreator ttfc = new TestingTrackFilesCreator();
 
 	private TestingDataCreator() {
 	}
@@ -55,19 +59,19 @@ public class TestingDataCreator {
 		String id = "hello id";
 		String description = "the description of the hello";
 		Duration duration = DurationUtilities.createDuration(0, 2, 10);
-		return doCreateTrack(musicbase, bundle, "hello track", description, id, duration, false);
+		return doCreateTrack(musicbase, bundle, "hello track", description, id, duration, null);
 	}
 
-	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title, boolean fileExisting) {
+	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title, TrackFileFormat trackFileOrNot) {
 		String id = "id of " + title;
 		String description = "description of " + title;
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
-		return doCreateTrack(musicbase, bundle, title, description, id, duration, fileExisting);
+		return doCreateTrack(musicbase, bundle, title, description, id, duration, trackFileOrNot);
 	}
 
 	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
-			String id, Duration duration, boolean fileExisting) {
-		return doCreateTrack(musicbase, bundle, title, description, id, duration, fileExisting);
+			String id, Duration duration, TrackFileFormat trackFileOrNot) {
+		return doCreateTrack(musicbase, bundle, title, description, id, duration, trackFileOrNot);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -88,18 +92,35 @@ public class TestingDataCreator {
 		}
 	}
 
+	/**
+	 * 
+	 * @param musicbase
+	 * @param bundle
+	 * @param title
+	 * @param description
+	 * @param id
+	 * @param duration
+	 * @param trackFileOrNot
+	 * @return
+	 * @deprecated do not use, rather provide the partoicular smaple track format 
+	 * and create the track file properly elsehow
+	 */
+	@Deprecated
 	private static Track doCreateTrack(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
-			String id, Duration duration, boolean fileExisting) {
+			String id, Duration duration, TrackFileFormat trackFileOrNot) {
 			TrackData data = new TrackData(id, title, description, duration);
-			File trackFile;
-			try {
-				trackFile = fileExisting ? File.createTempFile(title, ".music") : null;
-			} catch (IOException e) {
-				throw new JMOPRuntimeException(e);
+			
+			File trackFile = null;
+			if (trackFileOrNot != null) {
+				try {
+					trackFile = ttfc.prepare(trackFileOrNot);
+				} catch (IOException e) {
+					throw new JMOPRuntimeException(e);
+				}
 			}
 			
 			if (musicbase != null) {
-				return musicbase.createNewTrack(bundle, data, TrackFileCreationWay.COPY_FILE, trackFile);
+				return musicbase.createNewTrack(bundle, data, TrackFileCreationWay.JUST_SET, trackFile);
 			} else {
 				return new Track(bundle, id, title, description, duration, trackFile, Metadata.createNew());
 			}

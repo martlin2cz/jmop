@@ -42,7 +42,7 @@ class MusicbaseStatsTest {
 		BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
 		stats = new MusicbaseStats(musicbase);
 
-		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, false);
+		tme = TestingMusicdataExtension.withMusicbase(() -> musicbase, null);
 	}
 
 	///////////////////////////////////////////////////////////////////////////

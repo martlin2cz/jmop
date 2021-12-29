@@ -1,7 +1,6 @@
 package cz.martlin.jmop.common.testing.testdata;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.Objects;
 
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -25,8 +24,8 @@ public class TestingMusicdataWithStorage extends AbstractTestingMusicdata {
 
 	private final BaseMusicbaseStorage storage;
 
-	public TestingMusicdataWithStorage(BaseMusicbaseStorage storage, boolean fileExisting) {
-		super(fileExisting);
+	public TestingMusicdataWithStorage(BaseMusicbaseStorage storage, TrackFileFormat trackFileOrNot) {
+		super(trackFileOrNot);
 		Objects.requireNonNull(storage, "The storage is not provided");
 		
 		this.storage = storage;
@@ -86,10 +85,10 @@ public class TestingMusicdataWithStorage extends AbstractTestingMusicdata {
 
 	@Override
 	protected Track createTheTrack(Bundle bundle, String title, String description, String id, Duration duration,
-			boolean fileExisting) {
+			TrackFileFormat trackFileOrNot) {
 
-		Track track = TestingDataCreator.track(null, bundle, title, description, id, duration, false);
-		File trackFile = fileExisting ? TestingResources.prepareSampleTrack(this, TrackFileFormat.MP3) : null;
+		Track track = TestingDataCreator.track(null, bundle, title, description, id, duration, trackFileOrNot);
+		File trackFile = trackFileOrNot != null ? TestingResources.prepareSampleTrack(this, trackFileOrNot) : null;
 
 		storage.createTrack(track, TrackFileCreationWay.COPY_FILE, trackFile);
 		return track;

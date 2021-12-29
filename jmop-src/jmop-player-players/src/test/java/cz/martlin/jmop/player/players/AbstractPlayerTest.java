@@ -7,19 +7,24 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
+import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.common.testing.testdata.TestingDataCreator;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public abstract class AbstractPlayerTest {
 
 	private BasePlayer player;
-	private Track fooTrack;
-	private Track barTrack;
+	
+	@RegisterExtension
+	public TestingMusicdataExtension md = TestingMusicdataExtension.simple(getFormat());
 
 	public AbstractPlayerTest() {
 		super();
@@ -28,12 +33,9 @@ public abstract class AbstractPlayerTest {
 	@BeforeEach
 	public void beforeEach() {
 		player = createPlayer();
-
-		BaseInMemoryMusicbase musicbase = new DefaultInMemoryMusicbase();
-		Bundle bundle = TestingDataCreator.bundle(musicbase);
-		fooTrack = TestingDataCreator.track(musicbase, bundle, "foo", true);
-		barTrack = TestingDataCreator.track(musicbase, bundle, "bar", true);
 	}
+
+	protected abstract TrackFileFormat getFormat();
 
 	protected abstract BasePlayer createPlayer();
 
@@ -41,24 +43,24 @@ public abstract class AbstractPlayerTest {
 
 	@Test
 	public void testValids()  {
-		player.startPlaying(fooTrack);
-		check(fooTrack, PlayerStatus.PLAYING);
+		player.startPlaying(md.tmd.aerodynamic);
+		check(md.tmd.aerodynamic, PlayerStatus.PLAYING);
 		waitAsecond();
 
 		player.pause();
-		check(fooTrack, PlayerStatus.PAUSED);
+		check(md.tmd.aerodynamic, PlayerStatus.PAUSED);
 		waitAsecond();
 		
 		player.resume();
-		check(fooTrack, PlayerStatus.PLAYING);
+		check(md.tmd.aerodynamic, PlayerStatus.PLAYING);
 		waitAsecond();
 		
 		player.stop();
 		check(null, PlayerStatus.STOPPED);
 		waitAsecond();
 		
-		player.startPlaying(barTrack);
-		check(barTrack, PlayerStatus.PLAYING);
+		player.startPlaying(md.tmd.allTheHellIsBreakingLoose);
+		check(md.tmd.allTheHellIsBreakingLoose, PlayerStatus.PLAYING);
 		waitAsecond();
 		
 		player.stop();
@@ -73,18 +75,19 @@ public abstract class AbstractPlayerTest {
 		assertThrows(IllegalStateException.class, () -> player.stop());
 		waitAsecond();
 
-		player.startPlaying(fooTrack);
-		assertThrows(IllegalStateException.class, () -> player.startPlaying(barTrack));
+		player.startPlaying(md.tmd.dontForgetToFly);
+		assertThrows(IllegalStateException.class, () -> player.startPlaying(md.tmd.dontForgetToFly));
+		assertThrows(IllegalStateException.class, () -> player.startPlaying(md.tmd.atZijiDuchove));
 		assertThrows(IllegalStateException.class, () -> player.resume());
 		waitAsecond();
 		
 		player.pause();
-		assertThrows(IllegalStateException.class, () -> player.startPlaying(barTrack));
+		assertThrows(IllegalStateException.class, () -> player.startPlaying(md.tmd.atZijiDuchove));
 		assertThrows(IllegalStateException.class, () -> player.pause());
 		waitAsecond();
 		
 		player.resume();
-		assertThrows(IllegalStateException.class, () -> player.startPlaying(barTrack));
+		assertThrows(IllegalStateException.class, () -> player.startPlaying(md.tmd.atZijiDuchove));
 		assertThrows(IllegalStateException.class, () -> player.resume());
 		waitAsecond();
 			
@@ -96,9 +99,10 @@ public abstract class AbstractPlayerTest {
 	}
 
 	@Test
+	@Disabled
 	public void testToFinish()  {
-		player.startPlaying(fooTrack);
-		check(fooTrack, PlayerStatus.PLAYING);
+		player.startPlaying(md.tmd.atZijiDuchove);
+		check(md.tmd.atZijiDuchove, PlayerStatus.PLAYING);
 		
 		try {
 			// 20s should be enough to play the whole testing track
@@ -107,7 +111,7 @@ public abstract class AbstractPlayerTest {
 			fail(e);
 		}
 		
-		check(fooTrack, PlayerStatus.NO_TRACK);
+		check(md.tmd.atZijiDuchove, PlayerStatus.NO_TRACK);
 	}
 	
 	

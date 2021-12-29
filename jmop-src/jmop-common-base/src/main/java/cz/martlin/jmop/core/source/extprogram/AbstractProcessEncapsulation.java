@@ -53,7 +53,7 @@ public abstract class AbstractProcessEncapsulation {
 		}
 	}
 
-	public void terminate() {
+	public void terminate() throws ExternalProgramException {
 		LOG.info("Terminating process " + commandLine);
 
 		killTheProcess();
@@ -129,6 +129,10 @@ public abstract class AbstractProcessEncapsulation {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private void finishProcess() throws Exception {
+		if (process == null) {
+			throw new ExternalProgramException("The process is not running"); 
+		}
+		
 		int result = process.waitFor();
 
 		LOG.info("Process finished with code " + result); //$NON-NLS-1$
@@ -144,7 +148,11 @@ public abstract class AbstractProcessEncapsulation {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	private void killTheProcess() {
+	private void killTheProcess() throws ExternalProgramException {
+		if (process == null) {
+			throw new ExternalProgramException("The process is not running"); 
+		}
+		
 		process.destroy();
 	}
 

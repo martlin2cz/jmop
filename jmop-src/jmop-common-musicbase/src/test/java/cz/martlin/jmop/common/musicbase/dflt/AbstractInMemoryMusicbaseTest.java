@@ -26,7 +26,7 @@ public abstract class AbstractInMemoryMusicbaseTest {
 	public TestingMusicdataExtension tme;
 	
 	public AbstractInMemoryMusicbaseTest() {
-		tme = TestingMusicdataExtension.withMusicbase(this::createMusicbase, false);
+		tme = TestingMusicdataExtension.withMusicbase(this::createMusicbase, null);
 	}
 	
 	protected abstract BaseInMemoryMusicbase createMusicbase();
@@ -52,7 +52,7 @@ public abstract class AbstractInMemoryMusicbaseTest {
 		BaseMusicbaseModifing musicbase = tme.getMusicbase();
 		
 		BaseMusicbaseModifing another = createMusicbase();
-		TestingMusicdataWithMusicbase testing = new TestingMusicdataWithMusicbase(another, false);
+		TestingMusicdataWithMusicbase testing = new TestingMusicdataWithMusicbase(another, null);
 		
 		assertEquals(musicbase.toString(), another.toString());
 		assertEquals(musicbase, another);

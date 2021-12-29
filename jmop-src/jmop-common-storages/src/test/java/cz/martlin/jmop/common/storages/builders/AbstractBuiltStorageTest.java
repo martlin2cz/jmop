@@ -21,13 +21,14 @@ import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.common.testing.extensions.TestingRootDirExtension;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public abstract class AbstractBuiltStorageTest {
 	
 	@RegisterExtension
 	public TestingRootDirExtension root = new TestingRootDirExtension(this);
 	@RegisterExtension
-	public TestingMusicdataExtension musicdata = TestingMusicdataExtension.withStorageAndMusicbase(this::createMusibase, this::createTheStorage, true);
+	public TestingMusicdataExtension musicdata = TestingMusicdataExtension.withStorageAndMusicbase(this::createMusibase, this::createTheStorage, TrackFileFormat.MP3);
 
 	//TODO you would have to use musicdata.tbd.storage to obtain the storage instance.
 	public AbstractBuiltStorageTest() {

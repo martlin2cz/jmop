@@ -68,7 +68,7 @@ class StorageBuilderTest {
 		System.out.println(storage);
 		
 		BaseMusicbaseModifing musicbase = new PersistentMusicbase(inmemory, storage);
-		AbstractTestingMusicdata tmb = new TestingMusicdataWithMusicbase(musicbase, true);
+		AbstractTestingMusicdata tmb = new TestingMusicdataWithMusicbase(musicbase, TrackFileFormat.MP3);
 		
 		System.out.println(tmb);
 		

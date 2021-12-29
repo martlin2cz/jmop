@@ -4,6 +4,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
 /**
@@ -18,7 +19,7 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 	/**
 	 * May create the tracks files?
 	 */
-	private final boolean fileExisting;
+	private final TrackFileFormat trackFileOrNot;
 	
 	/**
 	 * Contains playlist {@link #discovery}, {@link #randomAccessMemories}. Contains
@@ -101,13 +102,13 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 	public AbstractTestingMusicdata() {
 		super();
 		
-		fileExisting = false;
+		trackFileOrNot = null;
 	}
 
-	public AbstractTestingMusicdata(boolean fileExisting) {
+	public AbstractTestingMusicdata(TrackFileFormat trackFileOrNot) {
 		super();
 		
-		this.fileExisting = fileExisting;
+		this.trackFileOrNot = trackFileOrNot;
 	}
 
 	protected void prepare() {
@@ -131,13 +132,13 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 
 		// tracks
 		oneMoreTime = createTheTrack(daftPunk, "One More Time", "One More Time (featuring Romanthony)", "OMT",
-				DurationUtilities.createDuration(0, 5, 20), fileExisting);
+				DurationUtilities.createDuration(0, 5, 20), trackFileOrNot);
 		aerodynamic = createTheTrack(daftPunk, "Aerodynamic", "Aerodynamic", "AD",
-				DurationUtilities.createDuration(0, 3, 27), fileExisting);
+				DurationUtilities.createDuration(0, 3, 27), trackFileOrNot);
 		verdisQuo = createTheTrack(daftPunk, "Veridis Quo", "Veridis Quo", "VQ",
-				DurationUtilities.createDuration(0, 5, 44), fileExisting);
+				DurationUtilities.createDuration(0, 5, 44), trackFileOrNot);
 		getLucky = createTheTrack(daftPunk, "Get Lucky", "Get Lucky (featuring Pharrell Williams)", "GL",
-				DurationUtilities.createDuration(0, 6, 8), fileExisting);
+				DurationUtilities.createDuration(0, 6, 8), trackFileOrNot);
 
 		// init the playlists
 		discovery.addTrack(oneMoreTime);
@@ -177,24 +178,24 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 
 		// tracks
 		justOneSecond = createTheTrack(londonElektricity, "Just One Second", "2. Just One Second", "JOS",
-				DurationUtilities.createDuration(0, 5, 39), fileExisting);
+				DurationUtilities.createDuration(0, 5, 39), trackFileOrNot);
 
 		allTheHellIsBreakingLoose = createTheTrack(londonElektricity, "All Hell Is Breaking Loose",
-				"6. All Hell Is Breaking Loose", "AtHBL", DurationUtilities.createDuration(0, 4, 44), fileExisting);
+				"6. All Hell Is Breaking Loose", "AtHBL", DurationUtilities.createDuration(0, 4, 44), trackFileOrNot);
 
 		pointOfNoReturn = createTheTrack(londonElektricity, "Point of No Return", "7. Point of No Return", "PoNR",
-				DurationUtilities.createDuration(0, 5, 52), fileExisting);
+				DurationUtilities.createDuration(0, 5, 52), trackFileOrNot);
 
 		meteorities = createTheTrack(londonElektricity, "Meteorites", "2. Meteorites (feat. Elsa Esmeralda)", "M",
-				DurationUtilities.createDuration(0, 6, 2), fileExisting);
+				DurationUtilities.createDuration(0, 6, 2), trackFileOrNot);
 
 		invisibleWorlds = createTheTrack(londonElektricity, "Invisible Worlds",
 				"Invisible Worlds (feat. Elsa Esmeralda)", "IW", DurationUtilities.createDuration(0, 6, 45),
-				fileExisting);
+				trackFileOrNot);
 
 		elektricityWillKeepMeWarm = createTheTrack(londonElektricity, "Elektricity Will Keep Me Warm",
 				"1. Elektricity Will Keep Me Warm (feat. Elsa Esmeralda)", "EWKMW",
-				DurationUtilities.createDuration(0, 3, 30), fileExisting);
+				DurationUtilities.createDuration(0, 3, 30), trackFileOrNot);
 
 		// init the playlists
 		syncopatedCity.addTrack(justOneSecond);
@@ -219,29 +220,29 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 		// tracks
 		seventeenPartI = createTheTrack(cocolinoDeep, "Seventeen Part1",
 				"\"Wherever you go becomes a part of you somehow.\"", "S1", DurationUtilities.createDuration(1, 42, 42),
-				fileExisting);
+				trackFileOrNot);
 
 		seventeenPartII = createTheTrack(cocolinoDeep, "Seventeen Part2",
 				"\"Wherever you go becomes a part of you somehow.\"", "S2", DurationUtilities.createDuration(1, 30, 50),
-				fileExisting);
+				trackFileOrNot);
 
 		seventeenPartIII = createTheTrack(cocolinoDeep, "Seventeen Part3",
 				"\"Wherever you go becomes a part of you somehow.\"", "S3", DurationUtilities.createDuration(1, 31, 31),
-				fileExisting);
+				trackFileOrNot);
 
 		seventeenPartIV = createTheTrack(cocolinoDeep, "Seventeen Part4",
 				"\"Wherever you go becomes a part of you somehow.\"", "S4", DurationUtilities.createDuration(1, 26, 53),
-				fileExisting);
+				trackFileOrNot);
 
 		dontForgetToFly = createTheTrack(cocolinoDeep, "Don't forget to fly", "Coccolino Deep - Don't forget to fly",
-				"DFtF", DurationUtilities.createDuration(0, 47, 32), fileExisting);
+				"DFtF", DurationUtilities.createDuration(0, 47, 32), trackFileOrNot);
 
 		getLost = createTheTrack(cocolinoDeep, "Get Lost", "Coccolino Deep - Get Lost", "GL",
-				DurationUtilities.createDuration(0, 50, 39), fileExisting);
+				DurationUtilities.createDuration(0, 50, 39), trackFileOrNot);
 
 		dancingWithTheElepthant = createTheTrack(cocolinoDeep, "Dancing with Elephant",
 				"\"Music is the strongest form of magic.\"", "DwE", DurationUtilities.createDuration(0, 59, 45),
-				fileExisting);
+				trackFileOrNot);
 
 		// init the playlists
 		seventeen.addTrack(seventeenPartI);
@@ -256,16 +257,16 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 
 		// tracks
 		atZijiDuchove = createTheTrack(robick, "At ziji duchove", "Robick feat. MC SPYDA - Ať žijí duchové (DNB Remix)",
-				"AZD", DurationUtilities.createDuration(0, 6, 4), fileExisting);
+				"AZD", DurationUtilities.createDuration(0, 6, 4), trackFileOrNot);
 
 		znamkaPunku = createTheTrack(robick, "Znamka punku", "Visaci Zamek: Znamka punku (Robick Remix)", "ZP",
-				DurationUtilities.createDuration(0, 4, 6), fileExisting);
+				DurationUtilities.createDuration(0, 4, 6), trackFileOrNot);
 
 		neniNutno = createTheTrack(robick, "Neni nutno", "Robick - Není nutno (feat.Tenor Fly & Top Cat)", "NN",
-				DurationUtilities.createDuration(0, 4, 30), fileExisting);
+				DurationUtilities.createDuration(0, 4, 30), trackFileOrNot);
 
 		ladyCarneval = createTheTrack(robick, "Lady Carneval", "Karel Gott Lady Carneval (DnB Remix by Robick)", "LC",
-				DurationUtilities.createDuration(0, 4, 11), fileExisting);
+				DurationUtilities.createDuration(0, 4, 11), trackFileOrNot);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -341,7 +342,7 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 	protected abstract Playlist createThePlaylist(Bundle bundle, String name);
 
 	protected abstract Track createTheTrack(Bundle bundle, String title, String description, String id,
-			Duration duration, boolean fileExisting);
+			Duration duration, TrackFileFormat trackFileOrNot);
 
 	protected abstract Track deleteTheTrack(Track track);
 
@@ -353,7 +354,7 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 
 	@Override
 	public String toString() {
-		return "AbstractTestingMusicdata [fileExisting=" + fileExisting + ", daftPunk=" + daftPunk + ", discovery="
+		return "AbstractTestingMusicdata [trackFileOrNot=" + trackFileOrNot + ", daftPunk=" + daftPunk + ", discovery="
 				+ discovery + ", randomAccessMemories=" + randomAccessMemories + ", oneMoreTime=" + oneMoreTime
 				+ ", aerodynamic=" + aerodynamic + ", verdisQuo=" + verdisQuo + ", getLucky=" + getLucky
 				+ ", londonElektricity=" + londonElektricity + ", syncopatedCity=" + syncopatedCity + ", yikes=" + yikes

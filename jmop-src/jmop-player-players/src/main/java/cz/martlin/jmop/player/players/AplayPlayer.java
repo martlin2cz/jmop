@@ -102,7 +102,11 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 	}
 	
 	private void stopTheAplay() {
-		this.process.terminate();
+		try {
+			this.process.terminate();
+		} catch (ExternalProgramException e) {
+			throw new RuntimeException(e);
+		}
 		this.process = null;
 	}
 

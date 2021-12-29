@@ -39,7 +39,7 @@ class XSPFPlaylistFilesMusicdataManipulatorBruteForceTest {
 	private final XSPFPlaylistFilesMusicdataManipulator weakManipulator;
 
 	public XSPFPlaylistFilesMusicdataManipulatorBruteForceTest() {
-		this.tme = TestingMusicdataExtension.simple(true);
+		this.tme = TestingMusicdataExtension.simple(TrackFileFormat.MP3);
 		this.trackSource = new TestingTracksSource(TrackFileFormat.MP3);
 
 		BaseErrorReporter reporter = new SimpleErrorReporter();

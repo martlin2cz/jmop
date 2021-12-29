@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<revision>3.1.2</revision>
+		<revision>3.1.9</revision>
 	</properties>
 
 	<dependencies>
@@ -32,13 +32,7 @@
 			<version>5.7.1</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-params</artifactId>
-			<version>5.7.1</version>
-			<scope>test</scope>
-		</dependency>
-		
+	    
 		<!-- hamcrest -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -113,16 +107,23 @@
 
 	<build>
 		<plugins>
-			<!-- https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven -->
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.22.2</version>
+		<!-- https://github.com/sormuras/junit-platform-maven-plugin -->
+		<!-- Run mvn clean test or whatever else testing -->
+		<plugin>
+			  <groupId>de.sormuras.junit</groupId>
+			  <artifactId>junit-platform-maven-plugin</artifactId>
+			  <version>1.1.5</version>
+			  <extensions>true</extensions>
+			  <configuration>
+			    <isolation>NONE</isolation>
+			    <tags>
+			    	<tag>!IDE_ONLY</tag>
+			    </tags>
+			  </configuration>
 			</plugin>
 		
+
+
 			<!-- https://github.com/openjfx/javafx-maven-plugin -->
 			<!-- Run: mvn javafx:compile -->
 			<plugin>
