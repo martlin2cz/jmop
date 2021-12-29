@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -15,6 +16,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
 
+@Tag(value = "IDE_ONLY")
 public class YoutubeQuerierTest {
 
 	public static void main(String[] args) throws IOException {

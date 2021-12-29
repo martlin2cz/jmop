@@ -7,10 +7,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.operation.PrintingListener;
 
+@Tag(value = "IDE_ONLY")
 public class YoutubeDLDownloaderTest {
 
 	public static void main(String[] args) throws IOException {

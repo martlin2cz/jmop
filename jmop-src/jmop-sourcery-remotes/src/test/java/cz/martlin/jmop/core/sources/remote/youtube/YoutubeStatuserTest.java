@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.ConsoleUIInteractor;
@@ -16,6 +17,7 @@ import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
 import cz.martlin.jmop.core.sources.remote.ffmpeg.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.remote.youtubedl.YoutubeDLDownloader;
 
+@Tag(value = "IDE_ONLY")
 class YoutubeStatuserTest {
 
 	public static class TestingConfig implements BaseRemotesConfiguration {
