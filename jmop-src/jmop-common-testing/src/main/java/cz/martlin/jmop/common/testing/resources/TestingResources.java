@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-import com.google.common.io.Files;
+import org.apache.commons.io.IOUtils;
 
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
@@ -53,13 +55,14 @@ public class TestingResources {
 
 		InputStream ins = loadResource(target, name);
 		byte[] bytes = read(ins);
-		Files.write(bytes, file);
+		Path path = file.toPath();
+		Files.write(path, bytes);
 
 		System.out.println("Resource file ready: " + file);
 		return file;
 	}
 
 	private static byte[] read(InputStream ins) throws IOException {
-		return org.apache.commons.io.IOUtils.readFully(ins, ins.available());
+		return IOUtils.readFully(ins, ins.available());
 	}
 }

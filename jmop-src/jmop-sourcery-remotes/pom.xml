@@ -5,49 +5,90 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.1.9</version>
+		<version>3.1.10</version>
 	</parent>
 
 	<artifactId>jmop-sourcery-remotes</artifactId>
 	<name>The JMOP sourcery remotes.</name>
 	<description>Module implementing all the sourcery remotes.</description>
-	<version>3.1.9</version>
+	<version>3.1.10</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-sourcery-base</artifactId>
-			<version>3.1.9</version>
+			<version>3.1.10</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-testing</artifactId>
-			<version>3.1.9</version>
-		</dependency>
-		
-		
-<!-- 	youtube API libraries -->
-<!-- 	https://developers.google.com/youtube/v3/quickstart/java -->
-		<dependency>
-			<groupId>com.google.api-client</groupId>
-			<artifactId>google-api-client</artifactId>
-			<version>1.31.1</version>
-			<scope>compile</scope>
+			<version>3.1.10</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.oauth-client</groupId>
-			<artifactId>google-oauth-client-jetty</artifactId>
-			<version>1.31.1</version>
-			<scope>compile</scope>
-		</dependency>
 
-		<dependency>
-			<groupId>com.google.apis</groupId>
-			<artifactId>google-api-services-youtube</artifactId>
-			<version>v3-rev222-1.25.0</version>
-			<scope>compile</scope>
-		</dependency>
+		<!-- youtube API libraries -->
+		<!-- https://developers.google.com/youtube/v3/quickstart/java -->
+<dependency>
+  <groupId>com.google.api-client</groupId>
+  <artifactId>google-api-client-assembly</artifactId>
+  <version>1.32.2</version>
+  <type>pom</type>
+</dependency>
+
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-youtube</artifactId>
+      <version>v3-rev20210915-1.32.1</version>
+    </dependency>
+    
+    <!-- https://stackoverflow.com/questions/40406183/how-to-import-localserverreceiver -->
+    <dependency>
+    <groupId>com.google.oauth-client</groupId>
+    <artifactId>google-oauth-client-jetty</artifactId>
+    <version>1.32.1</version>
+</dependency>
+
+<!-- https://stackoverflow.com/questions/17231722/com-google-api-client-json-jackson-jacksonfactory-missing-in-google-drive-examp -->
+<dependency>
+    <groupId>com.google.http-client</groupId>
+    <artifactId>google-http-client-jackson</artifactId>
+    <version>1.25.0</version>
+</dependency>
+
+<dependency>
+    <groupId>com.google.http-client</groupId>
+    <artifactId>google-http-client</artifactId>
+    <version>1.39.2</version>
+</dependency>
+
+<!-- there is the 1.39.5 version avaiable -->
+<!-- <dependency> -->
+<!--     <groupId>com.google.oauth-client</groupId> -->
+<!--     <artifactId>google-oauth-client-java6</artifactId> -->
+<!--     <version>1.39.5</version> -->
+<!-- </dependency> -->
+
+		<!-- - https://stackoverflow.com/a/17512552/3797793 - -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.http-client</groupId> -->
+		<!-- <artifactId>google-http-client-jackson</artifactId> -->
+		<!-- <version>1.15.0-rc</version> -->
+		<!-- </dependency> -->
+
+		<!-- - https://cloud.google.com/java/docs/reference/google-cloud-datastore/latest/com.google.datastore.v1.client.DatastoreFactory 
+			- -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.cloud</groupId> -->
+		<!-- <artifactId>google-cloud-datastore</artifactId> -->
+		<!-- <version>2.2.1</version> -->
+		<!-- </dependency> -->
+
+		<!-- workaround missing ByteStreams#exhaust -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.guava</groupId> -->
+		<!-- <artifactId>guava</artifactId> -->
+		<!-- <version>31.0.1-jre</version> -->
+		<!-- </dependency> -->
 	</dependencies>
 </project>

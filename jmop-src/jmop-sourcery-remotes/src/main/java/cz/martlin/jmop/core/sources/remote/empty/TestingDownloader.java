@@ -20,6 +20,11 @@ public class TestingDownloader implements BaseDownloader {
 	}
 
 	@Override
+	public TrackFileFormat downloadFormat() {
+		return downloadFileFormat;
+	}
+	
+	@Override
 	public void download(String url, File target) throws JMOPSourceryException {
 		try {
 			copyTestingFileTo(target);

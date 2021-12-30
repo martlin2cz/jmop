@@ -37,41 +37,56 @@ public class DefaultJMOPPlayerBuilder {
 	public static JMOPPlayer createTesting() {
 		TestingRootDir rootDir = new TestingRootDir(DefaultJMOPPlayerBuilder.class);
 		File root = rootDir.getFile();
-		
+
 		BasePlayer player = new TestingPlayer();
 		BaseDefaultJMOPConfig config = new ConstantDefaultFascadeConfig();
 
 		BaseErrorReporter reporter = new SimpleErrorReporter();
-		
+
 		return create(root, player, config, reporter);
 	}
 
-	public static JMOPPlayer create(File root, BasePlayer player,  BaseDefaultJMOPConfig config, BaseErrorReporter reporter) {
-		
-		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
-		BaseInMemoryMusicbase verifiing = new VerifiingInMemoryMusicbase(inmemory);
-		
-		BaseDefaultStorageConfig storageConfig = config;
+	public static JMOPPlayer create(File root, BasePlayer player, BaseDefaultJMOPConfig config,
+			BaseErrorReporter reporter) {
 
-		TrackFileFormat format = TrackFileFormat.MP3; //FIXME
+		BaseMusicbase musicbase = createMusicbase(root, config, reporter);
 
-//		BaseMusicbaseStorage storage = X_DefaultStorage.create(root, storageConfig, reporter, verifiing);
-
-		BaseMusicbaseStorage storage = new StorageBuilder().create(DirsLayout.BUNDLES_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, true, PlaylistFileFormat.XSPF, reporter, root, storageConfig, format, inmemory);
-
-//		StorageBuilder builder = new StorageBuilder();
-//		BaseMusicbaseStorage storage = builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.SIMPLE, false, PlaylistFileFormat.TXT, reporter, root, config, TrackFileFormat.MP3, inmemory);
-	
-		BaseMusicbase musicbase = new PersistentMusicbase(verifiing, storage);
-		
-		BaseDefaultEngineConfig engineConfig = config;
-		BasePlayerEngine engine = DefaultEngine.create(player, musicbase, engineConfig);
+		BasePlayerEngine engine = createEngine(player, config, musicbase);
 
 		return create(config, musicbase, engine);
 	}
 
-	private static JMOPPlayer create(BaseDefaultJMOPConfig config, BaseMusicbase musicbase,
-			BasePlayerEngine engine) {
+	public static BaseMusicbase createMusicbase(File root, BaseDefaultJMOPConfig config, BaseErrorReporter reporter) {
+		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
+		BaseInMemoryMusicbase verifiing = new VerifiingInMemoryMusicbase(inmemory);
+
+		BaseDefaultStorageConfig storageConfig = config;
+
+		TrackFileFormat format = TrackFileFormat.MP3; // FIXME config?
+
+//		BaseMusicbaseStorage storage = X_DefaultStorage.create(root, storageConfig, reporter, verifiing);
+
+		BaseMusicbaseStorage storage = new StorageBuilder().create(DirsLayout.BUNDLES_DIR,
+				BundleDataFile.ALL_TRACKS_PLAYLIST, true, PlaylistFileFormat.XSPF, reporter, root, storageConfig,
+				format, inmemory);
+
+//		StorageBuilder builder = new StorageBuilder();
+//		BaseMusicbaseStorage storage = builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.SIMPLE, false, PlaylistFileFormat.TXT, reporter, root, config, TrackFileFormat.MP3, inmemory);
+
+		BaseMusicbase musicbase = new PersistentMusicbase(verifiing, storage);
+		return musicbase;
+	}
+
+	private static BasePlayerEngine createEngine(BasePlayer player, BaseDefaultJMOPConfig config,
+			BaseMusicbase musicbase) {
+
+		BaseDefaultEngineConfig engineConfig = config;
+		BasePlayerEngine engine = DefaultEngine.create(player, musicbase, engineConfig);
+
+		return engine;
+	}
+
+	private static JMOPPlayer create(BaseDefaultJMOPConfig config, BaseMusicbase musicbase, BasePlayerEngine engine) {
 
 		JMOPConfig configModule = new JMOPConfig(config, musicbase, engine);
 		JMOPMusicbase musicbaseModule = new JMOPMusicbase(musicbase);

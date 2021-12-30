@@ -152,7 +152,7 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 	@Override
 	public String toString() {
 		return "Track [bundle=" + bundle.getName() + /*", identifier=" + identifier + */ ", title=" + title //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ ", description=" + "..." + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ", description=" + "..." + ", file=" + file + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	public String toHumanString() {

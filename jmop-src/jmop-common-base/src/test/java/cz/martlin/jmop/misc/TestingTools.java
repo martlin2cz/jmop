@@ -9,8 +9,13 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 
+/**
+ * @deprecated replaced by jmop-common-testing whole module
+ * @author martin
+ *
+ */
+@Deprecated
 public class TestingTools {
 
 	public static boolean delete(File directory) {
@@ -50,7 +55,7 @@ public class TestingTools {
 
 	public static void runAsJavaFX(Runnable runnable) {
 		//FIXME commented out
-		new JFXPanel(); // Initializes the JavaFx Platform
+		//new JFXPanel(); // Initializes the JavaFx Platform
 
 		Platform.runLater(runnable);
 	}

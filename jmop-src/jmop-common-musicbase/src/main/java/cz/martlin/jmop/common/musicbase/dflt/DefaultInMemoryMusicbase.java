@@ -134,12 +134,12 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	@Override
 	public Track createNewTrack(Bundle bundle, TrackData data, TrackFileCreationWay trackFileCreationSpecifier, File trackFileSource) {
 		Metadata metadata = Metadata.createNew();
-		return addTrack(bundle, data.getIdentifier(), data.getTitle(), data.getDescription(), data.getDuration(), metadata);
+		return addTrack(bundle, data.getIdentifier(), data.getTitle(), data.getDescription(), data.getDuration(), metadata, trackFileSource);
 	}
 
 	private Track addTrack(Bundle bundle, String identifier, String title, String description, Duration duration,
-			Metadata metadata) {
-		Track track = new Track(bundle, identifier, title, description, duration, null, metadata);
+			Metadata metadata, File file) {
+		Track track = new Track(bundle, identifier, title, description, duration, file, metadata);
 
 		tracks.add(track);
 		return track;

@@ -17,13 +17,18 @@ import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 public class YoutubeDLDownloader implements BaseDownloader {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
-	private static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.MP3;
+	public static final TrackFileFormat DOWNLOAD_FILE_FORMAT = TrackFileFormat.MP3;
 
 	private final BaseProgressListener listener;
 
 	public YoutubeDLDownloader(BaseProgressListener listener) {
 		super();
 		this.listener = listener;
+	}
+	
+	@Override
+	public TrackFileFormat downloadFormat() {
+		return DOWNLOAD_FILE_FORMAT;
 	}
 
 	@Override
@@ -46,7 +51,7 @@ public class YoutubeDLDownloader implements BaseDownloader {
 		String path = target.getAbsolutePath();
 		return Arrays.asList( //
 				"--newline", //
-				"--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.getExtension(), //
+				"--extract-audio", "--audio-format", DOWNLOAD_FILE_FORMAT.fileExtension(), //
 				"--output", path, url);
 	}
 

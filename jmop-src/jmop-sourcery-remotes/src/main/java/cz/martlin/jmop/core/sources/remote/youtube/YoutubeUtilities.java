@@ -17,7 +17,8 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.client.util.store.DataStoreFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.youtube.YouTube;
 
@@ -41,9 +42,9 @@ public class YoutubeUtilities {
 			".credentials/jmop");
 
 	/** Global instance of the {@link FileDataStoreFactory}. */
-	private static FileDataStoreFactory DATA_STORE_FACTORY;
+	private static DataStoreFactory DATA_STORE_FACTORY;
     
-    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 
 	/** Global instance of the HTTP transport. */
 	private static HttpTransport HTTP_TRANSPORT;

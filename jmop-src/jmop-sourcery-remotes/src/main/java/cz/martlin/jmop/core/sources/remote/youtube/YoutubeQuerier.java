@@ -1,6 +1,9 @@
 package cz.martlin.jmop.core.sources.remote.youtube;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,17 +49,19 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	@Override
 	protected String createUrlOfTrack(Track track) {
 		String id = track.getIdentifier();
-		return "https://www.youtube.com/watch?v=" + id; //$NON-NLS-1$
+		return urlOf(id); //$NON-NLS-1$
 	}
+
 
 	@Override
 	protected YouTube.Videos.List createLoadRequest(List<String> ids) throws Exception {
 		YouTube youtube = obtainYoutubeService();
 
-		YouTube.Videos.List listVideosRequest = youtube.videos().list("contentDetails,snippet"); //$NON-NLS-1$
+		
+		List<String> part = Arrays.asList("contentDetails", "snippet");//$NON-NLS-1$
+		YouTube.Videos.List listVideosRequest = youtube.videos().list(part); 
 
-		String idsStr = ids.stream().collect(Collectors.joining(","));
-		listVideosRequest.setId(idsStr);
+		listVideosRequest.setId(ids);
 
 		return listVideosRequest;
 	}
@@ -65,10 +70,15 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	protected YouTube.Search.List createSearchRequest(String query) throws IOException {
 		YouTube youtube = obtainYoutubeService();
 
-		YouTube.Search.List searchListByKeywordRequest = youtube.search().list("snippet"); //$NON-NLS-1$
-		searchListByKeywordRequest.setType("video"); //$NON-NLS-1$
+		List<String> part = Arrays.asList("snippet");//$NON-NLS-1$
+		YouTube.Search.List searchListByKeywordRequest = youtube.search().list(part); 
+		
+		List<String> types = Arrays.asList("video");//$NON-NLS-1$
+		searchListByKeywordRequest.setType(types); 
+		
 		searchListByKeywordRequest.setMaxResults((long) config.getSearchCount());
 		searchListByKeywordRequest.setQ(query);
+		
 		return searchListByKeywordRequest;
 	}
 
@@ -76,8 +86,12 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	protected YouTube.Search.List createLoadNextRequest(String id) throws IOException {
 		YouTube youtube = obtainYoutubeService();
 
-		YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list("snippet"); //$NON-NLS-1$
-		searchListRelatedVideosRequest.setType("video"); //$NON-NLS-1$
+		List<String> part = Arrays.asList("snippet");//$NON-NLS-1$
+		YouTube.Search.List searchListRelatedVideosRequest = youtube.search().list(part); 
+		
+		List<String> types = Arrays.asList("video");//$NON-NLS-1$
+		searchListRelatedVideosRequest.setType(types); 
+
 		searchListRelatedVideosRequest.setRelatedToVideoId(id);
 		searchListRelatedVideosRequest.setMaxResults(3l);
 		return searchListRelatedVideosRequest;
@@ -134,6 +148,9 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	private String urlOf(String id) {
+		return "https://www.youtube.com/watch?v=" + id;
+	}
 
 	private YouTube obtainYoutubeService() throws JMOPSourceryException {
 		try {
@@ -172,8 +189,15 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 		String description = result.getSnippet().getDescription();
 		String durationStr = result.getContentDetails().getDuration();
 		Duration duration = DurationUtilities.parseYoutubeDuration(durationStr);
-
-		return new TrackData(identifier, title, description, duration);
+		String urlStr = urlOf(identifier);
+		URL url;
+		try {
+			url = new URL(urlStr);
+		} catch (MalformedURLException e) {
+			throw new IllegalArgumentException("Cannot create track url", e);
+		}
+		
+		return new TrackData(identifier, title, description, duration, url);
 	}
 
 	/**
