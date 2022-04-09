@@ -12,14 +12,18 @@ import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.PlaylistMixin;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ScopeType;
 
 public class PrintCommands {
 
-	@Command(name = "status")
+	@Command(name = "status", aliases = { "st" }, //
+		description = "Prints the current player status", //
+		subcommands =  HelpCommand.class )
 	public static class StatusCommand extends AbstractRunnableCommand {
 
 		private final StatusPrinter printer;
@@ -40,7 +44,9 @@ public class PrintCommands {
 
 	}
 
-	@Command(name = "bar")
+	@Command(name = "bar", aliases = { "B" }, //
+		description = "Prints the track play progressbar", //
+		subcommands =  HelpCommand.class )
 	public static class BarCommand extends AbstractRunnableCommand {
 		private final BarPrinter printer;
 
@@ -61,7 +67,9 @@ public class PrintCommands {
 
 	}
 
-	@Command(name = "bundle")
+	@Command(name = "bundle", aliases = { "b" }, //
+		description = "Prints the info about the current or provided bundle", //
+		subcommands =  HelpCommand.class )
 	public static class BundleInfoCommand extends AbstractRunnableCommand {
 
 		private final ElementsPrinter printer;
@@ -83,11 +91,14 @@ public class PrintCommands {
 
 	}
 
-	@Command(name = "playlist", scope = ScopeType.INHERIT, subcommands = { //
+	@Command(name = "playlist", scope = ScopeType.INHERIT, aliases = { "P" },
+		description = "Prints info about the (current or provided) playlist or alters it", //
+		subcommands = { //
+			CommandLine.HelpCommand.class, //
 			ModifyPlaylistCommands.AddTrackCommand.class, //
 			ModifyPlaylistCommands.InsertTrackCommand.class, //
 			ModifyPlaylistCommands.RemoveTrackCommand.class, //
-	})
+	}) //
 	public static class PlaylistInfoCommand extends AbstractRunnableCommand {
 
 		private final ElementsPrinter printer;
@@ -109,7 +120,9 @@ public class PrintCommands {
 	}
 
 
-	@Command(name = "track")
+	@Command(name = "track", aliases = { "t" }, //
+		description = "Prints the info about the given or current track", //
+		subcommands =  HelpCommand.class )
 	public static class TrackInfoCommand extends AbstractRunnableCommand {
 
 		private final ElementsPrinter printer;
@@ -131,15 +144,17 @@ public class PrintCommands {
 
 	}
 
-	@Command(name = "stats")
+	@Command(name = "statistics", aliases = { "stats" }, //
+		description = "Prints various statistics about the playing and musicbase", //
+		subcommands =  HelpCommand.class )
 	public static class StatsCommand extends AbstractRunnableCommand {
 
 		private final StatsPrinter printer;
 
-		@Option(names = { "minimal", "short" })
+		@Option(names = { "minimal", "short" }, description = "Prints just the basic statistics")
 		private boolean minimal;
 		
-		@Option(names = { "full", "long" })
+		@Option(names = { "full", "long" }, description = "Prints complete statistics of all bundles, playlists and tracks")
 		private boolean full;
 		
 

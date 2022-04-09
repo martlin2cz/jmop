@@ -13,13 +13,16 @@ import cz.martlin.jmop.player.cli.repl.mixin.TrackOfBundleMixin;
 import cz.martlin.jmop.player.engine.dflt.BaseDefaultEngineConfig;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.ParentCommand;
 
 public class ModifyPlaylistCommands {
 	
-	@Command(name = "add")
+	@Command(name = "add", aliases = { "a" },
+		description = "Adds given track to the provided playlist", //
+		subcommands =  HelpCommand.class )
 	public static class AddTrackCommand extends AbstractRunnableCommand {
 		
 //		@Mixin
@@ -49,7 +52,9 @@ public class ModifyPlaylistCommands {
 		}
 	}
 	
-	@Command(name = "insert")
+	@Command(name = "insert", aliases = { "i" }, //
+		description = "Inserts the track to the specified spot in the playlist", //
+		subcommands =  HelpCommand.class )
 	public static class InsertTrackCommand extends AbstractRunnableCommand {
 		
 //		@Mixin
@@ -58,7 +63,8 @@ public class ModifyPlaylistCommands {
 		@ParentCommand
 		private PlaylistInfoCommand parent;
 		
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="WHERE", //
+				description = "Insert before what track? Provide either track title or index number")
 		private String beforeStr;
 		
 		@Mixin
@@ -85,7 +91,9 @@ public class ModifyPlaylistCommands {
 	}
 
 
-	@Command(name = "remove")
+	@Command(name = "remove", aliases = { "r" }, //
+		description = "Removes given track from the playlist", //
+		subcommands =  HelpCommand.class )
 	public static class RemoveTrackCommand extends AbstractRunnableCommand {
 		
 //		@Mixin
@@ -94,7 +102,8 @@ public class ModifyPlaylistCommands {
 		@ParentCommand
 		private PlaylistInfoCommand parent;
 		
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="TRACK_SPECIFIER", //
+				description = "What track to remove? Provide either track title or index number")
 		private String indexStr;
 
 		public RemoveTrackCommand(JMOPPlayer jmop) {

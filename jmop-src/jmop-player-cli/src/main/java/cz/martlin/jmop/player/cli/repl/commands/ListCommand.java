@@ -12,9 +12,12 @@ import cz.martlin.jmop.player.cli.repl.mixin.BundleOrNoneMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 
-@Command(name = "list", subcommands = { //
+@Command(name = "list", aliases = { "l" }, //
+	description = "Lists all bundles, playlists and/or tracks.", //
+	subcommands = { //
 		CommandLine.HelpCommand.class, //
 		ListCommand.ListBundlesCommand.class, //
 		ListCommand.ListPlaylistsCommand.class, //
@@ -26,7 +29,9 @@ public class ListCommand extends AbstractCommand {
 		super(jmop);
 	}
 
-	@Command(name = "bundles")
+	@Command(name = "bundles", aliases = { "b" }, //
+		description = "Lists all the bundles in the musicbase", //
+		subcommands =  HelpCommand.class )
 	public static class ListBundlesCommand extends AbstractRunnableCommand {
 		
 		public ListBundlesCommand(JMOPPlayer jmop) {
@@ -48,7 +53,9 @@ public class ListCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "playlists")
+	@Command(name = "playlists", aliases = { "p" }, //
+		description = "Lists all the playlists in the bundle or in the whole musicbase", //
+		subcommands =  HelpCommand.class )
 	public static class ListPlaylistsCommand extends AbstractRunnableCommand {
 
 		@Mixin
@@ -78,7 +85,9 @@ public class ListCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "tracks")
+	@Command(name = "tracks", aliases = { "t" }, //
+		description = "Lists all the tracks in the given bundle or in the whole musicbase", //
+		subcommands =  HelpCommand.class )
 	public static class ListTracksCommand extends AbstractRunnableCommand {
 
 		@Mixin

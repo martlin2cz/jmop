@@ -60,6 +60,8 @@ public class JmopRepl extends AbstractRepl {
 		cmd.setExecutionExceptionHandler(manager);
 		cmd.setExitCodeExceptionMapper(manager);
 		cmd.setParameterExceptionHandler(manager);
+		
+		cmd.setAbbreviatedSubcommandsAllowed(true);
 	}
 
 }

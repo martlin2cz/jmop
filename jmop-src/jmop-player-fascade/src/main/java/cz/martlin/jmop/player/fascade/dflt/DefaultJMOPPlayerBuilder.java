@@ -3,6 +3,7 @@ package cz.martlin.jmop.player.fascade.dflt;
 import java.io.File;
 
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
+import cz.martlin.jmop.common.musicbase.dflt.AdditionalActionsPerformingMusicbase;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.dflt.VerifiingInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
@@ -59,6 +60,7 @@ public class DefaultJMOPPlayerBuilder {
 	public static BaseMusicbase createMusicbase(File root, BaseDefaultJMOPConfig config, BaseErrorReporter reporter) {
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
 		BaseInMemoryMusicbase verifiing = new VerifiingInMemoryMusicbase(inmemory);
+		BaseInMemoryMusicbase additionalPerforming = new AdditionalActionsPerformingMusicbase(verifiing);
 
 		BaseDefaultStorageConfig storageConfig = config;
 
@@ -68,12 +70,12 @@ public class DefaultJMOPPlayerBuilder {
 
 		BaseMusicbaseStorage storage = new StorageBuilder().create(DirsLayout.BUNDLES_DIR,
 				BundleDataFile.ALL_TRACKS_PLAYLIST, true, PlaylistFileFormat.XSPF, reporter, root, storageConfig,
-				format, inmemory);
+				format, additionalPerforming);
 
 //		StorageBuilder builder = new StorageBuilder();
 //		BaseMusicbaseStorage storage = builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.SIMPLE, false, PlaylistFileFormat.TXT, reporter, root, config, TrackFileFormat.MP3, inmemory);
 
-		BaseMusicbase musicbase = new PersistentMusicbase(verifiing, storage);
+		BaseMusicbase musicbase = new PersistentMusicbase(additionalPerforming, storage);
 		return musicbase;
 	}
 

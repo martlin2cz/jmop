@@ -4,11 +4,14 @@ import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import javafx.util.Duration;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Parameters;
 
 public class PlayingCommands {
 
-	@Command(name = "pause")
+	@Command(name = "pause", /* alias done by the P command */ //
+		description = "Pauses the playing", //
+		subcommands =  HelpCommand.class )
 	public static class PauseCommand extends AbstractRunnableCommand {
 
 		public PauseCommand(JMOPPlayer jmop) {
@@ -25,7 +28,9 @@ public class PlayingCommands {
 		}
 	}
 
-	@Command(name = "resume")
+	@Command(name = "resume", /* aslias done by the P command */ //
+		description = "Resumes the plaing", //
+		subcommands =  HelpCommand.class )
 	public static class ResumeCommand extends AbstractRunnableCommand {
 
 		public ResumeCommand(JMOPPlayer jmop) {
@@ -42,7 +47,9 @@ public class PlayingCommands {
 		}
 	}
 	
-	@Command(name = "stop")
+	@Command(name = "stop", aliases = { "s" }, //
+		description = "Stops the playing", //
+		subcommands =  HelpCommand.class )
 	public static class StopCommand extends AbstractRunnableCommand {
 
 		public StopCommand(JMOPPlayer jmop) {
@@ -59,10 +66,13 @@ public class PlayingCommands {
 		}
 	}
 	
-	@Command(name = "seek")
+	@Command(name = "seek", /* TODO: alias via the P command? */ //
+		description = "Seeks (goes to specified duration)", //
+		subcommands =  HelpCommand.class )
 	public static class SeekCommand extends AbstractRunnableCommand {
 
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="DURATION", //
+				description = "The time to seek to")
 		private Duration duration;
 		
 		public SeekCommand(JMOPPlayer jmop) {
@@ -79,7 +89,9 @@ public class PlayingCommands {
 		}
 	}
 	
-	@Command(name = "next")
+	@Command(name = "next", aliases = { "n" }, //
+		description = "Goes to next track in the playlist", //
+		subcommands =  HelpCommand.class )
 	public static class NextCommand extends AbstractRunnableCommand {
 
 		public NextCommand(JMOPPlayer jmop) {
@@ -96,7 +108,9 @@ public class PlayingCommands {
 		}
 	}
 	
-	@Command(name = "previous")
+	@Command(name = "previous", aliases = { "N" }, //
+		description = "Goes to previous track in the playlist", //
+		subcommands =  HelpCommand.class )
 	public static class PreviousCommand extends AbstractRunnableCommand {
 
 		public PreviousCommand(JMOPPlayer jmop) {
@@ -112,7 +126,5 @@ public class PlayingCommands {
 			jmop.playing().toPrevious();	
 		}
 	}
-
-
 
 }

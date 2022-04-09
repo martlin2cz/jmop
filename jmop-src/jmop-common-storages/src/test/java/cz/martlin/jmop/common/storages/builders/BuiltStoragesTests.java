@@ -86,6 +86,18 @@ public class BuiltStoragesTests {
 			checkIsFile("Cocolino deep", "Seventeen.txt");
 			checkIsFile("Robick", "bundle.txt");
 		}		
+		
+		@Disabled("Simple storage doesn't store metadata")
+		@Override
+		void testCreateAndLoadSimplyCheckWithMetadata() throws Exception {
+			super.testCreateAndLoadSimplyCheckWithMetadata();
+		}
+		
+		@Disabled("Simple storage doesn't store metadata")
+		@Override
+		void testCreateLoadAndCheckEquality() throws Exception {
+			super.testCreateLoadAndCheckEquality();
+		}
 	}
 	
 	

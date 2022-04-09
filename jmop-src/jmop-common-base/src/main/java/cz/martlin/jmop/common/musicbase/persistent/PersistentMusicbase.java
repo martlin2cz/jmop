@@ -70,8 +70,8 @@ public class PersistentMusicbase implements BaseMusicbase {
 
 	@Override
 	public void removeBundle(Bundle bundle) {
-		inmemory.removeBundle(bundle);
 		storage.removeBundle(bundle);
+		inmemory.removeBundle(bundle);
 	}
 
 	@Override
@@ -109,8 +109,8 @@ public class PersistentMusicbase implements BaseMusicbase {
 
 	@Override
 	public void removePlaylist(Playlist playlist) {
-		inmemory.removePlaylist(playlist);
 		storage.removePlaylist(playlist);
+		inmemory.removePlaylist(playlist);
 	}
 
 	@Override
@@ -149,8 +149,8 @@ public class PersistentMusicbase implements BaseMusicbase {
 
 	@Override
 	public void removeTrack(Track track) {
-		inmemory.removeTrack(track);
 		storage.removeTrack(track);
+		inmemory.removeTrack(track);
 	}
 
 	@Override

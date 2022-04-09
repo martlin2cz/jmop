@@ -12,21 +12,27 @@ import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 
-@Command(name = "remove", subcommands = { //
+@Command(name = "delete", aliases = { "d" }, //
+	description = "Deletes the given bundle, playlist or track", //
+	subcommands = { //
 		CommandLine.HelpCommand.class, //
 		RemoveCommand.RemoveBundleCommand.class, //
 		RemoveCommand.RemovePlaylistCommand.class, //
 		RemoveCommand.RemoveTrackCommand.class, //
 }) //
+//TODO rename the class (and all its sub-commands) to DeleteCommand
 public class RemoveCommand extends AbstractCommand {
 
 	public RemoveCommand(JMOPPlayer jmop) {
 		super(jmop);
 	}
 
-	@Command(name = "bundle")
+	@Command(name = "bundle", aliases = { "b" }, //
+		description = "Deletes the given bundle", //
+		subcommands =  HelpCommand.class )
 	public static class RemoveBundleCommand extends AbstractRunnableCommand {
 
 		@Mixin()
@@ -44,7 +50,9 @@ public class RemoveCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "playlist")
+	@Command(name = "playlist", aliases = { "p" }, //
+		description = "Deletes the given playlist", //
+		subcommands =  HelpCommand.class )
 	public static class RemovePlaylistCommand extends AbstractRunnableCommand {
 
 		@Mixin
@@ -62,7 +70,9 @@ public class RemoveCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "track")
+	@Command(name = "track", aliases = { "t" }, //
+		description = "Deletes the given track. Removes it from all playlists", //
+		subcommands =  HelpCommand.class )
 	public static class RemoveTrackCommand extends AbstractRunnableCommand {
 
 		@Mixin

@@ -11,10 +11,13 @@ import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "play", subcommands = { //
+@Command(name = "play", /* alias done by the P command */ //
+	description = "Starts the playing of the specified bundle, playlist or track",
+	subcommands = { //
 		CommandLine.HelpCommand.class, //
 		PlayCommand.PlayBundleCommand.class, //
 		PlayCommand.PlayPlaylistCommand.class, //
@@ -22,7 +25,8 @@ import picocli.CommandLine.Parameters;
 }) //
 public class PlayCommand extends AbstractRunnableCommand {
 
-	@Parameters(arity = "0..1")
+	@Parameters(arity = "0..1", paramLabel="TRACK_INDEX", //
+			description = "Plays directly the track of the current playlist")
 	private TrackIndex index;
 
 	public PlayCommand(JMOPPlayer jmop) {
@@ -38,7 +42,9 @@ public class PlayCommand extends AbstractRunnableCommand {
 		}
 	}
 
-	@Command(name = "bundle")
+	@Command(name = "bundle", aliases = { "b" }, //
+		description = "Plays the given bundle (all its tracks)", //
+		subcommands =  HelpCommand.class )
 	public static class PlayBundleCommand extends AbstractRunnableCommand {
 
 		@Mixin
@@ -58,7 +64,9 @@ public class PlayCommand extends AbstractRunnableCommand {
 		}
 	}
 
-	@Command(name = "playlist")
+	@Command(name = "playlist", aliases = { "p" }, //
+		description = "Plays the given playlist", //
+		subcommands =  HelpCommand.class )
 	public static class PlayPlaylistCommand extends AbstractRunnableCommand {
 
 		@Mixin
@@ -78,7 +86,9 @@ public class PlayCommand extends AbstractRunnableCommand {
 		}
 	}
 
-	@Command(name = "track")
+	@Command(name = "track", aliases = { "t" }, //
+		description = "Plays just the provided track", //
+		subcommands =  HelpCommand.class )
 	public static class PlayTrackCommand extends AbstractRunnableCommand {
 
 		@Mixin

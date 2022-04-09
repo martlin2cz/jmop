@@ -32,7 +32,9 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		// playlist
 		exec("create", "playlist", "deadmau5", "chill mix");
 		// track
-		exec("create", "track", "deadmau5", "Ghosts N stuff", "duration", "3:15", "description", "deadmau5 feat. Rob Swire - Ghosts N Stuff");
+		exec("create", "track", "deadmau5", "Ghosts N stuff", "duration", "3:15", "description", "deadmau5 feat. Rob Swire - Ghosts N Stuff", "no-file");
+		
+		//TODO test with track file?
 	}
 
 	@Test
@@ -43,7 +45,7 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		String invisibleWorlds = tme.tmd.invisibleWorlds.getTitle();
 		
 		exec("playlist", couple(londonElektricity, bestTracks), "add", invisibleWorlds);
-		exec("playlist", couple(londonElektricity, bestTracks), "insert", invisibleWorlds, "1.");
+		exec("playlist", couple(londonElektricity, bestTracks), "insert",  "1.", invisibleWorlds);
 
 		exec("playlist", couple(londonElektricity, bestTracks), "remove", "1.");
 		exec("playlist", couple(londonElektricity, bestTracks), "remove", invisibleWorlds);
@@ -84,7 +86,7 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		String atZijiDuchove = tme.tmd.atZijiDuchove.getTitle();
 		exec("move", "track", couple(robick, atZijiDuchove), electronicMusic);
 		} finally {
-			jmop.musicbase().removeBundle(emb);
+		//	jmop.musicbase().removeBundle(emb);
 		}
 		
 	}
@@ -94,17 +96,17 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 	void testRemoveMusicbase()  {
 		// bundle
 		String londonElektricity = tme.tmd.londonElektricity.getName();
-		exec("remove", "bundle", londonElektricity);
+		exec("delete", "bundle", londonElektricity);
 		
 		// playlist
 		String cocolinoDeep = tme.tmd.cocolinoDeep.getName();
 		String seventeen = tme.tmd.seventeen.getName();
-		exec("remove", "playlist", couple(cocolinoDeep, seventeen));
+		exec("delete", "playlist", couple(cocolinoDeep, seventeen));
 		
 		// track
 		String robick = tme.tmd.robick.getName();
 		String atZijiDuchove = tme.tmd.atZijiDuchove.getTitle();
-		exec("remove", "track", couple(robick, atZijiDuchove));
+		exec("delete", "track", couple(robick, atZijiDuchove));
 	}
 
 }

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.1.10</version>
+		<version>3.1.12</version>
 	</parent>
 	<artifactId>jmop-sourcery-fascade</artifactId>
 	<name>The jmop sourcery fascade</name>
@@ -16,17 +16,17 @@
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-sourcery-base</artifactId>
-			<version>3.1.10</version>
+			<version>3.1.12</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-sourcery-engine</artifactId>
-			<version>3.1.10</version>
+			<version>3.1.12</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-player-fascade</artifactId>
-			<version>3.1.10</version>
+			<version>3.1.12</version>
 		</dependency>
 	</dependencies>
 </project>

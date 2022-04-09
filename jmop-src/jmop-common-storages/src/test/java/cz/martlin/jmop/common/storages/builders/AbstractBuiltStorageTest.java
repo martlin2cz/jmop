@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -66,7 +67,25 @@ public abstract class AbstractBuiltStorageTest {
 	protected abstract void checkStoredTestingMusicbase(TestingMusicdataExtension musicdata);
 
 	@Test
-	void testCreateAndLoadSimplyCheck() throws Exception {
+	void testCreateAndLoadSimplyCheckWithoutMetadata() throws Exception {
+		// same as testCreateAndLoadSimplyCheckWithMetadata but doesn't check the metadata
+		BaseInMemoryMusicbase targetMusicbase = tryLoad();
+		
+		System.out.println(targetMusicbase);
+		
+		Bundle daftPunk = targetMusicbase.bundles().stream().filter(b -> b.getName().equals("Daft Punk")).findAny().get();
+		assertEquals(daftPunk, musicdata.tmd.daftPunk);
+		
+		Playlist discovery = targetMusicbase.playlists(daftPunk).stream().filter(p -> p.getName().equals("Discovery")).findAny().get();
+		assertEquals(discovery, musicdata.tmd.discovery);
+		assertEquals(discovery.getTracks().count(), musicdata.tmd.discovery.getTracks().count());
+		
+		Track aerodynamic = targetMusicbase.tracks(daftPunk).stream().filter(t -> t.getTitle().equals("Aerodynamic")).findAny().get();
+		assertEquals(aerodynamic, musicdata.tmd.aerodynamic);
+	}
+	
+	@Test
+	void testCreateAndLoadSimplyCheckWithMetadata() throws Exception {
 		BaseInMemoryMusicbase targetMusicbase = tryLoad();
 		
 		System.out.println(targetMusicbase);

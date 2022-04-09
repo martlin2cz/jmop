@@ -83,16 +83,31 @@ public class AllTracksPlaylistStorage implements BaseMusicbaseStorage {
 
 	@Override
 	public void renamePlaylist(Playlist playlist, String oldName, String newName) {
+		if (oldName.equals(allTracksPlaylistName)) {
+			LOG.warn("Atemp to rename the all track playlist was made, skipping");
+			return; //TODO make a copy
+		}
+		
 		delegee.renamePlaylist(playlist, oldName, newName);
 	}
 
 	@Override
 	public void movePlaylist(Playlist playlist, Bundle oldBundle, Bundle newBundle) {
+		if (playlist.getName().equals(allTracksPlaylistName)) {
+			LOG.warn("Atemp to move the all track playlist was made, skipping");
+			return; //TODO make a copy
+		}
+		
 		delegee.movePlaylist(playlist, oldBundle, newBundle);
 	}
 
 	@Override
 	public void removePlaylist(Playlist playlist) {
+		if (playlist.getName().equals(allTracksPlaylistName)) {
+			LOG.warn("Atemp to remove the all track playlist was made, skipping");
+			return;
+		}
+		
 		delegee.removePlaylist(playlist);
 	}
 

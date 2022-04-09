@@ -5,7 +5,7 @@ import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine.Spec;
 
-public class AbstractJMOPMixin {
+public abstract class AbstractJMOPMixin {
 	@Spec(Spec.Target.MIXEE) CommandSpec mixee;
 	
 	protected JMOPPlayer getJMOP() {

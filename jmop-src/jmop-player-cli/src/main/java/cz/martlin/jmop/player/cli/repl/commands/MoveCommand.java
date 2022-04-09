@@ -12,9 +12,12 @@ import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 
-@Command(name = "move", subcommands = { //
+@Command(name = "move", aliases = { "m" },
+	description = "Moves the given playlist or track to another bundle",
+	subcommands = { //
 		CommandLine.HelpCommand.class, //
 		MoveCommand.MovePlaylistCommand.class, //
 		MoveCommand.MoveTrackCommand.class, //
@@ -26,7 +29,9 @@ public class MoveCommand extends AbstractCommand {
 	}
 
 
-	@Command(name = "playlist")
+	@Command(name = "playlist", aliases = { "p" }, // 
+		description = "Moves the given playlist to the given bundle. Note: without the tracks", //
+		subcommands =  HelpCommand.class )
 	public static class MovePlaylistCommand extends AbstractRunnableCommand {
 
 		@Mixin
@@ -49,7 +54,9 @@ public class MoveCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "track")
+	@Command(name = "track", aliases = { "t" }, //
+		description = "Moves the given track to the new bundle. Removes it from all playlists containing it", //
+		subcommands =  HelpCommand.class )
 	public static class MoveTrackCommand extends AbstractRunnableCommand {
 
 		@Mixin

@@ -156,7 +156,7 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 		try {
 			return YoutubeUtilities.getYouTubeService();
 		} catch (Exception e) {
-			throw new JMOPSourceryException("Cannot obtain the YouTube service", e);
+			throw new JMOPSourceryException("Cannot obtain the YouTube service. Try to remove the ~/.credentials/jmop and try again.", e);
 		}
 	}
 

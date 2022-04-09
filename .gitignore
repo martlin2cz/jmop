@@ -27,3 +27,4 @@ eclipse-workspace
 
 */target/
 /.metadata/
+.classpath

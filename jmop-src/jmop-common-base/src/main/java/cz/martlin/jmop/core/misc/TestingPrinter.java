@@ -1,13 +1,11 @@
 package cz.martlin.jmop.core.misc;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -20,7 +18,22 @@ import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
  *
  */
 public class TestingPrinter {
+	
+	public static String printTDs(List<TrackData> tracks) {
+		return tracks.stream() //
+				.map(TestingPrinter::print)
+				.collect(Collectors.joining());
+	}
 
+	public static String print(TrackData track) {
+		return "" //
+				+ " ID:    " + track.getIdentifier() + "\n"//
+				+ " TITLE: " + track.getTitle() + "\n"//
+				+ " TIME:  " + DurationUtilities.toHumanString(track.getDuration()) + "\n"//
+				+ " DESC:  " + shorten(track.getDescription()) + "\n"//
+				+ "\n"; //
+	}
+	
 	public static String print(Track track) {
 
 		return "" //

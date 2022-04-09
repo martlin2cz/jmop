@@ -24,9 +24,15 @@ public class TestingResources {
 	public static File prepareSampleTrack(Object target, TrackFileFormat format) {
 		String name = "sample." + format.fileExtension();
 		try {
-			return prepareResource(target, name);
+			File file = File.createTempFile("jmop-", "-" + name);
+
+			InputStream ins = loadSampleTrack(target, format);
+			saveToFile(file, ins);
+			ins.close();
+			
+			return file;
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("Cannot prepare track file", e);
 		}
 	}
 	
@@ -54,14 +60,18 @@ public class TestingResources {
 		File file = File.createTempFile("jmop-", "-" + name);
 
 		InputStream ins = loadResource(target, name);
-		byte[] bytes = read(ins);
-		Path path = file.toPath();
-		Files.write(path, bytes);
+		saveToFile(file, ins);
 
 		System.out.println("Resource file ready: " + file);
 		return file;
 	}
 
+	private static void saveToFile(File file, InputStream ins) throws IOException {
+		byte[] bytes = read(ins);
+		Path path = file.toPath();
+		Files.write(path, bytes);
+	}
+	
 	private static byte[] read(InputStream ins) throws IOException {
 		return IOUtils.readFully(ins, ins.available());
 	}

@@ -13,11 +13,14 @@ import javafx.util.Duration;
 import picocli.CommandLine;
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "create", subcommands = { //
+@Command(name = "create", aliases = { "c" }, //
+	description = "Creates specified bundle, playlist or track in the musicbase", //
+	subcommands = { //
 		CommandLine.HelpCommand.class, //
 		CreateCommand.CreateBundleCommand.class, //
 		CreateCommand.CreatePlaylistCommand.class, //
@@ -29,10 +32,13 @@ public class CreateCommand extends AbstractCommand {
 		super(jmop);
 	}
 
-	@Command(name = "bundle")
+	@Command(name = "bundle", aliases = { "b" }, //
+		description = "Creates bundle of the given name", //
+		subcommands =  HelpCommand.class )
 	public static class CreateBundleCommand extends AbstractRunnableCommand {
 
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="NAME", //
+				description = "The bundle name")
 		private String name;
 
 		public CreateBundleCommand(JMOPPlayer jmop) {
@@ -45,13 +51,17 @@ public class CreateCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "playlist")
+	// TODO move this to separate file
+	@Command(name = "playlist", aliases = { "p" }, //
+		description = "Creates playlist in the given bundle and of the given name", //
+		subcommands =  HelpCommand.class )
 	public static class CreatePlaylistCommand extends AbstractRunnableCommand {
 
-		@Mixin
+		@Mixin(name = "bundle")
 		private BundleOrCurrentMixin bundle;
 
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="NAME", //
+				description = "The playlist name")
 		private String name;
 
 		public CreatePlaylistCommand(JMOPPlayer jmop) {
@@ -66,25 +76,32 @@ public class CreateCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "track")
+	@Command(name = "track", aliases = { "t" }, //
+		description = "Creates track in the given bundle with specified parameters", //
+		subcommands =  HelpCommand.class )
 	public static class CreateTrackCommand extends AbstractRunnableCommand {
 
-		@Mixin
+		@Mixin(name = "bundle")
 		private BundleOrCurrentMixin bundle;
 
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="title", //
+			description = "The title of the track")
 		private String title;
 
-		@Option(names = "description", required = false)
+		@Option(names = "description", required = false, //
+			description = "The track description")
 		private String description;
 
-		@Option(names = "identifier", required = false)
+		@Option(names = "identifier", required = false, //
+			description = "The track identifier")
 		private String identifier;
 
-		@Option(names = "duration", required = true)
+		@Option(names = "duration", required = true, //
+			description = "The duration of the track (in format HH:MM:SS or MM:SS)")
 		private Duration duration;
 
-		@ArgGroup(exclusive = true, multiplicity = "1") //TODO or multiplicity=0..1 (i.e. optional?)
+		@ArgGroup(exclusive = true, multiplicity = "1" //TODO or multiplicity=0..1 (i.e. optional?)
+			/* description = "The track file specifier (use no-file for none)" */)
 		private FileSpecifier file;
 		
 		public CreateTrackCommand(JMOPPlayer jmop) {
@@ -103,19 +120,19 @@ public class CreateCommand extends AbstractCommand {
 		
 		public static class FileSpecifier {
 
-			@Option(names="copy-file")
+			@Option(names="copy-file", description = "Copies the given file to the musicbase storage location")
 			private File copyFile;
 			
-			@Option(names="move-file")
+			@Option(names="move-file", description = "Moves the given file to the musicbase storage location")
 			private File moveFile;
 			
-			@Option(names="link-file")
+			@Option(names="link-file", description = "Creates the link in the musicbase storage, pointing to the given file")
 			private File linkFile;
 			
-			@Option(names="set-file")
+			@Option(names="set-file", description = "Just marks the given file as the track file, ignoring the musicbase storage")
 			private File setFile;
 			
-			@Option(names="no-file")
+			@Option(names="no-file", description = "Does not create or set the track file")
 			private boolean noFile;
 			
 			public TrackFileCreationWay getHow() {

@@ -46,7 +46,7 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 		exec("create", "playlist", ".", "deadmau5");
 		
 		// track
-		exec("create", "track", ".", "Ghosts N stuff", "duration", "3:15", "description", "deadmau5 feat. Rob Swire - Ghosts N Stuff");
+		exec("create", "track", ".", "Ghosts N stuff", "duration", "3:15", "description", "deadmau5 feat. Rob Swire - Ghosts N Stuff", "no-file");
 	}
 
 	@Test
@@ -102,13 +102,13 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 		// since deleted X cannot be deleted again
 		
 		// track
-		exec("remove", "track", ".");
+		exec("delete", "track", ".");
 		
 		// playlist
-		exec("remove", "playlist", ".");
+		exec("delete", "playlist", ".");
 				
 		// bundle
-		exec("remove", "bundle", ".");
+		exec("delete", "bundle", ".");
 	}
 	
 	@Test
@@ -117,13 +117,13 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 
 		
 		// track
-		exec("remove", "track");
+		exec("delete", "track", ".");
 		
 		// playlist
-		exec("remove", "playlist");
+		exec("delete", "playlist", ".");
 				
 		// bundle
-		exec("remove", "bundle");
+		exec("delete", "bundle", ".");
 	}
 	
 	@Test
@@ -134,8 +134,8 @@ class JmopReplAdvancedMusicbaseTest extends AbstractReplTest {
 //		DO NOT: exec("playlist", ".", "add");
 		exec("playlist", ".", "add", invisibleWorlds);
 
-		exec("playlist", ".", "insert", invisibleWorlds, "1.");
-//		DO NOT: 		exec("playlist", ".", "insert", ".", "1.");
+		exec("playlist", ".", "insert", "1.", invisibleWorlds);
+//		DO NOT: 		exec("playlist", ".", "insert", "1.", ".");
 
 		exec("playlist", ".", "remove", invisibleWorlds);
 //		DO NOT: 	exec("playlist", ".", "remove", ".");

@@ -13,12 +13,16 @@ import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "p")
+@Command(name = "p", /* no alias needed */
+	description = "Alias for play bundle/playlist/track, play/pause/resume commands", //
+	subcommands =  HelpCommand.class )
 public class TheCommandP extends AbstractRunnableCommand {
 
-	@Parameters(arity = "0..1")
+	@Parameters(arity = "0..1", paramLabel ="WHAT_TO_PLAY", //
+			description = "When wanting to play bundle, playlist or track, provide the name (or index, if track) of that")
 	private String argument;
 
 	public TheCommandP(JMOPPlayer jmop) {

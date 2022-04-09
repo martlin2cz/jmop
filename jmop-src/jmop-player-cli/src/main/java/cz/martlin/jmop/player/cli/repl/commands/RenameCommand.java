@@ -12,10 +12,13 @@ import cz.martlin.jmop.player.cli.repl.mixin.TrackMixin;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "rename", subcommands = { //
+@Command(name = "rename", aliases = { "r" }, //
+	description = "Renames the provided bundle, playlist or track", //
+	subcommands = { //
 		CommandLine.HelpCommand.class, //
 		RenameCommand.RenameBundleCommand.class, //
 		RenameCommand.RenamePlaylistCommand.class, //
@@ -27,13 +30,16 @@ public class RenameCommand extends AbstractCommand {
 		super(jmop);
 	}
 
-	@Command(name = "bundle")
+	@Command(name = "bundle", aliases = { "b" }, //
+		description = "Renames the given bundle", //
+		subcommands =  HelpCommand.class )
 	public static class RenameBundleCommand extends AbstractRunnableCommand {
 
 		@Mixin()
 		private BundleOrCurrentMixin bundle;
 		
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="NEW_NAME", //
+				description = "The new bundle name")
 		private String newName;
 
 		public RenameBundleCommand(JMOPPlayer jmop) {
@@ -47,13 +53,16 @@ public class RenameCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "playlist")
+	@Command(name = "playlist", aliases = { "p" }, //
+		description = "Renames the given playlist", //
+		subcommands =  HelpCommand.class )
 	public static class RenamePlaylistCommand extends AbstractRunnableCommand {
 
 		@Mixin
 		private PlaylistMixin playlist;
 
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="NEW_NAME", //
+				description = "The new playlist name")
 		private String newName;
 
 		public RenamePlaylistCommand(JMOPPlayer jmop) {
@@ -68,13 +77,16 @@ public class RenameCommand extends AbstractCommand {
 		}
 	}
 
-	@Command(name = "track")
+	@Command(name = "track", aliases = { "t" }, //
+		description = "Renames the given track (changes its title)", //
+		subcommands =  HelpCommand.class )
 	public static class RenameTrackCommand extends AbstractRunnableCommand {
 
 		@Mixin
 		private TrackMixin track;
 
-		@Parameters(arity = "1")
+		@Parameters(arity = "1", paramLabel="NEW_TITLE", //
+				description = "The new track title")
 		private String newTitle;
 
 		public RenameTrackCommand(JMOPPlayer jmop) {

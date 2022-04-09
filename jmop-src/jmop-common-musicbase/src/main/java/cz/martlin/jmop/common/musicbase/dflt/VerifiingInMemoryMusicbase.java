@@ -1,10 +1,10 @@
 package cz.martlin.jmop.common.musicbase.dflt;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.Set;
 import java.util.function.Function;
 
+import cz.martlin.jmop.common.data.misc.TemporarySimpleTrackedPlaylist;
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -174,6 +174,10 @@ public class VerifiingInMemoryMusicbase implements BaseInMemoryMusicbase {
 	}
 	
 	private void checkPlaylist(Playlist playlist, Bundle otherBundle, String otherName, boolean requiredExistence) {
+		if (playlist instanceof TemporarySimpleTrackedPlaylist) {
+			return;
+		}
+		
 		Bundle bundle = getOr(playlist, Playlist::getBundle, otherBundle);
 		String name = getOr(playlist, Playlist::getName, otherName);
 		

@@ -30,9 +30,9 @@ public class JmopReplBruteForceTest extends AbstractReplTest {
 				// displaying commands
 				{ "status" }, //
 				{ "bar" }, //
-				{ "bundle" }, //
-				{ "playlist" }, //
-				{ "track" }, //
+				{ "bundle", "." }, //
+				{ "playlist" , "."}, //
+				{ "track" , "."}, //
 				// listing commands
 				{ "list", "bundles" }, //
 				{ "list", "playlists" }, //
