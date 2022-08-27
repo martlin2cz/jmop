@@ -2,25 +2,23 @@ package cz.martlin.jmop.sourcery.fascade;
 
 import java.io.File;
 
+import cz.martlin.jmop.common.fascade.DefaultJMOPCommonBuilder;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.operation.PrintingListener;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
-import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
 import cz.martlin.jmop.core.sources.remote.youtube.YoutubeRemoteSource;
-import cz.martlin.jmop.player.fascade.JMOPMusicbase;
-import cz.martlin.jmop.player.fascade.dflt.BaseDefaultJMOPConfig;
-import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
-import cz.martlin.jmop.player.fascade.dflt.config.ConstantDefaultFascadeConfig;
+import cz.martlin.jmop.sourcery.config.BaseJMOPSourceryConfig;
+import cz.martlin.jmop.sourcery.config.TestingConstantSourceryConfiguration;
 
 public class JMOPSourceryBuilder {
 
-	public static JMOPSourcery create(File root, BaseErrorReporter reporter, BaseRemotesConfiguration configuration, BaseProgressListener listener, BaseDefaultJMOPConfig musicbaseConfig) {
+	public static JMOPSourcery create(File root, BaseErrorReporter reporter, BaseJMOPSourceryConfig configuration, BaseProgressListener listener) {
 		
-		BaseMusicbase mb = DefaultJMOPPlayerBuilder.createMusicbase(root, musicbaseConfig, reporter);
-		JMOPMusicbase musicbase = new JMOPMusicbase(mb);
+		BaseMusicbase mb = DefaultJMOPCommonBuilder.createMusicbase(root, configuration, reporter);
+		JMOPSourceryMusicbase musicbase = new JMOPSourceryMusicbase(mb);
 		
 		BaseRemoteSource youtubeRemote = YoutubeRemoteSource.create(configuration, listener);
 		JMOPRemote youtube = new JMOPRemote(youtubeRemote, mb);
@@ -30,12 +28,10 @@ public class JMOPSourceryBuilder {
 	}
 	
 	public static JMOPSourcery createTesting(File root) {
-		BaseDefaultJMOPConfig musicbaseConfig = new ConstantDefaultFascadeConfig();
-		BaseRemotesConfiguration config = new TestingRemotesConfiguration();
-		
+		BaseJMOPSourceryConfig config = new TestingConstantSourceryConfiguration();
 		BaseProgressListener listener = new PrintingListener(System.err);
 		BaseErrorReporter reporter = new SimpleErrorReporter();
 		
-		return create(root, reporter, config, listener, musicbaseConfig);
+		return create(root, reporter, config, listener);
 	}
 }

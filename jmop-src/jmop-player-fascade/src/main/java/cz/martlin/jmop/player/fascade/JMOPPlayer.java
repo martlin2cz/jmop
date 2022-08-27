@@ -1,12 +1,14 @@
 package cz.martlin.jmop.player.fascade;
 
-public class JMOPPlayer {
+import cz.martlin.jmop.common.fascade.IJMOPCommonFascade;
+
+public class JMOPPlayer implements IJMOPCommonFascade {
 	private final JMOPConfig config;
-	private final JMOPMusicbase musicbase;
+	private final JMOPPlayerMusicbase musicbase;
 	private final JMOPPlaying playing;
 	private final JMOPStatus status;
 	
-	public JMOPPlayer(JMOPConfig config, JMOPMusicbase musicbase, JMOPPlaying playing, JMOPStatus status) {
+	public JMOPPlayer(JMOPConfig config, JMOPPlayerMusicbase musicbase, JMOPPlaying playing, JMOPStatus status) {
 		super();
 		this.config = config;
 		this.musicbase = musicbase;
@@ -18,7 +20,8 @@ public class JMOPPlayer {
 		return config;
 	}
 	
-	public JMOPMusicbase musicbase() {
+	@Override
+	public JMOPPlayerMusicbase musicbase() {
 		return musicbase;
 	}
 	

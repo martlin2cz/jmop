@@ -4,7 +4,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.player.cli.repl.converters.CoupleOrNotParser.CoupleOrNot;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
-import cz.martlin.jmop.player.fascade.dflt.BaseDefaultJMOPConfig;
+import cz.martlin.jmop.player.fascade.dflt.BaseJMOPPlayerConfig;
 import picocli.CommandLine;
 
 public class PlaylistConverter extends AbstractJMOPConverter<Playlist> {
@@ -28,7 +28,7 @@ public class PlaylistConverter extends AbstractJMOPConverter<Playlist> {
 	public Playlist playlist(String playlistSpecifier) {
 		CoupleOrNot couple = parser.parse(playlistSpecifier);
 
-		BaseDefaultJMOPConfig config = (BaseDefaultJMOPConfig) jmop.config().getConfiguration();
+		BaseJMOPPlayerConfig config = (BaseJMOPPlayerConfig) jmop.config().getConfiguration();
 		String allTrackPlaylistName = config.getAllTracksPlaylistName();
 
 		if (couple.hasBoth()) {

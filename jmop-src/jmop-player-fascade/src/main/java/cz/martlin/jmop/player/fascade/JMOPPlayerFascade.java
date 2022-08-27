@@ -12,7 +12,7 @@ import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.PlayerEngineWrapper;
-import cz.martlin.jmop.player.fascade.dflt.BaseDefaultJMOPConfig;
+import cz.martlin.jmop.player.fascade.dflt.BaseJMOPPlayerConfig;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
@@ -29,9 +29,9 @@ public class JMOPPlayerFascade {
 	private final MusicbaseModyfiingEncapsulator musicbaseModyfiing;
 
 	private final JMOPPlayerAdapter adapter;
-	private final BaseDefaultJMOPConfig config;
+	private final BaseJMOPPlayerConfig config;
 
-	public JMOPPlayerFascade(BasePlayerEngine engine, BaseMusicbase musicbase, BaseDefaultJMOPConfig config) {
+	public JMOPPlayerFascade(BasePlayerEngine engine, BaseMusicbase musicbase, BaseJMOPPlayerConfig config) {
 		super();
 		this.engine = new PlayerEngineWrapper(engine);
 		this.musicbaseListing = new MusicbaseListingEncapsulator(musicbase);
@@ -45,7 +45,7 @@ public class JMOPPlayerFascade {
 		return adapter;
 	}
 
-	public BaseDefaultJMOPConfig config() {
+	public BaseJMOPPlayerConfig config() {
 		return config;
 	}
 

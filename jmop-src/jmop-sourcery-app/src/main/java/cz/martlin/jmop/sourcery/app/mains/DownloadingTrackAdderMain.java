@@ -8,11 +8,9 @@ import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.operation.PrintingListener;
-import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
 import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
-import cz.martlin.jmop.player.fascade.dflt.BaseDefaultJMOPConfig;
-import cz.martlin.jmop.player.fascade.dflt.config.ConstantDefaultFascadeConfig;
-import cz.martlin.jmop.sourcery.app.config.ConstantRemotesConfiguration;
+import cz.martlin.jmop.sourcery.config.BaseJMOPSourceryConfig;
+import cz.martlin.jmop.sourcery.config.TestingConstantSourceryConfiguration;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourceryBuilder;
 import cz.martlin.jmop.sourcery.picocli.commands.RemoteCommand;
@@ -62,10 +60,9 @@ public class DownloadingTrackAdderMain {
 		BaseErrorReporter reporter = new SimpleErrorReporter();
 		BaseProgressListener listener = new PrintingListener(System.out);
 		
-		BaseRemotesConfiguration config = new ConstantRemotesConfiguration();
-		BaseDefaultJMOPConfig musicbaseConfig = new ConstantDefaultFascadeConfig();
+		BaseJMOPSourceryConfig config = new TestingConstantSourceryConfiguration();
 		
-		return JMOPSourceryBuilder.create(root, reporter, config, listener, musicbaseConfig);
+		return JMOPSourceryBuilder.create(root, reporter, config, listener);
 	}
 
 }

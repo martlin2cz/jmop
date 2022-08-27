@@ -18,6 +18,7 @@ import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
+import cz.martlin.jmop.common.fascade.JMOPCommonMusicbase;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
@@ -31,7 +32,7 @@ class JMOPMusicbaseTest {
 	@RegisterExtension
 	public TestingMusicdataExtension tme;
 
-	private JMOPMusicbase musicbase;
+	private JMOPCommonMusicbase musicbase;
 
 	public JMOPMusicbaseTest() {
 		this.musicbase = DefaultJMOPPlayerBuilder.createTesting().musicbase();

@@ -25,7 +25,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
-			<artifactId>jmop-player-fascade</artifactId>
+			<artifactId>jmop-common-fascade</artifactId>
 			<version>3.1.14</version>
 		</dependency>
 	</dependencies>

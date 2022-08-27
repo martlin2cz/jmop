@@ -1,9 +1,9 @@
 package cz.martlin.jmop.player.fascade.dflt.config;
 
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.player.fascade.dflt.BaseDefaultJMOPConfig;
+import cz.martlin.jmop.player.fascade.dflt.BaseJMOPPlayerConfig;
 
-public class ConstantDefaultFascadeConfig implements BaseDefaultJMOPConfig {
+public class ConstantDefaultFascadeConfig implements BaseJMOPPlayerConfig {
 
 	@Override
 	public TrackFileFormat trackFileFormat() {
