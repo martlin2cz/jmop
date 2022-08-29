@@ -5,25 +5,25 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.1.12</version>
+		<version>3.1.13</version>
 	</parent>
 
 	<artifactId>jmop-sourcery-remotes</artifactId>
 	<name>The JMOP sourcery remotes.</name>
 	<description>Module implementing all the sourcery remotes.</description>
-	<version>3.1.12</version>
+	<version>3.1.13</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-sourcery-base</artifactId>
-			<version>3.1.12</version>
+			<version>3.1.13</version>
 		</dependency>
 
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-testing</artifactId>
-			<version>3.1.12</version>
+			<version>3.1.13</version>
 		</dependency>
 
 

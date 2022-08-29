@@ -34,36 +34,17 @@ public class DurationUtilities {
 	}
 
 	/**
-	 * Parses the duration in the youtube API format (like "PT4H2M6S").
+	 * Parses the duration in the youtube API format (like "PT4H2M6S")
+	 * (which is in fact nothing but ISO-8601 standart).
 	 * 
 	 * @param string
 	 * @return
 	 */
 	public static Duration parseYoutubeDuration(String string) {
-		String[] parts = string.split("(PT|H|M|S)"); //$NON-NLS-1$
-		int hours, minutes, seconds;
-
-		if (string.matches("PT(\\d+)S")) { //$NON-NLS-1$
-			hours = 0;
-			minutes = 0;
-			seconds = Integer.parseInt(parts[1]);
-		} else if (string.matches("PT(\\d+)M(\\d+)S")) { //$NON-NLS-1$
-			hours = 0;
-			minutes = Integer.parseInt(parts[1]);
-			seconds = Integer.parseInt(parts[2]);
-		} else if (string.matches("PT(\\d+)H(\\d+)S")) { //$NON-NLS-1$
-			hours = Integer.parseInt(parts[1]);
-			minutes = 0;
-			seconds = Integer.parseInt(parts[2]);
-		} else if (string.matches("PT(\\d+)H(\\d+)M(\\d+)S")) { //$NON-NLS-1$
-			hours = Integer.parseInt(parts[1]);
-			minutes = Integer.parseInt(parts[2]);
-			seconds = Integer.parseInt(parts[3]);
-		} else {
-			throw new UnsupportedOperationException("Unknown format od duration: " + string); //$NON-NLS-1$
-		}
-
-		return createDuration(hours, minutes, seconds);
+		java.time.Duration javaDuration = java.time.Duration.parse(string);
+		
+		long milis = javaDuration.toMillis();
+		return new Duration(milis);
 	}
 
 	/**

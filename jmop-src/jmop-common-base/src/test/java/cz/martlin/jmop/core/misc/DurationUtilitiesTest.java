@@ -41,6 +41,12 @@ public class DurationUtilitiesTest {
 		Duration actualLong = DurationUtilities.parseYoutubeDuration("PT1H50M42S"); //$NON-NLS-1$
 
 		assertEquals(expectedLong, actualLong);
+
+		Duration expectedFailurar = DurationUtilities.createDuration(1, 25, 0);
+		Duration actualFailurar = DurationUtilities.parseYoutubeDuration("PT1H25M"); //$NON-NLS-1$
+
+		assertEquals(expectedFailurar, actualFailurar);
+			
 		
 		// #3
 		Duration expectedBuggy = DurationUtilities.createDuration(1, 0, 1);
