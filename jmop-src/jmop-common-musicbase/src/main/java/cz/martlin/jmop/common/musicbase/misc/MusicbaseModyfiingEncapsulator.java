@@ -94,7 +94,7 @@ public class MusicbaseModyfiingEncapsulator {
 
 	public void copyTrack(Track track, Bundle newBundle)  {
 		//TODO utilise
-		TrackData data = new TrackData(track.getIdentifier(), track.getTitle(), track.getDescription(), track.getDuration());
+		TrackData data = new TrackData(track.getTitle(), track.getDescription(), track.getDuration(), track.getSource());
 		
 		File trackFile = track.getFile();
 		if (!trackFile.exists()) {
@@ -128,7 +128,7 @@ public class MusicbaseModyfiingEncapsulator {
 	}
 
 	public void updateTrack(Track track, TrackData newData)  {
-		track.setIdentifier(newData.getIdentifier());
+		track.setSource(newData.getURI());
 		track.setDescription(newData.getDescription());
 		track.setDuration(newData.getDuration());
 		

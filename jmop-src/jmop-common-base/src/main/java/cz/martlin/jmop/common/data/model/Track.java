@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.data.model;
 
 import java.io.File;
+import java.net.URI;
 
 import cz.martlin.jmop.common.data.misc.HasMetadata;
 import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
@@ -17,7 +18,7 @@ import javafx.util.Duration;
  */
 public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 	private Bundle bundle;
-	private String identifier; //TODO replace by uri
+	private URI source; 
 	private String title;
 	private String description;
 	private Duration duration;
@@ -26,14 +27,14 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 	
 	private Metadata metadata;
 
-	public Track(Bundle bundle, String identifier, String title, String description, Duration duration, File file,
+	public Track(Bundle bundle, String title, String description, Duration duration, URI source, File file,
 			Metadata metadata) {
 		super();
 		this.bundle = bundle;
-		this.identifier = identifier;
 		this.title = title;
 		this.description = description;
 		this.duration = duration;
+		this.source = source;
 		this.file = file;
 		this.metadata = metadata;
 	}
@@ -44,14 +45,6 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 
 	public void setBundle(Bundle bundle) {
 		this.bundle = bundle;
-	}
-
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
 	}
 
 	public String getTitle() {
@@ -76,6 +69,14 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 
 	public void setDuration(Duration duration) {
 		this.duration = duration;
+	}
+	
+	public URI getSource() {
+		return source;
+	}
+	
+	public void setSource(URI source) {
+		this.source = source;
 	}
 	
 	public File getFile() {
@@ -110,7 +111,7 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 		int result = 1;
 		result = prime * result + ((bundle == null) ? 0 : bundle.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-//		result = prime * result + ((identifier == null) ? 0 : identifier.hashCode());
+		result = prime * result + ((source == null) ? 0 : source.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -134,13 +135,11 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		/*
-		if (identifier == null) {
-			if (other.identifier != null)
+		if (source == null) {
+			if (other.source != null)
 				return false;
-		} else if (!identifier.equals(other.identifier))
+		} else if (!source.equals(other.source))
 			return false;
-		 */
 		if (title == null) {
 			if (other.title != null)
 				return false;

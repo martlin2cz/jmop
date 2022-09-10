@@ -1,6 +1,7 @@
 package cz.martlin.jmop.player.cli.repl.commands;
 
 import java.io.File;
+import java.net.URI;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -92,9 +93,9 @@ public class CreateCommand extends AbstractCommand {
 			description = "The track description")
 		private String description;
 
-		@Option(names = "identifier", required = false, //
-			description = "The track identifier")
-		private String identifier;
+		@Option(names = "source", required = false, //
+			description = "The track source")
+		private URI source;
 
 		@Option(names = "duration", required = true, //
 			description = "The duration of the track (in format HH:MM:SS or MM:SS)")
@@ -111,7 +112,7 @@ public class CreateCommand extends AbstractCommand {
 		@Override
 		protected void doRun()  {
 			Bundle bundle = this.bundle.getBundle();
-			TrackData data = new TrackData(identifier, title, description, duration);
+			TrackData data = new TrackData(title, description, duration, source);
 			TrackFileCreationWay trackFileHow = file.getHow();
 			File trackFile = file.getFile();
 			

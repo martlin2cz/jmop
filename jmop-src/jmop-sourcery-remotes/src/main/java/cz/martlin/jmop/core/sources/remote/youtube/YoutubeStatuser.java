@@ -1,5 +1,7 @@
 package cz.martlin.jmop.core.sources.remote.youtube;
 
+import java.net.URI;
+
 import cz.martlin.jmop.core.sources.remote.BaseConverter;
 import cz.martlin.jmop.core.sources.remote.BaseDownloader;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
@@ -17,8 +19,8 @@ public class YoutubeStatuser extends AbstractRemoteStatusHandler {
 	}
 
 	@Override
-	protected String prepareTestingTrackID() {
-		return "U3ASj1L6_sY";
+	protected URI prepareTestingTrackURI() {
+		return URI.create("https://youtube.com/?v=U3ASj1L6_sY");
 	}
 
 }

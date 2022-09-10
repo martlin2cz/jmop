@@ -49,8 +49,8 @@ public class YoutubeQuerierTest {
 		System.out.println("Second track: " + secondTrack);
 
 		Bundle bundle = null; //not needed now
-		Track track = new Track(bundle, firstTrack.getIdentifier(), firstTrack.getTitle(), firstTrack.getDescription(),
-				firstTrack.getDuration(), null, Metadata.createNew());
+		Track track = new Track(bundle, firstTrack.getTitle(), firstTrack.getDescription(),
+				firstTrack.getDuration(), firstTrack.getURI(), null, Metadata.createNew());
 		
 		TrackData next = querier.loadNext(track);
 		assertNotNull(next);

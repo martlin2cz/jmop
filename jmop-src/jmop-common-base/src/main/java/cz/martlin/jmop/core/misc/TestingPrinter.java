@@ -27,20 +27,23 @@ public class TestingPrinter {
 
 	public static String print(TrackData track) {
 		return "" //
-				+ " ID:    " + track.getIdentifier() + "\n"//
+				
 				+ " TITLE: " + track.getTitle() + "\n"//
 				+ " TIME:  " + DurationUtilities.toHumanString(track.getDuration()) + "\n"//
 				+ " DESC:  " + shorten(track.getDescription()) + "\n"//
+				+ " SRC:   " + track.getURI() != null ? track.getURI().toASCIIString() : "NULL" + "\n"//
 				+ "\n"; //
 	}
 	
 	public static String print(Track track) {
 
 		return "" //
-				+ " ID:    " + track.getIdentifier() + "\n"//
+				
 				+ " TITLE: " + track.getTitle() + "\n"//
 				+ " TIME:  " + DurationUtilities.toHumanString(track.getDuration()) + "\n"//
 				+ " DESC:  " + shorten(track.getDescription()) + "\n"//
+				+ " FILE:  " + (track.getFile() != null ? track.getFile().getAbsolutePath() : "NULL") + "\n"//
+				+ " SRC:   " + (track.getSource() != null ? track.getSource().toASCIIString() : "NULL") + "\n"//
 				+ " META:  " + printMeta(track.getMetadata()) + "\n"//
 				+ "\n"; //
 	}

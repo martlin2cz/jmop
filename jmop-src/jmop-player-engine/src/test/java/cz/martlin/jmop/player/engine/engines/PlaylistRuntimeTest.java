@@ -25,11 +25,11 @@ public class PlaylistRuntimeTest {
 	private final Bundle bundle = new Bundle("testing bundle", Metadata.createNew()); //$NON-NLS-1$
 	private final Duration duration = DurationUtilities.createDuration(0, 10, 11);
 
-	private final Track trackFoo = new Track(bundle, "foo", "Foo", "foo bar", duration, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	private final Track trackBar = new Track(bundle, "bar", "Bar", "bar baz", duration, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	private final Track trackBaz = new Track(bundle, "baz", "Baz", "baz aux", duration, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	private final Track trackAux = new Track(bundle, "aux", "Aux", "aux qux", duration, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	private final Track trackQux = new Track(bundle, "Qux", "Qux", "qux qux", duration, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackFoo = new Track(bundle, "Foo", "foo bar", duration, null, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackBar = new Track(bundle, "Bar", "bar baz", duration, null, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackBaz = new Track(bundle, "Baz", "baz aux", duration, null, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackAux = new Track(bundle, "Aux", "aux qux", duration, null, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private final Track trackQux = new Track(bundle, "Qux", "qux qux", duration, null, null, Metadata.createNew()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 	@BeforeEach
 	public void setUp() throws Exception {

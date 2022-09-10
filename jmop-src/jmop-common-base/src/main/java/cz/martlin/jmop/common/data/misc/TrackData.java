@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.data.misc;
 
+import java.net.URI;
 import java.net.URL;
 
 import cz.martlin.jmop.common.data.model.Track;
@@ -13,46 +14,36 @@ import javafx.util.Duration;
  *
  */
 public class TrackData {
-	/** @deprecated replaced by #url */
-	@Deprecated
-	private final String identifier;
 	private final String title;
 	private final String description;
 	private final Duration duration;
-	private final URL url;
+	private final URI uri;
 
 	@Deprecated
 	public TrackData(String identifier, String title, String description, Duration duration) {
 		super();
-		this.identifier = identifier;
 		this.title = title;
 		this.description = description;
 		this.duration = duration;
-		this.url = null;
+		this.uri = null;
 	}
 	
 
-	public TrackData(String title, String description, Duration duration, URL url) {
+	public TrackData(String title, String description, Duration duration, URI uri) {
 		super();
-		this.identifier = null;
 		this.title = title;
 		this.description = description;
 		this.duration = duration;
-		this.url = url;
+		this.uri = uri;
 	}
-
-	public TrackData(String identifier, String title, String description, Duration duration, URL url) {
+	
+	@Deprecated
+	public TrackData(String identifier, String title, String description, Duration duration, URI uri) {
 		super();
-		this.identifier = identifier;
 		this.title = title;
 		this.description = description;
 		this.duration = duration;
-		this.url = url;
-	}
-
-
-	public String getIdentifier() {
-		return identifier;
+		this.uri = uri;
 	}
 
 	public String getTitle() {
@@ -67,13 +58,13 @@ public class TrackData {
 		return duration;
 	}
 
-	public URL getURL() {
-		return url;
+	public URI getURI() {
+		return uri;
 	}
 	
 	@Override
 	public String toString() {
-		return "TrackData [identifier=" + identifier + ", title=" + title + ", description=" + "..."
+		return "TrackData [uri=" + uri + ", title=" + title + ", description=" + "..."
 				+ ", duration=" + duration + "]";
 	}
 	

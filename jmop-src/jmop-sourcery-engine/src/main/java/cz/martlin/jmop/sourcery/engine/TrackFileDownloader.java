@@ -2,7 +2,7 @@ package cz.martlin.jmop.sourcery.engine;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -74,8 +74,8 @@ public class TrackFileDownloader {
 
 		TrackData searchedTrack = searchedTracks.get(0);
 
-		URL trackUrl = searchedTrack.getURL();
-		String urlStr = trackUrl.toExternalForm();
+		URI trackUri = searchedTrack.getURI();
+		String urlStr = trackUri.toASCIIString();
 		
 		LOG.debug("The track {}'s corresponding URL is {}", track.getTitle(), urlStr);
 		return urlStr;

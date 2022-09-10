@@ -65,7 +65,7 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 
 	@Override
 	public String createUrlOfTrack(Track track) {
-		return "http://localhost/?track=" + track.getIdentifier();
+		return "http://localhost/?track=" + track.getSource();
 	}
 
 }

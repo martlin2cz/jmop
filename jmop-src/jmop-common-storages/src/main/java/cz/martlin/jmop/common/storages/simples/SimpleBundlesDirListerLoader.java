@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -114,11 +115,11 @@ public class SimpleBundlesDirListerLoader implements //
 	public Track loadTrack(Bundle bundle, String title) throws JMOPPersistenceException {
 		Metadata metadata = Metadata.createNew();
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
-		String id = title;
 		String description = title;
 		File file = new File(title);
+		URI uri = file.toURI();
 		
-		return new Track(bundle, id, title, description, duration, file, metadata);
+		return new Track(bundle, title, description, duration, uri, file, metadata);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

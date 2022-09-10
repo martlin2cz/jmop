@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.xspf;
 
 import java.io.File;
+import java.net.URI;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -10,7 +11,6 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 import cz.martlin.jmop.common.storages.playlists.BasePlaylistMetaInfoManager;
 import cz.martlin.jmop.common.storages.playlists.BasePlaylistMetaInfoManager.MetaKind;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
@@ -139,6 +139,17 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 	}
 	
 	@Override
+	public URI getTrackSource(XSPFTrack xtrack) {
+		
+		try {
+			return super.getTrackSource(xtrack);
+		} catch (JMOPPersistenceException e) {
+			reporter.report("Cannot get track source of the track " + xtrackTitleToReport(xtrack), e);
+			return null;
+		}
+	}
+	
+	@Override
 	public File getTrackFile(XSPFTrack xtrack) {
 		try {
 			return super.getTrackFile(xtrack);
@@ -181,6 +192,15 @@ public class FailsaveJMOPToXSPFAdapter extends JMOPtoXSFPAdapter {
 			super.setTrackDuration(track, xtrack);
 		} catch (Exception e) {
 			reporter.report("Cannot set duration of the track " + xtrackTitleToReport(xtrack), e);
+		}
+	}
+	
+	@Override
+	public void setTrackSource(Track track, XSPFTrack xtrack) {
+		try {
+			super.setTrackSource(track, xtrack);
+		} catch (JMOPPersistenceException e) {
+			reporter.report("Cannot set track source of the track " + xtrackTitleToReport(xtrack), e);
 		}
 	}
 

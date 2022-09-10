@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.xspf;
 
 import java.io.File;
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -74,6 +75,7 @@ public class XSPFPlaylistManipulator implements BaseFileObjectManipulator<XSPFFi
 		adapter.setTrackAnnotation(track, xtrack);
 
 		adapter.setTrackDuration(track, xtrack);
+		adapter.setTrackSource(track, xtrack);
 
 		adapter.setTrackFile(track, xtrack);
 		adapter.setMetadata(track.getMetadata(), MetaKind.TRACK, xtrack);
@@ -119,13 +121,14 @@ public class XSPFPlaylistManipulator implements BaseFileObjectManipulator<XSPFFi
 	protected Track loadTrack(XSPFTrack xtrack, Bundle bundle) throws JMOPPersistenceException {
 		String title = adapter.getTrackTitle(xtrack);
 
-		String identifier = "TODO"; // TODO identifier
 		String description = adapter.getTrackAnnotation(xtrack);
 		Duration duration = adapter.getTrackDuration(xtrack);
 		Metadata metadata = adapter.getMetadata(xtrack, MetaKind.TRACK);
+		URI source = adapter.getTrackSource(xtrack);
 		File file = adapter.getTrackFile(xtrack);
 		
-		return new Track(bundle, identifier, title, description, duration, file, metadata);
+		
+		return new Track(bundle, title, description, duration, source, file, metadata);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -105,7 +106,7 @@ public class SimpleMusicdataFileManipulator implements BaseMusicdataFileManipula
 		try {
 			return fs.loadLines(file) //
 					.stream() //
-					.map(l -> new Track(bundle, l, l, l, duration, new File(l), metadata)) //
+					.map(l -> new Track(bundle, l, l, duration, new File(l).toURI(), new File(l), metadata)) //
 					.collect(Collectors.toList());
 		} catch (JMOPPersistenceException e) {
 			throw new JMOPRuntimeException("Could not load tracklist", e);

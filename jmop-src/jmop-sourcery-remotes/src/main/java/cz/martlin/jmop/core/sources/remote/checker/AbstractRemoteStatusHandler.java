@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.sources.remote.checker;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 
@@ -110,18 +111,18 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	protected Track prepareTestingTrack() {
 		Bundle bundle = null;
 
-		String identifier = prepareTestingTrackID();
 		String title = "testing track";
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
 		String description = "This is just an testing track";
 		Metadata metadata = Metadata.createNew();
-		
+		URI source = prepareTestingTrackURI();
 		File file = null;
 		
-		return new Track(bundle, identifier, title, description, duration, file, metadata);
+		return new Track(bundle, title, description, duration, source, file, metadata);
 	}
 
-	protected abstract String prepareTestingTrackID();
+	protected abstract URI prepareTestingTrackURI();
+	
 	///////////////////////////////////////////////////////////////////////////
 
 	@Deprecated

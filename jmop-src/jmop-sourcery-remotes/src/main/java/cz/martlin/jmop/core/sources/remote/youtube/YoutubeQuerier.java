@@ -2,6 +2,7 @@ package cz.martlin.jmop.core.sources.remote.youtube;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -48,8 +49,8 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 
 	@Override
 	protected String createUrlOfTrack(Track track) {
-		String id = track.getIdentifier();
-		return urlOf(id); //$NON-NLS-1$
+		URI source = track.getSource();
+		return source.toASCIIString();
 	}
 
 
@@ -135,15 +136,40 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	}
 
 	@Override
-	protected TrackData chooseNext(List<TrackData> tracks, String id) throws Exception {
+	protected TrackData chooseNext(List<TrackData> tracks, String title) throws Exception {
 		TrackData first = tracks.get(0);
 		TrackData second = tracks.get(1);
 
-		if (first.getIdentifier().equals(id)) {
+		if (first.getTitle().equals(title)) {
 			return second;
 		} else {
 			return first;
 		}
+	}
+	
+	@Override
+	protected String extractIdentifier(URI source) throws JMOPSourceryException {
+		URL url;
+		try {
+			url = source.toURL();
+		} catch (MalformedURLException e) {
+			throw new UnsupportedOperationException("This source is not a valid url: " + source);
+		}
+		
+		if (url.getHost().equals("youtube.com")) {
+			String query = url.getQuery();
+			String[] parts = query.split("[=&]");
+			if (parts.length != 2 || !parts[0].equals("v")) {
+				throw new UnsupportedOperationException("The source doesn't contain the video id in the supported format: " + source);
+			} else {
+				return parts[1];
+			}
+		}
+		if (url.getHost().equals("youtu.be")) {
+			return url.getPath();
+		}
+		
+		throw new UnsupportedOperationException("Unsupported source: " + source);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -184,20 +210,17 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 	 * @return
 	 */
 	private TrackData videoToTrack(Video result) {
-		String identifier = result.getId();
+
 		String title = result.getSnippet().getTitle();
 		String description = result.getSnippet().getDescription();
 		String durationStr = result.getContentDetails().getDuration();
 		Duration duration = DurationUtilities.parseYoutubeDuration(durationStr);
-		String urlStr = urlOf(identifier);
-		URL url;
-		try {
-			url = new URL(urlStr);
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException("Cannot create track url", e);
-		}
 		
-		return new TrackData(identifier, title, description, duration, url);
+		String identifier = result.getId();
+		String urlStr = urlOf(identifier);
+		URI url = URI.create(urlStr);
+		
+		return new TrackData(title, description, duration, url);
 	}
 
 	/**

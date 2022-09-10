@@ -37,7 +37,7 @@ public class MusicbaseDebugPrinter {
 	}
 
 	public static void print(Track track) {
-		System.out.println("		Track(" + track.getIdentifier() + "): '" + track.getTitle() + "'");
+		System.out.println("		Track '" + track.getTitle() + "'");
 		print(track.getMetadata());
 	}
 

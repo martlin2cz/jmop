@@ -1,10 +1,6 @@
 package cz.martlin.jmop.common.storages.simples;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -80,8 +76,7 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 	}
 
 	private TrackData trackDataOfTrack(Track track) {
-		TrackData td = new TrackData(track.getIdentifier(), track.getTitle(), track.getDescription(),
-				track.getDuration());
+		TrackData td = new TrackData(track.getTitle(), track.getDescription(), track.getDuration(), track.getSource());
 		return td;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////

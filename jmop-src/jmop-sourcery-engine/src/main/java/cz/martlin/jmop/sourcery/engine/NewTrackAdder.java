@@ -2,6 +2,7 @@ package cz.martlin.jmop.sourcery.engine;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
@@ -101,10 +102,10 @@ public class NewTrackAdder {
 	private File download(TrackData searchedTrack) throws JMOPSourceryException {
 		LOG.debug("Downloading the track file of {}", searchedTrack.getTitle());
 
-		URL url = searchedTrack.getURL();
+		URI uri = searchedTrack.getURI();
 		File temporaryDownloadFile = createTemporaryFile(searchedTrack);
-		String urlStr = url.toExternalForm();
-		downloader.download(urlStr, temporaryDownloadFile);
+		String uriStr = uri.toASCIIString();
+		downloader.download(uriStr, temporaryDownloadFile);
 
 		LOG.debug("Downloaded the track file of {} to {}", //
 				searchedTrack.getTitle(), temporaryDownloadFile.getAbsolutePath());

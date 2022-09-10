@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.testing.testdata;
 
+import java.net.URI;
+
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -38,10 +40,10 @@ public class SimpleTestingMusicdata extends AbstractTestingMusicdata {
 	}
 
 	@Override
-	protected Track createTheTrack(Bundle bundle, String title, String description, String id, Duration duration,
-			TrackFileFormat trackFileOrNot) {
+	protected Track createTheTrack(Bundle bundle, String title, String description, Duration duration, TrackFileFormat trackFileOrNot,
+			URI uri) {
 
-		return TestingDataCreator.track(null, bundle, title, description, id, duration, trackFileOrNot);
+		return TestingDataCreator.track(null, bundle, title, description, duration, uri, trackFileOrNot);
 	}
 
 	@Override

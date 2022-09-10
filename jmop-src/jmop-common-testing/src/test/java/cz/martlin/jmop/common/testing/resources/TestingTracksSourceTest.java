@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -52,8 +53,8 @@ class TestingTracksSourceTest {
 
 	private Track createTestingTrack() throws IOException {
 		Bundle bundle = new Bundle("baaar-bundle", Metadata.createNew());
-		Track track = new Track(bundle, "foo-id", "foo-title", "foo-description", //
-				Duration.minutes(1), File.createTempFile("track", ".whatever"), Metadata.createNew());
+		Track track = new Track(bundle, "foo-title", "foo-description", //
+				Duration.minutes(1), URI.create("foo.net"), File.createTempFile("track", ".whatever"), Metadata.createNew());
 		return track;
 	}
 

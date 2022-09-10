@@ -129,6 +129,16 @@ public class JMOPtoXSFPAdapter {
 		}
 	}
 
+
+	public URI getTrackSource(XSPFTrack xtrack) throws JMOPPersistenceException {
+		try {
+			URI source = xtrack.getIdentifier();
+			return source;
+		} catch (XSPFException e) {
+			throw new JMOPPersistenceException("Cannot obtain track source", e);
+		}
+	}
+	
 	public File getTrackFile(XSPFTrack xtrack) throws JMOPPersistenceException {
 		try {
 			URI location = xtrack.getLocation();
@@ -137,7 +147,7 @@ public class JMOPtoXSFPAdapter {
 			throw new JMOPPersistenceException("Cannot obtain track file", e);
 		}
 	}
-
+	
 
 	public void setTrackIndex(TrackIndex index, XSPFTrack xtrack) throws JMOPPersistenceException {
 		try {
@@ -175,7 +185,16 @@ public class JMOPtoXSFPAdapter {
 			throw new JMOPPersistenceException("Cannot set track duration", e);
 		}
 	}
-
+	
+	public void setTrackSource(Track track, XSPFTrack xtrack) throws JMOPPersistenceException {
+		URI source = track.getSource();
+		
+		try {
+			xtrack.setIdentifier(source);
+		} catch (XSPFException e) {
+			throw new JMOPPersistenceException("The track source cannot be set", e);
+		}
+	}
 	public void setTrackFile(Track track, XSPFTrack xtrack) throws JMOPPersistenceException {
 
 		File file = track.getFile();
@@ -257,5 +276,6 @@ public class JMOPtoXSFPAdapter {
 			throw new JMOPPersistenceException("The value is empty");
 		}
 	}
+
 
 }

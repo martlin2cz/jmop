@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -56,22 +57,24 @@ public class TestingDataCreator {
 	}
 
 	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle) {
-		String id = "hello id";
 		String description = "the description of the hello";
 		Duration duration = DurationUtilities.createDuration(0, 2, 10);
-		return doCreateTrack(musicbase, bundle, "hello track", description, id, duration, null);
+		URI uri = URI.create("file://hello-id");
+		
+		return doCreateTrack(musicbase, bundle, "hello track", description, duration, uri, null);
 	}
 
 	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title, TrackFileFormat trackFileOrNot) {
 		String id = "id of " + title;
 		String description = "description of " + title;
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
-		return doCreateTrack(musicbase, bundle, title, description, id, duration, trackFileOrNot);
+		URI uri = URI.create("file://uri-of" + title);
+		return doCreateTrack(musicbase, bundle, title, description, duration, uri, trackFileOrNot);
 	}
 
 	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
-			String id, Duration duration, TrackFileFormat trackFileOrNot) {
-		return doCreateTrack(musicbase, bundle, title, description, id, duration, trackFileOrNot);
+			Duration duration, URI uri, TrackFileFormat trackFileOrNot) {
+		return doCreateTrack(musicbase, bundle, title, description, duration, uri, trackFileOrNot);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -98,7 +101,6 @@ public class TestingDataCreator {
 	 * @param bundle
 	 * @param title
 	 * @param description
-	 * @param id
 	 * @param duration
 	 * @param trackFileOrNot
 	 * @return
@@ -107,8 +109,8 @@ public class TestingDataCreator {
 	 */
 	@Deprecated
 	private static Track doCreateTrack(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
-			String id, Duration duration, TrackFileFormat trackFileOrNot) {
-			TrackData data = new TrackData(id, title, description, duration);
+			Duration duration, URI uri, TrackFileFormat trackFileOrNot) {
+			TrackData data = new TrackData(title, description, duration, uri);
 			
 			File trackFile = null;
 			if (trackFileOrNot != null) {
@@ -122,7 +124,7 @@ public class TestingDataCreator {
 			if (musicbase != null) {
 				return musicbase.createNewTrack(bundle, data, TrackFileCreationWay.JUST_SET, trackFile);
 			} else {
-				return new Track(bundle, id, title, description, duration, trackFile, Metadata.createNew());
+				return new Track(bundle, title, description, duration, uri, trackFile, Metadata.createNew());
 			}
 	}
 

@@ -81,9 +81,9 @@ public abstract class AbstractBuiltStorageTest {
 		assertEquals(discovery.getTracks().count(), musicdata.tmd.discovery.getTracks().count());
 		
 		Track aerodynamic = targetMusicbase.tracks(daftPunk).stream().filter(t -> t.getTitle().equals("Aerodynamic")).findAny().get();
-		assertEquals(aerodynamic, musicdata.tmd.aerodynamic);
+		checkTrackSimply(aerodynamic, musicdata.tmd.aerodynamic);
 	}
-	
+
 	@Test
 	void testCreateAndLoadSimplyCheckWithMetadata() throws Exception {
 		BaseInMemoryMusicbase targetMusicbase = tryLoad();
@@ -100,7 +100,7 @@ public abstract class AbstractBuiltStorageTest {
 		assertEquals(discovery.getMetadata(), musicdata.tmd.discovery.getMetadata());
 		
 		Track aerodynamic = targetMusicbase.tracks(daftPunk).stream().filter(t -> t.getTitle().equals("Aerodynamic")).findAny().get();
-		assertEquals(aerodynamic, musicdata.tmd.aerodynamic);
+		checkTrackSimply(aerodynamic, musicdata.tmd.aerodynamic);
 		assertEquals(aerodynamic.getMetadata(), musicdata.tmd.aerodynamic.getMetadata());
 	}
 
@@ -114,6 +114,14 @@ public abstract class AbstractBuiltStorageTest {
 //		assertEquals(musicbase.toString(), targetMusicbase.toString());
 		assertEquals(musicbase, targetMusicbase);
 	}
+	
+	
+	protected void checkTrackSimply(Track actual, Track expected) {
+		assertEquals(expected.getBundle(), actual.getBundle());
+		assertEquals(expected.getTitle(), actual.getTitle());
+//		assertEquals(expected.getDuration(), actual.getDuration());
+	}
+
 	
 	///////////////////////////////////////////////////////////////////////////
 	

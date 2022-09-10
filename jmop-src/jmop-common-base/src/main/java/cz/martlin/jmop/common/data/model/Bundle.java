@@ -174,7 +174,7 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	 */
 	@Deprecated
 	public boolean contains(Track track) {
-		String id = track.getIdentifier();
+		String id = track.getTitle();
 		return tracks.containsKey(id);
 	}
 
@@ -194,7 +194,7 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	///////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Converts given tracklist to map, where key is track ID.
+	 * Converts given tracklist to map, where key is track title.
 	 * 
 	 * @param tracks
 	 * @return
@@ -204,7 +204,7 @@ public class Bundle extends ObservableObject<Bundle> implements Comparable<Bundl
 	private static Map<String, Track> toMap(Tracklist tracks) {
 		return tracks.getTracks().stream() //
 				.collect(Collectors.toMap( //
-						(t) -> t.getIdentifier(), //
+						(t) -> t.getTitle(), //
 						(t) -> t, //
 						(t1, t2) -> t1));
 	}

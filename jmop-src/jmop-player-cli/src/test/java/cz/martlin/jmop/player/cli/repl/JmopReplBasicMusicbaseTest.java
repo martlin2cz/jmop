@@ -32,7 +32,10 @@ class JmopReplBasicMusicbaseTest extends AbstractReplTest {
 		// playlist
 		exec("create", "playlist", "deadmau5", "chill mix");
 		// track
-		exec("create", "track", "deadmau5", "Ghosts N stuff", "duration", "3:15", "description", "deadmau5 feat. Rob Swire - Ghosts N Stuff", "no-file");
+		exec("create", "track", "deadmau5", "Ghosts N stuff", "duration", "3:15", 
+				"description", "deadmau5 feat. Rob Swire - Ghosts N Stuff", 
+				"source", "https://deadamu5.com/ghost-n-stuff",
+				"no-file");
 		
 		//TODO test with track file?
 	}

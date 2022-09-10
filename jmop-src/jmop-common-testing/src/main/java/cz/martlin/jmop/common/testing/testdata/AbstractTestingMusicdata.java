@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.testing.testdata;
 
+import java.net.URI;
+
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -131,14 +133,14 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 		randomAccessMemories = createThePlaylist(daftPunk, "Random Acess Memories");
 
 		// tracks
-		oneMoreTime = createTheTrack(daftPunk, "One More Time", "One More Time (featuring Romanthony)", "OMT",
-				DurationUtilities.createDuration(0, 5, 20), trackFileOrNot);
-		aerodynamic = createTheTrack(daftPunk, "Aerodynamic", "Aerodynamic", "AD",
-				DurationUtilities.createDuration(0, 3, 27), trackFileOrNot);
-		verdisQuo = createTheTrack(daftPunk, "Veridis Quo", "Veridis Quo", "VQ",
-				DurationUtilities.createDuration(0, 5, 44), trackFileOrNot);
-		getLucky = createTheTrack(daftPunk, "Get Lucky", "Get Lucky (featuring Pharrell Williams)", "GL",
-				DurationUtilities.createDuration(0, 6, 8), trackFileOrNot);
+		oneMoreTime = createTheTrack(daftPunk, "One More Time", "One More Time (featuring Romanthony)", DurationUtilities.createDuration(0, 5, 20),
+				trackFileOrNot, URI.create("https://dp.com/omt"));
+		aerodynamic = createTheTrack(daftPunk, "Aerodynamic", "Aerodynamic", DurationUtilities.createDuration(0, 3, 27),
+				trackFileOrNot, URI.create("https://dp.com/ad"));
+		verdisQuo = createTheTrack(daftPunk, "Veridis Quo", "Veridis Quo", DurationUtilities.createDuration(0, 5, 44),
+				trackFileOrNot, URI.create("https://dp.com/vq"));
+		getLucky = createTheTrack(daftPunk, "Get Lucky", "Get Lucky (featuring Pharrell Williams)", DurationUtilities.createDuration(0, 6, 8),
+				trackFileOrNot, URI.create("https://dp.com/gl"));
 
 		// init the playlists
 		discovery.addTrack(oneMoreTime);
@@ -177,25 +179,25 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 		bestTracks = createThePlaylist(londonElektricity, "best tracks");
 
 		// tracks
-		justOneSecond = createTheTrack(londonElektricity, "Just One Second", "2. Just One Second", "JOS",
-				DurationUtilities.createDuration(0, 5, 39), trackFileOrNot);
+		justOneSecond = createTheTrack(londonElektricity, "Just One Second", "2. Just One Second", DurationUtilities.createDuration(0, 5, 39),
+				trackFileOrNot, URI.create("http://le.uk/jos"));
 
 		allTheHellIsBreakingLoose = createTheTrack(londonElektricity, "All Hell Is Breaking Loose",
-				"6. All Hell Is Breaking Loose", "AtHBL", DurationUtilities.createDuration(0, 4, 44), trackFileOrNot);
+				"6. All Hell Is Breaking Loose", DurationUtilities.createDuration(0, 4, 44), trackFileOrNot,  URI.create("http://le.uk/ahbl"));
 
-		pointOfNoReturn = createTheTrack(londonElektricity, "Point of No Return", "7. Point of No Return", "PoNR",
-				DurationUtilities.createDuration(0, 5, 52), trackFileOrNot);
+		pointOfNoReturn = createTheTrack(londonElektricity, "Point of No Return", "7. Point of No Return", DurationUtilities.createDuration(0, 5, 52),
+				trackFileOrNot,  URI.create("http://le.uk/ponr"));
 
-		meteorities = createTheTrack(londonElektricity, "Meteorites", "2. Meteorites (feat. Elsa Esmeralda)", "M",
-				DurationUtilities.createDuration(0, 6, 2), trackFileOrNot);
+		meteorities = createTheTrack(londonElektricity, "Meteorites", "2. Meteorites (feat. Elsa Esmeralda)", DurationUtilities.createDuration(0, 6, 2),
+				trackFileOrNot,  URI.create("http://le.uk/m"));
 
 		invisibleWorlds = createTheTrack(londonElektricity, "Invisible Worlds",
-				"Invisible Worlds (feat. Elsa Esmeralda)", "IW", DurationUtilities.createDuration(0, 6, 45),
-				trackFileOrNot);
+				"Invisible Worlds (feat. Elsa Esmeralda)", DurationUtilities.createDuration(0, 6, 45), trackFileOrNot,
+				 URI.create("http://le.uk/iv"));
 
 		elektricityWillKeepMeWarm = createTheTrack(londonElektricity, "Elektricity Will Keep Me Warm",
-				"1. Elektricity Will Keep Me Warm (feat. Elsa Esmeralda)", "EWKMW",
-				DurationUtilities.createDuration(0, 3, 30), trackFileOrNot);
+				"1. Elektricity Will Keep Me Warm (feat. Elsa Esmeralda)", DurationUtilities.createDuration(0, 3, 30),
+				trackFileOrNot,  URI.create("http://le.uk/ewkmw"));
 
 		// init the playlists
 		syncopatedCity.addTrack(justOneSecond);
@@ -219,30 +221,30 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 
 		// tracks
 		seventeenPartI = createTheTrack(cocolinoDeep, "Seventeen Part1",
-				"\"Wherever you go becomes a part of you somehow.\"", "S1", DurationUtilities.createDuration(1, 42, 42),
-				trackFileOrNot);
+				"\"Wherever you go becomes a part of you somehow.\"", DurationUtilities.createDuration(1, 42, 42), trackFileOrNot,
+				null);
 
 		seventeenPartII = createTheTrack(cocolinoDeep, "Seventeen Part2",
-				"\"Wherever you go becomes a part of you somehow.\"", "S2", DurationUtilities.createDuration(1, 30, 50),
-				trackFileOrNot);
+				"\"Wherever you go becomes a part of you somehow.\"", DurationUtilities.createDuration(1, 30, 50), trackFileOrNot,
+				null);
 
 		seventeenPartIII = createTheTrack(cocolinoDeep, "Seventeen Part3",
-				"\"Wherever you go becomes a part of you somehow.\"", "S3", DurationUtilities.createDuration(1, 31, 31),
-				trackFileOrNot);
+				"\"Wherever you go becomes a part of you somehow.\"", DurationUtilities.createDuration(1, 31, 31), trackFileOrNot,
+				null);
 
 		seventeenPartIV = createTheTrack(cocolinoDeep, "Seventeen Part4",
-				"\"Wherever you go becomes a part of you somehow.\"", "S4", DurationUtilities.createDuration(1, 26, 53),
-				trackFileOrNot);
+				"\"Wherever you go becomes a part of you somehow.\"", DurationUtilities.createDuration(1, 26, 53), trackFileOrNot,
+				null);
 
 		dontForgetToFly = createTheTrack(cocolinoDeep, "Don't forget to fly", "Coccolino Deep - Don't forget to fly",
-				"DFtF", DurationUtilities.createDuration(0, 47, 32), trackFileOrNot);
+				DurationUtilities.createDuration(0, 47, 32), trackFileOrNot, null);
 
-		getLost = createTheTrack(cocolinoDeep, "Get Lost", "Coccolino Deep - Get Lost", "GL",
-				DurationUtilities.createDuration(0, 50, 39), trackFileOrNot);
+		getLost = createTheTrack(cocolinoDeep, "Get Lost", "Coccolino Deep - Get Lost", DurationUtilities.createDuration(0, 50, 39),
+				trackFileOrNot, null);
 
 		dancingWithTheElepthant = createTheTrack(cocolinoDeep, "Dancing with Elephant",
-				"\"Music is the strongest form of magic.\"", "DwE", DurationUtilities.createDuration(0, 59, 45),
-				trackFileOrNot);
+				"\"Music is the strongest form of magic.\"", DurationUtilities.createDuration(0, 59, 45), trackFileOrNot,
+				null);
 
 		// init the playlists
 		seventeen.addTrack(seventeenPartI);
@@ -257,16 +259,16 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 
 		// tracks
 		atZijiDuchove = createTheTrack(robick, "At ziji duchove", "Robick feat. MC SPYDA - Ať žijí duchové (DNB Remix)",
-				"AZD", DurationUtilities.createDuration(0, 6, 4), trackFileOrNot);
+				DurationUtilities.createDuration(0, 6, 4), trackFileOrNot,  URI.create("file://azd"));
 
-		znamkaPunku = createTheTrack(robick, "Znamka punku", "Visaci Zamek: Znamka punku (Robick Remix)", "ZP",
-				DurationUtilities.createDuration(0, 4, 6), trackFileOrNot);
+		znamkaPunku = createTheTrack(robick, "Znamka punku", "Visaci Zamek: Znamka punku (Robick Remix)", DurationUtilities.createDuration(0, 4, 6),
+				trackFileOrNot, URI.create("file://zp"));
 
-		neniNutno = createTheTrack(robick, "Neni nutno", "Robick - Není nutno (feat.Tenor Fly & Top Cat)", "NN",
-				DurationUtilities.createDuration(0, 4, 30), trackFileOrNot);
+		neniNutno = createTheTrack(robick, "Neni nutno", "Robick - Není nutno (feat.Tenor Fly & Top Cat)", DurationUtilities.createDuration(0, 4, 30),
+				trackFileOrNot, URI.create("file://nn"));
 
-		ladyCarneval = createTheTrack(robick, "Lady Carneval", "Karel Gott Lady Carneval (DnB Remix by Robick)", "LC",
-				DurationUtilities.createDuration(0, 4, 11), trackFileOrNot);
+		ladyCarneval = createTheTrack(robick, "Lady Carneval", "Karel Gott Lady Carneval (DnB Remix by Robick)", DurationUtilities.createDuration(0, 4, 11),
+				trackFileOrNot, URI.create("file://kglc"));
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -341,8 +343,8 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 
 	protected abstract Playlist createThePlaylist(Bundle bundle, String name);
 
-	protected abstract Track createTheTrack(Bundle bundle, String title, String description, String id,
-			Duration duration, TrackFileFormat trackFileOrNot);
+	protected abstract Track createTheTrack(Bundle bundle, String title, String description, Duration duration,
+			TrackFileFormat trackFileOrNot, URI uri);
 
 	protected abstract Track deleteTheTrack(Track track);
 

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -214,8 +215,8 @@ class PlaylistModifiersTest {
 	}
 
 	private Track track(Bundle bundle, String title) {
-		Track fooTrack = new Track(bundle, title, title, title, DurationUtilities.createDuration(0, 3, 15),
-				null, Metadata.createNew());
+		Track fooTrack = new Track(bundle, title, title, DurationUtilities.createDuration(0, 3, 15),
+				URI.create("file://" + title), null, Metadata.createNew());
 		return fooTrack;
 	}
 

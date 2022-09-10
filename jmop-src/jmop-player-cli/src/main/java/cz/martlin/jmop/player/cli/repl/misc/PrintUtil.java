@@ -1,11 +1,10 @@
 package cz.martlin.jmop.player.cli.repl.misc;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.net.URI;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 import cz.martlin.jmop.common.data.misc.TrackIndex;
@@ -57,6 +56,16 @@ public class PrintUtil {
 				String formatted = date.format(DATE_FORMAT);
 				System.out.print(formatted);
 				
+			} else if (item instanceof URI) {
+				URI uri = (URI) item;
+				String stringified = uri.toASCIIString();
+				System.out.print(stringified);
+			
+			} else if (item instanceof URL) {
+				URL url = (URL) item;
+				String stringified = url.toExternalForm();
+				System.out.print(stringified);
+							
 			} else if (item instanceof File) {
 				File file = (File) item;
 				if (file.exists()) {

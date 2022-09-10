@@ -1,5 +1,6 @@
 package cz.martlin.jmop.core.sources.remote;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,12 +59,13 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	public TrackData loadNext(Track track) throws JMOPSourceryException {
 		LOG.info("Loading next track of " + track.getTitle()); //$NON-NLS-1$
 
-		String identifier = track.getIdentifier();
-
+		String identifier = pickTrackIdentifier(track);
 		return loadNextOf(identifier);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
+
+	
 
 	/**
 	 * Loads track(s). In fact creates load request, executes it and converts
@@ -150,6 +152,17 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 		List<String> ids = convertLoadNextResponse(response);
 		return ids;
 	}
+	
+	private String pickTrackIdentifier(Track track) throws JMOPSourceryException {
+		URI source = track.getSource();
+		
+		try {
+			return  extractIdentifier(source);
+		} catch (Exception e) {
+			throw new JMOPSourceryException("Cannot extract track identifier", e);
+		}
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -206,7 +219,16 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	 * @throws Exception
 	 */
 	protected abstract SeaRqt createSearchRequest(String query) throws Exception;
-
+	
+	/**
+	 * Extracts the identifier from the track source location.
+	 * 
+	 * @param source
+	 * @return
+	 * @throws JMOPSourceryException 
+	 */
+	protected abstract String extractIdentifier(URI source) throws Exception;
+	
 	/**
 	 * Converts response of load next request into track.
 	 * 
@@ -243,5 +265,5 @@ public abstract class SimpleRemoteQuerier<GtRqt, GtRst, SeaRqt, SeaRst, GntRqt, 
 	 * @return
 	 * @throws Exception
 	 */
-	protected abstract TrackData chooseNext(List<TrackData> tracks, String id) throws Exception;
+	protected abstract TrackData chooseNext(List<TrackData> tracks, String title) throws Exception;
 }

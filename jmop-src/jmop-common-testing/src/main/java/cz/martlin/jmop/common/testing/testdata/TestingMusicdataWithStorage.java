@@ -1,6 +1,7 @@
 package cz.martlin.jmop.common.testing.testdata;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Objects;
 
 import cz.martlin.jmop.common.data.model.Bundle;
@@ -84,10 +85,10 @@ public class TestingMusicdataWithStorage extends AbstractTestingMusicdata {
 	}
 
 	@Override
-	protected Track createTheTrack(Bundle bundle, String title, String description, String id, Duration duration,
-			TrackFileFormat trackFileOrNot) {
+	protected Track createTheTrack(Bundle bundle, String title, String description, Duration duration, TrackFileFormat trackFileOrNot,
+			URI uri) {
 
-		Track track = TestingDataCreator.track(null, bundle, title, description, id, duration, trackFileOrNot);
+		Track track = TestingDataCreator.track(null, bundle, title, description, duration, uri, trackFileOrNot);
 		File trackFile = trackFileOrNot != null ? TestingResources.prepareSampleTrack(this, trackFileOrNot) : null;
 
 		storage.createTrack(track, TrackFileCreationWay.COPY_FILE, trackFile);
