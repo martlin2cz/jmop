@@ -5,19 +5,19 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.1.13</version>
+		<version>3.1.14</version>
 	</parent>
 
 	<artifactId>jmop-player-base</artifactId>
 	<name>JMOP player base module.</name>
 	<description>The base module for the JMOP player.</description>
-	<version>3.1.13</version>
+	<version>3.1.14</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-base</artifactId>
-			<version>3.1.13</version>
+			<version>3.1.14</version>
 		</dependency>
 	</dependencies>
 </project>

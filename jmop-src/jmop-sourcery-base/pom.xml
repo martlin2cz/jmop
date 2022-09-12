@@ -5,19 +5,19 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.1.13</version>
+		<version>3.1.14</version>
 	</parent>
 
 	<artifactId>jmop-sourcery-base</artifactId>
 	<name>The JMOP sourcery base module.</name>
 	<description>The base for the sourcering application.</description>
-	<version>3.1.13</version>
+	<version>3.1.14</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-base</artifactId>
-			<version>3.1.13</version>
+			<version>3.1.14</version>
 		</dependency>
 	</dependencies>
 </project>
