@@ -11,8 +11,8 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
-import cz.martlin.jmop.core.sources.remote.BaseConverter;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
+import cz.martlin.jmop.sourcery.remote.BaseConverter;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
 public class FFMPEGConverter implements BaseConverter {

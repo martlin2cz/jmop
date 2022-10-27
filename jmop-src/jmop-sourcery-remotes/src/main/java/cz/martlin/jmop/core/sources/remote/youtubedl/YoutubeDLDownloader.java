@@ -11,8 +11,8 @@ import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
+import cz.martlin.jmop.sourcery.remote.BaseDownloader;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 public class YoutubeDLDownloader implements BaseDownloader {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());

@@ -112,9 +112,11 @@ public class CreateCommand extends AbstractCommand {
 		@Override
 		protected void doRun()  {
 			Bundle bundle = this.bundle.getBundle();
-			TrackData data = new TrackData(title, description, duration, source);
-			TrackFileCreationWay trackFileHow = file.getHow();
 			File trackFile = file.getFile();
+			
+			TrackData data = new TrackData(title, description, duration, source, trackFile);
+			TrackFileCreationWay trackFileHow = file.getHow();
+			
 			
 			jmop.musicbase().createNewTrack(bundle, data, trackFileHow, trackFile);
 		}

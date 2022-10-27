@@ -200,5 +200,6 @@
 		<module>jmop-sourcery-app</module>
 
 		<module>jmop-sourcery-fascade</module>
+		<module>jmop-sourcery-locals</module>
 	</modules>
 </project>

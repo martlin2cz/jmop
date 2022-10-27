@@ -34,33 +34,32 @@ public class TrackFileCreater {
 		
 		File trackTargetFile = tracksLocator.trackFile(track);
 
-		prepareTheActualFile(trackCreationWay, trackSourceFile, trackTargetFile);
+		File newTrackFile = prepareTheActualFile(trackCreationWay, trackSourceFile, trackTargetFile);
 
-		track.setFile(trackTargetFile);
+		track.setFile(newTrackFile);
 		return trackTargetFile;
 	}
 
-	protected void prepareTheActualFile(TrackFileCreationWay trackCreationWay, File trackSourceFile,
+	protected File prepareTheActualFile(TrackFileCreationWay trackCreationWay, File trackSourceFile,
 			File trackTargetFile) throws JMOPPersistenceException {
 		switch (trackCreationWay) {
 		case COPY_FILE:
 			copy(trackSourceFile, trackTargetFile);
-			return;
+			return trackTargetFile;
 		case MOVE_FILE:
 			move(trackSourceFile, trackTargetFile);
-			return;
+			return trackTargetFile;
 		case LINK_FILE:
 			link(trackSourceFile, trackTargetFile);
-			return;
+			return trackTargetFile;
 		case JUST_SET:
 			// nothing to be done
-			return;
+			return trackSourceFile;
 		case NO_FILE:
 			// nothing to be done
-			return;
+			return null;
 		default:
 			throw new IllegalArgumentException();
-
 		}
 	}
 

@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.remote;
+package cz.martlin.jmop.sourcery.remote;
 
 import java.net.URL;
 import java.util.List;

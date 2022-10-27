@@ -97,7 +97,7 @@ public class TestingMusicdataWithMusicbase extends AbstractTestingMusicdata {
 
 		File trackFile = trackFileOrNot != null ? TestingResources.prepareSampleTrack(this, trackFileOrNot) : null;
 		TrackFileCreationWay trackCreationWay = trackFileOrNot != null ? TrackFileCreationWay.COPY_FILE : TrackFileCreationWay.NO_FILE; 
-		TrackData data = new TrackData(title, description, duration, uri);
+		TrackData data = new TrackData(title, description, duration, uri, trackFile);
 		return musicbase.createNewTrack(bundle, data, trackCreationWay, trackFile);
 	}
 

@@ -10,12 +10,12 @@ import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.ConsoleUIInteractor;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.operation.PrintingListener;
-import cz.martlin.jmop.core.sources.remote.BaseConverter;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
-import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
 import cz.martlin.jmop.core.sources.remote.ffmpeg.FFMPEGConverter;
 import cz.martlin.jmop.core.sources.remote.youtubedl.YoutubeDLDownloader;
+import cz.martlin.jmop.sourcery.remote.BaseConverter;
+import cz.martlin.jmop.sourcery.remote.BaseDownloader;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
+import cz.martlin.jmop.sourcery.remote.BaseRemotesConfiguration;
 
 @Tag(value = "IDE_ONLY")
 class YoutubeStatuserTest {

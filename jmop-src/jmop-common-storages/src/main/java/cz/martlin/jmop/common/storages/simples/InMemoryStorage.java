@@ -76,7 +76,7 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 	}
 
 	private TrackData trackDataOfTrack(Track track) {
-		TrackData td = new TrackData(track.getTitle(), track.getDescription(), track.getDuration(), track.getSource());
+		TrackData td = new TrackData(track.getTitle(), track.getDescription(), track.getDuration(), track.getSource(), track.getFile());
 		return td;
 	}
 	/////////////////////////////////////////////////////////////////////////////////////

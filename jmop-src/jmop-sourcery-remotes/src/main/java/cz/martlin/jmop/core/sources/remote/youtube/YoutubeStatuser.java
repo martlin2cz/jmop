@@ -2,10 +2,10 @@ package cz.martlin.jmop.core.sources.remote.youtube;
 
 import java.net.URI;
 
-import cz.martlin.jmop.core.sources.remote.BaseConverter;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.core.sources.remote.checker.AbstractRemoteStatusHandler;
+import cz.martlin.jmop.sourcery.remote.BaseConverter;
+import cz.martlin.jmop.sourcery.remote.BaseDownloader;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
 
 public class YoutubeStatuser extends AbstractRemoteStatusHandler {
 

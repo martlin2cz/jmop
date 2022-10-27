@@ -1,4 +1,4 @@
-package cz.martlin.jmop.core.sources.remote;
+package cz.martlin.jmop.sourcery.remote;
 
 public interface BaseRemoteSource {
 

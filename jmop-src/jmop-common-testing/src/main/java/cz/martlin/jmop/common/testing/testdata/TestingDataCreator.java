@@ -110,7 +110,6 @@ public class TestingDataCreator {
 	@Deprecated
 	private static Track doCreateTrack(BaseMusicbaseModifing musicbase, Bundle bundle, String title, String description,
 			Duration duration, URI uri, TrackFileFormat trackFileOrNot) {
-			TrackData data = new TrackData(title, description, duration, uri);
 			
 			File trackFile = null;
 			if (trackFileOrNot != null) {
@@ -122,6 +121,7 @@ public class TestingDataCreator {
 			}
 			
 			if (musicbase != null) {
+				TrackData data = new TrackData(title, description, duration, uri, trackFile);
 				return musicbase.createNewTrack(bundle, data, TrackFileCreationWay.JUST_SET, trackFile);
 			} else {
 				return new Track(bundle, title, description, duration, uri, trackFile, Metadata.createNew());

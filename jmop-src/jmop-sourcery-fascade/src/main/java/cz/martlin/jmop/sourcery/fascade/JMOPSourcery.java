@@ -6,12 +6,14 @@ public class JMOPSourcery implements IJMOPCommonFascade {
 	private final JMOPSourceryMusicbase musicbase;
 	private final JMOPConfig config;
 	private final JMOPRemote youtube;
+	private final JMOPLocal local;
 	
-	public JMOPSourcery(JMOPSourceryMusicbase musicbase, JMOPConfig config, JMOPRemote youtube) {
+	public JMOPSourcery(JMOPSourceryMusicbase musicbase, JMOPConfig config, JMOPRemote youtube, JMOPLocal local) {
 		super();
 		this.musicbase = musicbase;
 		this.config = config;
 		this.youtube = youtube;
+		this.local = local;
 	}
 	
 	@Override
@@ -27,6 +29,8 @@ public class JMOPSourcery implements IJMOPCommonFascade {
 		return youtube;
 	}
 
-
+	public JMOPLocal local() {
+		return local;
+	}
 	
 }

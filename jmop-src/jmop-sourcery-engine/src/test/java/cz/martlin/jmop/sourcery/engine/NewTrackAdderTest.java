@@ -16,10 +16,10 @@ import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.operation.PrintingListener;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
-import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import cz.martlin.jmop.core.sources.remote.youtube.YoutubeRemoteSource;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
+import cz.martlin.jmop.sourcery.remote.BaseRemotesConfiguration;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 @Tag("IDE_ONLY")
 class NewTrackAdderTest {

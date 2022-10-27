@@ -13,8 +13,8 @@ import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
-import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
+import cz.martlin.jmop.sourcery.remote.BaseRemotesConfiguration;
 
 @Tag(value = "IDE_ONLY")
 public class YoutubeQuerierTest {

@@ -17,11 +17,11 @@ import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.remote.BaseConverter;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteStatusHandler;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
+import cz.martlin.jmop.sourcery.remote.BaseConverter;
+import cz.martlin.jmop.sourcery.remote.BaseDownloader;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteStatusHandler;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
 public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHandler {

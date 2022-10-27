@@ -9,10 +9,10 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import cz.martlin.jmop.sourcery.fascade.JMOPRemote;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import cz.martlin.jmop.sourcery.picocli.misc.Service;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

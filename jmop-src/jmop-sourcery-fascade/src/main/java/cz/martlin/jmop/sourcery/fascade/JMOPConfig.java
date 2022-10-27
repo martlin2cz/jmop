@@ -2,7 +2,7 @@ package cz.martlin.jmop.sourcery.fascade;
 
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
-import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
+import cz.martlin.jmop.sourcery.remote.BaseRemotesConfiguration;
 
 public class JMOPConfig {
 	

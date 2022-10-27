@@ -8,8 +8,8 @@ import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.remote.AbstractRemoteQuerier;
-import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
+import cz.martlin.jmop.sourcery.remote.BaseRemotesConfiguration;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
 public class TestingRemoteQuerier extends AbstractRemoteQuerier {

@@ -28,12 +28,13 @@ public class FailsaveTrackFileCreater extends TrackFileCreater {
 	}
 
 	@Override
-	protected void prepareTheActualFile(TrackFileCreationWay trackCreationWay, File trackSourceFile,
+	protected File prepareTheActualFile(TrackFileCreationWay trackCreationWay, File trackSourceFile,
 			File trackTargetFile) throws JMOPPersistenceException {
 		try {
-			super.prepareTheActualFile(trackCreationWay, trackSourceFile, trackTargetFile);
+			return super.prepareTheActualFile(trackCreationWay, trackSourceFile, trackTargetFile);
 		} catch (JMOPPersistenceException | JMOPRuntimeException e) {
 			reporter.report("The track file could not be prepared", e);
+			return trackSourceFile;
 		}
 	}
 

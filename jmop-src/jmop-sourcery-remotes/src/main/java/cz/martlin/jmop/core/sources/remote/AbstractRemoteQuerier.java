@@ -15,6 +15,7 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.misc.ops.SimpleShortOperation;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
 
 public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 

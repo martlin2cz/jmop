@@ -13,10 +13,10 @@ import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSourceQuerier;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
+import cz.martlin.jmop.sourcery.remote.BaseDownloader;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 public class TrackFileDownloader {
 

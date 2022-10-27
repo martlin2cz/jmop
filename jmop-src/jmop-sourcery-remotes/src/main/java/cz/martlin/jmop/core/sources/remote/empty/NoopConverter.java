@@ -3,7 +3,7 @@ package cz.martlin.jmop.core.sources.remote.empty;
 import java.io.File;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.sources.remote.BaseConverter;
+import cz.martlin.jmop.sourcery.remote.BaseConverter;
 
 /**
  * Converter doing simply no conversion, or even nothing.

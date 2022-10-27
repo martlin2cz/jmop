@@ -6,10 +6,10 @@ import java.util.List;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import cz.martlin.jmop.sourcery.engine.NewTrackAdder;
 import cz.martlin.jmop.sourcery.engine.TrackFileDownloader;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 public class JMOPRemote {
 	

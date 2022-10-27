@@ -1,5 +1,11 @@
 package cz.martlin.jmop.core.sources.remote;
 
+import cz.martlin.jmop.sourcery.remote.BaseConverter;
+import cz.martlin.jmop.sourcery.remote.BaseDownloader;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
+import cz.martlin.jmop.sourcery.remote.BaseRemoteStatusHandler;
+
 public class AbstractRemoteSource implements BaseRemoteSource {
 
 	private final BaseRemoteStatusHandler statuser;

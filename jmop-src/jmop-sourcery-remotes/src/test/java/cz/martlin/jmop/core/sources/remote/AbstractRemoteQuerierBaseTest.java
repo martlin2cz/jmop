@@ -11,6 +11,7 @@ import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.TestingPrinter;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 public abstract class AbstractRemoteQuerierBaseTest {
 

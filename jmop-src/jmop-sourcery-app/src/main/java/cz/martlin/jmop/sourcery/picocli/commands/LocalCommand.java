@@ -2,15 +2,12 @@ package cz.martlin.jmop.sourcery.picocli.commands;
 
 import picocli.CommandLine.Command;
 
-@Command(name = "local")
-public class LocalCommand implements Runnable {
+@Command(name = "local", subcommands = 
+	ImportFromDirectoryOrFileCommand.class
+)
+public class LocalCommand{
 
 	public LocalCommand() {
 		super();
-	}
-	
-	@Override
-	public void run() {
-		throw new UnsupportedOperationException("Local sources not supported yet");
 	}
 }

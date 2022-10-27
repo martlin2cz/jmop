@@ -7,8 +7,8 @@ import com.google.common.io.Files;
 
 import cz.martlin.jmop.common.testing.resources.TestingResources;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
-import cz.martlin.jmop.core.sources.remote.BaseDownloader;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
+import cz.martlin.jmop.sourcery.remote.BaseDownloader;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 public class TestingDownloader implements BaseDownloader {
 

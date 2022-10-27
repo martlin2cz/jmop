@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>cz.martlin</groupId>
+    <artifactId>jmop</artifactId>
+    <version>3.1.12</version>
+  </parent>
+
+  <artifactId>jmop-sourcery-locals</artifactId>
+  <name>The JMOP sourcery locals</name>
+  <description>The implementation of the local (computer) sourceries</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-sourcery-base</artifactId>
+			<version>3.1.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-common-testing</artifactId>
+			<version>3.1.12</version>
+		</dependency>
+
+		 <!-- the MP3 file manipulation (metadata extraction) library --> 
+		<dependency>
+		  <groupId>com.mpatric</groupId>
+		  <artifactId>mp3agic</artifactId>
+		  <version>0.9.1</version>
+		</dependency>
+	</dependencies>
+
+</project>

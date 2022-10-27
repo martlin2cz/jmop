@@ -1,5 +1,6 @@
 package cz.martlin.jmop.common.data.misc;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
@@ -18,6 +19,7 @@ public class TrackData {
 	private final String description;
 	private final Duration duration;
 	private final URI uri;
+	private final File file;
 
 	@Deprecated
 	public TrackData(String identifier, String title, String description, Duration duration) {
@@ -26,8 +28,8 @@ public class TrackData {
 		this.description = description;
 		this.duration = duration;
 		this.uri = null;
+		this.file = null;
 	}
-	
 
 	public TrackData(String title, String description, Duration duration, URI uri) {
 		super();
@@ -35,6 +37,16 @@ public class TrackData {
 		this.description = description;
 		this.duration = duration;
 		this.uri = uri;
+		this.file = null;
+	}
+
+	public TrackData(String title, String description, Duration duration, URI uri, File file) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.duration = duration;
+		this.uri = uri;
+		this.file = file;
 	}
 	
 	@Deprecated
@@ -44,6 +56,7 @@ public class TrackData {
 		this.description = description;
 		this.duration = duration;
 		this.uri = uri;
+		this.file = null;
 	}
 
 	public String getTitle() {
@@ -62,12 +75,19 @@ public class TrackData {
 		return uri;
 	}
 	
+	public File getTrackFile() {
+		return file;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "TrackData [uri=" + uri + ", title=" + title + ", description=" + "..."
 				+ ", duration=" + duration + "]";
 	}
-	
+
+
+
 	
 
 }

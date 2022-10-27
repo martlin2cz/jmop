@@ -8,12 +8,12 @@ import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.operation.PrintingListener;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import cz.martlin.jmop.sourcery.config.BaseJMOPSourceryConfig;
 import cz.martlin.jmop.sourcery.config.TestingConstantSourceryConfiguration;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourceryBuilder;
 import cz.martlin.jmop.sourcery.picocli.commands.RemoteCommand;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 /**
  * @deprecated replaced by {@link SourceryPicocliMain} and {@link RemoteCommand}

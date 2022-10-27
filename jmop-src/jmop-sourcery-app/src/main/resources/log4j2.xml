@@ -22,11 +22,17 @@
 	</Appenders>
 
 	<Loggers>
+		<!-- remotes -->
 		<Logger name="cz.martlin.jmop.sourcery.engine.NewTrackAdder" level="DEBUG" />
 		<Logger name="cz.martlin.jmop.sourcery.engine.TrackFileDownloader" level="DEBUG" />
 
-		<Logger name="cz.martlin.jmop.sourcery.picocli" level="DEBUG" />
+		<!-- locals -->		
+		<Logger name="cz.martlin.jmop.sourcery.local" level="DEBUG" /> 
+		<Logger name="cz.martlin.jmop.sourcery.locals.sourceries" level="DEBUG" />
 
+		<!-- the actual command-line app -->
+		<Logger name="cz.martlin.jmop.sourcery.engineicocli" level="DEBUG" />
+		<Logger name="cz.martlin.jmop.sourcery.picocli" level="DEBUG" />
 	
 		<Root level="WARN">
 			<AppenderRef ref="Console" />

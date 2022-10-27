@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
+import cz.martlin.jmop.sourcery.remote.InternetConnectionStatus;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 /**
  * The general base remote source querier. Assumes working with some internal

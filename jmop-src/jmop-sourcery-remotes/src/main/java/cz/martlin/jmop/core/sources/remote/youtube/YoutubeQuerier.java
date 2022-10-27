@@ -17,9 +17,9 @@ import com.google.api.services.youtube.model.VideoListResponse;
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.sources.remote.BaseRemotesConfiguration;
-import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import cz.martlin.jmop.core.sources.remote.SimpleRemoteQuerier;
+import cz.martlin.jmop.sourcery.remote.BaseRemotesConfiguration;
+import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
 /**
@@ -220,7 +220,7 @@ public class YoutubeQuerier extends SimpleRemoteQuerier<//
 		String urlStr = urlOf(identifier);
 		URI url = URI.create(urlStr);
 		
-		return new TrackData(title, description, duration, url);
+		return new TrackData(title, description, duration, url, null);
 	}
 
 	/**
