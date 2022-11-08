@@ -1,7 +1,6 @@
-package cz.martlin.jmop.sourcery.picocli.commands;
+package cz.martlin.jmop.sourcery.picocli.commands.impls;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,59 +21,54 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 /**
- * Command executing {@link JMOPLocal#importFromDirsOrFiles(List, Bundle, boolean, TrackFileCreationWay)}.
+ * The import playlist from external playlist file command. Calls
+ * {@link JMOPLocal#importPlaylistFromPlaylist(File, Bundle, TrackFileCreationWay)}
+ * 
  * @author martin
  *
  */
-@Command(name = "import", //
-	description = "Imports the tracks from the specified files and foldres into the musicbase bundle.", //
-	subcommands =  HelpCommand.class )
-public class ImportFromDirectoryOrFileCommand implements Runnable {
+@Command(name = "from-playlist", aliases = { "from-file" }, //
+		description = "Imports the tracks from the specified external playlist file.", //
+		subcommands = HelpCommand.class)
+public class ImportTracksFromExternalPlaylist implements Runnable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RemoteAddCommand.class);
 
 	@ArgGroup(multiplicity = "1")
 	private CreateOrUseBundleGroup bundleArgs;
-	
-	@Option(names = { "--recursive", "-r" }, required = false, //
-		description = "If direcrtory, walk recursivelly into?")
-	private boolean recursive = false;
 
 	@Option(names = { "--create-file", "-f" }, //
-		description = "Whether/How to create track file, one of: ${COMPLETION-CANDIDATES}")
+			description = "Whether/How to create track file, one of: ${COMPLETION-CANDIDATES}")
 	private TrackFileCreationWay createFiles = TrackFileCreationWay.JUST_SET;
-	
 
 	@ArgGroup(multiplicity = "0..*")
 	private List<CreateOrAddToPlaylistGroup> playlistsArgs;
 
-	@Parameters(arity = "1..*", //
-		description = "The files or directories to scan for the tracks.")
-	private List<File> dirsOrFiles;
-
+	@Parameters(arity = "1", //
+			description = "The playlist file scan for the tracks.")
+	private File file;
 
 	@Override
 	public void run() {
-		LOGGER.debug("Importing tracks from {}", dirsOrFiles);
-		validateExistence(dirsOrFiles);
+		LOGGER.info("Importing playlist {}", file);
+		if (validateFileExistence(file)) {
+			return;
+		}
 
 		Bundle bundle = bundleArgs.getBundle();
 		JMOPLocal local = JMOPSourceryProvider.get().getSourcery().local();
-		List<Track> tracks = local.importFromDirsOrFiles(dirsOrFiles, bundle, recursive, createFiles);
+		List<Track> tracks = local.importTracksFromPlaylist(file, bundle, createFiles);
 
-		LOGGER.debug("Imported tracks {}", tracks);
 		SourceryPicocliUtilities.playlistThem(bundle, tracks, playlistsArgs);
+		LOGGER.info("Imported {} tracks", tracks.size());
 	}
 
-	private void validateExistence(List<File> dirsOrFiles) {
-		for (Iterator<File> iterator = dirsOrFiles.iterator(); iterator.hasNext();) {
-			File dir = iterator.next();
-			
-			if (!(dir.isFile() || dir.isDirectory())) {
-				LOGGER.warn("{} is not file or directory or doesn't exist, skipping", dir);
-				iterator.remove();
-			}
+	private boolean validateFileExistence(File file) {
+		if (!file.isFile()) {
+			LOGGER.error("{} is not file or doesn't exist, skipping", file);
+			return true;
 		}
-	}
 
+		return false;
+	}
 }

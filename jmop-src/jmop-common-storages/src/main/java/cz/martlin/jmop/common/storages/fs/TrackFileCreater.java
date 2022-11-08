@@ -66,17 +66,32 @@ public class TrackFileCreater {
 	private void copy(File trackSourceFile, File trackTargetFile) throws JMOPPersistenceException {
 		LOG.debug("Coping {} to {}", trackSourceFile, trackTargetFile);
 		
+		if (trackSourceFile == null) {
+			LOG.warn("NOT coping the file, since there is no source file");
+			return;
+		}
+		
 		fs.copyFile(trackSourceFile, trackTargetFile);
 	}
 
 	private void move(File trackSourceFile, File trackTargetFile) throws JMOPPersistenceException {
 		LOG.debug("Moving {} to {}", trackSourceFile, trackTargetFile);
 		
+		if (trackSourceFile == null) {
+			LOG.warn("NOT moving the file, since there is no source file");
+			return;
+		}
+		
 		fs.moveFile(trackSourceFile, trackTargetFile);
 	}
 
 	private void link(File trackSourceFile, File trackTargetFile) throws JMOPPersistenceException {
 		LOG.debug("Linking {} to {}", trackSourceFile, trackTargetFile);
+		
+		if (trackSourceFile == null) {
+			LOG.warn("NOT linking the file, since there is no source file");
+			return;
+		}
 		
 		fs.linkFile(trackTargetFile, trackSourceFile);
 	}

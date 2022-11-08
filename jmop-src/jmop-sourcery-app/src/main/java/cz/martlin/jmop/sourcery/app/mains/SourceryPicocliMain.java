@@ -11,7 +11,7 @@ import cz.martlin.jmop.sourcery.config.BaseJMOPSourceryConfig;
 import cz.martlin.jmop.sourcery.config.TestingConstantSourceryConfiguration;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourceryBuilder;
-import cz.martlin.jmop.sourcery.picocli.commands.SourceryRootCommand;
+import cz.martlin.jmop.sourcery.picocli.commands.structural.SourceryRootCommand;
 import cz.martlin.jmop.sourcery.picocli.converters.BundleConverter;
 import cz.martlin.jmop.sourcery.picocli.misc.SourceryCommandsFactory;
 import picocli.CommandLine;

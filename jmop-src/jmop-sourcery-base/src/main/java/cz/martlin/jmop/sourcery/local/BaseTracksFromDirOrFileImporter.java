@@ -1,6 +1,7 @@
 package cz.martlin.jmop.sourcery.local;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -13,7 +14,7 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
  * @author martin
  *
  */
-public interface BaseTracksImpoter {
+public interface BaseTracksFromDirOrFileImporter {
 
 	/**
 	 * Runs the import.
@@ -22,7 +23,8 @@ public interface BaseTracksImpoter {
 	 * @param recursive
 	 * @param filesFormat
 	 * @return
+	 * @throws IOException 
 	 */
-	List<TrackData> importTracks(File dirOrFile, boolean recursive, TrackFileFormat filesFormat);
+	List<TrackData> importTracks(File dirOrFile, boolean recursive, TrackFileFormat filesFormat) throws IOException;
 
 }

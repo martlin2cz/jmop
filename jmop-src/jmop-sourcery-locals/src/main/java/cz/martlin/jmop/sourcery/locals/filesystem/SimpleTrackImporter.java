@@ -1,10 +1,11 @@
-package cz.martlin.jmop.sourcery.locals.sourceries;
+package cz.martlin.jmop.sourcery.locals.filesystem;
 
 import java.io.File;
 import java.net.URI;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.core.misc.DurationUtilities;
+import cz.martlin.jmop.sourcery.locals.abstracts.AbstractSingleTrackPerFileImporter;
 import javafx.util.Duration;
 
 /**
@@ -14,9 +15,9 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class SimpleDirectoryImporter extends AbstractSingleTrackPerFileImporter {
+public class SimpleTrackImporter extends AbstractSingleTrackPerFileImporter {
 
-	public SimpleDirectoryImporter() {
+	public SimpleTrackImporter() {
 		super();
 	}
 

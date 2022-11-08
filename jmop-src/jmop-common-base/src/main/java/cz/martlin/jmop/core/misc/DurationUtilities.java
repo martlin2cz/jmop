@@ -82,7 +82,7 @@ public class DurationUtilities {
 		if (duration == null) {
 			return "unknown";
 		}
-		
+
 		long remaining = (long) duration.toMillis();
 		int hours = (int) TimeUnit.MILLISECONDS.toHours(remaining);
 
@@ -105,7 +105,7 @@ public class DurationUtilities {
 	 * @param durationStr
 	 * @return
 	 */
-	public static Duration parseHumanDuration(String durationStr) { 
+	public static Duration parseHumanDuration(String durationStr) {
 		String[] parts = durationStr.split(DURATION_SEPARATOR);
 
 		int sum = 0;
@@ -117,6 +117,16 @@ public class DurationUtilities {
 
 		int milis = (int) TimeUnit.SECONDS.toMillis(sum);
 		return new Duration(milis);
+	}
+
+	/**
+	 * Converts the one duration to another.
+	 * 
+	 * @param duration
+	 * @return
+	 */
+	public static Duration durationToDuration(java.time.Duration duration) {
+		return new Duration(duration.toMillis());
 	}
 
 }

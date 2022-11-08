@@ -1,4 +1,4 @@
-package cz.martlin.jmop.sourcery.picocli.commands;
+package cz.martlin.jmop.sourcery.picocli.commands.impls;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "add", //
+@Command(name = "add", aliases = { "search-and-add" },//
 	description = "Adds tracks into the musicbase by searching them via the specified music service.", //
 	subcommands =  HelpCommand.class )
 public class RemoteAddCommand implements Runnable {
@@ -27,7 +27,7 @@ public class RemoteAddCommand implements Runnable {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RemoteAddCommand.class);
 
 	@Option(names = { "--service", "-s" }, required = true, //
-		description = "Remote service name to use for the search and download.")
+		description = "Remote service name to use for the search and download. One of: ${COMPLETION-CANDIDATES}")
 	private Service service;
 
 	@ArgGroup(multiplicity = "1")
@@ -53,7 +53,7 @@ public class RemoteAddCommand implements Runnable {
 
 	@Override
 	public void run() {
-		LOGGER.debug("Searching for {} to download", queries);
+		LOGGER.info("Searching for {} to download", queries);
 
 		try {
 			Bundle bundle = bundleArgs.getBundle();
@@ -61,7 +61,7 @@ public class RemoteAddCommand implements Runnable {
 			
 			List<Track> tracks = remote.add(bundle, queries, download);
 			
-			LOGGER.debug("Searched tracks {}", tracks);
+			LOGGER.info("Searched {} tracks", tracks.size());
 			SourceryPicocliUtilities.playlistThem(bundle, tracks, playlistsArgs);
 		} catch (JMOPSourceryException e) {
 			LOGGER.error("The add command failed", e);

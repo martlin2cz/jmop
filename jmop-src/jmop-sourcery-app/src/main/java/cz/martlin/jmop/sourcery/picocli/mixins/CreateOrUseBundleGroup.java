@@ -38,7 +38,7 @@ public class CreateOrUseBundleGroup {
 			if (musicbase.bundleOfName(pickOrCreateBundle) != null) {
 				return getBundle(pickOrCreateBundle, musicbase);
 			} else {
-				musicbase.createNewBundle(pickOrCreateBundle);
+				return musicbase.createNewBundle(pickOrCreateBundle);
 			}
 		}
 

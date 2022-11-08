@@ -1,4 +1,4 @@
-package cz.martlin.jmop.sourcery.locals.sourceries;
+package cz.martlin.jmop.sourcery.locals.filesystem;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.Mp3File;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
+import cz.martlin.jmop.sourcery.locals.abstracts.AbstractSingleTrackPerFileImporter;
 import javafx.util.Duration;
 
 /**

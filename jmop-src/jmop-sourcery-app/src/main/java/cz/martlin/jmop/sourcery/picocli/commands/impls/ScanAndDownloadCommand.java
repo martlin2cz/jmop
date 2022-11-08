@@ -1,9 +1,12 @@
-package cz.martlin.jmop.sourcery.picocli.commands;
+package cz.martlin.jmop.sourcery.picocli.commands.impls;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -24,6 +27,8 @@ import picocli.CommandLine.Option;
 	subcommands =  HelpCommand.class )
 public class ScanAndDownloadCommand implements Runnable {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ScanAndDownloadCommand.class);
+
 	private final JMOPSourcery sourcery;
 
 	public ScanAndDownloadCommand(JMOPSourcery sourcery) {
@@ -32,7 +37,7 @@ public class ScanAndDownloadCommand implements Runnable {
 	}
 
 	@Option(names = { "--service", "-s" }, required = true, //
-		description = "The remote service to use for the download.")
+		description = "The remote service to use for the download. One of: ${COMPLETION-CANDIDATES}")
 	private Service service;
 
 	@Option(names = { "--musicbase", "-m", "-mb" }, required = false, //
@@ -57,6 +62,7 @@ public class ScanAndDownloadCommand implements Runnable {
 		JMOPRemote youtube = pickRemote();
 
 		for (Track track : tracks) {
+			LOGGER.debug("Downloading track {}", track.getTitle());
 			downloadAndSet(youtube, track);
 		}
 

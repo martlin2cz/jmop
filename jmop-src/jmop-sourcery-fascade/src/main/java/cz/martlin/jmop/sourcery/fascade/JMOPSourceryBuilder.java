@@ -12,9 +12,13 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.core.sources.remote.youtube.YoutubeRemoteSource;
 import cz.martlin.jmop.sourcery.config.BaseJMOPSourceryConfig;
 import cz.martlin.jmop.sourcery.config.TestingConstantSourceryConfiguration;
-import cz.martlin.jmop.sourcery.local.BaseTracksImpoter;
-import cz.martlin.jmop.sourcery.locals.sourceries.MP3FileMetadataBasedImporter;
-import cz.martlin.jmop.sourcery.locals.sourceries.SimpleDirectoryImporter;
+import cz.martlin.jmop.sourcery.local.BasePlaylistImporter;
+import cz.martlin.jmop.sourcery.local.BaseTracksFromDirOrFileImporter;
+import cz.martlin.jmop.sourcery.local.BaseTracksFromFileImporter;
+import cz.martlin.jmop.sourcery.locals.abstracts.DefaultTracksFromDirOrFileImporter;
+import cz.martlin.jmop.sourcery.locals.filesystem.MP3FileMetadataBasedImporter;
+import cz.martlin.jmop.sourcery.locals.playlists.FromExternalXSPFPlaylistPlaylistIImporter;
+import cz.martlin.jmop.sourcery.locals.playlists.FromXSPFPlaylistTracksImpoter;
 import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
 
 public class JMOPSourceryBuilder {
@@ -28,9 +32,14 @@ public class JMOPSourceryBuilder {
 		BaseRemoteSource youtubeRemote = YoutubeRemoteSource.create(configuration, listener);
 		JMOPRemote youtube = new JMOPRemote(youtubeRemote, mb);
 
-		BaseTracksImpoter directory = new MP3FileMetadataBasedImporter(true); // new SimpleDirectoryImporter();
 		TrackFileFormat trackFileFormat = TrackFileFormat.MP3; // TODO Pick of player
-		JMOPLocal local = new JMOPLocal(mb, trackFileFormat, directory);
+		
+		MP3FileMetadataBasedImporter tracksFromMP3FileImpoter = new MP3FileMetadataBasedImporter(true);  // new SimpleTrackImporter();
+		BaseTracksFromDirOrFileImporter tracksFromDirImpoter = new DefaultTracksFromDirOrFileImporter(tracksFromMP3FileImpoter);
+		BaseTracksFromFileImporter tracksFromPlaylistImpoter = new FromXSPFPlaylistTracksImpoter();
+		BasePlaylistImporter playlistFromPlaylistImpoter = new FromExternalXSPFPlaylistPlaylistIImporter();
+		
+		JMOPLocal local = new JMOPLocal(mb, trackFileFormat, tracksFromDirImpoter, tracksFromPlaylistImpoter, playlistFromPlaylistImpoter);
 		
 		JMOPConfig config = new JMOPConfig(configuration, mb);
 		

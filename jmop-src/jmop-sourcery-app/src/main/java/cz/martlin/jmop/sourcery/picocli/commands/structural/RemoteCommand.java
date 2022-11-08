@@ -1,5 +1,7 @@
-package cz.martlin.jmop.sourcery.picocli.commands;
+package cz.martlin.jmop.sourcery.picocli.commands.structural;
 
+import cz.martlin.jmop.sourcery.picocli.commands.impls.RemoteAddCommand;
+import cz.martlin.jmop.sourcery.picocli.commands.impls.ScanAndDownloadCommand;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 

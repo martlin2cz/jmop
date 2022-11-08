@@ -18,6 +18,12 @@ import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
 import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
+/**
+ * Component performing download of track(s).
+ * 
+ * @author martin
+ *
+ */
 public class TrackFileDownloader {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -26,14 +32,14 @@ public class TrackFileDownloader {
 	private final BaseDownloader downloader;
 
 	private final BaseMusicbaseModifing musicbaseModifing;
-	
+
 	public TrackFileDownloader(BaseRemoteSource remote, BaseMusicbaseModifing musicbaseModifing) {
 		super();
 		this.querier = remote.querier();
 		this.downloader = remote.downloader();
 		this.musicbaseModifing = musicbaseModifing;
 	}
-	
+
 	public TrackFileDownloader(BaseRemoteSourceQuerier querier, BaseDownloader downloader,
 			BaseMusicbaseModifing musicbaseModifing) {
 		super();
@@ -42,14 +48,12 @@ public class TrackFileDownloader {
 		this.musicbaseModifing = musicbaseModifing;
 	}
 
-	
-
 	public void downloadAndSetFile(Track track) throws JMOPSourceryException {
 		LOG.info("Will add and download track file for {} (and set the file)", track.getTitle());
 
 		File file = createTemporaryFile(track);
 		String url = obtainURL(track);
-		
+
 		downloader.download(url, file);
 		musicbaseModifing.specifyTrackFile(track, TrackFileCreationWay.MOVE_FILE, file);
 	}
@@ -59,13 +63,13 @@ public class TrackFileDownloader {
 
 		File file = track.getFile();
 		String url = obtainURL(track);
-		
+
 		downloader.download(url, file);
 		musicbaseModifing.specifyTrackFile(track, TrackFileCreationWay.MOVE_FILE, file);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
-	
+
 	private String obtainURL(Track track) throws JMOPSourceryException {
 		String title = track.getTitle();
 
@@ -73,7 +77,7 @@ public class TrackFileDownloader {
 			LOG.debug("Using track {} existing source url: {}", title, track.getSource());
 			return track.getSource().toASCIIString();
 		}
-		
+
 		LOG.debug("Searching track {} to pick the remote URL", title);
 		List<TrackData> searchedTracks = querier.search(title);
 
@@ -81,7 +85,7 @@ public class TrackFileDownloader {
 
 		URI trackUri = searchedTrack.getURI();
 		String urlStr = trackUri.toASCIIString();
-		
+
 		LOG.debug("The track {}'s corresponding URL is {}", title, urlStr);
 		return urlStr;
 	}

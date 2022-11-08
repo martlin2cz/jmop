@@ -7,11 +7,15 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
+import javafx.util.Duration;
 
 
 public class TestingTrackFilesCreator {
 
+	public static final Duration SAMPLE_FILE_DURATION = DurationUtilities.createDuration(0, 0, 10);
+	
 	public TestingTrackFilesCreator() {
 	}
 	

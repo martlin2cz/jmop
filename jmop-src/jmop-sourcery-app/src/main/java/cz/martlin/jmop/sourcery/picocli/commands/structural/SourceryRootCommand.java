@@ -1,4 +1,4 @@
-package cz.martlin.jmop.sourcery.picocli.commands;
+package cz.martlin.jmop.sourcery.picocli.commands.structural;
 
 import java.io.File;
 

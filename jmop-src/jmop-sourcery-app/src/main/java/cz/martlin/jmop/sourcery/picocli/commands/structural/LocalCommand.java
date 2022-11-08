@@ -1,12 +1,12 @@
-package cz.martlin.jmop.sourcery.picocli.commands;
+package cz.martlin.jmop.sourcery.picocli.commands.structural;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 
 @Command(name = "local", //
-	description = "Imports from the local place, i.e. this computer.", //
+	description = "Loads/adds/imports the musicbase data from the local place (this computer).", //
 	subcommands = { //
-		ImportFromDirectoryOrFileCommand.class, //
+		ImportCommand.class, //
 		HelpCommand.class
 	})
 public class LocalCommand{

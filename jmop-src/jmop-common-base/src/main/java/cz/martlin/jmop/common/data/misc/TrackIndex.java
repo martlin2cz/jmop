@@ -1,11 +1,12 @@
 package cz.martlin.jmop.common.data.misc;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An index of the track in the playlist. Since java uses zero-based indexing
@@ -18,6 +19,8 @@ import java.util.TreeMap;
  */
 public class TrackIndex implements Comparable<TrackIndex> {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TrackIndex.class);
+	
 	private final int index;
 
 	private TrackIndex(int index) {
@@ -148,7 +151,11 @@ public class TrackIndex implements Comparable<TrackIndex> {
 			TrackIndex index = TrackIndex.ofIndex(i);
 			E item = map.get(index);
 			
-			Objects.requireNonNull(item, "There is no item with index " + index);
+			if (item == null) {
+				LOGGER.warn("There is no item with index {}", index);
+				continue;
+			}
+			
 			list.add(item);
 		}
 

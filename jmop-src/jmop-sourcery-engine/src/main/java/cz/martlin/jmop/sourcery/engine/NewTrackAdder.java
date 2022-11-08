@@ -23,24 +23,31 @@ import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
 import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
+/**
+ * Component adding new track based on the search query.
+ * 
+ * @author martin
+ *
+ */
 public class NewTrackAdder {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private final BaseRemoteSourceQuerier querier;
 	private final BaseDownloader downloader;
-	
+
 	private final BaseMusicbaseModifing musicbaseModifing;
 	private final BaseMusicbaseLoading musicbaseLoading;
 
-	public NewTrackAdder(BaseRemoteSourceQuerier querier, BaseDownloader downloader, BaseMusicbaseModifing musicbaseModifing,  BaseMusicbaseLoading musicbaseLoading) {
+	public NewTrackAdder(BaseRemoteSourceQuerier querier, BaseDownloader downloader,
+			BaseMusicbaseModifing musicbaseModifing, BaseMusicbaseLoading musicbaseLoading) {
 		super();
 		this.querier = querier;
 		this.downloader = downloader;
 		this.musicbaseModifing = musicbaseModifing;
 		this.musicbaseLoading = musicbaseLoading;
-		
+
 	}
-	
+
 	public NewTrackAdder(BaseRemoteSource remote, BaseMusicbase musicbase) {
 		super();
 		this.querier = remote.querier();
@@ -51,10 +58,11 @@ public class NewTrackAdder {
 
 	public Track add(Bundle bundle, String query, boolean download) throws JMOPSourceryException {
 		LOG.info("Will add track to bundle {} by searching {}", bundle.getName(), query);
-		
+
 		TrackData searchedTrack = search(bundle, query);
 		String title = searchedTrack.getTitle();
-		Optional<Track> existingTrack = musicbaseLoading.tracks(bundle).stream().filter(t -> t.getTitle().equals(title)).findAny();
+		Optional<Track> existingTrack = musicbaseLoading.tracks(bundle).stream().filter(t -> t.getTitle().equals(title))
+				.findAny();
 		if (existingTrack.isPresent()) {
 			LOG.info("Track {} already exists in the bundle", title);
 			return existingTrack.get();
@@ -68,7 +76,7 @@ public class NewTrackAdder {
 				LOG.warn("Donwload failed, adding anyway", e);
 			}
 		}
-	
+
 		if (temporaryDownloadFile != null) {
 			return createTrackWithFile(bundle, searchedTrack, temporaryDownloadFile);
 		} else {
@@ -91,7 +99,7 @@ public class NewTrackAdder {
 			String extension = downloader.downloadFormat().fileExtension();
 			File file = File.createTempFile("jmop-" + searchedTrack.getTitle() + "-", "." + extension);
 			Files.delete(file.toPath());
-			
+
 			LOG.debug("Created temporary download file {}", file);
 			return file;
 		} catch (IOException e) {

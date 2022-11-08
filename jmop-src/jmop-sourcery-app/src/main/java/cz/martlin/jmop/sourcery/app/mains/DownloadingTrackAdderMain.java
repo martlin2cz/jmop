@@ -12,7 +12,7 @@ import cz.martlin.jmop.sourcery.config.BaseJMOPSourceryConfig;
 import cz.martlin.jmop.sourcery.config.TestingConstantSourceryConfiguration;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourceryBuilder;
-import cz.martlin.jmop.sourcery.picocli.commands.RemoteCommand;
+import cz.martlin.jmop.sourcery.picocli.commands.structural.RemoteCommand;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
 /**
