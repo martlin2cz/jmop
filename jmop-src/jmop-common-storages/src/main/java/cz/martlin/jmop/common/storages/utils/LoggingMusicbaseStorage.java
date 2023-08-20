@@ -141,5 +141,12 @@ public class LoggingMusicbaseStorage implements BaseMusicbaseStorage {
 		delegee.saveUpdatedTrack(track);
 	}
 
+	@Override
+	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile)
+			throws JMOPRuntimeException {
+	LOG.info("Speciffing track {} track file to be {} with {}", track.getTitle(), trackFileHow, trackSourceFile);
+
+		delegee.specifyTrackFile(track, trackFileHow, trackSourceFile);
+	}
 	
 }

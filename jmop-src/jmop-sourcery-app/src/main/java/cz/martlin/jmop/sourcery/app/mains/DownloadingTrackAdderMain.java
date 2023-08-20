@@ -15,7 +15,14 @@ import cz.martlin.jmop.player.fascade.dflt.config.ConstantDefaultFascadeConfig;
 import cz.martlin.jmop.sourcery.app.config.ConstantRemotesConfiguration;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourceryBuilder;
+import cz.martlin.jmop.sourcery.picocli.commands.RemoteCommand;
 
+/**
+ * @deprecated replaced by {@link SourceryPicocliMain} and {@link RemoteCommand}
+ * @author martin
+ *
+ */
+@Deprecated
 public class DownloadingTrackAdderMain {
 
 	public static void main(String[] args) {

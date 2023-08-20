@@ -3,8 +3,8 @@ package cz.martlin.jmop.sourcery.engine;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import cz.martlin.jmop.common.data.model.Track;
@@ -79,8 +79,9 @@ class NewTrackAdderTest {
 		BaseProgressListener listener = new PrintingListener(System.out);
 		BaseRemotesConfiguration config = new TestingConfig();
 		BaseRemoteSource remote = YoutubeRemoteSource.create(config, listener);
-		BaseMusicbaseModifing musicbase = tme.getMusicbase();
-		NewTrackAdder adder = new NewTrackAdder(remote, musicbase);
+		BaseMusicbaseModifing musicbaseModifiing = tme.getMusicbase();
+		BaseMusicbaseLoading musicbaseLoading = (BaseMusicbaseLoading) tme.getMusicbase();
+		NewTrackAdder adder = new NewTrackAdder(remote.querier(), remote.downloader(), musicbaseModifiing, musicbaseLoading);
 		return adder;
 	}
 

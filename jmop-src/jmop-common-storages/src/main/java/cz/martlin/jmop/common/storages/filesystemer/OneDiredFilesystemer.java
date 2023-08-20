@@ -76,5 +76,12 @@ public class OneDiredFilesystemer implements BaseMusicbaseFilesystemer, AllInOne
 	public void removeTrack(Track track) throws JMOPPersistenceException {
 		// okay, nothing to do// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile)
+			throws JMOPPersistenceException {
+
+		trackCreater.performTrackFileCreate(track, trackFileHow, trackSourceFile);
+	}
 
 }

@@ -129,5 +129,12 @@ public class BundlesDirsFilesystemer implements BaseMusicbaseFilesystemer, Bundl
 			fs.deleteFile(oldTrackFile);
 		}
 	}
+	
+	@Override
+	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile)
+			throws JMOPPersistenceException {
+
+		trackCreater.performTrackFileCreate(track, trackFileHow, trackSourceFile);
+	}
 
 }

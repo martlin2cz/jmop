@@ -132,6 +132,11 @@ public class PersistentMusicbase implements BaseMusicbase {
 		storage.createTrack(track, trackCreationWay, trackSourceFile);
 		return track;
 	}
+	
+	@Override
+	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile) {
+		storage.specifyTrackFile(track, trackFileHow, trackSourceFile);
+	}
 
 	@Override
 	public void renameTrack(Track track, String newTitle) {

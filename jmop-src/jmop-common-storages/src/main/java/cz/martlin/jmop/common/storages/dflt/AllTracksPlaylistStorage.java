@@ -148,6 +148,13 @@ public class AllTracksPlaylistStorage implements BaseMusicbaseStorage {
 		delegee.saveUpdatedTrack(track);
 		updateAllTracksPlaylistOfTrack(track);
 	}
+	
+	@Override
+	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile)
+			throws JMOPRuntimeException {
+		delegee.specifyTrackFile(track, trackFileHow, trackSourceFile);
+		updateAllTracksPlaylistOfTrack(track);
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -221,6 +228,8 @@ public class AllTracksPlaylistStorage implements BaseMusicbaseStorage {
 /////////////////////////////////////////////////////////////////////////////////////
 
 	private Playlist allTracksPlaylistFor(Bundle bundle) throws JMOPRuntimeException {
+		//TODO construct one based on the tracks collected from the remaining playlists
+		// if in FAILSAVE mode
 		return inmemory.playlists(bundle).stream() //
 				.filter(p -> allTracksPlaylistName.equals(p.getName())) //
 				.findAny().orElseThrow(() -> new JMOPRuntimeException(

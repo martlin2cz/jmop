@@ -164,6 +164,11 @@ public class DefaultInMemoryMusicbase implements BaseInMemoryMusicbase {
 	public void trackUpdated(Track track)  {
 		// nothing to do here
 	}
+	
+	@Override
+	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile) {
+		track.setFile(trackSourceFile);
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	

@@ -23,11 +23,25 @@
 			<artifactId>jmop-sourcery-fascade</artifactId>
 			<version>3.1.14</version>
 		</dependency>
+
+		 <!-- little tricky, just to be able to use the common components) -->
+		<dependency>
+			<groupId>cz.martlin</groupId>
+			<artifactId>jmop-player-cli</artifactId>
+			<version>3.1.12</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>com.ginsberg</groupId>
 			<artifactId>junit5-system-exit</artifactId>
 			<version>1.1.1 </version>
+		</dependency>
+
+		<!-- The picocli library -->
+		<dependency>
+		    <groupId>info.picocli</groupId>
+		    <artifactId>picocli</artifactId>
+		    <version>4.6.0</version>
 		</dependency>
 	</dependencies>
 

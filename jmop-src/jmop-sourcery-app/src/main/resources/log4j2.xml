@@ -2,7 +2,8 @@
 <Configuration status="WARN">
 	<Appenders>
 		<Console name="Console" target="SYSTEM_ERR">
-	            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+	            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+				<!-- <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/> -->
 	            <PatternLayout>
 	                <Pattern>%level %msg%n</Pattern>
 	            </PatternLayout>
@@ -21,6 +22,7 @@
 	</Appenders>
 	<Loggers>
 		<Logger name="cz.martlin.jmop.sourcery.engine.NewTrackAdder" level="DEBUG" />
+		<Logger name="cz.martlin.jmop.sourcery.engine.TrackFileDownloader" level="DEBUG" />
 	
 		<Root level="WARN">
 			<AppenderRef ref="Console" />
