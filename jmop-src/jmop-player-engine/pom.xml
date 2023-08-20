@@ -5,24 +5,24 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>${revision}</version>
+		<version>3.1.8</version>
 	</parent>
 	
 	<artifactId>jmop-player-engine</artifactId>
 	<name>JMOP player core engine.</name>
 	<description>The layer between the JMOP player GUI and the backend.</description>
-	<version>${revision}</version>
+	<version>3.1.8</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-player-base</artifactId>
-			<version>${revision}</version>
+			<version>3.1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-player-players</artifactId>
-			<version>${revision}</version>
+			<version>3.1.8</version>
 		</dependency>
 	</dependencies>
 

@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>${revision}</version>
+		<version>3.1.8</version>
 	</parent>
 
 	<artifactId>jmop-common-base</artifactId>
 	<name>JMOP base</name>
 	<description>The JMOP base module. Contains all the common features and abstract specifications of the JMOP.</description>
-	<version>${revision}</version>
+	<version>3.1.8</version>
 </project>

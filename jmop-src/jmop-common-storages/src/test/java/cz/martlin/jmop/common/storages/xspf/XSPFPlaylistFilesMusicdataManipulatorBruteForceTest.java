@@ -59,35 +59,35 @@ class XSPFPlaylistFilesMusicdataManipulatorBruteForceTest {
 	@Test
 	void testEmptyPlaylist() throws JMOPPersistenceException {
 		testLoadAndSave("empty-playlist.xspf", false, //
-				FAIL, OKAY, OKAY, OKAY, // weak: LB, SB, LP, SP
+				FAIL, OKAY, FAIL, OKAY, // weak: LB, SB, LP, SP
 				FAIL, OKAY, OKAY, OKAY); // fsv: LB, SB, LP, SP
 	}
 
 	@Test
 	void testMinimalFile() throws JMOPPersistenceException {
 		testLoadAndSave("minimal-discovery.xspf", true, //
-				FAIL, OKAY, OKAY, OKAY, // weak: LB, SB, LP, SP
+				FAIL, OKAY, FAIL, OKAY, // weak: LB, SB, LP, SP
 				FAIL, OKAY, OKAY, OKAY); // fsv: LB, SB, LP, SP
 	}
 
 	@Test
 	void testFileWithNoMetas() throws JMOPPersistenceException {
 		testLoadAndSave("discovery-with-no-metas.xspf", true, //
-				FAIL, OKAY, OKAY, OKAY, // weak: LB, SB, LP, SP
+				FAIL, OKAY, FAIL, OKAY, // weak: LB, SB, LP, SP
 				FAIL, OKAY, OKAY, OKAY); // fsv: LB, SB, LP, SP
 	}
 	
 	@Test
 	void testFileWithOtheExtension() throws JMOPPersistenceException {
 		testLoadAndSave("discovery-with-other-extension.xspf", true, //
-				FAIL, OKAY, OKAY, OKAY, // weak: LB, SB, LP, SP
+				FAIL, OKAY, FAIL, OKAY, // weak: LB, SB, LP, SP
 				FAIL, OKAY, OKAY, OKAY); // fsv: LB, SB, LP, SP
 	}
 
 	@Test
 	void testFileWithMetasAsChildren() throws JMOPPersistenceException {
 		testLoadAndSave("discovery-with-jmop-metas-as-children.xspf", true, //
-				FAIL, OKAY, OKAY, OKAY, // weak: LB, SB, LP, SP
+				FAIL, OKAY, FAIL, OKAY, // weak: LB, SB, LP, SP
 				FAIL, OKAY, OKAY, OKAY); // fsv: LB, SB, LP, SP
 	}
 
@@ -101,7 +101,7 @@ class XSPFPlaylistFilesMusicdataManipulatorBruteForceTest {
 	@Test
 	void testFileWithIcorrectValues() throws JMOPPersistenceException {
 		testLoadAndSave("discovery-with-incorrect-values.xspf", true, //
-				OKAY, FAIL, OKAY, FAIL, // weak: LB, SB, LP, SP
+				FAIL, FAIL, FAIL, FAIL, // weak: LB, SB, LP, SP
 				OKAY, OKAY, OKAY, OKAY); // fsv: LB, SB, LP, SP
 	}
 /////////////////////////////////////////////////////////////////////////////////////

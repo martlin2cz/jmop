@@ -5,24 +5,24 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>${revision}</version>
+		<version>3.1.8</version>
 	</parent>
 	
 	<artifactId>jmop-common-musicbase</artifactId>
 	<name>JMOP musicbase</name>
 	<description>Implements the (in-memory) database of the music</description>
-	<version>${revision}</version>
+	<version>3.1.8</version>
 	
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-base</artifactId>
-			<version>${revision}</version>
+			<version>3.1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-testing</artifactId>
-			<version>${revision}</version>
+			<version>3.1.8</version>
 		</dependency>
 	</dependencies>
 </project>

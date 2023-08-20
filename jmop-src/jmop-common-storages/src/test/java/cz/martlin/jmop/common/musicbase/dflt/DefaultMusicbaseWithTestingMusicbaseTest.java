@@ -2,22 +2,24 @@ package cz.martlin.jmop.common.musicbase.dflt;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.File;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
+import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
 import cz.martlin.jmop.common.musicbase.persistent.PersistentMusicbase;
+import cz.martlin.jmop.common.storages.builders.LocatorsBuilder.BundleDataFile;
+import cz.martlin.jmop.common.storages.builders.MusicdataManipulatorBuilder.PlaylistFileFormat;
+import cz.martlin.jmop.common.storages.builders.StorageBuilder;
+import cz.martlin.jmop.common.storages.builders.StorageBuilder.DirsLayout;
+import cz.martlin.jmop.common.storages.configs.BaseStorageConfiguration;
 import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
-import cz.martlin.jmop.common.storages.dflt.X_DefaultStorage;
 import cz.martlin.jmop.common.storages.utils.LoggingMusicbaseStorage;
-import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.common.testing.extensions.TestingRootDirExtension;
 import cz.martlin.jmop.common.testing.testdata.AbstractTestingMusicdata;
-import cz.martlin.jmop.common.testing.testdata.TestingDataCreator;
 import cz.martlin.jmop.common.testing.testdata.TestingMusicdataWithMusicbase;
+import cz.martlin.jmop.core.misc.BaseErrorReporter;
 import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
@@ -63,7 +65,9 @@ public class DefaultMusicbaseWithTestingMusicbaseTest {
 
 		BaseInMemoryMusicbase inmemory = new DefaultInMemoryMusicbase();
 
-		X_DefaultStorage storage = X_DefaultStorage.create(root.getRoot(), new DefaultConfig(), new SimpleErrorReporter(), inmemory);
+		BaseStorageConfiguration config = new DefaultConfig();
+		BaseErrorReporter reporter = new SimpleErrorReporter();
+		BaseMusicbaseStorage storage = new StorageBuilder().create(DirsLayout.BUNDLES_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, false, PlaylistFileFormat.XSPF, reporter, root.getFile(), config, TrackFileFormat.MP3, inmemory); 
 		LoggingMusicbaseStorage logging = new LoggingMusicbaseStorage(storage);
 
 		BaseMusicbase musicbase = new PersistentMusicbase(inmemory, logging);

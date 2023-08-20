@@ -5,34 +5,34 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>${revision}</version>
+		<version>3.1.8</version>
 	</parent>
 	
 	<artifactId>jmop-player-players</artifactId>
 	<name>JMOP players module.</name>
 	<description>The module implementing the actuall player(s).</description>
-	<version>${revision}</version>
+	<version>3.1.8</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-base</artifactId>
-			<version>${revision}</version>
+			<version>3.1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-player-base</artifactId>
-			<version>${revision}</version>
+			<version>3.1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-testing</artifactId>
-			<version>${revision}</version>
+			<version>3.1.8</version>
 		</dependency>		
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-storages</artifactId>
-			<version>${revision}</version>
+			<version>3.1.8</version>
 		</dependency>
 	</dependencies>
 	
