@@ -120,7 +120,7 @@ public abstract class AbstractPlayerTest {
 
 	private void waitAsecond() {
 		try {
-			TimeUnit.MILLISECONDS.sleep(100);
+			TimeUnit.MILLISECONDS.sleep(1000);
 		} catch (InterruptedException e) {
 			fail(e);
 		}

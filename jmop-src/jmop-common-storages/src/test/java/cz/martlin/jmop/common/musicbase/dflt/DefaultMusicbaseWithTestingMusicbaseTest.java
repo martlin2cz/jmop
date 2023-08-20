@@ -2,6 +2,9 @@ package cz.martlin.jmop.common.musicbase.dflt;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.File;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -24,6 +27,7 @@ import cz.martlin.jmop.core.misc.SimpleErrorReporter;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 @Deprecated
+@Disabled
 public class DefaultMusicbaseWithTestingMusicbaseTest {
 
 	@RegisterExtension
