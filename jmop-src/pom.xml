@@ -192,15 +192,11 @@
 		<module>jmop-player-fascade</module>
 		<module>jmop-player-cli</module>
 		
-<!-- 		<module>jmop-player-gui</module> -->
-<!-- 		<module>jmop-player-app</module> -->
-		
 		<module>jmop-sourcery-base</module>
 		<module>jmop-sourcery-remotes</module>
-		<module>jmop-sourcery-engine</module>
-		<module>jmop-sourcery-app</module>
-
-		<module>jmop-sourcery-fascade</module>
 		<module>jmop-sourcery-locals</module>
+		<module>jmop-sourcery-engine</module>
+		<module>jmop-sourcery-fascade</module>
+		<module>jmop-sourcery-app</module>
 	</modules>
 </project>
