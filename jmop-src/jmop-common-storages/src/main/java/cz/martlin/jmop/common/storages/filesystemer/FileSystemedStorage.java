@@ -201,4 +201,14 @@ public class FileSystemedStorage implements BaseMusicbaseStorage {
 		}
 	}
 
+	@Override
+	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile)
+			throws JMOPRuntimeException {
+		try {
+			filesystemer.specifyTrackFile(track, trackFileHow, trackSourceFile);
+			saver.saveTrackData(track, SaveReason.UPDATED);
+		} catch (JMOPPersistenceException | JMOPRuntimeException e) {
+			throw new JMOPRuntimeException("Could not specify track file", e);
+		}
+	}
 }

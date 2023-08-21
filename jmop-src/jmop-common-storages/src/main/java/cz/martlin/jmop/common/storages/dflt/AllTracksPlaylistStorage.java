@@ -148,6 +148,13 @@ public class AllTracksPlaylistStorage implements BaseMusicbaseStorage {
 		delegee.saveUpdatedTrack(track);
 		updateAllTracksPlaylistOfTrack(track);
 	}
+	
+	@Override
+	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile)
+			throws JMOPRuntimeException {
+		delegee.specifyTrackFile(track, trackFileHow, trackSourceFile);
+		updateAllTracksPlaylistOfTrack(track);
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
