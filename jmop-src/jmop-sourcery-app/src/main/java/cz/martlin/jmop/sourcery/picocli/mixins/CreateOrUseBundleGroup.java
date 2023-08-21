@@ -14,13 +14,16 @@ public class CreateOrUseBundleGroup {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateOrAddToPlaylistGroup.class);
 
-	@Option(names = { "--bundle", "-b" }, required = true)
+	@Option(names = { "--bundle", "-b" }, required = true, //
+		description = "Adds into the bundle. Creates if doesn't exist.")
 	private String pickOrCreateBundle;
 
-	@Option(names = { "--use-bundle", "-ub" }, required = true)
+	@Option(names = { "--use-bundle", "-ub" }, required = true, //
+		description = "Adds into the bundle. Bundle must exist.")
 	private String useBundle;
 
-	@Option(names = { "--create-bundle", "-B" }, required = true)
+	@Option(names = { "--create-bundle", "-B" }, required = true, //
+		description = "Adds into the bundle. Bundle gets created.")
 	private String createBundle;
 
 	public CreateOrUseBundleGroup() {

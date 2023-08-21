@@ -58,3 +58,4 @@ public class JMOPLocal {
 				.collect(Collectors.toList());
 	}
 }
+

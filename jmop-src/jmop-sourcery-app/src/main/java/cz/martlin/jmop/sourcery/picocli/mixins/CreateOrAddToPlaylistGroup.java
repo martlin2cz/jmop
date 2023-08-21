@@ -15,13 +15,16 @@ public class CreateOrAddToPlaylistGroup {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateOrAddToPlaylistGroup.class);
 
-	@Option(names = { "--add-to-playlist", "-p" }, required = true)
+	@Option(names = { "--add-to-playlist", "-p" }, required = true, //
+		description = "Adds to playlist. Creates if doesn't exist.")
 	private String addToPlaylist;
 
-	@Option(names = { "--add-to-existing-playlist", "-ap" }, required = true)
+	@Option(names = { "--add-to-existing-playlist", "-ap" }, required = true, //
+		description = "Adds to playlist. Playlist must exist.")
 	private String addToExistingPlaylist;
 
-	@Option(names = { "--add-to-new-playlist", "-P" }, required = true)
+	@Option(names = { "--add-to-new-playlist", "-P" }, required = true, //
+		description = "Adds to playlist. Playlist will be created.")
 	private String addToNewPlaylist;
 
 	public Playlist getPlaylist(Bundle bundle) {

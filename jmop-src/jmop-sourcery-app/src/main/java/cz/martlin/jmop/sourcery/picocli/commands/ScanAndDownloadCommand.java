@@ -14,9 +14,14 @@ import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import cz.martlin.jmop.sourcery.picocli.misc.Service;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 
-@Command(name = "download")
+@Command(name = "download", //
+	description = "Scans the whole musicbase, choosen bundle, playlist or just one single track, " //
+	+ "and if its tracks doesn't have the track file, attepmts to download it from the provided service. " //
+	+ "Keep in mind that downloading the tracks can violate the copyright policies or laws.", //
+	subcommands =  HelpCommand.class )
 public class ScanAndDownloadCommand implements Runnable {
 
 	private final JMOPSourcery sourcery;
@@ -26,19 +31,24 @@ public class ScanAndDownloadCommand implements Runnable {
 		this.sourcery = sourcery;
 	}
 
-	@Option(names = { "--service", "-s" }, required = true)
+	@Option(names = { "--service", "-s" }, required = true, //
+		description = "The remote service to use for the download.")
 	private Service service;
 
-	@Option(names = { "--musicbase", "-m", "-mb" }, required = false)
+	@Option(names = { "--musicbase", "-m", "-mb" }, required = false, //
+		description = "Check and download all the missing tracks in the whole musicbase.")
 	private boolean wholeMusicbase;
 
-	@Option(names = { "--bundle", "-b" }, required = false)
+	@Option(names = { "--bundle", "-b" }, required = false, //
+		description = "Check and download all the missing tracks in the specified bundle.")
 	private Bundle bundle;
 
-	@Option(names = { "--playlist", "-p" }, required = false)
+	@Option(names = { "--playlist", "-p" }, required = false, //
+		description = "Check and download all the missing tracks in the specified playlist.")
 	private Playlist playlist;
 
-	@Option(names = { "--track", "-t" }, required = false)
+	@Option(names = { "--track", "-t" }, required = false, //
+		description = "Check and download provided track.")
 	private Track track;
 
 	@Override

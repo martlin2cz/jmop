@@ -12,9 +12,12 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.sourcery.fascade.JMOPLocal;
 import cz.martlin.jmop.sourcery.picocli.misc.JMOPSourceryProvider;
+import cz.martlin.jmop.sourcery.picocli.misc.SourceryPicocliUtilities;
+import cz.martlin.jmop.sourcery.picocli.mixins.CreateOrAddToPlaylistGroup;
 import cz.martlin.jmop.sourcery.picocli.mixins.CreateOrUseBundleGroup;
 import picocli.CommandLine.ArgGroup;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
@@ -23,7 +26,9 @@ import picocli.CommandLine.Parameters;
  * @author martin
  *
  */
-@Command(name = "import")
+@Command(name = "import", //
+	description = "Imports the tracks from the specified files and foldres into the musicbase bundle.", //
+	subcommands =  HelpCommand.class )
 public class ImportFromDirectoryOrFileCommand implements Runnable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RemoteAddCommand.class);
@@ -31,15 +36,22 @@ public class ImportFromDirectoryOrFileCommand implements Runnable {
 	@ArgGroup(multiplicity = "1")
 	private CreateOrUseBundleGroup bundleArgs;
 	
-	@Option(names = { "--recursive", "-r" }, required = false)
+	@Option(names = { "--recursive", "-r" }, required = false, //
+		description = "If direcrtory, walk recursivelly into?")
 	private boolean recursive = false;
 
-	@Option(names = { "--create-file", "-f" },
-			description = "Whether/How to create track file, one of: ${COMPLETION-CANDIDATES}")
+	@Option(names = { "--create-file", "-f" }, //
+		description = "Whether/How to create track file, one of: ${COMPLETION-CANDIDATES}")
 	private TrackFileCreationWay createFiles = TrackFileCreationWay.JUST_SET;
+	
 
-	@Parameters(description = "The files or directories to scan for the tracks", arity = "1..*")
+	@ArgGroup(multiplicity = "0..*")
+	private List<CreateOrAddToPlaylistGroup> playlistsArgs;
+
+	@Parameters(arity = "1..*", //
+		description = "The files or directories to scan for the tracks.")
 	private List<File> dirsOrFiles;
+
 
 	@Override
 	public void run() {
@@ -51,7 +63,7 @@ public class ImportFromDirectoryOrFileCommand implements Runnable {
 		List<Track> tracks = local.importFromDirsOrFiles(dirsOrFiles, bundle, recursive, createFiles);
 
 		LOGGER.debug("Imported tracks {}", tracks);
-//		playlistThem(bundle, tracks);
+		SourceryPicocliUtilities.playlistThem(bundle, tracks, playlistsArgs);
 	}
 
 	private void validateExistence(List<File> dirsOrFiles) {
