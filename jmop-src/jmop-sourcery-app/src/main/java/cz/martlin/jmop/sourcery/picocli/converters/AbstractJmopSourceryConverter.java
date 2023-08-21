@@ -1,6 +1,5 @@
 package cz.martlin.jmop.sourcery.picocli.converters;
 
-import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import picocli.CommandLine.ITypeConverter;
 
 /**
@@ -12,11 +11,8 @@ import picocli.CommandLine.ITypeConverter;
  */
 public abstract class AbstractJmopSourceryConverter<T> implements ITypeConverter<T> {
 
-	protected final JMOPSourcery jmop;
-
-	public AbstractJmopSourceryConverter(JMOPSourcery jmop) {
+	public AbstractJmopSourceryConverter() {
 		super();
-		this.jmop = jmop;
 	}
 
 }

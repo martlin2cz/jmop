@@ -20,9 +20,13 @@
 	            <DefaultRolloverStrategy max="10"/>
 	        </RollingFile>
 	</Appenders>
+
 	<Loggers>
 		<Logger name="cz.martlin.jmop.sourcery.engine.NewTrackAdder" level="DEBUG" />
 		<Logger name="cz.martlin.jmop.sourcery.engine.TrackFileDownloader" level="DEBUG" />
+
+		<Logger name="cz.martlin.jmop.sourcery.picocli" level="DEBUG" />
+
 	
 		<Root level="WARN">
 			<AppenderRef ref="Console" />

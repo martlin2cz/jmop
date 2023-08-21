@@ -2,6 +2,7 @@ package cz.martlin.jmop.sourcery.picocli.converters;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
+import cz.martlin.jmop.sourcery.picocli.misc.JMOPSourceryProvider;
 import picocli.CommandLine;
 
 /**
@@ -13,12 +14,14 @@ import picocli.CommandLine;
  */
 public class BundleConverter extends AbstractJmopSourceryConverter<Bundle> {
 
-	public BundleConverter(JMOPSourcery jmop) {
-		super(jmop);
+	public BundleConverter() {
+		super();
 	}
 
 	@Override
 	public Bundle convert(String value) throws Exception {
+		JMOPSourcery jmop = JMOPSourceryProvider.get().getSourcery();
+		
 		Bundle bundle = jmop.musicbase().bundleOfName(value);
 		if (bundle == null) {
 			throw new CommandLine.TypeConversionException("No such bundle: " + value);

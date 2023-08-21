@@ -69,7 +69,12 @@ public class TrackFileDownloader {
 	private String obtainURL(Track track) throws JMOPSourceryException {
 		String title = track.getTitle();
 
-		LOG.debug("Searching track to pick the remote URL {}", track.getTitle());
+		if (track.getSource() != null) {
+			LOG.debug("Using track {} existing source url: {}", title, track.getSource());
+			return track.getSource().toASCIIString();
+		}
+		
+		LOG.debug("Searching track {} to pick the remote URL", title);
 		List<TrackData> searchedTracks = querier.search(title);
 
 		TrackData searchedTrack = searchedTracks.get(0);
@@ -77,7 +82,7 @@ public class TrackFileDownloader {
 		URI trackUri = searchedTrack.getURI();
 		String urlStr = trackUri.toASCIIString();
 		
-		LOG.debug("The track {}'s corresponding URL is {}", track.getTitle(), urlStr);
+		LOG.debug("The track {}'s corresponding URL is {}", title, urlStr);
 		return urlStr;
 	}
 
