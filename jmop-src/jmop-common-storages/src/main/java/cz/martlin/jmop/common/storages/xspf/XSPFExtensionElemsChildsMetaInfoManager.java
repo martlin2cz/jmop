@@ -11,8 +11,8 @@ import cz.martlin.xspf.playlist.base.XSPFCommon;
 import cz.martlin.xspf.playlist.collections.XSPFExtensions;
 import cz.martlin.xspf.playlist.elements.XSPFExtension;
 import cz.martlin.xspf.util.XMLDocumentUtility;
-import cz.martlin.xspf.util.XMLDocumentUtilityHelper.TextToValueMapper;
-import cz.martlin.xspf.util.XMLDocumentUtilityHelper.ValueToTextMapper;
+import cz.martlin.xspf.util.XMLDocumentUtilityHelper.NullableTextToValueMapper;
+import cz.martlin.xspf.util.XMLDocumentUtilityHelper.NullableValueToTextMapper;
 import cz.martlin.xspf.util.XSPFException;
 import cz.martlin.xspf.util.XSPFRuntimeException;
 
@@ -37,7 +37,7 @@ public class XSPFExtensionElemsChildsMetaInfoManager extends ValueToAndFromStrin
 
 	@Override
 	protected <T> void setMetaValue(XSPFCommon xelement, MetaKind kind, String metaName, T value,
-			ValueToTextMapper<T> mapper) throws JMOPPersistenceException {
+			NullableValueToTextMapper<T> mapper) throws JMOPPersistenceException {
 		try {
 			XSPFExtension extension = getOrCreateJMOPExtension(xelement);
 			Element extensionElem = extension.getElement();
@@ -54,7 +54,7 @@ public class XSPFExtensionElemsChildsMetaInfoManager extends ValueToAndFromStrin
 	}
 
 	@Override
-	public <T> T getMetaValue(XSPFCommon xelement, MetaKind kind, String metaName, TextToValueMapper<T> mapper)
+	public <T> T getMetaValue(XSPFCommon xelement, MetaKind kind, String metaName, NullableTextToValueMapper<T> mapper)
 			throws JMOPPersistenceException {
 		try {
 			XSPFExtension extension = getOrCreateJMOPExtension(xelement);

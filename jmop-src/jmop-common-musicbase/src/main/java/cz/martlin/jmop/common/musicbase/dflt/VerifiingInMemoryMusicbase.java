@@ -48,11 +48,6 @@ public class VerifiingInMemoryMusicbase implements BaseInMemoryMusicbase {
 		delegee.addTrack(track);
 	}
 
-	@Override
-	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile) {
-		mustExist(track, null, null);
-		delegee.specifyTrackFile(track, trackFileHow, trackSourceFile);
-	}
 
 	@Override public void renameBundle(Bundle bundle, String newName) {
 		mustExist(bundle, null);

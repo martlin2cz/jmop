@@ -37,7 +37,5 @@ public interface BaseMusicbaseFilesystemer {
 
 	void removeTrack(Track track) throws JMOPPersistenceException;
 
-	void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile) throws JMOPPersistenceException;
-
 
 }

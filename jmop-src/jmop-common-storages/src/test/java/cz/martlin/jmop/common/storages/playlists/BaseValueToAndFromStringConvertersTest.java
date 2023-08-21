@@ -29,44 +29,44 @@ abstract class BaseValueToAndFromStringConvertersTest {
 	}
 
 	@Test
-	void testTrackIndex() {
+	void testTrackIndex() throws Exception {
 		TrackIndex input = TrackIndex.ofHuman(42);
-		String text = converters.trackIndexToText(input);
+		String text = converters.trackIndexToTextMapper().valueOrNullToText(input);
 
-		TrackIndex output = converters.textToTrackIndex(text);
+		TrackIndex output = converters.textToTrackIndexMapper().textOrNullToValue(text);
 		System.out.println(input + " -> " + text + " -> " + output);
 		
 		assertEquals(input, output);
 	}
 	
 	@Test
-	void testNullTrackIndex() {
+	void testNullTrackIndex() throws Exception {
 		TrackIndex input = null;
-		String text = converters.trackIndexToText(input);
+		String text = converters.trackIndexToTextMapper().valueOrNullToText(input);
 
-		TrackIndex output = converters.textToTrackIndex(text);
+		TrackIndex output = converters.textToTrackIndexMapper().textOrNullToValue(text);
 		System.out.println(input + " -> " + text + " -> " + output);
 		
 		assertEquals(input, output);
 	}
 
 	@Test
-	void testDate() {
+	void testDate() throws Exception {
 		LocalDateTime input = LocalDateTime.now().withNano(0);
-		String text = converters.dateToText(input);
+		String text = converters.dateToTextMapper().valueOrNullToText(input);
 
-		LocalDateTime output = converters.textToDate(text);
+		LocalDateTime output = converters.textToDateMapper().textOrNullToValue(text);
 		System.out.println(input + " -> " + text + " -> " + output);
 		
 		assertEquals(input, output);
 	}
 	
 	@Test
-	void testNullDate() {
+	void testNullDate() throws Exception {
 		LocalDateTime input = null;
-		String text = converters.dateToText(input);
+		String text = converters.dateToTextMapper().valueOrNullToText(input);
 
-		LocalDateTime output = converters.textToDate(text);
+		LocalDateTime output = converters.textToDateMapper().textOrNullToValue(text);
 		System.out.println(input + " -> " + text + " -> " + output);
 		
 		assertEquals(input, output);
@@ -74,33 +74,33 @@ abstract class BaseValueToAndFromStringConvertersTest {
 	
 	
 	@Test
-	void testDuration() {
+	void testDuration() throws Exception {
 		Duration input = DurationUtilities.createDuration(1, 59, 42);
-		String text = converters.durationToText(input);
+		String text = converters.durationToTextMapper().valueOrNullToText(input);
 
-		Duration output = converters.textToDuration(text);
+		Duration output = converters.textToDurationMapper().textOrNullToValue(text);
 		System.out.println(input + " -> " + text + " -> " + output);
 		
 		assertEquals(input, output);
 	}
 	
 	@Test
-	void testNullDuration() {
+	void testNullDuration() throws Exception {
 		Duration input = null;
-		String text = converters.durationToText(input);
+		String text = converters.durationToTextMapper().valueOrNullToText(input);
 
-		Duration output = converters.textToDuration(text);
+		Duration output = converters.textToDurationMapper().textOrNullToValue(text);
 		System.out.println(input + " -> " + text + " -> " + output);
 		
 		assertEquals(input, output);
 	}
 	
 	@Test
-	void testNumber() {
+	void testNumber() throws Exception {
 		int input = 42;
-		String text = converters.numberToText(input);
+		String text = converters.numberToTextMapper().valueOrNullToText(input);
 
-		int output = converters.textToNumber(text);
+		int output = converters.textToNumberMapper().textOrNullToValue(text);
 		System.out.println(input + " -> " + text + " -> " + output);
 		
 		assertEquals(input, output);

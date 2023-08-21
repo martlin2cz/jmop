@@ -16,7 +16,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class FormatingValueToAndFromStringConverters implements BaseValueToAndFromStringConverters {
+public class FormatingValueToAndFromStringConverters extends AbstractNullableValueToAndFromStringConverters {
 
 	private static final String NONE_STR = "none";
 	private static final String NEVER_STR = "never";
@@ -24,7 +24,7 @@ public class FormatingValueToAndFromStringConverters implements BaseValueToAndFr
 			DateTimeFormatter.ofPattern("dd.MM.yyyy H.mm.ss");
 
 	@Override
-	public String trackIndexToText(TrackIndex value) {
+	public String trackIndexOrNullToText(TrackIndex value) {
 		if (value == null) {
 			return NONE_STR;
 		}
@@ -32,7 +32,7 @@ public class FormatingValueToAndFromStringConverters implements BaseValueToAndFr
 	}
 
 	@Override
-	public String dateToText(LocalDateTime value) {
+	public String dateOrNullToText(LocalDateTime value) {
 		if (value == null) {
 			return NEVER_STR;
 		}
@@ -40,12 +40,15 @@ public class FormatingValueToAndFromStringConverters implements BaseValueToAndFr
 	}
 
 	@Override
-	public String numberToText(int value) {
+	public String numberOrNullToText(Integer value) {
+		if (value == null) {
+			return NONE_STR;
+		}
 		return Integer.toString(value);
 	}
 
 	@Override
-	public String durationToText(Duration duration) {
+	public String durationOrNullToText(Duration duration) {
 		if (duration == null) {
 			return NONE_STR;
 		}
@@ -53,7 +56,7 @@ public class FormatingValueToAndFromStringConverters implements BaseValueToAndFr
 	}
 
 	@Override
-	public TrackIndex textToTrackIndex(String text) {
+	public TrackIndex textOrNullToTrackIndex(String text) {
 		if (text.equals(NONE_STR)) {
 			return null;
 		}
@@ -61,7 +64,7 @@ public class FormatingValueToAndFromStringConverters implements BaseValueToAndFr
 	}
 
 	@Override
-	public LocalDateTime textToDate(String text) {
+	public LocalDateTime textOrNullToDate(String text) {
 		if (text.equals(NEVER_STR)) {
 			return null;
 		}
@@ -70,7 +73,7 @@ public class FormatingValueToAndFromStringConverters implements BaseValueToAndFr
 	}
 
 	@Override
-	public int textToNumber(String text) {
+	public Integer textOrNullToNumber(String text) {
 		if (text.equals(NONE_STR)) {
 			return 0;
 		}
@@ -78,7 +81,7 @@ public class FormatingValueToAndFromStringConverters implements BaseValueToAndFr
 	}
 
 	@Override
-	public Duration textToDuration(String text) {
+	public Duration textOrNullToDuration(String text) {
 		if (text.equals(NONE_STR)) {
 			return null;
 		}

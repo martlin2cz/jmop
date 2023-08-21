@@ -34,8 +34,6 @@ public interface BaseMusicbaseModifing {
 	///////////////////////////////////////////////////////////////////////////
 	
 	public Track createNewTrack(Bundle bundle, TrackData data, TrackFileCreationWay trackFileHow, File trackSourceFile) ;
-	
-	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile) ;
 
 	public void renameTrack(Track track, String newTitle) ;
 

@@ -36,7 +36,7 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 	public LocalDateTime getDateMetaValue(PT xcontext, MetaKind kind, String name) {
 		try {
 			LocalDateTime value = delegee.getDateMetaValue(xcontext, kind, name);
-			Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
+			//Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
 			return value;
 		} catch (Exception e) {
 			report(e, xcontext, kind, name, "get", "date");
@@ -48,7 +48,7 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 	public int getCountMetaValue(PT xcontext, MetaKind kind, String name) {
 		try {
 			int value = delegee.getCountMetaValue(xcontext, kind, name);
-			Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
+			//Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
 			return value;
 		} catch (Exception e) {
 			report(e, xcontext, kind, name, "get", "count");
@@ -60,7 +60,7 @@ public class FailsavePlaylistMetaInfoManager<PT> implements BasePlaylistMetaInfo
 	public Duration getDurationMetaValue(PT xcontext, MetaKind kind, String name) {
 		try {
 			Duration value = delegee.getDurationMetaValue(xcontext, kind, name);
-			Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
+			//Objects.requireNonNull(value, "Meta value " + name + " of " + kind + " not found");
 			return value;
 		} catch (Exception e) {
 			report(e, xcontext, kind, name, "get", "duration");

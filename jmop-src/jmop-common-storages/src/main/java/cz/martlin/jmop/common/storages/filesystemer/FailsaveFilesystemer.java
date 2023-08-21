@@ -109,15 +109,5 @@ public class FailsaveFilesystemer implements BaseMusicbaseFilesystemer {
 			reporter.report("Could not remove track in the filesystem", e);
 		}
 	}
-	
-	@Override
-	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile)
-			throws JMOPPersistenceException {
-		try {
-			delegee.specifyTrackFile(track, trackFileHow, trackSourceFile);
-		} catch (JMOPPersistenceException e) {
-			reporter.report("Could not specify the track file", e);
-		}
-	}
 
 }

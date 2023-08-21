@@ -91,7 +91,6 @@ public class NewTrackAdder {
 			File file = File.createTempFile("jmop-" + searchedTrack.getTitle() + "-", "." + extension);
 			Files.delete(file.toPath());
 			
-			LOG.debug("Created temporary download file {}", file);
 			return file;
 		} catch (IOException e) {
 			throw new JMOPSourceryException("Could not create temporary download file", e);

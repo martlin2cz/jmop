@@ -159,12 +159,6 @@ public class InMemoryStorage implements BaseMusicbaseStorage {
 		// okay
 	}
 
-	@Override
-	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile)
-			throws JMOPRuntimeException {
-		
-		track.setFile(trackSourceFile);
-	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 

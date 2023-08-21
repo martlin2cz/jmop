@@ -3,31 +3,41 @@ package cz.martlin.jmop.common.storages.playlists;
 import java.time.LocalDateTime;
 
 import cz.martlin.jmop.common.data.misc.TrackIndex;
+import cz.martlin.xspf.util.XMLDocumentUtilityHelper.NullableTextToValueMapper;
+import cz.martlin.xspf.util.XMLDocumentUtilityHelper.NullableValueToTextMapper;
 import javafx.util.Duration;
 
 /**
- * An set of methods performing conversion to and from of the various
- * in-jmop-used types, like the TrackIndex or Duration.
+ * An set of mappers performing conversion to and from of the various
+ * in-jmop-used types (like the TrackIndex or Duration) to text.
+ * 
+ * Use {@link AbstractNonNullValueToAndFromStringConverters} or
+ * {@link AbstractNullableValueToAndFromStringConverters}
  * 
  * @author martin
  *
  */
 public interface BaseValueToAndFromStringConverters {
 
-	String trackIndexToText(TrackIndex value);
+	/////////////////////////////////////////////////////////////////
+	
+	NullableValueToTextMapper<TrackIndex> trackIndexToTextMapper();
 
-	String dateToText(LocalDateTime value);
+	NullableValueToTextMapper<LocalDateTime> dateToTextMapper();
 
-	String numberToText(int value);
+	NullableValueToTextMapper<Integer> numberToTextMapper();
 
-	String durationToText(Duration value);
+	NullableValueToTextMapper<Duration> durationToTextMapper();
 
-	TrackIndex textToTrackIndex(String text);
+	/////////////////////////////////////////////////////////////////
+	
+	NullableTextToValueMapper<TrackIndex> textToTrackIndexMapper();
 
-	LocalDateTime textToDate(String text);
+	NullableTextToValueMapper<LocalDateTime> textToDateMapper();
 
-	int textToNumber(String text);
+	NullableTextToValueMapper<Integer> textToNumberMapper();
 
-	Duration textToDuration(String text);
-
+	NullableTextToValueMapper<Duration> textToDurationMapper();
+	
+	/////////////////////////////////////////////////////////////////
 }

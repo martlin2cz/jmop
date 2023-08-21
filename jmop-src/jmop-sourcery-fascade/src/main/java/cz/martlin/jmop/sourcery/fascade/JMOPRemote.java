@@ -9,17 +9,14 @@ import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.core.sources.remote.BaseRemoteSource;
 import cz.martlin.jmop.core.sources.remote.JMOPSourceryException;
 import cz.martlin.jmop.sourcery.engine.NewTrackAdder;
-import cz.martlin.jmop.sourcery.engine.TrackFileDownloader;
 
 public class JMOPRemote {
 	
 	private final NewTrackAdder adder;
 	//TODO all the remaining remote-based actions performers
-	private final TrackFileDownloader downloader;
 	
 	public JMOPRemote(BaseRemoteSource remote, BaseMusicbase musicbase) {
 		this.adder = new NewTrackAdder(remote, musicbase);
-		this.downloader = new TrackFileDownloader(remote, musicbase);
 	}
 
 	public Track add(Bundle bundle, String query, boolean download) throws JMOPSourceryException {
@@ -47,14 +44,6 @@ public class JMOPRemote {
 		}
 		
 		return result;
-	}
-
-	public void download(Track track) throws JMOPSourceryException {
-		downloader.downloadAndSetFile(track);
-	}
-
-	public void downloadToFile(Track track) throws JMOPSourceryException {
-		downloader.downloadToFile(track);
 	}
 	
 	//TODO all the remaining remote-based actions

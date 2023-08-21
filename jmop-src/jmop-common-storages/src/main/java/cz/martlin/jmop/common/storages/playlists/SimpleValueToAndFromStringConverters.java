@@ -13,7 +13,7 @@ import javafx.util.Duration;
  * @author martin
  *
  */
-public class SimpleValueToAndFromStringConverters implements BaseValueToAndFromStringConverters {
+public class SimpleValueToAndFromStringConverters extends AbstractNonNullValueToAndFromStringConverters {
 
 	@Override
 	public String trackIndexToText(TrackIndex value) {

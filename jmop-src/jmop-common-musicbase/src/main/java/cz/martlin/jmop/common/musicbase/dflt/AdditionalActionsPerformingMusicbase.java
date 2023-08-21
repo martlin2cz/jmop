@@ -168,11 +168,6 @@ public class AdditionalActionsPerformingMusicbase implements BaseInMemoryMusicba
 	public void trackUpdated(Track track) {
 		delegee.trackUpdated(track);
 	}
-	
-	@Override
-	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile) {
-		delegee.specifyTrackFile(track, trackFileHow, trackSourceFile);
-	}
 	///////////////////////////////////////////////////////////////////////////
 
 	private Set<Playlist> playlistsContaining(Track track) {

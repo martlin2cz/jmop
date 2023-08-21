@@ -15,19 +15,19 @@ public class ValueToAndFromStringConvertersTest {
 
 		@Disabled("Simple converters does not support null values")
 		@Override
-		void testNullTrackIndex() {
+		void testNullTrackIndex() throws Exception {
 			super.testNullTrackIndex();
 		}
 
 		@Disabled("Simple converters does not support null values")
 		@Override
-		void testNullDate() {
+		void testNullDate() throws Exception {
 			super.testNullDate();
 		}
 
 		@Disabled("Simple converters does not support null values")
 		@Override
-		void testNullDuration() {
+		void testNullDuration() throws Exception {
 			super.testNullDuration();
 		}
 	}
