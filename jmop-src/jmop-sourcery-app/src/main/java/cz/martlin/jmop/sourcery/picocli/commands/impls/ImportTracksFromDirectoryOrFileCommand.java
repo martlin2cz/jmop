@@ -26,10 +26,11 @@ import picocli.CommandLine.Parameters;
  * @author martin
  *
  */
-@Command(name = "from-dir-or-files", aliases = { "from-dir", "from-files" }, //
-	description = "Imports the tracks from the specified files and foldres into the musicbase bundle.", //
+//FIXME having way too long aliases fails in picocli, see picocli #886
+@Command(name = "import-tracks-from-dirs", aliases = { "import-tracks-from-files",/* "import-tracks-from-directories",*/ "itfd", "itff" }, //
+	description = "Imports the tracks from the specified files and folders into the musicbase bundle.", //
 	subcommands =  HelpCommand.class )
-public class ImportFromDirectoryOrFileCommand implements Runnable {
+public class ImportTracksFromDirectoryOrFileCommand implements Runnable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RemoteAddCommand.class);
 

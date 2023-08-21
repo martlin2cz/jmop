@@ -25,8 +25,8 @@ import picocli.CommandLine.Parameters;
  * @author martin
  *
  */
-@Command(name = "from-file", aliases = { "from-playlist" }, //
-		description = "Imports the tracks from the specified playlist file into the musicbase bundle.", //
+@Command(name = "import-playlist-from-file", aliases = { "ipfp", "ipff" }, //
+		description = "Imports the playlist from the specified playlist file into the musicbase bundle.", //
 		subcommands = HelpCommand.class)
 public class ImportPlaylistFromPlaylistFileCommand implements Runnable {
 

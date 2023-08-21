@@ -22,7 +22,7 @@ public class YoutubeRemoteSource extends AbstractRemoteSource {
 	public static YoutubeRemoteSource create(BaseRemotesConfiguration config, BaseProgressListener listener) {
 
 		BaseRemoteSourceQuerier querier = new YoutubeQuerier(config);
-		BaseDownloader downloader = new TestingDownloader(TrackFileFormat.MP3);//new YoutubeDLDownloader(listener);	
+		BaseDownloader downloader = new YoutubeDLDownloader(listener); //new TestingDownloader(TrackFileFormat.MP3);	
 		BaseConverter converter = new FFMPEGConverter(listener);
 		BaseRemoteStatusHandler statuser = new YoutubeStatuser(querier, downloader, converter);
 

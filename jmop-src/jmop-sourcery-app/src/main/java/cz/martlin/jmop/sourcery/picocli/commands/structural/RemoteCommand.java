@@ -12,6 +12,7 @@ import picocli.CommandLine.HelpCommand;
 		ScanAndDownloadCommand.class, //
 		HelpCommand.class //
 	})
+@Deprecated
 public class RemoteCommand {
 
 }

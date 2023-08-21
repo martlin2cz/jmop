@@ -6,7 +6,7 @@
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
 	<packaging>pom</packaging>
-	<version>3.1.14</version>
+	<version>3.1.15</version>
 
 	<name>jmop</name>
 	<url>https://github.com/martlin2cz/jmop</url>
@@ -184,7 +184,8 @@
 		<module>jmop-common-storages</module>
 		<module>jmop-common-musicbase</module>
 		<module>jmop-common-testing</module>
-		
+		<module>jmop-common-fascade</module>
+
 		<module>jmop-player-base</module>
 		<module>jmop-player-players</module>
 		<module>jmop-player-engine </module>

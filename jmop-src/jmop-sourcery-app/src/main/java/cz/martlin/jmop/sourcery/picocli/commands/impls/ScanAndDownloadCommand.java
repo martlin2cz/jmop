@@ -14,13 +14,14 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.sourcery.fascade.JMOPRemote;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
+import cz.martlin.jmop.sourcery.picocli.misc.JMOPSourceryProvider;
 import cz.martlin.jmop.sourcery.picocli.misc.Service;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 
-@Command(name = "download", //
+@Command(name = "download", aliases = { "donwload-track-files", "d" }, //
 	description = "Scans the whole musicbase, choosen bundle, playlist or just one single track, " //
 	+ "and if its tracks doesn't have the track file, attepmts to download it from the provided service. " //
 	+ "Keep in mind that downloading the tracks can violate the copyright policies or laws.", //
@@ -29,11 +30,8 @@ public class ScanAndDownloadCommand implements Runnable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ScanAndDownloadCommand.class);
 
-	private final JMOPSourcery sourcery;
-
-	public ScanAndDownloadCommand(JMOPSourcery sourcery) {
+	public ScanAndDownloadCommand() {
 		super();
-		this.sourcery = sourcery;
 	}
 
 	@Option(names = { "--service", "-s" }, required = true, //
@@ -69,6 +67,7 @@ public class ScanAndDownloadCommand implements Runnable {
 	}
 
 	private Set<Track> listTracksToProcess() {
+		JMOPSourcery sourcery = JMOPSourceryProvider.get().getSourcery();
 		if (wholeMusicbase) {
 			return sourcery.musicbase().tracks(null);
 		}
@@ -95,13 +94,13 @@ public class ScanAndDownloadCommand implements Runnable {
 				youtube.downloadToFile(track);
 			}
 		} catch (JMOPSourceryException e) {
-			throw new JMOPRuntimeException("Cannot download track", e);
+//			throw new JMOPRuntimeException("Cannot download track", e);
+			LOGGER.error("Cannot download track {} (from {})", track.getTitle(), track.getSource());
 		}
 	}
 
 	private JMOPRemote pickRemote() {
-		// TODO check service
-		return sourcery.youtube();
+		return service.pickRemote();
 	}
 
 }

@@ -19,7 +19,7 @@ import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "add", aliases = { "search-and-add" },//
+@Command(name = "search-tracks", aliases = { "search-and-add-tracks", "s", "st" },//
 	description = "Adds tracks into the musicbase by searching them via the specified music service.", //
 	subcommands =  HelpCommand.class )
 public class RemoteAddCommand implements Runnable {

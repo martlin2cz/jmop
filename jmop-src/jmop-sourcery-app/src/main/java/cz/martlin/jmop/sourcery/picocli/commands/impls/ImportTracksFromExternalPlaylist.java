@@ -27,7 +27,7 @@ import picocli.CommandLine.Parameters;
  * @author martin
  *
  */
-@Command(name = "from-playlist", aliases = { "from-file" }, //
+@Command(name = "import-tracks-from-playlist", aliases = { "itfp" }, //
 		description = "Imports the tracks from the specified external playlist file.", //
 		subcommands = HelpCommand.class)
 public class ImportTracksFromExternalPlaylist implements Runnable {

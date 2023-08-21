@@ -9,6 +9,7 @@ import picocli.CommandLine.HelpCommand;
 		ImportCommand.class, //
 		HelpCommand.class
 	})
+@Deprecated
 public class LocalCommand{
 
 	public LocalCommand() {

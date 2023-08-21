@@ -1,6 +1,6 @@
 package cz.martlin.jmop.sourcery.picocli.commands.structural;
 
-import cz.martlin.jmop.sourcery.picocli.commands.impls.ImportFromDirectoryOrFileCommand;
+import cz.martlin.jmop.sourcery.picocli.commands.impls.ImportTracksFromDirectoryOrFileCommand;
 import cz.martlin.jmop.sourcery.picocli.commands.impls.ImportPlaylistFromPlaylistFileCommand;
 import cz.martlin.jmop.sourcery.picocli.commands.impls.ImportTracksFromExternalPlaylist;
 import picocli.CommandLine.Command;
@@ -18,6 +18,7 @@ import picocli.CommandLine.HelpCommand;
 				ImportCommand.ImportTracks.class, //
 				ImportCommand.ImportPlaylist.class, //
 				HelpCommand.class })
+@Deprecated
 public class ImportCommand {
 
 	/**
@@ -30,9 +31,10 @@ public class ImportCommand {
 	@Command(name = "tracks", //
 			description = "Imports ", //
 			subcommands = { //
-					ImportFromDirectoryOrFileCommand.class, //
+					ImportTracksFromDirectoryOrFileCommand.class, //
 					ImportTracksFromExternalPlaylist.class, //
 					HelpCommand.class })
+	@Deprecated
 	public static class ImportTracks {
 
 	}
@@ -49,7 +51,7 @@ public class ImportCommand {
 			subcommands = { //
 					ImportPlaylistFromPlaylistFileCommand.class, //
 					HelpCommand.class })
-
+	@Deprecated
 	public static class ImportPlaylist {
 
 	}

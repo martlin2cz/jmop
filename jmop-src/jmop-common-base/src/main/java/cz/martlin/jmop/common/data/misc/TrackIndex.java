@@ -1,8 +1,10 @@
 package cz.martlin.jmop.common.data.misc;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.slf4j.Logger;
@@ -145,21 +147,27 @@ public class TrackIndex implements Comparable<TrackIndex> {
 	/////////////////////////////////////////////////////////////////
 
 	public static <E> List<E> list(Map<TrackIndex, E> map) {
-		List<E> list = new ArrayList<>(map.size());
+		TreeMap<TrackIndex, E> ordered = new TreeMap<>(map);
 
-		for (int i = 0; i < map.size(); i++) {
-			TrackIndex index = TrackIndex.ofIndex(i);
-			E item = map.get(index);
-			
-			if (item == null) {
-				LOGGER.warn("There is no item with index {}", index);
-				continue;
+		// just verify there are no missing indexes
+		Set<TrackIndex> orderedKeys = ordered.keySet();
+		orderedKeys.stream().sequential().reduce(null, (previous, current) -> {
+			// if not yet any previous to compare to, terminate immediatelly
+			if (previous == null) {
+				return current;
 			}
 			
-			list.add(item);
-		}
+			// if current is not exactly following the previous, warn
+			if (previous.index + 1 != current.index) {
+				LOGGER.warn("There is/are no item(s) between indexes {} and {}", previous, current);
+			}
+			
+			// but return the current anyway
+			return current;
+		});
 
-		return list;
+		Collection<E> orderedValues = ordered.values();
+		return new ArrayList<>(orderedValues);
 	}
 
 	public static <E> Map<TrackIndex, E> map(List<E> list) {

@@ -1,12 +1,15 @@
 package cz.martlin.jmop.common.data.misc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 
 class TrackIndexTest {
 
@@ -47,7 +50,7 @@ class TrackIndexTest {
 		Map<TrackIndex, String> map = Map.of(TrackIndex.ofIndex(0), "lorem", TrackIndex.ofIndex(2), "ipsum");
 		System.out.println(map);
 		
-		assertThrows(NullPointerException.class, () -> TrackIndex.list(map));
+		assertEquals(Arrays.asList("lorem", "ipsum"), TrackIndex.list(map));
 	}
 	
 }
