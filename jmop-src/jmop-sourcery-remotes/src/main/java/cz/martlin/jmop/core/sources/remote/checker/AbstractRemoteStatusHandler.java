@@ -13,8 +13,6 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.testing.resources.TestingTrackFilesCreator;
 import cz.martlin.jmop.core.misc.BaseUIInterractor;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.ops.BaseLongOperation;
-import cz.martlin.jmop.core.misc.ops.BaseOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.sourcery.remote.BaseConverter;
@@ -24,10 +22,14 @@ import cz.martlin.jmop.sourcery.remote.BaseRemoteStatusHandler;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
+/**
+ * The abstract status checker which just tries to execute something, and checking whether it fails.
+ * 
+ * @author martin
+ *
+ */
 public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHandler {
 
-	private static final String QUERIER_SAMPLE_QUERY = "sample";
-	private static final String DOWNLOADER_SAMPLE_IDENTIFIER = null;
 	private final BaseRemoteSourceQuerier querier;
 	private final BaseDownloader downloader;
 	private final BaseConverter converter;
@@ -125,25 +127,6 @@ public abstract class AbstractRemoteStatusHandler implements BaseRemoteStatusHan
 	
 	///////////////////////////////////////////////////////////////////////////
 
-	@Deprecated
-	private static <InT, OutT> boolean runOperation(BaseUIInterractor interactor, BaseOperation<InT, OutT> operation) {
-
-		if (operation instanceof BaseLongOperation) {
-			boolean agreed = interactor.confirm("This operation may take a while, continue?");
-			if (!agreed) {
-				return false;
-			}
-		}
-
-		BaseProgressListener listener = new NoopProgressListener();
-		try {
-			OutT result = operation.run(listener);
-			return result != null;
-		} catch (Exception e) {
-			interactor.displayError(e.getMessage());
-			return false;
-		}
-	}
 
 	public static class NoopProgressListener implements BaseProgressListener {
 

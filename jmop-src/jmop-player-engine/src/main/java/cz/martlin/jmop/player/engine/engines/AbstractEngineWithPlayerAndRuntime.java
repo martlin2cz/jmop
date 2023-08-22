@@ -8,9 +8,22 @@ import cz.martlin.jmop.player.players.BasePlayer;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import cz.martlin.jmop.player.players.TrackFinishedListener;
 
+/**
+ * The engine with the player and playlist runtime.
+ * 
+ * @author martin
+ *
+ */
 public abstract class AbstractEngineWithPlayerAndRuntime implements BasePlayerEngine, TrackFinishedListener {
 
+	/**
+	 * The player doing nanana.
+	 */
 	protected final BasePlayer player;
+	
+	/**
+	 * The playlisting thing.
+	 */
 	protected PlaylistRuntime runtime;
 
 	public AbstractEngineWithPlayerAndRuntime(BasePlayer player) {

@@ -4,6 +4,13 @@ import java.util.Random;
 
 import cz.martlin.jmop.common.data.model.Playlist;
 
+/**
+ * The extended playlist modifier.
+ * Adds some extra, little advanced features.
+ * 
+ * @author martin
+ *
+ */
 public class ExtendedPlaylistModifier extends PlaylistModifier {
 
 	private Random random;
@@ -36,6 +43,11 @@ public class ExtendedPlaylistModifier extends PlaylistModifier {
 //		}
 //	}
 	
+	/**
+	 * Shuffles the playlist. Number specifies how much.
+	 * 
+	 * @param amount
+	 */
 	public void shuffle(int amount) {
 		int count = playlist.getTracks().count();
 		

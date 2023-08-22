@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -51,7 +52,8 @@ public class DefaultInMemoryMusicbaseTest {
 		testingPlaylist = musicbase.createNewPlaylist(testingBundle, "testing-playlist");
 
 		testingTrack = musicbase.createNewTrack(testingBundle, td("tt", "testing_track"), TrackFileCreationWay.NO_FILE, null);
-		testingPlaylist.addTrack(testingTrack);
+		
+		new PlaylistModifier(testingPlaylist).append(testingTrack);
 
 	}
 
@@ -114,7 +116,7 @@ public class DefaultInMemoryMusicbaseTest {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private TrackData td(String id, String title) {
-		return new TrackData(id, title, "Desc", DurationUtilities.createDuration(0, 4, 11));
+		return new TrackData(title, "Desc", DurationUtilities.createDuration(0, 4, 11), null, null);
 	}
 
 }

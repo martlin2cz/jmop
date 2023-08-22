@@ -15,6 +15,11 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 
+/**
+ * The list ... command.
+ * @author martin
+ *
+ */
 @Command(name = "list", aliases = { "l" }, //
 	description = "Lists all bundles, playlists and/or tracks.", //
 	subcommands = { //
@@ -29,6 +34,11 @@ public class ListCommand extends AbstractCommand {
 		super(jmop);
 	}
 
+	/**
+	 * The list bundles command.
+	 * @author martin
+	 *
+	 */
 	@Command(name = "bundles", aliases = { "b" }, //
 		description = "Lists all the bundles in the musicbase", //
 		subcommands =  HelpCommand.class )
@@ -44,6 +54,11 @@ public class ListCommand extends AbstractCommand {
 			printBundles(bundles);
 		}
 		
+		/**
+		 * Prints the bundles.
+		 * 
+		 * @param bundles
+		 */
 		private void printBundles(Set<Bundle> bundles) {
 			PrintUtil.print("Bundles:");
 			for (Bundle bundle : bundles) {
@@ -53,6 +68,12 @@ public class ListCommand extends AbstractCommand {
 		}
 	}
 
+	/**
+	 * The list playlists command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "playlists", aliases = { "p" }, //
 		description = "Lists all the playlists in the bundle or in the whole musicbase", //
 		subcommands =  HelpCommand.class )
@@ -72,6 +93,12 @@ public class ListCommand extends AbstractCommand {
 			printPlaylists(bundle, playlists);
 		}
 		
+		/**
+		 * Prints the playlists.
+		 * 
+		 * @param bundle
+		 * @param playlists
+		 */
 		private void printPlaylists(Bundle bundle, Set<Playlist> playlists) {
 			if (bundle != null) {
 			PrintUtil.print("Playlists in", bundle, ":");
@@ -85,6 +112,12 @@ public class ListCommand extends AbstractCommand {
 		}
 	}
 
+	/**
+	 * The list tracks command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "tracks", aliases = { "t" }, //
 		description = "Lists all the tracks in the given bundle or in the whole musicbase", //
 		subcommands =  HelpCommand.class )
@@ -104,6 +137,11 @@ public class ListCommand extends AbstractCommand {
 			printTracks(bundle, tracks);
 		}
 	
+		/**
+		 * Prints the tracks.
+		 * @param bundle
+		 * @param tracks
+		 */
 		private void printTracks(Bundle bundle, Set<Track> tracks) {
 			if (bundle != null) {
 			PrintUtil.print("Tracks in", bundle.getName(), ":");

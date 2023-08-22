@@ -5,22 +5,29 @@ import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.data.model.Tracklist;
+import cz.martlin.jmop.core.misc.TestingPrinter;
 
+/**
+ * The debug printer. Prints to stdout.
+ * 
+ * @author martin
+ * @see TestingPrinter
+ */
 public class MusicbaseDebugPrinter {
 
-	public static void print(BaseMusicbaseLoading musicbase)  {
-		for (Bundle bundle: musicbase.bundles()) {
+	public static void print(BaseMusicbaseLoading musicbase) {
+		for (Bundle bundle : musicbase.bundles()) {
 			print(musicbase, bundle);
 		}
 
 	}
 
-	private static void print(BaseMusicbaseLoading musicbase, Bundle bundle)  {
+	private static void print(BaseMusicbaseLoading musicbase, Bundle bundle) {
 		String bundleName = bundle.getName();
 		System.out.println("Bundle '" + bundleName + "':");
 		print(bundle.getMetadata());
 
-		for (Playlist playlist: musicbase.playlists(bundle)) {
+		for (Playlist playlist : musicbase.playlists(bundle)) {
 			print(playlist);
 		}
 	}

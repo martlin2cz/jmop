@@ -6,8 +6,8 @@ import cz.martlin.jmop.player.players.BasePlayer;
 import javafx.util.Duration;
 
 /**
- * Player engine is just simply the JMOP core of core. It is responsible for
- * both track playing (player) and also for the choosing of track (playlister).
+ * The simple player engine. Just plays by the given player.
+ * No other interactions happening.
  * 
  * @author martin
  *

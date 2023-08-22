@@ -10,16 +10,15 @@ import org.junit.jupiter.api.Test;
 
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
-import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
-import cz.martlin.jmop.common.storages.builders.LocatorsBuilder.BundleDataFile;
-import cz.martlin.jmop.common.storages.builders.MusicdataManipulatorBuilder.PlaylistFileFormat;
-import cz.martlin.jmop.common.storages.builders.StorageBuilder.DirsLayout;
-import cz.martlin.jmop.common.storages.configs.BaseStorageConfiguration;
+import cz.martlin.jmop.common.storages.builder.LocatorsBuilder.BundleDataFile;
+import cz.martlin.jmop.common.storages.builder.MusicdataManipulatorBuilder.PlaylistFileFormat;
+import cz.martlin.jmop.common.storages.builder.StorageBuilder;
+import cz.martlin.jmop.common.storages.builder.StorageBuilder.DirsLayout;
+import cz.martlin.jmop.common.storages.components.BaseStorageConfiguration;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class BuiltStoragesTests {
 	
@@ -36,7 +35,7 @@ public class BuiltStoragesTests {
 				BaseErrorReporter reporter) {
 			
 			StorageBuilder builder = new StorageBuilder();
-			return builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, false, PlaylistFileFormat.XSPF, reporter, root, config, TrackFileFormat.MP3, inmemory);
+			return builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, false, PlaylistFileFormat.XSPF, reporter, root, config, inmemory);
 		}
 		
 		@Override
@@ -76,7 +75,7 @@ public class BuiltStoragesTests {
 				BaseErrorReporter reporter) {
 			
 			StorageBuilder builder = new StorageBuilder();
-			return builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.SIMPLE, false, PlaylistFileFormat.TXT, reporter, root, config, TrackFileFormat.MP3, inmemory);
+			return builder.create(DirsLayout.BUNDLES_DIR, BundleDataFile.SIMPLE, false, PlaylistFileFormat.TXT, reporter, root, config, inmemory);
 		}
 		
 		@Override
@@ -115,7 +114,7 @@ public class BuiltStoragesTests {
 				BaseErrorReporter reporter) {
 			
 			StorageBuilder builder = new StorageBuilder();
-			return builder.create(DirsLayout.ALL_IN_ONE_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, false, PlaylistFileFormat.XSPF, reporter, root, config, TrackFileFormat.MP3, inmemory);
+			return builder.create(DirsLayout.ALL_IN_ONE_DIR, BundleDataFile.ALL_TRACKS_PLAYLIST, false, PlaylistFileFormat.XSPF, reporter, root, config, inmemory);
 		}
 		
 		@Override

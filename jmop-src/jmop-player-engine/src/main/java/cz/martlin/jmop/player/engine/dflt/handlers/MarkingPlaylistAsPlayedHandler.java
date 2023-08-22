@@ -3,7 +3,6 @@ package cz.martlin.jmop.player.engine.dflt.handlers;
 import cz.martlin.jmop.common.data.misc.TemporarySimpleTrackedPlaylist;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.OnPlaylistStartedHandler;
 import javafx.util.Duration;

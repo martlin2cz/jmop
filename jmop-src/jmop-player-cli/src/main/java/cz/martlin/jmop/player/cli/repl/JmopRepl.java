@@ -18,6 +18,8 @@ import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 
 /**
+ * The JMOP player REPL.
+ * 
  * @author martin
  *
  */
@@ -27,6 +29,11 @@ public class JmopRepl extends AbstractRepl {
 
 	private final JMOPPlayer jmop;
 
+	/**
+	 * Creates.
+	 * 
+	 * @param fascade
+	 */
 	public JmopRepl(JMOPPlayer fascade) {
 		super();
 		this.jmop = fascade;
@@ -52,15 +59,15 @@ public class JmopRepl extends AbstractRepl {
 		cmd.registerConverter(Bundle.class, new BundleOrCurrentConverter(jmop));
 		cmd.registerConverter(Playlist.class, new PlaylistOrCurrentConverter(jmop));
 		cmd.registerConverter(Track.class, new TrackOrCurrentConverter(jmop));
-		
+
 		cmd.registerConverter(TrackIndex.class, new CurrentPlaylistTrackIndexOrCurrentConverter(jmop));
 		cmd.registerConverter(Duration.class, new DurationConverter());
-		
+
 		JMOPExceptionManager manager = new JMOPExceptionManager();
 		cmd.setExecutionExceptionHandler(manager);
 		cmd.setExitCodeExceptionMapper(manager);
 		cmd.setParameterExceptionHandler(manager);
-		
+
 		cmd.setAbbreviatedSubcommandsAllowed(true);
 	}
 

@@ -15,8 +15,14 @@ import cz.martlin.jmop.sourcery.remote.BaseConverter;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
+/**
+ * The FFMPEG program based converter.
+ * 
+ * @author martin
+ *
+ */
 public class FFMPEGConverter implements BaseConverter {
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
+//	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private static final String FFMPEG_COMMAND_NAME = "ffmpeg";
 
@@ -39,6 +45,14 @@ public class FFMPEGConverter implements BaseConverter {
 	}
 
 	///////////////////////////////////////////////////////////////////////////
+	/**
+	 * Prepares the FFMPEG object.
+	 * 
+	 * @param track
+	 * @param from
+	 * @param to
+	 * @return
+	 */
 	private AbstractProcessEncapsulation prepareProcess(Track track, File from, File to) {
 		File workingDirectory = AbstractProcessEncapsulation.currentDirectory();
 		List<String> arguments = createArguments(track, from, to);

@@ -4,6 +4,12 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 
+/**
+ * The track (or current) converter.
+ * 
+ * @author martin
+ *
+ */
 public class TrackOrCurrentConverter extends TrackConverter {
 	
 	public TrackOrCurrentConverter(JMOPPlayer jmop) {

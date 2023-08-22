@@ -3,7 +3,6 @@ package cz.martlin.jmop.player.cli.repl.commands;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
@@ -16,6 +15,11 @@ import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Parameters;
 
+/**
+ * The rename ... command.
+ * @author martin
+ *
+ */
 @Command(name = "rename", aliases = { "r" }, //
 	description = "Renames the provided bundle, playlist or track", //
 	subcommands = { //
@@ -30,6 +34,12 @@ public class RenameCommand extends AbstractCommand {
 		super(jmop);
 	}
 
+	/**
+	 * The rename bundle command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "bundle", aliases = { "b" }, //
 		description = "Renames the given bundle", //
 		subcommands =  HelpCommand.class )
@@ -53,6 +63,12 @@ public class RenameCommand extends AbstractCommand {
 		}
 	}
 
+	/**
+	 * The rename playlist command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "playlist", aliases = { "p" }, //
 		description = "Renames the given playlist", //
 		subcommands =  HelpCommand.class )
@@ -77,6 +93,12 @@ public class RenameCommand extends AbstractCommand {
 		}
 	}
 
+	/**
+	 * The rename track command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "track", aliases = { "t" }, //
 		description = "Renames the given track (changes its title)", //
 		subcommands =  HelpCommand.class )

@@ -14,6 +14,12 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.sourcery.remote.BaseDownloader;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
+/**
+ * The youtube-dl based donwloader.
+ * 
+ * @author martin
+ *
+ */
 public class YoutubeDLDownloader implements BaseDownloader {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
@@ -47,6 +53,12 @@ public class YoutubeDLDownloader implements BaseDownloader {
 		}
 	}
 
+	/**
+	 * Constructs the command line.
+	 * @param url
+	 * @param target
+	 * @return
+	 */
 	private List<String> createCommandLine(String url, File target) {
 		String path = target.getAbsolutePath();
 		return Arrays.asList( //

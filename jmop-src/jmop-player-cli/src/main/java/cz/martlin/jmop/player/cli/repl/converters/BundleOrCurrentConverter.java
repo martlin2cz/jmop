@@ -4,6 +4,11 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 
+/**
+ * The bundle or current converter.
+ * @author martin
+ *
+ */
 public class BundleOrCurrentConverter extends BundleConverter {
 
 	public BundleOrCurrentConverter(JMOPPlayer jmop) {
@@ -15,6 +20,11 @@ public class BundleOrCurrentConverter extends BundleConverter {
 		return bundleOrCurrent(value);
 	}
 
+	/**
+	 * Find bundle of given name (or current if current).
+	 * @param bundleNameOrCurrentMarker
+	 * @return
+	 */
 	public Bundle bundleOrCurrent(String bundleNameOrCurrentMarker) {
 		if (bundleNameOrCurrentMarker.equals(USE_CURRENT)) {
 			return currentBundle();

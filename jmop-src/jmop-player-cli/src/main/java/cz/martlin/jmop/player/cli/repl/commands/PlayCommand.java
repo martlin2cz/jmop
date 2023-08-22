@@ -15,6 +15,12 @@ import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Parameters;
 
+/**
+ * The play ... command.
+ * 
+ * @author martin
+ *
+ */
 @Command(name = "play", /* alias done by the P command */ //
 	description = "Starts the playing of the specified bundle, playlist or track",
 	subcommands = { //
@@ -25,6 +31,9 @@ import picocli.CommandLine.Parameters;
 }) //
 public class PlayCommand extends AbstractRunnableCommand {
 
+	/**
+	 * The track index to play.
+	 */
 	@Parameters(arity = "0..1", paramLabel="TRACK_INDEX", //
 			description = "Plays directly the track of the current playlist")
 	private TrackIndex index;
@@ -42,6 +51,11 @@ public class PlayCommand extends AbstractRunnableCommand {
 		}
 	}
 
+	/**
+	 * The play bundle command.
+	 * @author martin
+	 *
+	 */
 	@Command(name = "bundle", aliases = { "b" }, //
 		description = "Plays the given bundle (all its tracks)", //
 		subcommands =  HelpCommand.class )
@@ -64,6 +78,12 @@ public class PlayCommand extends AbstractRunnableCommand {
 		}
 	}
 
+	/**
+	 * The play playlist command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "playlist", aliases = { "p" }, //
 		description = "Plays the given playlist", //
 		subcommands =  HelpCommand.class )
@@ -85,7 +105,13 @@ public class PlayCommand extends AbstractRunnableCommand {
 			jmop.playing().play(playlist);
 		}
 	}
-
+	
+	/**
+	 * The play track command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "track", aliases = { "t" }, //
 		description = "Plays just the provided track", //
 		subcommands =  HelpCommand.class )

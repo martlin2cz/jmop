@@ -6,6 +6,13 @@ import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
 import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
 import cz.martlin.jmop.sourcery.remote.BaseRemoteStatusHandler;
 
+/**
+ * The abstract remote source. In fact just the aggregate of the components, but
+ * it's still recommented to allways subclass.
+ * 
+ * @author martin
+ *
+ */
 public class AbstractRemoteSource implements BaseRemoteSource {
 
 	private final BaseRemoteStatusHandler statuser;
@@ -13,6 +20,14 @@ public class AbstractRemoteSource implements BaseRemoteSource {
 	private final BaseDownloader downloader;
 	private final BaseConverter converter;
 
+	/**
+	 * Creates.
+	 * 
+	 * @param statuser
+	 * @param querier
+	 * @param downloader
+	 * @param converter
+	 */
 	public AbstractRemoteSource(BaseRemoteStatusHandler statuser, BaseRemoteSourceQuerier querier,
 			BaseDownloader downloader, BaseConverter converter) {
 		super();

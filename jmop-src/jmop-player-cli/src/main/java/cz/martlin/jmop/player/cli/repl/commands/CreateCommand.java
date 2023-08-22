@@ -19,26 +19,38 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+/**
+ * The create ... command.
+ * 
+ * @author martin
+ *
+ */
 @Command(name = "create", aliases = { "c" }, //
-	description = "Creates specified bundle, playlist or track in the musicbase", //
-	subcommands = { //
-		CommandLine.HelpCommand.class, //
-		CreateCommand.CreateBundleCommand.class, //
-		CreateCommand.CreatePlaylistCommand.class, //
-		CreateCommand.CreateTrackCommand.class, //
-}) //
+		description = "Creates specified bundle, playlist or track in the musicbase", //
+		subcommands = { //
+				CommandLine.HelpCommand.class, //
+				CreateCommand.CreateBundleCommand.class, //
+				CreateCommand.CreatePlaylistCommand.class, //
+				CreateCommand.CreateTrackCommand.class, //
+		}) //
 public class CreateCommand extends AbstractCommand {
 
 	public CreateCommand(JMOPPlayer jmop) {
 		super(jmop);
 	}
 
+	/**
+	 * The create bundle command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "bundle", aliases = { "b" }, //
-		description = "Creates bundle of the given name", //
-		subcommands =  HelpCommand.class )
+			description = "Creates bundle of the given name", //
+			subcommands = HelpCommand.class)
 	public static class CreateBundleCommand extends AbstractRunnableCommand {
 
-		@Parameters(arity = "1", paramLabel="NAME", //
+		@Parameters(arity = "1", paramLabel = "NAME", //
 				description = "The bundle name")
 		private String name;
 
@@ -47,21 +59,27 @@ public class CreateCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun()  {
+		protected void doRun() {
 			jmop.musicbase().createNewBundle(name);
 		}
 	}
 
+	/**
+	 * The create to playlist command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	// TODO move this to separate file
 	@Command(name = "playlist", aliases = { "p" }, //
-		description = "Creates playlist in the given bundle and of the given name", //
-		subcommands =  HelpCommand.class )
+			description = "Creates playlist in the given bundle and of the given name", //
+			subcommands = HelpCommand.class)
 	public static class CreatePlaylistCommand extends AbstractRunnableCommand {
 
 		@Mixin(name = "bundle")
 		private BundleOrCurrentMixin bundle;
 
-		@Parameters(arity = "1", paramLabel="NAME", //
+		@Parameters(arity = "1", paramLabel = "NAME", //
 				description = "The playlist name")
 		private String name;
 
@@ -70,74 +88,85 @@ public class CreateCommand extends AbstractCommand {
 		}
 
 		@Override
-		protected void doRun()  {
+		protected void doRun() {
 			Bundle bundle = this.bundle.getBundle();
 
 			jmop.musicbase().createNewPlaylist(bundle, name);
 		}
 	}
 
+	/**
+	 * The create track command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "track", aliases = { "t" }, //
-		description = "Creates track in the given bundle with specified parameters", //
-		subcommands =  HelpCommand.class )
+			description = "Creates track in the given bundle with specified parameters", //
+			subcommands = HelpCommand.class)
 	public static class CreateTrackCommand extends AbstractRunnableCommand {
 
 		@Mixin(name = "bundle")
 		private BundleOrCurrentMixin bundle;
 
-		@Parameters(arity = "1", paramLabel="title", //
-			description = "The title of the track")
+		@Parameters(arity = "1", paramLabel = "title", //
+				description = "The title of the track")
 		private String title;
 
 		@Option(names = "description", required = false, //
-			description = "The track description")
+				description = "The track description")
 		private String description;
 
 		@Option(names = "source", required = false, //
-			description = "The track source")
+				description = "The track source")
 		private URI source;
 
 		@Option(names = "duration", required = true, //
-			description = "The duration of the track (in format HH:MM:SS or MM:SS)")
+				description = "The duration of the track (in format HH:MM:SS or MM:SS)")
 		private Duration duration;
 
-		@ArgGroup(exclusive = true, multiplicity = "1" //TODO or multiplicity=0..1 (i.e. optional?)
-			/* description = "The track file specifier (use no-file for none)" */)
+		@ArgGroup(exclusive = true, multiplicity = "1" // TODO or multiplicity=0..1 (i.e. optional?)
+		/* description = "The track file specifier (use no-file for none)" */)
 		private FileSpecifier file;
-		
+
 		public CreateTrackCommand(JMOPPlayer jmop) {
 			super(jmop);
 		}
 
 		@Override
-		protected void doRun()  {
+		protected void doRun() {
 			Bundle bundle = this.bundle.getBundle();
 			File trackFile = file.getFile();
-			
+
 			TrackData data = new TrackData(title, description, duration, source, trackFile);
 			TrackFileCreationWay trackFileHow = file.getHow();
-			
-			
+
 			jmop.musicbase().createNewTrack(bundle, data, trackFileHow, trackFile);
 		}
-		
+
+		/**
+		 * The create file specifier arg-group.
+		 * 
+		 * @author martin
+		 *
+		 */
 		public static class FileSpecifier {
 
-			@Option(names="copy-file", description = "Copies the given file to the musicbase storage location")
+			@Option(names = "copy-file", description = "Copies the given file to the musicbase storage location")
 			private File copyFile;
-			
-			@Option(names="move-file", description = "Moves the given file to the musicbase storage location")
+
+			@Option(names = "move-file", description = "Moves the given file to the musicbase storage location")
 			private File moveFile;
-			
-			@Option(names="link-file", description = "Creates the link in the musicbase storage, pointing to the given file")
+
+			@Option(names = "link-file", description = "Creates the link in the musicbase storage, pointing to the given file")
 			private File linkFile;
-			
-			@Option(names="set-file", description = "Just marks the given file as the track file, ignoring the musicbase storage")
+
+			@Option(names = "set-file", description = "Just marks the given file as the track file, ignoring the musicbase storage")
 			private File setFile;
-			
-			@Option(names="no-file", description = "Does not create or set the track file")
+
+			@Option(names = "no-file", description = "Does not create or set the track file")
 			private boolean noFile;
-			
+
 			public TrackFileCreationWay getHow() {
 				if (copyFile != null) {
 					return TrackFileCreationWay.COPY_FILE;

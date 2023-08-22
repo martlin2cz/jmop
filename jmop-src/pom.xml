@@ -6,7 +6,7 @@
 	<groupId>cz.martlin</groupId>
 	<artifactId>jmop</artifactId>
 	<packaging>pom</packaging>
-	<version>3.1.15</version>
+	<version>3.1.16</version>
 
 	<name>jmop</name>
 	<url>https://github.com/martlin2cz/jmop</url>

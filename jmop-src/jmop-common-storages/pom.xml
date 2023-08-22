@@ -5,29 +5,29 @@
 	<parent>
 		<groupId>cz.martlin</groupId>
 		<artifactId>jmop</artifactId>
-		<version>3.1.15</version>
+		<version>3.1.16</version>
 	</parent>
 
 	<artifactId>jmop-common-storages</artifactId>
 	<name>JMOP common storages</name>
 	<description>Implements the storage of the musicbase.</description>
-	<version>3.1.15</version>
+	<version>3.1.16</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-base</artifactId>
-			<version>3.1.15</version>
+			<version>3.1.16</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-testing</artifactId>
-			<version>3.1.15</version>
+			<version>3.1.16</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-musicbase</artifactId>
-			<version>3.1.15</version>
+			<version>3.1.16</version>
 		</dependency>
 
 		<dependency>

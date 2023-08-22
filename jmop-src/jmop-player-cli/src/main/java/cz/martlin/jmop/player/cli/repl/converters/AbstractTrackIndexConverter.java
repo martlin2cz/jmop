@@ -12,6 +12,11 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 
+/**
+ * The converter of track index.
+ * @author martin
+ *
+ */
 public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<TrackIndex> {
 
 	private static final Pattern ABSOLUTE_TRACK_PATTERN = Pattern.compile("^([0-9]+)(\\.?)$");
@@ -26,6 +31,11 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 		return trackIndex(value);
 	}
 
+	/**
+	 * REturns track index of the absolute, relative or track title.
+	 * @param trackIndexSpecifierOrTitle
+	 * @return
+	 */
 	public TrackIndex trackIndex(String trackIndexSpecifierOrTitle) {
 		TrackIndex index;
 		index = tryAbsoluteIndex(trackIndexSpecifierOrTitle);
@@ -46,6 +56,12 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 		throw new CommandLine.TypeConversionException("No such track " + trackIndexSpecifierOrTitle);
 	}
 
+	/**
+	 * Try convert input to absolute index.
+	 * 
+	 * @param trackIndexSpecifier
+	 * @return
+	 */
 	private TrackIndex tryAbsoluteIndex(String trackIndexSpecifier) {
 		Matcher matcher = ABSOLUTE_TRACK_PATTERN.matcher(trackIndexSpecifier);
 		if (matcher.matches()) {
@@ -60,6 +76,12 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 		return null;
 	}
 
+	/**
+	 * Try convert input to relative index.
+	 * 
+	 * @param trackIndexSpecifier
+	 * @return
+	 */
 	private TrackIndex tryRelativeIndex(String trackIndexSpecifier) {
 		Matcher matcher = RELATIVE_TRACK_PATTERN.matcher(trackIndexSpecifier);
 		if (matcher.matches()) {
@@ -81,6 +103,12 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 		return null;
 	}
 
+	/**
+	 * Try to convert input as track title and pick its index in the current playlist.
+	 * 
+	 * @param trackTitle
+	 * @return
+	 */
 	private TrackIndex tryTrackTitle(String trackTitle) {
 		Bundle bundle = bundle();
 		Track track = jmop.musicbase().trackOfTitle(bundle, trackTitle);
@@ -103,6 +131,11 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 		return index;
 	}
 
+	/**
+	 * Validates.
+	 * 
+	 * @param index
+	 */
 	private void validateIndex(TrackIndex index) {
 		Playlist playlist = playlist();
 		int count = playlist.getTracks().count();
@@ -114,8 +147,17 @@ public abstract class AbstractTrackIndexConverter extends AbstractJMOPConverter<
 		}
 	}
 	
+	/**
+	 * REturns the bundle where to pick tracks from.
+	 * @return
+	 */
 	protected abstract Bundle bundle();
 
+	/**
+	 * Returns the playlist where to pick tracks from.
+	 * 
+	 * @return
+	 */
 	protected abstract Playlist playlist();
 
 }

@@ -5,6 +5,12 @@ import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine.Spec;
 
+/**
+ * The jmop mixin.
+ * 
+ * @author martin
+ *
+ */
 public abstract class AbstractJMOPMixin {
 	@Spec(Spec.Target.MIXEE) CommandSpec mixee;
 	

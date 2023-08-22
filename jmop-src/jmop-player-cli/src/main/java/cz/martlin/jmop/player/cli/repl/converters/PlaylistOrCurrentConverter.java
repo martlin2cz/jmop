@@ -4,6 +4,12 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 
+/**
+ * The converter of playlist (or current).
+ * 
+ * @author martin
+ *
+ */
 public class PlaylistOrCurrentConverter extends PlaylistConverter {
 	
 	public PlaylistOrCurrentConverter(JMOPPlayer jmop) {

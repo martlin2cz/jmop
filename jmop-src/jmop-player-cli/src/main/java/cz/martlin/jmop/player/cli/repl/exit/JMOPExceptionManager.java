@@ -8,6 +8,12 @@ import picocli.CommandLine.IParameterExceptionHandler;
 import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.ParseResult;
 
+/**
+ * The exceptions manager.
+ * 
+ * @author martin
+ *
+ */
 public class JMOPExceptionManager
 		implements IExecutionExceptionHandler, IExitCodeExceptionMapper, IParameterExceptionHandler {
 

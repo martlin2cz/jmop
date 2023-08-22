@@ -5,6 +5,14 @@ import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseListingEncapsulator;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 
+/**
+ * The JMOP sourcery musicbase fascade.
+ * 
+ * Doesn't do anything speciall actually, just the common stuff.
+ * 
+ * @author martin
+ *
+ */
 public class JMOPSourceryMusicbase extends JMOPCommonMusicbase {
 
 	public JMOPSourceryMusicbase(BaseMusicbase musicbase) {

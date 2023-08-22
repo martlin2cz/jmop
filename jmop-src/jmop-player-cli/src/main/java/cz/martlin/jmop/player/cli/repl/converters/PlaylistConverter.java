@@ -7,6 +7,12 @@ import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import cz.martlin.jmop.player.fascade.dflt.BaseJMOPPlayerConfig;
 import picocli.CommandLine;
 
+/**
+ * The converter of playlist.
+ * 
+ * @author martin
+ *
+ */
 public class PlaylistConverter extends AbstractJMOPConverter<Playlist> {
 
 	private final CoupleOrNotParser parser;

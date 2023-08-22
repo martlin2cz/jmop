@@ -7,12 +7,18 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 
+/**
+ * The modifiing operations of the musicbase.
+ * 
+ * @author martin
+ *
+ */
 public interface BaseMusicbaseModifing {
 	
 	///////////////////////////////////////////////////////////////////////////
 	
 	public Bundle createNewBundle(String name) ;
-
+	
 	public void renameBundle(Bundle bundle, String newName) ;
 
 	public void removeBundle(Bundle bundle) ;

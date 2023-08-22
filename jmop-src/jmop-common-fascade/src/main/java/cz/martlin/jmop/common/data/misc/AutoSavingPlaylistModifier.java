@@ -4,10 +4,26 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.misc.MusicbaseModyfiingEncapsulator;
 
+/**
+ * The playlist modifier, which automatically triggers the playlist changed in
+ * the musicbase after each change.
+ * 
+ * @author martin
+ *
+ */
 public class AutoSavingPlaylistModifier extends ExtendedPlaylistModifier {
 
+	/**
+	 * The musicbase.
+	 */
 	private final MusicbaseModyfiingEncapsulator modyfiing;
 
+	/**
+	 * Creates.
+	 * 
+	 * @param playlist
+	 * @param modyfiing
+	 */
 	public AutoSavingPlaylistModifier(Playlist playlist, MusicbaseModyfiingEncapsulator modyfiing) {
 		super(playlist);
 
@@ -58,6 +74,9 @@ public class AutoSavingPlaylistModifier extends ExtendedPlaylistModifier {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Saves the playlist changes in the musicbase.
+	 */
 	private void reportChanged() {
 		modyfiing.playlistUpdated(playlist);
 	}

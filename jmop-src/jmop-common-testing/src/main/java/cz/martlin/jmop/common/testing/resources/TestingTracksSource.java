@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 /**

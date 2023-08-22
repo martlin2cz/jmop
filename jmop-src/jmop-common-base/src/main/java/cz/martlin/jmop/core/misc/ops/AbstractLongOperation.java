@@ -2,6 +2,14 @@ package cz.martlin.jmop.core.misc.ops;
 
 import java.util.function.Function;
 
+/**
+ * Abstract common superclass of the long operation.
+ * 
+ * @author martin
+ *
+ * @param <InT>
+ * @param <OutT>
+ */
 public abstract class AbstractLongOperation<InT, OutT> implements BaseLongOperation<InT, OutT> {
 
 	private final String name;

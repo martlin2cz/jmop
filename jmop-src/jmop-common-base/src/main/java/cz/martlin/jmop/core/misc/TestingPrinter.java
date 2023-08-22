@@ -13,6 +13,8 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.MusicbaseDebugPrinter;
 
 /**
+ * The testing printer of the musicdata.
+ * 
  * @see MusicbaseDebugPrinter
  * @author martin
  *
@@ -57,7 +59,6 @@ public class TestingPrinter {
 				+ "NAME:   " + playlist.getName() + "\n"//
 				+ "BUNDLE: " + playlist.getBundle().getName() + "\n"//
 				+ "CURR:   " + playlist.getCurrentTrackIndex() + "\n"//
-				+ "LOCK:   " + playlist.isLocked() + "\n"//
 				+ "META:   " + printMeta(playlist.getMetadata()) + "\n"//
 				+ "TRACKS:" + "\n"//
 				+ print(playlist.getTracks().getTracks()); //
@@ -66,10 +67,8 @@ public class TestingPrinter {
 	public static String print(Bundle bundle) {
 		return "" //
 				+ "NAME:  " + bundle.getName() + "\n"//
-				+ "KIND:  " + bundle.getKind() + "\n"//
 				+ "META:  " + printMeta(bundle.getMetadata()) + "\n"//
-				+ "TRACKS:" + "\n"//
-				+ print(bundle.tracks().getTracks()); //
+				+ "TRACKS:" + "\n"; //
 	}
 
 	private static String printMeta(Metadata metadata) {

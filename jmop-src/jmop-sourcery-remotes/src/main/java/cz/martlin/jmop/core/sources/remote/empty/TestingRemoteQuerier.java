@@ -12,8 +12,22 @@ import cz.martlin.jmop.sourcery.remote.BaseRemotesConfiguration;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 import javafx.util.Duration;
 
+/**
+ * The testing qiuerier. Specify the track datas and it then randomly picks
+ * some.
+ * 
+ * @author martin
+ *
+ */
 public class TestingRemoteQuerier extends AbstractRemoteQuerier {
+	/**
+	 * The configuration.
+	 * 
+	 */
 	private final BaseRemotesConfiguration config;
+	/**
+	 * The pool of tracks to pick the resul from.
+	 */
 	private final List<TrackData> tracksData;
 	private final Random rand;
 
@@ -23,15 +37,30 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 		this.rand = new Random(seed);
 	}
 
+	/**
+	 * Appends new testing data.
+	 * 
+	 * @param identifier
+	 * @param title
+	 * @param description
+	 * @param minutes
+	 * @param seconds
+	 * @return
+	 */
 	public TestingRemoteQuerier add(String identifier, String title, String description, int minutes, int seconds) {
 		Duration duration = DurationUtilities.createDuration(0, minutes, seconds);
 
-		TrackData trackData = new TrackData(identifier, title, description, duration);
+		TrackData trackData = new TrackData(title, description, duration, null, null);
 		tracksData.add(trackData);
 
 		return this;
 	}
 
+	/**
+	 * Picks random track from the pool.
+	 * 
+	 * @return
+	 */
 	private TrackData pick() {
 		int index = rand.nextInt(tracksData.size());
 		return tracksData.get(index);
@@ -54,7 +83,7 @@ public class TestingRemoteQuerier extends AbstractRemoteQuerier {
 	@Override
 	public TrackData loadNext(Track track) throws JMOPSourceryException {
 		TrackData nextData = pick();
-		
+
 		return nextData;
 	}
 

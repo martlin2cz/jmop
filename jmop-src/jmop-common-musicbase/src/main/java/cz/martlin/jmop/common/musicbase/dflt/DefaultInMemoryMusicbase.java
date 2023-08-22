@@ -1,9 +1,7 @@
 package cz.martlin.jmop.common.musicbase.dflt;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.URI;
-import java.util.TreeSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;

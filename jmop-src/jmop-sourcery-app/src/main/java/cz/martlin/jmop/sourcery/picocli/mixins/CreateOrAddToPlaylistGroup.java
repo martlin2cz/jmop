@@ -11,22 +11,36 @@ import cz.martlin.jmop.sourcery.fascade.JMOPSourceryMusicbase;
 import cz.martlin.jmop.sourcery.picocli.misc.JMOPSourceryProvider;
 import picocli.CommandLine.Option;
 
+/**
+ * The arguments group of the "add-to-(existing/new)-paylist".
+ * 
+ * @author martin
+ *
+ */
 public class CreateOrAddToPlaylistGroup {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateOrAddToPlaylistGroup.class);
 
 	@Option(names = { "--add-to-playlist", "-p" }, required = true, //
-		description = "Adds to playlist. Creates if doesn't exist.")
+			description = "Adds to playlist. Creates if doesn't exist.")
 	private String addToPlaylist;
 
 	@Option(names = { "--add-to-existing-playlist", "-ap" }, required = true, //
-		description = "Adds to playlist. Playlist must exist.")
+			description = "Adds to playlist. Playlist must exist.")
 	private String addToExistingPlaylist;
 
 	@Option(names = { "--add-to-new-playlist", "-P" }, required = true, //
-		description = "Adds to playlist. Playlist will be created.")
+			description = "Adds to playlist. Playlist will be created.")
 	private String addToNewPlaylist;
 
+	/**
+	 * Returns the playlist constructed based on the flags. Either creating the new
+	 * one or picking existing.
+	 * 
+	 * 
+	 * @param bundle
+	 * @return
+	 */
 	public Playlist getPlaylist(Bundle bundle) {
 		JMOPSourceryMusicbase musicbase = JMOPSourceryProvider.get().getSourcery().musicbase();
 
@@ -63,7 +77,5 @@ public class CreateOrAddToPlaylistGroup {
 		return "CreateOrAddToPlaylistGroup [addToPlaylist=" + addToPlaylist + ", addToExistingPlaylist="
 				+ addToExistingPlaylist + ", addToNewPlaylist=" + addToNewPlaylist + "]";
 	}
-
-	
 
 }

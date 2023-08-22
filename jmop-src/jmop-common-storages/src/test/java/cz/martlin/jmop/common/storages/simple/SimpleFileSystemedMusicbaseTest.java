@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -16,10 +16,7 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
-import cz.martlin.jmop.common.testing.resources.TestingResources;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 
 public class SimpleFileSystemedMusicbaseTest {
 
@@ -54,8 +51,7 @@ public class SimpleFileSystemedMusicbaseTest {
 		TrackFileCreationWay trackCreationWay = TrackFileCreationWay.NO_FILE;
 
 		testingTrack = musicbase.createNewTrack(testingBundle, td("tt"), trackCreationWay, trackFile);
-		testingPlaylist.addTrack(testingTrack);
-
+		new PlaylistModifier(testingPlaylist).append(testingTrack);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +99,7 @@ public class SimpleFileSystemedMusicbaseTest {
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	private TrackData td(String id) {
-		return new TrackData(id, id, id, DurationUtilities.createDuration(0, 3, 15));
+		return new TrackData(id, id, DurationUtilities.createDuration(0, 3, 15), null, null);
 	}
 
 

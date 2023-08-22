@@ -3,7 +3,6 @@ package cz.martlin.jmop.player.players;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.player.players.BasePlayer;
 import cz.martlin.jmop.player.players.TestingPlayer;

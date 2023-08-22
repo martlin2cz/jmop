@@ -6,6 +6,12 @@ import cz.martlin.jmop.player.cli.repl.converters.CoupleOrNotParser.CoupleOrNot;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 
+/**
+ * The track converter.
+ * 
+ * @author martin
+ *
+ */
 public class TrackConverter extends AbstractJMOPConverter<Track> {
 	private static final String NO_TRACK_INDICATOR = "(no track)";
 	
@@ -25,6 +31,12 @@ public class TrackConverter extends AbstractJMOPConverter<Track> {
 		return track(value);
 	}
 
+	/**
+	 * Picks the track of the given specifier.
+	 * 
+	 * @param trackSpecifier
+	 * @return
+	 */
 	public Track track(String trackSpecifier) {
 		CoupleOrNot couple = parser.parse(trackSpecifier);
 

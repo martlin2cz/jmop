@@ -5,12 +5,11 @@ import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.storages.dflt.BaseDefaultStorageConfig;
+import cz.martlin.jmop.common.storages.config.BaseDefaultStorageConfig;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.commands.PrintCommands.PlaylistInfoCommand;
 import cz.martlin.jmop.player.cli.repl.converters.CustomPlaylistTrackIndexOrCurrentConverter;
 import cz.martlin.jmop.player.cli.repl.mixin.TrackOfBundleMixin;
-import cz.martlin.jmop.player.engine.dflt.BaseDefaultEngineConfig;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
@@ -18,8 +17,19 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.ParentCommand;
 
+/**
+ * The playlist modifiing commands.
+ * 
+ * @author martin
+ *
+ */
 public class ModifyPlaylistCommands {
 	
+	/**
+	 * The add track command.
+	 * @author martin
+	 *
+	 */
 	@Command(name = "add", aliases = { "a" },
 		description = "Adds given track to the provided playlist", //
 		subcommands =  HelpCommand.class )
@@ -52,6 +62,12 @@ public class ModifyPlaylistCommands {
 		}
 	}
 	
+	/**
+	 * The insert track command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "insert", aliases = { "i" }, //
 		description = "Inserts the track to the specified spot in the playlist", //
 		subcommands =  HelpCommand.class )
@@ -90,7 +106,12 @@ public class ModifyPlaylistCommands {
 
 	}
 
-
+	/**
+	 * The remove track command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "remove", aliases = { "r" }, //
 		description = "Removes given track from the playlist", //
 		subcommands =  HelpCommand.class )
@@ -122,7 +143,12 @@ public class ModifyPlaylistCommands {
 		}
 	}
 
-
+	/**
+	 * If the playlist is all-tracks-playlist, the operation gets rejected.
+	 * 
+	 * @param command
+	 * @param playlist
+	 */
 	public static void rejectAllTracksPlaylist(AbstractRunnableCommand command, Playlist playlist) {
 		JMOPPlayer jmop = command.getJMOP();
 		BaseDefaultStorageConfig configuration = (BaseDefaultStorageConfig) jmop.config().getConfiguration();

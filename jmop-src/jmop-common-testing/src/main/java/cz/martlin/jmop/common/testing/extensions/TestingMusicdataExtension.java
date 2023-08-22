@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;

@@ -23,8 +23,16 @@ public class TrackIndex implements Comparable<TrackIndex> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TrackIndex.class);
 	
+	/**
+	 * The actual index (zero-indexed).
+	 */
 	private final int index;
 
+	/**
+	 * Creates.
+	 * 
+	 * @param index
+	 */
 	private TrackIndex(int index) {
 		if (index < 0) {
 			throw new IllegalArgumentException("The index cannot be " + index);
@@ -35,10 +43,18 @@ public class TrackIndex implements Comparable<TrackIndex> {
 
 	/////////////////////////////////////////////////////////////////
 
+	/**
+	 * Returns the index (zero indexed).
+	 * @return
+	 */
 	public int getIndex() {
 		return index;
 	}
 
+	/**
+	 * Returns the index in human-readable counting (starting by 1).
+	 * @return
+	 */
 	public int getHuman() {
 		return indexToHuman(index);
 	}
@@ -135,10 +151,22 @@ public class TrackIndex implements Comparable<TrackIndex> {
 
 	/////////////////////////////////////////////////////////////////
 
+	/**
+	 * Constructs the index of the zero-index index.
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public static TrackIndex ofIndex(int index) {
 		return new TrackIndex(index);
 	}
 
+	/**
+	 * Constructs the index of the human readable format (starting from 1).
+	 * 
+	 * @param human
+	 * @return
+	 */
 	public static TrackIndex ofHuman(int human) {
 		int index = humanToIndex(human);
 		return new TrackIndex(index);
@@ -146,6 +174,13 @@ public class TrackIndex implements Comparable<TrackIndex> {
 
 	/////////////////////////////////////////////////////////////////
 
+	/**
+	 * Lists the elements of the given map ordered by the indexes.
+	 * 
+	 * @param <E>
+	 * @param map
+	 * @return
+	 */
 	public static <E> List<E> list(Map<TrackIndex, E> map) {
 		TreeMap<TrackIndex, E> ordered = new TreeMap<>(map);
 
@@ -170,6 +205,13 @@ public class TrackIndex implements Comparable<TrackIndex> {
 		return new ArrayList<>(orderedValues);
 	}
 
+	/**
+	 * Converts the list of elements into indexed map.
+	 * 
+	 * @param <E>
+	 * @param list
+	 * @return
+	 */
 	public static <E> Map<TrackIndex, E> map(List<E> list) {
 		Map<TrackIndex, E> map = new TreeMap<>();
 

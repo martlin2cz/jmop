@@ -1,7 +1,13 @@
 package cz.martlin.jmop.core.misc.ops;
 
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 
+/**
+ * Abstract common tri-phased operation (having three individual operations).
+ * 
+ * @author martin
+ *
+ * @param <T>
+ */
 public abstract class AbstractTriPhasedOperationsChain<T> implements BaseOperationsChain<T> {
 
 	public AbstractTriPhasedOperationsChain() {

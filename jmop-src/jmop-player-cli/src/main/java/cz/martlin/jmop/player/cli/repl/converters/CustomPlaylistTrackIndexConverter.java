@@ -4,6 +4,12 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 
+/**
+ * The track index converter based on specified playlist.
+ * 
+ * @author martin
+ *
+ */
 public class CustomPlaylistTrackIndexConverter extends AbstractTrackIndexConverter {
 
 	private final Playlist playlist;

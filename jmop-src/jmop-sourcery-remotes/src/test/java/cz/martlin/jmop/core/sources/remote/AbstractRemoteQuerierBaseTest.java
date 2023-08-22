@@ -30,7 +30,7 @@ public abstract class AbstractRemoteQuerierBaseTest {
 
 	@Test
 	public void testRunSearch() throws JMOPSourceryException  {
-		Bundle bundle = createBundle();
+//		Bundle bundle = createBundle();
 		String query = createQuery();
 
 		System.out.println("Searching " + query);

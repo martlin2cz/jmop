@@ -19,6 +19,12 @@ import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+/**
+ * The remote search tracks command.
+ * 
+ * @author martin
+ *
+ */
 @Command(name = "search-tracks", aliases = { "search-and-add-tracks", "s", "st" },//
 	description = "Adds tracks into the musicbase by searching them via the specified music service.", //
 	subcommands =  HelpCommand.class )

@@ -7,8 +7,19 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Parameters;
 
+/**
+ * The player manipulating commands.
+ * @author martin
+ *
+ */
 public class PlayingCommands {
 
+	/**
+	 * The pause command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "pause", /* alias done by the P command */ //
 		description = "Pauses the playing", //
 		subcommands =  HelpCommand.class )
@@ -28,6 +39,12 @@ public class PlayingCommands {
 		}
 	}
 
+	/**
+	 * The resume command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "resume", /* aslias done by the P command */ //
 		description = "Resumes the plaing", //
 		subcommands =  HelpCommand.class )
@@ -47,6 +64,12 @@ public class PlayingCommands {
 		}
 	}
 	
+	/**
+	 * The stop command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "stop", aliases = { "s" }, //
 		description = "Stops the playing", //
 		subcommands =  HelpCommand.class )
@@ -65,6 +88,13 @@ public class PlayingCommands {
 			jmop.playing().stop();
 		}
 	}
+	
+	/**
+	 * The seek command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	
 	@Command(name = "seek", /* TODO: alias via the P command? */ //
 		description = "Seeks (goes to specified duration)", //
@@ -89,6 +119,12 @@ public class PlayingCommands {
 		}
 	}
 	
+	/**
+	 * The next command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "next", aliases = { "n" }, //
 		description = "Goes to next track in the playlist", //
 		subcommands =  HelpCommand.class )
@@ -107,7 +143,12 @@ public class PlayingCommands {
 			jmop.playing().toNext();	
 		}
 	}
-	
+	/**
+	 * The previous command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "previous", aliases = { "N" }, //
 		description = "Goes to previous track in the playlist", //
 		subcommands =  HelpCommand.class )

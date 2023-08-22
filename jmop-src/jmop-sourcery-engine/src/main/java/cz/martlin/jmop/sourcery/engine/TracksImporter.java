@@ -28,10 +28,22 @@ public class TracksImporter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TracksImporter.class);
 
+	/**
+	 * The musibase.
+	 */
 	private final BaseMusicbaseModifing musicbaseModifing;
 
+	/**
+	 * The tracks file format.
+	 */
 	private final TrackFileFormat filesFormat;
+	/**
+	 * The from-file-or-dir importer.
+	 */
 	private final BaseTracksFromDirOrFileImporter fileOrDirImporter;
+	/**
+	 * The from playlist importer.
+	 */
 	private final BaseTracksFromFileImporter fromPlaylistImporter; 
 
 	/**
@@ -99,6 +111,14 @@ public class TracksImporter {
 	}
 
 
+	/**
+	 * Adds the imported tracks to the given bundle.
+	 * 
+	 * @param toBundle
+	 * @param createFiles
+	 * @param datas
+	 * @return
+	 */
 	private List<Track> addTracks(Bundle toBundle, TrackFileCreationWay createFiles, List<TrackData> datas) {
 		List<Track> tracks = new ArrayList<>(datas.size());
 		for (TrackData trackData : datas) {

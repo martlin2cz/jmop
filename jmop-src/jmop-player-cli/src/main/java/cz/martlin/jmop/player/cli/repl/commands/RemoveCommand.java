@@ -3,7 +3,6 @@ package cz.martlin.jmop.player.cli.repl.commands;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
@@ -15,6 +14,12 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 
+/**
+ * The remove ... commands.
+ * 
+ * @author martin
+ *
+ */
 @Command(name = "delete", aliases = { "d" }, //
 	description = "Deletes the given bundle, playlist or track", //
 	subcommands = { //
@@ -29,7 +34,13 @@ public class RemoveCommand extends AbstractCommand {
 	public RemoveCommand(JMOPPlayer jmop) {
 		super(jmop);
 	}
-
+	
+	/**
+	 * The remove bundle command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "bundle", aliases = { "b" }, //
 		description = "Deletes the given bundle", //
 		subcommands =  HelpCommand.class )
@@ -50,6 +61,12 @@ public class RemoveCommand extends AbstractCommand {
 		}
 	}
 
+	/**
+	 * The remove playlist command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "playlist", aliases = { "p" }, //
 		description = "Deletes the given playlist", //
 		subcommands =  HelpCommand.class )
@@ -70,6 +87,12 @@ public class RemoveCommand extends AbstractCommand {
 		}
 	}
 
+	/**
+	 * The remove track command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "track", aliases = { "t" }, //
 		description = "Deletes the given track. Removes it from all playlists", //
 		subcommands =  HelpCommand.class )

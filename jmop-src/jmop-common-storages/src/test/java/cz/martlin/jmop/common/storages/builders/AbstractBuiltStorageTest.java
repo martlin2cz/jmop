@@ -10,14 +10,13 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.dflt.DefaultInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseInMemoryMusicbase;
 import cz.martlin.jmop.common.musicbase.persistent.BaseMusicbaseStorage;
-import cz.martlin.jmop.common.storages.configs.BaseStorageConfiguration;
+import cz.martlin.jmop.common.storages.components.BaseStorageConfiguration;
 import cz.martlin.jmop.common.testing.extensions.TestingMusicdataExtension;
 import cz.martlin.jmop.common.testing.extensions.TestingRootDirExtension;
 import cz.martlin.jmop.core.misc.BaseErrorReporter;

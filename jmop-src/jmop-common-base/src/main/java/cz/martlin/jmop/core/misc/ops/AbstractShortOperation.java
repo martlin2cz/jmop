@@ -1,5 +1,13 @@
 package cz.martlin.jmop.core.misc.ops;
 
+/**
+ * Abstract common short operation.
+ * 
+ * @author martin
+ *
+ * @param <InT>
+ * @param <OutT>
+ */
 public abstract class AbstractShortOperation<InT, OutT> implements BaseShortOperation<InT, OutT> {
 
 	private final String name;

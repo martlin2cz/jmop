@@ -20,10 +20,16 @@ import cz.martlin.jmop.player.players.BasePlayer;
 import cz.martlin.jmop.player.players.TestingPlayer;
 
 /**
- *
+ * The builder of the default {@link JMOPPlayer} based on the configuration.
+ * 
  */
 public class DefaultJMOPPlayerBuilder {
 
+	/**
+	 * Creates testing instance.
+	 * 
+	 * @return
+	 */
 	public static JMOPPlayer createTesting() {
 		TestingRootDir rootDir = new TestingRootDir(DefaultJMOPPlayerBuilder.class);
 		File root = rootDir.getFile();
@@ -36,6 +42,15 @@ public class DefaultJMOPPlayerBuilder {
 		return create(root, player, config, reporter);
 	}
 
+	/**
+	 * Creates based on the input.
+	 * 
+	 * @param root the root directory
+	 * @param player the player
+	 * @param config the configuration
+	 * @param reporter the error reporter
+	 * @return
+	 */
 	public static JMOPPlayer create(File root, BasePlayer player, BaseJMOPPlayerConfig config,
 			BaseErrorReporter reporter) {
 
@@ -47,6 +62,14 @@ public class DefaultJMOPPlayerBuilder {
 	}
 	
 
+	/**
+	 * Creates the player engine.
+	 * 
+	 * @param player
+	 * @param config
+	 * @param musicbase
+	 * @return
+	 */
 	private static BasePlayerEngine createEngine(BasePlayer player, BaseJMOPPlayerConfig config,
 			BaseMusicbase musicbase) {
 
@@ -56,7 +79,14 @@ public class DefaultJMOPPlayerBuilder {
 		return engine;
 	}
 
-
+	/**
+	 * Creates finally the {@link JMOPPlayer} instance based on the given components.
+	 * 
+	 * @param config
+	 * @param musicbase
+	 * @param engine
+	 * @return
+	 */
 	private static JMOPPlayer create(BaseJMOPPlayerConfig config, BaseMusicbase musicbase, BasePlayerEngine engine) {
 
 		JMOPConfig configModule = new JMOPConfig(config, musicbase, engine);

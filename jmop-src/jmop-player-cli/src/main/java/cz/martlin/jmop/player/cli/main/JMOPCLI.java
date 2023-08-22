@@ -12,6 +12,12 @@ import cz.martlin.jmop.player.fascade.dflt.DefaultJMOPPlayerBuilder;
 import cz.martlin.jmop.player.fascade.dflt.config.ConstantDefaultFascadeConfig;
 import cz.martlin.jmop.player.players.JavaFXMediaPlayer;
 
+/**
+ * The actual main JMOP Player executable, main. Starts the CLI and runs the REPL loop.
+ * 
+ * @author martin
+ *
+ */
 public class JMOPCLI {
 	private static final Logger LOG = LoggerFactory.getLogger(JMOPCLI.class);
 	

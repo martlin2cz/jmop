@@ -90,6 +90,11 @@ public class AplayPlayer extends AbstractTrackFilePlaingPlayer {
 	protected void doTrackFinished() {
 		// okay
 	}
+	
+	@Override
+	public String toString() {
+		return "AplayPlayer [currentTrackFile=" + currentTrackFile + ", currentTrack=" + currentTrack + "]";
+	}
 
 	///////////////////////////////////////////////////////////////////////////
 

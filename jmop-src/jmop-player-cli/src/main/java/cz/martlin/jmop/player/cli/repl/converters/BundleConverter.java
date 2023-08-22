@@ -4,6 +4,12 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 
+/**
+ * The bundle converter.
+ * 
+ * @author martin
+ *
+ */
 public class BundleConverter extends AbstractJMOPConverter<Bundle> {
 
 	public BundleConverter(JMOPPlayer jmop) {
@@ -15,6 +21,12 @@ public class BundleConverter extends AbstractJMOPConverter<Bundle> {
 		return bundle(value);
 	}
 
+	/**
+	 * Finds the bundle of given name.
+	 * 
+	 * @param bundleName
+	 * @return
+	 */
 	public Bundle bundle(String bundleName) {
 		Bundle bundle = jmop.musicbase().bundleOfName(bundleName);
 		if (bundle == null) {

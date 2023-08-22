@@ -1,8 +1,15 @@
 package cz.martlin.jmop.core.misc;
 
+import java.io.Console;
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * The UI interactor with {@link Console}.
+ * 
+ * @author martin
+ *
+ */
 public class ConsoleUIInteractor implements BaseUIInterractor {
 
 	private final Scanner scanner;

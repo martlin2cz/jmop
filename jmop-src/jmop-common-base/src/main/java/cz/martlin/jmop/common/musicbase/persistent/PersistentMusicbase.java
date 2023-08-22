@@ -10,11 +10,24 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 
+/**
+ * The persistent musicbase. Contains instance of in-memory-musicbase and the
+ * musicbase storage.
+ * 
+ * @author martin
+ *
+ */
 public class PersistentMusicbase implements BaseMusicbase {
 
 	private final BaseInMemoryMusicbase inmemory;
 	private final BaseMusicbaseStorage storage;
 
+	/**
+	 * Creates instance.
+	 * 
+	 * @param inmemory
+	 * @param storage
+	 */
 	public PersistentMusicbase(BaseInMemoryMusicbase inmemory, BaseMusicbaseStorage storage) {
 		super();
 		this.inmemory = inmemory;
@@ -127,12 +140,13 @@ public class PersistentMusicbase implements BaseMusicbase {
 	}
 
 	@Override
-	public Track createNewTrack(Bundle bundle, TrackData data, TrackFileCreationWay trackCreationWay, File trackSourceFile) {
+	public Track createNewTrack(Bundle bundle, TrackData data, TrackFileCreationWay trackCreationWay,
+			File trackSourceFile) {
 		Track track = inmemory.createNewTrack(bundle, data, trackCreationWay, trackSourceFile);
 		storage.createTrack(track, trackCreationWay, trackSourceFile);
 		return track;
 	}
-	
+
 	@Override
 	public void specifyTrackFile(Track track, TrackFileCreationWay trackFileHow, File trackSourceFile) {
 		storage.specifyTrackFile(track, trackFileHow, trackSourceFile);

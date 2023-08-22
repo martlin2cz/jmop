@@ -2,6 +2,14 @@ package cz.martlin.jmop.core.misc.ops;
 
 import javafx.concurrent.Task;
 
+/**
+ * JavaFX task executing the operation.
+ * 
+ * @author martin
+ *
+ * @param <InT>
+ * @param <OutT>
+ */
 public class OperationTask<InT, OutT> extends Task<OutT> implements BaseProgressListener {
 
 	private final BaseOperation<InT, OutT> operation;

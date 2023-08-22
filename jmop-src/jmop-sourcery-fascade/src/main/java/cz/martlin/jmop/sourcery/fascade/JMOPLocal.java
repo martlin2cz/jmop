@@ -17,7 +17,7 @@ import cz.martlin.jmop.sourcery.local.BaseTracksFromDirOrFileImporter;
 import cz.martlin.jmop.sourcery.local.BaseTracksFromFileImporter;
 
 /**
- * The sourcery component responsible for local sourcering (importing from
+ * The sourcery fascade responsible for local sourcering (importing from
  * elsewhere in the computer).
  * 
  * @author martin
@@ -25,9 +25,24 @@ import cz.martlin.jmop.sourcery.local.BaseTracksFromFileImporter;
  */
 public class JMOPLocal {
 
+	/**
+	 * The tracks importer.
+	 */
 	private final TracksImporter tracksImporter;
+	/**
+	 * The playlists importer.
+	 */
 	private final PlaylistImporter playlistImporter;
 
+	/**
+	 * Creates.
+	 * 
+	 * @param musicbase
+	 * @param trackFormat
+	 * @param tracksFromDirImpoter
+	 * @param tracksFromPlaylistImpoter
+	 * @param playlistFromPlaylistImpoter
+	 */
 	public JMOPLocal(BaseMusicbase musicbase, TrackFileFormat trackFormat, BaseTracksFromDirOrFileImporter tracksFromDirImpoter, BaseTracksFromFileImporter tracksFromPlaylistImpoter, BasePlaylistImporter playlistFromPlaylistImpoter) {
 		super();
 		this.tracksImporter = new TracksImporter(musicbase, trackFormat, tracksFromDirImpoter, tracksFromPlaylistImpoter);

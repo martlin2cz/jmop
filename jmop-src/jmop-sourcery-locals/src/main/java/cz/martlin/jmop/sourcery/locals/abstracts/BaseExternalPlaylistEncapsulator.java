@@ -23,10 +23,30 @@ public abstract class BaseExternalPlaylistEncapsulator<PT, TT> {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(BaseExternalPlaylistEncapsulator.class);
 
+	/**
+	 * Loads the xplaylist.
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
 	public abstract PT loadPlaylist(File file) throws IOException;
 
+	/**
+	 * Obtains the playlist name from the xplaylist.
+	 * 
+	 * @param xplaylist
+	 * @return
+	 * @throws IOException
+	 */
 	public abstract String obtainName(PT xplaylist) throws IOException;
 
+	/**
+	 * OBtains the track datas from the xplaylist.
+	 * 
+	 * @param xplaylist
+	 * @return
+	 * @throws IOException
+	 */
 	public List<TrackData> obtainTracks(PT xplaylist) throws IOException {
 		List<TT> xtracks = obtainRawTracks(xplaylist);
 		return convertTracks(xtracks);
@@ -34,8 +54,21 @@ public abstract class BaseExternalPlaylistEncapsulator<PT, TT> {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Obtains the xtracks from the xplaylist.
+	 * 
+	 * @param xplaylist
+	 * @return
+	 * @throws IOException
+	 */
 	protected abstract List<TT> obtainRawTracks(PT xplaylist) throws IOException;
 
+	/**
+	 * Converts xtracks to track datas.
+	 * 
+	 * @param xtracks
+	 * @return
+	 */
 	protected List<TrackData> convertTracks(List<TT> xtracks) {
 		List<TrackData> result = new ArrayList<>(xtracks.size());
 
@@ -51,6 +84,13 @@ public abstract class BaseExternalPlaylistEncapsulator<PT, TT> {
 		return result;
 	}
 
+	/**
+	 * Converts xtrack to track data.
+	 * 
+	 * @param xtrack
+	 * @return
+	 * @throws IOException
+	 */
 	protected abstract TrackData convertTrack(TT xtrack) throws IOException;
 
 }

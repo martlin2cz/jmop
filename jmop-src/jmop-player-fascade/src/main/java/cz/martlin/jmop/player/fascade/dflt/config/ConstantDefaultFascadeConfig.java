@@ -3,6 +3,12 @@ package cz.martlin.jmop.player.fascade.dflt.config;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.player.fascade.dflt.BaseJMOPPlayerConfig;
 
+/**
+ * The default implementation of the configuration. It's just constants.
+ * 
+ * @author martin
+ *
+ */
 public class ConstantDefaultFascadeConfig implements BaseJMOPPlayerConfig {
 
 	@Override

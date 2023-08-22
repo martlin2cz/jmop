@@ -8,6 +8,12 @@ import cz.martlin.jmop.player.engine.BasePlayerEngine;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
+/**
+ * The. Player. Engine. Wrapper. Fascade.
+ * 
+ * @author martin
+ *
+ */
 public class PlayerEngineWrapper {
 	private final BasePlayerEngine engine;
 

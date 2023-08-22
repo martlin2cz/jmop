@@ -3,7 +3,6 @@ package cz.martlin.jmop.player.cli.repl.commands;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
 import cz.martlin.jmop.player.cli.repl.command.AbstractCommand;
 import cz.martlin.jmop.player.cli.repl.command.AbstractRunnableCommand;
 import cz.martlin.jmop.player.cli.repl.mixin.BundleOrCurrentMixin;
@@ -15,7 +14,12 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Mixin;
 
-@Command(name = "move", aliases = { "m" },
+/**
+ * The move ... comand.
+ * @author martin
+ *
+ */
+@Command(name = "move", aliases = { "m" }, //
 	description = "Moves the given playlist or track to another bundle",
 	subcommands = { //
 		CommandLine.HelpCommand.class, //
@@ -29,6 +33,12 @@ public class MoveCommand extends AbstractCommand {
 	}
 
 
+	/**
+	 * The moves playlist command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "playlist", aliases = { "p" }, // 
 		description = "Moves the given playlist to the given bundle. Note: without the tracks", //
 		subcommands =  HelpCommand.class )
@@ -54,6 +64,12 @@ public class MoveCommand extends AbstractCommand {
 		}
 	}
 
+	/**
+	 * The move track comamnd.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "track", aliases = { "t" }, //
 		description = "Moves the given track to the new bundle. Removes it from all playlists containing it", //
 		subcommands =  HelpCommand.class )

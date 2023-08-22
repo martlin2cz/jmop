@@ -17,6 +17,10 @@ import cz.martlin.jmop.sourcery.local.BaseTracksFromFileImporter;
  */
 public class FromPlaylistFileTracksImporter<PT, TT> implements BaseTracksFromFileImporter {
 
+	/**
+	 * The external playlist encapsulator.
+	 * 
+	 */
 	private final BaseExternalPlaylistEncapsulator<PT, TT> encapsulator;
 
 	public FromPlaylistFileTracksImporter(BaseExternalPlaylistEncapsulator<PT, TT> encapsulator) {

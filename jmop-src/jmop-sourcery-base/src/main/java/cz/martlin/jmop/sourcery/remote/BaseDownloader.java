@@ -13,8 +13,19 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
  */
 public interface BaseDownloader {
 
+	/**
+	 * Donwloads the track from the given url into given file.
+	 * @param url
+	 * @param target
+	 * @throws JMOPSourceryException
+	 */
 	public void download(String url, File target) throws JMOPSourceryException;
 
+	/**
+	 * Returns the download format.
+	 * 
+	 * @return
+	 */
 	public TrackFileFormat downloadFormat();
 
 }

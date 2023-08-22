@@ -1,8 +1,6 @@
 package cz.martlin.jmop.common.data.model;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 
@@ -12,18 +10,42 @@ import javafx.util.Duration;
  * An immutable structure holding the general metadata of bundle, playlist or
  * track.
  * 
+ * USe the static {@link #createNew()} and {@link #createExisting(Calendar, Calendar, int)} to obtain instance.
+ * 
+ * 
  * @author martin
  *
  */
 public class Metadata {
-	// TODO replace Calendar with something more ...
-	// TODO make the fields final
 
+	/**
+	 * The date of creation. Never null.
+	 */
 	private final LocalDateTime created;
+	
+	/**
+	 * The date of last play. Can be null (if never played).
+	 */
 	private final LocalDateTime lastPlayed;
+	
+	/**
+	 * Number of plays. 
+	 */
 	private final int numberOfPlays;
+	
+	/**
+	 * Total played time. Never null.
+	 */
 	private final Duration totalTime;
 
+	/**
+	 * Create.
+	 * 
+	 * @param created
+	 * @param lastPlayed
+	 * @param numberOfPlays
+	 * @param totalTime
+	 */
 	private Metadata(LocalDateTime created, LocalDateTime lastPlayed, int numberOfPlays, Duration totalTime) {
 		super();
 		this.created = created;
@@ -52,16 +74,13 @@ public class Metadata {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	@Deprecated
-	public Metadata played() {
-		LocalDateTime newCreated = this.created;
-		int newNumberOfPlays = this.numberOfPlays + 1;
-		LocalDateTime newLastPlayed = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-		Duration newTotalTime = this.totalTime;
-
-		return createExisting(newCreated, newLastPlayed, newNumberOfPlays, newTotalTime);
-	}
-
+	/**
+	 * Constructs the metadata for the played element.
+	 * 
+	 * @param playedTime how long it was played.
+	 * 
+	 * @return
+	 */
 	public Metadata played(Duration playedTime) {
 		LocalDateTime newCreated = this.created;
 		int newNumberOfPlays = this.numberOfPlays + 1;
@@ -73,6 +92,11 @@ public class Metadata {
 
 /////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Creates metadata for thing just fresly created.
+	 * 
+	 * @return
+	 */
 	public static Metadata createNew() {
 		LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 		LocalDateTime lastPlayed = null;
@@ -82,14 +106,15 @@ public class Metadata {
 		return new Metadata(created, lastPlayed, numberOfPlays, totalTime);
 	}
 
-	@Deprecated
-	public static Metadata createExisting(Calendar created, Calendar lastPlayed, int numberOfPlays) {
-		return new Metadata(
-				created == null ? null : LocalDateTime.ofInstant(created.toInstant(), ZoneId.systemDefault()),
-				lastPlayed == null ? null : LocalDateTime.ofInstant(lastPlayed.toInstant(), ZoneId.systemDefault()),
-				numberOfPlays, new Duration(0));
-	}
-
+	/**
+	 * Creates metadata from the given (existing) fields.
+	 * 
+	 * @param created
+	 * @param lastPlayed
+	 * @param numberOfPlays
+	 * @param totalTime
+	 * @return
+	 */
 	public static Metadata createExisting(LocalDateTime created, LocalDateTime lastPlayed, int numberOfPlays,
 			Duration totalTime) {
 		return new Metadata(created, lastPlayed, numberOfPlays, totalTime);

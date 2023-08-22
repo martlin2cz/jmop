@@ -1,5 +1,11 @@
 package cz.martlin.jmop.core.misc;
 
+/**
+ * The simple error reporter which just outputs the error to stderr.
+ * 
+ * @author martin
+ *
+ */
 public class SimpleErrorReporter implements BaseErrorReporter {
 
 	@Override

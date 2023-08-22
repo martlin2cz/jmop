@@ -12,6 +12,12 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 import javafx.util.Duration;
 
+/**
+ * The FFMPEG process. Does all the output parsing and stuff.
+ * 
+ * @author martin
+ *
+ */
 public class FFMPEGProcessEncapsulation extends AbstractProcessEncapsulation {
 
 	private static final String DURATION_REGEX = "\\d{2}\\:\\d{2}\\:\\d{2}"; //$NON-NLS-1$

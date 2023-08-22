@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackData;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
@@ -27,7 +28,14 @@ public class PlaylistImporter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PlaylistImporter.class);
 
+	/**
+	 * The musicbase.
+	 * 
+	 */
 	private final BaseMusicbase musicbase;
+	/**
+	 * The playlist importer.
+	 */
 	private final BasePlaylistImporter importer;
 
 	public PlaylistImporter(BaseMusicbase musicbase, BasePlaylistImporter importer) {
@@ -36,6 +44,14 @@ public class PlaylistImporter {
 		this.importer = importer;
 	}
 
+	/**
+	 * Imports the playlist from the external playlist file.
+	 * 
+	 * @param playlistFile
+	 * @param inBundle
+	 * @param createTracks
+	 * @return
+	 */
 	public Playlist importPlaylist(File playlistFile, Bundle inBundle, TrackFileCreationWay createTracks) {
 		LOGGER.debug("Importing playlist from {}", playlistFile);
 
@@ -56,17 +72,36 @@ public class PlaylistImporter {
 		return playlist;
 	}
 
+	/**
+	 * Adds the tracks to the bundle and playlist.
+	 * 
+	 * @param trackDatas
+	 * @param bundle
+	 * @param playlist
+	 * @param createTrack
+	 */
 	private void addTracks(List<TrackData> trackDatas, Bundle bundle, Playlist playlist,
 			TrackFileCreationWay createTrack) {
+
+		PlaylistModifier modifier = new PlaylistModifier(playlist);
+
 		for (TrackData trackData : trackDatas) {
 			Track track = processTrack(bundle, trackData, createTrack);
-			playlist.addTrack(track);
+			modifier.append(track);
 		}
 
 		musicbase.playlistUpdated(playlist);
-
 	}
 
+	/**
+	 * Processes one track data (either adds if not already in the bundle, or just
+	 * uses existing track).
+	 * 
+	 * @param bundle
+	 * @param trackData
+	 * @param createTrack
+	 * @return
+	 */
 	private Track processTrack(Bundle bundle, TrackData trackData, TrackFileCreationWay createTrack) {
 		String title = trackData.getTitle();
 		Track track = musicbase.tracks(bundle).stream() //

@@ -3,7 +3,6 @@ package cz.martlin.jmop.sourcery.engine;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
@@ -31,11 +30,23 @@ import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
  */
 public class NewTrackAdder {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
-
+	
+	/**
+	 * The querier.
+	 */
 	private final BaseRemoteSourceQuerier querier;
+	/**
+	 * The downloader.
+	 */
 	private final BaseDownloader downloader;
 
+	/**
+	 * The musicbase modifiing.
+	 */
 	private final BaseMusicbaseModifing musicbaseModifing;
+	/**
+	 * The misicbase loading.
+	 */
 	private final BaseMusicbaseLoading musicbaseLoading;
 
 	public NewTrackAdder(BaseRemoteSourceQuerier querier, BaseDownloader downloader,
@@ -56,6 +67,15 @@ public class NewTrackAdder {
 		this.musicbaseLoading = musicbase;
 	}
 
+	/**
+	 * Searches and adds track to the given bundle. Optionally downloads its file.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @param download
+	 * @return
+	 * @throws JMOPSourceryException
+	 */
 	public Track add(Bundle bundle, String query, boolean download) throws JMOPSourceryException {
 		LOG.info("Will add track to bundle {} by searching {}", bundle.getName(), query);
 
@@ -84,6 +104,14 @@ public class NewTrackAdder {
 		}
 	}
 
+	/**
+	 * Does the search.
+	 * 
+	 * @param bundle
+	 * @param query
+	 * @return
+	 * @throws JMOPSourceryException
+	 */
 	private TrackData search(Bundle bundle, String query) throws JMOPSourceryException {
 		LOG.debug("Searching '{}'", query, bundle.getName());
 
@@ -94,6 +122,13 @@ public class NewTrackAdder {
 		return searchedTrack;
 	}
 
+	/**
+	 * Creates the temporary target file for the track.
+	 * 
+	 * @param searchedTrack
+	 * @return
+	 * @throws JMOPSourceryException
+	 */
 	private File createTemporaryFile(TrackData searchedTrack) throws JMOPSourceryException {
 		try {
 			String extension = downloader.downloadFormat().fileExtension();
@@ -107,6 +142,13 @@ public class NewTrackAdder {
 		}
 	}
 
+	/**
+	 * Does the download.
+	 * 
+	 * @param searchedTrack
+	 * @return
+	 * @throws JMOPSourceryException
+	 */
 	private File download(TrackData searchedTrack) throws JMOPSourceryException {
 		LOG.debug("Downloading the track file of {}", searchedTrack.getTitle());
 
@@ -130,6 +172,13 @@ public class NewTrackAdder {
 		return track;
 	}
 
+	/**
+	 * Actually creates the track.
+	 * 
+	 * @param bundle
+	 * @param searchedTrack
+	 * @return
+	 */
 	private Track createTrackWithNoFile(Bundle bundle, TrackData searchedTrack) {
 		LOG.debug("Creating the track: {}", searchedTrack);
 

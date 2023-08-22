@@ -21,8 +21,23 @@ import cz.martlin.jmop.sourcery.locals.playlists.FromExternalXSPFPlaylistPlaylis
 import cz.martlin.jmop.sourcery.locals.playlists.FromXSPFPlaylistTracksImpoter;
 import cz.martlin.jmop.sourcery.remote.BaseRemoteSource;
 
+/**
+ * The JMOP Sourcery fascade builder.
+ * 
+ * @author martin
+ *
+ */
 public class JMOPSourceryBuilder {
 
+	/**
+	 * Creates one based on the given parameters.
+	 * 
+	 * @param root          the root directory
+	 * @param reporter      the error reporter
+	 * @param configuration the configuration
+	 * @param listener      the progress listener
+	 * @return
+	 */
 	public static JMOPSourcery create(File root, BaseErrorReporter reporter, BaseJMOPSourceryConfig configuration,
 			BaseProgressListener listener) {
 
@@ -33,19 +48,28 @@ public class JMOPSourceryBuilder {
 		JMOPRemote youtube = new JMOPRemote(youtubeRemote, mb);
 
 		TrackFileFormat trackFileFormat = TrackFileFormat.MP3; // TODO Pick of player
-		
-		MP3FileMetadataBasedImporter tracksFromMP3FileImpoter = new MP3FileMetadataBasedImporter(true);  // new SimpleTrackImporter();
-		BaseTracksFromDirOrFileImporter tracksFromDirImpoter = new DefaultTracksFromDirOrFileImporter(tracksFromMP3FileImpoter);
+
+		MP3FileMetadataBasedImporter tracksFromMP3FileImpoter = new MP3FileMetadataBasedImporter(true); // new
+																										// SimpleTrackImporter();
+		BaseTracksFromDirOrFileImporter tracksFromDirImpoter = new DefaultTracksFromDirOrFileImporter(
+				tracksFromMP3FileImpoter);
 		BaseTracksFromFileImporter tracksFromPlaylistImpoter = new FromXSPFPlaylistTracksImpoter();
 		BasePlaylistImporter playlistFromPlaylistImpoter = new FromExternalXSPFPlaylistPlaylistIImporter();
-		
-		JMOPLocal local = new JMOPLocal(mb, trackFileFormat, tracksFromDirImpoter, tracksFromPlaylistImpoter, playlistFromPlaylistImpoter);
-		
+
+		JMOPLocal local = new JMOPLocal(mb, trackFileFormat, tracksFromDirImpoter, tracksFromPlaylistImpoter,
+				playlistFromPlaylistImpoter);
+
 		JMOPConfig config = new JMOPConfig(configuration, mb);
-		
+
 		return new JMOPSourcery(musicbase, config, youtube, local);
 	}
 
+	/**
+	 * Creates testing fascade.
+	 * 
+	 * @param root
+	 * @return
+	 */
 	public static JMOPSourcery createTesting(File root) {
 		BaseJMOPSourceryConfig config = new TestingConstantSourceryConfiguration();
 		BaseProgressListener listener = new PrintingListener(System.err);

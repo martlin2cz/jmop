@@ -6,6 +6,11 @@ import cz.martlin.jmop.player.fascade.JMOPPlayer;
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 
+/**
+ * The JMOP Factory. Constructs JMOP objects by injecting the JMOP fascade.
+ * @author martin
+ *
+ */
 public class JMOPComponentsFactory implements IFactory {
 
 	private final JMOPPlayer jmop;

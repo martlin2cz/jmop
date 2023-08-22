@@ -88,8 +88,8 @@ public class VerifiingInMemoryMusicbaseTest {
 
 	@Test
 	void testTracksSimply() {
-		TrackData data = new TrackData("DD", "Different Drum", "Billion Dollar Gravy",
-				DurationUtilities.createDuration(0, 7, 42));
+		TrackData data = new TrackData("Different Drum", "Billion Dollar Gravy",
+				DurationUtilities.createDuration(0, 7, 42), null, null);
 
 		Track differentDrum = musicbase.createNewTrack(tme.tmd.londonElektricity, data, TrackFileCreationWay.NO_FILE, null);
 		asrtFail(() -> musicbase.createNewTrack(tme.tmd.londonElektricity, data, TrackFileCreationWay.NO_FILE, null));

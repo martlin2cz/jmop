@@ -25,12 +25,24 @@ import picocli.CommandLine.IFactory;
 import picocli.shell.jline3.PicocliCommands;
 import picocli.shell.jline3.PicocliCommands.PicocliCommandsFactory;
 
+/**
+ * The common REPL obtained somehwere from the picocli docs.
+ * 
+ * @author martin
+ *
+ */
 public abstract class AbstractRepl {
 
 	public AbstractRepl() {
 		super();
 	}
 
+	/**
+	 * Constructs the picocli commandline object to not be executed as REPL, but
+	 * standalone.
+	 * 
+	 * @return
+	 */
 	public CommandLine createStandaloneCommandline() {
 		Object commands = createRootCommand();
 
@@ -41,7 +53,12 @@ public abstract class AbstractRepl {
 		initializeCommandLine(cmd);
 		return cmd;
 	}
-	
+
+	/**
+	 * Runs the REPL configured by the overriden methods.
+	 * 
+	 * @throws Exception
+	 */
 	public void runREPL() throws Exception {
 		try {
 			Supplier<Path> workDir = () -> Paths.get(System.getProperty("user.dir"));
@@ -97,12 +114,32 @@ public abstract class AbstractRepl {
 		}
 	}
 
+	/**
+	 * Returns the root command.
+	 * 
+	 * @return
+	 */
 	protected abstract Object createRootCommand();
 
+	/**
+	 * Returns the command factory.
+	 * 
+	 * @return
+	 */
 	protected abstract IFactory createCommandsFactory();
 
+	/**
+	 * Does further configuration of the command line (register things).
+	 * 
+	 * @param cmd
+	 */
 	protected abstract void initializeCommandLine(CommandLine cmd);
 
+	/**
+	 * Returns the prompt text.
+	 * 
+	 * @return
+	 */
 	protected abstract String createPropmt();
 
 }

@@ -3,13 +3,19 @@ package cz.martlin.jmop.common.testing.resources;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Testing root directory utility.
+ * In tests, use the {@link TestingRootDir}.
+ * 
+ *
+ * @author martin
+ *
+ */
 public class TestingRootDir {
 	private static final Logger LOG = LoggerFactory.getLogger(TestingRootDir.class);
 
@@ -29,6 +35,11 @@ public class TestingRootDir {
 		return file;
 	}
 	
+	/**
+	 * Constructs the root directory based on the curernt test class name.
+	 * 
+	 * @return
+	 */
 	private File prepareFile() {
 		File jmopDir = getJMOPTempDir();
 
@@ -48,6 +59,10 @@ public class TestingRootDir {
 		return testDir;
 	}
 
+	/**
+	 * Returns the jmop dedicated temporary dir.
+	 * @return
+	 */
 	private static File getJMOPTempDir() {
 		String tempPath = System.getProperty("java.io.tmpdir");
 

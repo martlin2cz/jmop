@@ -5,27 +5,26 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.martlin.jmop.common.data.misc.TrackData;
-import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.core.misc.ops.SimpleShortOperation;
 import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
 
+/**
+ * The abstract common remote querier superclass.
+ * 
+ * @author martin
+ *
+ */
 public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
+//	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	public AbstractRemoteQuerier() {
 		super();
 	}
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,12 +36,8 @@ public abstract class AbstractRemoteQuerier implements BaseRemoteSourceQuerier {
 
 	protected abstract String createUrlOfTrack(Track track);
 
-
 /////////////////////////////////////////////////////////////////////////////////////
 
-	private static String trackToString(Track track) {
-		return track.toHumanString();
-	}
 
 	private static URL stringToURL(String url) {
 		try {

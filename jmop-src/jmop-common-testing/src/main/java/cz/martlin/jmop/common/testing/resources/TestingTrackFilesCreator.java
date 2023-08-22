@@ -11,7 +11,12 @@ import cz.martlin.jmop.core.misc.DurationUtilities;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
-
+/**
+ * The testing track file creator.
+ * 
+ * @author martin
+ *
+ */
 public class TestingTrackFilesCreator {
 
 	public static final Duration SAMPLE_FILE_DURATION = DurationUtilities.createDuration(0, 0, 10);
@@ -19,6 +24,13 @@ public class TestingTrackFilesCreator {
 	public TestingTrackFilesCreator() {
 	}
 	
+	/**
+	 * Creates temporary track file of given format.
+	 * 
+	 * @param format
+	 * @return
+	 * @throws IOException
+	 */
 	public File prepare(TrackFileFormat format) throws IOException {
 		String extension = format.fileExtension();
 		File file = File.createTempFile("sample-track-", "." + extension );
@@ -26,7 +38,13 @@ public class TestingTrackFilesCreator {
 		return file;
 	}
 	
-	
+	/**
+	 * Writes the sample track data into the given temp file.
+	 * 
+	 * @param format
+	 * @param file
+	 * @throws IOException
+	 */
 	public void prepare(TrackFileFormat format, File file) throws IOException {
 		byte[] data = readSampleTrack(format);
 		Path path = file.toPath();

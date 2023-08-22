@@ -17,14 +17,39 @@ import javafx.util.Duration;
  *
  */
 public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
+	/**
+	 * The bundle this track belongs to.
+	 */
 	private Bundle bundle;
+	
+	/**
+	 * The source location (where it was downloaded or copied from). Can be null.
+	 */
 	private URI source; 
+	
+	/**
+	 * The track title. Never null.
+	 */
 	private String title;
+	
+	/**
+	 * The track description. Optional, can be null.
+	 */
 	private String description;
+	
+	/**
+	 * The track time, length, duration. Never null.
+	 */
 	private Duration duration;
 	
+	/**
+	 * The track file. Can be null or non-existing file.
+	 */
 	private File file;
-	
+
+	/**
+	 * The track metadata. Never null.
+	 */
 	private Metadata metadata;
 
 	public Track(Bundle bundle, String title, String description, Duration duration, URI source, File file,
@@ -162,6 +187,4 @@ public class Track implements Comparable<Track>, HasMetadata, WithPlayedMarker {
 	public void played(Duration time) {
 		metadata = metadata.played(time);
 	}
-	
-
 }

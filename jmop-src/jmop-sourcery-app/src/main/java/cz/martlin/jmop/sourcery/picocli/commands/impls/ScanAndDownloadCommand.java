@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.sourcery.fascade.JMOPRemote;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import cz.martlin.jmop.sourcery.picocli.misc.JMOPSourceryProvider;
@@ -21,6 +20,12 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 
+/**
+ * The download track files command.
+ * 
+ * @author martin
+ *
+ */
 @Command(name = "download", aliases = { "donwload-track-files", "d" }, //
 	description = "Scans the whole musicbase, choosen bundle, playlist or just one single track, " //
 	+ "and if its tracks doesn't have the track file, attepmts to download it from the provided service. " //
@@ -65,7 +70,12 @@ public class ScanAndDownloadCommand implements Runnable {
 		}
 
 	}
-
+	
+	/**
+	 * Lists tracks to progrees based on the playlist/bundle/or the single track.
+	 * 
+	 * @return
+	 */
 	private Set<Track> listTracksToProcess() {
 		JMOPSourcery sourcery = JMOPSourceryProvider.get().getSourcery();
 		if (wholeMusicbase) {
@@ -84,6 +94,12 @@ public class ScanAndDownloadCommand implements Runnable {
 		return Collections.emptySet();
 	}
 
+	/**
+	 * Runs the download.
+	 * 
+	 * @param youtube
+	 * @param track
+	 */
 	private void downloadAndSet(JMOPRemote youtube, Track track) {
 		File file = track.getFile();
 

@@ -19,8 +19,20 @@ import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ScopeType;
 
+/**
+ * The printing commands
+ * 
+ * @author martin
+ *
+ */
 public class PrintCommands {
 
+	/**
+	 * The print current status command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "status", aliases = { "st" }, //
 		description = "Prints the current player status", //
 		subcommands =  HelpCommand.class )
@@ -44,6 +56,12 @@ public class PrintCommands {
 
 	}
 
+	/**
+	 * Print bar command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "bar", aliases = { "B" }, //
 		description = "Prints the track play progressbar", //
 		subcommands =  HelpCommand.class )
@@ -64,9 +82,13 @@ public class PrintCommands {
 
 			printer.printBar();
 		}
-
 	}
-
+	/**
+	 * Print the bundle information command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "bundle", aliases = { "b" }, //
 		description = "Prints the info about the current or provided bundle", //
 		subcommands =  HelpCommand.class )
@@ -90,7 +112,12 @@ public class PrintCommands {
 		}
 
 	}
-
+	/**
+	 * Print the playlist info command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "playlist", scope = ScopeType.INHERIT, aliases = { "P" },
 		description = "Prints info about the (current or provided) playlist or alters it", //
 		subcommands = { //
@@ -120,6 +147,12 @@ public class PrintCommands {
 	}
 
 
+	/**
+	 * Print the track info command.
+	 * 
+	 * @author martin
+	 *
+	 */
 	@Command(name = "track", aliases = { "t" }, //
 		description = "Prints the info about the given or current track", //
 		subcommands =  HelpCommand.class )
@@ -143,7 +176,12 @@ public class PrintCommands {
 		}
 
 	}
-
+	
+	/**
+	 * Prints the stats command.
+	 * @author martin
+	 *
+	 */
 	@Command(name = "statistics", aliases = { "stats" }, //
 		description = "Prints various statistics about the playing and musicbase", //
 		subcommands =  HelpCommand.class )

@@ -1,7 +1,6 @@
 package cz.martlin.jmop.common.data.model;
 
 import cz.martlin.jmop.common.data.misc.HasMetadata;
-import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.misc.TrackIndex;
 import cz.martlin.jmop.common.data.misc.WithPlayedMarker;
 import cz.martlin.jmop.core.misc.ObservableObject;
@@ -9,21 +8,36 @@ import javafx.util.Duration;
 
 /**
  * The data structure for playlist. Each playlist is associated with some
- * bundle, and has name, list of tracks and current track index.
- * Changes of instance of this class fires
- * invalidated events.
+ * bundle, and has name, list of tracks and current track index. Changes of
+ * instance of this class fires invalidated events.
  * 
  * @author martin
  *
  */
-public class Playlist extends ObservableObject<Playlist> implements Comparable<Playlist>, HasMetadata, WithPlayedMarker {
+public class Playlist extends ObservableObject<Playlist>
+		implements Comparable<Playlist>, HasMetadata, WithPlayedMarker {
+
+	/**
+	 * The owning bundle.
+	 */
 	private Bundle bundle;
 
+	/**
+	 * The playlist name.
+	 */
 	private String name;
+	/**
+	 * The list of tracks.
+	 */
 	private Tracklist tracks;
+	/**
+	 * The current track.
+	 */
 	private TrackIndex currentTrackIndex;
-	@Deprecated
-	private boolean locked;
+
+	/**
+	 * The metadata.
+	 */
 	private Metadata metadata;
 
 	public Playlist(Bundle bundle, String name, Metadata metadata) {
@@ -34,7 +48,7 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		this.currentTrackIndex = TrackIndex.ofIndex(0);
 		this.metadata = metadata;
 	}
-	
+
 	public Playlist(Bundle bundle, String name, Tracklist tracks, TrackIndex currentTrackIndex, Metadata metadata) {
 		super();
 		this.bundle = bundle;
@@ -43,66 +57,13 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		this.currentTrackIndex = currentTrackIndex;
 		this.metadata = metadata;
 	}
-	
-	/**
-	 * 
-	 * @param bundle
-	 * @param name
-	 * @param tracks
-	 * @param currentTrackIndex
-	 * @param locked
-	 * @deprecated use the {@link #Playlist(Bundle, String, Tracklist, int, Metadata))}
-	 */
-	@Deprecated
-	public Playlist(Bundle bundle, String name, Tracklist tracks, int currentTrackIndex, boolean locked) {
-		super();
-		throw new UnsupportedOperationException("nope");
-	}
-
-	/**
-	 * 
-	 * @param bundle
-	 * @param name
-	 * @param tracks
-	 * @deprecated use the {@link #Playlist(Bundle, String, Tracklist, int, Metadata))}
-	 */
-	@Deprecated
-	public Playlist(Bundle bundle, String name, Tracklist tracks) {
-		super();
-		throw new UnsupportedOperationException("nope");
-	}
-
-	/**
-	 * @deprecated use the {@link #Playlist(Bundle, String, Tracklist, int, Metadata))}
-	 * @param bundle
-	 * @param name
-	 */
-	@Deprecated
-	public Playlist(Bundle bundle, String name) {
-		super();
-		throw new UnsupportedOperationException("nope");
-	}
-
-	/**
-	 * 
-	 * @param bundle
-	 * @param name
-	 * @param currentTrack
-	 * @param locked
-	 * @param metadata
-	 * @param tracks
-	 * @deprecated use the {@link #Playlist(Bundle, String, Tracklist, int, Metadata))}
-	 */
-	public Playlist(Bundle bundle, String name, int currentTrack, boolean locked, Metadata metadata, Tracklist tracks) {
-		super();
-		throw new UnsupportedOperationException("nope");
-	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
 	public Bundle getBundle() {
 		return bundle;
 	}
-	
+
 	public void setBundle(Bundle bundle) {
 		this.bundle = bundle;
 	}
@@ -119,36 +80,6 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 	public Tracklist getTracks() {
 		return tracks;
 	}
-	
-	/**
-	 * use the {@link PlaylistModifier} instead
-	 * @param track
-	 */
-	@Deprecated
-	public void addTrack(Track track) {
-		//TODO little tricky
-		tracks.getTracks().add(track);
-	}
-	
-	/**
-	 * use the {@link PlaylistModifier} instead
-	 * @param track
-	 */
-	@Deprecated
-	public void removeTrack(Track track) {
-		//TODO little tricky
-		tracks.getTracks().remove(track);
-	}
-
-	/**
-	 * use the {@link PlaylistModifier} when needed
-	 * @param track
-	 */
-	@Deprecated
-	public void setTracks(Tracklist tracks) {
-		this.tracks = tracks;
-		fireValueChangedEvent();
-	}
 
 	public TrackIndex getCurrentTrackIndex() {
 		return currentTrackIndex;
@@ -159,29 +90,9 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		fireValueChangedEvent();
 	}
 
-	@Deprecated
-	public boolean isLocked() {
-		return locked;
-	}
-
-	@Deprecated
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-		fireValueChangedEvent();
-	}
-	
 	@Override
 	public Metadata getMetadata() {
 		return metadata;
-	}
-
-	/**
-	 * Use {@link #played(Duration)}
-	 * @param metadata
-	 */
-	@Deprecated
-	public void setMetadata(Metadata metadata) {
-		this.metadata = metadata;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,7 +133,7 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 		if (nameCmp != 0) {
 			return nameCmp;
 		}
-		
+
 		int bundleCmp = this.bundle.compareTo(other.bundle);
 		return bundleCmp;
 	}
@@ -244,10 +155,9 @@ public class Playlist extends ObservableObject<Playlist> implements Comparable<P
 
 	public Duration getTotalDuration() {
 		return tracks.getTracks().stream() //
-				.reduce(Duration.ZERO, // 
+				.reduce(Duration.ZERO, //
 						(Duration d, Track t) -> d.add(t.getDuration()), //
 						(Duration x, Duration y) -> x.add(y)); //
 	}
-	
 
 }

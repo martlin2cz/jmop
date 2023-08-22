@@ -18,6 +18,9 @@ import cz.martlin.jmop.sourcery.local.BasePlaylistImporter;
  */
 public class FromExternalPlaylistPlaylistImpoter<PT, TT> implements BasePlaylistImporter {
 
+	/**
+	 * The playlist file encapsulator.
+	 */
 	private final BaseExternalPlaylistEncapsulator<PT, TT> encapsulator;
 
 	public FromExternalPlaylistPlaylistImpoter(BaseExternalPlaylistEncapsulator<PT, TT> encapsulator) {

@@ -5,6 +5,12 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
 
+/**
+ * The track index of the current playlist converter.
+ * 
+ * @author martin
+ *
+ */
 public class CurrentPlaylistTrackIndexConverter extends AbstractTrackIndexConverter {
 
 	public CurrentPlaylistTrackIndexConverter(JMOPPlayer jmop) {

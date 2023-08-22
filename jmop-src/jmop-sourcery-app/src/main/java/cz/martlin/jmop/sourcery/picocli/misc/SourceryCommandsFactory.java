@@ -6,6 +6,12 @@ import java.lang.reflect.InvocationTargetException;
 import cz.martlin.jmop.sourcery.fascade.JMOPSourcery;
 import picocli.CommandLine.IFactory;
 
+/**
+ * The commands factor.y
+ * 
+ * @author martin
+ *
+ */
 public class SourceryCommandsFactory implements IFactory {
 
 	private final IFactory delegee;

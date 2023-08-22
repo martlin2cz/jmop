@@ -1,11 +1,17 @@
 package cz.martlin.jmop.sourcery.remote;
 
-import java.util.Collection;
-
-import cz.martlin.jmop.common.data.model.Track;
-
+/**
+ * The configuratin of the remotes.
+ * @author martin
+ *
+ */
 public interface BaseRemotesConfiguration {
 
+	/**
+	 * The number of tracks to search on each query.
+	 * 
+	 * @return
+	 */
 	int getSearchCount();
 
 }

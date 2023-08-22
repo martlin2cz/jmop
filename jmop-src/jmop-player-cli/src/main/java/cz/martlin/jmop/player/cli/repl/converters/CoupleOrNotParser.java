@@ -2,6 +2,12 @@ package cz.martlin.jmop.player.cli.repl.converters;
 
 import java.util.Objects;
 
+/**
+ * The couple (or not) parser.
+ * 
+ * @author martin
+ *
+ */
 public class CoupleOrNotParser {
 
 	private static final String SEPARATOR = "/";
@@ -10,6 +16,12 @@ public class CoupleOrNotParser {
 		super();
 	}
 
+	/**
+	 * Parses the given value as the couple.
+	 * 
+	 * @param value
+	 * @return
+	 */
 	protected CoupleOrNot parse(String value) {
 		// FIXME what about '/' in names? will some escaping help?
 
@@ -29,6 +41,11 @@ public class CoupleOrNotParser {
 		throw new IllegalArgumentException("Invalid format: " + value);
 	}
 
+	/**
+	 * The couple of two strings separated by slash (the second part beeing optional).
+	 * @author martin
+	 *
+	 */
 	public static class CoupleOrNot {
 		private final String first;
 		private final String secondOptional;

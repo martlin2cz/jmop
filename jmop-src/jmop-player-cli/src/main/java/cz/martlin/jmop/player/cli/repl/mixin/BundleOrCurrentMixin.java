@@ -1,7 +1,6 @@
 package cz.martlin.jmop.player.cli.repl.mixin;
 
 import cz.martlin.jmop.common.data.model.Bundle;
-import cz.martlin.jmop.player.cli.repl.completions.BundlesCompletionsIterator;
 import picocli.CommandLine.Parameters;
 
 /**
@@ -14,8 +13,7 @@ import picocli.CommandLine.Parameters;
 public class BundleOrCurrentMixin {
 
 	@Parameters(arity = "1", paramLabel = "BUNDLE", //
-			description = "The bundle name or '.' for the bundle currently beeing played", //
-			completionCandidates = BundlesCompletionsIterator.class)
+			description = "The bundle name or '.' for the bundle currently beeing played")
 	private Bundle bundle;
 
 	public BundleOrCurrentMixin() {

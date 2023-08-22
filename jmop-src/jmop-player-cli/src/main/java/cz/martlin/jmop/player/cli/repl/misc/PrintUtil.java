@@ -14,58 +14,73 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.core.misc.DurationUtilities;
 import javafx.util.Duration;
 
+/**
+ * The utility for the printing.
+ * 
+ * @author martin
+ *
+ */
 public class PrintUtil {
 
 	public static final String PATH_SEPARATOR = "/";
-	
+
 	private static final DateTimeFormatter DATE_FORMAT = //
 			DateTimeFormatter.ofPattern("d.M.yy H:mm:ss");
 
+	/**
+	 * Prints the empty line.
+	 */
 	public static void emptyLine() {
 		System.out.println();
 	}
 
+	/**
+	 * Prints the line with given objects, chooses propriet format based on the
+	 * object type.
+	 * 
+	 * @param items
+	 */
 	public static void print(Object... items) {
 		for (Object item : items) {
 			if (item instanceof Bundle) {
 				Bundle bundle = (Bundle) item;
 				System.out.print(bundle.getName());
-				
+
 			} else if (item instanceof Playlist) {
 				Playlist playlist = (Playlist) item;
 				System.out.print(playlist.getName());
-				
+
 			} else if (item instanceof Track) {
 				Track track = (Track) item;
 				System.out.print(track.getTitle());
-				
+
 			} else if (item instanceof TrackIndex) {
 				TrackIndex index = (TrackIndex) item;
 				System.out.print(index.getHuman() + ".");
-						
+
 			} else if (item instanceof Duration) {
 				Duration duration = (Duration) item;
 				System.out.print(DurationUtilities.toHumanString(duration));
-			
+
 			} else if (item instanceof Integer) {
 				Integer num = (Integer) item;
 				System.out.print(num);
-			
+
 			} else if (item instanceof LocalDateTime) {
 				LocalDateTime date = (LocalDateTime) item;
 				String formatted = date.format(DATE_FORMAT);
 				System.out.print(formatted);
-				
+
 			} else if (item instanceof URI) {
 				URI uri = (URI) item;
 				String stringified = uri.toASCIIString();
 				System.out.print(stringified);
-			
+
 			} else if (item instanceof URL) {
 				URL url = (URL) item;
 				String stringified = url.toExternalForm();
 				System.out.print(stringified);
-							
+
 			} else if (item instanceof File) {
 				File file = (File) item;
 				if (file.exists()) {
@@ -73,21 +88,21 @@ public class PrintUtil {
 				} else {
 					System.out.print("none");
 				}
-				
+
 			} else if (item instanceof String) {
 				String string = (String) item;
 				System.out.print(string);
-			
+
 			} else if (item == null) {
 				System.out.print("---");
-				
+
 			} else {
 				throw new UnsupportedOperationException(Objects.toString(item));
 			}
-			
+
 			System.out.print(" ");
 		}
-		
+
 		System.out.println();
 	}
 

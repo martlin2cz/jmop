@@ -10,13 +10,39 @@ Apart from the usual music players, JMOP can play **only and only** what's locat
 
 The main idea of JMOP is to play music you have locally on your computer, not beeing annoyed by some extra GUI window. The music shall just flow, and you may not have to even bee thinking about any music player been running.
 
-*Note:* Running in background (as a service/daemon) and mapping the controls to media keys is planned. Also, some automated _musicdata_ import procedure is in the queue. 
-
 And why just command-line app? Well, It's a hobby project and mantaining good and user-friendly GUI is extremelly time-consuming. If you want to see _bad_ UX, try the version 1.
 
 # Screenshots
 ![Working with JMOP](screens/jmop-cli.png) 
  
+# How to start
+1. Dedicate folder for your musicbase.
+2. Start jmop by running
+````
+$ cd dist
+$ ./jmop-player.sh /your/favourite/music/directory #or jmop-player.bat
+````
+3. If everything goes well, you can start building your own musicbase, like:
+````
+> create bundle Ventolin
+> create track "Disco science" bundle=Ventolin duration=3:15 set-file=~/music/ventolin/disco-science.mp3
+> create playlist best-of-ventolin bundle=Ventolin
+> playlist Ventolin/best-of-ventolin add "Ventolin/Disco science"
+````
+4. And then play:
+````
+play playlist best-of-ventolin
+pause
+next
+stop
+````
+5. If that's too anoying for you, you can use sourcery to import your music, various ways, like:
+````
+$ ./jmop-sourcery.sh import-tracks --create-bundle MidiLidi ~/music/midilidi/*.mp3
+$ ./jmop-sourcery.sh import-playlist --into-bundle MidiLidi ~/music/midilidi/OperaceKindigo.xspf
+````
+
+
 # Download
 See GitHub [](https://github.com/martlin2cz/jmop/releases "Releases") site to get the latest version. **Important note:** The project is still under development, expected less-then-more stable releases. Rather checkout the latest version and build from sources.
 

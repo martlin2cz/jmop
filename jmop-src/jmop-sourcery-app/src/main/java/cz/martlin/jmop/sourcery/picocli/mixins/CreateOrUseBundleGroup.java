@@ -10,6 +10,12 @@ import cz.martlin.jmop.sourcery.fascade.JMOPSourceryMusicbase;
 import cz.martlin.jmop.sourcery.picocli.misc.JMOPSourceryProvider;
 import picocli.CommandLine.Option;
 
+/**
+ * The add-to-(new/existing)-bundle arguments group.
+ * 
+ * @author martin
+ *
+ */
 public class CreateOrUseBundleGroup {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateOrAddToPlaylistGroup.class);
@@ -30,6 +36,11 @@ public class CreateOrUseBundleGroup {
 		super();
 	}
 
+	/**
+	 * Returns the bundle, either picking existing or creating new.
+	 * 
+	 * @return
+	 */
 	public Bundle getBundle() {
 		JMOPSourceryMusicbase musicbase = JMOPSourceryProvider.get().getSourcery().musicbase();
 

@@ -7,6 +7,12 @@ import cz.martlin.jmop.sourcery.remote.BaseConverter;
 import cz.martlin.jmop.sourcery.remote.BaseDownloader;
 import cz.martlin.jmop.sourcery.remote.BaseRemoteSourceQuerier;
 
+/**
+ * The youtube statuser.
+ * 
+ * @author martin
+ *
+ */
 public class YoutubeStatuser extends AbstractRemoteStatusHandler {
 
 	public YoutubeStatuser(BaseRemoteSourceQuerier querier, BaseDownloader downloader, BaseConverter converter) {

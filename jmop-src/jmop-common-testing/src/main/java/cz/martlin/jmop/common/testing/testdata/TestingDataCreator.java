@@ -1,11 +1,8 @@
 package cz.martlin.jmop.common.testing.testdata;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.Calendar;
 
 import cz.martlin.jmop.common.data.misc.TrackData;
@@ -13,28 +10,22 @@ import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Metadata;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
-import cz.martlin.jmop.common.data.model.Tracklist;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseModifing;
 import cz.martlin.jmop.common.musicbase.TrackFileCreationWay;
 import cz.martlin.jmop.common.testing.resources.TestingTrackFilesCreator;
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import cz.martlin.jmop.core.misc.DurationUtilities;
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-import cz.martlin.jmop.core.sources.SourceKind;
 import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import javafx.util.Duration;
 
 /**
+ * The testing data creator, or should it be called builder.
+ * 
  * @author martin
  *
  */
 public class TestingDataCreator {
 
-	@Deprecated
-	public static final String FOO_TRACK_ID = "1234";
-	@Deprecated
-	public static final String BAR_TRACK_ID = "9999";
-	
 	private static final TestingTrackFilesCreator ttfc = new TestingTrackFilesCreator();
 
 	private TestingDataCreator() {
@@ -65,7 +56,6 @@ public class TestingDataCreator {
 	}
 
 	public static Track track(BaseMusicbaseModifing musicbase, Bundle bundle, String title, TrackFileFormat trackFileOrNot) {
-		String id = "id of " + title;
 		String description = "description of " + title;
 		Duration duration = DurationUtilities.createDuration(0, 3, 15);
 		URI uri = URI.create("file://uri-of" + title);
@@ -129,25 +119,7 @@ public class TestingDataCreator {
 	}
 
 
-
-	@Deprecated
-	public static Bundle createEmptyTestingBundle() {
-		String name = "box";
-		SourceKind kind = SourceKind.YOUTUBE;
-		Metadata metadata = metadata(5, 2, 2, 29, 9);
-		Bundle bundle = new Bundle(kind, name, metadata);
-		return bundle;
-	}
-
 	//////////////////////////////////////////////////////////////////////////////////////
-
-	public static Metadata metadata(int numberOfPlays, int createdDay, int createdMonth, int lastPlayedDay,
-			int lastPlayedMonth) {
-		Calendar lastPlayed = datetime(lastPlayedDay, lastPlayedMonth);
-		Calendar created = datetime(createdDay, createdMonth);
-		Metadata metadata = Metadata.createExisting(created, lastPlayed, numberOfPlays);
-		return metadata;
-	}
 
 	public static Calendar datetime(int dayAndMinute, int monthAndHour) {
 		Calendar calendar = Calendar.getInstance();

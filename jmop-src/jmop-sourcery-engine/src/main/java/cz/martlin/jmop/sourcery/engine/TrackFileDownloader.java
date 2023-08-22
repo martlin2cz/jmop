@@ -28,9 +28,18 @@ public class TrackFileDownloader {
 
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
+	/**
+	 * The querier.
+	 */
 	private final BaseRemoteSourceQuerier querier;
+	/**
+	 * The downloader.
+	 */
 	private final BaseDownloader downloader;
 
+	/**
+	 * The musicbase.
+	 */
 	private final BaseMusicbaseModifing musicbaseModifing;
 
 	public TrackFileDownloader(BaseRemoteSource remote, BaseMusicbaseModifing musicbaseModifing) {
@@ -48,6 +57,13 @@ public class TrackFileDownloader {
 		this.musicbaseModifing = musicbaseModifing;
 	}
 
+	/**
+	 * Downloads the given (already musicbase track) and updates its track file into
+	 * the downloaded file.
+	 * 
+	 * @param track
+	 * @throws JMOPSourceryException
+	 */
 	public void downloadAndSetFile(Track track) throws JMOPSourceryException {
 		LOG.info("Will add and download track file for {} (and set the file)", track.getTitle());
 
@@ -58,6 +74,13 @@ public class TrackFileDownloader {
 		musicbaseModifing.specifyTrackFile(track, TrackFileCreationWay.MOVE_FILE, file);
 	}
 
+	/**
+	 * Downloads the given track (Already musicbase track) and moves the downloaded
+	 * track file into one specified in the track.
+	 * 
+	 * @param track
+	 * @throws JMOPSourceryException
+	 */
 	public void downloadToFile(Track track) throws JMOPSourceryException {
 		LOG.info("Will add and download track file for {} into the specified track file", track.getTitle());
 
@@ -70,6 +93,13 @@ public class TrackFileDownloader {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Obtains the download url of the track.
+	 * 
+	 * @param track
+	 * @return
+	 * @throws JMOPSourceryException
+	 */
 	private String obtainURL(Track track) throws JMOPSourceryException {
 		String title = track.getTitle();
 
@@ -90,6 +120,13 @@ public class TrackFileDownloader {
 		return urlStr;
 	}
 
+	/**
+	 * Creates the temporary donwload file.
+	 * 
+	 * @param track
+	 * @return
+	 * @throws JMOPSourceryException
+	 */
 	private File createTemporaryFile(Track track) throws JMOPSourceryException {
 		try {
 			String extension = downloader.downloadFormat().fileExtension();

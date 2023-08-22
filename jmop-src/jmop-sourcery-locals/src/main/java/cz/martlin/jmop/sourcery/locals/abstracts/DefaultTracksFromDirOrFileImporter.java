@@ -27,6 +27,10 @@ public class DefaultTracksFromDirOrFileImporter implements BaseTracksFromDirOrFi
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultTracksFromDirOrFileImporter.class);
 
+	/**
+	 * The tracks-from-file improter.
+	 * 
+	 */
 	private final BaseTracksFromFileImporter fromFileImporter;
 
 	public DefaultTracksFromDirOrFileImporter(BaseTracksFromFileImporter fromFileImporter) {

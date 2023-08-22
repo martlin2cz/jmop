@@ -167,8 +167,8 @@ class JMOPMusicbaseTest {
 	@Test
 	void testCreateNewTrack()  {
 		Bundle bundle = tme.tmd.daftPunk;
-		TrackData data = new TrackData("HBFS", "Harder, Better, Faster, Stronger", "Discovery, 2001",
-				DurationUtilities.createDuration(0, 3, 48));
+		TrackData data = new TrackData("Harder, Better, Faster, Stronger", "Discovery, 2001",
+				DurationUtilities.createDuration(0, 3, 48), null, null);
 		
 		File contents;
 		try {
@@ -228,7 +228,7 @@ class JMOPMusicbaseTest {
 		Track track = tme.tmd.ladyCarneval;
 //		Bundle bundle = track.getBundle();
 
-		TrackData data = new TrackData("KGLC", track.getTitle(), "Great one!", DurationUtilities.createDuration(0, 4, 12));
+		TrackData data = new TrackData(track.getTitle(), "Great one!", DurationUtilities.createDuration(0, 4, 12), null, null);
 		
 		musicbase.updateTrack(track, data);
 		

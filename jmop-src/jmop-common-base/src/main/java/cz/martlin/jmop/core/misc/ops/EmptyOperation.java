@@ -1,5 +1,11 @@
 package cz.martlin.jmop.core.misc.ops;
 
+/**
+ * Operation doing nothing.
+ * @author martin
+ *
+ * @param <T>
+ */
 public class EmptyOperation<T> implements BaseOperation<T, T> {
 
 	private final T input;

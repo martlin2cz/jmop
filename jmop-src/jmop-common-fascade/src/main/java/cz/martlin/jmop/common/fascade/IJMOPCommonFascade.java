@@ -8,5 +8,9 @@ package cz.martlin.jmop.common.fascade;
  */
 public interface IJMOPCommonFascade {
 
+	/**
+	 * The musicbase related thing.
+	 * @return
+	 */
 	public JMOPCommonMusicbase musicbase();
 }

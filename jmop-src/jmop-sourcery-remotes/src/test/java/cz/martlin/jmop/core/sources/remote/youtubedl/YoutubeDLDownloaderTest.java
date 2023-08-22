@@ -6,10 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.Test;
 
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 import cz.martlin.jmop.core.operation.PrintingListener;

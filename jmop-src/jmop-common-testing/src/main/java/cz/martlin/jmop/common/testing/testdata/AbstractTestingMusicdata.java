@@ -2,6 +2,7 @@ package cz.martlin.jmop.common.testing.testdata;
 
 import java.net.URI;
 
+import cz.martlin.jmop.common.data.misc.PlaylistModifier;
 import cz.martlin.jmop.common.data.model.Bundle;
 import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
@@ -143,11 +144,13 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 				trackFileOrNot, URI.create("https://dp.com/gl"));
 
 		// init the playlists
-		discovery.addTrack(oneMoreTime);
-		discovery.addTrack(aerodynamic);
-		discovery.addTrack(verdisQuo);
+		PlaylistModifier discoveryM = new PlaylistModifier(discovery);
+		discoveryM.append(oneMoreTime);
+		discoveryM.append(aerodynamic);
+		discoveryM.append(verdisQuo);
 		
-		randomAccessMemories.addTrack(getLucky);
+		PlaylistModifier ramM = new PlaylistModifier(randomAccessMemories);
+		ramM.append(getLucky);
 		
 		// mark something played
 		daftPunk.played(DurationUtilities.createDuration(0, 14, 8));
@@ -200,16 +203,19 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 				trackFileOrNot,  URI.create("http://le.uk/ewkmw"));
 
 		// init the playlists
-		syncopatedCity.addTrack(justOneSecond);
-		syncopatedCity.addTrack(allTheHellIsBreakingLoose);
-		syncopatedCity.addTrack(pointOfNoReturn);
+		PlaylistModifier syncopatedCityM = new PlaylistModifier(syncopatedCity);
+		syncopatedCityM.append(justOneSecond);
+		syncopatedCityM.append(allTheHellIsBreakingLoose);
+		syncopatedCityM.append(pointOfNoReturn);
 
-		yikes.addTrack(meteorities);
-		yikes.addTrack(invisibleWorlds);
-		yikes.addTrack(elektricityWillKeepMeWarm);
+		PlaylistModifier yikesM = new PlaylistModifier(yikes);
+		yikesM.append(meteorities);
+		yikesM.append(invisibleWorlds);
+		yikesM.append(elektricityWillKeepMeWarm);
 
-		bestTracks.addTrack(justOneSecond);
-		bestTracks.addTrack(meteorities);
+		PlaylistModifier bestTracksM = new PlaylistModifier(bestTracks);
+		bestTracksM.append(justOneSecond);
+		bestTracksM.append(meteorities);
 	}
 
 	protected void createCocolinoDeep() {
@@ -247,10 +253,11 @@ public abstract class AbstractTestingMusicdata implements AutoCloseable {
 				null);
 
 		// init the playlists
-		seventeen.addTrack(seventeenPartI);
-		seventeen.addTrack(seventeenPartII);
-		seventeen.addTrack(seventeenPartIII);
-		seventeen.addTrack(seventeenPartIV);
+		PlaylistModifier seventeenM = new PlaylistModifier(seventeen);
+		seventeenM.append(seventeenPartI);
+		seventeenM.append(seventeenPartII);
+		seventeenM.append(seventeenPartIII);
+		seventeenM.append(seventeenPartIV);
 	}
 
 	protected void createRobick() {

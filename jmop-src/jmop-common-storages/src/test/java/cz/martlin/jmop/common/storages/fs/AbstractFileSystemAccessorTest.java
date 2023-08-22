@@ -13,11 +13,8 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-//import org.junit.Assume;
-//import org.junit.Test;
-import org.junit.jupiter.api.io.TempDir;
 
-import cz.martlin.jmop.common.storages.fs.BaseFileSystemAccessor;
+import cz.martlin.jmop.common.storages.filesystem.BaseFileSystemAccessor;
 import cz.martlin.jmop.common.testing.extensions.TestingRootDirExtension;
 import cz.martlin.jmop.core.exceptions.JMOPPersistenceException;
 

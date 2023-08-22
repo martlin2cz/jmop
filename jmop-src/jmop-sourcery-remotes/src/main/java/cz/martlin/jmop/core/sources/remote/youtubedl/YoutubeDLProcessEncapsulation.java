@@ -8,6 +8,12 @@ import java.util.List;
 
 import cz.martlin.jmop.core.source.extprogram.AbstractProcessEncapsulation;
 
+/**
+ * The encapsulation of the youtube-dl process.
+ * 
+ * @author martin
+ *
+ */
 public class YoutubeDLProcessEncapsulation extends AbstractProcessEncapsulation {
 	private static final String COMMAND_NAME = "youtube-dl"; //$NON-NLS-1$
 

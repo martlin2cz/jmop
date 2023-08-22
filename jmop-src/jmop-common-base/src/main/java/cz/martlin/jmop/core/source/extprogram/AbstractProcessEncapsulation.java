@@ -15,6 +15,12 @@ import org.slf4j.LoggerFactory;
 import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 
+/**
+ * Encasuplator of any external process.
+ * 
+ * @author martin
+ *
+ */
 public abstract class AbstractProcessEncapsulation {
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -23,10 +29,18 @@ public abstract class AbstractProcessEncapsulation {
 
 	private Process process;
 
+	/**
+	 * Creates.
+	 * 
+	 * @param command
+	 * @param arguments
+	 * @param workingDirectory
+	 */
 	public AbstractProcessEncapsulation(String command, List<String> arguments, File workingDirectory) {
 		this(commandLine(command, arguments), workingDirectory);
 	}
 
+	
 	protected AbstractProcessEncapsulation(List<String> commandLine, File workingDirectory) {
 		super();
 		this.commandLine = commandLine;
@@ -35,6 +49,12 @@ public abstract class AbstractProcessEncapsulation {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Runs the process.
+	 * 
+	 * @param listener
+	 * @throws ExternalProgramException
+	 */
 	public void run(BaseProgressListener listener) throws ExternalProgramException {
 		LOG.info("Running process " + commandLine + " in " + workingDirectory);
 
@@ -53,6 +73,11 @@ public abstract class AbstractProcessEncapsulation {
 		}
 	}
 
+	/**
+	 * Terminates this process. Assuming it's running.
+	 *
+	 * @throws ExternalProgramException
+	 */
 	public void terminate() throws ExternalProgramException {
 		LOG.info("Terminating process " + commandLine);
 
@@ -67,10 +92,21 @@ public abstract class AbstractProcessEncapsulation {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Prepares the process.
+	 * 
+	 * @throws ExternalProgramException
+	 */
 	private void prepareProcess() throws ExternalProgramException {
 		process = createJavaProcess();
 	}
 
+	/**
+	 * Constructs the process instance.
+	 * 
+	 * @return
+	 * @throws ExternalProgramException
+	 */
 	private Process createJavaProcess() throws ExternalProgramException {
 		try {
 			ProcessBuilder builder = new ProcessBuilder(commandLine);
@@ -83,6 +119,12 @@ public abstract class AbstractProcessEncapsulation {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Runns processing of the output.
+	 * 
+	 * @param listener
+	 * @throws Exception
+	 */
 	private void handleProcessOutput(BaseProgressListener listener) throws Exception {
 		InputStream ins = getStreamWithOutput(process);
 		Reader r = new InputStreamReader(ins);
@@ -107,8 +149,21 @@ public abstract class AbstractProcessEncapsulation {
 		s.close();
 	}
 
+	/**
+	 * Returns stdout or stderr, a stream with output.
+	 * 
+	 * @param process
+	 * @return
+	 */
 	protected abstract InputStream getStreamWithOutput(Process process);
 
+	/**
+	 * Parses progress from the given line of output.
+	 * 
+	 * @param line
+	 * @return
+	 * @throws Exception
+	 */
 	protected abstract Double processLineOfOutput(String line) throws Exception;
 
 	/**
@@ -128,6 +183,11 @@ public abstract class AbstractProcessEncapsulation {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Finishes the process. Awaits its end and cheks expected result code.
+	 * 
+	 * @throws Exception
+	 */
 	private void finishProcess() throws Exception {
 		if (process == null) {
 			throw new ExternalProgramException("The process is not running"); 
@@ -144,10 +204,19 @@ public abstract class AbstractProcessEncapsulation {
 		}
 	}
 
+	/**
+	 * Returns the expected exit code (0 usually).
+	 * @return
+	 */
 	protected abstract int getExpectedResultCode();
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Kills the process.
+	 * 
+	 * @throws ExternalProgramException
+	 */
 	private void killTheProcess() throws ExternalProgramException {
 		if (process == null) {
 			throw new ExternalProgramException("The process is not running"); 
@@ -156,10 +225,22 @@ public abstract class AbstractProcessEncapsulation {
 		process.destroy();
 	}
 
+	/**
+	 * IF generated some temporary sub-result, this method may delete it.
+	 * 
+	 * @throws Exception
+	 */
 	protected abstract void deleteSubResult() throws Exception;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Constructs the command line.
+	 * 
+	 * @param command
+	 * @param arguments
+	 * @return
+	 */
 	private static List<String> commandLine(String command, List<String> arguments) {
 		ArrayList<String> commandLine = new ArrayList<String>(arguments.size());
 
@@ -169,6 +250,11 @@ public abstract class AbstractProcessEncapsulation {
 		return commandLine;
 	}
 	
+	/**
+	 * Returns the current directy for the execution.
+	 * 
+	 * @return
+	 */
 	public static File currentDirectory() {
 		String path = System.getProperty("user.dir");
 		return new File(path);

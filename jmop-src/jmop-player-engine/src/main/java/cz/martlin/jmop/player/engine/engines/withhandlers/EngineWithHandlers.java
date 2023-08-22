@@ -13,6 +13,13 @@ import cz.martlin.jmop.player.engine.engines.withhandlers.EngineHandlers.OnPlayl
 import cz.martlin.jmop.player.players.BasePlayer;
 import javafx.util.Duration;
 
+/**
+ * The playing engine which triggers handles on each start or stop of playing of
+ * each bundle, playlist or track.
+ * 
+ * @author martin
+ *
+ */
 public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 
 	private final OnPlaylistStartedHandler playlistStarted;
@@ -21,7 +28,6 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	private final AfterTrackStartedHandler afterTrackStarted;
 	private final BeforeTrackEndedHandler beforeTrackEnded;
 	private final AfterTrackEndedHandler afterTrackEnded;
-	
 
 	public EngineWithHandlers(BasePlayer player, //
 			OnPlaylistStartedHandler playlistStarted, OnPlaylistEndedHandler playlistEnded, //
@@ -29,7 +35,7 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 			BeforeTrackEndedHandler beforeTrackEnded, AfterTrackEndedHandler afterTrackEnded) {
 
 		super(player);
-		
+
 		this.playlistStarted = playlistStarted;
 		this.playlistEnded = playlistEnded;
 		this.beforeTrackStarted = beforeTrackStarted;
@@ -55,42 +61,42 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void startPlayingPlaylist(Playlist playlist)  {
+	public void startPlayingPlaylist(Playlist playlist) {
 		if (playlistStarted != null) {
 			playlistStarted.onPlaylistStarted(this, playlist);
 		}
-		
+
 		super.startPlayingPlaylist(playlist);
-		
+
 	}
-	
+
 	@Override
-	public void stopPlayingPlaylist()  {
+	public void stopPlayingPlaylist() {
 		Playlist playlist = currentPlaylist();
-		
+
 		super.stopPlayingPlaylist();
-		
+
 		if (playlistEnded != null) {
 			playlistEnded.onPlaylistEnded(this, playlist);
 		}
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void play()  {
+	public void play() {
 		Track track = runtime.current();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void play(TrackIndex index)  {
+	public void play(TrackIndex index) {
 		Track track = runtime.play(index);
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void stop()  {
+	public void stop() {
 		stopTrack();
 	}
 
@@ -110,26 +116,26 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	public void toNext()  {
+	public void toNext() {
 		Track track = runtime.toNext();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void toPrevious()  {
+	public void toPrevious() {
 		Track track = runtime.toPrevious();
 		stopAndPlayAnother(track);
 	}
 
 	@Override
-	public void trackOver(Track track)  {
+	public void trackOver(Track track) {
 		ifHasPlayNext();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	protected void playTrack(Track track)  {
+	protected void playTrack(Track track) {
 		if (beforeTrackStarted != null) {
 			boolean canStart = beforeTrackStarted.beforeTrackStarted(this, track);
 
@@ -146,11 +152,11 @@ public class EngineWithHandlers extends AbstractEngineWithPlayerAndRuntime {
 	}
 
 	@Override
-	protected void stopTrack()  {
-		//FIXME in case the current track was removed by the time,
-		// the runtime's current track fails. Thus, as a workaround, 
+	protected void stopTrack() {
+		// FIXME in case the current track was removed by the time,
+		// the runtime's current track fails. Thus, as a workaround,
 		// we pick the track from the player.
-		Track track = player.actualTrack(); //runtime.current();  
+		Track track = player.actualTrack(); // runtime.current();
 
 		if (beforeTrackEnded != null) {
 			beforeTrackEnded.beforeTrackEnded(this, track);

@@ -7,6 +7,14 @@ import cz.martlin.jmop.core.misc.ExternalProgramException;
 import cz.martlin.jmop.core.misc.ops.AbstractLongOperation;
 import cz.martlin.jmop.core.misc.ops.BaseProgressListener;
 
+/**
+ * The long operation of the external process run.
+ * 
+ * @author martin
+ *
+ * @param <InT>
+ * @param <OutT>
+ */
 public class ExternalProcessLongOperation<InT, OutT> extends AbstractLongOperation<InT, OutT> {
 
 	private final AbstractProcessEncapsulation process;

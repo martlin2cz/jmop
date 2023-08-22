@@ -2,6 +2,12 @@ package cz.martlin.jmop.core.misc.ops;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Testing long operation. Just counts given number of seconds.
+ * 
+ * @author martin
+ *
+ */
 public class TestingCountingLongOperation extends AbstractLongOperation<Integer, Integer> {
 
 	private final String name;

@@ -6,6 +6,12 @@ import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.player.players.PlayerStatus;
 import javafx.util.Duration;
 
+/**
+ * The player engine. The thing encaspsulating the whole playing, tracks navigation and stuff.
+ * 
+ * @author martin
+ *
+ */
 public interface BasePlayerEngine {
 
 	/////////////////////////////////////////////////////////////////////////////////////

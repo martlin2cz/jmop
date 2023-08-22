@@ -10,6 +10,12 @@ import cz.martlin.jmop.core.sources.local.TrackFileFormat;
 import cz.martlin.jmop.sourcery.remote.BaseDownloader;
 import cz.martlin.jmop.sourcery.remote.JMOPSourceryException;
 
+/**
+ * The testing downloader. Just prepares testing track file.
+ * 
+ * @author martin
+ *
+ */
 public class TestingDownloader implements BaseDownloader {
 
 	private final TrackFileFormat downloadFileFormat;
@@ -23,7 +29,7 @@ public class TestingDownloader implements BaseDownloader {
 	public TrackFileFormat downloadFormat() {
 		return downloadFileFormat;
 	}
-	
+
 	@Override
 	public void download(String url, File target) throws JMOPSourceryException {
 		try {
@@ -37,13 +43,12 @@ public class TestingDownloader implements BaseDownloader {
 	 * Copies testing file to given file.
 	 * 
 	 * @param targetFile
-	 * @
-	 * @throws IOException
+	 * @ @throws IOException
 	 */
 	public void copyTestingFileTo(File targetFile) throws IOException {
 		File file = TestingResources.prepareSampleTrack(this, downloadFileFormat);
-				
-		Files.copy(file, targetFile);	
+
+		Files.copy(file, targetFile);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////

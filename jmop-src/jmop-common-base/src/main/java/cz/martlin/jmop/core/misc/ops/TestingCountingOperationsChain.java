@@ -1,7 +1,11 @@
 package cz.martlin.jmop.core.misc.ops;
 
-import cz.martlin.jmop.core.misc.JMOPMusicbaseException;
-
+/**
+ * Chain of testing counting operations.
+ * 
+ * @author martin
+ *
+ */
 public class TestingCountingOperationsChain implements BaseOperationsChain<Integer> {
 
 	private final String name;

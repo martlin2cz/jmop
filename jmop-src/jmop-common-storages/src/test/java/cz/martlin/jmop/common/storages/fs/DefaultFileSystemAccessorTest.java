@@ -1,5 +1,7 @@
 package cz.martlin.jmop.common.storages.fs;
 
+import cz.martlin.jmop.common.storages.filesystem.DefaultFileSystemAccessor;
+
 /**
  * An test of the {@link DefaultFileSystemAccessor}.
  * 

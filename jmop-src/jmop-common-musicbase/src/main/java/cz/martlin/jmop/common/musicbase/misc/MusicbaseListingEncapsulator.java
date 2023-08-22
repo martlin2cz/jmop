@@ -1,6 +1,5 @@
 package cz.martlin.jmop.common.musicbase.misc;
 
-import java.io.File;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -10,7 +9,6 @@ import cz.martlin.jmop.common.data.model.Playlist;
 import cz.martlin.jmop.common.data.model.Track;
 import cz.martlin.jmop.common.musicbase.BaseMusicbase;
 import cz.martlin.jmop.common.musicbase.BaseMusicbaseLoading;
-import cz.martlin.jmop.common.musicbase.TracksLocator;
 
 /**
  * The main entry point for the musicbase. This class encapsulates the

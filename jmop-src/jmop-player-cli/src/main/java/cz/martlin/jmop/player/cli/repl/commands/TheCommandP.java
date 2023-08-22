@@ -10,18 +10,25 @@ import cz.martlin.jmop.player.cli.repl.converters.CurrentPlaylistTrackIndexConve
 import cz.martlin.jmop.player.cli.repl.converters.PlaylistConverter;
 import cz.martlin.jmop.player.cli.repl.converters.TrackConverter;
 import cz.martlin.jmop.player.fascade.JMOPPlayer;
-import cz.martlin.jmop.player.players.PlayerStatus;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Parameters;
 
+/**
+ * The "P" supercommand. If without argument, either plays/pauses/resumes (based
+ * on the current player status). If with argument, based on that argument
+ * either plays track of specified index, name, playlist or bundle.
+ * 
+ * @author martin
+ *
+ */
 @Command(name = "p", /* no alias needed */
-	description = "Alias for play bundle/playlist/track, play/pause/resume commands", //
-	subcommands =  HelpCommand.class )
+		description = "Alias for play bundle/playlist/track, play/pause/resume commands", //
+		subcommands = HelpCommand.class)
 public class TheCommandP extends AbstractRunnableCommand {
 
-	@Parameters(arity = "0..1", paramLabel ="WHAT_TO_PLAY", //
+	@Parameters(arity = "0..1", paramLabel = "WHAT_TO_PLAY", //
 			description = "When wanting to play bundle, playlist or track, provide the name (or index, if track) of that")
 	private String argument;
 
@@ -38,29 +45,38 @@ public class TheCommandP extends AbstractRunnableCommand {
 		}
 	}
 
+	/**
+	 * Takes the appropriet action in the non-argument form.
+	 * 
+	 */
 	private void doWithNoArgument() {
 		if (!jmop.status().isPlayingSomePlaylist()) {
 			reject("Specify what to play");
 		}
-		
+
 		if (!jmop.status().isPlayingSomeTrack()) {
 			jmop.playing().play();
 			return;
 		}
-		
+
 		if (jmop.status().isPlaying()) {
 			jmop.playing().pause();
 			return;
 		}
-		
+
 		if (jmop.status().isPaused()) {
 			jmop.playing().resume();
 			return;
 		}
-		
+
 		throw new IllegalStateException("This should never happen");
 	}
 
+	/**
+	 * Takes the appriiet action with the argument.
+	 * 
+	 * @param argument
+	 */
 	private void doWithArgument(String argument) {
 		try {
 			TrackIndex index = CurrentPlaylistTrackIndexConverter.convertIndex(jmop, argument);
@@ -69,7 +85,7 @@ public class TheCommandP extends AbstractRunnableCommand {
 		} catch (Exception e) {
 			// okay, go on
 		}
-		
+
 		try {
 			Bundle bundle = null; // assume all bundles
 			Track track = TrackConverter.convertTrack(jmop, bundle, argument);
@@ -78,7 +94,7 @@ public class TheCommandP extends AbstractRunnableCommand {
 		} catch (Exception e) {
 			// okay, go on
 		}
-		
+
 		try {
 			Bundle bundle = null; // assume all bundles
 			Playlist playlist = PlaylistConverter.convertPlaylist(jmop, bundle, argument);
@@ -87,7 +103,7 @@ public class TheCommandP extends AbstractRunnableCommand {
 		} catch (Exception e) {
 			// okay, go on
 		}
-		
+
 		try {
 			Bundle bundle = BundleConverter.convertBundle(jmop, argument);
 			jmop.playing().play(bundle);
@@ -95,7 +111,7 @@ public class TheCommandP extends AbstractRunnableCommand {
 		} catch (Exception e) {
 			// okay, go on
 		}
-		
+
 		throw new CommandLine.TypeConversionException("Nothing named " + argument + " can be played");
 	}
 

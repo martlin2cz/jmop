@@ -15,6 +15,9 @@ import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
  *
  */
 public class Tracklist {
+	/**
+	 * The tracks. Never null.
+	 */
 	private final List<Track> tracks;
 
 	public Tracklist() {
@@ -33,10 +36,21 @@ public class Tracklist {
 		return tracks;
 	}
 
+	/**
+	 * Returns number of tracks.
+	 * 
+	 * @return
+	 */
 	public int count() {
 		return tracks.size();
 	}
 
+	/**
+	 * Returns track of given index.
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public Track getTrack(TrackIndex index) {
 		int indx = index.getIndex();
 		if (indx < 0 || indx >= count()) {
@@ -48,6 +62,13 @@ public class Tracklist {
 		return tracks.get(indx);
 	}
 
+	/**
+	 * Returns sublist of the tracks.
+	 * 
+	 * @param start start (inclusive)
+	 * @param end   end (exclusive)
+	 * @return
+	 */
 	public List<Track> subList(TrackIndex start, TrackIndex end) {
 		int startIndx = start.getIndex();
 		int endIndx = end.getIndex();
@@ -55,6 +76,11 @@ public class Tracklist {
 		return tracks.subList(startIndx, endIndx);
 	}
 
+	/**
+	 * Returns this tracklist as map.
+	 * 
+	 * @return
+	 */
 	public Map<TrackIndex, Track> asIndexedMap() {
 		return TrackIndex.map(tracks);
 	}
@@ -91,6 +117,7 @@ public class Tracklist {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
+	
 	public String toHumanString() {
 		StringBuilder stb = new StringBuilder();
 
