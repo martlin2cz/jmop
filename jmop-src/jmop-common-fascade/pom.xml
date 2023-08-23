@@ -4,7 +4,7 @@
   <parent>
     <groupId>cz.martlin</groupId>
     <artifactId>jmop</artifactId>
-    <version>3.1.16</version>
+    <version>3.1.17</version>
   </parent>
 
   <artifactId>jmop-common-fascade</artifactId>
@@ -16,17 +16,17 @@
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-base</artifactId>
-			<version>3.1.16</version>
+			<version>3.1.17</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-musicbase</artifactId>
-			<version>3.1.16</version>
+			<version>3.1.17</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.martlin</groupId>
 			<artifactId>jmop-common-storages</artifactId>
-			<version>3.1.16</version>
+			<version>3.1.17</version>
 		</dependency>
 	</dependencies>
 </project>

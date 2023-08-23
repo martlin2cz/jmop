@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_ERR">
+	            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+	            <PatternLayout>
+			   <Pattern>%level %msg%n</Pattern>
+			   <alwaysWriteExceptions>false</alwaysWriteExceptions>
+	            </PatternLayout>
+		</Console>
+	    
+	        <RollingFile name="Logfile" fileName="logs.log" filePattern="log-%i.log" append="false">
+	            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+	            <PatternLayout>
+			<Pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Pattern>
+	            </PatternLayout>
+	            <Policies>
+	                <SizeBasedTriggeringPolicy size="1 MB" />
+	            </Policies>
+	            <DefaultRolloverStrategy max="10"/>
+	        </RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="DEBUG">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="Logfile" />
+
+		</Root>
+	</Loggers>
+</Configuration>

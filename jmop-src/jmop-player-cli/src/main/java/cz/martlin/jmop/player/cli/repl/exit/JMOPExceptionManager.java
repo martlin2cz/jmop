@@ -1,5 +1,8 @@
 package cz.martlin.jmop.player.cli.repl.exit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.martlin.jmop.core.exceptions.JMOPRuntimeException;
 import picocli.CommandLine;
 import picocli.CommandLine.IExecutionExceptionHandler;
@@ -17,6 +20,8 @@ import picocli.CommandLine.ParseResult;
 public class JMOPExceptionManager
 		implements IExecutionExceptionHandler, IExitCodeExceptionMapper, IParameterExceptionHandler {
 
+	private static final Logger LOG = LoggerFactory.getLogger(JMOPExceptionManager.class);
+	
 	public static final int OK = CommandLine.ExitCode.OK;
 	public static final int INVALID_USAGE_REJECTED = 201;
 	public static final int INVALID_USAGE_PARAMETER = 202;
@@ -54,10 +59,10 @@ public class JMOPExceptionManager
 				|| (ex instanceof CommandLine.TypeConversionException)) {
 
 			//TODO customize the error messages for picocli exceptions
-			System.err.println(ex.getMessage());
+			LOG.warn("Input invalid or rejected: " + ex.getMessage(), ex);
 		} else {
-			System.err.println("An error occured during the execution of the command: " + ex.getMessage());
-			ex.printStackTrace();
+			LOG.error("An error occured during the execution of the command: " + ex.getMessage(), ex);
+//			ex.printStackTrace();
 		}
 	}
 

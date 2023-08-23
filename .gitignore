@@ -28,3 +28,9 @@ eclipse-workspace
 */target/
 /.metadata/
 .classpath
+
+# the dest binaries
+dist/*.jar
+dist/README.md
+dist/libs/*
+

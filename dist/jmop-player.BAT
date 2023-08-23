@@ -1,6 +1,6 @@
 @echo off
-REM Runs JMOP on DOS or Windows systems
+REM Runs JMOP player on DOS or Windows systems
 
-java -jar jmop-jwd.jar%*
+java -Dlog4j2.configurationFile=log4j2.xml -jar jmop-player.jar %*
 
 EXIT

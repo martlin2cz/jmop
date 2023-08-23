@@ -1,6 +1,6 @@
 #!/bin/bash
-# Runs JMOP on unix-like systems
+# Runs JMOP player on unix-like systems
 
-java -jar jmop-jwd.jar $@
+java -Dlog4j2.configurationFile=log4j2.xml -jar jmop-player.jar $@
 
 exit $?
